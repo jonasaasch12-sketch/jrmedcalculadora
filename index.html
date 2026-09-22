@@ -163,7 +163,7 @@
         .main-content { flex: 1; min-width: 0; }
 
         /* TARJAS DE CATEGORIA E PONTOS */
-        .section-header { padding: 10px 16px; font-size: 12.5px; font-weight: 800; border-radius: 6px; margin: 60px 0 10px 0; text-transform: uppercase; letter-spacing: 0.8px; color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+        .section-header { padding: 10px 16px; font-size: 12.5px; font-weight: 800; border-radius: 6px; margin: 20px 0 10px 0; text-transform: uppercase; letter-spacing: 0.8px; color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
         .sub-type-title { font-size: 11.5px; font-weight: 800; color: #0284c7; text-transform: uppercase; margin: 18px 0 8px 4px; border-bottom: 2px solid #e0f2fe; padding-bottom: 4px; letter-spacing: 0.5px; }
 
         .dot-exame, .tarja-exame { background-color: #0d9488; }
@@ -280,7 +280,7 @@
         /* PAINEL: ALERGIAS, NOVO PACIENTE, ALERTA PESO/IDADE    */
         /* ===================================================== */
         .linha-secundaria { display: flex; gap: 10px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
-        .allergy-input { flex: 1; min-width: 160px; padding: 6px 10px; font-size: 12.5px; border: 1px solid var(--border); border-radius: 6px; outline: none; background: #fff5f5; color: #7f1d1d; }
+        .allergy-input { flex: 1; min-width: 160px; max-width: 250px; padding: 6px 10px; font-size: 12.5px; border: 1px solid var(--border); border-radius: 6px; outline: none; background: #fff5f5; color: #7f1d1d; }
         .allergy-input::placeholder { color: #b45309; opacity: 0.7; }
         .btn-novo-paciente { background: #fff; color: #dc2626; border: 1px solid #fecaca; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 11.5px; cursor: pointer; white-space: nowrap; }
         .btn-novo-paciente:hover { background: #fef2f2; }
@@ -423,8 +423,6 @@
             </div>
             <div class="linha-secundaria">
                 <input type="text" id="alergiaInput" class="allergy-input" placeholder="⚠️ Alergias do paciente (ex: dipirona, penicilina)" oninput="calcularTudo()">
-            </div>
-            <div class="linha-secundaria">
                 <button id="btnNovoPaciente" class="btn-novo-paciente" title="Limpar peso, idade, alergias e o carrinho de prescrição">🔄 Novo Paciente</button>
             </div>
             <div id="avisoPesoIdade" class="aviso-peso-idade"></div>
@@ -2064,11 +2062,11 @@
             todasCategorias.forEach(cat => {
                 let estiloCor = cat.corHex ? ` style="background-color:${escaparHtml(cat.corHex)};"` : "";
                 htmlMenuSidebar += `
-                    <button class="sidebar-link" onclick="document.getElementById('${cat.id}').scrollIntoView({behavior: 'smooth'})">
+                    <button class="sidebar-link" onclick="document.getElementById('${cat.id}').scrollIntoView({behavior: 'smooth', block: 'start'})">
                         <span class="dot ${cat.dotClass || ''}"${estiloCor}></span> ${escaparHtml(cat.nome)}
                     </button>
                 `;
-                htmlMenuBottom += `<button class="nav-btn ${cat.cor || ''}"${estiloCor} onclick="document.getElementById('${cat.id}').scrollIntoView({behavior: 'smooth'})">${escaparHtml(cat.icone)}</button>`;
+                htmlMenuBottom += `<button class="nav-btn ${cat.cor || ''}"${estiloCor} onclick="document.getElementById('${cat.id}').scrollIntoView({behavior: 'smooth', block: 'start'})">${escaparHtml(cat.icone)}</button>`;
 
                 htmlFinal += `<div id="${cat.id}" class="category-group"><div class="section-header ${cat.cor || ''}"${estiloCor}>${escaparHtml(cat.titulo)}</div>`;
 
