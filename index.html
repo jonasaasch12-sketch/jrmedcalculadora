@@ -163,7 +163,7 @@
         .main-content { flex: 1; min-width: 0; }
 
         /* TARJAS DE CATEGORIA E PONTOS */
-        .section-header { padding: 10px 16px; font-size: 12.5px; font-weight: 800; border-radius: 6px; margin: 25px 0 10px 0; text-transform: uppercase; letter-spacing: 0.8px; color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+        .section-header { padding: 10px 16px; font-size: 12.5px; font-weight: 800; border-radius: 6px; margin: 60px 0 10px 0; text-transform: uppercase; letter-spacing: 0.8px; color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
         .sub-type-title { font-size: 11.5px; font-weight: 800; color: #0284c7; text-transform: uppercase; margin: 18px 0 8px 4px; border-bottom: 2px solid #e0f2fe; padding-bottom: 4px; letter-spacing: 0.5px; }
 
         .dot-exame, .tarja-exame { background-color: #0d9488; }
@@ -423,6 +423,8 @@
             </div>
             <div class="linha-secundaria">
                 <input type="text" id="alergiaInput" class="allergy-input" placeholder="⚠️ Alergias do paciente (ex: dipirona, penicilina)" oninput="calcularTudo()">
+            </div>
+            <div class="linha-secundaria">
                 <button id="btnNovoPaciente" class="btn-novo-paciente" title="Limpar peso, idade, alergias e o carrinho de prescrição">🔄 Novo Paciente</button>
             </div>
             <div id="avisoPesoIdade" class="aviso-peso-idade"></div>
@@ -521,8 +523,40 @@
                 <p class="form-hint" style="margin-bottom:12px;">Deixe em branco o que não se aplicar — só aparece no card o que for preenchido. Preencha com base numa fonte que você confia (bulário, protocolo do serviço etc.); isso não é preenchido automaticamente.</p>
 
                 <div class="form-group">
+                    <label>Indicações</label>
+                    <textarea id="hIndicacoes" class="form-textarea" rows="3" placeholder="Ex: infecções por bactérias sensíveis..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Dose</label>
+                    <textarea id="hDose" class="form-textarea" rows="2" placeholder="Ex: 50 mg/kg/dia..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Dose máxima</label>
+                    <textarea id="hDoseMaxima" class="form-textarea" rows="2" placeholder="Ex: 2g/dia..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Apresentações / Concentrações</label>
+                    <textarea id="hApresentacoes" class="form-textarea" rows="3" placeholder="Ex: 250 mg/5 mL, 500 mg comprimido..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Via de administração</label>
+                    <textarea id="hVia" class="form-textarea" rows="2" placeholder="Ex: oral, endovenosa, intramuscular..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Intervalo entre doses</label>
+                    <textarea id="hIntervalo" class="form-textarea" rows="2" placeholder="Ex: 6/6h, 8/8h..."></textarea>
+                </div>
+                <div class="form-group">
                     <label>Contraindicações</label>
                     <textarea id="hContraindicacoes" class="form-textarea" rows="3" placeholder="Ex: hipersensibilidade a penicilinas..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Alertas pediátricos</label>
+                    <textarea id="hAlertasPediatricos" class="form-textarea" rows="3" placeholder="Ex: evitar em menores de 6 meses..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Efeitos adversos importantes</label>
+                    <textarea id="hEfeitosAdversos" class="form-textarea" rows="3" placeholder="Ex: fotossensibilidade, diarreia..."></textarea>
                 </div>
                 <div class="form-group">
                     <label>Interações medicamentosas importantes</label>
@@ -535,6 +569,31 @@
                 <div class="form-group">
                     <label>Ajuste na insuficiência hepática</label>
                     <textarea id="hAjusteHepatico" class="form-textarea" rows="3" placeholder="Ex: usar com cautela, sem necessidade de ajuste..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Fonte / Data de revisão</label>
+                    <textarea id="hFonteRevisao" class="form-textarea" rows="2" placeholder="Ex: Pediatric Dosage Handbook (2024)..."></textarea>
+                </div>
+
+                <!-- Campos específicos para injetáveis -->
+                <div id="camposInjetaveis" style="display:none; border-top: 2px solid var(--border); padding-top: 12px; margin-top: 12px;">
+                    <p class="form-hint" style="font-weight: 700; margin-bottom: 12px;">⚕️ Campos específicos para medicamentos parenterais:</p>
+                    <div class="form-group">
+                        <label>Diluição</label>
+                        <textarea id="hDiluicao" class="form-textarea" rows="3" placeholder="Ex: diluir em SF 0,9% ou SG 5%..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Reconstituição</label>
+                        <textarea id="hReconstituicao" class="form-textarea" rows="3" placeholder="Ex: adicionar 5 mL de água destilada..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Infusão</label>
+                        <textarea id="hInfusao" class="form-textarea" rows="3" placeholder="Ex: infundir lentamente em 30 minutos..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Conservação</label>
+                        <textarea id="hConservacao" class="form-textarea" rows="3" placeholder="Ex: guardar em temperatura ambiente, proteger da luz..."></textarea>
+                    </div>
                 </div>
 
                 <div id="erroFormFicha" class="form-erro"></div>
@@ -1766,7 +1825,7 @@
         // exige nenhuma alteração na lógica de cálculo de dose.
         function renderizarBlocoFicha(idRemedio, instanceId) {
             let ficha = fichasMedicamentos[idRemedio];
-            let temConteudo = !!(ficha && (ficha.contraindicacoes || ficha.interacoes || ficha.ajusteRenal || ficha.ajusteHepatico));
+            let temConteudo = !!(ficha && (ficha.indicacoes || ficha.dose || ficha.doseMaxima || ficha.apresentacoes || ficha.via || ficha.intervalo || ficha.contraindicacoes || ficha.alertasPediatricos || ficha.efeitosAdversos || ficha.interacoes || ficha.ajusteRenal || ficha.ajusteHepatico || ficha.fonteRevisao || ficha.diluicao || ficha.reconstituicao || ficha.infusao || ficha.conservacao));
             let ehAdmin = !!window.usuarioEhAdmin;
 
             if (!temConteudo && !ehAdmin) return ""; // ninguém cadastrou ainda, e quem está vendo não pode cadastrar
@@ -1780,10 +1839,23 @@
             }
 
             let linhas = "";
+            if (ficha.indicacoes) linhas += `<div class="ficha-campo"><strong>Indicações:</strong> ${escaparHtml(ficha.indicacoes)}</div>`;
+            if (ficha.dose) linhas += `<div class="ficha-campo"><strong>Dose:</strong> ${escaparHtml(ficha.dose)}</div>`;
+            if (ficha.doseMaxima) linhas += `<div class="ficha-campo"><strong>Dose máxima:</strong> ${escaparHtml(ficha.doseMaxima)}</div>`;
+            if (ficha.apresentacoes) linhas += `<div class="ficha-campo"><strong>Apresentações/Concentrações:</strong> ${escaparHtml(ficha.apresentacoes)}</div>`;
+            if (ficha.via) linhas += `<div class="ficha-campo"><strong>Via:</strong> ${escaparHtml(ficha.via)}</div>`;
+            if (ficha.intervalo) linhas += `<div class="ficha-campo"><strong>Intervalo:</strong> ${escaparHtml(ficha.intervalo)}</div>`;
             if (ficha.contraindicacoes) linhas += `<div class="ficha-campo"><strong>Contraindicações:</strong> ${escaparHtml(ficha.contraindicacoes)}</div>`;
+            if (ficha.alertasPediatricos) linhas += `<div class="ficha-campo"><strong>Alertas pediátricos:</strong> ${escaparHtml(ficha.alertasPediatricos)}</div>`;
+            if (ficha.efeitosAdversos) linhas += `<div class="ficha-campo"><strong>Efeitos adversos importantes:</strong> ${escaparHtml(ficha.efeitosAdversos)}</div>`;
             if (ficha.interacoes) linhas += `<div class="ficha-campo"><strong>Interações importantes:</strong> ${escaparHtml(ficha.interacoes)}</div>`;
             if (ficha.ajusteRenal) linhas += `<div class="ficha-campo"><strong>Ajuste na insuficiência renal:</strong> ${escaparHtml(ficha.ajusteRenal)}</div>`;
             if (ficha.ajusteHepatico) linhas += `<div class="ficha-campo"><strong>Ajuste na insuficiência hepática:</strong> ${escaparHtml(ficha.ajusteHepatico)}</div>`;
+            if (ficha.fonteRevisao) linhas += `<div class="ficha-campo"><strong>Fonte / Data de revisão:</strong> ${escaparHtml(ficha.fonteRevisao)}</div>`;
+            if (ficha.diluicao) linhas += `<div class="ficha-campo"><strong>Diluição:</strong> ${escaparHtml(ficha.diluicao)}</div>`;
+            if (ficha.reconstituicao) linhas += `<div class="ficha-campo"><strong>Reconstituição:</strong> ${escaparHtml(ficha.reconstituicao)}</div>`;
+            if (ficha.infusao) linhas += `<div class="ficha-campo"><strong>Infusão:</strong> ${escaparHtml(ficha.infusao)}</div>`;
+            if (ficha.conservacao) linhas += `<div class="ficha-campo"><strong>Conservação:</strong> ${escaparHtml(ficha.conservacao)}</div>`;
 
             return `
                 <div class="ficha-completa-area">
@@ -2147,7 +2219,6 @@
         }
 
         function limparCarrinho() {
-            if (!confirm("Remover todos os itens da receita em construção?")) return;
             carrinhoPrescricao = [];
             atualizarCarrinhoUI();
         }
@@ -2182,7 +2253,7 @@
         function copiarReceitaCompleta() {
             let texto = carrinhoPrescricao.map((item, idx) => `${idx + 1}) ${item.texto}`).join("\n\n");
             navigator.clipboard.writeText(texto).then(() => {
-                alert("Receita completa copiada! Cole no seu sistema/prontuário.");
+                // Notificação removida
             }).catch(() => alert("Erro ao copiar."));
         }
 
@@ -2482,10 +2553,23 @@
             let erroBox = document.getElementById('erroFormFicha');
             erroBox.innerText = "";
             let dados = {
+                indicacoes: document.getElementById('hIndicacoes').value.trim(),
+                dose: document.getElementById('hDose').value.trim(),
+                doseMaxima: document.getElementById('hDoseMaxima').value.trim(),
+                apresentacoes: document.getElementById('hApresentacoes').value.trim(),
+                via: document.getElementById('hVia').value.trim(),
+                intervalo: document.getElementById('hIntervalo').value.trim(),
                 contraindicacoes: document.getElementById('hContraindicacoes').value.trim(),
+                alertasPediatricos: document.getElementById('hAlertasPediatricos').value.trim(),
+                efeitosAdversos: document.getElementById('hEfeitosAdversos').value.trim(),
                 interacoes: document.getElementById('hInteracoes').value.trim(),
                 ajusteRenal: document.getElementById('hAjusteRenal').value.trim(),
-                ajusteHepatico: document.getElementById('hAjusteHepatico').value.trim()
+                ajusteHepatico: document.getElementById('hAjusteHepatico').value.trim(),
+                fonteRevisao: document.getElementById('hFonteRevisao').value.trim(),
+                diluicao: document.getElementById('hDiluicao').value.trim(),
+                reconstituicao: document.getElementById('hReconstituicao').value.trim(),
+                infusao: document.getElementById('hInfusao').value.trim(),
+                conservacao: document.getElementById('hConservacao').value.trim()
             };
 
             let btn = document.getElementById('btnSalvarFicha');
