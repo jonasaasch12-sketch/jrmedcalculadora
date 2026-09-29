@@ -1782,9 +1782,8 @@
                 ignoraPeso: regra.tipoDose === "fixo",
                 calc: (p) => {
                     let valorTxt = calcularDoseCustomizada(regra, p);
-                    let cabecalho = `USO ${regra.via || "ORAL"}\n\n`;
                     let linha2 = regra.duracao ? `, ${regra.duracao}` : "";
-                    let texto = `${cabecalho}1) ${regra.nome.toUpperCase()} ${regra.apresentacao ? "(" + regra.apresentacao + ")" : ""} --- 1 UNID\nDAR ${valorTxt}, VIA ${regra.via || "ORAL"}, DE ${regra.intervalo || "CONFORME ORIENTAÇÃO"}${linha2}.`;
+                    let texto = `${regra.nome.toUpperCase()} ${regra.apresentacao ? "(" + regra.apresentacao + ")" : ""} --- 1 UNID\nDAR ${valorTxt}, VIA ${regra.via || "ORAL"}, DE ${regra.intervalo || "CONFORME ORIENTAÇÃO"}${linha2}.`;
                     return { v: valorTxt, r: texto };
                 }
             };
@@ -2249,21 +2248,22 @@
         }
 
         function copiarReceitaCompleta() {
-            // Extrair a via de cada item (está na primeira linha: "USO XXX")
+            // Extrair a via de cada item e remover qualquer numeração ou letra anterior
             let itemsComVia = carrinhoPrescricao.map(item => {
                 let linhas = item.texto.split('\n');
-                let viaLinha = linhas[0]; // "USO XXX"
-                let viaMatch = viaLinha.match(/USO\s+(.+?)(?:\n|$)/);
+                // A primeira linha pode ser vazia ou ter "USO XXX"
+                let viaMatch = item.texto.match(/VIA\s+([A-Z\s]+),/);
                 let via = viaMatch ? viaMatch[1].trim() : "ORAL";
-                let textoSemCabecalho = linhas.slice(1).join('\n').trim();
-                return { via, textoSemCabecalho, textoCompleto: item.texto };
+                // Remove qualquer prefixo de letra ou número (A., 1), etc)
+                let textoLimpo = item.texto.replace(/^[A-Z]\.\s+/, '').replace(/^\d+\)\s+/, '');
+                return { via, textoLimpo };
             });
 
             // Agrupar por via
             let porVia = {};
             itemsComVia.forEach(item => {
                 if (!porVia[item.via]) porVia[item.via] = [];
-                porVia[item.via].push(item.textoSemCabecalho);
+                porVia[item.via].push(item.textoLimpo);
             });
 
             // Montar receita agrupada
@@ -2995,4 +2995,3 @@
     </script>
 </body>
 </html>
-
