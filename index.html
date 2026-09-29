@@ -829,8 +829,10 @@
             "ibu_gts": {
                 cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
                 kw: "ibuprofeno gotas alivium febre dor sintomaticos oral ambulatorial", nome: "Ibuprofeno Gotas (Alivium)", apres: "100 mg / mL",
-                info: "<strong>Posologia:</strong> 1 gota a cada 2 kg VO de 6/6h ou 8/8h. Liberado >6 meses.", badge: "Teto Máx: 20 gotas", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = Math.min(Math.floor(p / 2), 20); return { v: v + " gts", r: `${recHead}1) IBUPROFENO 100 MG/ML ------------------- 1 FR\nDAR ${v} GOTAS, VIA ORAL, DE 6/6 HORAS, SE DOR OU FEBRE (TEMPERATURA MAIOR QUE 37,5°C).` }; }
+                info: "<strong>Posologia:</strong> 1 gota/kg/dose VO de 6/6h ou 8/8h. Liberado >6 meses.", badge: "Teto Máx: 40 gotas", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => { let v = Math.min(Math.round(p), 40); return { v: v + " gts", r: `${recHead}1) IBUPROFENO 100 MG/ML ------------------- 1 FR\nDAR ${v} GOTAS, VIA ORAL, DE 6/6 HORAS, SE DOR OU FEBRE (TEMPERATURA MAIOR QUE 37,5°C).` }; }
+            },
+
             },
             "ibu_50": {
                 cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
