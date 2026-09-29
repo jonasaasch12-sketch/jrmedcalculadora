@@ -791,7 +791,7 @@
                 nome: "Sinais de Alarme — Respiratório / Geral", apres: "Termo de Alta",
                 info: "<strong>Descrição:</strong> Orientações de alta para quadros respiratórios e gerais.",
                 badgeSt: "static-blue", badge: "Orientações", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
-                calc: () => ({ v: "Orientações", r: "ORIENTAÇÕES:\n- MANTER CABECEIRA ELEVADA\n- TOSSE E CORIZA PODEM PERSISTIR POR ALGUMAS SEMANAS\n\nRETORNAR SE:\n- RESPIRAÇÃO OFEGANTE, RUIDOSA OU DIFÍCIL\n- CANSAÇO\n- QUEDA NO ESTADO GERAL MESMO QUE SEM FEBRE\n- FEBRE POR MAIS 48H APÓS O DIA DE HOJE (TEMPERATURA >= 37.5°C)\n- PIORA OU NÃO MELHORA" })
+                calc: () => ({ v: "Orientações", r: "ORIENTAÇÕES:n- TOSSE E CORIZA PODEM PERSISTIR POR ALGUMAS SEMANAS\n\nRETORNAR SE:\n- RESPIRAÇÃO OFEGANTE, RUIDOSA OU DIFÍCIL\n- CANSAÇO\n- QUEDA NO ESTADO GERAL MESMO QUE SEM FEBRE\n- FEBRE POR MAIS 48H APÓS O DIA DE HOJE (TEMPERATURA >= 37.5°C)\n- PIORA OU NÃO MELHORA" })
             },
             "orientacoes_geca": {
                 cat: "cat-exame-fisico", sub: "Orientações e Sinais de Alarme",
@@ -2196,16 +2196,33 @@
         // ===================================================== 
         let carrinhoPrescricao = []; // { nome, apres, texto }
 
-        function adicionarAoCarrinho(instanceId, btnId) {
+                function adicionarAoCarrinho(instanceId, btnId) {
             let med = buscarMed(instanciasRenderizadas.find(i => i.instanceId === instanceId)?.medKey);
             let recBox = document.getElementById('rec-' + instanceId);
             if (!med || !recBox) return;
 
-            // Extrair via do texto (está em "VIA XXX")
-            let viaMatch = recBox.innerText.match(/VIA\s+([A-Z\sÁÉÍÓÚÃÕÇ]+?)(?:,|$)/);
-            let via = viaMatch ? viaMatch[1].trim() : "ORAL";
+            // Extrai o texto gerado
+            let textoCompleto = recBox.innerText.trim();
+            // A "Via" será identificada automaticamente pela 1ª linha do texto do card
+            let primeiraLinha = textoCompleto.split('\n')[0].trim();
+            let primeiraLinhaUpper = primeiraLinha.toUpperCase();
+            
+            let cabecalhoVia = "USO ORAL"; // Padrão de segurança
+            
+            // Se a primeira linha indicar a rota (USO, VIA, etc), usamos ela como cabeçalho
+            if (primeiraLinhaUpper.startsWith("USO") || 
+                primeiraLinhaUpper.startsWith("VIA") || 
+                primeiraLinhaUpper.includes("NEBULIZAÇÃO") || 
+                primeiraLinhaUpper.includes("VENÓCLISE") || 
+                primeiraLinhaUpper.includes("DISPOSITIVOS") ||
+                primeiraLinhaUpper.includes("ORIENTAÇÕES")) {
+                cabecalhoVia = primeiraLinha;
+            } else if (med.custom && med._regra && med._regra.via) {
+                // Caso seja um remédio da equipe cadastrado manualmente sem cabeçalho
+                cabecalhoVia = `USO ${med._regra.via.toUpperCase()}`;
+            }
 
-            carrinhoPrescricao.push({ nome: med.nome, apres: med.apres, texto: recBox.innerText, via: via });
+            carrinhoPrescricao.push({ nome: med.nome, apres: med.apres, texto: textoCompleto, via: cabecalhoVia });
 
             let botao = document.getElementById(btnId);
             let original = botao.innerHTML;
@@ -2253,11 +2270,11 @@
             lista.innerHTML = html;
         }
 
-        function copiarReceitaCompleta() {
-            // Agrupar itens por via
+                function copiarReceitaCompleta() {
+            // Agrupar itens pela via exata que capturamos
             let porVia = {};
             carrinhoPrescricao.forEach(item => {
-                let via = item.via || "ORAL";
+                let via = item.via || "USO ORAL";
                 if (!porVia[via]) porVia[via] = [];
                 porVia[via].push(item.texto);
             });
@@ -2266,24 +2283,41 @@
             let vias = Object.keys(porVia).sort(); // Ordena alfabeticamente
             let texto = vias.map(via => {
                 let items = porVia[via];
-                let linhas = [`USO ${via}`];
+                let linhas = [via]; // O cabeçalho (ex: USO TÓPICO, VIA ENDOVENOSA)
 
                 items.forEach((itemTexto, idx) => {
-                    // Remove a linha "USO XXX" se existir no texto individual
-                    let linhasItem = itemTexto.split('\n').filter(l => !l.match(/^USO\s+/i));
-                    // Remove prefixos como "1) ", "2) ", etc do início
-                    let textoLimpo = linhasItem.join('\n').trim();
-                    textoLimpo = textoLimpo.replace(/^\d+\)\s+/, '');
+                    let linhasItem = itemTexto.trim().split('\n');
+                    
+                    // Removemos a 1ª linha do texto do remédio se for igual ao cabeçalho da via (para não duplicar)
+                    let primeira = linhasItem[0].trim().toUpperCase();
+                    if (primeira === via.toUpperCase() || primeira.startsWith("USO ") || primeira.startsWith("VIA ") || primeira.includes("NEBULIZAÇÃO")) {
+                        linhasItem.shift(); 
+                    }
+                    
+                    // Remove linhas em branco que sobraram no começo
+                    while(linhasItem.length > 0 && linhasItem[0].trim() === "") {
+                        linhasItem.shift();
+                    }
 
-                    // Adiciona com numeração nova
+                    let textoLimpo = linhasItem.join('\n').trim();
+                    
+                    // Remove a numeração antiga ("1) ", "2) ", etc)
+                    textoLimpo = textoLimpo.replace(/^\d+\)\s*/, '');
+
+                    // Adiciona a nova numeração (1, 2, 3...) reiniciando dentro de cada grupo
                     linhas.push(`${idx + 1}) ${textoLimpo}`);
                 });
 
-                return linhas.join('\n');
-            }).join('\n\n');
+                return linhas.join('\n\n'); // Espaçamento duplo entre as medicações de um grupo
+            }).join('\n\n--------------------------------------------------\n\n'); // Divisória clara entre Vias diferentes
 
             navigator.clipboard.writeText(texto).then(() => {
-                // Notificação removida
+                let btn = document.querySelector('.btn-copiar-receita-completa');
+                if(btn) {
+                    let original = btn.innerText;
+                    btn.innerText = "✓ Copiado!";
+                    setTimeout(() => btn.innerText = original, 1500);
+                }
             }).catch(() => alert("Erro ao copiar."));
         }
 
