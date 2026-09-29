@@ -642,15 +642,15 @@
                         <div class="form-group">
                             <label>Via de administração</label>
                             <select id="fVia" class="form-select">
-                                <option>ORAL</option>
-                                <option>ENDOVENOSA</option>
-                                <option>INTRAMUSCULAR</option>
-                                <option>TÓPICA</option>
-                                <option>INALATÓRIA</option>
-                                <option>NASAL</option>
-                                <option>RETAL</option>
-                                <option>OFTALMOLÓGICA</option>
-                                <option>OTOLÓGICA</option>
+                                <option value="ORAL">ORAL</option>
+                                <option value="ENDOVENOSA">ENDOVENOSA</option>
+                                <option value="INTRAMUSCULAR">INTRAMUSCULAR</option>
+                                <option value="TÓPICA">TÓPICA</option>
+                                <option value="INALATÓRIA">INALATÓRIA</option>
+                                <option value="NASAL">NASAL</option>
+                                <option value="RETAL">RETAL</option>
+                                <option value="OFTALMOLÓGICA">OFTALMOLÓGICA</option>
+                                <option value="OTOLÓGICA">OTOLÓGICA</option>
                             </select>
                         </div>
                     </div>
@@ -2249,7 +2249,34 @@
         }
 
         function copiarReceitaCompleta() {
-            let texto = carrinhoPrescricao.map((item, idx) => `${idx + 1}) ${item.texto}`).join("\n\n");
+            // Extrair a via de cada item (está na primeira linha: "USO XXX")
+            let itemsComVia = carrinhoPrescricao.map(item => {
+                let linhas = item.texto.split('\n');
+                let viaLinha = linhas[0]; // "USO XXX"
+                let viaMatch = viaLinha.match(/USO\s+(.+?)(?:\n|$)/);
+                let via = viaMatch ? viaMatch[1].trim() : "ORAL";
+                let textoSemCabecalho = linhas.slice(1).join('\n').trim();
+                return { via, textoSemCabecalho, textoCompleto: item.texto };
+            });
+
+            // Agrupar por via
+            let porVia = {};
+            itemsComVia.forEach(item => {
+                if (!porVia[item.via]) porVia[item.via] = [];
+                porVia[item.via].push(item.textoSemCabecalho);
+            });
+
+            // Montar receita agrupada
+            let vias = Object.keys(porVia);
+            let texto = vias.map(via => {
+                let items = porVia[via];
+                let linhas = [
+                    `USO ${via}`,
+                    ...items.map((texto, idx) => `${idx + 1}) ${texto}`)
+                ];
+                return linhas.join('\n');
+            }).join('\n\n');
+
             navigator.clipboard.writeText(texto).then(() => {
                 // Notificação removida
             }).catch(() => alert("Erro ao copiar."));
@@ -2968,3 +2995,4 @@
     </script>
 </body>
 </html>
+
