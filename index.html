@@ -934,10 +934,10 @@
             "dip_inj": {
                 cat: "cat-sintomaticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)", 
                 kw: "dipirona ev im febre dor hospitalar injetavel", nome: "Dipirona Injetável", apres: "Ampola 500 mg / mL",
-                info: "<strong>Conduta:</strong> 0,03 mL/kg/dose. EV: diluir em 9 mL AD lento. IM: sem diluir.", badge: "Teto Máx: 5 mL", recLabel: "Texto para selecionar e copiar:",
+                info: "<strong>Conduta:</strong> 0,03 mL/kg/dose. EV: diluir em 9 mL AD lento. IM: sem diluir.", badge: "Teto Máx: 2 mL", recLabel: "Texto para selecionar e copiar:",
                 calc: (p) => { 
-                    // Limite máximo de segurança de 5 mL (2.500 mg) por dose
-                    let v = Math.min((p * 0.03), 5.0).toFixed(2); 
+                    // Limite máximo de segurança de 2 mL (1000 mg) por dose
+                    let v = Math.min((p * 0.03), 2.0).toFixed(2); 
                     return { 
                         v: v + " mL", 
                         r: `USO HOSPITALAR (ANALGESIA / ANTITÉRMICO)\n\nOPÇÃO ENDOVENOSA:\nAspirar ${v} mL de Dipirona (500 mg/mL). Diluir em 9 mL de Água Destilada e administrar por via EV LENTA.\n\nOPÇÃO INTRAMUSCULAR:\nAspirar ${v} mL de Dipirona (500 mg/mL) e administrar por via IM profunda (NÃO DILUIR).\n\n(Administrar de 6/6 horas se dor ou febre)` 
