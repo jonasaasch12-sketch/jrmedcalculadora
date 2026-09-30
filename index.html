@@ -904,7 +904,7 @@
             },
             "ondif_cp": {
                 cat: "cat-vomitos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
-                kw: "ondif ondansetrona filme comprimido vomito nausea antiemetico oral ambulatorial", nome: "Ondif Comprimido/Filme (Ondansetrona 4mg)", apres: "4 mg",
+                kw: "ondif ondansetrona filme vomito nausea antiemetico oral ambulatorial", nome: "Ondif Filme (Ondansetrona 4mg)", apres: "4 mg",
                 info: "<strong>Posologia:</strong> A partir de 6 meses. 8-15kg: 2mg | 16-30kg: 4mg | >30kg: 8mg (até 8/8h).", badge: "", recLabel: "Texto para selecionar e copiar:",
                 calc: (p, i) => {
                     if (i !== "" && parseFloat(i) < 0.5) return { v: "Contraind.", r: "ATENÇÃO: Uso de Ondansetrona/Ondif não recomendado para menores de 6 meses." };
@@ -917,12 +917,12 @@
                         cpQtd = "2 comprimidos de 4 mg";
                     } else if (pNum >= 16) {
                         doseMg = "4 mg";
-                        cpQtd = "1 comprimido de 4 mg ou 1 filme";
+                        cpQtd = "1 filme";
                     }
 
                     return {
                         v: doseMg,
-                        r: `${recHead}1) ONDANSETRONA / ONDIF 4 MG ----------------- 1 CX\nTOMAR ${cpQtd} VIA ORAL DE ATÉ 8/8H SE NÁUSEAS E VÔMITOS.`
+                        r: `${recHead}1) ONDIF 4 MG ----------------- 1 CX\nCOLOCAR ${cpQtd} NA LINGUA VIA ORAL DE ATÉ 8/8H SE NÁUSEAS E VÔMITOS.`
                     };
                 }
             },
@@ -937,7 +937,7 @@
 
                     return {
                         v: ofertaMl,
-                        r: `${recHead}1) ONDANSETRONA / ONDIF 4 MG ----------------- 1 CX\nDILUIR 1 COMPRIMIDO EM 10 ML DE ÁGUA E OFERECER ${ofertaMl}, VIA ORAL, DE ATÉ 8/8H SE NÁUSEAS E VÔMITOS.`
+                        r: `${recHead}1) ONDANSETRONA 4MG ----------------- 1 CX\nDILUIR 1 COMPRIMIDO EM 10 ML DE ÁGUA E OFERECER ${ofertaMl}, VIA ORAL, DE ATÉ 8/8H SE NÁUSEAS E VÔMITOS.`
                     };
                 }
             },
