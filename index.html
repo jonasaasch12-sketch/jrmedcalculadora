@@ -904,43 +904,32 @@
             },
             "ondif_cp": {
                 cat: "cat-vomitos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
-                kw: "ondif ondansetrona filme vomito nausea antiemetico oral ambulatorial", nome: "Ondif Filme (Ondansetrona 4mg)", apres: "4 mg",
-                info: "<strong>Posologia:</strong> A partir de 6 meses. 8-15kg: 2mg | 16-30kg: 4mg | >30kg: 8mg (até 8/8h).", badge: "", recLabel: "Texto para selecionar e copiar:",
+                kw: "ondif ondansetrona filme orodispersivel vomito nausea antiemetico oral ambulatorial", nome: "Ondif Filme (Ondansetrona 4mg)", apres: "4 mg",
+                info: "<strong>Posologia:</strong> <2 anos: Contraindicado | 2-11 anos: 4mg (1 filme) | >11 anos: 8mg (2 filmes).", badgeSt: "static-blue", badge: "Dose p/ Idade", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
                 calc: (p, i) => {
-                    if (i !== "" && parseFloat(i) < 0.5) return { v: "Contraind.", r: "ATENÇÃO: Uso de Ondansetrona/Ondif não recomendado para menores de 6 meses." };
-                    let pNum = parseFloat(p);
-                    let doseMg = "2 mg";
-                    let cpQtd = "1/2 comprimido de 4 mg";
-
-                    if (pNum >= 30) {
-                        doseMg = "8 mg";
-                        cpQtd = "2 comprimidos de 4 mg";
-                    } else if (pNum >= 16) {
-                        doseMg = "4 mg";
-                        cpQtd = "1 filme";
+                    let id = i !== "" ? parseFloat(i) : null;
+                    
+                    // Fallback de segurança: se o médico colocar só o peso e esquecer a idade (2 anos ≈ 12kg, 11 anos ≈ 35kg)
+                    if (id === null && p) {
+                        if (p < 12) id = 1;
+                        else if (p <= 35) id = 5;
+                        else id = 12;
                     }
+
+                    if (id === null) return { v: "—", r: "Insira a idade acima para calcular a dose." };
+
+                    if (id < 2) return { v: "Contraind.", r: "ATENÇÃO: Uso de Ondif contraindicado para menores de 2 anos segundo protocolo selecionado." };
+
+                    let doseMg = id > 11 ? "8 mg" : "4 mg";
+                    let qtdFilme = id > 11 ? "2 FILMES" : "1 FILME";
 
                     return {
                         v: doseMg,
-                        r: `${recHead}1) ONDIF 4 MG ----------------- 1 CX\nCOLOCAR ${cpQtd} NA LINGUA VIA ORAL DE ATÉ 8/8H SE NÁUSEAS E VÔMITOS.`
+                        r: `${recHead}1) ONDIF 4 MG (FILME ORODISPERSÍVEL) ------- 1 CX\nCOLOCAR ${qtdFilme} NA LÍNGUA, DE 8/8H, SE NÁUSEAS OU VÔMITOS.`
                     };
                 }
             },
-            "ondif_dil": {
-                cat: "cat-vomitos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
-                kw: "ondif ondansetrona diluicao diluido agua liquido vomito nausea antiemetico oral ambulatorial", nome: "Ondif Diluído em Água (Ondansetrona 4mg)", apres: "4 mg (comprimido diluído)",
-                info: "<strong>Posologia:</strong> A partir de 6 meses. Diluir 1 comprimido de 4 mg em 10 mL de água.", badge: "", recLabel: "Texto para selecionar e copiar:",
-                calc: (p, i) => {
-                    if (i !== "" && parseFloat(i) < 0.5) return { v: "Contraind.", r: "ATENÇÃO: Uso de Ondansetrona/Ondif não recomendado para menores de 6 meses." };
-                    let pNum = parseFloat(p);
-                    let ofertaMl = pNum >= 16 ? "10 ML" : "5 ML";
 
-                    return {
-                        v: ofertaMl,
-                        r: `${recHead}1) ONDANSETRONA 4MG ----------------- 1 CX\nDILUIR 1 COMPRIMIDO EM 10 ML DE ÁGUA E OFERECER ${ofertaMl}, VIA ORAL, DE ATÉ 8/8H SE NÁUSEAS E VÔMITOS.`
-                    };
-                }
-            },
             "ondan_vo": {
                 cat: "cat-vomitos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
                 kw: "ondansetrona solucao xarope vomito nausea antiemetico oral ambulatorial", nome: "Ondansetrona Solução Oral", apres: "4 mg / 5 mL",
