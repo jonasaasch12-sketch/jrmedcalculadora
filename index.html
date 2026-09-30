@@ -1179,15 +1179,24 @@
             },
             "magnesio_ev": {
                 cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)", 
-                kw: "sulfato de magnesio asma grave crise ev hospitalar injetavel", nome: "Sulfato de Magnésio EV (10% ou 50%)", apres: "Calculado para 5 Horas",
-                info: "<strong>Conduta:</strong> Infusão (50 mg/kg/h) por 5 horas.", badge: "Teto Máx: 10.000 mg", recLabel: "Texto para selecionar e copiar:",
+                kw: "sulfato de magnesio asma grave crise ev hospitalar injetavel", nome: "Sulfato de Magnésio EV", apres: "Ampolas a 10% ou 50%",
+                info: "<strong>Conduta:</strong> 50 mg/kg/h por 5 horas (Dose Máxima: 2 g/h).", badge: "Máx: 2 g/h", recLabel: "Texto para selecionar e copiar:",
                 calc: (p) => { 
-                    let mgTotal = Math.min((p * 250), 10000); 
+                    // Limite máximo de 2.000 mg por hora (2 g/h).
+                    let mgPorHora = Math.min((p * 50), 2000);
+                    // O total para as 5 horas de infusão
+                    let mgTotal = mgPorHora * 5; 
+                    
                     let vol10 = mgTotal / 100, sf10 = vol10 * 2, vazao10 = (vol10 + sf10) / 5;
                     let vol50 = mgTotal / 500, sf50 = vol50 * 8, vazao50 = (vol50 + sf50) / 5;
-                    return { v: `10%: ${vazao10.toFixed(1)} mL/h\n50%: ${vazao50.toFixed(1)} mL/h`, r: `VIA ENDOVENOSA (INFUSÃO CONTÍNUA - 5 HORAS)\n\nOPÇÃO A (10%): Aspirar ${vol10.toFixed(1)} mL + ${sf10.toFixed(1)} mL SF 0,9%. Correr em BIC a ${vazao10.toFixed(1)} mL/h.\nOPÇÃO B (50%): Aspirar ${vol50.toFixed(1)} mL + ${sf50.toFixed(1)} mL SF 0,9%. Correr em BIC a ${vazao50.toFixed(1)} mL/h.` }; 
+                    
+                    return { 
+                        v: `10%: ${vazao10.toFixed(1)} mL/h\n50%: ${vazao50.toFixed(1)} mL/h`, 
+                        r: `VIA ENDOVENOSA (INFUSÃO CONTÍNUA - 5 HORAS)\n\nOPÇÃO A (Ampola 10% - 100 mg/mL):\nAspirar ${vol10.toFixed(1)} mL de Sulfato de Magnésio a 10% + ${sf10.toFixed(1)} mL de SF 0,9%.\nCorrer em BIC a ${vazao10.toFixed(1)} mL/h.\n\nOPÇÃO B (Ampola 50% - 500 mg/mL):\nAspirar ${vol50.toFixed(1)} mL de Sulfato de Magnésio a 50% + ${sf50.toFixed(1)} mL de SF 0,9%.\nCorrer em BIC a ${vazao50.toFixed(1)} mL/h.` 
+                    }; 
                 }
             },
+
             "salb_neb": {
                 cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)", 
                 kw: "salbutamol gotas nebulizacao asma hospitalar injetavel", nome: "Salbutamol Gotas (Nebulização)", apres: "5 mg / mL",
