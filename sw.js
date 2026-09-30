@@ -7,7 +7,7 @@
 // (ex: hospedado no Netlify/Firebase Hosting). Não funciona abrindo o arquivo
 // direto do computador (file://) — navegadores bloqueiam Service Worker nesse caso.
 
-const CACHE_NOME = "jrmed-cache-v2"; // troque o número (v3, v4...) sempre que quiser forçar a limpeza do cache antigo
+const CACHE_NOME = "jrmed-cache-v3"; // troque o número (v3, v4...) sempre que quiser forçar a limpeza do cache antigo
 
 const ARQUIVOS_ESSENCIAIS = [
   "./",
