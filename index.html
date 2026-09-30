@@ -875,9 +875,56 @@
             "buscopan": {
                 cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
                 kw: "buscopan gotas escopolamina dor abdominal colica oral ambulatorial", nome: "Buscopan Gotas (Escopolamina)", apres: "10 mg / mL",
-                info: "<strong>Posologia:</strong> Evitar em lactentes. 1-6 anos: 2 x peso em gotas de 6/6h. 6-14 anos: 20 a 40 gotas.", badge: "", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = (p >= 1 && p <= 6) ? Math.round(2 * p) + " gts" : "Consulte Obs"; return { v: v, r: `${recHead}1) BUSCOPAN GOTAS 10 MG/ML ------------------ 1 FR\nTOMAR O VOLUME CORRESPONDENTE DE 6/6 HORAS SE COLICA ABDOMINAL (CONFORME INDICAÇÃO POR IDADE).` }; }
+                info: "<strong>Posologia:</strong> Evitar em RN. 1-3m: 0,5mg/kg | 3-11m: 0,7mg/kg | 1-6a: 0,4mg/kg | >6a: 20 a 40 gotas (8/8h).", badgeSt: "static-blue", badge: "Dose por Idade", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    let idAnos = i !== "" ? parseFloat(i) : null;
+                    let pNum = parseFloat(p);
+                    
+                    // Sistema de segurança: se preencher só o peso, o sistema estima a idade para não quebrar a regra
+                    if (idAnos === null && pNum) {
+                        if (pNum < 4) idAnos = 0.05; // Recém-nascido (< 1 mês)
+                        else if (pNum < 6) idAnos = 0.16; // 1 a 3 meses
+                        else if (pNum < 10) idAnos = 0.5; // 3 a 11 meses
+                        else if (pNum <= 20) idAnos = 3; // 1 a 6 anos
+                        else idAnos = 7; // > 6 anos
+                    }
+                    
+                    if (idAnos === null || !pNum) return { v: "—", r: "Insira o peso e a idade acima para calcular." };
+
+                    let meses = idAnos * 12;
+                    
+                    // Regra 1: Evitar em Recém-nascido
+                    if (meses < 1) return { v: "Evitar", r: "ATENÇÃO: Evitar o uso em recém-nascidos (< 1 mês)." };
+
+                    let gotas;
+                    let txtGotas;
+
+                    // Sabendo que 1 gota = 0,5 mg
+                    if (meses < 3) {
+                        // 0,5 mg/kg = 1 gota/kg
+                        gotas = Math.round(pNum * 1);
+                        txtGotas = `${gotas} GOTAS`;
+                    } else if (meses < 12) {
+                        // 0,7 mg/kg = 1,4 gotas/kg
+                        gotas = Math.round(pNum * 1.4);
+                        txtGotas = `${gotas} GOTAS`;
+                    } else if (idAnos <= 6) {
+                        // 0,4 mg/kg = 0,8 gotas/kg
+                        gotas = Math.round(pNum * 0.8);
+                        txtGotas = `${gotas} GOTAS`;
+                    } else {
+                        // > 6 anos = 20 a 40 gotas
+                        gotas = "20 a 40";
+                        txtGotas = `20 A 40 GOTAS`;
+                    }
+
+                    return {
+                        v: `${gotas} gts`,
+                        r: `${recHead}1) BUSCOPAN GOTAS 10 MG/ML ------------------ 1 FR\nDAR ${txtGotas}, VIA ORAL, DE 8/8 HORAS SE CÓLICAS OU DORES ABDOMINAIS.`
+                    };
+                }
             },
+
             "simet": {
                 cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
                 kw: "simeticona gotas gases distensao abdominal oral ambulatorial", nome: "Simeticona Gotas", apres: "75 mg / mL",
@@ -887,21 +934,17 @@
             "dip_inj": {
                 cat: "cat-sintomaticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)", 
                 kw: "dipirona ev im febre dor hospitalar injetavel", nome: "Dipirona Injetável", apres: "Ampola 500 mg / mL",
-                info: "<strong>Conduta:</strong> Dose calculada por faixas de peso. Não é necessário diluir.", badge: "Dose Máx: 10 mL/dia", recLabel: "Texto para selecionar e copiar:",
-                calc: (p, i) => {
-                    let v = "—", t = "";
-                    if (p < 5) return { v: "Não rec.", r: "Não recomendado rotineiramente < 5kg." };
-                    else if (p <= 8) { v = "0,1-0,2 mL"; t = "FAZER DE 0,1 A 0,2 ML (50-100 MG)"; }
-                    else if (p <= 15) { v = "0,2-0,5 mL"; t = "FAZER DE 0,2 A 0,5 ML (100-250 MG)"; }
-                    else if (p <= 23) { v = "0,3-0,8 mL"; t = "FAZER DE 0,3 A 0,8 ML (150-400 MG)"; }
-                    else if (p <= 30) { v = "0,4-1,0 mL"; t = "FAZER DE 0,4 A 1,0 ML (200-500 MG)"; }
-                    else if (p <= 45) { v = "0,5-1,5 mL"; t = "FAZER DE 0,5 A 1,5 ML (250-750 MG)"; }
-                    else if (p <= 53) { v = "0,8-1,8 mL"; t = "FAZER DE 0,8 A 1,8 ML (400-900 MG)"; }
-                    else { v = "2,0-5,0 mL"; t = "FAZER DE 2,0 A 5,0 ML (1.000-2.500 MG)"; }
-                    let via = (i !== "" && parseFloat(i) <= 1) || (p <= 8) ? "INTRAMUSCULAR" : "IM ou EV";
-                    return { v: v, r: `USO HOSPITALAR (ANALGESIA/ANTITÉRMICO)\n\n ${t} DE DIPIRONA (AMPOLA 500 MG/ML) POR VIA ${via}, DE 6/6 HORAS.` };
+                info: "<strong>Conduta:</strong> 0,03 mL/kg/dose. EV: diluir em 9 mL AD lento. IM: sem diluir.", badge: "Teto Máx: 5 mL", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => { 
+                    // Limite máximo de segurança de 5 mL (2.500 mg) por dose
+                    let v = Math.min((p * 0.03), 5.0).toFixed(2); 
+                    return { 
+                        v: v + " mL", 
+                        r: `USO HOSPITALAR (ANALGESIA / ANTITÉRMICO)\n\nOPÇÃO ENDOVENOSA:\nAspirar ${v} mL de Dipirona (500 mg/mL). Diluir em 9 mL de Água Destilada e administrar por via EV LENTA.\n\nOPÇÃO INTRAMUSCULAR:\nAspirar ${v} mL de Dipirona (500 mg/mL) e administrar por via IM profunda (NÃO DILUIR).\n\n(Administrar de 6/6 horas se dor ou febre)` 
+                    }; 
                 }
             },
+
             "ondif_cp": {
                 cat: "cat-vomitos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
                 kw: "ondif ondansetrona filme orodispersivel vomito nausea antiemetico oral ambulatorial", nome: "Ondif Filme (Ondansetrona 4mg)", apres: "4 mg",
@@ -962,8 +1005,8 @@
             "ondan_ev": {
                 cat: "cat-vomitos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)", 
                 kw: "ondansetrona ev vomito nausea hospitalar injetavel", nome: "Ondansetrona EV", apres: "Ampola 2 mg / mL",
-                info: "<strong>Conduta:</strong> 0,05 x Peso em mL. Diluir em 50 mL de SF 0,9% EV lento.", badge: "", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = (p * 0.05).toFixed(2); return { v: v + " mL", r: `VIA ENDOVENOSA (ANTIEMÉTICO)\n\n Aspirar ${v} mL de Ondansetrona (2 mg/mL). Diluir em 50 mL de SF 0,9% e infundir por via EV lenta agora.` }; }
+                info: "<strong>Conduta:</strong> 0,075 x Peso em mL. Diluir em 50 mL de SF 0,9% EV lento.", badge: "", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => { let v = (p * 0.075).toFixed(2); return { v: v + " mL", r: `VIA ENDOVENOSA (ANTIEMÉTICO)\n\n Aspirar ${v} mL de Ondansetrona (2 mg/mL). Diluir em 50 mL de SF 0,9% e infundir por via EV lenta agora.` }; }
             },
             "broma_ev": {
                 cat: "cat-vomitos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)", 
