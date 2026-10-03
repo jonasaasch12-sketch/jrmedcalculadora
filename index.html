@@ -3116,7 +3116,9 @@
             });
 
             // Montar receita agrupada
-            let vias = Object.keys(porVia).sort(); // Ordena alfabeticamente
+            // Ordena alfabeticamente, mas as orientações vão sempre por último (depois das medicações)
+            let ehOrientacao = v => v.toUpperCase().includes("ORIENTAÇÕES");
+            let vias = Object.keys(porVia).sort((a, b) => (ehOrientacao(a) - ehOrientacao(b)) || a.localeCompare(b));
             let texto = vias.map(via => {
                 let items = porVia[via];
                 let linhas = [via]; // O cabeçalho (ex: USO TÓPICO, VIA ENDOVENOSA)
