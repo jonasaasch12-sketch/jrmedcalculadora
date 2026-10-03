@@ -200,6 +200,13 @@
         .result-box.static-gray { background:#f1f5f9; color:#475569; border-color:#cbd5e1; }
         
         .med-info-row { font-size: 12px; color: #334155; margin-top: 3px; margin-bottom: 6px; line-height: 1.4; width: 100%; }
+        .med-detalhes { font-size: 12px; color: #334155; margin: 3px 0 8px; line-height: 1.4; width: 100%; display: grid; grid-template-columns: max-content 1fr; column-gap: 8px; row-gap: 3px; }
+        .med-detalhes dt { font-weight: 800; color: #0f172a; }
+        .med-detalhes dd { margin: 0; }
+        .med-detalhes .det-atencao { color: #b91c1c; }
+        html[data-theme="dark"] .med-detalhes, html[data-theme="dark"] .med-info-row { color: #cbd5e1; }
+        html[data-theme="dark"] .med-detalhes dt { color: var(--text-main); }
+        html[data-theme="dark"] .med-detalhes .det-atencao { color: #f87171; }
         .badge-teto { background-color: #fef2f2; color: #991b1b; font-size: 9.5px; font-weight: 700; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 8px; text-transform: uppercase; border: 1px solid #fecaca; align-self: flex-start; }
         
         .prescription-header-row { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; background: #f8fafc; padding: 5px 10px; border-radius: 6px 6px 0 0; border: 1px solid var(--border); border-bottom: none; width: 100%; }
@@ -742,6 +749,32 @@
     <!-- ========================================== -->
     <script>
         const recHead = "USO ORAL\n\n";
+
+        // CEFTRIAXONA: monta as duas opções de esquema (24/24h e 12/12h) usadas nos cards.
+        // Dose do dia de 100 mg/kg: em dose única (24/24h) ou dividida em 2 (50 mg/kg de 12/12h).
+        // Teto de 2 g/dia: até 2 g de 24/24h ou até 1 g de 12/12h. Cada FA tem 1 g, então acima de 1 g pede 2 FA.
+        function opcaoCeftriaxona(p, intervalo, via, diluicaoSF) {
+            let mgDose = Math.min(p * (intervalo === 24 ? 100 : 50), intervalo === 24 ? 2000 : 1000);
+            let nFA = mgDose > 1000 ? 2 : 1;
+            let titulo = intervalo === 24 ? "OPÇÃO 24/24H (100 MG/KG EM DOSE ÚNICA DIÁRIA)" : "OPÇÃO 12/12H (100 MG/KG/DIA DIVIDIDO: 50 MG/KG/DOSE)";
+            if (via === "IM") {
+                let ml = mgDose / 285.7; // 1 g + 3,5 mL de lidocaína 1%
+                let fa = nFA === 2 ? "2 FA de Ceftriaxona 1 g, cada um com 3,5 mL" : "1 FA de Ceftriaxona 1 g com 3,5 mL";
+                return { ml, texto: `${titulo}:\n Reconstituir ${fa} de Lidocaína 1%. Aspirar ${ml.toFixed(1)} mL e aplicar por via IM profunda, de ${intervalo}/${intervalo}h.` };
+            }
+            let ml = mgDose / 100; // 1 g em 10 mL de AD
+            let fa = nFA === 2 ? "2 FA de Ceftriaxona 1 g, cada um em 10 mL de AD" : "1 FA de Ceftriaxona 1 g em 10 mL de AD";
+            return { ml, texto: `${titulo}:\n Reconstituir ${fa}. Aspirar ${ml.toFixed(1)} mL, diluir em ${Math.ceil(diluicaoSF(ml))} mL de SF 0,9% e infundir em 30 min, de ${intervalo}/${intervalo}h.` };
+        }
+
+        function calcCeftriaxona(p, cabecalho, via, primeiro, diluicaoSF) {
+            let a = opcaoCeftriaxona(p, primeiro, via, diluicaoSF);
+            let b = opcaoCeftriaxona(p, primeiro === 24 ? 12 : 24, via, diluicaoSF);
+            return {
+                v: `${primeiro}/${primeiro}h: ${a.ml.toFixed(1)} mL\n${primeiro === 24 ? 12 : 24}/${primeiro === 24 ? 12 : 24}h: ${b.ml.toFixed(1)} mL`,
+                r: `${cabecalho}\n\n${a.texto}\n\n${b.texto}`
+            };
+        }
         const round05 = (val) => (Math.round(val * 2) / 2).toFixed(1);
 
         function toggleSenha() {
@@ -830,15 +863,15 @@
             "ibu_gts": {
                 cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
                 kw: "ibuprofeno gotas alivium febre dor sintomaticos oral ambulatorial", nome: "Ibuprofeno Gotas (Alivium)", apres: "100 mg / mL",
-                info: "<strong>Posologia:</strong> 1 gota/kg/dose VO de 6/6h ou 8/8h. Liberado >6 meses.", badge: "Teto Máx: 40 gotas", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = Math.min(Math.round(p), 40); return { v: v + " gts", r: `${recHead}1) IBUPROFENO 100 MG/ML ------------------- 1 FR\nDAR ${v} GOTAS, VIA ORAL, DE 6/6 HORAS, SE DOR OU FEBRE (TEMPERATURA MAIOR QUE 37,5°C).` }; }
+                info: "<strong>Posologia:</strong> 1 gota/kg/dose VO de 6/6h ou 8/8h. Liberado >6 meses.", badge: "Teto: 400 mg (<12a) | 600 mg (≥12a)", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => { /* 1 gota = 5 mg. Teto por dose: 400 mg (80 gts) abaixo de 12 anos, 600 mg (120 gts) a partir de 12. Sem idade, usa o teto menor. */ let teto = (i !== "" && parseFloat(i) >= 12) ? 120 : 80; let v = Math.min(Math.round(p), teto); return { v: v + " gts", r: `${recHead}1) IBUPROFENO 100 MG/ML ------------------- 1 FR\nDAR ${v} GOTAS, VIA ORAL, DE 6/6 HORAS, SE DOR OU FEBRE (TEMPERATURA MAIOR QUE 37,5°C).` }; }
 
             },
             "ibu_50": {
                 cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
                 kw: "ibuprofeno gotas febre dor sintomaticos oral ambulatorial", nome: "Ibuprofeno Gotas", apres: "50 mg / mL",
-                info: "<strong>Posologia:</strong> Dar 2 x Peso em gotas por via oral de 6/6 horas.", badge: "", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = Math.round(p * 2); return { v: v + " gts", r: `${recHead}1) IBUPROFENO GOTAS 50 MG/ML ---------------- 1 FR\nDAR ${v} GOTAS, VIA ORAL, DE 6/6 HORAS SE FEBRE (>37,5°C).` }; }
+                info: "<strong>Posologia:</strong> Dar 2 x Peso em gotas por via oral de 6/6 horas.", badge: "Teto: 400 mg (<12a) | 600 mg (≥12a)", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => { /* 1 gota = 2,5 mg. Teto por dose: 400 mg (160 gts) abaixo de 12 anos, 600 mg (240 gts) a partir de 12. Sem idade, usa o teto menor. */ let teto = (i !== "" && parseFloat(i) >= 12) ? 240 : 160; let v = Math.min(Math.round(p * 2), teto); return { v: v + " gts", r: `${recHead}1) IBUPROFENO GOTAS 50 MG/ML ---------------- 1 FR\nDAR ${v} GOTAS, VIA ORAL, DE 6/6 HORAS SE FEBRE (>37,5°C).` }; }
             },
             "ceto_oral": {
                 cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
@@ -1006,8 +1039,8 @@
             "ondan_ev": {
                 cat: "cat-vomitos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)", 
                 kw: "ondansetrona ev vomito nausea hospitalar injetavel", nome: "Ondansetrona EV", apres: "Ampola 2 mg / mL",
-                info: "<strong>Conduta:</strong> 0,075 x Peso em mL. Diluir em 50 mL de SF 0,9% EV lento.", badge: "", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = (p * 0.075).toFixed(2); return { v: v + " mL", r: `VIA ENDOVENOSA (ANTIEMÉTICO)\n\n Aspirar ${v} mL de Ondansetrona (2 mg/mL). Diluir em 50 mL de SF 0,9% e infundir por via EV lenta agora.` }; }
+                info: "<strong>Conduta:</strong> 0,075 x Peso em mL. Diluir em 50 mL de SF 0,9% EV lento.", badge: "Teto Máx: 8 mg (4 mL)", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => { let v = Math.min(p * 0.075, 4).toFixed(2); /* 0,15 mg/kg/dose, teto de 8 mg (4 mL a 2 mg/mL) */ return { v: v + " mL", r: `VIA ENDOVENOSA (ANTIEMÉTICO)\n\n Aspirar ${v} mL de Ondansetrona (2 mg/mL). Diluir em 50 mL de SF 0,9% e infundir por via EV lenta agora.` }; }
             },
             "broma_ev": {
                 cat: "cat-vomitos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)", 
@@ -1023,9 +1056,18 @@
             },
             "dexclor": {
                 cat: "cat-antialergicos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
-                kw: "dexclorfeniramina polaramine histamin coceira alergia antialergico oral ambulatorial", nome: "Dexclorfeniramina Sol. (Polaramine)", apres: "2 mg / 5 mL",
-                info: "<strong>Posologia:</strong> Peso / 4 mL por tomada via oral de 8/8h.", badge: "", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = round05(p / 4); return { v: v + " mL", r: `${recHead}1) DEXCLORFENIRAMINA 0,4 MG/ML ------------- 1 FR\nTOMAR ${v} ML DE 8/8 HORAS SE COCEIRA.` }; }
+                kw: "dexclorfeniramina polaramine histamin coceira alergia antialergico oral ambulatorial", nome: "Dexclorfeniramina Sol. (Polaramine / Histamin)", apres: "2 mg / 5 mL",
+                info: "<strong>Posologia:</strong> 2-6a: 1,25 mL | 6-12a: 2,5 mL | >12a: 5 mL. De 8/8h.", badge: "Dose p/ Idade", badgeSt: "static-blue", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    if (i === "") return { v: "—", r: "Insira a idade acima." };
+                    let id = parseFloat(i);
+                    if (id < 2) return { v: "Contraind.", r: "ATENÇÃO: Dexclorfeniramina solução não indicada para menores de 2 anos." };
+                    // Dose fixa por idade, 3x ao dia. Máximo: 3 mg/dia (2-6a), 6 mg/dia (6-12a), 12 mg/dia (>12a).
+                    let dose = "5 ML", max = "30 ML (12 MG)";
+                    if (id < 6) { dose = "1,25 ML"; max = "7,5 ML (3 MG)"; }
+                    else if (id <= 12) { dose = "2,5 ML"; max = "15 ML (6 MG)"; }
+                    return { v: dose.toLowerCase().replace("ml", "mL"), r: `${recHead}1) DEXCLORFENIRAMINA 2 MG/5 ML (POLARAMINE / HISTAMIN) -- 1 FR\nDAR ${dose} VIA ORAL, DE 8/8 HORAS, SE COCEIRA. MÁXIMO ${max} POR DIA.` };
+                }
             },
             "deslo": {
                 cat: "cat-antialergicos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
@@ -1078,8 +1120,16 @@
             "pred_sol": {
                 cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais / Inalatórios)", 
                 kw: "prednisolona prelone asma corticoide oral ambulatorial", nome: "Prednisolona Solução (Prelone)", apres: "3 mg / mL",
-                info: "<strong>Posologia Asma:</strong> 1 mg/kg/dia VO pela manhã por 5 dias.", badge: "Teto Máx: 20 mL", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = round05(Math.min((p / 3), 20)); return { v: v + " mL", r: `${recHead}1) PREDNISOLONA SOLUÇÃO 3 MG/ML ------------ 1 FR\nDAR ${v} ML, VIA ORAL, UMA VEZ AO DIA PELA MANHÃ DURANTE 5 DIAS.` }; }
+                info: "<strong>Posologia Asma:</strong> 1 mg/kg/dia VO pela manhã por 5 dias.", badge: "Teto por Idade (GINA)", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    if (i === "") return { v: "—", r: "Insira a idade acima." };
+                    let id = parseFloat(i);
+                    // GINA: 1 mg/kg/dia, com dose máxima por idade: <2a 20 mg | 2-5a 30 mg | 6-11a 40 mg | ≥12a 50 mg.
+                    let tetoMg = id < 2 ? 20 : id < 6 ? 30 : id < 12 ? 40 : 50;
+                    let tetoMl = Math.floor((tetoMg / 3) * 2) / 2; // arredonda para baixo, para nunca passar do teto
+                    let v = Math.min(parseFloat(round05(p / 3)), tetoMl).toFixed(1);
+                    return { v: v + " mL", r: `${recHead}1) PREDNISOLONA SOLUÇÃO 3 MG/ML ------------ 1 FR\nDAR ${v} ML, VIA ORAL, UMA VEZ AO DIA PELA MANHÃ DURANTE 5 DIAS.` };
+                }
             },
             "clenil_hfa": {
                 cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais / Inalatórios)", 
@@ -1138,8 +1188,8 @@
                 cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
                 kw: "azitromicina suspensao pneumonia oral ambulatorial",
                 nome: "Azitromicina Suspensão (Pneumonia)", apres: "200 mg / 5 mL",
-                info: "<strong>Posologia:</strong> 10 mg/kg no Dia 1, depois 5 mg/kg por 4 dias.", badge: "Teto Máx: 6.25 mL", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let d1 = round05(Math.min(p/4, 6.25)); let d2 = round05(Math.min(p/8, 6.25)); return { v: d1 + " mL", r: `${recHead}1) AZITROMICINA SUSPENSÃO 200 MG/5ML --------- 1 FR\n• DIA 1: DAR ${d1} ML EM DOSE ÚNICA.\n• DIAS 2 A 5: DAR ${d2} ML 1X AO DIA.` }; }
+                info: "<strong>Posologia:</strong> 10 mg/kg no Dia 1, depois 5 mg/kg por 4 dias.", badge: "Teto: 12,5 mL (D1) / 6,25 mL", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => { let d1 = Math.min(round05(p/4), 12.5); let d2 = Math.min(round05(p/8), 6.25); /* Teto: 500 mg (12,5 mL) no 1º dia e 250 mg (6,25 mL) nos dias 2 a 5 */ return { v: d1 + " mL", r: `${recHead}1) AZITROMICINA SUSPENSÃO 200 MG/5ML --------- 1 FR\n• DIA 1: DAR ${d1} ML EM DOSE ÚNICA.\n• DIAS 2 A 5: DAR ${d2} ML 1X AO DIA.` }; }
             },
             // FIM DOS COMPARTILHADOS DE PNEUMONIA
             "ampicilina": {
@@ -1151,20 +1201,20 @@
             "cef_resp_ev": {
                 cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)", 
                 kw: "ceftriaxona ev antibiotico pneumonia respiratorio hospitalar injetavel", nome: "Ceftriaxona EV (Respiratório)", apres: "FA 1 g",
-                info: "<strong>Conduta:</strong> 100 mg/kg/dose EV de 24/24h por 7 dias.", badge: "Teto Máx: 20 mL", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = Math.min((p * 100) / 100, 20.0), sf = Math.max(v * 2.5, 10); return { v: v.toFixed(1) + " mL", r: `VIA ENDOVENOSA (USO HOSPITALAR - RESPIRATÓRIO)\n\n Reconstituir 1 FA de Ceftriaxona 1 g em 10 mL de AD. Aspirar ${v.toFixed(1)} mL, diluir em ${Math.ceil(sf)} mL de SF 0,9% e infundir em 30 min, de 24/24h.` }; }
+                info: "<strong>Conduta:</strong> 100 mg/kg/dose EV de 24/24h por 7 dias.", badge: "Teto: 2 g/dia", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => calcCeftriaxona(p, "VIA ENDOVENOSA (USO HOSPITALAR - RESPIRATÓRIO)", "EV", 24, ml => Math.max(ml * 2.5, 10))
             },
             "cef_resp_im": {
                 cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)", 
                 kw: "ceftriaxona im antibiotico pneumonia respiratorio ambulatorial ubs injetavel", nome: "Ceftriaxona IM (Respiratório)", apres: "FA 1 g + 3,5 mL Lidocaína 1%",
-                info: "<strong>Conduta:</strong> 100 mg/kg/dose IM de 24/24h por 7 dias.", badge: "Teto Máx: 7 mL", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = Math.min((p * 100) / 285.7, 7.0); return { v: v.toFixed(1) + " mL", r: `VIA INTRAMUSCULAR (USO HOSPITALAR/UBS - RESPIRATÓRIO)\n\n Reconstituir 1 FA de Ceftriaxona 1 g com 3,5 mL de Lidocaína 1%. Aspirar ${v.toFixed(1)} mL e aplicar por via IM profunda, de 24/24h.` }; }
+                info: "<strong>Conduta:</strong> 100 mg/kg/dose IM de 24/24h por 7 dias.", badge: "Teto: 2 g/dia", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => calcCeftriaxona(p, "VIA INTRAMUSCULAR (USO HOSPITALAR/UBS - RESPIRATÓRIO)", "IM", 24)
             },
             "azi_ev": {
                 cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)", 
                 kw: "azitromicina ev atipica antibiotico pneumonia respiratorio hospitalar injetavel", nome: "Azitromicina EV (Pneumonia Atípica)", apres: "FA 500 mg",
-                info: "<strong>Conduta:</strong> 20 mg/kg/dia EV de 24/24h por 5 dias.", badge: "Teto Máx: 2.5 mL", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = Math.min((p * 20) / 100, 2.5), sf = (v * 100) / 2; return { v: v.toFixed(1) + " mL", r: `VIA ENDOVENOSA (ATÍPICOS)\n\n Reconstituir 1 FA de Azitromicina em 4,8 mL de AD (100 mg/mL). Aspirar ${v.toFixed(1)} mL e diluir em ${Math.ceil(sf)} mL de SF 0,9%. Infundir em 3 horas.` }; }
+                info: "<strong>Conduta:</strong> 10 mg/kg/dia EV de 24/24h por 5 dias.", badge: "Teto Máx: 5 mL (500 mg)", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => { let v = Math.min((p * 10) / 100, 5.0), sf = (v * 100) / 2; /* 10 mg/kg/dia, teto de 500 mg (5 mL a 100 mg/mL) */ return { v: v.toFixed(1) + " mL", r: `VIA ENDOVENOSA (ATÍPICOS)\n\n Reconstituir 1 FA de Azitromicina em 4,8 mL de AD (100 mg/mL). Aspirar ${v.toFixed(1)} mL e diluir em ${Math.ceil(sf)} mL de SF 0,9%. Infundir em 3 horas.` }; }
             },
             "genta": {
                 cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)", 
@@ -1206,9 +1256,18 @@
             },
             "hidro_ev": {
                 cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)", 
-                kw: "hidrocortisona ev asma hospitalar injetavel", nome: "Hidrocortisona EV (Crise Asma)", apres: "FA 500 mg",
-                info: "<strong>Conduta:</strong> 2-4 mg/kg EV de 6/6h.", badge: "", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = (p * 0.04).toFixed(2); return { v: v + " mL", r: `VIA ENDOVENOSA HOSPITALAR\n\n Aspirar ${v} mL de Hidrocortisona (100 mg/mL), diluir em 20 mL de SG 5% e infundir de 6/6 horas.` }; }
+                kw: "hidrocortisona ev asma hospitalar injetavel", nome: "Hidrocortisona EV (Crise Asma)", apres: "FA 100 mg (reconst. 2 mL AD = 50 mg/mL)",
+                info: "<strong>Conduta:</strong> 1 mg/kg/dose EV de 6/6h (máx. 240 mg/dose).", badge: "Teto Máx: 240 mg/dose", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    // 1 mg/kg/dose, teto de 240 mg. FA 100 mg + 2 mL AD = 50 mg/mL. Rediluir em SF 0,9% a 1 mg/mL.
+                    let mg = Math.min(p * 1, 240);
+                    let nFA = Math.ceil(mg / 100);
+                    let ml = mg / 50;
+                    let total = mg;            // 1 mg/mL
+                    let sf = total - ml;
+                    let fa = nFA > 1 ? `${nFA} FA de Hidrocortisona 100 mg, cada um com 2 mL de AD` : "1 FA de Hidrocortisona 100 mg com 2 mL de AD";
+                    return { v: `${ml.toFixed(1)} mL (${mg.toFixed(0)} mg)`, r: `VIA ENDOVENOSA HOSPITALAR\n\n Reconstituir ${fa} (50 mg/mL). Aspirar ${ml.toFixed(1)} mL (${mg.toFixed(0)} mg) e rediluir em ${sf.toFixed(1)} mL de SF 0,9% (total ${total.toFixed(0)} mL, 1 mg/mL). Infundir em 20 a 30 minutos, de 6/6 horas.` };
+                }
             },
             "ipra": {
                 cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)", 
@@ -1313,7 +1372,7 @@
                 cat: "cat-rsi", sub: "🏥 Uso Hospitalar (Vias Injetáveis)", 
                 kw: "fentanil analgesia sedacao intubacao rsi hospitalar injetavel", nome: "Fentanil (Analgesia e Sedação)", apres: "50 mcg / mL (Diluído 5 mcg/mL)",
                 info: "<strong>Dose:</strong> 2 mcg/kg lento.", badge: "Teto Máx: 50 mcg", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = (p * 2) / 5; return { v: v.toFixed(1) + " mL", r: `VIA ENDOVENOSA (RSI - ANALGESIA)\n\n DILUIR 1 ML DE FENTANIL EM 9 ML DE AD. FAZER ${v.toFixed(1)} ML DA SOLUÇÃO DILUÍDA IV/IO LENTA, AGORA.` }; }
+                calc: (p) => { let v = Math.min((p * 2), 50) / 5; /* Teto de 50 mcg por dose (10 mL da solução diluída) */ return { v: v.toFixed(1) + " mL", r: `VIA ENDOVENOSA (RSI - ANALGESIA)\n\n DILUIR 1 ML DE FENTANIL EM 9 ML DE AD. FAZER ${v.toFixed(1)} ML DA SOLUÇÃO DILUÍDA IV/IO LENTA, AGORA.` }; }
             },
             "rsi_ceta": {
                 cat: "cat-rsi", sub: "🏥 Uso Hospitalar (Vias Injetáveis)", 
@@ -1542,14 +1601,36 @@
             "neuro_diaz": {
                 cat: "cat-neuro", sub: "🏥 Uso Hospitalar (Crise Convulsiva)", 
                 kw: "diazepam convulsao estado de mal neuro hospitalar injetavel retal", nome: "Diazepam EV ou Retal (Ataque)", apres: "Ampola 10 mg / 2 mL",
-                info: "<strong>Conduta:</strong> Peso x 0,06 mL EV ou Retal.", badge: "", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = (p * 0.06).toFixed(2); return { v: v + " mL", r: `VIA ENDOVENOSA OU RETAL (CRISE)\n\n FAZER ${v} ML DE DIAZEPAM EV OU RETAL. REPETIR EM 5 MIN SE NECESSÁRIO.` }; }
+                info: "<strong>Conduta:</strong> EV 0,2 mg/kg/dose (máx. 10 mg) | Retal 0,5 mg/kg/dose (máx. 20 mg).", badge: "Teto: EV 10 mg | Retal 20 mg", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    // EV: 0,2 mg/kg/dose, teto 10 mg. Retal: 0,5 mg/kg e repetição de 0,25 mg/kg, teto 20 mg por dose. Ampola de 5 mg/mL.
+                    let ev = Math.min(p * 0.04, 2).toFixed(2);
+                    let retal = Math.min(p * 0.1, 4).toFixed(2);
+                    let retal2 = Math.min(p * 0.05, 4).toFixed(2);
+                    return { v: `EV: ${ev} mL\nRetal: ${retal} mL`, r: `CRISE CONVULSIVA - DIAZEPAM (5 MG/ML)\n\nOPÇÃO ENDOVENOSA (0,2 MG/KG/DOSE):\n FAZER ${ev} ML DE DIAZEPAM EV. SE A CRISE PERSISTIR, PODE REPETIR A CADA 3 A 5 MINUTOS, ATÉ 2 VEZES.\n\nOPÇÃO RETAL (0,5 MG/KG/DOSE):\n FAZER ${retal} ML DE DIAZEPAM VIA RETAL. SE A CRISE PERSISTIR, PODE REPETIR APÓS 10 MINUTOS COM ${retal2} ML (0,25 MG/KG).` };
+                }
             },
             "neuro_midaz": {
                 cat: "cat-neuro", sub: "🏥 Uso Hospitalar (Crise Convulsiva)", 
                 kw: "midazolam convulsao estado de mal neuro hospitalar injetavel intramuscular", nome: "Midazolam IM (Se sem acesso)", apres: "Ampola 5 mg / mL",
-                info: "<strong>Conduta:</strong> Peso x 0,04 mL IM.", badge: "", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = (p * 0.04).toFixed(2); return { v: v + " mL", r: `VIA INTRAMUSCULAR (SEM ACESSO)\n\n FAZER ${v} ML DE MIDAZOLAM IM IMEDIATAMENTE.` }; }
+                info: "<strong>Conduta:</strong> Peso x 0,04 mL IM. Máx. 10 mg.", badge: "Teto Máx: 10 mg (2 mL)", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => { let v = Math.min(p * 0.04, 2).toFixed(2); /* 0,2 mg/kg, teto de 10 mg (2 mL a 5 mg/mL) */ return { v: v + " mL", r: `VIA INTRAMUSCULAR (SEM ACESSO)\n\n FAZER ${v} ML DE MIDAZOLAM IM IMEDIATAMENTE.` }; }
+            },
+            "neuro_fenitoina": {
+                cat: "cat-neuro", sub: "🏥 Uso Hospitalar (Crise Convulsiva)", 
+                kw: "fenitoina hidantal convulsao crise persistente estado de mal epileptico neuro hospitalar injetavel", nome: "Fenitoína EV (Crise Persistente)", apres: "Ampola 50 mg / mL",
+                info: "<strong>Conduta:</strong> 20 mg/kg EV (máx. 1 g). Velocidade máx. 3 mg/kg/min, até 50 mg/min.", badge: "Máx: 1 g (20 mL)", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    // 20 mg/kg, teto de 1000 mg. Velocidade: até 3 mg/kg/min, nunca acima de 50 mg/min.
+                    let mg = Math.min(p * 20, 1000);
+                    let mlPuro = mg / 50;                       // ampola 50 mg/mL
+                    let mgMin = Math.min(p * 3, 50);            // velocidade máxima permitida
+                    let tempoMin = Math.ceil(mg / mgMin);       // tempo mínimo de infusão
+                    let volDiluido = mg / 5;                    // diluição final de 5 mg/mL
+                    let sf = volDiluido - mlPuro;
+                    let vazao = (mgMin / 5) * 60;               // mL/h na BIC
+                    return { v: `${mlPuro.toFixed(1)} mL (${mg.toFixed(0)} mg)`, r: `VIA ENDOVENOSA (CRISE CONVULSIVA PERSISTENTE)\n\nDOSE: ${mg.toFixed(0)} MG = ${mlPuro.toFixed(1)} ML DE FENITOÍNA 50 MG/ML.\n\nOPÇÃO A - SEM DILUIÇÃO:\n Fazer ${mlPuro.toFixed(1)} mL EV lento, em no mínimo ${tempoMin} minutos (máx. ${mgMin.toFixed(0)} mg/min).\n\nOPÇÃO B - DILUÍDA (5 MG/ML):\n Aspirar ${mlPuro.toFixed(1)} mL de Fenitoína + ${sf.toFixed(1)} mL de SF 0,9% (total ${volDiluido.toFixed(1)} mL).\n Correr em BIC a ${vazao.toFixed(0)} mL/h (${mgMin.toFixed(0)} mg/min), em no mínimo ${tempoMin} minutos.` };
+                }
             },
             "urina_clav": {
                 cat: "cat-urinario", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
@@ -1566,14 +1647,14 @@
             "urina_ceft": {
                 cat: "cat-urinario", sub: "🏥 Uso Hospitalar (Vias Injetáveis)", 
                 kw: "ceftriaxona itu hospitalar pielonefrite internação antibiotico hospitalar injetavel", nome: "Ceftriaxona EV (Pielonefrite)", apres: "FA 1 G",
-                info: "<strong>Conduta:</strong> 50 mg/kg/dose de 12/12h.", badge: "", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = (p / 2).toFixed(1); return { v: v + " mL", r: `VIA ENDOVENOSA (PIELONEFRITE)\n\n Reconstituir 1 FA de Ceftriaxona 1 g em 10 mL de AD. Aspirar ${v} mL, diluir em 50 mL de SF 0,9% e infundir de 12/12h.` }; }
+                info: "<strong>Conduta:</strong> 50 mg/kg/dose de 12/12h.", badge: "Teto: 2 g/dia", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => calcCeftriaxona(p, "VIA ENDOVENOSA (PIELONEFRITE)", "EV", 12, () => 50)
             },
             "urina_furo": {
                 cat: "cat-urinario", sub: "🏥 Uso Hospitalar (Vias Injetáveis)", 
                 kw: "furosemida nefritica gnpe edema hipertensao diuretico hospitalar injetavel", nome: "Furosemida EV (GNPE / Edema)", apres: "Ampola 10 mg / mL",
-                info: "<strong>Conduta:</strong> Peso * 0,1 mL EV bólus.", badge: "", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = (p * 0.1).toFixed(1); return { v: v + " mL", r: `VIA ENDOVENOSA (GNPE / EDEMA)\n\n FAZER ${v} ML DE FUROSEMIDA (10 MG/ML) PURA POR VIA ENDOVENOSA, BÓLUS, DE 12/12 HORAS.` }; }
+                info: "<strong>Conduta:</strong> Peso * 0,1 mL EV bólus. Máx. 20 mg/dia.", badge: "Teto: 10 mg/dose (20 mg/dia)", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => { let v = Math.min(p * 0.1, 1).toFixed(1); /* 1 mg/kg/dose, teto de 10 mg/dose (1 mL) = 20 mg/dia em 12/12h */ return { v: v + " mL", r: `VIA ENDOVENOSA (GNPE / EDEMA)\n\n FAZER ${v} ML DE FUROSEMIDA (10 MG/ML) PURA POR VIA ENDOVENOSA, BÓLUS, DE 12/12 HORAS. MÁXIMO 20 MG POR DIA.` }; }
             },
             "tgi_sro": {
                 cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
@@ -1624,8 +1705,8 @@
             "tgi_azitro": {
                 cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
                 kw: "azitromicina diarreia disenteria antibiotico oral ambulatorial", nome: "Azitromicina Suspensão (Disenteria)", apres: "200 mg / 5 mL",
-                info: "<strong>Conduta:</strong> 10 mg/kg no Dia 1, depois 5 mg/kg por 4 dias.", badge: "Teto Máx: 6.25 mL", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let d1 = round05(Math.min(p/4, 6.25)); let d2 = round05(Math.min(p/8, 6.25)); return { v: d1 + " mL", r: `${recHead}1) AZITROMICINA SUSPENSÃO 200 MG/5ML --------- 1 FR\n• DIA 1: DAR ${d1} ML EM DOSE ÚNICA.\n• DIAS 2 A 5: DAR ${d2} ML 1X AO DIA.` }; }
+                info: "<strong>Conduta:</strong> 10 mg/kg no Dia 1, depois 5 mg/kg por 4 dias.", badge: "Teto: 12,5 mL (D1) / 6,25 mL", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => { let d1 = Math.min(round05(p/4), 12.5); let d2 = Math.min(round05(p/8), 6.25); /* Teto: 500 mg (12,5 mL) no 1º dia e 250 mg (6,25 mL) nos dias 2 a 5 */ return { v: d1 + " mL", r: `${recHead}1) AZITROMICINA SUSPENSÃO 200 MG/5ML --------- 1 FR\n• DIA 1: DAR ${d1} ML EM DOSE ÚNICA.\n• DIAS 2 A 5: DAR ${d2} ML 1X AO DIA.` }; }
             },
             "tgi_alben": {
                 cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
@@ -1783,6 +1864,548 @@
             }
         };
 
+        // =====================================================================
+        // FICHA PADRONIZADA DE CADA MEDICAÇÃO (aparece logo abaixo do nome)
+        // Sempre os mesmos 3 campos, na mesma ordem: Indicação, Dose e Atenção.
+        // Itens que não estão aqui (ex.: exame físico, orientações e os cadastrados
+        // pela equipe) continuam mostrando o texto antigo do campo "info".
+        // =====================================================================
+        const detalhesMedicacoes = {
+            // ---------- SINTOMÁTICOS ----------
+            "dip_gts": {
+                indicacao: "Febre e dor leve a moderada.",
+                dose: "0,75 gota/kg/dose VO de 6/6h, se dor ou febre (>37,5°C).",
+                atencao: "Máximo 40 gotas por dose. Evitar em menores de 3 meses ou 5 kg."
+            },
+            "dip_xpe": {
+                indicacao: "Febre e dor leve a moderada.",
+                dose: "15 mg/kg/dose (Peso x 0,3 mL) VO de 6/6h, se dor ou febre.",
+                atencao: "Evitar em menores de 3 meses ou 5 kg."
+            },
+            "pct_gts": {
+                indicacao: "Febre e dor leve a moderada.",
+                dose: "1 gota/kg/dose VO de 6/6h, se dor ou febre (>37,5°C).",
+                atencao: "Máximo 35 gotas por dose. Risco de hepatotoxicidade se ultrapassar a dose diária."
+            },
+            "pct_bebe": {
+                indicacao: "Febre e dor leve a moderada em lactentes.",
+                dose: "0,15 mL/kg/dose (15 mg/kg) VO de 6/6h, se dor ou febre.",
+                atencao: "Concentração diferente das gotas (100 mg/mL). Conferir a apresentação antes de orientar."
+            },
+            "ibu_gts": {
+                indicacao: "Febre e dor; efeito anti-inflamatório.",
+                dose: "1 gota/kg/dose (5 mg/kg) VO de 6/6h ou 8/8h.",
+                atencao: "Liberado a partir de 6 meses. Máximo por dose: 400 mg (80 gotas) abaixo de 12 anos, 600 mg (120 gotas) a partir de 12. Evitar em desidratação, dengue e doença renal."
+            },
+            "ibu_50": {
+                indicacao: "Febre e dor; efeito anti-inflamatório.",
+                dose: "2 gotas/kg/dose (5 mg/kg) VO de 6/6h.",
+                atencao: "Liberado a partir de 6 meses. Máximo por dose: 400 mg (160 gotas) abaixo de 12 anos, 600 mg (240 gotas) a partir de 12. Evitar em desidratação, dengue e doença renal."
+            },
+            "ceto_oral": {
+                indicacao: "Dor e febre; efeito anti-inflamatório.",
+                dose: "6m-1a: 0,5-1 mg/kg | >1a: até 1 mg/kg (máx. 50 gts) | 7-11a: 25 gts | ≥12a: 50 gts. De 6/6h ou 8/8h (1 gota = 1 mg).",
+                atencao: "Não usar em menores de 6 meses. Máximo 300 gotas/dia e no máximo 3 dias de uso."
+            },
+            "buscopan": {
+                indicacao: "Cólica abdominal (espasmo do trato gastrointestinal).",
+                dose: "1-3m: 0,5 mg/kg | 3-11m: 0,7 mg/kg | 1-6a: 0,4 mg/kg | >6a: 20 a 40 gotas. De 8/8h.",
+                atencao: "Evitar em recém-nascidos. Calcula melhor com peso e idade preenchidos."
+            },
+            "simet": {
+                indicacao: "Gases e distensão abdominal.",
+                dose: "Lactentes: 6 gotas | <12 anos: 10 gotas | >12 anos: 16 gotas. De 8/8h.",
+                atencao: "Sem efeito sistêmico importante. Reavaliar se houver vômitos, febre ou distensão persistente."
+            },
+            "dip_inj": {
+                indicacao: "Febre e dor em ambiente hospitalar.",
+                dose: "0,03 mL/kg/dose (15 mg/kg) EV ou IM de 6/6h.",
+                atencao: "Máximo 2 mL (1 g) por dose. Infusão rápida pode causar hipotensão."
+            },
+
+            // ---------- VÔMITOS ----------
+            "ondif_cp": {
+                indicacao: "Náuseas e vômitos (ex.: gastroenterite).",
+                dose: "2-11 anos: 4 mg (1 filme) | >11 anos: 8 mg (2 filmes). De 8/8h, se náuseas ou vômitos.",
+                atencao: "Contraindicado em menores de 2 anos (protocolo do app). Cautela em QT longo."
+            },
+            "ondan_vo": {
+                indicacao: "Náuseas e vômitos (ex.: gastroenterite).",
+                dose: "10-11kg: 2 mL | 12-14kg: 2,5 mL | 15-18kg: 3,5 mL | 19-23kg: 4,3 mL | ≥24kg: 5 mL. De 8/8h.",
+                atencao: "Não recomendada em menores de 6 meses. Cautela em QT longo."
+            },
+            "broma_vo": {
+                indicacao: "Náuseas e vômitos.",
+                dose: "1 gota/kg/dose VO até de 8/8h.",
+                atencao: "Máximo 40 gotas por dose. Risco de reação extrapiramidal (distonia), principalmente em crianças pequenas."
+            },
+            "dramin_vo": {
+                indicacao: "Náuseas, vômitos e cinetose.",
+                dose: "1 gota/kg/dose VO de 6/6h.",
+                atencao: "Liberado a partir de 2 anos. Máximo 40 gotas por dose. Causa sonolência."
+            },
+            "ondan_ev": {
+                indicacao: "Náuseas e vômitos em ambiente hospitalar.",
+                dose: "0,15 mg/kg/dose (Peso x 0,075 mL) EV.",
+                atencao: "Máximo 8 mg (4 mL) por dose. Cautela em QT longo e distúrbios eletrolíticos."
+            },
+            "broma_ev": {
+                indicacao: "Náuseas e vômitos em ambiente hospitalar.",
+                dose: "Peso x 0,03 mL (0,15 mg/kg) EV.",
+                atencao: "Risco de reação extrapiramidal (distonia)."
+            },
+
+            // ---------- ANTIALÉRGICOS ----------
+            "hixizine": {
+                indicacao: "Prurido, urticária e dermatites alérgicas.",
+                dose: "0,5 mg/kg/dose (Peso ÷ 4 mL) VO de 8/8h por 5 dias.",
+                atencao: "Liberado a partir de 2 anos. Causa sonolência."
+            },
+            "dexclor": {
+                indicacao: "Prurido, urticária e rinite alérgica.",
+                dose: "2-6 anos: 1,25 mL | 6-12 anos: 2,5 mL | >12 anos: 5 mL. VO 3x ao dia (8/8h).",
+                atencao: "Máximo por dia: 7,5 mL (3 mg) de 2-6 anos | 15 mL (6 mg) de 6-12 anos | 30 mL (12 mg) acima de 12 anos. Não usar em menores de 2 anos. Causa sonolência."
+            },
+            "deslo": {
+                indicacao: "Rinite alérgica e urticária.",
+                dose: "6m-2a: 2 mL | 2-5a: 2,5 mL | 5-10a: 5 mL | >10a: 10 mL. 1x ao dia.",
+                atencao: "Liberado a partir de 6 meses. Pouca sonolência. Precisa da idade para calcular."
+            },
+            "prometa": {
+                indicacao: "Reação alérgica e urticária em ambiente hospitalar.",
+                dose: "0,02 mL/kg/dose (0,5 mg/kg) IM de 6/6h.",
+                atencao: "Contraindicado em menores de 2 anos (risco de depressão respiratória). Máximo 1 mL por dose."
+            },
+
+            // ---------- RESPIRATÓRIO ----------
+            "soro_nasal": {
+                indicacao: "Congestão e obstrução nasal (resfriado, rinite, bronquiolite).",
+                dose: "<1a: 3 mL | 1-2a: 5 mL | >2a: 10 mL em cada narina, de 2/2h ou conforme necessidade.",
+                atencao: "Sem contraindicação. Precisa da idade para calcular o volume."
+            },
+            "clenil_hfa": {
+                indicacao: "Asma: manutenção após a crise (corticoide inalatório — GINA).",
+                dose: "Dose e número de jatos por faixa etária, 12/12h (ver texto da receita).",
+                atencao: "Lavar o rosto e fazer higiene oral após o uso (risco de candidíase). Precisa da idade."
+            },
+            "pred_sol": {
+                indicacao: "Crise de asma (corticoide oral).",
+                dose: "1 mg/kg/dia VO pela manhã por 5 dias (GINA).",
+                atencao: "Máximo por dia: <2 anos 20 mg (6,5 mL) | 2-5 anos 30 mg (10 mL) | 6-11 anos 40 mg (13 mL) | ≥12 anos 50 mg (16,5 mL)."
+            },
+            "salb_spray": {
+                indicacao: "Broncoespasmo: crise de asma e sibilância.",
+                dose: "Crise: Peso ÷ 2 jatos de 20/20 min por 1h. Alta: Peso ÷ 3 jatos de 4/4h por 3 dias, depois 6/6h por 2 dias.",
+                atencao: "Mínimo 4 e máximo 10 jatos por vez. Pode causar taquicardia e tremor."
+            },
+            "metil": {
+                indicacao: "Crise de asma grave (corticoide EV).",
+                dose: "2 mg/kg/dose EV lento.",
+                atencao: "Máximo 60 mg por dose."
+            },
+            "magnesio_ev": {
+                indicacao: "Crise de asma grave sem resposta ao tratamento inicial.",
+                dose: "50 mg/kg/h em infusão contínua por 5 horas.",
+                atencao: "Máximo 2 g/h. Monitorar PA, reflexos e frequência respiratória."
+            },
+            "amox": {
+                indicacao: "Pneumonia, otite média aguda e faringoamigdalite bacteriana.",
+                dose: "50 mg/kg/dia VO de 8/8h por 7 dias.",
+                atencao: "Perguntar sobre alergia a penicilina."
+            },
+            "amox400": {
+                indicacao: "Pneumonia, otite média aguda e faringoamigdalite bacteriana.",
+                dose: "50 mg/kg/dia VO de 12/12h por 7 dias.",
+                atencao: "Perguntar sobre alergia a penicilina. Concentração diferente da suspensão de 250 mg/5 mL."
+            },
+            "clav": {
+                indicacao: "Pneumonia, otite e sinusite com falha à amoxicilina.",
+                dose: "45 mg/kg/dia VO de 12/12h por 7 dias.",
+                atencao: "Perguntar sobre alergia a penicilina. Pode causar diarreia."
+            },
+            "azi_oral": {
+                indicacao: "Pneumonia atípica (Mycoplasma, Chlamydia) e alergia a penicilina.",
+                dose: "10 mg/kg no 1º dia, depois 5 mg/kg 1x ao dia por mais 4 dias.",
+                atencao: "Máximo 500 mg (12,5 mL) no 1º dia e 250 mg (6,25 mL) do 2º ao 5º dia. Cautela em QT longo."
+            },
+            "ampicilina": {
+                indicacao: "Pneumonia com necessidade de internação.",
+                dose: "50 mg/kg/dose EV de 6/6h por 7 dias.",
+                atencao: "Perguntar sobre alergia a penicilina. Máximo 20 mL (2 g) por dose."
+            },
+            "cef_resp_ev": {
+                indicacao: "Pneumonia grave ou com necessidade de internação.",
+                dose: "100 mg/kg/dia EV por 7 dias: 100 mg/kg de 24/24h ou 50 mg/kg de 12/12h.",
+                atencao: "Máximo 2 g/dia: até 2 g de 24/24h ou até 1 g de 12/12h. Acima de 1 g, usar 2 frascos. Não infundir junto com soluções com cálcio."
+            },
+            "cef_resp_im": {
+                indicacao: "Pneumonia quando não há acesso venoso.",
+                dose: "100 mg/kg/dia IM por 7 dias: 100 mg/kg de 24/24h ou 50 mg/kg de 12/12h.",
+                atencao: "A versão com lidocaína é só IM, nunca EV. Máximo 2 g/dia: até 2 g (7 mL) de 24/24h ou até 1 g (3,5 mL) de 12/12h. Acima de 1 g, usar 2 frascos."
+            },
+            "azi_ev": {
+                indicacao: "Pneumonia atípica com necessidade de internação.",
+                dose: "10 mg/kg/dia EV de 24/24h por 5 dias.",
+                atencao: "Máximo 500 mg (5 mL) por dose. Não fazer em bolus. Cautela em QT longo."
+            },
+            "genta": {
+                indicacao: "Infecções bacterianas graves (gram-negativos), em associação.",
+                dose: "5 a 7,5 mg/kg/dia EV ou IM de 24/24h.",
+                atencao: "Máximo 240 mg/dia. Nefrotóxica e ototóxica: monitorar função renal."
+            },
+            "pulmicort": {
+                indicacao: "Laringite (crupe) e sibilância/asma (corticoide inalatório).",
+                dose: "2 mL nebulizados 1x ao dia por 5 dias.",
+                atencao: "Idade mínima: 5 meses."
+            },
+            "salb_neb": {
+                indicacao: "Broncoespasmo: crise de asma e sibilância.",
+                dose: "Peso ÷ 2 gotas por nebulização.",
+                atencao: "Máximo 20 gotas por nebulização. Pode causar taquicardia e tremor."
+            },
+            "hidro_ev": {
+                indicacao: "Crise de asma (corticoide EV).",
+                dose: "1 mg/kg/dose EV de 6/6h, infundir em 20 a 30 minutos.",
+                atencao: "Máximo 240 mg por dose. Rediluir em SF 0,9% a 1 mg/mL."
+            },
+            "ipra": {
+                indicacao: "Crise de asma moderada a grave, junto com o salbutamol.",
+                dose: "<10 kg: 10 gotas | 10-20 kg: 20 gotas | >20 kg: 40 gotas. De 20/20 min na 1ª hora.",
+                atencao: "Usar junto com o salbutamol, não sozinho. Proteger os olhos da névoa."
+            },
+            "dexa_crupe": {
+                indicacao: "Laringite (crupe) e reação alérgica grave.",
+                dose: "0,4 mg/kg IM ou EV em dose única.",
+                atencao: "Máximo 5 mL (20 mg) por dose."
+            },
+
+            // ---------- ANTIBIÓTICOS ----------
+            "benza": {
+                indicacao: "Faringoamigdalite estreptocócica (dose única).",
+                dose: "50.000 UI/kg IM, dose única. ≤27 kg: 600.000 UI | >27 kg: 1.200.000 UI.",
+                atencao: "Perguntar sobre alergia a penicilina. Manter em observação por 40 minutos."
+            },
+
+            // ---------- RSI ----------
+            "rsi_tubo": {
+                indicacao: "Intubação: escolher tubo, lâmina e profundidade de fixação.",
+                dose: "Com cuff: idade ÷ 4 + 3,5. Sem cuff: idade ÷ 4 + 4. Fixação: tubo x 3 cm.",
+                atencao: "Valores arredondados de 0,5 em 0,5 mm. Confirmar a posição com capnografia e ausculta."
+            },
+            "rsi_lido": {
+                indicacao: "Pré-medicação na intubação de pacientes com TCE.",
+                dose: "1,5 mg/kg IV/IO.",
+                atencao: "Usar só a apresentação sem vasoconstritor."
+            },
+            "rsi_fent": {
+                indicacao: "Analgesia e sedação na intubação.",
+                dose: "2 mcg/kg IV/IO lento.",
+                atencao: "Teto 50 mcg por dose. Infusão rápida pode causar rigidez torácica."
+            },
+            "rsi_ceta": {
+                indicacao: "Indução na intubação; preferida em choque e asma.",
+                dose: "2 mg/kg IV/IO.",
+                atencao: "Pode aumentar secreção e causar reações na recuperação."
+            },
+            "rsi_midaz": {
+                indicacao: "Sedação na intubação.",
+                dose: "0,2 mg/kg IV/IO.",
+                atencao: "Máximo 10 mg por dose. Causa hipotensão, cuidado no choque."
+            },
+            "rsi_roc": {
+                indicacao: "Bloqueio neuromuscular na intubação.",
+                dose: "1 mg/kg IV/IO.",
+                atencao: "Só fazer depois do sedativo e com via aérea pronta. Antídoto: sugamadex."
+            },
+            "rsi_succi": {
+                indicacao: "Bloqueio neuromuscular na intubação.",
+                dose: "1 mg/kg IV/IO.",
+                atencao: "Contraindicada em hipercalemia, queimaduras/trauma após 48h, doenças neuromusculares e história de hipertermia maligna."
+            },
+            "rsi_cont_morfina": {
+                indicacao: "Analgesia e sedação contínuas após a intubação.",
+                dose: "5 a 20 mcg/kg/h.",
+                atencao: "Monitorar depressão respiratória e hipotensão. Antídoto: naloxona."
+            },
+            "rsi_cont_cetamina": {
+                indicacao: "Sedação e analgesia contínuas após a intubação.",
+                dose: "10 a 40 mcg/kg/min.",
+                atencao: "Pode aumentar secreções e a pressão arterial."
+            },
+            "rsi_cont_clonidina": {
+                indicacao: "Sedação contínua (adjuvante) após a intubação.",
+                dose: "0,5 a 3 mcg/kg/h.",
+                atencao: "Pode causar bradicardia e hipotensão."
+            },
+            "rsi_cont_precedex": {
+                indicacao: "Sedação contínua após a intubação.",
+                dose: "0,2 a 1 mcg/kg/h.",
+                atencao: "Pode causar bradicardia e hipotensão."
+            },
+            "rsi_cont_rocuronio": {
+                indicacao: "Bloqueio neuromuscular contínuo após a intubação.",
+                dose: "7 a 12 mcg/kg/min.",
+                atencao: "Só com sedação e analgesia adequadas."
+            },
+            "rsi_cont_pancuronio": {
+                indicacao: "Bloqueio neuromuscular contínuo após a intubação.",
+                dose: "0,4 a 1 mcg/kg/min.",
+                atencao: "Só com sedação e analgesia adequadas. Pode causar taquicardia."
+            },
+            "rsi_cont_lidocaina": {
+                indicacao: "Analgesia contínua e adjuvante da sedação.",
+                dose: "1 a 3 mg/kg/h.",
+                atencao: "Usar sem vasoconstritor. Monitorar ECG (risco de arritmia e convulsão em dose alta)."
+            },
+            "rsi_cont_propofol": {
+                indicacao: "Sedação contínua após a intubação.",
+                dose: "25 a 300 mcg/kg/min.",
+                atencao: "Causa hipotensão. Uso prolongado em dose alta: risco de síndrome da infusão do propofol."
+            },
+
+            // ---------- URGÊNCIA PALS ----------
+            "adenosina_pals": {
+                indicacao: "Taquicardia supraventricular (TSV).",
+                dose: "1ª dose: 0,1 mg/kg (máx. 6 mg). 2ª dose: 0,2 mg/kg (máx. 12 mg).",
+                atencao: "Fazer em acesso próximo ao coração, com monitor ligado. Não usar via endotraqueal."
+            },
+            "amiodarona_pals": {
+                indicacao: "Taquiarritmias e FV/TV sem pulso.",
+                dose: "5 mg/kg em 20 a 60 min. Pode repetir até 15 mg/kg.",
+                atencao: "Máximo 300 mg por dose. Monitorar ECG e PA. Não associar com procainamida."
+            },
+            "epinefrina_pals": {
+                indicacao: "Parada cardiorrespiratória e choque.",
+                dose: "IV/IO: 0,01 mg/kg, de 3 a 5 min. Tubo endotraqueal: 0,1 mg/kg.",
+                atencao: "Máximo IV/IO 1 mg por dose. Conferir a diluição antes de aplicar."
+            },
+            "glicose_pals": {
+                indicacao: "Hipoglicemia.",
+                dose: "0,5 a 1 g/kg IV.",
+                atencao: "Concentrações altas lesam a veia. Repetir a glicemia após o bolus."
+            },
+            "lidocaina_pals": {
+                indicacao: "Taquiarritmias ventriculares (FV/TV).",
+                dose: "Ataque: 1 mg/kg IV/IO. Manutenção: 20 a 50 mcg/kg/min.",
+                atencao: "Máximo 100 mg no ataque. Monitorar ECG."
+            },
+            "magnesio_pals": {
+                indicacao: "Torsades de pointes e hipomagnesemia.",
+                dose: "20 a 50 mg/kg IV/IO em 10 a 20 minutos.",
+                atencao: "Máximo 2 g. Pode correr mais rápido em torsades. Monitorar hipotensão."
+            },
+            "milrinone_pals": {
+                indicacao: "Choque cardiogênico.",
+                dose: "Ataque: 50 mcg/kg em 10 a 60 min. Manutenção: 0,5 a 0,75 mcg/kg/min.",
+                atencao: "Causa hipotensão: infundir devagar e manter o paciente euvolêmico."
+            },
+            "naloxona_pals": {
+                indicacao: "Intoxicação por opioide e depressão respiratória.",
+                dose: "<5 anos ou ≤20 kg: 0,1 mg/kg. >5 anos ou >20 kg: 2 mg. IV a cada 2 a 3 min, se necessário.",
+                atencao: "Efeito mais curto que o do opioide: observar nova depressão. Dose menor (1-5 mcg/kg) para uso terapêutico."
+            },
+            "procainamida_pals": {
+                indicacao: "Taquiarritmias (TSV refratária e TV com pulso).",
+                dose: "15 mg/kg IV/IO em 30 a 60 minutos.",
+                atencao: "Não associar com amiodarona. Monitorar ECG e PA."
+            },
+            "bicarbonato_pals": {
+                indicacao: "Acidose metabólica grave e hipercalemia.",
+                dose: "1 mEq/kg em bolus lento.",
+                atencao: "Máximo 50 mEq. Só após ventilação adequada. Monitorar gasometria e ECG."
+            },
+            "atropina": {
+                indicacao: "Bradicardia sintomática, incluindo a bradicardia vagal durante a intubação.",
+                dose: "0,02 mg/kg IV/IO. Tubo endotraqueal: 0,03 mg/kg.",
+                atencao: "Máximo 0,5 mg por dose."
+            },
+
+            // ---------- NEURO ----------
+            "neuro_diaz": {
+                indicacao: "Crise convulsiva.",
+                dose: "EV: 0,2 mg/kg/dose, pode repetir a cada 3 a 5 min, até 2 vezes. Retal: 0,5 mg/kg/dose, pode repetir após 10 min com 0,25 mg/kg.",
+                atencao: "Máximo por dose: EV 10 mg (2 mL) | Retal 20 mg (4 mL). Risco de depressão respiratória: ter material de via aérea pronto."
+            },
+            "neuro_midaz": {
+                indicacao: "Crise convulsiva aguda sem acesso venoso.",
+                dose: "0,2 mg/kg (Peso x 0,04 mL) IM.",
+                atencao: "Máximo 10 mg (2 mL) por dose. Risco de depressão respiratória: ter material de via aérea pronto."
+            },
+            "neuro_fenitoina": {
+                indicacao: "Crise convulsiva que persiste por mais de 10 a 15 minutos mesmo após diazepam ou midazolam.",
+                dose: "20 mg/kg EV. Sem diluir ou diluída a 5 mg/mL, a no máximo 3 mg/kg/min e 50 mg/min.",
+                atencao: "Máximo 1 g (20 mL) por dose. Diluir só em SF 0,9% (precipita em soro glicosado). Monitorar ECG e PA: risco de arritmia e hipotensão se correr rápido."
+            },
+
+            // ---------- URINÁRIO ----------
+            "urina_clav": {
+                indicacao: "Infecção do trato urinário (ITU).",
+                dose: "Peso ÷ 3 mL VO de 8/8h por 10 dias.",
+                atencao: "Perguntar sobre alergia a penicilina. Ajustar pela urocultura."
+            },
+            "urina_cefa": {
+                indicacao: "Cistite (ITU baixa).",
+                dose: "Peso ÷ 4 mL VO de 6/6h por 7 dias.",
+                atencao: "Ajustar pela urocultura."
+            },
+            "urina_ceft": {
+                indicacao: "Pielonefrite (ITU alta) e ITU febril em lactentes.",
+                dose: "100 mg/kg/dia EV: 50 mg/kg de 12/12h ou 100 mg/kg de 24/24h.",
+                atencao: "Máximo 2 g/dia: até 2 g de 24/24h ou até 1 g de 12/12h. Acima de 1 g, usar 2 frascos. Não infundir junto com soluções com cálcio. Ajustar pela urocultura."
+            },
+            "urina_furo": {
+                indicacao: "Edema e hipertensão da síndrome nefrítica (GNPE).",
+                dose: "1 mg/kg (Peso x 0,1 mL) EV em bolus, de 12/12h.",
+                atencao: "Máximo 10 mg (1 mL) por dose, 20 mg por dia. Monitorar diurese, PA e potássio."
+            },
+
+            // ---------- TGI ----------
+            "tgi_sro": {
+                indicacao: "Diarreia: prevenir e tratar desidratação (Planos A e B).",
+                dose: "<2 anos: 50-100 mL | ≥2 anos: 100-200 mL após cada evacuação líquida.",
+                atencao: "Não acrescentar açúcar. Precisa da idade para calcular."
+            },
+            "tgi_zinco": {
+                indicacao: "Diarreia aguda (reduz duração e gravidade).",
+                dose: "<6 meses: 2,5 mL | ≥6 meses: 5 mL. 1x ao dia por 10 dias.",
+                atencao: "Pode causar vômito se dado em jejum. Precisa da idade."
+            },
+            "tgi_provance_mini": {
+                indicacao: "Diarreia aguda (probiótico).",
+                dose: "1 sachê 1x ao dia por 5 dias.",
+                atencao: "Não diluir em líquido quente."
+            },
+            "tiorfan": {
+                indicacao: "Diarreia aguda (antissecretor intestinal), junto com a reidratação.",
+                dose: "<9 kg: 1 sachê de 10 mg | 9-13 kg: 2 de 10 mg | 14-26 kg: 1 de 30 mg | ≥27 kg: 2 de 30 mg. De 8/8h até cessar a diarreia.",
+                atencao: "Contraindicado em menores de 3 meses. Não substitui a reidratação."
+            },
+            "tgi_provance_gg": {
+                indicacao: "Diarreia aguda (probiótico).",
+                dose: "≤1 ano: 14 gotas de 12/12h | >1 ano: 28 gotas 1x ao dia. Por 5 dias.",
+                atencao: "Não misturar com líquido quente. Precisa da idade."
+            },
+            "tgi_flora": {
+                indicacao: "Diarreia aguda (probiótico).",
+                dose: "1 sachê de 12/12h enquanto durarem os sintomas.",
+                atencao: "Não diluir em líquido quente."
+            },
+            "tgi_azitro": {
+                indicacao: "Disenteria (diarreia com sangue) com indicação de antibiótico.",
+                dose: "10 mg/kg no 1º dia, depois 5 mg/kg 1x ao dia por mais 4 dias.",
+                atencao: "Máximo 500 mg (12,5 mL) no 1º dia e 250 mg (6,25 mL) do 2º ao 5º dia. Cautela em QT longo."
+            },
+            "tgi_alben": {
+                indicacao: "Verminoses (ascaridíase, ancilostomíase, tricuríase, enterobíase).",
+                dose: "10 mL (400 mg) VO em dose única. Repetir em 14 dias.",
+                atencao: "Dose para maiores de 2 anos."
+            },
+            "tgi_meben": {
+                indicacao: "Verminoses (ascaridíase, ancilostomíase, tricuríase, enterobíase).",
+                dose: "5 mL (100 mg) VO em dose única. Repetir em 14 dias.",
+                atencao: "Dose para maiores de 2 anos."
+            },
+            "tgi_planoc": {
+                indicacao: "Desidratação grave ou choque (Plano C).",
+                dose: "Etapa 1: 30 mL/kg. Etapa 2: 70 mL/kg. <1 ano: 1h + 5h | ≥1 ano: 30 min + 2h30.",
+                atencao: "Reavaliar o paciente após cada etapa. Iniciar SRO assim que conseguir beber."
+            },
+            "tgi_manutencao": {
+                indicacao: "Hidratação venosa de manutenção.",
+                dose: "Holliday-Segar: 70% ou 80% da necessidade, contínuo em 24h.",
+                atencao: "Reavaliar sódio, potássio e glicemia. Ajustar em cardiopatia, nefropatia ou SIADH."
+            },
+            "vig_4": {
+                indicacao: "Hidratação venosa de manutenção com oferta de glicose (VIG 4).",
+                dose: "VIG 4 mg/kg/min, com 70% da necessidade hídrica.",
+                atencao: "Controlar a glicemia."
+            },
+            "vig_5": {
+                indicacao: "Hidratação venosa de manutenção com oferta de glicose (VIG 5).",
+                dose: "VIG 5 mg/kg/min, com 70% da necessidade hídrica.",
+                atencao: "Controlar a glicemia."
+            },
+
+            // ---------- PELE ----------
+            "pele_larva": {
+                indicacao: "Larva migrans cutânea (bicho geográfico).",
+                dose: "Tiabendazol pomada de 6/6h por 5 dias + albendazol 400 mg 1x ao dia por 3 dias.",
+                atencao: "Albendazol para maiores de 2 anos."
+            },
+            "pele_delta": {
+                indicacao: "Pediculose (piolho).",
+                dose: "Aplicar nos cabelos por 4 dias seguidos.",
+                atencao: "Passar pente fino depois. Tratar os contactantes."
+            },
+            "pele_perme_shampoo": {
+                indicacao: "Pediculose (piolho).",
+                dose: "Aplicar 1 vez e repetir após 7 dias.",
+                atencao: "Passar pente fino depois. Tratar os contactantes."
+            },
+            "pele_perme": {
+                indicacao: "Escabiose (sarna).",
+                dose: "Aplicar à noite e repetir após 7 dias.",
+                atencao: "Tratar todos da casa ao mesmo tempo. Lavar roupas e roupas de cama em água quente."
+            },
+            "pele_iver": {
+                indicacao: "Escabiose (sarna) e outras parasitoses.",
+                dose: "15-25 kg: ½ cp | 26-45 kg: 1 cp | >45 kg: 2 cp. Dose única, repetir em 14 dias.",
+                atencao: "Contraindicada abaixo de 15 kg ou 5 anos."
+            },
+            "pele_mupi": {
+                indicacao: "Impetigo e infecções bacterianas superficiais da pele.",
+                dose: "Aplicar de 8/8h por 8 dias.",
+                atencao: "Lesões extensas podem precisar de antibiótico oral."
+            },
+            "pele_nista": {
+                indicacao: "Candidíase oral (sapinho).",
+                dose: "≤12 kg: 1 mL | >12 kg: 2,5 mL. 4 vezes ao dia por 14 dias.",
+                atencao: "Manter por alguns dias depois que as placas sumirem. Higienizar bicos e chupetas."
+            },
+            "pele_acicl": {
+                indicacao: "Herpes labial e lesões herpéticas de pele.",
+                dose: "Aplicar de 4/4h por 5 dias.",
+                atencao: "Melhor resultado se iniciado logo nos primeiros sintomas."
+            },
+            "pele_trokg": {
+                indicacao: "Dermatites com infecção fúngica ou bacteriana associada.",
+                dose: "Fina camada 1 a 2 vezes ao dia.",
+                atencao: "Contém corticoide: máximo 2 semanas. Evitar no rosto e na área da fralda por tempo prolongado."
+            },
+            "pele_trok": {
+                indicacao: "Dermatites com infecção fúngica associada.",
+                dose: "Fina camada de 12/12h por 5 dias.",
+                atencao: "Contém corticoide: máximo 2 semanas. Evitar no rosto e na área da fralda por tempo prolongado."
+            },
+
+            // ---------- ESPECIALIDADES ----------
+            "espec_otociriax": {
+                indicacao: "Otite externa.",
+                dose: "3 gotas no ouvido afetado de 12/12h por 7 dias.",
+                atencao: "Não usar se houver suspeita de perfuração da membrana timpânica."
+            },
+            "espec_cerumin": {
+                indicacao: "Cerume impactado (amolecer antes da lavagem).",
+                dose: "3 gotas no ouvido de 8/8h por 7 dias.",
+                atencao: "Não usar se houver perfuração timpânica ou otite."
+            },
+            "espec_tobra": {
+                indicacao: "Conjuntivite bacteriana.",
+                dose: "1 gota em cada olho de 6/6h por 7 dias.",
+                atencao: "Lavar as mãos antes e depois. Reavaliar se não melhorar em 48 a 72h."
+            },
+            "espec_tobra_dexa": {
+                indicacao: "Conjuntivite bacteriana com inflamação importante.",
+                dose: "1 gota em cada olho de 6/6h por 7 dias.",
+                atencao: "Contém corticoide: evitar se houver suspeita de herpes ocular. Não prolongar o uso."
+            },
+            "espec_lacribell": {
+                indicacao: "Olho seco e irritação ocular (lubrificante).",
+                dose: "1 gota em cada olho de 4/4h por 10 dias.",
+                atencao: "Sem contraindicação importante."
+            }
+        };
+
         // ÁRVORE DE CATEGORIAS ORGANIZADA POR PATOLOGIAS (DIAGNÓSTICOS)
         const categorias = [
             { 
@@ -1850,20 +2473,20 @@
                 id: "cat-rsi", titulo: "RSI", dotClass: "dot-rsi", cor: "tarja-rsi", nome: "RSI", icone: "💉 RSI",
                 patologias: [
                     { nome: "Escolha de Material e Dispositivos", remedios: ["rsi_tubo"] },
-                    { nome: "Pré-medicação e Indução em Bólus", remedios: ["rsi_atropina", "rsi_lido", "rsi_fent", "rsi_ceta", "rsi_midaz", "rsi_roc", "rsi_succi"] },
+                    { nome: "Pré-medicação e Indução em Bólus", remedios: ["atropina", "rsi_lido", "rsi_fent", "rsi_ceta", "rsi_midaz", "rsi_roc", "rsi_succi"] },
                     { nome: "Manutenção por Infusão Contínua", remedios: ["rsi_cont_morfina", "rsi_cont_cetamina", "rsi_cont_clonidina", "rsi_cont_precedex", "rsi_cont_rocuronio", "rsi_cont_pancuronio", "rsi_cont_lidocaina", "rsi_cont_propofol"] }
                 ]
             },
             { 
                 id: "cat-pals", titulo: "Urgência PALS", dotClass: "dot-sintomaticos", cor: "tarja-sintomaticos", nome: "PALS", icone: "🚨 PALS",
                 patologias: [
-                    { nome: "Parada e Arritmias", remedios: ["rsi_atropina", "adenosina_pals", "amiodarona_pals", "epinefrina_pals", "glicose_pals", "lidocaina_pals", "magnesio_pals", "milrinone_pals", "naloxona_pals", "procainamida_pals", "bicarbonato_pals"] }
+                    { nome: "Parada e Arritmias", remedios: ["atropina", "adenosina_pals", "amiodarona_pals", "epinefrina_pals", "glicose_pals", "lidocaina_pals", "magnesio_pals", "milrinone_pals", "naloxona_pals", "procainamida_pals", "bicarbonato_pals"] }
                 ]
             },
             { 
                 id: "cat-neuro", titulo: "Neuro", dotClass: "dot-neuro", cor: "tarja-neuro", nome: "Neuro", icone: "🧠 Neuro",
                 patologias: [
-                    { nome: "Crise Convulsiva Aguda", remedios: ["neuro_diaz", "neuro_midaz"] }
+                    { nome: "Crise Convulsiva Aguda", remedios: ["neuro_diaz", "neuro_midaz", "neuro_fenitoina"] }
                 ]
             },
             { 
@@ -2014,6 +2637,18 @@
         // (se houver) e, pro admin, sempre mostra um jeito de criar/editar a ficha —
         // vale tanto pra remédio fixo do app quanto pra remédio da equipe, e não
         // exige nenhuma alteração na lógica de cálculo de dose.
+        // Mostra a ficha padronizada (Indicação, Dose, Atenção) quando o
+        // remédio está em "detalhesMedicacoes"; senão, mantém o texto antigo do "info".
+        function renderizarInfoMed(idRemedio, med) {
+            let d = !med.custom && detalhesMedicacoes[idRemedio];
+            if (!d) return `<div class="med-info-row">${med.info}</div>`;
+            return `<dl class="med-detalhes">
+                <dt>Indicação</dt><dd>${escaparHtml(d.indicacao)}</dd>
+                <dt>Dose</dt><dd>${escaparHtml(d.dose)}</dd>
+                <dt class="det-atencao">⚠️ Atenção</dt><dd class="det-atencao">${escaparHtml(d.atencao)}</dd>
+            </dl>`;
+        }
+
         function renderizarBlocoFicha(idRemedio, instanceId) {
             let ficha = fichasMedicamentos[idRemedio];
             let temConteudo = !!(ficha && (ficha.indicacoes || ficha.dose || ficha.doseMaxima || ficha.apresentacoes || ficha.via || ficha.intervalo || ficha.contraindicacoes || ficha.alertasPediatricos || ficha.efeitosAdversos || ficha.interacoes || ficha.ajusteRenal || ficha.ajusteHepatico || ficha.fonteRevisao || ficha.diluicao || ficha.reconstituicao || ficha.infusao || ficha.conservacao));
@@ -2300,7 +2935,7 @@
                                 <div><span class="med-name">${escaparHtml(med.nome)}</span><span class="med-presentation">${escaparHtml(med.apres)}</span></div>
                                 <div id="res-${instanceId}" class="result-box">—</div>
                             </div>
-                            <div class="med-info-row">${med.info}</div>
+                            ${renderizarInfoMed(idRemedio, med)}
                             ${badgeHtml}
                             <div id="alerta-alergia-${instanceId}" style="display:none;" class="tarja-alergia">⚠️ Paciente referiu alergia compatível — confira antes de prescrever</div>
                             <div class="prescription-header-row">
