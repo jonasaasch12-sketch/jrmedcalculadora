@@ -1802,6 +1802,14 @@
                     return { v: c, r: `${recHead}1) IVERMECTINA 6 MG -------------------------------------- 1 CX\n${t}` }; 
                 }
             },
+            "pele_escabiose_orient": {
+                cat: "cat-pele", sub: "Orientações",
+                kw: "escabiose sarna orientacoes familia contactantes ubs lavar ferver roupas ferro colchao sofa ivermectina permetrina",
+                nome: "Orientações — Escabiose (Família)", apres: "Termo de Orientação",
+                info: "<strong>Descrição:</strong> Tratamento de todos os contactantes e cuidados com roupas, colchão e sofá.",
+                badgeSt: "static-blue", badge: "Orientações", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+                calc: () => ({ v: "Orientações", r: "ORIENTAÇÕES - ESCABIOSE (SARNA): TRATAMENTO DE TODA A FAMÍLIA\n\n1) TRATAR TODOS DA CASA AO MESMO TEMPO:\n- Todas as pessoas que moram na casa e os contatos próximos devem ser tratados no mesmo dia, mesmo quem não tem coceira.\n- Procurar a UBS para que seja prescrito o tratamento de todos os contactantes.\n- Repetir o tratamento conforme a receita: permetrina após 7 dias, ivermectina após 14 dias.\n\n2) ROUPAS E OBJETOS:\n- Lavar e ferver todas as roupas de cama, de banho e de uso pessoal por 3 dias consecutivos.\n- Secar ao sol e passar ferro quente em todas as roupas.\n- Passar ferro quente no colchão, no sofá e em outros estofados.\n- O que não puder ser lavado (bichos de pelúcia, almofadas, sapatos) deve ficar fechado em saco plástico por 7 dias.\n- Não compartilhar roupas, toalhas e roupas de cama.\n\n3) CUIDADOS:\n- Manter as unhas curtas e limpas e evitar coçar, para não infeccionar as lesões.\n- A coceira pode continuar por até 2 a 4 semanas depois do tratamento. Isso não quer dizer que o tratamento falhou.\n\nRETORNAR SE:\n- Lesões com pus, vermelhidão que aumenta ou febre;\n- Coceira ou lesões novas depois de 4 semanas do tratamento." })
+            },
             "pele_mupi": {
                 cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)", 
                 kw: "mupirocina pomada impetigo bacteriana pele ambulatorial tópica", nome: "Mupirocina 2% Creme (Impetigo)", apres: "Creme Tópico",
@@ -2506,7 +2514,7 @@
             { 
                 id: "cat-pele", titulo: "Pele", dotClass: "dot-pele", cor: "tarja-pele", nome: "Pele", icone: "🩺 Pele",
                 patologias: [
-                    { nome: "Parasitoses, Infecções e Lesões Cutâneas", remedios: ["pele_larva", "pele_delta", "pele_perme_shampoo", "pele_perme", "pele_iver", "pele_mupi", "pele_nista", "pele_acicl", "pele_trokg","pele_trok"] }
+                    { nome: "Parasitoses, Infecções e Lesões Cutâneas", remedios: ["pele_larva", "pele_delta", "pele_perme_shampoo", "pele_perme", "pele_iver", "pele_escabiose_orient", "pele_mupi", "pele_nista", "pele_acicl", "pele_trokg","pele_trok"] }
                 ]
             },
             { 
