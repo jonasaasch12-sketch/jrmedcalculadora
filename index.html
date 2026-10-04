@@ -1869,6 +1869,496 @@
                 kw: "lacribell colirio olho lubrificante lagrima", nome: "Lacribell Colírio", apres: "Uso Oftalmológico",
                 info: "<strong>Conduta:</strong> 1 gota de 4/4h por 10 dias.", badgeSt: "static-blue", badge: "1 Gota", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
                 calc: () => ({ v: "1 Gota", r: `USO OFTALMOLÓGICO\n\n1) LACRIBELL COLÍRIO --------------------------------- 1 FR\nAPLICAR 1 GOTA EM CADA OLHO, DE 4/4 HORAS, POR 10 DIAS.` })
+            },
+
+            // =====================================================================
+            // CARDS ADICIONADOS A PARTIR DO "MANUAL DE SOBREVIVÊNCIA DO RESIDENTE DE
+            // PEDIATRIA" (HIAS - Fortaleza/CE, jul/2017). Doses conforme o manual.
+            // =====================================================================
+
+            // ---------- SINTOMÁTICOS ----------
+            "tramadol_gts": {
+                cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "tramadol tramal dor analgesico opioide gotas oral", nome: "Tramadol Gotas", apres: "100 mg / mL (2,5 mg/gota)",
+                info: "<strong>Posologia:</strong> 1 mg/kg/dose de 6/6h. Máx. 400 mg/dia.", badge: "Máx: 100 mg/dose", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    // 1 mg/kg/dose (faixa 1-2 mg/kg) de 6/6h. Máximo 400 mg/dia = 100 mg/dose (40 gotas).
+                    let gts = Math.min(Math.round(p / 2.5), 40);
+                    return { v: gts + " gts", r: `${recHead}1) TRAMADOL GOTAS 100 MG/ML ---------------- 1 FR\nDAR ${gts} GOTAS (${(gts * 2.5).toFixed(1)} MG), VIA ORAL, DE 6/6 HORAS, SE DOR. MÁXIMO 400 MG POR DIA.` };
+                }
+            },
+            "buscopan_composto": {
+                cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "buscopan composto hioscina escopolamina dipirona colica dor abdominal gotas", nome: "Buscopan Composto Gotas (Hioscina + Dipirona)", apres: "6,67 + 333,4 mg/mL (0,5 + 25 mg/gota)",
+                info: "<strong>Posologia:</strong> 1-6a: 5-10 gotas | >6a: 10-20 gotas. De 8/8h ou 6/6h.", badgeSt: "static-blue", badge: "Dose p/ Idade", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    if (i === "") return { v: "—", r: "Insira a idade acima." };
+                    let id = parseFloat(i);
+                    if (id < 1) return { v: "Evitar", r: "ATENÇÃO: Evitar o uso em menores de 1 ano (lactentes)." };
+                    let gts = id <= 6 ? "5 A 10 GOTAS" : "10 A 20 GOTAS";
+                    return { v: id <= 6 ? "5-10 gts" : "10-20 gts", r: `${recHead}1) BUSCOPAN COMPOSTO GOTAS ------------------ 1 FR\nDAR ${gts}, VIA ORAL, DE 8/8 HORAS, SE CÓLICA OU DOR ABDOMINAL.` };
+                }
+            },
+            "buscopan_composto_ev": {
+                cat: "cat-sintomaticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+                kw: "buscopan composto hioscina escopolamina dipirona colica dor abdominal endovenoso hospitalar injetavel", nome: "Buscopan Composto EV", apres: "Ampola 6,67 + 333,4 mg/mL",
+                info: "<strong>Conduta:</strong> 0,03 x Peso em mL EV lento (5 min).", badge: "", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let v = (p * 0.03).toFixed(2);
+                    return { v: v + " mL", r: `VIA ENDOVENOSA (CÓLICA / DOR ABDOMINAL)\n\n Fazer ${v} mL de Buscopan Composto EV LENTO, em 5 minutos, de 8/8 ou 6/6 horas, se dor.` };
+                }
+            },
+            "colikids": {
+                cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "colikids lactobacillus reuteri probiotico colica lactente gotas", nome: "Colikids Gotas (Lactobacillus reuteri)", apres: "Frasco 5 mL",
+                info: "<strong>Posologia:</strong> 5 gotas 1x ao dia.", badgeSt: "static-blue", badge: "5 Gotas", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+                calc: () => ({ v: "5 gts", r: `${recHead}1) COLIKIDS GOTAS ----------------------------- 1 FR\nDAR 5 GOTAS, VIA ORAL, 1 VEZ AO DIA. PODE DILUIR EM SUCO OU OUTRO LÍQUIDO, EXCETO LÍQUIDOS QUENTES.` })
+            },
+
+            // ---------- ANTIALÉRGICOS ----------
+            "loratadina": {
+                cat: "cat-antialergicos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "loratadina claritin antialergico rinite urticaria xarope oral", nome: "Loratadina Xarope (Claritin)", apres: "1 mg / mL",
+                info: "<strong>Posologia:</strong> 2-5a: 5 mL | ≥6a ou >30 kg: 10 mL. 1x ao dia.", badgeSt: "static-blue", badge: "Dose p/ Idade", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    if (i === "") return { v: "—", r: "Insira a idade acima." };
+                    let id = parseFloat(i);
+                    if (id < 2) return { v: "Evitar", r: "ATENÇÃO: Evitar loratadina em menores de 2 anos." };
+                    let ml = (id >= 6 || p > 30) ? "10 ML" : "5 ML";
+                    return { v: ml.toLowerCase().replace("ml", "mL"), r: `${recHead}1) LORATADINA XAROPE 1 MG/ML ------------- 1 FR\nDAR ${ml}, VIA ORAL, 1 VEZ AO DIA.` };
+                }
+            },
+
+            // ---------- RESPIRATÓRIO ----------
+            "fenoterol_gts": {
+                cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)",
+                kw: "fenoterol berotec gotas nebulizacao asma broncoespasmo crise", nome: "Fenoterol Gotas (Berotec) - Nebulização", apres: "5 mg / mL (0,25 mg/gota)",
+                info: "<strong>Conduta:</strong> 1 gota a cada 3 kg + 4 mL SF, de 20/20 min, 3 vezes. Máx. 10 gotas.", badge: "Máx: 10 gotas", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let gts = Math.max(1, Math.min(Math.round(p / 3), 10));
+                    return { v: gts + " gts", r: `NEBULIZAÇÃO (CRISE DE ASMA / BRONCOESPASMO)\n\n Colocar ${gts} gotas de Fenoterol (Berotec) + 4 mL de SF 0,9%. Nebulizar de 20/20 minutos, 3 vezes. Após melhora, espaçar para 2/2 horas.` };
+                }
+            },
+            "fenoterol_spray": {
+                cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais / Inalatórios)",
+                kw: "fenoterol berotec spray bombinha asma broncoespasmo crise inalatorio espacador", nome: "Fenoterol Spray (Berotec) 100 mcg", apres: "100 mcg / jato + espaçador",
+                info: "<strong>Conduta:</strong> 1 jato a cada 3 kg, de 20/20 min, 3 vezes. Máx. 10 jatos.", badge: "Máx: 10 jatos", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let jt = Math.max(1, Math.min(Math.round(p / 3), 10));
+                    return { v: jt + " jatos", r: `USO INALATÓRIO (CRISE)\n\n1) FENOTEROL SPRAY 100 MCG + ESPAÇADOR ------ 1 UNID\nFAZER ${jt} JATOS COM ESPAÇADOR, DE 20/20 MINUTOS, 3 VEZES.` };
+                }
+            },
+            "salina_hipertonica": {
+                cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)",
+                kw: "salina hipertonica nacl 3% nebulizacao bronquiolite bva", nome: "Salina Hipertônica 3% (Nebulização)", apres: "NaCl 20% 1,5 mL + AD 8,5 mL",
+                info: "<strong>Conduta:</strong> Nebulizar 4 mL de NaCl 3% de 8/8h, junto com broncodilatador.", badgeSt: "static-blue", badge: "4 mL 8/8h", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+                calc: () => ({ v: "4 mL", r: `NEBULIZAÇÃO (BRONQUIOLITE VIRAL AGUDA)\n\n Preparar NaCl 3%: 1,5 mL de NaCl 20% + 8,5 mL de AD (total 10 mL).\n Retirar 4 mL e nebulizar de 8/8 horas.\n Fazer broncodilatador junto, para evitar broncoespasmo.` })
+            },
+            "koid_d": {
+                cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais / Inalatórios)",
+                kw: "koid d betametasona dexclorfeniramina tosse alergica xarope antitussigeno", nome: "Koid D Xarope (Betametasona + Dexclorfeniramina)", apres: "0,25 mg + 2 mg / 5 mL",
+                info: "<strong>Posologia:</strong> 2-6a: 2 mL | 6-12a: 2,5 mL | >12a: 5 mL. De 8/8h.", badgeSt: "static-blue", badge: "Dose p/ Idade", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    if (i === "") return { v: "—", r: "Insira a idade acima." };
+                    let id = parseFloat(i);
+                    if (id < 2) return { v: "Contraind.", r: "ATENÇÃO: Koid D não indicado para menores de 2 anos." };
+                    let ml = id < 6 ? "2 ML" : id <= 12 ? "2,5 ML" : "5 ML";
+                    return { v: ml.toLowerCase().replace("ml", "mL"), r: `${recHead}1) KOID D XAROPE ---------------------------- 1 FR\nDAR ${ml}, VIA ORAL, DE 8/8 HORAS.` };
+                }
+            },
+            "torante": {
+                cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais / Inalatórios)",
+                kw: "torante hedera helix tosse expectorante xarope antitussigeno", nome: "Torante Xarope (Hedera helix)", apres: "15 mg / mL",
+                info: "<strong>Posologia:</strong> 2-5a: 2,5 mL | ≥6a: 5 mL. De 8/8h.", badgeSt: "static-blue", badge: "Dose p/ Idade", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    if (i === "") return { v: "—", r: "Insira a idade acima." };
+                    let id = parseFloat(i);
+                    if (id < 2) return { v: "Evitar", r: "ATENÇÃO: Dose do manual definida a partir de 2 anos." };
+                    let ml = id < 6 ? "2,5 ML" : "5 ML";
+                    return { v: ml.toLowerCase().replace("ml", "mL"), r: `${recHead}1) TORANTE XAROPE 15 MG/ML ----------------- 1 FR\nDAR ${ml}, VIA ORAL, DE 8/8 HORAS.` };
+                }
+            },
+            "acebrofilina": {
+                cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais / Inalatórios)",
+                kw: "acebrofilina brondilat tosse expectorante broncodilatador xarope", nome: "Acebrofilina Xarope Pediátrico", apres: "25 mg / 5 mL",
+                info: "<strong>Posologia:</strong> Peso ÷ 5 mL de 12/12h por 5 dias (máx. 10 mL).", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let v = Math.min(parseFloat(round05(p / 5)), 10).toFixed(1);
+                    return { v: v + " mL", r: `${recHead}1) ACEBROFILINA XAROPE 25 MG/5 ML -------- 1 FR\nDAR ${v} ML, VIA ORAL, DE 12/12 HORAS, POR 5 DIAS.` };
+                }
+            },
+
+            // ---------- ANTIBIÓTICOS ORAIS ----------
+            "cefadroxila": {
+                cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "cefadroxila cefamox antibiotico suspensao capsula oral pele faringite amigdalite", nome: "Cefadroxila", apres: "Suspensão 250 mg/5 mL | Cápsula 500 mg",
+                info: "<strong>Posologia:</strong> <12a: 12,5-25 mg/kg 12/12h | ≥12a: 1-2 g/dia em 2 tomadas.", badge: "Máx: 1 g/dose", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    // Whitebook: <12 anos 12,5-25 mg/kg/dose VO de 12/12h (suspensão 250 mg/5 mL = 50 mg/mL); ≥12 anos 1-2 g/dia em 2 tomadas.
+                    if (i !== "" && parseFloat(i) >= 12) return { v: "500 mg-1 g", r: `${recHead}1) CEFADROXILA 500 MG CÁPSULA ------------- 1 CX\nTOMAR 1 A 2 CÁPSULAS (500 MG A 1 G), VIA ORAL, DE 12/12 HORAS, POR 10 DIAS.` };
+                    let min = Math.min(parseFloat(round05(p * 12.5 / 50)), 20).toFixed(1), max = Math.min(parseFloat(round05(p * 25 / 50)), 20).toFixed(1);
+                    return { v: `${min}-${max} mL`, r: `${recHead}1) CEFADROXILA SUSPENSÃO 250 MG/5 ML ------ 1 FR\nDAR ${min} A ${max} ML (12,5 A 25 MG/KG), VIA ORAL, DE 12/12 HORAS, POR 10 DIAS.` };
+                }
+            },
+            "pen_v": {
+                cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "penicilina v pen-ve-oral fenoximetilpenicilina faringite otite estreptococo solucao oral", nome: "Penicilina V Solução (Pen-Ve-Oral)", apres: "80.000 UI / mL",
+                info: "<strong>Posologia:</strong> 5-12a: 40.000 UI/kg/dia de 12/12h por 10 dias | ≥12a: 2,5-6,3 mL de 6/6 ou 8/8h.", badge: "Máx: 6,3 mL (500.000 UI)", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    // Whitebook: uso acima de 5 anos. 5-12a (infecções estreptocócicas, incluindo otite): 40.000 UI/kg/dia VO de 12/12h por 10 dias.
+                    // ≥12a (infecções estreptocócicas leves a moderadas): 2,5-6,3 mL (200.000-500.000 UI) VO de 6/6 ou 8/8h por 10 dias. Máx. 6,3 mL/dose.
+                    if (i === "") return { v: "—", r: "Insira a idade acima." };
+                    let id = parseFloat(i);
+                    if (id < 5) return { v: "Contraind.", r: "ATENÇÃO: Penicilina V indicada acima de 5 anos de idade." };
+                    if (id >= 12) return { v: "2,5-6,3 mL", r: `${recHead}1) PENICILINA V 80.000 UI/ML ---------------- 1 FR\nDAR 2,5 A 6,3 ML (200.000 A 500.000 UI), VIA ORAL, DE 6/6 OU 8/8 HORAS, POR 10 DIAS.` };
+                    let v = Math.min(parseFloat(round05(p * 0.25)), 6.3).toFixed(1);
+                    return { v: v + " mL", r: `${recHead}1) PENICILINA V 80.000 UI/ML ---------------- 1 FR\nDAR ${v} ML, VIA ORAL, DE 12/12 HORAS, POR 10 DIAS.` };
+                }
+            },
+            "smx_tmp": {
+                cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "sulfametoxazol trimetoprima bactrim smx tmp antibiotico suspensao itu infeccao urinaria", nome: "Sulfametoxazol + Trimetoprima (Bactrim)", apres: "200 + 40 mg / 5 mL (8 mg TMP/mL)",
+                info: "<strong>Posologia (ITU):</strong> 8-12 mg TMP/kg/dia de 12/12h por 7-14 dias. Máx. 20 mL/dose.", badge: "Máx: 20 mL/dose", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    // Whitebook (ITU): 8-12 mg de TMP/kg/dia VO de 12/12h, por 7-14 dias. Máximo 20 mL (160 mg TMP) por dose. A partir de 2 meses.
+                    if (i !== "" && parseFloat(i) < 0.17) return { v: "Contraind.", r: "ATENÇÃO: Sulfametoxazol + Trimetoprima a partir de 2 meses de idade." };
+                    let min = Math.min(parseFloat(round05(p * 4 / 8)), 20).toFixed(1), max = Math.min(parseFloat(round05(p * 6 / 8)), 20).toFixed(1);
+                    return { v: `${min}-${max} mL`, r: `${recHead}1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR ${min} A ${max} ML, VIA ORAL, DE 12/12 HORAS, POR 7 A 14 DIAS.` };
+                }
+            },
+            "metronidazol_vo": {
+                cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "metronidazol flagyl suspensao oral giardia ameba anaerobio antibiotico", nome: "Metronidazol Suspensão", apres: "40 mg / mL",
+                info: "<strong>Posologia:</strong> 30-40 mg/kg/dia de 8/8h. Peso ÷ 3 mL por dose.", badge: "Máx: 500 mg/dose", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let v = Math.min(parseFloat(round05(p / 3)), 12.5).toFixed(1); // teto 500 mg/dose (Whitebook)
+                    return { v: v + " mL", r: `${recHead}1) METRONIDAZOL SUSPENSÃO 40 MG/ML -------- 1 FR\nDAR ${v} ML, VIA ORAL, DE 8/8 HORAS.` };
+                }
+            },
+            "cipro_vo": {
+                cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "ciprofloxacino cipro quinolona antibiotico comprimido oral itu infeccao urinaria", nome: "Ciprofloxacino VO", apres: "Comprimido 500 mg",
+                info: "<strong>Posologia (ITU):</strong> 10-20 mg/kg/dose de 12/12h. Máx. 750 mg/dose.", badge: "Máx: 750 mg/dose", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    // Whitebook (ITU): 10-20 mg/kg/dose VO de 12/12h, por 3-7 dias (cistite) ou 7-14 dias (pielonefrite). Máximo 750 mg/dose.
+                    let min = Math.min(p * 10, 750), max = Math.min(p * 20, 750);
+                    return { v: `${min.toFixed(0)}-${max.toFixed(0)} mg`, r: `${recHead}1) CIPROFLOXACINO 500 MG ------------------- 1 CX\nDAR ${min.toFixed(0)} A ${max.toFixed(0)} MG, VIA ORAL, DE 12/12 HORAS, POR 3 A 7 DIAS (CISTITE) OU 7 A 14 DIAS (PIELONEFRITE).` };
+                }
+            },
+
+            // ---------- ANTIBIÓTICOS EV ----------
+            "amicacina": {
+                cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+                kw: "amicacina aminoglicosideo antibiotico endovenoso hospitalar injetavel neutropenia", nome: "Amicacina EV", apres: "Ampola 100 mg / 2 mL (50 mg/mL)",
+                info: "<strong>Conduta:</strong> 15 mg/kg/dia, 1x ao dia ou de 8/8h. Máx. 1,5 g/dia.", badge: "Máx: 1,5 g/dia", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let dia = Math.min(p * 15, 1500), d8 = dia / 3;
+                    let op = (mg, h) => `Aspirar ${(mg / 50).toFixed(1)} mL (${mg.toFixed(0)} mg) e diluir em SF 0,9% até ${Math.ceil(mg / 5)} mL (5 mg/mL). Infundir em 30 a 60 min, de ${h}/${h}h.`;
+                    return { v: `24/24h: ${(dia / 50).toFixed(1)} mL\n8/8h: ${(d8 / 50).toFixed(1)} mL`, r: `VIA ENDOVENOSA (USO HOSPITALAR)\n\nOPÇÃO 1X AO DIA (15 MG/KG):\n ${op(dia, 24)}\n\nOPÇÃO 8/8H (5 MG/KG/DOSE):\n ${op(d8, 8)}` };
+                }
+            },
+            "cefalotina": {
+                cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+                kw: "cefalotina keflin cefalotil cefalosporina primeira geracao antibiotico endovenoso intramuscular hospitalar injetavel", nome: "Cefalotina Sódica EV / IM", apres: "Pó para solução injetável 1 g",
+                info: "<strong>Conduta:</strong> 20-40 mg/kg IM/EV de 6/6h OU 12-25 mg/kg IM/EV de 4/4h.", badge: "", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    // Whitebook (Pediatria): 20-40 mg/kg IM/EV de 6/6h OU 12-25 mg/kg IM/EV de 4/4h.
+                    // Reconstituição: EV 1 g em 10 mL AD (100 mg/mL); IM 1 g em 5 mL AD (200 mg/mL). Infusão: diluir em 100 mL de SF 0,9% ou SG 5%, em 30 min.
+                    let f = n => n.toFixed(1);
+                    let a1 = p * 20, a2 = p * 40, b1 = p * 12, b2 = p * 25;
+                    let nFA = Math.max(a2, b2) > 1000 ? "2 FA (1 g cada)" : "1 FA de 1 g";
+                    return { v: `6/6h: ${f(a1 / 100)}-${f(a2 / 100)} mL\n4/4h: ${f(b1 / 100)}-${f(b2 / 100)} mL`,
+                        r: `VIA ENDOVENOSA OU INTRAMUSCULAR (USO HOSPITALAR)\n\nOPÇÃO 6/6H (20 A 40 MG/KG/DOSE): ${a1.toFixed(0)} a ${a2.toFixed(0)} mg por dose.\nOPÇÃO 4/4H (12 A 25 MG/KG/DOSE): ${b1.toFixed(0)} a ${b2.toFixed(0)} mg por dose.\n\nEV: Reconstituir ${nFA} em 10 mL de água para injetáveis (100 mg/mL).\n 6/6h: aspirar ${f(a1 / 100)} a ${f(a2 / 100)} mL | 4/4h: aspirar ${f(b1 / 100)} a ${f(b2 / 100)} mL.\n Fazer EV direta em 3 a 5 minutos OU diluir em 100 mL de SF 0,9% ou SG 5% e infundir em 30 minutos.\n\nIM: Reconstituir em 5 mL de água para injetáveis (200 mg/mL).\n 6/6h: aspirar ${f(a1 / 200)} a ${f(a2 / 200)} mL | 4/4h: aspirar ${f(b1 / 200)} a ${f(b2 / 200)} mL.\n Injetar em grande massa muscular (face lateral da coxa).` };
+                }
+            },
+            "cefepime": {
+                cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+                kw: "cefepime maxcef cefalosporina 4 geracao antibiotico endovenoso hospitalar neutropenia febril", nome: "Cefepime EV", apres: "FA 1 g ou 2 g",
+                info: "<strong>Conduta:</strong> 50 mg/kg/dose de 8/8h. Máx. 2 g/dose.", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let mg = Math.min(p * 50, 2000), ml = mg / 100;
+                    return { v: ml.toFixed(1) + " mL", r: `VIA ENDOVENOSA (USO HOSPITALAR)\n\n Reconstituir o FA a 100 mg/mL (1 g em 10 mL de AD). Aspirar ${ml.toFixed(1)} mL (${mg.toFixed(0)} mg) e rediluir em SF 0,9% até ${Math.ceil(mg / 40)} mL (40 mg/mL). Infundir em 30 min, de 8/8 horas.` };
+                }
+            },
+            "ceftazidima": {
+                cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+                kw: "ceftazidima fortaz cefalosporina pseudomonas antibiotico endovenoso hospitalar neutropenia febril", nome: "Ceftazidima EV", apres: "FA 1 g ou 2 g",
+                info: "<strong>Conduta:</strong> 100-150 mg/kg/dia de 8/8h. Máx. 6 g/dia.", badge: "Máx: 6 g/dia", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let m100 = Math.min(p * 100 / 3, 2000), m150 = Math.min(p * 150 / 3, 2000);
+                    let op = mg => `Aspirar ${(mg / 100).toFixed(1)} mL (${mg.toFixed(0)} mg) do FA reconstituído a 100 mg/mL e rediluir em SF 0,9% até ${Math.ceil(mg / 40)} mL (40 mg/mL). Infundir em 20 min, de 8/8 horas.`;
+                    return { v: `100: ${(m100 / 100).toFixed(1)} mL\n150: ${(m150 / 100).toFixed(1)} mL`, r: `VIA ENDOVENOSA (USO HOSPITALAR)\n\nOPÇÃO 100 MG/KG/DIA:\n ${op(m100)}\n\nOPÇÃO 150 MG/KG/DIA (NEUTROPENIA FEBRIL):\n ${op(m150)}` };
+                }
+            },
+            "cipro_ev": {
+                cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+                kw: "ciprofloxacino cipro quinolona antibiotico endovenoso hospitalar injetavel", nome: "Ciprofloxacino EV", apres: "Solução injetável 2 mg / mL",
+                info: "<strong>Conduta:</strong> 10 mg/kg/dose EV de 8/8 ou 12/12h. Máx. 400 mg/dose.", badge: "Máx: 400 mg/dose", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    // Whitebook: 10 mg/kg/dose EV de 8/8 ou 12/12h. Máximo 400 mg (200 mL) por dose. Sem diluição, correr em 60 min.
+                    let mg = Math.min(p * 10, 400), ml = (mg / 2).toFixed(1);
+                    return { v: ml + " mL", r: `VIA ENDOVENOSA (USO HOSPITALAR)\n\n Infundir ${ml} mL (${mg.toFixed(0)} mg) de Ciprofloxacino 2 mg/mL, sem diluir, em 60 minutos, de 8/8 ou 12/12 horas.` };
+                }
+            },
+            "clindamicina": {
+                cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+                kw: "clindamicina dalacin lincosamida antibiotico endovenoso intramuscular hospitalar injetavel osteoarticular osteomielite artrite septica pneumonia celulite erisipela pneumocistose", nome: "Clindamicina EV / IM", apres: "Solução injetável 150 mg / mL",
+                info: "<strong>Conduta:</strong> 20-40 mg/kg/dia EV/IM de 6/6 ou 8/8h. Máx. 2.700 mg/dia.", badge: "Máx: 2.700 mg/dia", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    // Whitebook (lactentes, crianças e adolescentes): dose usual 20-40 mg/kg/dia EV ou IM de 6/6 ou 8/8h. Máximo 18 mL/dia (2.700 mg/dia).
+                    // EV: diluir em SF ou SG 5% até 18 mg/mL e infundir em 10-60 min (máx. 30 mg/min). IM: sem diluir, máximo 600 mg/dose.
+                    let f = n => n.toFixed(2);
+                    let o6 = [Math.min(p * 5, 675), Math.min(p * 10, 675)], o8 = [Math.min(p * 20 / 3, 900), Math.min(p * 40 / 3, 900)];
+                    let ml = mg => mg / 150, tot = mg => mg / 18;
+                    let ev = (o, h) => `${h}/${h}H: aspirar ${f(ml(o[0]))} a ${f(ml(o[1]))} mL (${o[0].toFixed(0)} a ${o[1].toFixed(0)} mg) e completar com SF 0,9% até ${Math.ceil(tot(o[0]))} a ${Math.ceil(tot(o[1]))} mL (18 mg/mL).`;
+                    let im = (o, h) => `${h}/${h}H: ${f(ml(Math.min(o[0], 600)))} a ${f(ml(Math.min(o[1], 600)))} mL IM, sem diluir.`;
+                    return { v: `6/6h: ${f(ml(o6[0]))}-${f(ml(o6[1]))} mL\n8/8h: ${f(ml(o8[0]))}-${f(ml(o8[1]))} mL`,
+                        r: `CLINDAMICINA 150 MG/ML - DOSE USUAL 20 A 40 MG/KG/DIA (MÁXIMO 2.700 MG/DIA)\n\nVIA ENDOVENOSA:\n ${ev(o6, 6)}\n ${ev(o8, 8)}\n Infundir em 10 a 60 minutos (máximo 30 mg/minuto).\n\nVIA INTRAMUSCULAR (máximo 600 mg/dose):\n ${im(o6, 6)}\n ${im(o8, 8)}` };
+                }
+            },
+            "meropenem": {
+                cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+                kw: "meropenem meropenem meronem carbapenemico antibiotico endovenoso hospitalar meningite neutropenia febril fibrose cistica intra-abdominal", nome: "Meropeném EV", apres: "Frasco-ampola 500 mg, 1 g e 2 g",
+                info: "<strong>Conduta (≥3 meses):</strong> 20 mg/kg/dose (máx. 1 g) ou 40 mg/kg/dose (máx. 2 g) EV de 8/8h.", badge: "Máx: 1 g ou 2 g/dose", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    // Whitebook (lactentes ≥3 meses, crianças e adolescentes), EV de 8/8h:
+                    // 20 mg/kg/dose (máx. 1 g): neutropenia febril, intra-abdominais, cutâneas graves, anthrax cutânea (máx. 2 g).
+                    // 40 mg/kg/dose (máx. 2 g): meningite, anthrax sistêmica, exacerbação pulmonar de fibrose cística.
+                    // Reconstituir a 50 mg/mL e rediluir em SF 0,9% a 20 mg/mL. Infundir em 15-30 min.
+                    if (i !== "" && parseFloat(i) < 0.25) return { v: "< 3 meses", r: "ATENÇÃO: Em neonatos e lactentes menores de 3 meses a dose depende da idade gestacional e dos dias de vida. Consultar a tabela do Whitebook." };
+                    let f = n => n.toFixed(1);
+                    let a = Math.min(p * 20, 1000), b = Math.min(p * 40, 2000);
+                    let op = (mg, t) => `${t}:\n Aspirar ${f(mg / 50)} mL (${mg.toFixed(0)} mg) do frasco reconstituído (50 mg/mL) + ${f(mg / 20 - mg / 50)} mL de SF 0,9% (total ${f(mg / 20)} mL, 20 mg/mL). Infundir EV em 15 a 30 minutos, de 8/8 horas.`;
+                    return { v: `20: ${f(a / 50)} mL\n40: ${f(b / 50)} mL`, r: `VIA ENDOVENOSA (USO HOSPITALAR)\n\nRECONSTITUIÇÃO: 500 mg em 10 mL, 1 g em 20 mL ou 2 g em 40 mL de água para injeção (50 mg/mL).\n\n${op(a, "20 MG/KG/DOSE (NEUTROPENIA FEBRIL, INTRA-ABDOMINAIS, CUTÂNEAS GRAVES) - MÁX. 1 G")}\n\n${op(b, "40 MG/KG/DOSE (MENINGITE, FIBROSE CÍSTICA, ANTHRAX SISTÊMICA) - MÁX. 2 G")}` };
+                }
+            },
+            "metronidazol_ev": {
+                cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+                kw: "metronidazol flagyl anaerobio antibiotico endovenoso hospitalar injetavel", nome: "Metronidazol EV", apres: "5 mg / mL (solução pronta)",
+                info: "<strong>Conduta:</strong> 30-40 mg/kg/dia de 8/8h. 2 x Peso em mL por dose.", badge: "Máx: 500 mg/dose (100 mL)", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let mg = Math.min(p * 10, 500), ml = (mg / 5).toFixed(1); // teto 500 mg/dose (Whitebook)
+                    return { v: ml + " mL", r: `VIA ENDOVENOSA (USO HOSPITALAR)\n\n Infundir ${ml} mL (${mg.toFixed(0)} mg) de Metronidazol 5 mg/mL (solução pronta, sem diluir) em 30 a 60 minutos, de 8/8 horas.` };
+                }
+            },
+            "oxacilina": {
+                cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+                kw: "oxacilina staphylococcus antibiotico endovenoso hospitalar injetavel pele celulite", nome: "Oxacilina EV", apres: "FA 500 mg",
+                info: "<strong>Conduta:</strong> 150-200 mg/kg/dia de 4/4h ou 6/6h. Máx. 1 g/dose.", badge: "Máx: 1 g/dose", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let mg = Math.min(p * 200 / 6, 1000), ml = mg / 100; // 200 mg/kg/dia de 4/4h
+                    return { v: ml.toFixed(1) + " mL", r: `VIA ENDOVENOSA (USO HOSPITALAR)\n\n Reconstituir o FA a 100 mg/mL (500 mg em 5 mL de AD). Aspirar ${ml.toFixed(1)} mL (${mg.toFixed(0)} mg) e rediluir em SF 0,9% até ${Math.ceil(mg / 10)} mL (10 mg/mL). Administrar de 4/4 horas.` };
+                }
+            },
+            "pen_cristalina": {
+                cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+                kw: "penicilina cristalina g potassica antibiotico endovenoso hospitalar sifilis meningite", nome: "Penicilina Cristalina EV", apres: "FA 5.000.000 UI (+ 8 mL AD = 500.000 UI/mL)",
+                info: "<strong>Conduta:</strong> 200.000 UI/kg/dia de 6/6h. Máx. 24.000.000 UI/dia.", badge: "Máx: 24 milhões UI/dia", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    let ui = Math.min(p * 50000, 6000000), ml = ui / 500000;
+                    let conc = (i !== "" && parseFloat(i) < 1) ? 50000 : 100000;
+                    return { v: ml.toFixed(2) + " mL", r: `VIA ENDOVENOSA (USO HOSPITALAR)\n\n Reconstituir 1 FA de 5.000.000 UI com 8 mL de AD (500.000 UI/mL). Aspirar ${ml.toFixed(2)} mL (${ui.toLocaleString('pt-BR')} UI) e rediluir em SF 0,9% até ${Math.ceil(ui / conc)} mL (${conc.toLocaleString('pt-BR')} UI/mL${conc === 50000 ? ", menor de 1 ano" : ""}). Administrar de 6/6 horas.` };
+                }
+            },
+            "vancomicina": {
+                cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+                kw: "vancomicina vanco cloridrato glicopeptideo mrsa antibiotico endovenoso hospitalar meningite endocardite cateter neutropenia", nome: "Vancomicina EV", apres: "Frasco-ampola 500 mg e 1 g (reconstituído a 100 mg/mL)",
+                info: "<strong>Conduta:</strong> Infecções suscetíveis 45-60 mg/kg/dia EV de 6/6 ou 8/8h. Ajustar pela concentração sérica.", badge: "Infundir em 60 min", badgeSt: "static-blue", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    // Whitebook (lactentes, crianças e adolescentes) - infecções suscetíveis: 45-60 mg/kg/dia EV de 6/6 ou 8/8h, ajustar pela concentração sérica.
+                    // Reconstituir a 100 mg/mL (500 mg + 5 mL ou 1 g + 10 mL de diluente) e rediluir em SF 0,9% a 5 mg/mL. Infundir lentamente em 60 min.
+                    let f = n => n.toFixed(1);
+                    let o6 = [p * 45 / 4, p * 60 / 4], o8 = [p * 45 / 3, p * 60 / 3];
+                    let op = (o, h) => `${h}/${h}H: ${o[0].toFixed(0)} a ${o[1].toFixed(0)} mg = aspirar ${f(o[0] / 100)} a ${f(o[1] / 100)} mL e completar com SF 0,9% até ${Math.ceil(o[0] / 5)} a ${Math.ceil(o[1] / 5)} mL (5 mg/mL).`;
+                    return { v: `6/6h: ${f(o6[0] / 100)}-${f(o6[1] / 100)} mL\n8/8h: ${f(o8[0] / 100)}-${f(o8[1] / 100)} mL`,
+                        r: `VIA ENDOVENOSA (USO HOSPITALAR) - INFECÇÕES SUSCETÍVEIS (45 A 60 MG/KG/DIA)\n\nRECONSTITUIÇÃO: 500 mg + 5 mL ou 1 g + 10 mL de água para diluente (100 mg/mL).\n\n ${op(o6, 6)}\n ${op(o8, 8)}\n\n Infundir lentamente em 60 minutos. Ajustar conforme a concentração sérica.` };
+                }
+            },
+
+            // ---------- NEURO ----------
+            "fenobarbital": {
+                cat: "cat-neuro", sub: "🏥 Uso Hospitalar (Crise Convulsiva)",
+                kw: "fenobarbital gardenal anticonvulsivante barbiturico convulsao crise neonatal ataque sedacao hospitalar injetavel", nome: "Fenobarbital EV", apres: "Ampola 100 mg / mL",
+                info: "<strong>Conduta:</strong> Ataque 10-20 mg/kg EV dose única (neonatal 20 mg/kg). Máx. 320 mg/dose. Infundir até 60 mg/min.", badge: "Máx: 320 mg/dose", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    // Whitebook - ampola 100 mg/mL, diluir com SF e infundir no máximo a 60 mg/min.
+                    // Neonatal: ataque 20 mg/kg (repetir 10-20 mg/kg se necessário); manutenção 5 mg/kg/dia EV de 24/24h.
+                    // Lactentes, crianças e adolescentes: ataque 10-20 mg/kg (repetir 5-10 mg/kg); manutenção 3-6 mg/kg/dia de 12/12 ou 24/24h. Máximo 320 mg/dose.
+                    let f = n => n.toFixed(2), neo = i !== "" && parseFloat(i) < 0.08;
+                    let cap = mg => Math.min(mg, 320), t = mg => Math.ceil(mg / 60);
+                    if (neo) {
+                        let a = cap(p * 20), r1 = cap(p * 10), r2 = cap(p * 20);
+                        return { v: f(a / 100) + " mL", r: `VIA ENDOVENOSA (PERÍODO NEONATAL) - FENOBARBITAL 100 MG/ML\n\nATAQUE (20 MG/KG): ${f(a / 100)} mL (${a.toFixed(0)} mg), diluído em SF 0,9%, EV em dose única (no mínimo ${t(a)} min, até 60 mg/min).\nSE NECESSÁRIO, REPETIR: ${f(r1 / 100)} a ${f(r2 / 100)} mL (10 a 20 mg/kg).\n\nMANUTENÇÃO: ${f(p * 5 / 100)} mL (${(p * 5).toFixed(1)} mg = 5 mg/kg/dia) EV de 24/24 horas.` };
+                    }
+                    let a1 = cap(p * 10), a2 = cap(p * 20), r1 = cap(p * 5), r2 = cap(p * 10);
+                    return { v: `${f(a1 / 100)}-${f(a2 / 100)} mL`, r: `VIA ENDOVENOSA - FENOBARBITAL 100 MG/ML\n\nATAQUE (10 A 20 MG/KG): ${f(a1 / 100)} a ${f(a2 / 100)} mL (${a1.toFixed(0)} a ${a2.toFixed(0)} mg), diluído em SF 0,9%, EV em dose única (até 60 mg/min; ${a2.toFixed(0)} mg em no mínimo ${t(a2)} min).\nPODE SER REPETIDO: ${f(r1 / 100)} a ${f(r2 / 100)} mL (5 a 10 mg/kg).\n\nMANUTENÇÃO: ${(p * 3).toFixed(0)} a ${(p * 6).toFixed(0)} mg/dia (3 a 6 mg/kg/dia) EV de 12/12 ou 24/24 horas.\n\nDOSE MÁXIMA: 320 mg (3,2 mL) por dose.` };
+                }
+            },
+            "fenobarbital_gts": {
+                cat: "cat-neuro", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "fenobarbital gardenal gotas anticonvulsivante manutencao crise convulsiva oral", nome: "Fenobarbital Gotas (Manutenção)", apres: "40 mg / mL (1 gota = 1 mg)",
+                info: "<strong>Posologia:</strong> Neonatos 5 mg/kg/dia 24/24h | >1 mês 3-6 mg/kg/dia de 12/12 ou 24/24h. Máx. 400 gotas/dia.", badge: "Máx: 400 gotas/dia", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    // Whitebook - manutenção para crises convulsivas (VO, 1 gota = 1 mg). Dose máxima 400 gotas/dia (400 mg/dia).
+                    if (i !== "" && parseFloat(i) < 0.08) {
+                        let g = Math.min(Math.round(p * 5), 400);
+                        return { v: g + " gts", r: `${recHead}1) FENOBARBITAL GOTAS 40 MG/ML ------------- 1 FR\nDAR ${g} GOTAS (5 MG/KG/DIA), VIA ORAL, DE 24/24 HORAS.` };
+                    }
+                    let min = Math.min(Math.round(p * 3), 400), max = Math.min(Math.round(p * 6), 400);
+                    return { v: `${min}-${max} gts/dia`, r: `${recHead}1) FENOBARBITAL GOTAS 40 MG/ML ------------- 1 FR\nDAR ${min} A ${max} GOTAS POR DIA (3 A 6 MG/KG/DIA), VIA ORAL, EM DOSE ÚNICA (24/24 HORAS) OU DIVIDIDO DE 12/12 HORAS. MÁXIMO 400 GOTAS POR DIA.` };
+                }
+            },
+            "hidrato_cloral": {
+                cat: "cat-neuro", sub: "🏥 Uso Hospitalar (Sedação)",
+                kw: "hidrato de cloral sedacao exame ecocardiograma eco sedativo oral", nome: "Hidrato de Cloral 4% (Sedação para Exames)", apres: "40 mg / mL",
+                info: "<strong>Conduta:</strong> Peso ÷ 2 mL (20 mg/kg), 30 min antes do exame.", badge: "Máx: 20 mL acumulado", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let v = Math.min(parseFloat(round05(p / 2)), 20).toFixed(1);
+                    return { v: v + " mL", r: `${recHead}1) HIDRATO DE CLORAL 4% (40 MG/ML)\nDAR ${v} ML, VIA ORAL, 30 MINUTOS ANTES DO EXAME.\nOBSERVAR POR 60 MINUTOS. SE NÃO DORMIR, PODE REPETIR A DOSE, SEM PASSAR DE 20 ML SOMANDO TODAS AS DOSES.` };
+                }
+            },
+
+            // ---------- TGI ----------
+            "nitazoxanida": {
+                cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "nitazoxanida annita verminose giardia criptosporidio diarreia antiparasitario suspensao", nome: "Nitazoxanida Suspensão (Annita)", apres: "20 mg / mL",
+                info: "<strong>Posologia:</strong> 7,5 mg/kg/dose de 12/12h por 3 dias. Máx. 15 mL/dose.", badge: "Máx: 15 mL/dose", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    if (i !== "" && parseFloat(i) < 1) return { v: "Contraind.", r: "ATENÇÃO: Nitazoxanida indicada a partir de 1 ano." };
+                    if (i !== "" && parseFloat(i) > 12) return { v: "500 mg", r: `${recHead}1) NITAZOXANIDA 500 MG ----------------------- 6 CP\nTOMAR 1 COMPRIMIDO, VIA ORAL, DE 12/12 HORAS, POR 3 DIAS.` };
+                    let v = Math.min(parseFloat(round05(p * 7.5 / 20)), 15).toFixed(1);
+                    return { v: v + " mL", r: `${recHead}1) NITAZOXANIDA SUSPENSÃO 20 MG/ML -------- 1 FR\nDAR ${v} ML, VIA ORAL, DE 12/12 HORAS, POR 3 DIAS.` };
+                }
+            },
+            "domperidona": {
+                cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "domperidona motilium procinetico dispepsia emese vomito refluxo suspensao oral", nome: "Domperidona Suspensão (Motilium)", apres: "Suspensão 1 mg / mL",
+                info: "<strong>Posologia:</strong> 0,25-0,5 mg/kg/dose de 8/8h. Máx. 1 mg/kg/dia ou 35 mg/dia.", badge: "Máx: 1 mg/kg/dia (35 mg/dia)", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    // Whitebook: dispepsia e êmese 0,25-0,5 mg/kg/dose VO de 8/8h, 15-30 min antes das refeições e ao dormir (se necessário).
+                    // Dose máxima 1 mg/kg/dia ou 35 mg/dia. Atenção: evitar em menores de 12 anos e/ou 35 kg.
+                    let maxDia = Math.min(p * 1, 35);
+                    let min = Math.min(p * 0.25, maxDia / 3).toFixed(1), max = Math.min(p * 0.5, maxDia / 3).toFixed(1); // as 3 tomadas não podem passar do máximo diário
+                    let alerta = ((i !== "" && parseFloat(i) < 12) || p < 35) ? "ATENÇÃO: Evitar o uso em menores de 12 anos e/ou 35 kg de peso corpóreo.\n\n" : "";
+                    return { v: `${min}-${max} mL`, r: `${alerta}${recHead}1) DOMPERIDONA SUSPENSÃO 1 MG/ML ---------- 1 FR\nDAR ${min} A ${max} ML, VIA ORAL, DE 8/8 HORAS, 15 A 30 MINUTOS ANTES DAS REFEIÇÕES E AO DORMIR, SE NECESSÁRIO. NÃO ULTRAPASSAR ${maxDia.toFixed(1)} ML POR DIA.` };
+                }
+            },
+            "lactulose": {
+                cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "lactulose lactulona constipacao intestino preso laxativo xarope", nome: "Lactulose Xarope (Lactulona)", apres: "667 mg / mL",
+                info: "<strong>Posologia:</strong> Constipação: 0,3-0,5 mL/kg/dia de 12/12h.", badge: "", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let min = round05(p * 0.15), max = round05(p * 0.25);
+                    return { v: `${min}-${max} mL`, r: `${recHead}1) LACTULOSE XAROPE 667 MG/ML -------------- 1 FR\nDAR ${min} A ${max} ML, VIA ORAL, DE 12/12 HORAS. AJUSTAR A DOSE CONFORME O FUNCIONAMENTO DO INTESTINO.` };
+                }
+            },
+            "oleo_mineral": {
+                cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "oleo mineral nujol constipacao intestino preso laxativo", nome: "Óleo Mineral", apres: "Frasco",
+                info: "<strong>Posologia:</strong> 1-3 mL/kg/dia em 1-2 doses. Máx. 50 mL/dose. Só a partir de 4 anos.", badge: "Máx: 50 mL/dose", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    if (i === "") return { v: "—", r: "Insira a idade acima." };
+                    if (parseFloat(i) < 4) return { v: "Contraind.", r: "ATENÇÃO: Não usar óleo mineral em menores de 4 anos ou com risco de aspiração." };
+                    let v = Math.min(Math.round(p), 50);
+                    return { v: v + " mL", r: `${recHead}1) ÓLEO MINERAL ------------------------------- 1 FR\nDAR ${v} ML, VIA ORAL, 1 VEZ AO DIA. NÃO DAR DEITADO NEM PERTO DE DORMIR.` };
+                }
+            },
+            "solucao_mucosite": {
+                cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "solucao mucosite boca xilocaina nistatina eritromicina hidroxido aluminio bochecho", nome: "Solução para Mucosite (Bochecho)", apres: "Fórmula manipulada",
+                info: "<strong>Conduta:</strong> Bochechar e cuspir de 8/8h.", badgeSt: "static-blue", badge: "Bochecho", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+                calc: () => ({ v: "Bochecho", r: `USO ORAL (BOCHECHO)\n\n1) SOLUÇÃO PARA MUCOSITE:\n   XILOCAÍNA 5 ML + NISTATINA 5 ML + ERITROMICINA 5 ML + HIDRÓXIDO DE ALUMÍNIO 5 ML\nBOCHECHAR E CUSPIR, DE 8/8 HORAS. NÃO ENGOLIR.` })
+            },
+            "kcl_ev": {
+                cat: "cat-diarreia", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Expansão)",
+                kw: "potassio kcl hipocalemia hipopotassemia correcao reposicao endovenosa hidroeletrolitico", nome: "KCl 10% EV (Hipocalemia Grave, K < 2,5)", apres: "KCl 10% = 1,34 mEq/mL",
+                info: "<strong>Conduta:</strong> 0,3 a 0,5 mEq/kg/h por 4h, a 4 mEq/100 mL.", badge: "Máx periférica: 8 mEq/100 mL", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let op = taxa => { let meq = taxa * p * 4, vol = meq / 4 * 100, kcl = meq / 1.34; return { meq, vol, kcl, bic: vol / 4 }; };
+                    let a = op(0.3), b = op(0.5);
+                    let txt = (o, t) => `${t} MEQ/KG/H (${o.meq.toFixed(1)} mEq em 4h):\n SG 5% ou SF 0,9% ..... ${Math.round(o.vol)} mL\n KCl 10% ..... ${o.kcl.toFixed(1)} mL\n Correr EV em 4 horas, em BIC a ${o.bic.toFixed(0)} mL/h.`;
+                    return { v: `0,3: ${a.kcl.toFixed(1)} mL KCl\n0,5: ${b.kcl.toFixed(1)} mL KCl`, r: `VIA ENDOVENOSA (HIPOCALEMIA GRAVE - FASE RÁPIDA)\n\n${txt(a, "0,3")}\n\n${txt(b, "0,5")}\n\n* Concentração de 4 mEq/100 mL. Máximo em veia periférica: 8 mEq/100 mL; veia central: 15 mEq/100 mL.` };
+                }
+            },
+            "kcl_xarope": {
+                cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "potassio kcl xarope hipocalemia leve moderada reposicao oral", nome: "KCl 6% Xarope (Hipocalemia Leve/Moderada)", apres: "6% = 0,8 mEq/mL",
+                info: "<strong>Posologia:</strong> 2 a 5 mEq/kg/dia de 6/6h.", badge: "", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let min = (p * 2 / 4 / 0.8).toFixed(1), max = (p * 5 / 4 / 0.8).toFixed(1);
+                    return { v: `${min}-${max} mL`, r: `${recHead}1) CLORETO DE POTÁSSIO XAROPE 6% ------------ 1 FR\nDAR ${min} A ${max} ML, VIA ORAL, DE 6/6 HORAS (2 A 5 MEQ/KG/DIA).` };
+                }
+            },
+            "nacl3_hiponatremia": {
+                cat: "cat-diarreia", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Expansão)",
+                kw: "sodio nacl 3% hiponatremia correcao reposicao endovenosa hidroeletrolitico", nome: "NaCl 3% EV (Hiponatremia Grave, Na < 120)", apres: "NaCl 20% 15 mL + SG 5% 85 mL",
+                info: "<strong>Conduta:</strong> (Na desejado − Na atual) x 0,6 x Peso, em 4 a 6h. Calculado para subir 8 mEq/L.", badge: "Máx: 12 mEq/L por dia", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let meq = 8 * 0.6 * p, vol = meq / 0.5, nacl20 = vol * 0.15, sg = vol * 0.85;
+                    return { v: `${vol.toFixed(0)} mL NaCl 3%`, r: `VIA ENDOVENOSA (HIPONATREMIA GRAVE - FASE DE ATAQUE)\n\nCálculo para subir 8 mEq/L: 8 x 0,6 x ${p} kg = ${meq.toFixed(1)} mEq de Na.\n\nNaCl 20% ..... ${nacl20.toFixed(1)} mL\nSG 5% ..... ${sg.toFixed(1)} mL\n(${vol.toFixed(0)} mL de NaCl 3%)\nFazer EV em 4 horas, em BIC a ${(vol / 4).toFixed(0)} mL/h.\n\n* Não subir mais que 12 mEq/L por dia (ideal 6 a 8).\n* Velocidade máxima: aguda 10 mL/kg/h (${(p * 10).toFixed(0)} mL/h); crônica 5 mL/kg/h (${(p * 5).toFixed(0)} mL/h).` };
+                }
+            },
+
+            // ---------- ESPECIALIDADES: HEMATO E ENDÓCRINO ----------
+            "sulfato_ferroso": {
+                cat: "cat-especialidades", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "sulfato ferroso ferro anemia ferropriva gotas antianemico tratamento", nome: "Sulfato Ferroso Gotas (Tratamento)", apres: "124,45 mg/mL = 25 mg/mL de ferro elementar (1 gota = 1 mg)",
+                info: "<strong>Posologia:</strong> 3-6 mg de ferro elementar/kg/dia de 12/12 ou 24/24h, por 6 meses. Máx. 80 gotas/dia.", badge: "Máx: 80 gotas/dia", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    // Whitebook - tratamento da anemia ferropriva: 3-6 mg de ferro elementar/kg/dia VO de 12/12 ou 24/24h, por 6 meses
+                    // ou até reposição dos estoques. Gotas 124,45 mg/mL (1 gota = 1 mg de ferro elementar). Dose máxima na pediatria: 80 gotas/dia.
+                    let min = Math.min(Math.round(p * 3), 80), max = Math.min(Math.round(p * 6), 80);
+                    return { v: `${min}-${max} gts/dia`, r: `${recHead}1) SULFATO FERROSO GOTAS 25 MG/ML (FERRO ELEMENTAR) -- 1 FR\nDAR ${min} A ${max} GOTAS POR DIA, VIA ORAL, EM DOSE ÚNICA (24/24 HORAS) OU DIVIDIDO DE 12/12 HORAS, POR 6 MESES.\nTOMAR COM O ESTÔMAGO VAZIO, COM ÁGUA OU SUCO CÍTRICO. NÃO DAR COM LEITE OU DERIVADOS.` };
+                }
+            },
+            "sulfato_ferroso_prof": {
+                cat: "cat-especialidades", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+                kw: "sulfato ferroso ferro profilaxia anemia ferropriva sbp prematuro baixo peso suplementacao gotas", nome: "Sulfato Ferroso Gotas (Profilaxia - SBP 2021)", apres: "124,45 mg/mL = 25 mg/mL de ferro elementar (1 gota = 1 mg)",
+                info: "<strong>Profilaxia (SBP 2021):</strong> 1 mg/kg/dia no termo AIG; 2-4 mg/kg/dia no baixo peso e prematuro (1-12 meses).", badgeSt: "static-blue", badge: "1 gota = 1 mg", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    // Whitebook - profilaxia da anemia ferropriva (SBP 2021), VO de 24/24h:
+                    // termo AIG: 1 mg/kg/dia (6-24 meses sem fatores de risco; 3-24 meses com fatores de risco);
+                    // termo < 2.500 g ou prematuro > 1.500 g: 2 mg/kg/dia; prematuro 1.000-1.500 g: 3 mg/kg/dia; prematuro < 1.000 g: 4 mg/kg/dia (1-12 meses); depois 1 mg/kg/dia (12-24 meses).
+                    let g = n => Math.min(Math.round(p * n), 80);
+                    return { v: `${g(1)} gts/dia`, r: `${recHead}1) SULFATO FERROSO GOTAS 25 MG/ML (FERRO ELEMENTAR) -- 1 FR\nDAR ${g(1)} GOTAS (1 MG/KG/DIA), VIA ORAL, 1 VEZ AO DIA.\nTOMAR COM O ESTÔMAGO VAZIO, COM ÁGUA OU SUCO CÍTRICO. NÃO DAR COM LEITE OU DERIVADOS.\n\n* Outras doses de profilaxia (SBP 2021), de 1 a 12 meses: 2 mg/kg/dia = ${g(2)} gotas (termo < 2.500 g ou prematuro > 1.500 g); 3 mg/kg/dia = ${g(3)} gotas (prematuro 1.000-1.500 g); 4 mg/kg/dia = ${g(4)} gotas (prematuro < 1.000 g). De 12 a 24 meses: 1 mg/kg/dia.` };
+                }
+            },
+            "hemacias": {
+                cat: "cat-especialidades", sub: "🏥 Uso Hospitalar (Hemoderivados)",
+                kw: "concentrado de hemacias transfusao anemia hemoderivado sangue", nome: "Concentrado de Hemácias", apres: "1 unidade = 250 a 300 mL",
+                info: "<strong>Conduta:</strong> 10-15 mL/kg em 1 a 2 horas (máx. 4h).", badge: "", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let a = Math.round(p * 10), b = Math.round(p * 15);
+                    return { v: `${a}-${b} mL`, r: `HEMOTRANSFUSÃO\n\n Transfundir ${a} a ${b} mL de Concentrado de Hemácias (10 a 15 mL/kg) EV, em 1 a 2 horas (não ultrapassar 4 horas).\n Não exceder 20 a 30 mL/kg/hora.\n Dosar Hb/Ht 1 a 2 horas após a transfusão.` };
+                }
+            },
+            "plaquetas": {
+                cat: "cat-especialidades", sub: "🏥 Uso Hospitalar (Hemoderivados)",
+                kw: "concentrado de plaquetas transfusao plaquetopenia hemoderivado", nome: "Concentrado de Plaquetas", apres: "1 unidade = 50 a 70 mL",
+                info: "<strong>Conduta:</strong> 1 unidade a cada 7-10 kg. Menores de 15 kg: 5-10 mL/kg. Em 30 min.", badge: "", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    if (p < 15) { let a = Math.round(p * 5), b = Math.round(p * 10); return { v: `${a}-${b} mL`, r: `HEMOTRANSFUSÃO\n\n Transfundir ${a} a ${b} mL de Concentrado de Plaquetas (5 a 10 mL/kg) EV, em 30 minutos.\n Não exceder 20 a 30 mL/kg/hora.\n Dosar plaquetas 1 hora após a transfusão.` }; }
+                    let u = Math.max(1, Math.round(p / 10)), u2 = Math.max(1, Math.round(p / 7));
+                    return { v: `${u}-${u2} unid.`, r: `HEMOTRANSFUSÃO\n\n Transfundir ${u} a ${u2} unidades de Concentrado de Plaquetas (1 unidade a cada 7 a 10 kg) EV, em 30 minutos.\n Não exceder 20 a 30 mL/kg/hora.\n Dosar plaquetas 1 hora após a transfusão.` };
+                }
+            },
+            "plasma": {
+                cat: "cat-especialidades", sub: "🏥 Uso Hospitalar (Hemoderivados)",
+                kw: "plasma fresco congelado pfc transfusao coagulopatia hemoderivado", nome: "Plasma Fresco Congelado", apres: "Bolsa",
+                info: "<strong>Conduta:</strong> 10-20 mL/kg, correr aberto (máx. 1 hora).", badge: "", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let a = Math.round(p * 10), b = Math.round(p * 20);
+                    return { v: `${a}-${b} mL`, r: `HEMOTRANSFUSÃO\n\n Transfundir ${a} a ${b} mL de Plasma Fresco Congelado (10 a 20 mL/kg) EV, correndo aberto, em no máximo 1 hora.` };
+                }
+            },
+            "insulina_cad": {
+                cat: "cat-especialidades", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+                kw: "insulina regular cetoacidose diabetica cad diabetes infusao continua endovenosa", nome: "Insulina Regular (Cetoacidose Diabética)", apres: "50 U em 500 mL SF 0,9% (0,1 U/mL)",
+                info: "<strong>Conduta:</strong> 0,1 U/kg/h EV em BIC, após a expansão. Reduzir para 0,05 U/kg/h se glicemia ~250.", badge: "Não iniciar se K < 3,3", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    let r1 = p * 0.1 / 0.1, r05 = p * 0.05 / 0.1;
+                    return { v: `0,1: ${r1.toFixed(1)} mL/h\n0,05: ${r05.toFixed(1)} mL/h`, r: `VIA ENDOVENOSA (CETOACIDOSE DIABÉTICA - 2ª HORA)\n\nPREPARO: Insulina Regular 50 U em 500 mL de SF 0,9% (0,1 U/mL). Lavar o equipo com a solução e trocar o frasco a cada 6 horas.\n\n• 0,1 U/kg/h: correr em BIC a ${r1.toFixed(1)} mL/h.\n• Reduzir para 0,05 U/kg/h (${r05.toFixed(1)} mL/h) quando a glicemia ficar perto de 250 mg/dL ou cair mais de 100 mg/dL/h com acidose ainda presente.\n\nSEM BIC: Insulina Regular ${(p * 0.2).toFixed(1)} U (0,2 U/kg) IM de 2/2h; reduzir para ${(p * 0.1).toFixed(1)} U (0,1 U/kg) nas mesmas situações.\n\n* Não iniciar se K < 3,3. Glicemia capilar 1/1h, cetonúria e gasometria 2/2h.` };
+                }
             }
         };
 
@@ -2411,6 +2901,403 @@
                 indicacao: "Olho seco e irritação ocular (lubrificante).",
                 dose: "1 gota em cada olho de 4/4h por 10 dias.",
                 atencao: "Sem contraindicação importante."
+            },
+
+            // ---------- ADICIONADOS A PARTIR DO MANUAL HIAS (2017) ----------
+            "tramadol_gts": {
+                indicacao: "Dor moderada a intensa que não melhora com dipirona ou paracetamol.",
+                dose: "1 mg/kg/dose (faixa 1-2 mg/kg) VO de 6/6h. 1 gota = 2,5 mg.",
+                atencao: "Máximo 400 mg/dia (100 mg = 40 gotas por dose). Risco de depressão respiratória e sonolência."
+            },
+            "buscopan_composto": {
+                indicacao: "Cólica e dor abdominal.",
+                dose: "1-6 anos: 5-10 gotas | >6 anos: 10-20 gotas. VO de 8/8h ou 6/6h.",
+                atencao: "Contém dipirona: confirmar alergia. Evitar em lactentes."
+            },
+            "buscopan_composto_ev": {
+                indicacao: "Cólica e dor abdominal em ambiente hospitalar.",
+                dose: "0,03 x Peso em mL EV de 8/8h ou 6/6h.",
+                atencao: "Fazer lento, em 5 minutos. Contém dipirona: confirmar alergia."
+            },
+            "colikids": {
+                indicacao: "Cólica do lactente (probiótico).",
+                dose: "5 gotas VO 1x ao dia.",
+                atencao: "Não misturar com líquidos quentes."
+            },
+            "loratadina": {
+                indicacao: "Rinite alérgica e urticária.",
+                dose: "2-5 anos: 5 mL | ≥6 anos ou >30 kg: 10 mL. VO 1x ao dia.",
+                atencao: "Evitar em menores de 2 anos. Precisa da idade para calcular."
+            },
+            "fenoterol_gts": {
+                indicacao: "Crise de asma e broncoespasmo (nebulização).",
+                dose: "1 gota a cada 3 kg + 4 mL de SF 0,9%, de 20/20 min, 3 vezes.",
+                atencao: "Máximo 10 gotas por nebulização. Pode causar taquicardia e tremor."
+            },
+            "fenoterol_spray": {
+                indicacao: "Crise de asma e broncoespasmo.",
+                dose: "1 jato a cada 3 kg com espaçador, de 20/20 min, 3 vezes.",
+                atencao: "Máximo 10 jatos por dose. Pode causar taquicardia e tremor."
+            },
+            "salina_hipertonica": {
+                indicacao: "Bronquiolite viral aguda (nebulização).",
+                dose: "4 mL de NaCl 3% nebulizados de 8/8h.",
+                atencao: "Fazer junto com broncodilatador, para evitar broncoespasmo."
+            },
+            "koid_d": {
+                indicacao: "Tosse e sintomas alérgicos respiratórios.",
+                dose: "2-6 anos: 2 mL | 6-12 anos: 2,5 mL | >12 anos: 5 mL. VO de 8/8h.",
+                atencao: "Contém corticoide (betametasona): evitar uso prolongado. Não usar em menores de 2 anos."
+            },
+            "torante": {
+                indicacao: "Tosse produtiva (expectorante).",
+                dose: "2-5 anos: 2,5 mL | ≥6 anos: 5 mL. VO de 8/8h.",
+                atencao: "Dose do manual a partir de 2 anos. Precisa da idade para calcular."
+            },
+            "acebrofilina": {
+                indicacao: "Tosse com broncoespasmo e secreção.",
+                dose: "Peso ÷ 5 mL VO de 12/12h por 5 dias.",
+                atencao: "Máximo 10 mL por dose."
+            },
+            "cefadroxila": {
+                indicacao: "Faringite ou amigdalite estreptocócica beta-hemolítica.",
+                dose: "<12 anos: 12,5-25 mg/kg/dose VO de 12/12h. ≥12 anos: 1-2 g/dia em 2 tomadas (cápsula 500 mg). Faringoamigdalite: por 10 dias.",
+                atencao: "Máximo 1 g por dose. Perguntar sobre alergia a cefalosporinas."
+            },
+            "pen_v": {
+                indicacao: "Infecções suscetíveis; infecções estreptocócicas (incluindo otite média); tratamento de faringoamigdalite para profilaxia de febre reumática; infecções pneumocócicas leves a moderadas; infecções estafilocócicas de pele e tecidos moles; angina de Vincent; prevenção de febre reumática.",
+                dose: "5-12 anos: 40.000 UI/kg/dia VO de 12/12h por 10 dias. ≥12 anos: 2,5-6,3 mL (200.000-500.000 UI) de 6/6 ou 8/8h por 10 dias.",
+                atencao: "Uso acima de 5 anos. Máximo 6,3 mL (500.000 UI) por dose. Para prevenção de febre reumática, preferir penicilina G benzatina."
+            },
+            "smx_tmp": {
+                indicacao: "Infecção do trato urinário.",
+                dose: "8-12 mg de TMP/kg/dia VO de 12/12h, por 7 a 14 dias.",
+                atencao: "Máximo 20 mL (160 mg de TMP) por dose. A partir de 2 meses. Perguntar sobre alergia a sulfa."
+            },
+            "metronidazol_vo": {
+                indicacao: "Giardíase, amebíase (incluindo abscesso hepático amebiano) e infecções bacterianas anaeróbias; casos leves de infecções por Clostridioides (Clostridium) difficile; infecção de cateter de diálise peritoneal.",
+                dose: "15-50 mg/kg/dia VO de 8/8h. O app calcula 40 mg/kg/dia (Peso ÷ 3 mL por dose).",
+                atencao: "Máximo 500 mg por dose (12,5 mL). Na infecção por C. difficile, a vancomicina oral é preferida. Gosto metálico e náusea são comuns."
+            },
+            "cipro_vo": {
+                indicacao: "Infecção do trato urinário; profilaxia de doença meningocócica; doença por complexo Mycobacterium avium.",
+                dose: "ITU: 10-20 mg/kg/dose VO de 12/12h, por 3-7 dias (cistite) ou 7-14 dias (pielonefrite). Profilaxia de doença meningocócica: 20 mg/kg em dose única (máx. 500 mg).",
+                atencao: "Máximo 750 mg por dose. Suspender ao primeiro sinal de dor ou inflamação de tendão ou de neuropatia."
+            },
+            "amicacina": {
+                indicacao: "Infecções graves por gram-negativos e neutropenia febril (em associação).",
+                dose: "15 mg/kg/dia EV, 1x ao dia ou dividido de 8/8h. Diluir a 5 mg/mL em SF 0,9%.",
+                atencao: "Máximo 1,5 g/dia. Nefrotóxica e ototóxica: ajustar pelo clearance de creatinina."
+            },
+            "cefalotina": {
+                indicacao: "Infecções do trato respiratório; infecções do trato geniturinário; infecções gastrointestinais; infecções da pele e dos tecidos moles; infecções ósseas e articulares; meningite; septicemia; profilaxia em cirurgias.",
+                dose: "20-40 mg/kg IM/EV de 6/6h OU 12-25 mg/kg IM/EV de 4/4h. EV direta em 3-5 min ou infusão em 30 min.",
+                atencao: "Reconstituir EV 1 g em 10 mL e IM 1 g em 5 mL de água para injetáveis. Infusão: diluir em 100 mL de SF 0,9% ou SG 5% (~9 mg/mL). Monitorar função renal."
+            },
+            "cefepime": {
+                indicacao: "Neutropenia febril de alto risco e infecções hospitalares graves.",
+                dose: "50 mg/kg/dose EV de 8/8h. Rediluir a 40 mg/mL e correr em 30 min.",
+                atencao: "Máximo 2 g por dose. Ajustar pelo clearance de creatinina."
+            },
+            "ceftazidima": {
+                indicacao: "Infecções por Pseudomonas e neutropenia febril de baixo risco (com amicacina).",
+                dose: "100-150 mg/kg/dia EV de 8/8h. Rediluir a 40 mg/mL e correr em 20 min.",
+                atencao: "Máximo 6 g/dia (2 g por dose). Ajustar pelo clearance de creatinina."
+            },
+            "cipro_ev": {
+                indicacao: "Infecções moderadas a graves; fibrose cística (exacerbação pulmonar); endocardite infecciosa; meningite ou ventriculite (agente alternativo); profilaxia para infecção por antraz por inalação (pós-exposição).",
+                dose: "10 mg/kg/dose EV de 8/8 ou 12/12h. Fibrose cística: de 8/8h. Sem diluir, em 60 minutos.",
+                atencao: "Máximo 400 mg (200 mL) por dose. Suspender ao primeiro sinal de dor ou inflamação de tendão ou de neuropatia."
+            },
+            "clindamicina": {
+                indicacao: "Infecções osteoarticulares; pneumocistose; pneumonia adquirida na comunidade (sem ser por MRSA); infecções cutâneas (celulites, erisipelas).",
+                dose: "Dose usual: 20-40 mg/kg/dia EV/IM de 6/6 ou 8/8h. Osteoarticulares: 30-40 mg/kg/dia de 6/6 ou 8/8h. PAC: 40 mg/kg/dia por 5-10 dias. Cutâneas: 25-40 mg/kg/dia de 8/8h. Pneumocistose: 40 mg/kg/dia de 6/6h com primaquina, 21 dias.",
+                atencao: "Máximo 2.700 mg/dia (18 mL). EV: diluir a 18 mg/mL em SF ou SG 5%, infundir em 10-60 min (máx. 30 mg/min). IM: máximo 600 mg/dose. Cutâneas e pneumocistose: máximo 600 mg/dose; osteoarticulares: 900 mg/dose."
+            },
+            "meropenem": {
+                indicacao: "Infecções graves (intra-abdominais complicadas, pele, partes moles e meningite bacteriana); neutropenia febril; exacerbação pulmonar de fibrose cística; anthrax cutânea e sistêmica.",
+                dose: "≥3 meses, EV de 8/8h: 20 mg/kg/dose (neutropenia febril, intra-abdominais, cutâneas graves) ou 40 mg/kg/dose (meningite, fibrose cística, anthrax sistêmica). Fibrose cística ≥8 anos: pode infundir em 3 horas.",
+                atencao: "Máximo 1 g/dose no esquema de 20 mg/kg e 2 g/dose no de 40 mg/kg. Reconstituir a 50 mg/mL e rediluir a 1-20 mg/mL em SF 0,9% ou SG 5%, infundir em 15-30 min. Menores de 3 meses: dose por idade gestacional."
+            },
+            "metronidazol_ev": {
+                indicacao: "Prevenção cirúrgica; apendicite; infecções intra-abdominais.",
+                dose: "30 mg/kg/dia EV (2 x Peso em mL por dose de 8/8h). Apendicite: 30 mg/kg/dia de 6/6h, por 7 dias somando EV e VO.",
+                atencao: "Máximo 500 mg (100 mL) por dose. Solução pronta, sem diluir, em 30 a 60 minutos."
+            },
+            "oxacilina": {
+                indicacao: "Infecções por estafilococo sensível (pele, partes moles, ossos).",
+                dose: "150-200 mg/kg/dia EV de 4/4h ou 6/6h. O app calcula 200 mg/kg/dia de 4/4h.",
+                atencao: "Máximo 1 g por dose. Rediluir a 10 mg/mL em SF 0,9%."
+            },
+            "pen_cristalina": {
+                indicacao: "Sífilis congênita, meningite e infecções graves por germes sensíveis.",
+                dose: "200.000 UI/kg/dia EV de 6/6h (Peso ÷ 10 mL do FA reconstituído).",
+                atencao: "Máximo 24 milhões UI/dia. Rediluir: menor de 1 ano a 50.000 UI/mL, maior de 1 ano a 100.000 UI/mL."
+            },
+            "vancomicina": {
+                indicacao: "Infecções suscetíveis; endocardite; meningite; infecções graves por MRSA; infecções cutâneas (necrotizantes e piomiosites).",
+                dose: "Infecções suscetíveis: 45-60 mg/kg/dia de 6/6 ou 8/8h. Meningite: 60 mg/kg/dia de 6/6h. Endocardite: empírico 60 mg/kg/dia de 6/6h; estreptococo, enterococo e S. aureus 40 mg/kg/dia de 8/8 ou 12/12h, por 4-6 semanas. MRSA grave: 3 meses-12 anos 60-80 mg/kg/dia de 6/6h; ≥12 anos 60-70 mg/kg/dia de 6/6 ou 8/8h. Necrotizantes não MRSA: 10-13 mg/kg/dose de 8/8h.",
+                atencao: "Máximo: endocardite 2 g/dia; MRSA grave e piomiosite 3,6 g/dia. Ajustar pela concentração sérica. Rediluir a 5 mg/mL e infundir lentamente em 60 min. Neonatos: dose por idade gestacional (ver Whitebook)."
+            },
+            "fenobarbital": {
+                indicacao: "Anticonvulsivante; sedação; efeitos hipnóticos.",
+                dose: "Neonatal: ataque 20 mg/kg EV (repetir 10-20 mg/kg se necessário); manutenção 5 mg/kg/dia de 24/24h. Lactentes, crianças e adolescentes: ataque 10-20 mg/kg EV (repetir 5-10 mg/kg); manutenção 3-6 mg/kg/dia de 12/12 ou 24/24h.",
+                atencao: "Dose máxima 320 mg (3,2 mL) por dose. Diluir com SF e infundir no máximo a 60 mg/min. Pode causar hipotensão, depressão respiratória e rebaixamento do nível de consciência, podendo ser necessário manejo de via aérea avançada em doses repetidas."
+            },
+            "fenobarbital_gts": {
+                indicacao: "Dose de manutenção para crises convulsivas.",
+                dose: "Neonatos: 5 mg/kg/dia VO de 24/24h. >1 mês de idade: 3-6 mg/kg/dia VO de 12/12 ou 24/24h. 1 gota = 1 mg.",
+                atencao: "Dose máxima: 400 gotas/dia (400 mg/dia)."
+            },
+            "hidrato_cloral": {
+                indicacao: "Sedação leve para exames (ex.: ecocardiograma).",
+                dose: "20 mg/kg (Peso ÷ 2 mL) VO, 30 min antes do exame. Pode repetir após 60 min se não dormir.",
+                atencao: "Máximo 20 mL somando todas as doses. Não usar se estiver em uso de diazepam; metade da dose se usar clonazepam ou clobazam."
+            },
+            "nitazoxanida": {
+                indicacao: "Giardíase, criptosporidiose, amebíase e outras parasitoses intestinais.",
+                dose: "7,5 mg/kg/dose VO de 12/12h por 3 dias. Acima de 12 anos: 500 mg de 12/12h.",
+                atencao: "A partir de 1 ano. Máximo 15 mL por dose."
+            },
+            "domperidona": {
+                indicacao: "Dispepsia e êmese (procinético).",
+                dose: "0,25-0,5 mg/kg/dose VO de 8/8h, 15-30 minutos antes das refeições e ao dormir (caso necessário).",
+                atencao: "Evitar o uso em menores de 12 anos e/ou 35 kg de peso corpóreo. Dose máxima: 1 mg/kg/dia ou 35 mg/dia."
+            },
+            "lactulose": {
+                indicacao: "Constipação intestinal.",
+                dose: "0,3-0,5 mL/kg/dia VO de 12/12h.",
+                atencao: "Pode causar gases e cólica no início. Ajustar a dose pelo funcionamento do intestino."
+            },
+            "oleo_mineral": {
+                indicacao: "Constipação intestinal.",
+                dose: "1-3 mL/kg/dia VO em 1 ou 2 doses (app calcula 1 mL/kg).",
+                atencao: "Não usar em menores de 4 anos nem com risco de aspiração. Máximo 50 mL por dose."
+            },
+            "solucao_mucosite": {
+                indicacao: "Mucosite oral.",
+                dose: "Bochechar e cuspir de 8/8h.",
+                atencao: "Não engolir (contém xilocaína)."
+            },
+            "kcl_ev": {
+                indicacao: "Hipocalemia grave (K < 2,5).",
+                dose: "0,3 a 0,5 mEq/kg/h por 4 horas, a 4 mEq/100 mL de SG 5% ou SF 0,9%.",
+                atencao: "Sempre em BIC. Máximo 8 mEq/100 mL em veia periférica e 15 mEq/100 mL em veia central. Monitorar ECG."
+            },
+            "kcl_xarope": {
+                indicacao: "Hipocalemia leve a moderada.",
+                dose: "2 a 5 mEq/kg/dia VO de 6/6h (1 mL = 0,8 mEq).",
+                atencao: "Dar após as refeições para reduzir a irritação gástrica."
+            },
+            "nacl3_hiponatremia": {
+                indicacao: "Hiponatremia grave (Na < 120) ou sintomática.",
+                dose: "(Na desejado − Na atual) x 0,6 x Peso, em 4 a 6 horas. O app calcula para subir 8 mEq/L.",
+                atencao: "Não subir mais que 12 mEq/L por dia (ideal 6 a 8): risco de mielinólise. Ajustar o cálculo ao Na real do paciente."
+            },
+            "sulfato_ferroso": {
+                indicacao: "Tratamento de anemia ferropriva.",
+                dose: "3-6 mg de ferro elementar/kg/dia VO de 12/12 ou 24/24h, por 6 meses ou até reposição dos estoques corporais. 1 gota = 1 mg de ferro elementar.",
+                atencao: "Dose máxima na pediatria: 80 gotas/dia (80 mg/dia). Tomar com estômago vazio, com água ou sucos cítricos. Não administrar com leite ou produtos lácteos."
+            },
+            "sulfato_ferroso_prof": {
+                indicacao: "Profilaxia da anemia ferropriva (protocolo da Sociedade Brasileira de Pediatria - 2021).",
+                dose: "Termo AIG: 1 mg/kg/dia de 6 a 24 meses (sem fatores de risco) ou de 3 a 24 meses (com fatores de risco). Termo < 2.500 g ou prematuro > 1.500 g: 2 mg/kg/dia; prematuro 1.000-1.500 g: 3 mg/kg/dia; prematuro < 1.000 g: 4 mg/kg/dia, de 1 a 12 meses; depois 1 mg/kg/dia de 12 a 24 meses. VO de 24/24h.",
+                atencao: "Dose máxima na pediatria: 80 gotas/dia. Tomar com estômago vazio, com água ou sucos cítricos. Não administrar com leite ou produtos lácteos."
+            },
+            "hemacias": {
+                indicacao: "Anemia com indicação de transfusão.",
+                dose: "10-15 mL/kg EV em 1 a 2 horas.",
+                atencao: "Não ultrapassar 4 horas nem 20-30 mL/kg/hora. Dosar Hb/Ht 1 a 2 horas depois."
+            },
+            "plaquetas": {
+                indicacao: "Plaquetopenia com indicação de transfusão (falência medular, procedimentos).",
+                dose: "1 unidade a cada 7-10 kg. Menores de 15 kg: 5-10 mL/kg. Em 30 minutos.",
+                atencao: "Não transfundir em plaquetopenia imune (PTI, dengue) sem sangramento grave."
+            },
+            "plasma": {
+                indicacao: "Coagulopatia com sangramento ou antes de procedimento.",
+                dose: "10-20 mL/kg EV, correndo aberto.",
+                atencao: "Tempo máximo de 1 hora."
+            },
+            "insulina_cad": {
+                indicacao: "Cetoacidose diabética, após a expansão inicial.",
+                dose: "0,1 U/kg/h EV em BIC; reduzir para 0,05 U/kg/h. Sem BIC: 0,2 U/kg IM de 2/2h.",
+                atencao: "Não iniciar se K < 3,3. Queda da glicemia entre 50 e 100 mg/dL/h. Glicemia 1/1h e gasometria 2/2h."
+            }
+        };
+
+        // =====================================================================
+        // FICHA TÉCNICA PADRÃO ("📋 Ficha completa") - transcrita do Whitebook (Afya),
+        // a partir dos prints/vídeos enviados em out/2026. Só aparece quando a equipe
+        // ainda não salvou uma ficha própria no Firestore (a da equipe tem prioridade).
+        // =====================================================================
+        const fichasPadrao = {
+            "cefadroxila": {
+                indicacoes: "Faringite ou amigdalite estreptocócica beta-hemolítica.",
+                dose: "< 12 anos (suspensão oral): 12,5-25 mg/kg VO 2x/dia. ≥ 12 anos: 1-2 g/dia VO, fracionados em 2 tomadas de 12/12 horas; alternativamente, em dose única diária. Faringite ou amigdalite estreptocócica beta-hemolítica (cápsula, ≥ 12 anos): 1 g/dia VO em dose única ou fracionado em 2 tomadas de 12/12 horas, por 7-10 dias.",
+                doseMaxima: "≥ 12 anos: 2 g/dia.",
+                apresentacoes: "Suspensão oral; cápsula (indicada para ≥ 12 anos).",
+                via: "Oral.",
+                intervalo: "12/12 horas ou dose única diária.",
+                fonteRevisao: "Whitebook (Afya) - Medicamentos/Bulário: Cefadroxila, atualizado em 13/02/2025."
+            },
+            "smx_tmp": {
+                indicacoes: "Infecção do trato urinário.",
+                dose: "Lactentes acima de 2 meses, crianças e adolescentes: 8-12 mg TMP/kg/dia VO de 12/12 horas, por 7-14 dias.",
+                doseMaxima: "20 mL/dose (160 mg de TMP/dose).",
+                apresentacoes: "Suspensão oral 200 mg + 40 mg/5 mL.",
+                via: "Oral.",
+                intervalo: "12/12 horas.",
+                alertasPediatricos: "Uso a partir de 2 meses de idade.",
+                fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Sulfametoxazol + Trimetoprima, atualizado em 14/08/2025."
+            },
+            "pen_v": {
+                indicacoes: "Infecções suscetíveis; infecções estreptocócicas (incluindo otite média); tratamento de faringoamigdalite para profilaxia de febre reumática; infecções estreptocócicas leves a moderadas; infecções pneumocócicas leves a moderadas; infecções estafilocócicas de pele e tecidos moles; angina de Vincent (leves a moderadas); prevenção de febre reumática.",
+                dose: "5-12 anos (solução 80.000 unidades/mL): infecções suscetíveis 25.000-90.000 unidades/kg/dia VO de 4/4, 6/6 ou 8/8 horas; infecções estreptocócicas (incluindo otite média) 40.000 unidades/kg/dia VO de 12/12 horas, por 10 dias; faringoamigdalite para profilaxia de febre reumática 25.000-50.000 unidades/kg/dia VO de 8/8 ou 12/12 horas, por 10 dias. ≥ 12 anos: infecções estreptocócicas leves a moderadas 2,5-6,3 mL/dose (200.000-500.000 unidades/dose) VO de 6/6 ou 8/8 horas, por 10 dias; infecções pneumocócicas, estafilocócicas de pele e tecidos moles e angina de Vincent 5-6,3 mL/dose (400.000-500.000 unidades/dose) VO de 6/6 ou 8/8 horas; prevenção de febre reumática 5-6,3 mL VO de 12/12 horas, ininterruptamente.",
+                doseMaxima: "6,3 mL/dose (500.000 unidades/dose).",
+                apresentacoes: "Comprimido 500.000 unidades; solução oral 80.000 unidades/mL.",
+                via: "Oral.",
+                alertasPediatricos: "Uso acima de 5 anos de idade. O uso de penicilina G benzatina deve ser preconizado para prevenção de febre reumática.",
+                fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Penicilina V, atualizado em 22/01/2026."
+            },
+            "metronidazol_vo": {
+                indicacoes: "Giardíase, amebíase (incluindo abscesso hepático amebiano) e infecções bacterianas anaeróbias; casos leves de infecções por Clostridioides (Clostridium) difficile; infecção de cateter de diálise peritoneal.",
+                dose: "Crianças e adolescentes: 15-50 mg/kg/dia VO de 8/8 horas. Casos leves de C. difficile: 30 mg/kg/dia VO de 8/8 horas por 10-14 dias. Infecção de cateter de diálise peritoneal: 10 mg/kg/dose VO de 8/8 horas.",
+                doseMaxima: "C. difficile: 500 mg/dose. Diálise peritoneal: 1.500 mg/dose.",
+                via: "Oral.",
+                intervalo: "8/8 horas.",
+                alertasPediatricos: "O uso em outras parasitoses, como trichomoníase, é raro em pediatria. Na indisponibilidade da fidaxomicina (atual tratamento de escolha), a vancomicina oral é preferida ao metronidazol para C. difficile em crianças, especialmente em casos moderados a graves.",
+                ajusteRenal: "Não é necessário ajuste de dose em pacientes em diálise peritoneal contínua ambulatorial.",
+                fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Metronidazol, atualizado em 05/02/2026."
+            },
+            "metronidazol_ev": {
+                indicacoes: "Prevenção cirúrgica; apendicite; infecções intra-abdominais.",
+                dose: "Neonatal: ataque 15 mg/kg/dose EV, seguida de 7,5 mg/kg/dose após 24 h, e então conforme a idade gestacional (23-34 semanas: 7,5 mg/kg/dose EV de 12/12 horas, iniciando 12 h após o ataque). Prevenção cirúrgica: neonatos < 1.200 g 7,5 mg/kg/dose EV; neonatos e crianças ≥ 1.200 g 15 mg/kg/dose EV, 30-60 minutos antes da cirurgia. Apendicite: 30 mg/kg/dia EV de 6/6 horas, por 7 dias (incluindo o período de antibiótico EV e VO).",
+                doseMaxima: "500 mg/dose (100 mL/dose).",
+                apresentacoes: "Frasco de 5 mg/mL.",
+                via: "Endovenosa.",
+                diluicao: "Não é necessária a diluição.",
+                infusao: "Correr em 30-60 minutos. A infusão deve ser a uma velocidade de 5 mL por minuto.",
+                alertasPediatricos: "O regime de escolha para apendicite não complicada em crianças é ceftriaxona associada a metronidazol, com transição para amoxicilina-clavulanato oral ou ciprofloxacino-metronidazol.",
+                fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Metronidazol, atualizado em 05/02/2026."
+            },
+            "cipro_ev": {
+                indicacoes: "Infecções moderadas a graves; fibrose cística (exacerbação pulmonar); endocardite infecciosa; meningite ou ventriculite (agente alternativo); profilaxia para infecção por antraz por inalação (pós-exposição).",
+                dose: "Lactentes e crianças maiores: dose usual 10 mg/kg/dose EV de 8/8 ou 12/12 horas. Fibrose cística: 10 mg/kg/dose EV de 8/8 horas. Endocardite: 10-15 mg/kg/dose EV de 12/12 horas. Meningite ou ventriculite: 10 mg/kg/dose EV de 8/8 horas ou 15 mg/kg/dose EV de 12/12 horas. Antraz (pós-exposição): 10 mg/kg/dose EV de 12/12 horas.",
+                doseMaxima: "200 mL/dose (400 mg/dose).",
+                apresentacoes: "Comprimido 500 mg; solução injetável 2 mg/mL.",
+                via: "Endovenosa.",
+                diluicao: "Sem diluição. Correr em 60 minutos.",
+                infusao: "60 minutos.",
+                alertasPediatricos: "Neonatos: dados limitados. O tratamento com fluoroquinolona deve ser descontinuado ao primeiro sinal de dor ou inflamação do tendão (como inchaço, dificuldade de caminhar). Os pacientes devem procurar atendimento médico imediato se apresentarem sintomas de neuropatia (dor, queimação, formigamento, dormência ou fraqueza).",
+                fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Ciprofloxacino, atualizado em 10/11/2025."
+            },
+            "cipro_vo": {
+                indicacoes: "Infecção do trato urinário; profilaxia de doença meningocócica; doença por complexo Mycobacterium avium.",
+                dose: "Infecção do trato urinário: 10-20 mg/kg/dose VO de 12/12 horas, por 3-7 dias (cistite) ou 7-14 dias (pielonefrite). Profilaxia de doença meningocócica: 20 mg/kg VO em dose única. Complexo Mycobacterium avium: 10-15 mg/kg/dose VO de 12/12 horas (com outros antibióticos).",
+                doseMaxima: "ITU e M. avium: 750 mg/dose. Profilaxia meningocócica: 500 mg.",
+                apresentacoes: "Comprimido 500 mg; solução injetável 2 mg/mL.",
+                via: "Oral.",
+                intervalo: "12/12 horas.",
+                alertasPediatricos: "O tratamento com fluoroquinolona deve ser descontinuado ao primeiro sinal de dor ou inflamação do tendão. Procurar atendimento imediato se houver sintomas de neuropatia (dor, queimação, formigamento, dormência ou fraqueza).",
+                fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Ciprofloxacino, atualizado em 10/11/2025."
+            },
+            "cefalotina": {
+                indicacoes: "Infecções do trato respiratório; infecções do trato geniturinário; infecções gastrointestinais; infecções da pele e dos tecidos moles; infecções ósseas e articulares; meningite; septicemia; profilaxia em cirurgias.",
+                dose: "Pediatria: 20-40 mg/kg IM/EV de 6/6 horas OU 12-25 mg/kg IM/EV de 4/4 horas.",
+                apresentacoes: "Pó para solução injetável 1 g. Nomes comerciais: Cefalotil®, Cefariston®, Kefalomax®, Keflin Neutro®.",
+                via: "Endovenosa ou intramuscular.",
+                intervalo: "6/6 horas ou 4/4 horas.",
+                reconstituicao: "IM: 1 g em 5 mL de água para injetáveis. EV direta e infusão EV: 1 g em 10 mL de água para injetáveis.",
+                diluicao: "Infusão EV: diluir em 100 mL de SF 0,9% ou SG 5%, obtendo concentração final de ~9 mg/mL.",
+                infusao: "EV direta: 3-5 minutos. Infusão EV: durante 30 minutos. IM: injetar em grande massa muscular (face lateral da coxa).",
+                alertasPediatricos: "Cefalosporina de 1ª geração. Monitoramento: função renal.",
+                fonteRevisao: "Whitebook (Afya) - Medicamentos/Bulário: Cefalotina Sódica, atualizado em 21/01/2026."
+            },
+            "clindamicina": {
+                indicacoes: "Infecções osteoarticulares; pneumocistose; pneumonia adquirida na comunidade (sem ser por MRSA); infecções cutâneas (celulites, erisipelas). VO: infecções leves a moderadas; malária; otite média; faringite por Streptococcus do grupo A; pneumocistose (quadros leves); pneumonia (quadros leves); impetigo (MRSA suspeito ou confirmado); infecções por MRSA (ex.: celulite ou erisipela).",
+                dose: "Lactentes, crianças e adolescentes (150 mg/mL): dose usual 20-40 mg/kg/dia EV ou IM de 6/6 ou 8/8 horas. Infecções osteoarticulares: 30-40 mg/kg/dia EV de 6/6 ou 8/8 horas (≥ 2-3 semanas na artrite séptica e ≥ 3-4 semanas na osteomielite). Pneumocistose: 40 mg/kg/dia EV de 6/6 horas com primaquina, 21 dias. PAC (sem MRSA): 40 mg/kg/dia EV de 6/6 ou 8/8 horas por 5-10 dias. Infecções cutâneas: 25-40 mg/kg/dia EV de 8/8 horas. VO: infecções leves a moderadas 10-40 mg/kg/dia de 8/8 horas; otite média 30-40 mg/kg/dia de 6/6 ou 8/8 horas; faringite por Streptococcus do grupo A 21 mg/kg/dia de 8/8 horas por 10 dias; pneumonia leve 30-40 mg/kg/dia de 6/6 ou 8/8 horas; impetigo (MRSA) 20 mg/kg/dia de 8/8 horas por 7 dias; infecções por MRSA 30-40 mg/kg/dia de 6/6 ou 8/8 horas.",
+                doseMaxima: "EV: 18 mL/dia (2.700 mg/dia); osteoarticulares 900 mg/dose; pneumocistose e cutâneas 600 mg/dose. IM: 600 mg/dose. VO: 1.800 mg/dia (faringite 300 mg/dose; impetigo 400 mg/dose; MRSA 450 mg/dose; pneumocistose 300-450 mg/dose).",
+                apresentacoes: "Comprimido 300 mg; solução injetável 150 mg/mL.",
+                via: "Endovenosa, intramuscular ou oral.",
+                diluicao: "Uso EV: diluir em SG 5% ou SF para concentração final de 6-18 mg/mL. Uso IM: não é necessária diluição.",
+                infusao: "Infundir em 10-60 minutos (máximo: 30 mg/minuto).",
+                fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Clindamicina, atualizado em 30/10/2025."
+            },
+            "meropenem": {
+                indicacoes: "Antibiótico para infecções graves (intra-abdominais complicadas, pele, partes moles e meningite bacteriana); neutropenia febril; exacerbação pulmonar de fibrose cística; anthrax cutânea e sistêmica.",
+                dose: "Lactentes ≥ 3 meses, crianças e adolescentes, EV de 8/8 horas: anthrax cutânea 20 mg/kg/dose; anthrax sistêmica (incluindo meningite) 40 mg/kg/dose; exacerbação pulmonar de fibrose cística 40 mg/kg/dose (≥ 8 anos: pode infundir em 3 horas); neutropenia febril 20 mg/kg/dose; meningite 40 mg/kg/dose; infecções intra-abdominais 20 mg/kg/dose; infecções cutâneas graves 20 mg/kg/dose. Neonatos e < 3 meses: dose conforme idade gestacional e dias de vida (20-40 mg/kg/dose de 8/8 ou 12/12 horas).",
+                doseMaxima: "20 mg/kg/dose: 1 g/dose (anthrax cutânea 2 g/dose). 40 mg/kg/dose: 2 g/dose.",
+                apresentacoes: "Frasco-ampola 500 mg, 1.000 mg e 2.000 mg.",
+                via: "Endovenosa.",
+                intervalo: "8/8 horas.",
+                reconstituicao: "Reconstituir o frasco em água para injeção a 50 mg/mL (500 mg em 10 mL, 1.000 mg em 20 mL e 2.000 mg em 40 mL).",
+                diluicao: "Rediluir em SF 0,9% ou SG 5% ou 10% para concentração final de 1-20 mg/mL.",
+                infusao: "Infundir em 15-30 minutos.",
+                alertasPediatricos: "O tempo de tratamento deve ser individualizado conforme o paciente, a doença tratada e o patógeno envolvido. Os dados sobre tempo de tratamento em lactentes menores de 3 meses são limitados.",
+                fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Meropeném, atualizado em 05/02/2026."
+            },
+            "vancomicina": {
+                indicacoes: "Infecções suscetíveis; endocardite; meningite; infecções graves por MRSA; infecções cutâneas (infecções necrotizantes não MRSA; infecções necrotizantes e piomiosites MRSA).",
+                dose: "Lactentes, crianças e adolescentes: infecções suscetíveis 45-60 mg/kg/dia EV de 6/6 ou 8/8 horas, ajustar conforme concentração sérica. Endocardite: empírico 60 mg/kg/dia de 6/6 horas por 4-6 semanas associado a outro antibiótico; estreptococo, enterococo e S. aureus 40 mg/kg/dia de 8/8 ou 12/12 horas por 4-6 semanas. Meningite: 60 mg/kg/dia de 6/6 horas. Infecções graves por MRSA: 3 meses-12 anos 60-80 mg/kg/dia de 6/6 horas; ≥ 12 anos 60-70 mg/kg/dia de 6/6 ou 8/8 horas. Necrotizantes não MRSA: 10-13 mg/kg/dose de 8/8 horas. Necrotizantes e piomiosites MRSA: 60 mg/kg/dia de 6/6 horas. Neonatal (infecções suscetíveis): 15 mg/kg/dose a cada 24 h (≤ 29 semanas), 12/12 h (29-35 semanas) ou 8/8 h (> 35 semanas).",
+                doseMaxima: "Endocardite: 2 g/dia. MRSA grave e piomiosite MRSA: 3.600 mg/dia.",
+                apresentacoes: "Frasco-ampola 500 mg e 1.000 mg.",
+                via: "Endovenosa.",
+                reconstituicao: "Diluir 1 frasco para concentração de 100 mg/mL (500 mg + 5 mL ou 1.000 mg + 10 mL de água para diluente).",
+                diluicao: "Rediluir para concentração de 5 mg/mL em soro fisiológico.",
+                infusao: "Infundir lentamente em 60 minutos.",
+                alertasPediatricos: "Ajustar a dose conforme a concentração sérica.",
+                fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Cloridrato de Vancomicina, atualizado em 30/10/2025."
+            },
+            "domperidona": {
+                indicacoes: "Dispepsia e êmese (procinético).",
+                dose: "0,25-0,5 mg/kg/dose VO de 8/8 horas, 15-30 minutos antes das refeições e ao dormir (caso necessário).",
+                doseMaxima: "1 mg/kg/dia ou 35 mg/dia.",
+                apresentacoes: "Suspensão 1 mg/mL e 5 mg/mL; comprimido 10 mg.",
+                via: "Oral.",
+                intervalo: "8/8 horas.",
+                alertasPediatricos: "Evitar o uso em menores de 12 anos e/ou 35 kg de peso corpóreo.",
+                fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Domperidona, atualizado em 15/09/2026."
+            },
+            "fenobarbital": {
+                indicacoes: "Anticonvulsivante; sedação; efeitos hipnóticos.",
+                dose: "Período neonatal: ataque 20 mg/kg/dose EV dose única, podendo ser repetido com 10-20 mg/kg/dose EV, caso necessário; manutenção 5 mg/kg/dia EV de 24/24 horas. Lactentes, crianças e adolescentes: ataque 10-20 mg/kg/dose EV dose única, podendo ser repetido com 5-10 mg/kg/dose EV; manutenção 3-6 mg/kg/dia EV de 12/12 ou 24/24 horas.",
+                doseMaxima: "3,2 mL/dose (320 mg).",
+                apresentacoes: "Ampola 100 mg/mL e 200 mg/mL; comprimido 50 mg e 100 mg; gotas 40 mg/mL (1 gota = 1 mg).",
+                via: "Endovenosa.",
+                diluicao: "Diluir com soro fisiológico.",
+                infusao: "Infundir no máximo a 60 mg/minuto.",
+                alertasPediatricos: "Pode causar hipotensão, depressão respiratória e rebaixamento do nível de consciência, podendo ser necessário inclusive manejo de via aérea avançada em uso de doses repetidas.",
+                fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Fenobarbital, atualizado em 14/08/2025."
+            },
+            "fenobarbital_gts": {
+                indicacoes: "Dose de manutenção para crises convulsivas.",
+                dose: "Neonatos: 5 mg/kg/dia VO de 24/24 horas. > 1 mês de idade: 3-6 mg/kg/dia VO de 12/12 ou 24/24 horas.",
+                doseMaxima: "400 gotas/dia (400 mg/dia).",
+                apresentacoes: "Gotas 40 mg/mL (1 gota = 1 mg); comprimido 50 mg e 100 mg.",
+                via: "Oral.",
+                intervalo: "12/12 ou 24/24 horas.",
+                fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Fenobarbital, atualizado em 14/08/2025."
+            },
+            "sulfato_ferroso": {
+                indicacoes: "Reposição de ferro: tratamento de anemia ferropriva.",
+                dose: "Gotas (124,45 mg/mL = 1 mg de ferro elementar/gota): 3-6 mg de ferro elementar/kg/dia VO de 12/12 ou 24/24 horas, por 6 meses, ou até reposição dos estoques corporais.",
+                doseMaxima: "Dose máxima na pediatria: 80 gotas/dia (80 mg/dia).",
+                apresentacoes: "Comprimido revestido 121,72 mg, 121,75 mg, 124,4 mg e 125,545 mg (= 40 mg de ferro elementar), 152,19 mg (= 50 mg) e 190 mg (= 60 mg); drágea 190 mg (= 60 mg); solução oral 124,45 mg/mL e 125 mg/mL (= 25 mg/mL de ferro elementar) e 68 mg/mL (= 13,668 mg/mL); xarope 25 mg/mL (= 5 mg/mL e 5,025 mg/mL de ferro elementar) e 50 mg/mL (= 10 mg/mL).",
+                via: "Oral.",
+                intervalo: "12/12 ou 24/24 horas.",
+                alertasPediatricos: "Tomar com estômago vazio, com água ou sucos cítricos para melhor absorção. Não administrar com leite ou produtos lácteos.",
+                fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Sulfato Ferroso, atualizado em 14/08/2025."
+            },
+            "sulfato_ferroso_prof": {
+                indicacoes: "Profilaxia da anemia ferropriva (protocolo da Sociedade Brasileira de Pediatria - 2021).",
+                dose: "RN a termo AIG em aleitamento materno exclusivo até o 6º mês, sem fatores de risco: 1 mg/kg/dia VO de 24/24 horas de 6-24 meses. RN a termo AIG com fatores de risco (aleitamento exclusivo ou qualquer alimentação): 1 mg/kg/dia de 3-24 meses. RN a termo < 2.500 g: 2 mg/kg/dia de 1-12 meses; depois 1 mg/kg/dia de 12-24 meses. Prematuros > 1.500 g: 2 mg/kg/dia de 1-12 meses; 1.500-1.000 g: 3 mg/kg/dia de 1-12 meses; < 1.000 g: 4 mg/kg/dia de 1-12 meses; depois 1 mg/kg/dia de 12-24 meses.",
+                doseMaxima: "Dose máxima na pediatria: 80 gotas/dia (80 mg/dia).",
+                apresentacoes: "Gotas 124,45 mg/mL (= 25 mg/mL de ferro elementar; 1 gota = 1 mg).",
+                via: "Oral.",
+                intervalo: "24/24 horas.",
+                alertasPediatricos: "Tomar com estômago vazio, com água ou sucos cítricos para melhor absorção. Não administrar com leite ou produtos lácteos.",
+                fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Sulfato Ferroso, atualizado em 14/08/2025."
             }
         };
 
@@ -2427,8 +3314,9 @@
                 id: "cat-sintomaticos", titulo: "Sintomáticos", dotClass: "dot-sintomaticos", cor: "tarja-sintomaticos", nome: "Sintomáticos", icone: "💊 Sintom.",
                 patologias: [
                     { nome: "Febre e Dor (Vias Orais)", remedios: ["dip_gts", "dip_xpe", "pct_gts", "pct_bebe", "ibu_gts", "ibu_50", "ceto_oral"] },
-                    { nome: "Cólicas e Distensão Abdominal", remedios: ["buscopan", "simet"] },
-                    { nome: "Analgesia e Antitérmico Hospitalar", remedios: ["dip_inj"] }
+                    { nome: "Cólicas e Distensão Abdominal", remedios: ["buscopan", "buscopan_composto", "simet", "colikids"] },
+                    { nome: "Dor Moderada a Intensa (Via Oral)", remedios: ["tramadol_gts"] },
+                    { nome: "Analgesia e Antitérmico Hospitalar", remedios: ["dip_inj", "buscopan_composto_ev"] }
                 ]
             },
             { 
@@ -2441,7 +3329,7 @@
             { 
                 id: "cat-antialergicos", titulo: "Antialérgicos", dotClass: "dot-alergias", cor: "tarja-alergias", nome: "Antialérgicos", icone: "🤧 Alerg.",
                 patologias: [
-                    { nome: "Prurido e Rinite (Vias Orais)", remedios: ["hixizine", "dexclor", "deslo"] },
+                    { nome: "Prurido e Rinite (Vias Orais)", remedios: ["hixizine", "dexclor", "deslo", "loratadina"] },
                     { nome: "Urticária / Reação Alérgica (Hospitalar)", remedios: ["prometa"] }
                 ]
             },
@@ -2455,7 +3343,9 @@
                             // Prescrição Ambulatorial
                             "clenil_hfa", "pred_sol", "salb_spray",
                             // Prescrição para Emergência
-                            "salb_spray", "pred_sol", "metil", "magnesio_ev"
+                            "salb_spray", "pred_sol", "metil", "magnesio_ev",
+                            // Adicionados (manual HIAS)
+                            "fenoterol_spray", "fenoterol_gts"
                         ] 
                     },
                     { 
@@ -2467,6 +3357,8 @@
                             "ampicilina", "cef_resp_ev", "cef_resp_im", "azi_ev", "genta"
                         ] 
                     },
+                    { nome: "Bronquiolite Viral Aguda", remedios: ["salina_hipertonica"] },
+                    { nome: "Tosse (Antitussígenos e Expectorantes)", remedios: ["koid_d", "torante", "acebrofilina"] },
                     { nome: "Manejo Avançado e Outros Respiratórios", remedios: ["pulmicort", "salb_neb", "hidro_ev", "ipra", "dexa_crupe"] }
                 ]
             },
@@ -2474,7 +3366,9 @@
                 id: "cat-antibioticos", titulo: "Antibióticos", dotClass: "dot-antibioticos", cor: "tarja-antibioticos", nome: "Antibióticos", icone: "🦠 ATB",
                 patologias: [
                     { nome: "Infecções de Vias Aéreas e Partes Moles", remedios: ["amox", "amox400", "clav"] },
-                    { nome: "Faringite / Amigdalite (Dose Única)", remedios: ["benza"] }
+                    { nome: "Faringite / Amigdalite (Dose Única)", remedios: ["benza"] },
+                    { nome: "Outros Antibióticos Orais", remedios: ["cefadroxila", "pen_v", "smx_tmp", "metronidazol_vo", "cipro_vo"] },
+                    { nome: "Antibióticos Hospitalares (EV)", remedios: ["amicacina", "cefalotina", "cefepime", "ceftazidima", "cipro_ev", "clindamicina", "meropenem", "metronidazol_ev", "oxacilina", "pen_cristalina", "vancomicina"] }
                 ]
             },
             { 
@@ -2494,7 +3388,9 @@
             { 
                 id: "cat-neuro", titulo: "Neuro", dotClass: "dot-neuro", cor: "tarja-neuro", nome: "Neuro", icone: "🧠 Neuro",
                 patologias: [
-                    { nome: "Crise Convulsiva Aguda", remedios: ["neuro_diaz", "neuro_midaz", "neuro_fenitoina"] }
+                    { nome: "Crise Convulsiva Aguda", remedios: ["neuro_diaz", "neuro_midaz", "neuro_fenitoina", "fenobarbital"] },
+                    { nome: "Anticonvulsivantes de Manutenção", remedios: ["fenobarbital_gts"] },
+                    { nome: "Sedação para Exames", remedios: ["hidrato_cloral"] }
                 ]
             },
             { 
@@ -2507,8 +3403,10 @@
             { 
                 id: "cat-diarreia", titulo: "TGI", dotClass: "dot-diarreia", cor: "tarja-diarreia", nome: "TGI", icone: "💧 TGI",
                 patologias: [
-                    { nome: "Gastroenterite e Reidratação Oral", remedios: ["tgi_sro", "tgi_zinco", "tgi_provance_mini", "tiorfan", "ondif_cp", "tgi_provance_gg", "tgi_flora", "tgi_azitro", "tgi_alben", "tgi_meben"] },
-                    { nome: "Hidratação IV e Hidroeletrolíticos (Choque/Manutenção)", remedios: ["tgi_planoc", "tgi_manutencao", "vig_4", "vig_5"] }
+                    { nome: "Gastroenterite e Reidratação Oral", remedios: ["tgi_sro", "tgi_zinco", "tgi_provance_mini", "tiorfan", "ondif_cp", "tgi_provance_gg", "tgi_flora", "tgi_azitro", "tgi_alben", "tgi_meben", "nitazoxanida"] },
+                    { nome: "Constipação, Refluxo e Mucosite", remedios: ["lactulose", "oleo_mineral", "domperidona", "solucao_mucosite"] },
+                    { nome: "Hidratação IV e Hidroeletrolíticos (Choque/Manutenção)", remedios: ["tgi_planoc", "tgi_manutencao", "vig_4", "vig_5"] },
+                    { nome: "Correção de Potássio e Sódio", remedios: ["kcl_ev", "kcl_xarope", "nacl3_hiponatremia"] }
                 ]
             },
             { 
@@ -2520,7 +3418,9 @@
             { 
                 id: "cat-especialidades", titulo: "Especialidades", dotClass: "dot-especialidades", cor: "tarja-especialidades", nome: "Especialidades", icone: "👁️‍🗨️ Espec.",
                 patologias: [
-                    { nome: "Otologia e Oftalmologia", remedios: ["espec_otociriax", "espec_cerumin", "espec_tobra", "espec_tobra_dexa", "espec_lacribell"] }
+                    { nome: "Otologia e Oftalmologia", remedios: ["espec_otociriax", "espec_cerumin", "espec_tobra", "espec_tobra_dexa", "espec_lacribell"] },
+                    { nome: "Hematologia (Ferro e Hemoderivados)", remedios: ["sulfato_ferroso", "sulfato_ferroso_prof", "hemacias", "plaquetas", "plasma"] },
+                    { nome: "Endócrino (Cetoacidose Diabética)", remedios: ["insulina_cad"] }
                 ]
             }
         ];
@@ -2658,7 +3558,7 @@
         }
 
         function renderizarBlocoFicha(idRemedio, instanceId) {
-            let ficha = fichasMedicamentos[idRemedio];
+            let ficha = fichasMedicamentos[idRemedio] || fichasPadrao[idRemedio]; // a da equipe (Firestore) tem prioridade sobre a padrão
             let temConteudo = !!(ficha && (ficha.indicacoes || ficha.dose || ficha.doseMaxima || ficha.apresentacoes || ficha.via || ficha.intervalo || ficha.contraindicacoes || ficha.alertasPediatricos || ficha.efeitosAdversos || ficha.interacoes || ficha.ajusteRenal || ficha.ajusteHepatico || ficha.fonteRevisao || ficha.diluicao || ficha.reconstituicao || ficha.infusao || ficha.conservacao));
             let ehAdmin = !!window.usuarioEhAdmin;
 
@@ -3440,12 +4340,15 @@
             let med = buscarMed(idRemedio);
             if (!med) return;
             fichaEditandoId = idRemedio;
-            let ficha = fichasMedicamentos[idRemedio] || {};
+            // Abre com a ficha salva pela equipe ou, se não houver, com a ficha padrão do app.
+            let ficha = fichasMedicamentos[idRemedio] || fichasPadrao[idRemedio] || {};
             document.getElementById('fichaMedNome').innerText = med.nome;
-            document.getElementById('hContraindicacoes').value = ficha.contraindicacoes || "";
-            document.getElementById('hInteracoes').value = ficha.interacoes || "";
-            document.getElementById('hAjusteRenal').value = ficha.ajusteRenal || "";
-            document.getElementById('hAjusteHepatico').value = ficha.ajusteHepatico || "";
+            // Preenche TODOS os campos, para que salvar não apague o que já estava escrito.
+            [["hIndicacoes", "indicacoes"], ["hDose", "dose"], ["hDoseMaxima", "doseMaxima"], ["hApresentacoes", "apresentacoes"],
+             ["hVia", "via"], ["hIntervalo", "intervalo"], ["hContraindicacoes", "contraindicacoes"], ["hAlertasPediatricos", "alertasPediatricos"],
+             ["hEfeitosAdversos", "efeitosAdversos"], ["hInteracoes", "interacoes"], ["hAjusteRenal", "ajusteRenal"], ["hAjusteHepatico", "ajusteHepatico"],
+             ["hFonteRevisao", "fonteRevisao"], ["hDiluicao", "diluicao"], ["hReconstituicao", "reconstituicao"], ["hInfusao", "infusao"],
+             ["hConservacao", "conservacao"]].forEach(([campo, chave]) => { document.getElementById(campo).value = ficha[chave] || ""; });
             document.getElementById('erroFormFicha').innerText = "";
             document.getElementById('modalFicha').classList.add('aberto');
         }
