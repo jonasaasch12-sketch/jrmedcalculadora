@@ -23,7 +23,7 @@
 .cond-indice { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
 .cond-indice a { font-size: 11.5px; font-weight: 700; text-decoration: none; color: var(--text-main); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; }
 
-.cond-secao { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin-bottom: 12px; scroll-margin-top: calc(var(--altura-topo, 100px) + 10px); }
+.cond-secao { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; scroll-margin-top: calc(var(--altura-topo, 100px) + 10px); }
 .cond-secao h3 { margin: 0 0 8px; font-size: 15px; color: color-mix(in srgb, var(--cor-cat) 82%, #000); }
 .cond-secao ul { margin: 0; padding-left: 20px; font-size: 13.5px; line-height: 1.55; }
 .cond-secao li { margin-bottom: 3px; }
@@ -39,10 +39,24 @@
 .cond-nota { font-size: 12px; color: var(--text-muted); margin-top: 6px; line-height: 1.45; }
 .cond-legenda { font-size: 12px; color: var(--text-muted); background: var(--surface); border: 1px dashed var(--border); border-radius: 8px; padding: 8px 12px; margin-bottom: 10px; }
 .tag-imip { display: inline-block; font-size: 10px; font-weight: 800; color: #7c3aed; background: #f3e8ff; border: 1px solid #ddd6fe; border-radius: 4px; padding: 0 5px; margin-left: 4px; vertical-align: 1px; white-space: nowrap; }
-.cond-secao details > summary { list-style: none; cursor: pointer; }
-.cond-secao details > summary::-webkit-details-marker { display: none; }
-.cond-secao details > summary h3::after { content: " ▸ toque para abrir"; font-size: 11px; font-weight: 600; color: var(--text-muted); }
-.cond-secao details[open] > summary h3::after { content: " ▾"; }
+/* Seções sanfona (abre/fecha com um toque) */
+details.cond-secao { padding: 0; }
+details.cond-secao > summary { list-style: none; cursor: pointer; padding: 12px 40px 12px 16px; position: relative; }
+details.cond-secao > summary::-webkit-details-marker { display: none; }
+details.cond-secao > summary h3 { margin: 0; }
+details.cond-secao > summary::after { content: "▸"; position: absolute; right: 16px; top: 12px; font-size: 18px; color: var(--cor-cat); transition: transform .15s; }
+details.cond-secao[open] > summary::after { transform: rotate(90deg); }
+details.cond-secao[open] > summary { border-bottom: 1px solid var(--border); }
+.cond-secao-resumo { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+.cond-secao-corpo { padding: 12px 16px; }
+.cond-alerta.cond-secao > summary h3 { color: #b91c1c; }
+/* Blocos (Diagnóstico · Emergência · Ambulatório) */
+.cond-bloco { display: flex; flex-direction: column; gap: 2px; margin: 18px 0 10px; padding: 10px 14px; border-radius: 10px; background: var(--cor-bloco); color: #fff; font-weight: 800; font-size: 15px; letter-spacing: .2px; scroll-margin-top: calc(var(--altura-topo, 100px) + 10px); }
+.cond-bloco small { font-weight: 600; font-size: 12px; opacity: .9; }
+.cond-indice-blocos { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
+.cond-indice-blocos a.cond-indice-bloco { text-align: center; border-radius: 10px; padding: 10px 8px; font-size: 13px; font-weight: 800; color: #fff; background: var(--cor-bloco); border: none; }
+.cond-acoes { display: flex; gap: 8px; justify-content: flex-end; margin-bottom: 6px; }
+.cond-acoes button { background: none; border: 1px solid var(--border); color: var(--text-muted); border-radius: 6px; padding: 4px 10px; font-size: 12px; cursor: pointer; }
 .cond-fonte ul { margin: 4px 0 8px; padding-left: 18px; }
 .cond-tabela tbody th { background: #f8fafc; font-weight: 700; white-space: nowrap; }
 

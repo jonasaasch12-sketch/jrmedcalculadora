@@ -14,8 +14,59 @@ registrarConduta({
     resumo: "Diagnóstico, controle, tratamento de manutenção por etapas e manejo da crise, com o escore PRAM.",
     legenda: "Conduta conforme o <strong>GINA 2026</strong> (capítulos pediátricos), traduzido e adaptado. O manejo da crise neste documento é o da faixa de <strong>≤ 5 anos</strong>. O escore PRAM é validado de 2 a 17 anos.",
 
-    secoes: [
+    blocos: [
         {
+            titulo: "Diagnóstico e apresentação clínica",
+            icone: "🔎",
+            cor: "#0284c7",
+            secoes: [
+        {
+            aberta: true,
+            resumo: "Tabela de gravidade e escore clicável.",
+            titulo: "Gravidade da crise + escore PRAM",
+            icone: "📊",
+            tabela: {
+                gravidade: true,
+                colunas: ["", "Leve (todos)", "Moderada", "Grave (qualquer)", "Ameaça à vida"],
+                linhas: [
+                    ["Consciência", "Normal", "Normal", "Normal", "Sonolento, confuso"],
+                    ["Cianose central", "Ausente", "Não", "Pode estar presente", "Cianótico"],
+                    ["SpO₂ em ar ambiente*", "≥ 94%", "≥ 92%", "< 92%", ""],
+                    ["Fala†", "Frases", "Expressões", "Palavras", ""],
+                    ["Frequência respiratória", "≤ 40/min", "Aumentada, mas ≤ 40/min", "> 40/min", ""],
+                    ["Musculatura acessória", "Ausente", "Alguma", "Presente; retração de escalenos", ""],
+                    ["Entrada de ar", "Normal ou ↓ leve nas bases", "↓ (bases ou difusa)", "Tórax silencioso ou só sibilo inspiratório", ""],
+                    ["Sibilância", "Nenhuma ou expiratória leve", "Expiratória ± inspiratória", "Tórax pode estar silencioso", ""],
+                    ["PRAM", "1–3", "4–7", "8–10", "11–12"]
+                ],
+                nota: "Tabela do GINA para ≤ 5 anos (Box 12-1). *Antes do O₂; a oximetria pode superestimar a saturação em pele escura. †Considerar o desenvolvimento da criança. Agitação, sonolência e confusão sugerem hipoxemia cerebral. Tórax silencioso = ventilação mínima. SpO₂ < 92% na chegada (sobretudo < 88%) indica alta chance de internação."
+            },
+            grupos: [
+                {
+                    nome: "Escore PRAM (Pediatric Respiratory Assessment Measure) · 2 a 17 anos",
+                    escore: {
+                        id: "pram",
+                        instrucao: "Toque no que o paciente apresenta em cada item. A soma é feita automaticamente.",
+                        itens: [
+                            { nome: "Saturação de O₂", opcoes: [[0, "≥ 95%"], [1, "92–94%"], [2, "< 92%"]] },
+                            { nome: "Retração supraesternal", opcoes: [[0, "Ausente"], [2, "Presente"]] },
+                            { nome: "Contração dos escalenos (palpação)", opcoes: [[0, "Ausente"], [2, "Presente"]] },
+                            { nome: "Entrada de ar*", opcoes: [[0, "Normal"], [1, "Diminuída nas bases"], [2, "Diminuída em ápices e bases"], [3, "Mínima ou ausente"]] },
+                            { nome: "Sibilância§", opcoes: [[0, "Ausente"], [1, "Só expiratória"], [2, "Inspiratória (± expiratória)"], [3, "Audível sem estetoscópio ou tórax silencioso"]] }
+                        ],
+                        faixas: [
+                            { min: 0, max: 3, rotulo: "Crise leve", cor: "#16a34a" },
+                            { min: 4, max: 7, rotulo: "Crise moderada", cor: "#d97706" },
+                            { min: 8, max: 10, rotulo: "Crise grave", cor: "#dc2626" },
+                            { min: 11, max: 12, rotulo: "Crise grave: risco de vida", cor: "#7f1d1d", texto: "Pior categoria do escore. Tratar imediatamente e chamar UTI." }
+                        ],
+                        nota: "Máximo 12. Classificação: 0–3 leve · 4–7 moderada · 8–12 grave (11–12 = ameaça à vida, pela tabela de gravidade do GINA). *Se assimetria, vale o campo pulmonar (ápice-base) mais acometido. §Se assimetria, valem as duas zonas de ausculta mais acometidas. O escore é um guia e não substitui a avaliação clínica. PRAM © 2011 Francine Ducharme."
+                    }
+                }
+            ]
+        },
+        {
+            resumo: "Os 3 critérios do GINA, asma suspeita e exames.",
             titulo: "Diagnóstico (≤ 5 anos)",
             icone: "🔎",
             itens: [
@@ -30,10 +81,10 @@ registrarConduta({
             ]
         },
         {
+            resumo: "Outras causas de sibilância e quando encaminhar.",
             titulo: "Diagnóstico diferencial (≤ 5 anos)",
             icone: "🧭",
-            recolhida: true,
-            tabela: {
+                        tabela: {
                 colunas: ["Sintomas ou sinais", "Considerar"],
                 linhas: [
                     ["Tosse e coriza/congestão nasal < 10 dias, sem sibilância ou dificuldade respiratória", "IVAS viral"],
@@ -63,8 +114,148 @@ registrarConduta({
                     ]
                 }
             ]
+        }
+            ]
         },
         {
+            titulo: "Condução na emergência",
+            icone: "🚨",
+            cor: "#dc2626",
+            secoes: [
+        {
+            titulo: "Conduta por gravidade",
+            icone: "🩺",
+            aberta: true,
+            resumo: "Salbutamol, ipratrópio, corticoide, O₂ e magnésio conforme a gravidade.",
+            itens: [
+                "Avaliar se é asma ou outra causa (crupe, bronquiolite: mais provável se < 12 meses com crepitações, corpo estranho, cetoacidose). Perguntar o que já foi feito.",
+                "<strong>Se houver anafilaxia junto com a asma: adrenalina IM primeiro.</strong>",
+                "Broncodilatador por <strong>spray + espaçador</strong> (mais eficiente e confortável, não dispersa vírus). Máscara só se a criança não conseguir usar o bocal. Um jato por vez, agitando antes de cada jato, 5–6 respirações após cada jato."
+            ],
+            grupos: [
+                {
+                    nome: "🟢 Leve",
+                    itens: [
+                        "<strong>Salbutamol spray + espaçador</strong> conforme o card.",
+                        "Reavaliar a resposta e repetir se necessário."
+                    ],
+                    remedios: ["salb_spray"]
+                },
+                {
+                    nome: "🟠 Moderada",
+                    itens: [
+                        "<strong>Salbutamol spray</strong> de 20/20 min na 1ª hora.",
+                        "<strong>Ipratrópio</strong> junto com o broncodilatador, a cada 20–30 min, até 3 vezes.",
+                        "<strong>Iniciar corticoide sistêmico</strong>: prednisolona VO (alternativa: dexametasona VO 0,3–0,6 mg/kg, máx. 12 mg, 1–2 dias; vomita menos)."
+                    ],
+                    remedios: ["salb_spray", "ipra", "pred_sol"]
+                },
+                {
+                    nome: "🔴 Grave",
+                    itens: [
+                        "<strong>Iniciar o tratamento imediatamente</strong> (na atenção primária: transferir para unidade de urgência).",
+                        "Salbutamol de 20/20 min + ipratrópio a cada vez, até 3 vezes.",
+                        "<strong>O₂ se SpO₂ < 92%</strong> (acordado), alvo <strong>≥ 92%</strong>.",
+                        "Corticoide sistêmico (VO, ou EV se não tolerar VO). <strong>Considerar sulfato de magnésio EV.</strong> Monitorização contínua."
+                    ],
+                    remedios: ["salb_spray", "ipra", "metil", "magnesio_ev", "adrenalina_im"]
+                },
+                {
+                    nome: "⛔ Ameaça à vida (sonolento, confuso, cianótico ou PRAM 11–12)",
+                    itens: [
+                        "Tratar imediatamente: broncodilatador, ipratrópio, O₂ e corticoide sistêmico. <strong>Chamar UTI pediátrica ou anestesia.</strong>",
+                        "Adrenalina IM primeiro se anafilaxia. Acesso EV e monitorização cardiorrespiratória contínua.",
+                        "O₂ 100% por máscara não reinalante. Broncodilatador + ipratrópio contínuos/seriados na 1ª hora. Monitorar toxicidade do SABA.",
+                        "Corticoide EV ou IM. Sulfato de magnésio EV. Radiografia de tórax. Considerar gasometria."
+                    ],
+                    remedios: ["metil", "magnesio_ev"]
+                }
+            ],
+            nota: "⚠️ Toxicidade do SABA: taquicardia, palpitações, ansiedade, hipocalemia, arritmias, acidose lática e hiperventilação. Pode ser confundida com piora da asma. Ipratrópio: suspender após as primeiras 1–2 h. Magnésio nebulizado não tem benefício."
+        },
+        {
+            resumo: "Reavaliar em 1 h; quando transferir e internar.",
+            titulo: "Reavaliação, transferência e internação",
+            icone: "🏥",
+            grupos: [
+                {
+                    nome: "Reavaliar em 1 hora (ou antes)",
+                    itens: [
+                        "Repetir SpO₂, FR, musculatura acessória, entrada de ar e PRAM.",
+                        "<strong>Melhora acentuada</strong> sem novo SABA: avaliar alta.",
+                        "<strong>Melhora parcial:</strong> salbutamol adicional se necessário, considerar nova dose de ipratrópio, corticoide sistêmico se ainda não feito. Reavaliar no mínimo a cada hora.",
+                        "<strong>Piora:</strong> pensar em causas alternativas ou adicionais; salbutamol + ipratrópio; corticoide; magnésio EV; considerar UTI."
+                    ]
+                },
+                {
+                    nome: "Transferência imediata para hospital (qualquer um)",
+                    itens: [
+                        "Cianose · incapaz de falar ou beber · <strong>FR > 40/min</strong> · <strong>SpO₂ < 92%</strong> em ar ambiente · tórax silencioso com dispneia.",
+                        "Sem resposta ao salbutamol de 20/20 min por até 3× (1 hora), ou taquipneia persistente após 3 doses, mesmo com outra melhora (FR normal: < 50 entre 2–12 meses; < 40 entre 1–5 anos).",
+                        "Crise grave sem resolução em 1–2 h · parada ou parada iminente · recorrência de crise grave em 48 h (sobretudo já com corticoide).",
+                        "Ambiente social que limita o tratamento ou cuidador incapaz de manejar em casa.",
+                        "Durante o transporte: manter salbutamol, O₂ (alvo ≥ 92%) e iniciar corticoide sistêmico.",
+                        "Procurar atendimento precoce se história de crise grave com risco de vida ou < 2 anos (maior risco de desidratação e fadiga)."
+                    ]
+                },
+                {
+                    nome: "Considerar internação se",
+                    itens: [
+                        "Sem melhora em 1 hora · SpO₂ < 92% · necessidade de SABA mais que a cada 1–2 h.",
+                        "Dispneia persistente 4–6 h após o corticoide sistêmico.",
+                        "Fatores que dificultem a adesão ou impossibilidade de acompanhamento próximo."
+                    ]
+                }
+            ]
+        },
+        {
+            titulo: "Alta da emergência",
+            icone: "✅",
+            resumo: "Critérios para liberar para casa.",
+            itens: [
+                "Sintomas melhorados e critérios de crise \"leve\" por <strong>1–2 h após o último salbutamol</strong>.",
+                "<strong>SpO₂ ≥ 92%</strong> em ar ambiente.",
+                "Estável (fora do leito, comendo e bebendo) e recursos adequados em casa.",
+                "Registrar o diagnóstico de asma se confirmado: sibilância observada, sem outra causa e resposta ao SABA.",
+                "Prescrição para casa: ver o bloco Ambulatório abaixo."
+            ]
+        }
+            ]
+        },
+        {
+            titulo: "Ambulatório: casa e manutenção",
+            icone: "🏠",
+            cor: "#16a34a",
+            secoes: [
+        {
+            titulo: "Prescrição para casa (pós-crise)",
+            icone: "📝",
+            aberta: true,
+            resumo: "Broncodilatador, corticoide oral, corticoide inalatório e retorno.",
+            itens: [
+                "<strong>Salbutamol spray + espaçador</strong> conforme o card (esquema de alta).",
+                "<strong>Corticoide oral:</strong> completar o curso (prednisolona 3–5 dias no total, ou dexametasona 1–2 dias).",
+                "<strong>Corticoide inalatório:</strong> iniciar, manter ou aumentar se crise moderada/grave ou sintomas entre as crises (≥ 2 dias/semana). No 1º mês após a alta, usar o <strong>dobro da dose baixa</strong>, depois ajustar.",
+                "Treinar a técnica com espaçador. Entregar plano de ação escrito. Identificar gatilhos (virose, tabaco, poluição, alérgenos, adesão).",
+                "<strong>Retorno em 1–3 dias</strong> e novamente em <strong>2–3 meses</strong>. Encaminhar ao especialista se ≥ 1 crise nos últimos 12 meses ou > 1 curso de corticoide oral no ano.",
+                "Procurar atendimento se não melhorar ou piorar nas próximas 24–48 h."
+            ],
+            remedios: ["salb_spray", "pred_sol", "clenil_hfa"]
+        },
+        {
+            resumo: "O que os pais fazem e quando procurar atendimento.",
+            titulo: "Plano de ação em casa (≤ 5 anos)",
+            icone: "🏠",
+            itens: [
+                "Iniciar <strong>salbutamol spray + espaçador</strong> (dose do card, um jato por vez). Pode repetir mais 2× a intervalos de 20 min se necessário. Se melhorar, manter em repouso e observar por 1 h ou mais.",
+                "<strong>Procurar atendimento imediato se:</strong> desconforto agudo (falta de ar intensa, tiragem, cianose), sonolência/letargia ou piora; sem alívio rápido com o broncodilatador; alívio dura menos de 4 h ou cada vez menos; menor de 12 meses precisando de SABA repetido por várias horas.",
+                "<strong>Procurar atendimento no mesmo dia</strong> se precisar de nova dose em menos de 4 h ou de SABA > 3 vezes nas primeiras 12 h.",
+                "<strong>Corticoide oral iniciado pelos pais não é recomendado.</strong> CI em dose alta episódico só se o médico tiver certeza do uso adequado.",
+                "Montelucaste no início de virose: evidência conflitante. Orientar efeitos em sono, comportamento e humor."
+            ]
+        },
+        {
+            resumo: "4 perguntas clicáveis e fatores de risco.",
             titulo: "Avaliação do controle (≤ 5 anos)",
             icone: "🎯",
             escore: {
@@ -106,6 +297,7 @@ registrarConduta({
             ]
         },
         {
+            resumo: "Etapas, dose baixa de corticoide inalatório e dispositivo.",
             titulo: "Manutenção ≤ 5 anos (por etapas)",
             icone: "🪜",
             tabela: {
@@ -160,6 +352,7 @@ registrarConduta({
             ]
         },
         {
+            resumo: "Tratamento inicial e etapas 1 a 5.",
             titulo: "Manutenção 6–11 anos (por etapas)",
             icone: "🪜",
             tabela: {
@@ -202,172 +395,7 @@ registrarConduta({
             ]
         },
         {
-            titulo: "Crise: avaliação da gravidade",
-            icone: "📊",
-            tabela: {
-                gravidade: true,
-                colunas: ["", "Leve (todos)", "Moderada", "Grave (qualquer)", "Ameaça à vida"],
-                linhas: [
-                    ["Consciência", "Normal", "Normal", "Normal", "Sonolento, confuso"],
-                    ["Cianose central", "Ausente", "Não", "Pode estar presente", "Cianótico"],
-                    ["SpO₂ em ar ambiente*", "≥ 94%", "≥ 92%", "< 92%", ""],
-                    ["Fala†", "Frases", "Expressões", "Palavras", ""],
-                    ["Frequência respiratória", "≤ 40/min", "Aumentada, mas ≤ 40/min", "> 40/min", ""],
-                    ["Musculatura acessória", "Ausente", "Alguma", "Presente; retração de escalenos", ""],
-                    ["Entrada de ar", "Normal ou ↓ leve nas bases", "↓ (bases ou difusa)", "Tórax silencioso ou só sibilo inspiratório", ""],
-                    ["Sibilância", "Nenhuma ou expiratória leve", "Expiratória ± inspiratória", "Tórax pode estar silencioso", ""],
-                    ["PRAM", "1–3", "4–7", "8–10", "11–12"]
-                ],
-                nota: "Tabela do GINA para ≤ 5 anos (Box 12-1). *Antes do O₂; a oximetria pode superestimar a saturação em pele escura. †Considerar o desenvolvimento da criança. Agitação, sonolência e confusão sugerem hipoxemia cerebral. Tórax silencioso = ventilação mínima. SpO₂ < 92% na chegada (sobretudo < 88%) indica alta chance de internação."
-            },
-            grupos: [
-                {
-                    nome: "Escore PRAM (Pediatric Respiratory Assessment Measure) · 2 a 17 anos",
-                    escore: {
-                        id: "pram",
-                        instrucao: "Toque no que o paciente apresenta em cada item. A soma é feita automaticamente.",
-                        itens: [
-                            { nome: "Saturação de O₂", opcoes: [[0, "≥ 95%"], [1, "92–94%"], [2, "< 92%"]] },
-                            { nome: "Retração supraesternal", opcoes: [[0, "Ausente"], [2, "Presente"]] },
-                            { nome: "Contração dos escalenos (palpação)", opcoes: [[0, "Ausente"], [2, "Presente"]] },
-                            { nome: "Entrada de ar*", opcoes: [[0, "Normal"], [1, "Diminuída nas bases"], [2, "Diminuída em ápices e bases"], [3, "Mínima ou ausente"]] },
-                            { nome: "Sibilância§", opcoes: [[0, "Ausente"], [1, "Só expiratória"], [2, "Inspiratória (± expiratória)"], [3, "Audível sem estetoscópio ou tórax silencioso"]] }
-                        ],
-                        faixas: [
-                            { min: 0, max: 3, rotulo: "Crise leve", cor: "#16a34a" },
-                            { min: 4, max: 7, rotulo: "Crise moderada", cor: "#d97706" },
-                            { min: 8, max: 10, rotulo: "Crise grave", cor: "#dc2626" },
-                            { min: 11, max: 12, rotulo: "Crise grave: risco de vida", cor: "#7f1d1d", texto: "Pior categoria do escore. Tratar imediatamente e chamar UTI." }
-                        ],
-                        nota: "Máximo 12. Classificação: 0–3 leve · 4–7 moderada · 8–12 grave (11–12 = ameaça à vida, pela tabela de gravidade do GINA). *Se assimetria, vale o campo pulmonar (ápice-base) mais acometido. §Se assimetria, valem as duas zonas de ausculta mais acometidas. O escore é um guia e não substitui a avaliação clínica. PRAM © 2011 Francine Ducharme."
-                    }
-                }
-            ]
-        },
-        {
-            titulo: "Crise: conduta (≤ 5 anos)",
-            icone: "🩺",
-            itens: [
-                "Avaliar se os sintomas são de asma ou de outra causa (crupe, bronquiolite: mais provável se < 12 meses com crepitações, corpo estranho, cetoacidose). Perguntar que tratamento já foi feito.",
-                "<strong>Se houver sinais de anafilaxia junto com a asma: adrenalina IM primeiro.</strong>",
-                "<strong>Salbutamol: pMDI + espaçador é preferível</strong> ao nebulizador (mais eficiente, mais confortável, menos efeitos adversos e não dispersa vírus). Usar máscara só se a criança não conseguir usar o bocal."
-            ],
-            grupos: [
-                {
-                    nome: "🟢 Leve",
-                    itens: [
-                        "<strong>Salbutamol 100 mcg: 4 jatos</strong> (um por vez) por pMDI + espaçador, <strong>ou 2,5 mg</strong> por nebulização.",
-                        "Avaliar a resposta e, <strong>se necessário, repetir 1× após 30–60 min</strong>."
-                    ]
-                },
-                {
-                    nome: "🟠 Moderada",
-                    itens: [
-                        "<strong>Salbutamol 4–6 jatos</strong> por pMDI + espaçador, ou <strong>2,5 mg</strong> por nebulização, <strong>até 3×, a cada 20–30 min</strong>.",
-                        "<strong>Ipratrópio 20 mcg: 4 jatos</strong> junto com cada série de salbutamol (ou 0,25 mg nebulizado), até 3×.",
-                        "<strong>Iniciar corticoide sistêmico.</strong>"
-                    ],
-                    remedios: ["pred_sol"]
-                },
-                {
-                    nome: "🔴 Grave",
-                    itens: [
-                        "<strong>Transferir para unidade de urgência e iniciar o tratamento imediatamente.</strong>",
-                        "Salbutamol 4–6 jatos (pMDI + espaçador) ou 2,5 mg nebulizado <strong>a cada 20 min</strong>, + ipratrópio 4 jatos (20 mcg/jato) ou 0,25 mg nebulizado a cada vez, até 3×.",
-                        "<strong>O₂ se SpO₂ < 92%</strong> (acordado), alvo <strong>≥ 92%</strong>.",
-                        "Corticoide sistêmico. <strong>Considerar sulfato de magnésio EV.</strong> Monitorização contínua."
-                    ],
-                    remedios: ["pred_sol", "adrenalina_im"]
-                },
-                {
-                    nome: "⛔ Ameaça à vida (sonolento, confuso, cianótico ou PRAM 11–12)",
-                    itens: [
-                        "Tratar imediatamente com salbutamol, ipratrópio, O₂ e corticoide sistêmico. <strong>Chamar UTI pediátrica ou anestesia.</strong>",
-                        "Adrenalina IM primeiro se anafilaxia. Acesso EV e monitorização cardiorrespiratória contínua.",
-                        "O₂ 100% por máscara não reinalante. <strong>Salbutamol + ipratrópio nebulizados contínuos por 60 min.</strong> Monitorar toxicidade do SABA.",
-                        "Corticoide EV ou IM. Sulfato de magnésio EV. Radiografia de tórax. Considerar gasometria."
-                    ]
-                },
-                {
-                    nome: "Medicações da crise: doses do GINA (≤ 5 anos)",
-                    tabela: {
-                        colunas: ["Medicação", "Dose e administração"],
-                        linhas: [
-                            ["Oxigênio", "Cateter nasal ou máscara, para manter SpO₂ ≥ 92%."],
-                            ["Salbutamol (SABA)", "≥ 4 jatos de 100 mcg por espaçador (um por vez) ou 2,5 mg nebulizado (2,5 mg diluídos em 3 mL de SF 0,9% em nebulizador a O₂, se hipoxemia). Moderada/grave: a cada 20 min até 3×, depois reavaliar."],
-                            ["Prednisolona / prednisona VO", "1–2 mg/kg (máx. <strong>20 mg se < 2 anos</strong>; <strong>30 mg se 2–5 anos</strong>), por <strong>3–5 dias</strong>, sem desmame."],
-                            ["Dexametasona VO", "0,3–0,6 mg/kg (máx. 12 mg), 1 dose, com ou sem 2ª dose no dia seguinte (total 1–2 dias). Causa menos vômitos."],
-                            ["Metilprednisolona EV", "1 mg/kg de 6/6 h no 1º dia."],
-                            ["Brometo de ipratrópio", "4 jatos de 20 mcg (pMDI + espaçador) ou 0,25 mg nebulizado, com o SABA, até 3×. Suspender após as primeiras 1–2 h."],
-                            ["Sulfato de magnésio EV", "40–50 mg/kg (máx. 2 g) em 20–60 min, dose única, em ≥ 2 anos com crise grave, após a 1ª hora de tratamento. Magnésio nebulizado não tem benefício."]
-                        ],
-                        nota: "⚠️ Toxicidade do SABA: taquicardia, palpitações, ansiedade, hipocalemia, arritmias, acidose lática e hiperventilação. Pode ser confundida com piora da asma."
-                    }
-                }
-            ]
-        },
-        {
-            titulo: "Reavaliação, transferência e internação",
-            icone: "🏥",
-            grupos: [
-                {
-                    nome: "Reavaliar em 1 hora (ou antes)",
-                    itens: [
-                        "Repetir SpO₂, FR, musculatura acessória, entrada de ar e PRAM.",
-                        "<strong>Melhora acentuada</strong> sem novo SABA: avaliar alta.",
-                        "<strong>Melhora parcial:</strong> salbutamol adicional se necessário, considerar nova dose de ipratrópio, corticoide sistêmico se ainda não feito. Reavaliar no mínimo a cada hora.",
-                        "<strong>Piora:</strong> pensar em causas alternativas ou adicionais; salbutamol + ipratrópio; corticoide; magnésio EV; considerar UTI."
-                    ]
-                },
-                {
-                    nome: "Transferência imediata para hospital (qualquer um)",
-                    itens: [
-                        "Cianose · incapaz de falar ou beber · <strong>FR > 40/min</strong> · <strong>SpO₂ < 92%</strong> em ar ambiente · tórax silencioso com dispneia.",
-                        "Sem resposta a 4–6 jatos de salbutamol a cada 20 min por até 3× (1 hora), ou taquipneia persistente após 3 doses, mesmo com outra melhora (FR normal: < 50 entre 2–12 meses; < 40 entre 1–5 anos).",
-                        "Crise grave sem resolução em 1–2 h · parada ou parada iminente · recorrência de crise grave em 48 h (sobretudo já com corticoide).",
-                        "Ambiente social que limita o tratamento ou cuidador incapaz de manejar em casa.",
-                        "Durante o transporte: manter salbutamol, O₂ (alvo ≥ 92%) e iniciar corticoide sistêmico.",
-                        "Procurar atendimento precoce se história de crise grave com risco de vida ou < 2 anos (maior risco de desidratação e fadiga)."
-                    ]
-                },
-                {
-                    nome: "Considerar internação se",
-                    itens: [
-                        "Sem melhora em 1 hora · SpO₂ < 92% · necessidade de SABA mais que a cada 1–2 h.",
-                        "Dispneia persistente 4–6 h após o corticoide sistêmico.",
-                        "Fatores que dificultem a adesão ou impossibilidade de acompanhamento próximo."
-                    ]
-                }
-            ]
-        },
-        {
-            titulo: "Alta e seguimento",
-            icone: "✅",
-            itens: [
-                "<strong>Critérios:</strong> sintomas melhorados e critérios de crise \"leve\" por <strong>1–2 h após o último salbutamol</strong>, <strong>SpO₂ ≥ 92%</strong> em ar ambiente, estável (fora do leito, comendo e bebendo) e recursos adequados em casa.",
-                "Registrar o diagnóstico de asma se confirmado: sibilância observada, sem outra causa e resposta ao SABA.",
-                "<strong>Salbutamol pMDI + espaçador, 2 jatos se necessário</strong> (não regular). Voltar à emergência se precisar de novo em menos de 4 h (máx. 12 jatos/24 h).",
-                "<strong>Ipratrópio:</strong> suspender (sem benefício após 1–2 h).",
-                "<strong>CI:</strong> iniciar, manter ou aumentar se crise moderada/grave ou sintomas entre as crises (≥ 2 dias/semana). No 1º mês após a alta, <strong>dobro da dose baixa</strong>, depois ajustar.",
-                "<strong>Corticoide oral:</strong> completar o curso (prednisolona 3–5 dias no total, ou dexametasona 1–2 dias).",
-                "Treinar técnica com espaçador, plano de ação escrito, identificar gatilhos (virose, tabaco, poluição, alérgenos, adesão).",
-                "<strong>Retorno em 1–3 dias</strong> e novamente em <strong>2–3 meses</strong>. Encaminhar ao especialista se ≥ 1 crise nos últimos 12 meses ou > 1 curso de corticoide oral no ano.",
-                "Procurar atendimento se não melhorar ou piorar nas próximas 24–48 h."
-            ],
-            remedios: ["pred_sol", "clenil_hfa"]
-        },
-        {
-            titulo: "Plano de ação em casa (≤ 5 anos)",
-            icone: "🏠",
-            itens: [
-                "Iniciar <strong>salbutamol 100 mcg 2 jatos</strong> (um por vez, pMDI + espaçador). Pode repetir mais 2× a intervalos de 20 min se necessário. Se melhorar, manter em repouso e observar por 1 h ou mais.",
-                "<strong>Procurar atendimento imediato se:</strong> desconforto agudo (falta de ar intensa, tiragem, cianose), sonolência/letargia ou piora; sem alívio rápido com o broncodilatador; alívio dura menos de 4 h ou cada vez menos; menor de 12 meses precisando de SABA repetido por várias horas.",
-                "<strong>Procurar atendimento no mesmo dia</strong> se ≥ 4 jatos em menos de 4 h ou SABA > 3 vezes nas primeiras 12 h.",
-                "<strong>Corticoide oral iniciado pelos pais não é recomendado.</strong> CI em dose alta episódico só se o médico tiver certeza do uso adequado.",
-                "Montelucaste no início de virose: evidência conflitante. Orientar efeitos em sono, comportamento e humor."
-            ]
-        },
-        {
+            resumo: "O que evitar.",
             titulo: "Não recomendado",
             icone: "🚫",
             alerta: true,
@@ -385,11 +413,12 @@ registrarConduta({
         {
             titulo: "Vacinas",
             icone: "💉",
-            recolhida: true,
-            itens: [
+                        itens: [
                 "<strong>Influenza</strong> anual na asma moderada a grave (ou quando indicada para a população geral).",
                 "Pneumocócica, coqueluche, influenza, VSR e COVID-19 conforme o calendário local.",
                 "Asma isolada não é indicação específica de vacina pneumocócica."
+            ]
+        }
             ]
         }
     ],

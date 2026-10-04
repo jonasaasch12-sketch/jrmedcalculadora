@@ -91,7 +91,6 @@ function htmlBlocoConduta(b) {
         if (t.nota) html += `<div class="cond-nota">${t.nota}</div>`;
     });
     if (b.escore) html += htmlEscore(b.escore);
-    if (b.nota) html += `<div class="cond-nota">${b.nota}</div>`;
     if (b.remedios && b.remedios.length) {
         html += `<div class="cond-meds-titulo">💊 Medicações desta etapa</div><div class="cond-meds">`;
         b.remedios.forEach(rid => { html += htmlMedConduta(rid); });
@@ -100,13 +99,21 @@ function htmlBlocoConduta(b) {
     (b.grupos || []).forEach(g => {
         html += `<div class="cond-grupo"><div class="cond-grupo-nome">${g.nome}</div>${htmlBlocoConduta(g)}</div>`;
     });
+    if (b.nota) html += `<div class="cond-nota">${b.nota}</div>`;
     return html;
 }
 
+// Uma conduta pode ter "blocos" (ex.: Diagnóstico · Emergência · Ambulatório),
+// cada um com suas seções; ou só "secoes" (um bloco sem título).
+// As seções abrem e fecham com um toque (fechadas por padrão; "aberta: true" começa aberta).
 function abrirConduta(id) {
     let c = condutasJR[id];
     if (!c) return;
     condutaAberta = id;
+    let blocos = c.blocos || [{ secoes: c.secoes }];
+    let n = 0;
+    let indice = blocos.filter(b => b.titulo).map((b, bi) =>
+        `<a href="#cond-bloco-${bi}" class="cond-indice-bloco" style="--cor-bloco:${b.cor || c.cor}" onclick="document.getElementById('cond-bloco-${bi}').scrollIntoView({behavior:'smooth'});return false;">${b.icone || ''} ${escCond(b.titulo)}</a>`).join('');
     let html = `
         <button type="button" class="cond-voltar" onclick="renderizarListaCondutas(); window.scrollTo(0,0);">← Todas as condutas</button>
         <div class="cond-cabecalho" style="--cor-cat:${c.cor}">
@@ -115,14 +122,18 @@ function abrirConduta(id) {
             <div class="cond-cabecalho-resumo">${escCond(c.resumo || '')}</div>
         </div>
         ${c.legenda ? `<div class="cond-legenda">${c.legenda}</div>` : ''}
-        <nav class="cond-indice">${c.secoes.map((s, i) => `<a href="#cond-sec-${i}" onclick="abrirSecaoConduta(${i});return false;">${s.icone || ''} ${escCond(s.titulo)}</a>`).join('')}</nav>`;
+        ${indice ? `<nav class="cond-indice cond-indice-blocos">${indice}</nav>` : ''}
+        <div class="cond-acoes"><button type="button" onclick="abrirTodasSecoes(true)">⊕ Abrir tudo</button><button type="button" onclick="abrirTodasSecoes(false)">⊖ Fechar tudo</button></div>`;
 
-    c.secoes.forEach((s, i) => {
-        let titulo = `<h3>${s.icone || ''} ${escCond(s.titulo)}</h3>`;
-        let corpo = htmlBlocoConduta(s);
-        html += `<section class="cond-secao${s.alerta ? ' cond-alerta' : ''}" id="cond-sec-${i}" style="--cor-cat:${c.cor}">`
-            + (s.recolhida ? `<details><summary>${titulo}</summary>${corpo}</details>` : titulo + corpo)
-            + `</section>`;
+    blocos.forEach((b, bi) => {
+        if (b.titulo) html += `<div class="cond-bloco" id="cond-bloco-${bi}" style="--cor-bloco:${b.cor || c.cor}"><span>${b.icone || ''} ${escCond(b.titulo)}</span>${b.subtitulo ? `<small>${b.subtitulo}</small>` : ''}</div>`;
+        b.secoes.forEach(s => {
+            let i = n++;
+            html += `<details class="cond-secao${s.alerta ? ' cond-alerta' : ''}" id="cond-sec-${i}" style="--cor-cat:${c.cor}"${s.aberta ? ' open' : ''}>
+                <summary><h3>${s.icone || ''} ${escCond(s.titulo)}</h3>${s.resumo ? `<div class="cond-secao-resumo">${s.resumo}</div>` : ''}</summary>
+                <div class="cond-secao-corpo">${htmlBlocoConduta(s)}</div>
+            </details>`;
+        });
     });
     html += `<div class="cond-fonte"><strong>Fontes:</strong><ul>${c.fontes.map(f => `<li>${escCond(f)}</li>`).join('')}</ul><strong>Revisão:</strong> ${escCond(c.revisao)}</div>`;
     document.getElementById('area-condutas').innerHTML = html;
@@ -130,12 +141,15 @@ function abrirConduta(id) {
     window.scrollTo(0, 0);
 }
 
+function abrirTodasSecoes(abrir) {
+    document.querySelectorAll('#area-condutas details.cond-secao').forEach(d => d.open = abrir);
+}
+
 // Atalho do índice: abre a seção (se estiver recolhida) e rola até ela.
 function abrirSecaoConduta(i) {
     let sec = document.getElementById('cond-sec-' + i);
     if (!sec) return;
-    let det = sec.querySelector('details');
-    if (det) det.open = true;
+    sec.open = true;
     sec.scrollIntoView({ behavior: 'smooth' });
 }
 
