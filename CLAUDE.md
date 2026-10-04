@@ -6,9 +6,17 @@ está no repositório é exatamente o que vai para o ar. Login e dados da equipe
 
 ## Regras de trabalho (combinadas com o Dr. Jonas)
 
-- **Nunca publicar sem autorização explícita** ("pode publicar"). Antes disso, mostrar uma
-  prévia (capturas de tela no computador e no celular).
-- Publicar = commit no branch de trabalho → PR → merge (squash) na `main`.
+- **Duas versões do site:**
+  - `main` → jrmedprescricao.com.br (oficial, toda a equipe)
+  - `teste` → jrmedprescricao.com.br/teste/ (versão de teste: faixa vermelha, só administradores)
+- **Toda mudança vai primeiro para o teste**: commit no branch de trabalho → PR para `teste` →
+  merge (squash). O Dr. Jonas testa no celular dele.
+- **Liberar para todos** só quando ele pedir ("pode liberar"): PR `teste` → `main`, merge com
+  **merge commit** (não squash, para as duas branches não divergirem).
+- Publicação automática: `.github/workflows/publicar.yml` (GitHub Actions) monta os dois
+  endereços a cada push na `main` ou na `teste`, e não publica se `testes/verificar.js` falhar na `main`.
+- O banco de dados (Firebase) é o **mesmo** nas duas versões: remédios da equipe e fichas
+  editados no teste valem no oficial. Só o código fica separado.
 - **Sempre rodar `node testes/verificar.js` antes de publicar.** Se a mudança de dose foi
   intencional, rodar `node testes/verificar.js --atualizar` e conferir o diff de
   `testes/referencia-doses.json`: ele mostra exatamente quais receitas mudaram.
@@ -23,6 +31,7 @@ está no repositório é exatamente o que vai para o ar. Login e dados da equipe
 index.html                 telas (login, cabeçalho, painel, modais) + lista de <script>
 css/estilo.css             toda a aparência (inclui tema escuro: html[data-theme="dark"])
 js/base.js                 auxiliares usados nos cálculos (recHead, round05, ceftriaxona)
+js/modo-teste.js           versão de teste: faixa, selo e bloqueio de quem não é admin
 medicamentos/registro.js   registrarMedicamentos(): cria farmaciaJR, detalhesMedicacoes, fichasPadrao
 medicamentos/<categoria>.js um arquivo por categoria (cat: "cat-<categoria>")
 medicamentos/menu.js       árvore do menu: categoria → seções → ids dos remédios (ordem de exibição)
@@ -38,6 +47,9 @@ Os scripts são clássicos (não módulos) e compartilham variáveis globais (`f
 
 **Arquivo novo de .js/.css?** Acrescentar no `index.html` **e** em `ARQUIVOS_ESSENCIAIS` do
 `sw.js`, e subir o número de `CACHE_NOME`. O teste acusa se faltar.
+
+Todos os caminhos são **relativos** (`js/app.js`, nunca `/js/app.js`), para o mesmo código
+funcionar na raiz e em `/teste/`. `js/modo-teste.js` detecta `/teste/` (constante `MODO_TESTE`).
 
 ## Formato de um remédio (tudo num bloco só)
 

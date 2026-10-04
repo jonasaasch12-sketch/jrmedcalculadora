@@ -248,6 +248,8 @@ onAuthStateChanged(auth, (user) => {
         appPrincipal.style.display = "block";
         let tag = document.getElementById('userEmailTag');
         let ehAdmin = EMAILS_ADMIN.includes(user.email);
+        // Versão de teste (/teste/): só administradores entram.
+        if (MODO_TESTE && !ehAdmin) { mostrarBloqueioTeste(user.email); return; }
         window.usuarioEhAdmin = ehAdmin;
         if (tag) tag.innerText = user.email + (ehAdmin ? " (admin)" : "");
         let btnAdd = document.getElementById('btnAddMed');

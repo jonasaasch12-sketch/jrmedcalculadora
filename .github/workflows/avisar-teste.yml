@@ -1,0 +1,18 @@
+# Quando a branch "teste" muda, pede para o workflow "Publicar site" (que roda
+# a partir da main) publicar de novo — assim o /teste/ é atualizado.
+name: Atualizar versão de teste
+
+on:
+  push:
+    branches: [teste]
+
+permissions:
+  actions: write
+
+jobs:
+  disparar:
+    runs-on: ubuntu-latest
+    steps:
+      - run: gh workflow run publicar.yml --ref main --repo "$GITHUB_REPOSITORY"
+        env:
+          GH_TOKEN: ${{ github.token }}
