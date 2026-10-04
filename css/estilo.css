@@ -1,0 +1,372 @@
+:root {
+    --bg-app: #f8fafc;
+    --surface: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --primary: #0284c7;
+    --primary-dark: #0369a1;
+    --border: #e2e8f0;
+}
+
+* { box-sizing: border-box; font-family: 'Segoe UI', -apple-system, Helvetica, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
+body { margin: 0; padding: 0; background-color: var(--bg-app); color: var(--text-main); padding-bottom: 100px; }
+
+/* TELA DE LOGIN */
+.login-container { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background: #f1f5f9; padding: 20px; }
+.login-box { background: #ffffff; padding: 35px 25px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 100%; max-width: 380px; text-align: center; border: 1px solid #e2e8f0; }
+
+.logo-futurista {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 50%, #38bdf8 100%);
+    color: #ffffff;
+    font-weight: 900;
+    letter-spacing: 1px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+.logo-login { font-size: 28px; padding: 10px 18px; margin-bottom: 15px; }
+.logo-header { font-size: 16px; padding: 4px 10px; margin-right: 12px; }
+
+.login-input-group { position: relative; margin-bottom: 16px; width: 100%; }
+.login-input { width: 100%; padding: 14px 45px 14px 14px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 15px; outline: none; transition: border-color 0.2s; background: #fff; }
+.login-input:focus { border-color: var(--primary); }
+
+.btn-toggle-password { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 18px; color: #64748b; padding: 0; }
+.btn-login { width: 100%; padding: 14px; background: #0284c7; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; margin-bottom: 10px; transition: background 0.2s; }
+.btn-login:hover { background: #0369a1; }
+.btn-register { width: 100%; padding: 14px; background: #16a34a; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; transition: background 0.2s; }
+.btn-register:hover { background: #15803d; }
+
+/* CABEÇALHO FIXO */
+.header-banner { background-color: #ffffff; color: #0f172a; padding: 8px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 110; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+.header-left { display: flex; align-items: center; }
+.brand-title { font-size: 18px; font-weight: 800; margin: 0; letter-spacing: -0.5px; color: #0f172a; }
+.brand-subtitle { font-size: 9px; color: var(--text-muted); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+.btn-logout { background: transparent; color: #dc2626; border: 1px solid #fecaca; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 11px; cursor: pointer; transition: all 0.2s; }
+.btn-logout:hover { background: #fef2f2; }
+
+/* PAINEL DE CONTROLE FIXO E ESTREITO */
+.control-panel { 
+    background-color: rgba(255, 255, 255, 0.98); 
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border); 
+    padding: 8px 20px; 
+    position: sticky; 
+    top: var(--altura-header, 51px); 
+    z-index: 105; 
+    box-shadow: 0 4px 12px -2px rgba(0,0,0,0.05); 
+}
+.panel-inner { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; gap: 15px; }
+
+.inputs-inline { display: flex; gap: 10px; }
+.input-group { display: flex; align-items: center; background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; width: 130px; }
+.input-label { font-size: 10.5px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-right: 6px; }
+
+.numeric-input, .age-input { border: none; background: transparent; font-size: 14px; font-weight: 800; width: 100%; outline: none; color: var(--text-main); }
+
+.search-container { flex: 1; }
+.search-input { width: 100%; padding: 7px 12px; font-size: 13.5px; border: 1px solid var(--border); border-radius: 6px; outline: none; background: #f8fafc; transition: all 0.2s; }
+.search-input:focus { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 3px rgba(2,132,199,0.1); }
+
+/* Ao clicar no menu, a tarja da categoria para logo abaixo do painel (linha do "Novo Paciente"). */
+.category-group { scroll-margin-top: calc(var(--altura-topo, 100px) + 10px); }
+
+/* LAYOUT PRINCIPAL (DUAS COLUNAS NA HORIZONTAL) */
+.app-layout {
+    display: flex;
+    max-width: 1300px;
+    margin: 15px auto;
+    padding: 0 20px;
+    gap: 30px;
+}
+
+/* MENU LATERAL (EXIBIDO NA HORIZONTAL) */
+.sidebar-nav {
+    display: none;
+    width: 220px;
+    min-width: 220px;
+    position: sticky;
+    /* Fica logo abaixo do cabeçalho + painel (altura medida em JS), sem ser cortado ao rolar. */
+    top: calc(var(--altura-topo, 100px) + 12px);
+    height: calc(100vh - var(--altura-topo, 100px) - 24px);
+    align-self: flex-start;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+.nav-category-title {
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+}
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 7px 4px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #334155;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.15s;
+    margin-bottom: 2px;
+}
+.sidebar-link:hover {
+    background: #f1f5f9;
+    color: var(--primary);
+}
+
+.dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+
+/* NAVEGAÇÃO INFERIOR (EXIBIDA NA VERTICAL) */
+.bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background-color: #0f172a;
+    border-top: 4px solid #cbd5e1;
+    padding: 8px;
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 6px;
+    z-index: 120;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.15);
+}
+.bottom-nav .nav-btn {
+    color: #ffffff;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+/* ÁREA DE CONTEÚDO PRINCIPAL */
+.main-content { flex: 1; min-width: 0; }
+
+/* TARJAS DE CATEGORIA E PONTOS */
+.section-header { padding: 10px 16px; font-size: 12.5px; font-weight: 800; border-radius: 6px; margin: 20px 0 10px 0; text-transform: uppercase; letter-spacing: 0.8px; color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+.sub-type-title { font-size: 11.5px; font-weight: 800; color: #0284c7; text-transform: uppercase; margin: 18px 0 8px 4px; border-bottom: 2px solid #e0f2fe; padding-bottom: 4px; letter-spacing: 0.5px; }
+
+.dot-exame, .tarja-exame { background-color: #0d9488; }
+.dot-sintomaticos, .tarja-sintomaticos { background-color: #dc2626; }
+.dot-respiratorio, .tarja-respiratorio { background-color: #0284c7; }
+.dot-antibioticos, .tarja-antibioticos { background-color: #16a34a; }
+.dot-rsi, .tarja-rsi { background-color: #4f46e5; }
+.dot-urinario, .tarja-urinario { background-color: #d97706; }
+.dot-diarreia, .tarja-diarreia { background-color: #0891b2; }
+.dot-pele, .tarja-pele { background-color: #db2777; }
+.dot-neuro, .tarja-neuro { background-color: #7c3aed; } 
+.dot-alergias, .tarja-alergias { background-color: #c026d3; } 
+.dot-especialidades, .tarja-especialidades { background-color: #0d9488; }
+
+/* CARDS DE MEDICAMENTO / EXAME */
+.med-card { 
+    background: #ffffff; 
+    border: 1px solid var(--border); 
+    border-radius: 8px; 
+    margin-bottom: 12px; 
+    padding: 14px; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02); 
+    display: flex;
+    flex-direction: column; 
+    align-items: stretch;
+}
+.med-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; gap: 10px; width: 100%; }
+.med-name { font-weight: 800; color: #0f172a; font-size: 14.5px; }
+.icone-injetavel { display: inline-block; vertical-align: -0.2em; margin-right: 2px; }
+.icone-injetavel svg { width: 1.15em; height: 1.15em; display: block; }
+/* Título de seção de uso hospitalar: borda forte, fundo clarinho e texto na cor da categoria. */
+.sub-type-title.sub-type-hosp {
+    color: color-mix(in srgb, var(--cor-cat) 82%, #000);
+    background: color-mix(in srgb, var(--cor-cat) 12%, #fff);
+    border-left: 6px solid var(--cor-cat);
+    border-bottom: none;
+    padding: 9px 14px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    letter-spacing: 0.06em;
+}
+html[data-theme="dark"] .sub-type-title.sub-type-hosp {
+    color: color-mix(in srgb, var(--cor-cat) 55%, #fff);
+    background: color-mix(in srgb, var(--cor-cat) 22%, #111827);
+}
+.med-presentation { font-size: 11px; color: #64748b; margin-top: 2px; display: block; font-weight: 500; }
+
+.result-box { background-color: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; font-weight: 800; font-size: 13px; padding: 5px 10px; border-radius: 6px; text-align: center; min-width: 100px; white-space: pre-line; }
+.result-box.static-blue { background:#f0f9ff; color:#0369a1; border-color:#bae6fd; }
+.result-box.static-gray { background:#f1f5f9; color:#475569; border-color:#cbd5e1; }
+
+.med-info-row { font-size: 12px; color: #334155; margin-top: 3px; margin-bottom: 6px; line-height: 1.4; width: 100%; }
+.ficha-lista { margin: 4px 0 0; padding-left: 18px; display: grid; gap: 4px; }
+.med-detalhes { font-size: 12px; color: #334155; margin: 3px 0 8px; line-height: 1.4; width: 100%; display: grid; grid-template-columns: max-content 1fr; column-gap: 8px; row-gap: 3px; }
+.med-detalhes dt { font-weight: 800; color: #0f172a; }
+.med-detalhes dd { margin: 0; }
+.med-detalhes .det-atencao { color: #b91c1c; }
+html[data-theme="dark"] .med-detalhes, html[data-theme="dark"] .med-info-row { color: #cbd5e1; }
+html[data-theme="dark"] .med-detalhes dt { color: var(--text-main); }
+html[data-theme="dark"] .med-detalhes .det-atencao { color: #f87171; }
+.badge-teto { background-color: #fef2f2; color: #991b1b; font-size: 9.5px; font-weight: 700; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 8px; text-transform: uppercase; border: 1px solid #fecaca; align-self: flex-start; }
+
+.prescription-header-row { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; background: #f8fafc; padding: 5px 10px; border-radius: 6px 6px 0 0; border: 1px solid var(--border); border-bottom: none; width: 100%; }
+.prescription-label { font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; }
+
+.btn-copiar { background-color: #ffffff; color: var(--primary); border: 1px solid #bae6fd; padding: 3px 8px; border-radius: 4px; font-size: 10.5px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 4px; }
+.btn-copiar:hover { background-color: #0369a1; color: white; border-color: #0369a1; }
+.btn-copiar.copiado { background-color: #16a34a !important; color: white !important; border-color: #16a34a !important; }
+
+.prescription-text-box { background-color: #fafafa; border: 1px solid var(--border); border-radius: 0 0 6px 6px; padding: 10px; font-family: 'Courier New', Courier, monospace; font-size: 11.5px; color: #1e293b; white-space: pre-wrap; word-break: break-word; line-height: 1.45; -webkit-user-select: text; user-select: text; width: 100%; }
+
+.copyright-card { background-color: #ffffff; border: 1px dashed var(--border); border-radius: 8px; margin-top: 30px; margin-bottom: 15px; padding: 15px; text-align: center; color: var(--text-muted); font-size: 11px; line-height: 1.5; }
+.copyright-card strong { color: var(--text-main); font-size: 12px; display: block; margin-bottom: 2px; }
+
+.clinical-disclaimer { background-color: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 11.5px; line-height: 1.5; color: #78350f; display: flex; gap: 8px; align-items: flex-start; }
+.clinical-disclaimer strong { color: #78350f; }
+
+/* REGRA DE RESPONSIVIDADE (VERTICAL VS HORIZONTAL) */
+@media (min-width: 850px) and (orientation: landscape) {
+    body { padding-bottom: 20px; }
+    .bottom-nav { display: none !important; }
+    .sidebar-nav { display: block !important; }
+}
+@media (max-width: 849px), (orientation: portrait) {
+    .sidebar-nav { display: none !important; }
+    .bottom-nav { display: flex !important; }
+    .app-layout { padding: 0 10px; }
+    .panel-inner { flex-direction: column; align-items: stretch; gap: 8px; }
+    .inputs-inline { width: 100%; justify-content: space-between; }
+    .input-group { flex: 1; }
+}
+
+/* ===================================================== */
+/* MODO ESCURO                                           */
+/* ===================================================== */
+html[data-theme="dark"] {
+    --bg-app: #0b1220;
+    --surface: #111827;
+    --text-main: #e5e7eb;
+    --text-muted: #94a3b8;
+    --border: #1f2937;
+}
+html[data-theme="dark"] body { background-color: var(--bg-app); }
+html[data-theme="dark"] .header-banner,
+html[data-theme="dark"] .control-panel,
+html[data-theme="dark"] .med-card,
+html[data-theme="dark"] .copyright-card,
+html[data-theme="dark"] .modal-box,
+html[data-theme="dark"] .login-box { background-color: var(--surface); border-color: var(--border); }
+html[data-theme="dark"] .brand-title,
+html[data-theme="dark"] .med-name,
+html[data-theme="dark"] .form-group label { color: var(--text-main); }
+html[data-theme="dark"] .search-input,
+html[data-theme="dark"] .input-group,
+html[data-theme="dark"] .form-input,
+html[data-theme="dark"] .form-select,
+html[data-theme="dark"] .form-textarea { background-color: #0b1220; border-color: var(--border); color: var(--text-main); }
+html[data-theme="dark"] .prescription-text-box { background-color: #0b1220; color: #cbd5e1; border-color: var(--border); }
+html[data-theme="dark"] .btn-toggle-ficha,
+html[data-theme="dark"] .ficha-conteudo { background-color: #0b1220; border-color: var(--border); }
+html[data-theme="dark"] .prescription-header-row { background-color: #0b1220; border-color: var(--border); }
+html[data-theme="dark"] .sidebar-link { color: #cbd5e1; }
+html[data-theme="dark"] .sub-type-title { border-bottom-color: #1e3a5f; }
+html[data-theme="dark"] .clinical-disclaimer { background-color: #3b2f0b; border-color: #78350f; color: #fde68a; }
+html[data-theme="dark"] .clinical-disclaimer strong { color: #fde68a; }
+
+/* ===================================================== */
+/* AÇÕES DO CABEÇALHO (TEMA, FONTE, + MEDICAMENTO)       */
+/* ===================================================== */
+.header-actions { display: flex; align-items: center; gap: 6px; }
+.icon-btn { background: transparent; border: 1px solid var(--border); color: var(--text-main); width: 30px; height: 30px; border-radius: 6px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.icon-btn:hover { background: var(--bg-app); }
+.btn-add-med { background: #0284c7; color: #fff; border: none; padding: 6px 10px; border-radius: 6px; font-weight: 700; font-size: 11.5px; cursor: pointer; white-space: nowrap; }
+.btn-add-med:hover { background: #0369a1; }
+.user-email-tag { font-size: 10px; color: var(--text-muted); margin-right: 4px; display: none; }
+@media (min-width: 500px) { .user-email-tag { display: inline; } }
+
+/* ===================================================== */
+/* PAINEL: ALERGIAS, NOVO PACIENTE, ALERTA PESO/IDADE    */
+/* ===================================================== */
+.linha-secundaria { display: flex; gap: 10px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
+.allergy-input { flex: 1; min-width: 160px; max-width: 250px; padding: 6px 10px; font-size: 12.5px; border: 1px solid var(--border); border-radius: 6px; outline: none; background: #fff5f5; color: #7f1d1d; }
+.allergy-input::placeholder { color: #b45309; opacity: 0.7; }
+.btn-novo-paciente { background: #fff; color: #dc2626; border: 1px solid #fecaca; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 11.5px; cursor: pointer; white-space: nowrap; }
+.btn-novo-paciente:hover { background: #fef2f2; }
+.aviso-peso-idade { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 6px; margin-top: 6px; display: none; }
+.aviso-peso-idade.visivel { display: block; }
+
+/* CARD COM ALERTA DE ALERGIA */
+.med-card.alerta-alergia { border: 2px solid #dc2626; background: #fef2f2; }
+.tarja-alergia { background: #dc2626; color: #fff; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px; text-transform: uppercase; }
+
+/* BOTÃO ADICIONAR AO CARRINHO NO CARD */
+.card-actions-row { display: flex; gap: 6px; }
+.btn-add-carrinho { background-color: #ffffff; color: #16a34a; border: 1px solid #bbf7d0; padding: 3px 8px; border-radius: 4px; font-size: 10.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+.btn-add-carrinho:hover { background-color: #16a34a; color: white; border-color: #16a34a; }
+.btn-add-carrinho.adicionado { background-color: #16a34a !important; color: #fff !important; border-color: #16a34a !important; }
+
+/* BOTÃO FLUTUANTE DO CARRINHO */
+.cart-fab { position: fixed; right: 16px; bottom: 90px; background: #16a34a; color: #fff; border: none; border-radius: 50px; padding: 12px 18px; font-weight: 800; font-size: 13px; box-shadow: 0 6px 16px rgba(0,0,0,0.2); cursor: pointer; z-index: 130; display: none; align-items: center; gap: 8px; }
+.cart-fab.visivel { display: flex; }
+.cart-fab .badge-count { background: #fff; color: #16a34a; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+@media (min-width: 850px) and (orientation: landscape) { .cart-fab { bottom: 24px; } }
+
+/* MODAIS (CARRINHO / ADICIONAR MEDICAMENTO) */
+.modal-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.55); z-index: 200; display: none; align-items: flex-end; justify-content: center; }
+.modal-overlay.aberto { display: flex; }
+@media (min-width: 700px) { .modal-overlay { align-items: center; } }
+.modal-box { background: var(--surface); width: 100%; max-width: 560px; max-height: 88vh; overflow-y: auto; border-radius: 16px 16px 0 0; padding: 18px; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); }
+@media (min-width: 700px) { .modal-box { border-radius: 14px; } }
+.modal-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.modal-title { font-size: 16px; font-weight: 800; color: var(--text-main); margin: 0; }
+.btn-fechar-modal { background: transparent; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted); line-height: 1; }
+
+.cart-item { border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-bottom: 8px; }
+.cart-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.cart-item-nome { font-weight: 700; font-size: 13px; color: var(--text-main); }
+.btn-remover-item { background: transparent; border: none; color: #dc2626; font-size: 12px; cursor: pointer; font-weight: 700; }
+.cart-item-texto { font-size: 11px; color: var(--text-muted); white-space: pre-wrap; font-family: 'Courier New', monospace; }
+.btn-copiar-receita-completa { width: 100%; background: #16a34a; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; margin-top: 10px; }
+.btn-limpar-carrinho { width: 100%; background: transparent; color: #64748b; border: 1px solid var(--border); padding: 8px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; margin-top: 8px; }
+.carrinho-vazio { text-align: center; color: var(--text-muted); font-size: 12.5px; padding: 30px 10px; }
+
+/* FORMULÁRIO DE ADICIONAR MEDICAMENTO */
+.form-group { margin-bottom: 12px; }
+.form-group label { display: block; font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; }
+.form-input, .form-select, .form-textarea { width: 100%; padding: 9px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; outline: none; background: #fff; color: var(--text-main); }
+.form-textarea { resize: vertical; min-height: 50px; font-family: inherit; }
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.form-hint { font-size: 10.5px; color: var(--text-muted); margin-top: 3px; }
+.btn-salvar-med { width: 100%; background: #0284c7; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; margin-top: 6px; }
+.btn-salvar-med:disabled { opacity: 0.6; cursor: not-allowed; }
+.form-erro { color: #dc2626; font-size: 12px; font-weight: 700; margin-top: 8px; min-height: 16px; }
+.campos-dose-peso, .campos-dose-fixa { display: none; }
+.campos-dose-peso.ativo, .campos-dose-fixa.ativo { display: block; }
+.campos-tipo-item { display: none; }
+.campos-tipo-item.ativo { display: block; }
+
+/* Cor genérica para categorias criadas pelo administrador dentro do app */
+.dot-personalizada, .tarja-personalizada { background-color: #334155; }
+
+.btn-excluir-custom { background: transparent; border: none; color: #dc2626; font-size: 10.5px; font-weight: 700; cursor: pointer; }
+.lista-subcategorias { display: flex; flex-wrap: wrap; gap: 6px; min-height: 20px; }
+.chip-subcategoria { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; font-size: 11.5px; font-weight: 700; padding: 5px 10px; border-radius: 20px; display: inline-flex; align-items: center; gap: 6px; }
+.chip-subcategoria .remover { cursor: pointer; color: #1d4ed8; font-weight: 900; }
+.ficha-completa-area { margin-top: 8px; }
+.btn-toggle-ficha { background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; font-size: 12px; font-weight: 700; color: var(--text-muted); cursor: pointer; width: 100%; text-align: left; }
+.ficha-conteudo { padding: 10px; background: #f8fafc; border: 1px solid var(--border); border-top: none; border-radius: 0 0 6px 6px; font-size: 12px; color: var(--text-main); }
+.ficha-campo { margin-bottom: 6px; white-space: pre-wrap; line-height: 1.4; }
+.ficha-campo:last-child { margin-bottom: 0; }
+.btn-editar-ficha { background: transparent; border: none; color: var(--primary); font-size: 11px; font-weight: 700; cursor: pointer; margin-top: 4px; padding: 2px 0; display: block; }
