@@ -61,7 +61,7 @@ const categorias = [
             },
             { nome: "Tosse (Antitussígenos e Expectorantes)", remedios: ["koid_d", "torante", "acebrofilina"] },
             { nome: "Laringite Viral Aguda (Crupe)", remedios: ["dexa_crupe", "adrenalina_neb"] },
-            { nome: "Manejo Avançado e Outros Respiratórios", remedios: ["pulmicort", "salb_neb", "hidro_ev", "ipra"] }
+            { nome: "Manejo Avançado e Outros Respiratórios", remedios: ["pulmicort", "hidro_ev", "ipra"] }
         ]
     },
     { 

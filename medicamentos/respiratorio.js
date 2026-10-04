@@ -173,15 +173,21 @@ registrarMedicamentos({
     },
     "metil": {
         cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)", 
-        kw: "metilprednisolona asma grave corticoide injetavel hospitalar", nome: "Metilprednisolona EV 125 mg", apres: "FA 125 mg",
-        info: "<strong>Ataque Asma Grave:</strong> 2 mg/kg/dose EV lento.", badge: "Teto Máx: 60 mg", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => { let v = Math.min((p * 2) / 62.5, 0.96); return { v: v.toFixed(2) + " mL", r: `VIA ENDOVENOSA (ATAQUE ASMA GRAVE)\n\n Reconstituir 1 FA de Metilprednisolona 125 mg em 2 mL diluente próprio. Aspirar ${v.toFixed(2)} mL, rediluir em 5 mL de AD e administrar EV lento.` }; },
+        kw: "metilprednisolona asma grave corticoide injetavel hospitalar", nome: "Metilprednisolona EV 125 mg", apres: "FA 125 mg (62,5 mg/mL)",
+        info: "<strong>Crise de asma (GINA):</strong> 1 mg/kg/dose EV de 6/6h no 1º dia.", badge: "Teto Máx: 60 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* GINA 2026: 1 mg/kg de 6/6h no 1º dia. Teto mantido de 60 mg por dose. FA 125 mg + 2 mL = 62,5 mg/mL. */
+            let mg = Math.min(p * 1, 60);
+            let v = mg / 62.5;
+            return { v: v.toFixed(2) + " mL", r: `VIA ENDOVENOSA (CRISE DE ASMA)\n\n Reconstituir 1 FA de Metilprednisolona 125 mg em 2 mL de diluente próprio (62,5 mg/mL). Aspirar ${v.toFixed(2)} mL (${mg.toFixed(0)} mg), rediluir em 5 mL de AD e administrar EV lento, de 6/6 horas no 1º dia.` };
+        },
         detalhes: {
-            indicacao: "Crise de asma grave (corticoide EV).",
-            dose: "2 mg/kg/dose EV lento.",
-            atencao: "Máximo 60 mg por dose."
+            indicacao: "Crise de asma moderada a grave (corticoide EV).",
+            dose: "1 mg/kg/dose EV de 6/6h no 1º dia (GINA).",
+            atencao: "Máximo 60 mg por dose. Depois, seguir com corticoide oral."
         }
     },
+
     "magnesio_ev": {
         cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)", 
         kw: "sulfato de magnesio asma grave crise ev hospitalar injetavel", nome: "Sulfato de Magnésio EV", apres: "Ampolas a 10% ou 50%",
@@ -206,17 +212,6 @@ registrarMedicamentos({
             atencao: "Máximo 2 g/h. Monitorar PA, reflexos e frequência respiratória."
         }
     },
-    "salb_neb": {
-        cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)", 
-        kw: "salbutamol gotas nebulizacao asma hospitalar injetavel", nome: "Salbutamol Gotas (Nebulização)", apres: "5 mg / mL",
-        info: "<strong>Conduta:</strong> Peso / 2 em gotas + 4 mL SF 0,9%.", badge: "Teto Máx: 20 gotas", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => { let v = Math.min(Math.round(p / 2), 20); return { v: v + " gts", r: `VIA INALATÓRIA HOSPITALAR\n\n Colocar ${v} gotas de Salbutamol + 4 mL de SF 0,9% sob fluxo de O2 (6-8 L/min).` }; },
-        detalhes: {
-            indicacao: "Broncoespasmo: crise de asma e sibilância.",
-            dose: "Peso ÷ 2 gotas por nebulização.",
-            atencao: "Máximo 20 gotas por nebulização. Pode causar taquicardia e tremor."
-        }
-    },
     "hidro_ev": {
         cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)", 
         kw: "hidrocortisona ev asma hospitalar injetavel", nome: "Hidrocortisona EV (Crise Asma)", apres: "FA 100 mg (reconst. 2 mL AD = 50 mg/mL)",
@@ -239,15 +234,21 @@ registrarMedicamentos({
     },
     "ipra": {
         cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)", 
-        kw: "ipratropio atrovent nebulizacao asma hospitalar", nome: "Brometo de Ipratrópio Gotas", apres: "0,25 mg / mL",
-        info: "<strong>Conduta:</strong> <10kg: 10gts | 10-20kg: 20gts | >20kg: 40gts.", badge: "", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => { let v = 20; if(p<10)v=10; if(p>20)v=40; return { v: v + " gts", r: `NEBULIZAÇÃO HOSPITALAR ASMA\n\n Colocar ${v} gotas de Ipratrópio + 4 mL de SF 0,9%. Realizar ciclos de 20/20 min na 1ª hora.` }; },
+        kw: "ipratropio atrovent nebulizacao asma hospitalar crise", nome: "Brometo de Ipratrópio Gotas", apres: "0,25 mg / mL (20 gotas = 0,25 mg)",
+        info: "<strong>Conduta (GINA):</strong> ≤ 5 anos: 20 gotas (0,25 mg) | > 5 anos e > 20 kg: 40 gotas. Com o broncodilatador, a cada 20–30 min, até 3 vezes.", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            /* GINA 2026 (≤ 5 anos): 0,25 mg nebulizado com o SABA, até 3x a cada 20–30 min. Acima de 5 anos e 20 kg: mantida a dose de 40 gotas. */
+            let id = i === "" ? null : parseFloat(i);
+            let v = (id !== null && id <= 5) || p <= 20 ? 20 : 40;
+            return { v: v + " gts", r: `NEBULIZAÇÃO HOSPITALAR ASMA\n\n Colocar ${v} gotas de Ipratrópio + 4 mL de SF 0,9%, junto com o broncodilatador. Repetir a cada 20-30 min, até 3 vezes na 1ª hora.` };
+        },
         detalhes: {
-            indicacao: "Crise de asma moderada a grave, junto com o salbutamol.",
-            dose: "<10 kg: 10 gotas | 10-20 kg: 20 gotas | >20 kg: 40 gotas. De 20/20 min na 1ª hora.",
-            atencao: "Usar junto com o salbutamol, não sozinho. Proteger os olhos da névoa."
+            indicacao: "Crise de asma moderada a grave, junto com o broncodilatador.",
+            dose: "≤ 5 anos: 20 gotas (0,25 mg) | > 5 anos e > 20 kg: 40 gotas. A cada 20–30 min, até 3 vezes na 1ª hora (GINA).",
+            atencao: "Usar junto com o broncodilatador, não sozinho. Suspender após as primeiras 1–2 h (sem benefício depois). Proteger os olhos da névoa."
         }
     },
+
     "adrenalina_neb": {
         cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)",
         kw: "adrenalina epinefrina inalatoria nebulizacao crupe laringite estridor", nome: "Adrenalina Inalatória (Crupe)", apres: "Ampola 1 mg / mL (1:1000)",

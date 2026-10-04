@@ -32,6 +32,8 @@ const TETOS = {
     neuro_fenitoina: 20,  // mL (1 g)
     neuro_midaz: 2,       // mL (10 mg)
     cef_resp_ev: 20,      // mL 24/24h (2 g)
+    metil: 0.96,          // mL (60 mg)
+    ipra: 40,             // gotas
 };
 
 const PESOS = [2.5, 4, 7, 10, 15, 22, 30, 45, 70];
