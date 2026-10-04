@@ -103,17 +103,23 @@ registrarConduta({
             grupos: [
                 {
                     nome: `Escore de Wood-Downes modificado por Ferrés ${IMIP}`,
-                    tabela: {
-                        colunas: ["", "0", "1", "2", "3"],
-                        linhas: [
-                            ["Sibilância", "Não", "Final da expiração", "Toda a expiração", "Inspiração + expiração"],
-                            ["Tiragem", "Não", "Subcostal + intercostal inferior", "\"1\" + supraclavicular + BAN", "\"2\" + intercostal superior + supraesternal"],
-                            ["Entrada de ar", "Boa, simétrica", "Regular, simétrica", "Muito diminuída", "Tórax silencioso"],
-                            ["Cianose", "Não", "Sim", "", ""],
-                            ["FR", "< 30", "31 – 45", "46 – 60", "> 60"],
-                            ["FC", "< 120", "> 120", "", ""]
+                    escore: {
+                        id: "wdf",
+                        instrucao: "Toque no que o paciente apresenta em cada item. A soma é feita automaticamente.",
+                        itens: [
+                            { nome: "Sibilância", opcoes: [[0, "Não"], [1, "Final da expiração"], [2, "Toda a expiração"], [3, "Inspiração + expiração"]] },
+                            { nome: "Tiragem", opcoes: [[0, "Não"], [1, "Subcostal + intercostal inferior"], [2, "Subcostal + intercostal inferior + supraclavicular + BAN"], [3, "Anteriores + intercostal superior + supraesternal"]] },
+                            { nome: "Ventilação (entrada de ar)", opcoes: [[0, "Boa, simétrica"], [1, "Regular, simétrica"], [2, "Muito diminuída"], [3, "Tórax silencioso (ausência de sibilância)"]] },
+                            { nome: "Cianose", opcoes: [[0, "Não"], [1, "Sim"]] },
+                            { nome: "Frequência respiratória", opcoes: [[0, "< 30 irpm"], [1, "31–45 irpm"], [2, "46–60 irpm"], [3, "> 60 irpm"]] },
+                            { nome: "Frequência cardíaca", opcoes: [[0, "< 120 bpm"], [1, "> 120 bpm"]] }
                         ],
-                        nota: "1–3 = leve · 4–7 = moderada · 8–14 = grave. Antes de aplicar: desobstruir o nariz (lavagem nasal se necessário), decúbito a 30–45° e aguardar o fim de acesso de tosse."
+                        faixas: [
+                            { min: 1, max: 3, rotulo: "BVA leve", cor: "#16a34a" },
+                            { min: 4, max: 7, rotulo: "BVA moderada", cor: "#d97706" },
+                            { min: 8, max: 14, rotulo: "BVA grave", cor: "#dc2626" }
+                        ],
+                        nota: "1–3 = leve · 4–7 = moderada · 8–14 = grave (máximo 14). Antes de aplicar: desobstruir o nariz (lavagem nasal se necessário), decúbito a 30–45° e aguardar o fim de acesso de tosse. No IMIP: escore > 3 é critério de admissão em UTI e > 7 indica insucesso da VNI. A conduta deste app segue a classificação do Ministério da Saúde (tabela acima)."
                     }
                 }
             ]
