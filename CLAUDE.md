@@ -1,0 +1,77 @@
+# JR MED — Manual & Calculadora de Bolso (pediatria)
+
+App de prescrição pediátrica do Dr. Jonas Raasch, publicado em jrmedprescricao.com.br
+(GitHub Pages, branch `main`). HTML/CSS/JS puro, **sem build e sem frameworks**: o que
+está no repositório é exatamente o que vai para o ar. Login e dados da equipe via Firebase.
+
+## Regras de trabalho (combinadas com o Dr. Jonas)
+
+- **Nunca publicar sem autorização explícita** ("pode publicar"). Antes disso, mostrar uma
+  prévia (capturas de tela no computador e no celular).
+- Publicar = commit no branch de trabalho → PR → merge (squash) na `main`.
+- **Sempre rodar `node testes/verificar.js` antes de publicar.** Se a mudança de dose foi
+  intencional, rodar `node testes/verificar.js --atualizar` e conferir o diff de
+  `testes/referencia-doses.json`: ele mostra exatamente quais receitas mudaram.
+- Doses: seguir o **Whitebook** (prioridade) e as diretrizes da **SBP**. Não inventar dose.
+  Na dúvida, perguntar. Conteúdo do Manual HIAS (2017) é a referência mais antiga.
+- Texto técnico, igual à fonte. Ignorar a parte de adultos dos materiais enviados.
+- Respostas ao usuário em português, linguagem simples (ele é médico, não programador).
+
+## Estrutura
+
+```
+index.html                 telas (login, cabeçalho, painel, modais) + lista de <script>
+css/estilo.css             toda a aparência (inclui tema escuro: html[data-theme="dark"])
+js/base.js                 auxiliares usados nos cálculos (recHead, round05, ceftriaxona)
+medicamentos/registro.js   registrarMedicamentos(): cria farmaciaJR, detalhesMedicacoes, fichasPadrao
+medicamentos/<categoria>.js um arquivo por categoria (cat: "cat-<categoria>")
+medicamentos/menu.js       árvore do menu: categoria → seções → ids dos remédios (ordem de exibição)
+js/app.js                  renderização, busca, cálculo, alergias, carrinho/receita, tema, fonte
+js/formularios.js          modais (cadastro da equipe, categorias, ficha) + inicialização (no final)
+js/firebase.js             login e Firestore (módulo)
+sw.js                      modo offline (rede primeiro)
+testes/verificar.js        verificação automática (só precisa de Node)
+```
+
+A **ordem dos `<script>` no index.html importa**: base → registro → categorias → menu → app → formularios.
+Os scripts são clássicos (não módulos) e compartilham variáveis globais (`farmaciaJR`, `categorias`...).
+
+**Arquivo novo de .js/.css?** Acrescentar no `index.html` **e** em `ARQUIVOS_ESSENCIAIS` do
+`sw.js`, e subir o número de `CACHE_NOME`. O teste acusa se faltar.
+
+## Formato de um remédio (tudo num bloco só)
+
+```js
+"id_do_remedio": {
+    cat: "cat-respiratorio",                 // categoria (= nome do arquivo)
+    sub: "🏠 Uso Ambulatorial (Vias Orais)",
+    kw: "palavras chave para a busca",
+    nome: "Nome Comercial / Genérico", apres: "Concentração",
+    info: "...", badge: "...", recLabel: "Texto para selecionar e copiar:",
+    calc: (p, i) => ({ v: "dose curta (quadro azul)", r: `${recHead}1) NOME 100 MG/ML ------ 1 FR\nDAR X ML, VIA ORAL, DE 8/8 HORAS.` }),
+    detalhes: { indicacao: "...", dose: "...", atencao: "..." },   // texto abaixo do nome
+    ficha: { apresentacoes, indicacoes, dose, doseMaxima, via, intervalo, reconstituicao,
+             diluicao, infusao, alertasPediatricos, contraindicacoes, efeitosAdversos,
+             interacoes, ajusteRenal, ajusteHepatico, conservacao, fonteRevisao }
+}
+```
+
+- `calc(p, i)`: `p` = peso (kg, número), `i` = idade em anos (**texto**, pode ser `""`).
+  Retorna `{ v, r }`. Sempre aplicar o **teto** com `Math.min(...)` *depois* do arredondamento.
+- Receita (`r`): 1ª linha = via (`USO ORAL`, `VIA ENDOVENOSA`, `NEBULIZAÇÃO ...`, `ORIENTAÇÕES ...`):
+  é por ela que a receita copiada agrupa os itens. Em MAIÚSCULAS, padrão `1) NOME CONC ---- QTD`.
+- `badgeSt` (selo fixo): **só em card de dose fixa**. Com ele o quadro azul não é recalculado.
+- Comentários dentro de `calc` de uma linha: usar `/* */`, nunca `//`.
+- Ficha completa: ordem de exibição fixa (em `renderizarBlocoFicha`), **fonte sempre por último**.
+  Se o card tem ficha com dose, o texto abaixo do nome mostra "Ver 📋 Ficha completa".
+  Fichas da equipe (Firestore `fichas_medicamentos`) têm prioridade sobre `ficha`.
+- Injetáveis ganham a seringa 💉 automaticamente (pelo texto da receita).
+  Seções hospitalares ganham 🏥 pelo nome ("hospitalar") ou pela lista `SECOES_HOSPITALARES` (js/app.js).
+- Novo remédio: criar o bloco no arquivo da categoria **e** colocar o id em `medicamentos/menu.js`.
+  Se tiver teto de dose, acrescentar em `TETOS` (testes/verificar.js).
+
+## Testar a tela
+
+Servir a pasta (`python3 -m http.server`) e abrir no Playwright (Chromium já instalado).
+O login do Firebase não carrega no ambiente de teste: mostrar o app com
+`tela-login.style.display='none'; aplicativo-principal.style.display='block'`.

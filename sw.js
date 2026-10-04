@@ -7,13 +7,35 @@
 // (ex: hospedado no Netlify/Firebase Hosting). Não funciona abrindo o arquivo
 // direto do computador (file://) — navegadores bloqueiam Service Worker nesse caso.
 
-const CACHE_NOME = "jrmed-cache-v3"; // troque o número (v3, v4...) sempre que quiser forçar a limpeza do cache antigo
+const CACHE_NOME = "jrmed-cache-v4"; // troque o número (v3, v4...) sempre que quiser forçar a limpeza do cache antigo
 
+// Todo arquivo .js/.css carregado pelo index.html PRECISA estar aqui
+// (o teste "node testes/verificar.js" avisa se faltar algum).
 const ARQUIVOS_ESSENCIAIS = [
   "./",
   "./index.html",
   "./manifest.json",
-  "./icon.svg"
+  "./icon.svg",
+  "./css/estilo.css",
+  "./js/base.js",
+  "./medicamentos/registro.js",
+  "./medicamentos/exame-fisico.js",
+  "./medicamentos/sintomaticos.js",
+  "./medicamentos/vomitos.js",
+  "./medicamentos/antialergicos.js",
+  "./medicamentos/respiratorio.js",
+  "./medicamentos/antibioticos.js",
+  "./medicamentos/rsi.js",
+  "./medicamentos/pals.js",
+  "./medicamentos/neuro.js",
+  "./medicamentos/urinario.js",
+  "./medicamentos/diarreia.js",
+  "./medicamentos/pele.js",
+  "./medicamentos/especialidades.js",
+  "./medicamentos/menu.js",
+  "./js/app.js",
+  "./js/formularios.js",
+  "./js/firebase.js"
 ];
 
 self.addEventListener("install", (event) => {
@@ -37,8 +59,11 @@ self.addEventListener("fetch", (event) => {
 
   // REDE PRIMEIRO: sempre tenta buscar a versão mais nova primeiro.
   // Só usa o que está salvo localmente se a internet falhar de verdade.
+  // Arquivos do próprio site: "no-cache" faz o navegador confirmar com o servidor
+  // se há versão nova (evita misturar um index.html novo com um .js antigo).
+  let mesmoSite = new URL(event.request.url).origin === self.location.origin;
   event.respondWith(
-    fetch(event.request)
+    fetch(event.request, mesmoSite ? { cache: "no-cache" } : undefined)
       .then((respostaRede) => {
         let copia = respostaRede.clone();
         caches.open(CACHE_NOME).then((cache) => cache.put(event.request, copia));
