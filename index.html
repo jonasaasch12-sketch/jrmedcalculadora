@@ -926,7 +926,7 @@
             "buscopan": {
                 cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
                 kw: "buscopan gotas escopolamina dor abdominal colica oral ambulatorial", nome: "Buscopan Gotas (Escopolamina)", apres: "10 mg / mL",
-                info: "<strong>Posologia:</strong> Evitar em RN. 1-3m: 0,5mg/kg | 3-11m: 0,7mg/kg | 1-6a: 0,4mg/kg | >6a: 20 a 40 gotas (8/8h).", badgeSt: "static-blue", badge: "Dose por Idade", recLabel: "Texto para selecionar e copiar:",
+                info: "<strong>Posologia:</strong> Evitar em RN. 1-3m: 0,5mg/kg | 3-11m: 0,7mg/kg | 1-6a: 0,4mg/kg | >6a: 20 a 40 gotas (8/8h).", badge: "", recLabel: "Texto para selecionar e copiar:",
                 calc: (p, i) => {
                     let idAnos = i !== "" ? parseFloat(i) : null;
                     let pNum = parseFloat(p);
@@ -1000,7 +1000,7 @@
             "ondif_cp": {
                 cat: "cat-vomitos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
                 kw: "ondif ondansetrona filme orodispersivel vomito nausea antiemetico oral ambulatorial", nome: "Ondif Filme (Ondansetrona 4mg)", apres: "4 mg",
-                info: "<strong>Posologia:</strong> <2 anos: Contraindicado | 2-11 anos: 4mg (1 filme) | >11 anos: 8mg (2 filmes).", badgeSt: "static-blue", badge: "Dose p/ Idade", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+                info: "<strong>Posologia:</strong> <2 anos: Contraindicado | 2-11 anos: 4mg (1 filme) | >11 anos: 8mg (2 filmes).", badge: "", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
                 calc: (p, i) => {
                     let id = i !== "" ? parseFloat(i) : null;
                     
@@ -1075,7 +1075,7 @@
             "dexclor": {
                 cat: "cat-antialergicos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
                 kw: "dexclorfeniramina polaramine histamin coceira alergia antialergico oral ambulatorial", nome: "Dexclorfeniramina Sol. (Polaramine / Histamin)", apres: "2 mg / 5 mL",
-                info: "<strong>Posologia:</strong> 2-6a: 1,25 mL | 6-12a: 2,5 mL | >12a: 5 mL. De 8/8h.", badge: "Dose p/ Idade", badgeSt: "static-blue", recLabel: "Texto para selecionar e copiar:",
+                info: "<strong>Posologia:</strong> 2-6a: 1,25 mL | 6-12a: 2,5 mL | >12a: 5 mL. De 8/8h.", badge: "", recLabel: "Texto para selecionar e copiar:",
                 calc: (p, i) => {
                     if (i === "") return { v: "—", r: "Insira a idade acima." };
                     let id = parseFloat(i);
@@ -1090,12 +1090,12 @@
             "deslo": {
                 cat: "cat-antialergicos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
                 kw: "desloratadina alergia rinite antialergico oral ambulatorial", nome: "Desloratadina Xarope", apres: "0,5 mg / mL",
-                info: "<strong>Posologia:</strong> 6m a 2a: 2mL | 2a a 5a: 2,5mL | 5a a 10a: 5mL | >10a: 10mL.", badgeSt: "static-blue", badge: "Dose p/ Idade", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+                info: "<strong>Posologia:</strong> 6m a 2a: 2mL | 2a a 5a: 2,5mL | 5a a 10a: 5mL | >10a: 10mL.", badge: "", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
                 calc: (p, i) => {
                     if (i === "") return { v: "—", r: "Insira a idade acima." };
                     let id = parseFloat(i);
                     let t = "10 ML"; if(id<2) t="2 ML"; else if(id<5) t="2,5 ML"; else if(id<10) t="5 ML";
-                    return { v: t, r: `${recHead}1) DESLORATADINA XAROPE 0,5 MG/ML ---------- 1 FR\nDAR ${t} VIA ORAL UMA VEZ AO DIA.` };
+                    return { v: t.replace("ML", "mL"), r: `${recHead}1) DESLORATADINA XAROPE 0,5 MG/ML ---------- 1 FR\nDAR ${t} VIA ORAL UMA VEZ AO DIA.` };
                 }
             },
             "adrenalina_im": {
@@ -1125,7 +1125,7 @@
                 cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais / Inalatórios)", 
                 kw: "soro fisiologico nasal lavagem coriza nariz",
                 nome: "Lavagem Nasal (SF 0,9%)", apres: "Soro Fisiológico 0,9%",
-                info: "<strong>Conduta:</strong> Lavar as narinas com volume adequado (<1a: 3ml | 1-2a: 5ml | >2a: 10ml) de 2/2h.", badgeSt: "static-blue", badge: "Livre", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+                info: "<strong>Conduta:</strong> Lavar as narinas com volume adequado (<1a: 3ml | 1-2a: 5ml | >2a: 10ml) de 2/2h.", badge: "", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
                 calc: (p, i) => { 
                     let x = "X";
                     if(i !== "") {
@@ -1165,8 +1165,7 @@
                 cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais / Inalatórios)", 
                 kw: "clenil hfa beclometasona corticoide inalatorio asma manutenção",
                 nome: "Clenil HFA (Beclometasona)", apres: "50 mcg / dose (Extrafina)",
-                info: "<strong>Manutenção Pós-Crise (GINA):</strong> Adaptação por faixa etária, dose e dispositivo.",
-                badgeSt: "static-blue", badge: "GINA Guideline", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+                info: "<strong>Manutenção Pós-Crise (GINA):</strong> Adaptação por faixa etária, dose e dispositivo.", badge: "", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
                 calc: (p, i) => {
                     if (i === "") return { v: "—", r: "Insira a idade do paciente para calcular o Clenil HFA." };
                     let id = parseFloat(i);
@@ -1187,7 +1186,7 @@
                 cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais / Inalatórios)", 
                 kw: "pulmicort budesonida nebulizacao asma laringite oral ambulatorial inalatorio",
                 nome: "Pulmicort (Budesonida)", apres: "0,25 mg / mL",
-                info: "<strong>Conduta:</strong> Nebulizar 2 mL + 2 mL de SF 0,9% 1x ao dia por 5 dias. <span style='color:#b91c1c; font-weight:bold;'>(Idade mínima: 5 meses)</span>.", badgeSt: "static-blue", badge: "2 mL", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+                info: "<strong>Conduta:</strong> Nebulizar 2 mL + 2 mL de SF 0,9% 1x ao dia por 5 dias. <span style='color:#b91c1c; font-weight:bold;'>(Idade mínima: 5 meses)</span>.", badge: "", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
                 calc: (p, i) => { 
                     if (i !== "" && parseFloat(i) < 0.41) { 
                         return { v: "Contraind.", r: "ATENÇÃO: Idade inferior a 5 meses. Avalie contraindicação." };
@@ -1341,8 +1340,7 @@
                 cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
                 kw: "tiorfan racecadotrila antissecretor diarreia infantil sachê",
                 nome: "Tiorfan (Racecadotrila)", apres: "Sachê 10 mg ou 30 mg",
-                info: "<strong>Antissecretor Intestinal:</strong> Idade mínima de 3 meses. Ajustado por peso e apresentação inteira.",
-                badgeSt: "static-blue", badge: "Antissecretor", recLabel: "Texto para selecionar e copiar:",
+                info: "<strong>Antissecretor Intestinal:</strong> Idade mínima de 3 meses. Ajustado por peso e apresentação inteira.", badge: "", recLabel: "Texto para selecionar e copiar:",
                 calc: (p, i) => {
                     if (i !== "" && parseFloat(i) < 0.25) {
                         return { v: "Contraind.", r: "ATENÇÃO: Idade inferior a 3 meses. Tiorfan contraindicado." };
@@ -1790,7 +1788,7 @@
                 cat: "cat-diarreia", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Expansão)", 
                 kw: "vig 4 neonatologia rn recem nascido glicose soro glicosado venoclise hospitalar injetavel holliday segar", 
                 nome: "Venóclise de Manutenção (VIG 4)", apres: "Diluição SG 5% + G 50%",
-                info: "<strong>Conduta:</strong> VIG 4 mg/kg/min.", badgeSt: "static-blue", badge: "VIG 4", recLabel: "Texto para selecionar e copiar:",
+                info: "<strong>Conduta:</strong> VIG 4 mg/kg/min.", badge: "", recLabel: "Texto para selecionar e copiar:",
                 calc: (p) => { 
                     let total = p <= 10 ? p * 100 : 1000 + (p - 10) * 50;
                     let vol = total * 0.7, c = (4 * p * 144) / vol, g50 = c > 5 ? vol * (c - 5) / 45 : 0, sg5 = vol - g50;
@@ -1801,7 +1799,7 @@
                 cat: "cat-diarreia", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Expansão)", 
                 kw: "vig 5 neonatologia rn recem nascido glicose soro glicosado venoclise hospitalar injetavel holliday segar", 
                 nome: "Venóclise de Manutenção (VIG 5)", apres: "Diluição SG 5% + G 50%",
-                info: "<strong>Conduta:</strong> VIG 5 mg/kg/min.", badgeSt: "static-blue", badge: "VIG 5", recLabel: "Texto para selecionar e copiar:",
+                info: "<strong>Conduta:</strong> VIG 5 mg/kg/min.", badge: "", recLabel: "Texto para selecionar e copiar:",
                 calc: (p) => { 
                     let total = p <= 10 ? p * 100 : 1000 + (p - 10) * 50;
                     let vol = total * 0.7, c = (5 * p * 144) / vol, g50 = c > 5 ? vol * (c - 5) / 45 : 0, sg5 = vol - g50;
@@ -1941,7 +1939,7 @@
             "buscopan_composto": {
                 cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
                 kw: "buscopan composto hioscina escopolamina dipirona colica dor abdominal gotas", nome: "Buscopan Composto Gotas (Hioscina + Dipirona)", apres: "6,67 + 333,4 mg/mL (0,5 + 25 mg/gota)",
-                info: "<strong>Posologia:</strong> 1-6a: 5-10 gotas | >6a: 10-20 gotas. De 8/8h ou 6/6h.", badgeSt: "static-blue", badge: "Dose p/ Idade", recLabel: "Texto para selecionar e copiar:",
+                info: "<strong>Posologia:</strong> 1-6a: 5-10 gotas | >6a: 10-20 gotas. De 8/8h ou 6/6h.", badge: "", recLabel: "Texto para selecionar e copiar:",
                 calc: (p, i) => {
                     if (i === "") return { v: "—", r: "Insira a idade acima." };
                     let id = parseFloat(i);
@@ -1970,7 +1968,7 @@
             "loratadina": {
                 cat: "cat-antialergicos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
                 kw: "loratadina claritin antialergico rinite urticaria xarope oral", nome: "Loratadina Xarope (Claritin)", apres: "1 mg / mL",
-                info: "<strong>Posologia:</strong> 2-5a: 5 mL | ≥6a ou >30 kg: 10 mL. 1x ao dia.", badgeSt: "static-blue", badge: "Dose p/ Idade", recLabel: "Texto para selecionar e copiar:",
+                info: "<strong>Posologia:</strong> 2-5a: 5 mL | ≥6a ou >30 kg: 10 mL. 1x ao dia.", badge: "", recLabel: "Texto para selecionar e copiar:",
                 calc: (p, i) => {
                     if (i === "") return { v: "—", r: "Insira a idade acima." };
                     let id = parseFloat(i);
@@ -2008,7 +2006,7 @@
             "koid_d": {
                 cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais / Inalatórios)",
                 kw: "koid d betametasona dexclorfeniramina tosse alergica xarope antitussigeno", nome: "Koid D Xarope (Betametasona + Dexclorfeniramina)", apres: "0,25 mg + 2 mg / 5 mL",
-                info: "<strong>Posologia:</strong> 2-6a: 2 mL | 6-12a: 2,5 mL | >12a: 5 mL. De 8/8h.", badgeSt: "static-blue", badge: "Dose p/ Idade", recLabel: "Texto para selecionar e copiar:",
+                info: "<strong>Posologia:</strong> 2-6a: 2 mL | 6-12a: 2,5 mL | >12a: 5 mL. De 8/8h.", badge: "", recLabel: "Texto para selecionar e copiar:",
                 calc: (p, i) => {
                     if (i === "") return { v: "—", r: "Insira a idade acima." };
                     let id = parseFloat(i);
@@ -2020,7 +2018,7 @@
             "torante": {
                 cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais / Inalatórios)",
                 kw: "torante hedera helix tosse expectorante xarope antitussigeno", nome: "Torante Xarope (Hedera helix)", apres: "15 mg / mL",
-                info: "<strong>Posologia:</strong> 2-5a: 2,5 mL | ≥6a: 5 mL. De 8/8h.", badgeSt: "static-blue", badge: "Dose p/ Idade", recLabel: "Texto para selecionar e copiar:",
+                info: "<strong>Posologia:</strong> 2-5a: 2,5 mL | ≥6a: 5 mL. De 8/8h.", badge: "", recLabel: "Texto para selecionar e copiar:",
                 calc: (p, i) => {
                     if (i === "") return { v: "—", r: "Insira a idade acima." };
                     let id = parseFloat(i);
@@ -2214,7 +2212,7 @@
             "vancomicina": {
                 cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
                 kw: "vancomicina vanco cloridrato glicopeptideo mrsa antibiotico endovenoso hospitalar meningite endocardite cateter neutropenia", nome: "Vancomicina EV", apres: "Frasco-ampola 500 mg e 1 g (reconstituído a 100 mg/mL)",
-                info: "<strong>Conduta:</strong> Infecções suscetíveis 45-60 mg/kg/dia EV de 6/6 ou 8/8h. Ajustar pela concentração sérica.", badge: "Infundir em 60 min", badgeSt: "static-blue", recLabel: "Texto para selecionar e copiar:",
+                info: "<strong>Conduta:</strong> Infecções suscetíveis 45-60 mg/kg/dia EV de 6/6 ou 8/8h. Ajustar pela concentração sérica.", badge: "", recLabel: "Texto para selecionar e copiar:",
                 calc: (p) => {
                     // Whitebook (lactentes, crianças e adolescentes) - infecções suscetíveis: 45-60 mg/kg/dia EV de 6/6 ou 8/8h, ajustar pela concentração sérica.
                     // Reconstituir a 100 mg/mL (500 mg + 5 mL ou 1 g + 10 mL de diluente) e rediluir em SF 0,9% a 5 mg/mL. Infundir lentamente em 60 min.
@@ -2365,7 +2363,7 @@
             "sulfato_ferroso_prof": {
                 cat: "cat-especialidades", sub: "🏠 Uso Ambulatorial (Vias Orais)",
                 kw: "sulfato ferroso ferro profilaxia anemia ferropriva sbp prematuro baixo peso suplementacao gotas", nome: "Sulfato Ferroso Gotas (Profilaxia - SBP 2021)", apres: "124,45 mg/mL = 25 mg/mL de ferro elementar (1 gota = 1 mg)",
-                info: "<strong>Profilaxia (SBP 2021):</strong> 1 mg/kg/dia no termo AIG; 2-4 mg/kg/dia no baixo peso e prematuro (1-12 meses).", badgeSt: "static-blue", badge: "1 gota = 1 mg", recLabel: "Texto para selecionar e copiar:",
+                info: "<strong>Profilaxia (SBP 2021):</strong> 1 mg/kg/dia no termo AIG; 2-4 mg/kg/dia no baixo peso e prematuro (1-12 meses).", badge: "", recLabel: "Texto para selecionar e copiar:",
                 calc: (p) => {
                     // Whitebook - profilaxia da anemia ferropriva (SBP 2021), VO de 24/24h:
                     // termo AIG: 1 mg/kg/dia (6-24 meses sem fatores de risco; 3-24 meses com fatores de risco);
