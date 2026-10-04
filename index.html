@@ -200,6 +200,7 @@
         .result-box.static-gray { background:#f1f5f9; color:#475569; border-color:#cbd5e1; }
         
         .med-info-row { font-size: 12px; color: #334155; margin-top: 3px; margin-bottom: 6px; line-height: 1.4; width: 100%; }
+        .ficha-lista { margin: 4px 0 0; padding-left: 18px; display: grid; gap: 4px; }
         .med-detalhes { font-size: 12px; color: #334155; margin: 3px 0 8px; line-height: 1.4; width: 100%; display: grid; grid-template-columns: max-content 1fr; column-gap: 8px; row-gap: 3px; }
         .med-detalhes dt { font-weight: 800; color: #0f172a; }
         .med-detalhes dd { margin: 0; }
@@ -838,15 +839,26 @@
             "dip_gts": {
                 cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
                 kw: "dipirona gotas febre dor sintomaticos oral ambulatorial",
-                nome: "Dipirona Gotas", apres: "500 mg / mL",
-                info: "<strong>Posologia:</strong> 0,75 gota/kg/dose VO de 6/6h se dor ou febre (>37,5°C).", badge: "Teto Máx: 40 gotas", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = Math.min(Math.round(p * 0.75), 40); return { v: v + " gts", r: `${recHead}1) DIPIRONA 500 MG/ML --------------------- 1 FR\nDAR ${v} GOTAS, VIA ORAL, DE 6/6 HORAS, SE DOR OU FEBRE (TEMPERATURA MAIOR QUE 37,5°C).` }; }
+                nome: "Dipirona Gotas", apres: "500 mg / mL (1 gota = 25 mg)",
+                info: "<strong>Posologia:</strong> 15 mg/kg/dose (0,6 gota/kg) VO de 6/6h se dor ou febre.", badge: "Teto Máx: 40 gotas (1 g)", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    // SBP (Manejo da febre aguda): 10-16 mg/kg/dose de 6/6 ou 8/8h, máx. 40-64 mg/kg/dia, a partir de 3 meses e 5 kg.
+                    // App: 15 mg/kg/dose (0,6 gota/kg) de 6/6h = 60 mg/kg/dia. Teto absoluto de 40 gotas (1 g) por dose.
+                    if ((i !== "" && parseFloat(i) < 0.25) || p < 5) return { v: "Contraind.", r: "ATENÇÃO: Dipirona indicada a partir de 3 meses de idade e 5 kg (SBP)." };
+                    let v = Math.min(Math.round(p * 0.6), 40);
+                    return { v: v + " gts", r: `${recHead}1) DIPIRONA 500 MG/ML --------------------- 1 FR\nDAR ${v} GOTAS, VIA ORAL, DE 6/6 HORAS, SE DOR OU FEBRE (TEMPERATURA MAIOR QUE 37,5°C).` };
+                }
             },
             "dip_xpe": {
                 cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
                 kw: "dipirona xarope febre dor sintomaticos oral ambulatorial", nome: "Dipirona Xarope", apres: "50 mg / mL",
-                info: "<strong>Posologia:</strong> 15 mg/kg por tomada (Peso x 0,3 mL) VO de 6/6h.", badge: "", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = round05(p * 0.3); return { v: v + " mL", r: `${recHead}1) DIPIRONA 50 MG/ML ---------------------- 1 FR\nDAR ${v} ML, VIA ORAL, DE 6/6 HORAS, SE DOR OU FEBRE (>37,5°C).` }; }
+                info: "<strong>Posologia:</strong> 15 mg/kg/dose (Peso x 0,3 mL) VO de 6/6h.", badge: "Teto Máx: 20 mL (1 g)", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    // SBP: 10-16 mg/kg/dose, máx. 40-64 mg/kg/dia, a partir de 3 meses e 5 kg. App: 15 mg/kg/dose de 6/6h, teto 1 g (20 mL) por dose.
+                    if ((i !== "" && parseFloat(i) < 0.25) || p < 5) return { v: "Contraind.", r: "ATENÇÃO: Dipirona indicada a partir de 3 meses de idade e 5 kg (SBP)." };
+                    let v = Math.min(parseFloat(round05(p * 0.3)), 20).toFixed(1);
+                    return { v: v + " mL", r: `${recHead}1) DIPIRONA 50 MG/ML ---------------------- 1 FR\nDAR ${v} ML, VIA ORAL, DE 6/6 HORAS, SE DOR OU FEBRE (>37,5°C).` };
+                }
             },
             "pct_gts": {
                 cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
@@ -968,9 +980,10 @@
             "dip_inj": {
                 cat: "cat-sintomaticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)", 
                 kw: "dipirona ev im febre dor hospitalar injetavel", nome: "Dipirona Injetável", apres: "Ampola 500 mg / mL",
-                info: "<strong>Conduta:</strong> 0,03 mL/kg/dose. EV: diluir em 9 mL AD lento. IM: sem diluir.", badge: "Teto Máx: 2 mL", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { 
-                    // Limite máximo de segurança de 2 mL (1000 mg) por dose
+                info: "<strong>Conduta:</strong> 15 mg/kg/dose (0,03 mL/kg). EV: diluir em 9 mL AD lento. IM: sem diluir.", badge: "Teto Máx: 2 mL (1 g)", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => { 
+                    // SBP: 10-16 mg/kg/dose, a partir de 3 meses e 5 kg. App: 15 mg/kg/dose (0,03 mL/kg), teto 2 mL (1 g) por dose.
+                    if ((i !== "" && parseFloat(i) < 0.25) || p < 5) return { v: "Contraind.", r: "ATENÇÃO: Dipirona indicada a partir de 3 meses de idade e 5 kg (SBP)." };
                     let v = Math.min((p * 0.03), 2.0).toFixed(2); 
                     return { 
                         v: v + " mL", 
@@ -1078,6 +1091,18 @@
                     let id = parseFloat(i);
                     let t = "10 ML"; if(id<2) t="2 ML"; else if(id<5) t="2,5 ML"; else if(id<10) t="5 ML";
                     return { v: t, r: `${recHead}1) DESLORATADINA XAROPE 0,5 MG/ML ---------- 1 FR\nDAR ${t} VIA ORAL UMA VEZ AO DIA.` };
+                }
+            },
+            "adrenalina_im": {
+                cat: "cat-antialergicos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+                kw: "adrenalina epinefrina intramuscular anafilaxia choque anafilatico alergia grave reacao alergica emergencia", nome: "Adrenalina IM (Anafilaxia)", apres: "Ampola 1 mg / mL (1:1000)",
+                info: "<strong>Conduta:</strong> 0,01 mg/kg (0,01 mL/kg) IM na face anterolateral da coxa. Repetir a cada 5-15 min.", badge: "Máx: 0,3 mg (criança) / 0,5 mg", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => {
+                    // SBP (Anafilaxia: atualização 2021): 0,01 mg/kg da solução 1:1000 (1 mg/mL) IM na face anterolateral da coxa,
+                    // máximo 0,3 mg em crianças e 0,5 mg em adultos; repetir a cada 5-15 min se necessário.
+                    let teto = (i !== "" && parseFloat(i) >= 12) ? 0.5 : 0.3;
+                    let mg = Math.min(p * 0.01, teto);
+                    return { v: mg.toFixed(2) + " mL", r: `🚨 VIA INTRAMUSCULAR (ANAFILAXIA)\n\nAspirar ${mg.toFixed(2)} mL de Adrenalina 1 mg/mL (1:1000), sem diluir = ${mg.toFixed(2)} mg.\nAplicar IM na face anterolateral da coxa, AGORA.\nRepetir a cada 5 a 15 minutos, se necessário.\n\n(Dose máxima por aplicação: ${teto.toFixed(1)} mg.)` };
                 }
             },
             "prometa": {
@@ -1275,11 +1300,26 @@
                 info: "<strong>Conduta:</strong> <10kg: 10gts | 10-20kg: 20gts | >20kg: 40gts.", badge: "", recLabel: "Texto para selecionar e copiar:",
                 calc: (p) => { let v = 20; if(p<10)v=10; if(p>20)v=40; return { v: v + " gts", r: `NEBULIZAÇÃO HOSPITALAR ASMA\n\n Colocar ${v} gotas de Ipratrópio + 4 mL de SF 0,9%. Realizar ciclos de 20/20 min na 1ª hora.` }; }
             },
+            "adrenalina_neb": {
+                cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)",
+                kw: "adrenalina epinefrina inalatoria nebulizacao crupe laringite estridor", nome: "Adrenalina Inalatória (Crupe)", apres: "Ampola 1 mg / mL (1:1000)",
+                info: "<strong>Conduta:</strong> 0,5 mL/kg nebulizado (Peso ÷ 2 em mL). Máx. 5 mL.", badge: "Máx: 5 mL", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    // Manual HIAS (2017): adrenalina 1:1000, 0,5 mL/kg (Peso ÷ 2 em mL), máximo 5 mL; pode ou não diluir com igual volume de SF 0,9%.
+                    // SBP (Crupe viral e bacteriano): efeito ultrarrápido no estridor, com duração de cerca de 2 horas.
+                    let v = Math.min(p * 0.5, 5).toFixed(1);
+                    return { v: v + " mL", r: `NEBULIZAÇÃO (LARINGITE / CRUPE)\n\n Colocar ${v} mL de Adrenalina 1 mg/mL (1:1000) no nebulizador (pode completar com igual volume de SF 0,9%) e nebulizar com O2.\n Manter observação por pelo menos 2 horas após a nebulização (risco de retorno dos sintomas).` };
+                }
+            },
             "dexa_crupe": {
                 cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)", 
                 kw: "dexametasona injetavel crupe laringite anafilaxia alergia hospitalar", nome: "Dexametasona Injetável", apres: "4 mg / mL",
-                info: "<strong>Conduta:</strong> 0,4 mg/kg via IM/EV dose única.", badge: "Teto Máx: 5 mL", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = Math.min((p * 0.4) / 4, 5.0).toFixed(2); return { v: v + " mL", r: `VIA ENDOVENOSA / INTRAMUSCULAR (CRUPE / ANAFILAXIA)\n\n Fazer ${v} mL de Dexametasona injetável (4 mg/mL) em dose única agora.` }; }
+                info: "<strong>Conduta:</strong> Crupe: 0,15 mg/kg (leve) até 0,6 mg/kg (grave), dose única.", badge: "Teto Máx: 5 mL (20 mg)", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => {
+                    // SBP (crupe): dose única de 0,15 mg/kg (crupe leve) até 0,6 mg/kg (crupe grave), VO ou parenteral. Teto do app: 5 mL (20 mg).
+                    let leve = Math.min(p * 0.15 / 4, 5).toFixed(2), grave = Math.min(p * 0.6 / 4, 5).toFixed(2);
+                    return { v: `0,15: ${leve} mL\n0,6: ${grave} mL`, r: `VIA ENDOVENOSA / INTRAMUSCULAR (CRUPE) - DEXAMETASONA 4 MG/ML, DOSE ÚNICA\n\n• CRUPE LEVE (0,15 MG/KG): fazer ${leve} mL agora.\n• CRUPE GRAVE (0,6 MG/KG): fazer ${grave} mL agora.` };
+                }
             },
             "benza": {
                 cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar / UBS (Vias Injetáveis)", 
@@ -1613,8 +1653,8 @@
             "neuro_midaz": {
                 cat: "cat-neuro", sub: "🏥 Uso Hospitalar (Crise Convulsiva)", 
                 kw: "midazolam convulsao estado de mal neuro hospitalar injetavel intramuscular", nome: "Midazolam IM (Se sem acesso)", apres: "Ampola 5 mg / mL",
-                info: "<strong>Conduta:</strong> Peso x 0,04 mL IM. Máx. 10 mg.", badge: "Teto Máx: 10 mg (2 mL)", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { let v = Math.min(p * 0.04, 2).toFixed(2); /* 0,2 mg/kg, teto de 10 mg (2 mL a 5 mg/mL) */ return { v: v + " mL", r: `VIA INTRAMUSCULAR (SEM ACESSO)\n\n FAZER ${v} ML DE MIDAZOLAM IM IMEDIATAMENTE.` }; }
+                info: "<strong>Conduta:</strong> 0,2 mg/kg IM (Peso x 0,04 mL). Máx. 6 mg. Pode repetir em 10-15 min.", badge: "Teto Máx: 6 mg (1,2 mL)", recLabel: "Texto para selecionar e copiar:",
+                calc: (p) => { let v = Math.min(p * 0.04, 1.2).toFixed(2); /* SBP: 0,2 mg/kg IM, máx. 6 mg/dose (1,2 mL a 5 mg/mL), repetir em 10-15 min se necessário */ return { v: v + " mL", r: `VIA INTRAMUSCULAR (SEM ACESSO)\n\n FAZER ${v} ML DE MIDAZOLAM (5 MG/ML) IM IMEDIATAMENTE. PODE SER REPETIDO EM 10 A 15 MINUTOS, SE NECESSÁRIO.` }; }
             },
             "neuro_fenitoina": {
                 cat: "cat-neuro", sub: "🏥 Uso Hospitalar (Crise Convulsiva)", 
@@ -1787,14 +1827,20 @@
             "pele_perme": {
                 cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)", 
                 kw: "permetrina loção 5% sarna escabiose coceira pele ambulatorial tópica", nome: "Permetrina Loção 5% (Escabiose)", apres: "Loção Tópica",
-                info: "<strong>Conduta:</strong> Abaixo do pescoço à noite. Repetir em 7 dias.", badgeSt: "static-blue", badge: "Uso Tópico", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
-                calc: () => ({ v: "Uso Tópico", r: `USO TÓPICO\n\n1) PERMETRINA LOÇÃO A 5% --------------------------------- 1 FR\nAPLICAR NO CORPO ABAIXO DO PESCOÇO ANTES DE DORMIR, RETIRAR AO ACORDAR. REPETIR EM 7 DIAS.` })
+                info: "<strong>Conduta:</strong> Abaixo do pescoço à noite. Repetir em 7 dias. A partir de 2 meses.", badgeSt: "static-blue", badge: "Uso Tópico", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+                calc: (p, i) => {
+                    // SBP (Ectoparasitoses): permetrina 5% é a 1ª escolha na escabiose, a partir de 2 meses de idade.
+                    if (i !== "" && parseFloat(i) < 0.17) return { v: "Contraind.", r: "ATENÇÃO: Permetrina 5% indicada a partir de 2 meses de idade (SBP)." };
+                    return { v: "Uso Tópico", r: `USO TÓPICO\n\n1) PERMETRINA LOÇÃO A 5% --------------------------------- 1 FR\nAPLICAR NO CORPO ABAIXO DO PESCOÇO ANTES DE DORMIR, RETIRAR AO ACORDAR. REPETIR EM 7 DIAS.` };
+                }
             },
             "pele_iver": {
                 cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)", 
                 kw: "ivermectina comprimido sarna escabiose pele oral ambulatorial", nome: "Ivermectina 6 mg (Escabiose Oral)", apres: "Comprimido",
-                info: "<strong>Conduta:</strong> Dose única baseada em peso (>15kg e >5 anos).", badge: "", recLabel: "Texto para selecionar e copiar:",
-                calc: (p) => { 
+                info: "<strong>Conduta:</strong> Dose única por peso. >5 anos e >15 kg. Reservada a casos graves ou refratários.", badge: "> 5 anos e > 15 kg", recLabel: "Texto para selecionar e copiar:",
+                calc: (p, i) => { 
+                    // SBP (Ectoparasitoses): só para maiores de 5 anos e 15 kg; reservada às formas graves ou refratárias ao tratamento tópico.
+                    if (i !== "" && parseFloat(i) <= 5) return { v: "Contraind.", r: "ATENÇÃO: Ivermectina indicada apenas para maiores de 5 anos e 15 kg (SBP). Preferir permetrina 5% tópica." };
                     let c = "Contraind.", t = "VERIFICAR CONTRAINDICAÇÃO (<15 kg).";
                     if (p >= 15 && p <= 25) { c = "0.5 cp"; t = "TOMAR MEIO COMPRIMIDO VIA ORAL, DOSE ÚNICA. REPETIR EM 14 DIAS."; }
                     else if (p > 25 && p <= 45) { c = "1 cp"; t = "TOMAR 01 COMPRIMIDO VIA ORAL, DOSE ÚNICA. REPETIR EM 14 DIAS."; }
@@ -2372,13 +2418,13 @@
             // ---------- SINTOMÁTICOS ----------
             "dip_gts": {
                 indicacao: "Febre e dor leve a moderada.",
-                dose: "0,75 gota/kg/dose VO de 6/6h, se dor ou febre (>37,5°C).",
-                atencao: "Máximo 40 gotas por dose. Evitar em menores de 3 meses ou 5 kg."
+                dose: "15 mg/kg/dose (0,6 gota/kg) VO de 6/6h, se dor ou febre (>37,5°C).",
+                atencao: "Máximo 40 gotas (1 g) por dose. Não alternar nem combinar antitérmicos (risco de superdosagem, sem benefício). A partir de 3 meses e 5 kg. Máximo 64 mg/kg/dia."
             },
             "dip_xpe": {
                 indicacao: "Febre e dor leve a moderada.",
                 dose: "15 mg/kg/dose (Peso x 0,3 mL) VO de 6/6h, se dor ou febre.",
-                atencao: "Evitar em menores de 3 meses ou 5 kg."
+                atencao: "Máximo 20 mL (1 g) por dose. Não alternar nem combinar antitérmicos (risco de superdosagem, sem benefício). A partir de 3 meses e 5 kg. Máximo 64 mg/kg/dia."
             },
             "pct_gts": {
                 indicacao: "Febre e dor leve a moderada.",
@@ -2417,8 +2463,8 @@
             },
             "dip_inj": {
                 indicacao: "Febre e dor em ambiente hospitalar.",
-                dose: "0,03 mL/kg/dose (15 mg/kg) EV ou IM de 6/6h.",
-                atencao: "Máximo 2 mL (1 g) por dose. Infusão rápida pode causar hipotensão."
+                dose: "15 mg/kg/dose (0,03 mL/kg) EV ou IM de 6/6h.",
+                atencao: "Máximo 2 mL (1 g) por dose. EV lento: infusão rápida pode causar hipotensão. Não alternar nem combinar antitérmicos (risco de superdosagem, sem benefício). A partir de 3 meses e 5 kg. Máximo 64 mg/kg/dia."
             },
 
             // ---------- VÔMITOS ----------
@@ -2473,6 +2519,11 @@
                 indicacao: "Reação alérgica e urticária em ambiente hospitalar.",
                 dose: "0,02 mL/kg/dose (0,5 mg/kg) IM de 6/6h.",
                 atencao: "Contraindicado em menores de 2 anos (risco de depressão respiratória). Máximo 1 mL por dose."
+            },
+            "adrenalina_im": {
+                indicacao: "Anafilaxia.",
+                dose: "0,01 mg/kg (0,01 mL/kg da solução 1 mg/mL) IM na face anterolateral da coxa. Repetir a cada 5-15 minutos, se necessário.",
+                atencao: "Máximo 0,3 mg em crianças e 0,5 mg em adolescentes/adultos por aplicação. Não diluir. É a medicação de 1ª linha: não atrasar por anti-histamínico ou corticoide."
             },
 
             // ---------- RESPIRATÓRIO ----------
@@ -2572,9 +2623,14 @@
                 atencao: "Usar junto com o salbutamol, não sozinho. Proteger os olhos da névoa."
             },
             "dexa_crupe": {
-                indicacao: "Laringite (crupe) e reação alérgica grave.",
-                dose: "0,4 mg/kg IM ou EV em dose única.",
-                atencao: "Máximo 5 mL (20 mg) por dose."
+                indicacao: "Laringite viral aguda (crupe).",
+                dose: "Dose única de 0,15 mg/kg (crupe leve) até 0,6 mg/kg (crupe grave), VO ou parenteral (IM/EV).",
+                atencao: "Máximo 5 mL (20 mg). A associação com adrenalina inalatória reduz as taxas de internação."
+            },
+            "adrenalina_neb": {
+                indicacao: "Laringite viral aguda (crupe) com estridor em repouso ou desconforto respiratório.",
+                dose: "0,5 mL/kg (Peso ÷ 2 em mL) da adrenalina 1:1000 nebulizada. Pode diluir com igual volume de SF 0,9%.",
+                atencao: "Máximo 5 mL. Efeito ultrarrápido, mas dura cerca de 2 horas: observar o retorno dos sintomas. Associar dexametasona."
             },
 
             // ---------- ANTIBIÓTICOS ----------
@@ -2726,8 +2782,8 @@
             },
             "neuro_midaz": {
                 indicacao: "Crise convulsiva aguda sem acesso venoso.",
-                dose: "0,2 mg/kg (Peso x 0,04 mL) IM.",
-                atencao: "Máximo 10 mg (2 mL) por dose. Risco de depressão respiratória: ter material de via aérea pronto."
+                dose: "0,2 mg/kg (Peso x 0,04 mL) IM. Pode ser repetido em 10-15 minutos, se necessário.",
+                atencao: "Máximo 6 mg (1,2 mL) por dose (SBP). Risco de depressão respiratória: ter material de via aérea pronto."
             },
             "neuro_fenitoina": {
                 indicacao: "Crise convulsiva que persiste por mais de 10 a 15 minutos mesmo após diazepam ou midazolam.",
@@ -2843,12 +2899,12 @@
             "pele_perme": {
                 indicacao: "Escabiose (sarna).",
                 dose: "Aplicar à noite e repetir após 7 dias.",
-                atencao: "Tratar todos da casa ao mesmo tempo. Lavar roupas e roupas de cama em água quente."
+                atencao: "A partir de 2 meses de idade. 1ª escolha na escabiose (eficácia de 90-98% com 8-12 h de contato). Tratar todos da casa ao mesmo tempo. Lavar roupas e roupas de cama em água quente."
             },
             "pele_iver": {
                 indicacao: "Escabiose (sarna) e outras parasitoses.",
                 dose: "15-25 kg: ½ cp | 26-45 kg: 1 cp | >45 kg: 2 cp. Dose única, repetir em 14 dias.",
-                atencao: "Contraindicada abaixo de 15 kg ou 5 anos."
+                atencao: "Contraindicada abaixo de 15 kg ou 5 anos. Reservada às formas graves de escabiose ou refratárias ao tratamento tópico (SBP); a permetrina 5% é a 1ª escolha."
             },
             "pele_mupi": {
                 indicacao: "Impetigo e infecções bacterianas superficiais da pele.",
@@ -3132,9 +3188,100 @@
         // ainda não salvou uma ficha própria no Firestore (a da equipe tem prioridade).
         // =====================================================================
         const fichasPadrao = {
+            // ---------- A partir das diretrizes da SBP (out/2026) ----------
+            "dip_gts": {
+                indicacoes: "Febre associada a desconforto evidente (choro intenso, irritabilidade, redução da atividade, do apetite ou do sono) e dor.",
+                dose: "Febre e dor: 15 mg/kg/dose (0,6 gota/kg) VO de 6/6 horas\nFaixa SBP: 10-16 mg/kg/dose de 6/6 ou 8/8 horas",
+                doseMaxima: "40-64 mg/kg/dia (SBP). Teto absoluto do app: 1 g por dose.",
+                apresentacoes: "Gotas 500 mg/mL (1 gota = 25 mg).",
+                via: "Oral.",
+                intervalo: "6/6 ou 8/8 horas.",
+                contraindicacoes: "Menores de 3 meses ou com menos de 5 kg.",
+                alertasPediatricos: "O uso alternado ou combinado de antitérmicos não é recomendado: pode confundir familiares e cuidadores e aumentar o risco de superdosagem, sem benefício sobre a monoterapia. O antitérmico deve ser indicado quando a febre estiver associada a desconforto evidente.",
+                fonteRevisao: "SBP - Documento Científico Manejo da febre aguda (Depto. de Pediatria Ambulatorial e Infectologia): https://www.sbp.com.br/fileadmin/user_upload/23229c-DC_Manejo_da_febre_aguda.pdf - consultado em out/2026."
+            },
+            "dip_xpe": {
+                indicacoes: "Febre associada a desconforto evidente (choro intenso, irritabilidade, redução da atividade, do apetite ou do sono) e dor.",
+                dose: "Febre e dor: 15 mg/kg/dose (0,3 mL/kg) VO de 6/6 horas\nFaixa SBP: 10-16 mg/kg/dose de 6/6 ou 8/8 horas",
+                doseMaxima: "40-64 mg/kg/dia (SBP). Teto absoluto do app: 1 g por dose.",
+                apresentacoes: "Solução oral 50 mg/mL.",
+                via: "Oral.",
+                intervalo: "6/6 ou 8/8 horas.",
+                contraindicacoes: "Menores de 3 meses ou com menos de 5 kg.",
+                alertasPediatricos: "O uso alternado ou combinado de antitérmicos não é recomendado: pode confundir familiares e cuidadores e aumentar o risco de superdosagem, sem benefício sobre a monoterapia. O antitérmico deve ser indicado quando a febre estiver associada a desconforto evidente.",
+                fonteRevisao: "SBP - Documento Científico Manejo da febre aguda (Depto. de Pediatria Ambulatorial e Infectologia): https://www.sbp.com.br/fileadmin/user_upload/23229c-DC_Manejo_da_febre_aguda.pdf - consultado em out/2026."
+            },
+            "dip_inj": {
+                indicacoes: "Febre associada a desconforto evidente (choro intenso, irritabilidade, redução da atividade, do apetite ou do sono) e dor.",
+                dose: "Febre e dor: 15 mg/kg/dose (0,03 mL/kg) EV ou IM de 6/6 horas\nFaixa SBP: 10-16 mg/kg/dose de 6/6 ou 8/8 horas",
+                doseMaxima: "40-64 mg/kg/dia (SBP). Teto absoluto do app: 1 g por dose.",
+                apresentacoes: "Ampola 500 mg/mL.",
+                via: "Endovenosa ou intramuscular.",
+                intervalo: "6/6 ou 8/8 horas.",
+                contraindicacoes: "Menores de 3 meses ou com menos de 5 kg.",
+                alertasPediatricos: "O uso alternado ou combinado de antitérmicos não é recomendado: pode confundir familiares e cuidadores e aumentar o risco de superdosagem, sem benefício sobre a monoterapia. O antitérmico deve ser indicado quando a febre estiver associada a desconforto evidente.",
+                diluicao: "EV: diluir em 9 mL de água destilada. IM: não diluir.",
+                infusao: "EV lenta (infusão rápida pode causar hipotensão). IM profunda.",
+                fonteRevisao: "SBP - Documento Científico Manejo da febre aguda (Depto. de Pediatria Ambulatorial e Infectologia): https://www.sbp.com.br/fileadmin/user_upload/23229c-DC_Manejo_da_febre_aguda.pdf - consultado em out/2026."
+            },
+            "neuro_midaz": {
+                indicacoes: "Crise convulsiva aguda / estado de mal epiléptico sem acesso venoso.",
+                dose: "Crise convulsiva sem acesso venoso: 0,2 mg/kg IM, podendo repetir em 10-15 minutos, se necessário\nEstado de mal refratário (EV): 0,15-0,2 mg/kg, seguidos de infusão contínua de 1 mcg/kg/min",
+                doseMaxima: "6 mg por dose IM.",
+                apresentacoes: "Ampola 5 mg/mL.",
+                via: "Intramuscular.",
+                alertasPediatricos: "O midazolam por vias não intravenosas (IM, intranasal) é eficaz e seguro no controle de crises agudas, comparável ao diazepam EV. Nos casos de persistência das crises, usar fenitoína, ácido valproico ou fenobarbital. Risco de depressão respiratória.",
+                fonteRevisao: "SBP - Sedação, Analgesia e Bloqueio Neuromuscular: https://www.sbp.com.br/fileadmin/user_upload/pdfs/Sedacao_Analgesia_Bloqueio_Neuromuscular.pdf - consultado em out/2026."
+            },
+            "adrenalina_im": {
+                indicacoes: "Anafilaxia.",
+                dose: "Anafilaxia: 0,01 mg/kg (0,01 mL/kg da solução 1 mg/mL) IM na face anterolateral da coxa, repetir a cada 5-15 minutos, se necessário",
+                doseMaxima: "0,3 mg em crianças; 0,5 mg em adultos.",
+                apresentacoes: "Ampola 1 mg/mL (1:1000). Autoinjetores: 0,15 mg (crianças de 7,5 kg a 25-30 kg) e 0,3 mg (a partir de 25-30 kg, adolescentes e adultos).",
+                via: "Intramuscular (face anterolateral da coxa).",
+                intervalo: "A cada 5-15 minutos, se necessário.",
+                fonteRevisao: "SBP - Guia Prático de Atualização Anafilaxia: atualização 2021: https://www.sbp.com.br/fileadmin/user_upload/22970c-GPA-Anafilaxia_-_Atualizacao_2021.pdf; ASBAI - Autoinjetores de adrenalina no manejo da anafilaxia (2024) - consultados em out/2026."
+            },
+            "adrenalina_neb": {
+                indicacoes: "Laringite viral aguda (crupe) com estridor ou desconforto respiratório.",
+                dose: "Crupe: 0,5 mL/kg (Peso ÷ 2 em mL) da adrenalina 1:1000 nebulizada, pode diluir com igual volume de SF 0,9%",
+                doseMaxima: "5 mL por nebulização.",
+                apresentacoes: "Ampola 1 mg/mL (1:1000).",
+                via: "Inalatória (nebulização).",
+                alertasPediatricos: "Efeito ultrarrápido: diminui quase instantaneamente o estridor e os sintomas de falência respiratória. Como o efeito é breve (cerca de 2 horas), o paciente pode voltar ao desconforto inicial após o fim da ação. Há evidência de benefício da adrenalina combinada à dexametasona na redução das internações.",
+                fonteRevisao: "Dose: Manual de Sobrevivência do Residente de Pediatria (HIAS, 2017). Efeito e associação: SBP - Crupe viral e bacteriano: https://www.sbp.com.br/fileadmin/user_upload/2017/01/Emergncia-Crupe-Viral-e-Bacteriano.pdf - consultado em out/2026."
+            },
+            "dexa_crupe": {
+                indicacoes: "Laringite viral aguda (crupe).",
+                dose: "Crupe leve: 0,15 mg/kg, dose única, VO ou parenteral\nCrupe grave: 0,6 mg/kg, dose única, VO ou parenteral",
+                doseMaxima: "Teto do app: 5 mL (20 mg).",
+                apresentacoes: "Injetável 4 mg/mL.",
+                via: "Oral, intramuscular ou endovenosa.",
+                intervalo: "Dose única.",
+                alertasPediatricos: "Há evidência de benefício da adrenalina inalatória combinada à dexametasona na redução das taxas de internação.",
+                fonteRevisao: "SBP - Crupe viral e bacteriano: https://www.sbp.com.br/fileadmin/user_upload/2017/01/Emergncia-Crupe-Viral-e-Bacteriano.pdf - consultado em out/2026."
+            },
+            "pele_iver": {
+                indicacoes: "Escabiose grave ou refratária ao tratamento tópico. Tem indicação em bula para pediculose.",
+                dose: "Escabiose grave ou refratária: 200 mcg/kg VO em dose única, repetir em 14 dias\n15-25 kg: ½ comprimido\n26-45 kg: 1 comprimido\n> 45 kg: 2 comprimidos",
+                apresentacoes: "Comprimido 6 mg.",
+                via: "Oral.",
+                contraindicacoes: "Crianças com 5 anos ou menos ou com 15 kg ou menos.",
+                alertasPediatricos: "Deve ter as indicações limitadas às formas mais graves de escabiose ou refratárias ao tratamento tópico: há relatos de efeitos adversos graves e a segurança em crianças não está bem estabelecida. A permetrina 5% tópica é o tratamento de 1ª escolha.",
+                fonteRevisao: "SBP - Documento Científico Ectoparasitoses: https://www.sbp.com.br/fileadmin/user_upload/22734c-DC-Ectoparasitoses.pdf - consultado em out/2026."
+            },
+            "pele_perme": {
+                indicacoes: "Escabiose (1ª escolha).",
+                dose: "Escabiose: aplicar em todo o corpo abaixo do pescoço, em todas as lesões, à noite, e retirar no banho ao acordar (8-12 horas de contato); repetir em 7 dias",
+                apresentacoes: "Loção/creme 5%.",
+                via: "Tópica.",
+                contraindicacoes: "Menores de 2 meses de idade.",
+                alertasPediatricos: "Eficácia de 90-98% com 8-12 horas de contato. A permetrina 5% não tem eficácia na pediculose.",
+                fonteRevisao: "SBP - Documento Científico Ectoparasitoses: https://www.sbp.com.br/fileadmin/user_upload/22734c-DC-Ectoparasitoses.pdf - consultado em out/2026."
+            },
             "cefadroxila": {
                 indicacoes: "Faringite ou amigdalite estreptocócica beta-hemolítica.",
-                dose: "< 12 anos (suspensão oral): 12,5-25 mg/kg VO 2x/dia. ≥ 12 anos: 1-2 g/dia VO, fracionados em 2 tomadas de 12/12 horas; alternativamente, em dose única diária. Faringite ou amigdalite estreptocócica beta-hemolítica (cápsula, ≥ 12 anos): 1 g/dia VO em dose única ou fracionado em 2 tomadas de 12/12 horas, por 7-10 dias.",
+                dose: "< 12 anos (suspensão oral): 12,5-25 mg/kg VO de 12/12 horas\n≥ 12 anos: 1-2 g/dia VO em 2 tomadas de 12/12 horas, ou em dose única diária\nFaringite ou amigdalite estreptocócica beta-hemolítica (≥ 12 anos, cápsula): 1 g/dia VO em dose única ou de 12/12 horas, por 7-10 dias",
                 doseMaxima: "≥ 12 anos: 2 g/dia.",
                 apresentacoes: "Suspensão oral; cápsula (indicada para ≥ 12 anos).",
                 via: "Oral.",
@@ -3143,7 +3290,7 @@
             },
             "smx_tmp": {
                 indicacoes: "Infecção do trato urinário.",
-                dose: "Lactentes acima de 2 meses, crianças e adolescentes: 8-12 mg TMP/kg/dia VO de 12/12 horas, por 7-14 dias.",
+                dose: "Infecção do trato urinário (> 2 meses): 8-12 mg TMP/kg/dia VO de 12/12 horas, por 7-14 dias",
                 doseMaxima: "20 mL/dose (160 mg de TMP/dose).",
                 apresentacoes: "Suspensão oral 200 mg + 40 mg/5 mL.",
                 via: "Oral.",
@@ -3153,7 +3300,7 @@
             },
             "pen_v": {
                 indicacoes: "Infecções suscetíveis; infecções estreptocócicas (incluindo otite média); tratamento de faringoamigdalite para profilaxia de febre reumática; infecções estreptocócicas leves a moderadas; infecções pneumocócicas leves a moderadas; infecções estafilocócicas de pele e tecidos moles; angina de Vincent (leves a moderadas); prevenção de febre reumática.",
-                dose: "5-12 anos (solução 80.000 unidades/mL): infecções suscetíveis 25.000-90.000 unidades/kg/dia VO de 4/4, 6/6 ou 8/8 horas; infecções estreptocócicas (incluindo otite média) 40.000 unidades/kg/dia VO de 12/12 horas, por 10 dias; faringoamigdalite para profilaxia de febre reumática 25.000-50.000 unidades/kg/dia VO de 8/8 ou 12/12 horas, por 10 dias. ≥ 12 anos: infecções estreptocócicas leves a moderadas 2,5-6,3 mL/dose (200.000-500.000 unidades/dose) VO de 6/6 ou 8/8 horas, por 10 dias; infecções pneumocócicas, estafilocócicas de pele e tecidos moles e angina de Vincent 5-6,3 mL/dose (400.000-500.000 unidades/dose) VO de 6/6 ou 8/8 horas; prevenção de febre reumática 5-6,3 mL VO de 12/12 horas, ininterruptamente.",
+                dose: "Infecções suscetíveis (5-12 anos): 25.000-90.000 unidades/kg/dia VO de 4/4, 6/6 ou 8/8 horas\nInfecções estreptocócicas, incluindo otite média (5-12 anos): 40.000 unidades/kg/dia VO de 12/12 horas, por 10 dias\nFaringoamigdalite para profilaxia de febre reumática (5-12 anos): 25.000-50.000 unidades/kg/dia VO de 8/8 ou 12/12 horas, por 10 dias\nInfecções estreptocócicas leves a moderadas (≥ 12 anos): 2,5-6,3 mL/dose (200.000-500.000 unidades) VO de 6/6 ou 8/8 horas, por 10 dias\nInfecções pneumocócicas, estafilocócicas de pele e tecidos moles e angina de Vincent (≥ 12 anos): 5-6,3 mL/dose (400.000-500.000 unidades) VO de 6/6 ou 8/8 horas\nPrevenção de febre reumática (≥ 12 anos): 5-6,3 mL VO de 12/12 horas, ininterruptamente",
                 doseMaxima: "6,3 mL/dose (500.000 unidades/dose).",
                 apresentacoes: "Comprimido 500.000 unidades; solução oral 80.000 unidades/mL.",
                 via: "Oral.",
@@ -3162,7 +3309,7 @@
             },
             "metronidazol_vo": {
                 indicacoes: "Giardíase, amebíase (incluindo abscesso hepático amebiano) e infecções bacterianas anaeróbias; casos leves de infecções por Clostridioides (Clostridium) difficile; infecção de cateter de diálise peritoneal.",
-                dose: "Crianças e adolescentes: 15-50 mg/kg/dia VO de 8/8 horas. Casos leves de C. difficile: 30 mg/kg/dia VO de 8/8 horas por 10-14 dias. Infecção de cateter de diálise peritoneal: 10 mg/kg/dose VO de 8/8 horas.",
+                dose: "Giardíase, amebíase e infecções anaeróbias: 15-50 mg/kg/dia VO de 8/8 horas\nCasos leves de C. difficile: 30 mg/kg/dia VO de 8/8 horas, por 10-14 dias\nInfecção de cateter de diálise peritoneal: 10 mg/kg/dose VO de 8/8 horas",
                 doseMaxima: "C. difficile: 500 mg/dose. Diálise peritoneal: 1.500 mg/dose.",
                 via: "Oral.",
                 intervalo: "8/8 horas.",
@@ -3172,7 +3319,7 @@
             },
             "metronidazol_ev": {
                 indicacoes: "Prevenção cirúrgica; apendicite; infecções intra-abdominais.",
-                dose: "Neonatal: ataque 15 mg/kg/dose EV, seguida de 7,5 mg/kg/dose após 24 h, e então conforme a idade gestacional (23-34 semanas: 7,5 mg/kg/dose EV de 12/12 horas, iniciando 12 h após o ataque). Prevenção cirúrgica: neonatos < 1.200 g 7,5 mg/kg/dose EV; neonatos e crianças ≥ 1.200 g 15 mg/kg/dose EV, 30-60 minutos antes da cirurgia. Apendicite: 30 mg/kg/dia EV de 6/6 horas, por 7 dias (incluindo o período de antibiótico EV e VO).",
+                dose: "Neonatal: ataque 15 mg/kg/dose EV; após 24 h, 7,5 mg/kg/dose; depois conforme a idade gestacional (23-34 semanas: 7,5 mg/kg/dose de 12/12 horas, iniciando 12 h após o ataque)\nPrevenção cirúrgica (< 1.200 g): 7,5 mg/kg/dose EV, 30-60 minutos antes da cirurgia\nPrevenção cirúrgica (≥ 1.200 g, neonatos e crianças): 15 mg/kg/dose EV, 30-60 minutos antes da cirurgia\nApendicite: 30 mg/kg/dia EV de 6/6 horas, por 7 dias (somando EV e VO)",
                 doseMaxima: "500 mg/dose (100 mL/dose).",
                 apresentacoes: "Frasco de 5 mg/mL.",
                 via: "Endovenosa.",
@@ -3183,7 +3330,7 @@
             },
             "cipro_ev": {
                 indicacoes: "Infecções moderadas a graves; fibrose cística (exacerbação pulmonar); endocardite infecciosa; meningite ou ventriculite (agente alternativo); profilaxia para infecção por antraz por inalação (pós-exposição).",
-                dose: "Lactentes e crianças maiores: dose usual 10 mg/kg/dose EV de 8/8 ou 12/12 horas. Fibrose cística: 10 mg/kg/dose EV de 8/8 horas. Endocardite: 10-15 mg/kg/dose EV de 12/12 horas. Meningite ou ventriculite: 10 mg/kg/dose EV de 8/8 horas ou 15 mg/kg/dose EV de 12/12 horas. Antraz (pós-exposição): 10 mg/kg/dose EV de 12/12 horas.",
+                dose: "Infecções moderadas a graves: 10 mg/kg/dose EV de 8/8 ou 12/12 horas\nFibrose cística (exacerbação pulmonar): 10 mg/kg/dose EV de 8/8 horas\nEndocardite infecciosa: 10-15 mg/kg/dose EV de 12/12 horas\nMeningite ou ventriculite: 10 mg/kg/dose EV de 8/8 horas ou 15 mg/kg/dose EV de 12/12 horas\nAntraz por inalação (pós-exposição): 10 mg/kg/dose EV de 12/12 horas",
                 doseMaxima: "200 mL/dose (400 mg/dose).",
                 apresentacoes: "Comprimido 500 mg; solução injetável 2 mg/mL.",
                 via: "Endovenosa.",
@@ -3194,7 +3341,7 @@
             },
             "cipro_vo": {
                 indicacoes: "Infecção do trato urinário; profilaxia de doença meningocócica; doença por complexo Mycobacterium avium.",
-                dose: "Infecção do trato urinário: 10-20 mg/kg/dose VO de 12/12 horas, por 3-7 dias (cistite) ou 7-14 dias (pielonefrite). Profilaxia de doença meningocócica: 20 mg/kg VO em dose única. Complexo Mycobacterium avium: 10-15 mg/kg/dose VO de 12/12 horas (com outros antibióticos).",
+                dose: "Infecção do trato urinário: 10-20 mg/kg/dose VO de 12/12 horas, por 3-7 dias (cistite) ou 7-14 dias (pielonefrite)\nProfilaxia de doença meningocócica: 20 mg/kg VO em dose única\nComplexo Mycobacterium avium: 10-15 mg/kg/dose VO de 12/12 horas (com outros antibióticos)",
                 doseMaxima: "ITU e M. avium: 750 mg/dose. Profilaxia meningocócica: 500 mg.",
                 apresentacoes: "Comprimido 500 mg; solução injetável 2 mg/mL.",
                 via: "Oral.",
@@ -3204,7 +3351,7 @@
             },
             "cefalotina": {
                 indicacoes: "Infecções do trato respiratório; infecções do trato geniturinário; infecções gastrointestinais; infecções da pele e dos tecidos moles; infecções ósseas e articulares; meningite; septicemia; profilaxia em cirurgias.",
-                dose: "Pediatria: 20-40 mg/kg IM/EV de 6/6 horas OU 12-25 mg/kg IM/EV de 4/4 horas.",
+                dose: "Dose usual: 20-40 mg/kg IM/EV de 6/6 horas\nOu: 12-25 mg/kg IM/EV de 4/4 horas",
                 apresentacoes: "Pó para solução injetável 1 g. Nomes comerciais: Cefalotil®, Cefariston®, Kefalomax®, Keflin Neutro®.",
                 via: "Endovenosa ou intramuscular.",
                 intervalo: "6/6 horas ou 4/4 horas.",
@@ -3216,7 +3363,7 @@
             },
             "clindamicina": {
                 indicacoes: "Infecções osteoarticulares; pneumocistose; pneumonia adquirida na comunidade (sem ser por MRSA); infecções cutâneas (celulites, erisipelas). VO: infecções leves a moderadas; malária; otite média; faringite por Streptococcus do grupo A; pneumocistose (quadros leves); pneumonia (quadros leves); impetigo (MRSA suspeito ou confirmado); infecções por MRSA (ex.: celulite ou erisipela).",
-                dose: "Lactentes, crianças e adolescentes (150 mg/mL): dose usual 20-40 mg/kg/dia EV ou IM de 6/6 ou 8/8 horas. Infecções osteoarticulares: 30-40 mg/kg/dia EV de 6/6 ou 8/8 horas (≥ 2-3 semanas na artrite séptica e ≥ 3-4 semanas na osteomielite). Pneumocistose: 40 mg/kg/dia EV de 6/6 horas com primaquina, 21 dias. PAC (sem MRSA): 40 mg/kg/dia EV de 6/6 ou 8/8 horas por 5-10 dias. Infecções cutâneas: 25-40 mg/kg/dia EV de 8/8 horas. VO: infecções leves a moderadas 10-40 mg/kg/dia de 8/8 horas; otite média 30-40 mg/kg/dia de 6/6 ou 8/8 horas; faringite por Streptococcus do grupo A 21 mg/kg/dia de 8/8 horas por 10 dias; pneumonia leve 30-40 mg/kg/dia de 6/6 ou 8/8 horas; impetigo (MRSA) 20 mg/kg/dia de 8/8 horas por 7 dias; infecções por MRSA 30-40 mg/kg/dia de 6/6 ou 8/8 horas.",
+                dose: "Dose usual (EV ou IM): 20-40 mg/kg/dia de 6/6 ou 8/8 horas\nInfecções osteoarticulares: 30-40 mg/kg/dia EV de 6/6 ou 8/8 horas (≥ 2-3 semanas na artrite séptica; ≥ 3-4 semanas na osteomielite)\nPneumocistose: 40 mg/kg/dia EV de 6/6 horas com primaquina, por 21 dias\nPAC (sem MRSA): 40 mg/kg/dia EV de 6/6 ou 8/8 horas, por 5-10 dias\nInfecções cutâneas (celulites, erisipelas): 25-40 mg/kg/dia EV de 8/8 horas\nVO - infecções leves a moderadas: 10-40 mg/kg/dia de 8/8 horas\nVO - otite média: 30-40 mg/kg/dia de 6/6 ou 8/8 horas\nVO - faringite por Streptococcus do grupo A: 21 mg/kg/dia de 8/8 horas, por 10 dias\nVO - pneumonia leve: 30-40 mg/kg/dia de 6/6 ou 8/8 horas\nVO - impetigo (MRSA): 20 mg/kg/dia de 8/8 horas, por 7 dias\nVO - infecções por MRSA (celulite, erisipela): 30-40 mg/kg/dia de 6/6 ou 8/8 horas",
                 doseMaxima: "EV: 18 mL/dia (2.700 mg/dia); osteoarticulares 900 mg/dose; pneumocistose e cutâneas 600 mg/dose. IM: 600 mg/dose. VO: 1.800 mg/dia (faringite 300 mg/dose; impetigo 400 mg/dose; MRSA 450 mg/dose; pneumocistose 300-450 mg/dose).",
                 apresentacoes: "Comprimido 300 mg; solução injetável 150 mg/mL.",
                 via: "Endovenosa, intramuscular ou oral.",
@@ -3226,7 +3373,7 @@
             },
             "meropenem": {
                 indicacoes: "Antibiótico para infecções graves (intra-abdominais complicadas, pele, partes moles e meningite bacteriana); neutropenia febril; exacerbação pulmonar de fibrose cística; anthrax cutânea e sistêmica.",
-                dose: "Lactentes ≥ 3 meses, crianças e adolescentes, EV de 8/8 horas: anthrax cutânea 20 mg/kg/dose; anthrax sistêmica (incluindo meningite) 40 mg/kg/dose; exacerbação pulmonar de fibrose cística 40 mg/kg/dose (≥ 8 anos: pode infundir em 3 horas); neutropenia febril 20 mg/kg/dose; meningite 40 mg/kg/dose; infecções intra-abdominais 20 mg/kg/dose; infecções cutâneas graves 20 mg/kg/dose. Neonatos e < 3 meses: dose conforme idade gestacional e dias de vida (20-40 mg/kg/dose de 8/8 ou 12/12 horas).",
+                dose: "Neutropenia febril: 20 mg/kg/dose EV de 8/8 horas\nInfecções intra-abdominais: 20 mg/kg/dose EV de 8/8 horas\nInfecções cutâneas graves: 20 mg/kg/dose EV de 8/8 horas\nMeningite: 40 mg/kg/dose EV de 8/8 horas\nExacerbação pulmonar de fibrose cística: 40 mg/kg/dose EV de 8/8 horas (≥ 8 anos: pode infundir em 3 horas)\nAnthrax cutânea: 20 mg/kg/dose EV de 8/8 horas\nAnthrax sistêmica (incluindo meningite): 40 mg/kg/dose EV de 8/8 horas\nNeonatos e < 3 meses: conforme idade gestacional e dias de vida (20-40 mg/kg/dose de 8/8 ou 12/12 horas)",
                 doseMaxima: "20 mg/kg/dose: 1 g/dose (anthrax cutânea 2 g/dose). 40 mg/kg/dose: 2 g/dose.",
                 apresentacoes: "Frasco-ampola 500 mg, 1.000 mg e 2.000 mg.",
                 via: "Endovenosa.",
@@ -3239,7 +3386,7 @@
             },
             "vancomicina": {
                 indicacoes: "Infecções suscetíveis; endocardite; meningite; infecções graves por MRSA; infecções cutâneas (infecções necrotizantes não MRSA; infecções necrotizantes e piomiosites MRSA).",
-                dose: "Lactentes, crianças e adolescentes: infecções suscetíveis 45-60 mg/kg/dia EV de 6/6 ou 8/8 horas, ajustar conforme concentração sérica. Endocardite: empírico 60 mg/kg/dia de 6/6 horas por 4-6 semanas associado a outro antibiótico; estreptococo, enterococo e S. aureus 40 mg/kg/dia de 8/8 ou 12/12 horas por 4-6 semanas. Meningite: 60 mg/kg/dia de 6/6 horas. Infecções graves por MRSA: 3 meses-12 anos 60-80 mg/kg/dia de 6/6 horas; ≥ 12 anos 60-70 mg/kg/dia de 6/6 ou 8/8 horas. Necrotizantes não MRSA: 10-13 mg/kg/dose de 8/8 horas. Necrotizantes e piomiosites MRSA: 60 mg/kg/dia de 6/6 horas. Neonatal (infecções suscetíveis): 15 mg/kg/dose a cada 24 h (≤ 29 semanas), 12/12 h (29-35 semanas) ou 8/8 h (> 35 semanas).",
+                dose: "Infecções suscetíveis: 45-60 mg/kg/dia EV de 6/6 ou 8/8 horas (ajustar pela concentração sérica)\nEndocardite (empírico): 60 mg/kg/dia EV de 6/6 horas, por 4-6 semanas, com outro antibiótico\nEndocardite (estreptococo, enterococo, S. aureus): 40 mg/kg/dia EV de 8/8 ou 12/12 horas, por 4-6 semanas\nMeningite: 60 mg/kg/dia EV de 6/6 horas\nInfecções graves por MRSA (3 meses-12 anos): 60-80 mg/kg/dia EV de 6/6 horas\nInfecções graves por MRSA (≥ 12 anos): 60-70 mg/kg/dia EV de 6/6 ou 8/8 horas\nInfecções necrotizantes não MRSA: 10-13 mg/kg/dose EV de 8/8 horas\nInfecções necrotizantes e piomiosites MRSA: 60 mg/kg/dia EV de 6/6 horas\nNeonatal (infecções suscetíveis): 15 mg/kg/dose a cada 24 h (≤ 29 semanas), 12/12 h (29-35 semanas) ou 8/8 h (> 35 semanas)",
                 doseMaxima: "Endocardite: 2 g/dia. MRSA grave e piomiosite MRSA: 3.600 mg/dia.",
                 apresentacoes: "Frasco-ampola 500 mg e 1.000 mg.",
                 via: "Endovenosa.",
@@ -3251,7 +3398,7 @@
             },
             "domperidona": {
                 indicacoes: "Dispepsia e êmese (procinético).",
-                dose: "0,25-0,5 mg/kg/dose VO de 8/8 horas, 15-30 minutos antes das refeições e ao dormir (caso necessário).",
+                dose: "Dispepsia e êmese: 0,25-0,5 mg/kg/dose VO de 8/8 horas, 15-30 minutos antes das refeições e ao dormir (caso necessário)",
                 doseMaxima: "1 mg/kg/dia ou 35 mg/dia.",
                 apresentacoes: "Suspensão 1 mg/mL e 5 mg/mL; comprimido 10 mg.",
                 via: "Oral.",
@@ -3261,7 +3408,7 @@
             },
             "fenobarbital": {
                 indicacoes: "Anticonvulsivante; sedação; efeitos hipnóticos.",
-                dose: "Período neonatal: ataque 20 mg/kg/dose EV dose única, podendo ser repetido com 10-20 mg/kg/dose EV, caso necessário; manutenção 5 mg/kg/dia EV de 24/24 horas. Lactentes, crianças e adolescentes: ataque 10-20 mg/kg/dose EV dose única, podendo ser repetido com 5-10 mg/kg/dose EV; manutenção 3-6 mg/kg/dia EV de 12/12 ou 24/24 horas.",
+                dose: "Período neonatal - ataque: 20 mg/kg EV dose única; repetir 10-20 mg/kg se necessário\nPeríodo neonatal - manutenção: 5 mg/kg/dia EV de 24/24 horas\nLactentes, crianças e adolescentes - ataque: 10-20 mg/kg EV dose única; repetir 5-10 mg/kg se necessário\nLactentes, crianças e adolescentes - manutenção: 3-6 mg/kg/dia EV de 12/12 ou 24/24 horas",
                 doseMaxima: "3,2 mL/dose (320 mg).",
                 apresentacoes: "Ampola 100 mg/mL e 200 mg/mL; comprimido 50 mg e 100 mg; gotas 40 mg/mL (1 gota = 1 mg).",
                 via: "Endovenosa.",
@@ -3272,7 +3419,7 @@
             },
             "fenobarbital_gts": {
                 indicacoes: "Dose de manutenção para crises convulsivas.",
-                dose: "Neonatos: 5 mg/kg/dia VO de 24/24 horas. > 1 mês de idade: 3-6 mg/kg/dia VO de 12/12 ou 24/24 horas.",
+                dose: "Manutenção em neonatos: 5 mg/kg/dia VO de 24/24 horas\nManutenção em > 1 mês de idade: 3-6 mg/kg/dia VO de 12/12 ou 24/24 horas",
                 doseMaxima: "400 gotas/dia (400 mg/dia).",
                 apresentacoes: "Gotas 40 mg/mL (1 gota = 1 mg); comprimido 50 mg e 100 mg.",
                 via: "Oral.",
@@ -3281,7 +3428,7 @@
             },
             "sulfato_ferroso": {
                 indicacoes: "Reposição de ferro: tratamento de anemia ferropriva.",
-                dose: "Gotas (124,45 mg/mL = 1 mg de ferro elementar/gota): 3-6 mg de ferro elementar/kg/dia VO de 12/12 ou 24/24 horas, por 6 meses, ou até reposição dos estoques corporais.",
+                dose: "Tratamento de anemia ferropriva: 3-6 mg de ferro elementar/kg/dia VO de 12/12 ou 24/24 horas, por 6 meses ou até reposição dos estoques corporais",
                 doseMaxima: "Dose máxima na pediatria: 80 gotas/dia (80 mg/dia).",
                 apresentacoes: "Comprimido revestido 121,72 mg, 121,75 mg, 124,4 mg e 125,545 mg (= 40 mg de ferro elementar), 152,19 mg (= 50 mg) e 190 mg (= 60 mg); drágea 190 mg (= 60 mg); solução oral 124,45 mg/mL e 125 mg/mL (= 25 mg/mL de ferro elementar) e 68 mg/mL (= 13,668 mg/mL); xarope 25 mg/mL (= 5 mg/mL e 5,025 mg/mL de ferro elementar) e 50 mg/mL (= 10 mg/mL).",
                 via: "Oral.",
@@ -3291,7 +3438,7 @@
             },
             "sulfato_ferroso_prof": {
                 indicacoes: "Profilaxia da anemia ferropriva (protocolo da Sociedade Brasileira de Pediatria - 2021).",
-                dose: "RN a termo AIG em aleitamento materno exclusivo até o 6º mês, sem fatores de risco: 1 mg/kg/dia VO de 24/24 horas de 6-24 meses. RN a termo AIG com fatores de risco (aleitamento exclusivo ou qualquer alimentação): 1 mg/kg/dia de 3-24 meses. RN a termo < 2.500 g: 2 mg/kg/dia de 1-12 meses; depois 1 mg/kg/dia de 12-24 meses. Prematuros > 1.500 g: 2 mg/kg/dia de 1-12 meses; 1.500-1.000 g: 3 mg/kg/dia de 1-12 meses; < 1.000 g: 4 mg/kg/dia de 1-12 meses; depois 1 mg/kg/dia de 12-24 meses.",
+                dose: "Termo AIG, aleitamento exclusivo até o 6º mês, sem fatores de risco: 1 mg/kg/dia VO de 24/24 horas, dos 6 aos 24 meses\nTermo AIG com fatores de risco (qualquer alimentação): 1 mg/kg/dia, dos 3 aos 24 meses\nTermo < 2.500 g: 2 mg/kg/dia de 1-12 meses; depois 1 mg/kg/dia de 12-24 meses\nPrematuro > 1.500 g: 2 mg/kg/dia de 1-12 meses; depois 1 mg/kg/dia de 12-24 meses\nPrematuro 1.000-1.500 g: 3 mg/kg/dia de 1-12 meses; depois 1 mg/kg/dia de 12-24 meses\nPrematuro < 1.000 g: 4 mg/kg/dia de 1-12 meses; depois 1 mg/kg/dia de 12-24 meses",
                 doseMaxima: "Dose máxima na pediatria: 80 gotas/dia (80 mg/dia).",
                 apresentacoes: "Gotas 124,45 mg/mL (= 25 mg/mL de ferro elementar; 1 gota = 1 mg).",
                 via: "Oral.",
@@ -3330,6 +3477,7 @@
                 id: "cat-antialergicos", titulo: "Antialérgicos", dotClass: "dot-alergias", cor: "tarja-alergias", nome: "Antialérgicos", icone: "🤧 Alerg.",
                 patologias: [
                     { nome: "Prurido e Rinite (Vias Orais)", remedios: ["hixizine", "dexclor", "deslo", "loratadina"] },
+                    { nome: "Anafilaxia (Emergência)", remedios: ["adrenalina_im"] },
                     { nome: "Urticária / Reação Alérgica (Hospitalar)", remedios: ["prometa"] }
                 ]
             },
@@ -3359,7 +3507,8 @@
                     },
                     { nome: "Bronquiolite Viral Aguda", remedios: ["salina_hipertonica"] },
                     { nome: "Tosse (Antitussígenos e Expectorantes)", remedios: ["koid_d", "torante", "acebrofilina"] },
-                    { nome: "Manejo Avançado e Outros Respiratórios", remedios: ["pulmicort", "salb_neb", "hidro_ev", "ipra", "dexa_crupe"] }
+                    { nome: "Laringite Viral Aguda (Crupe)", remedios: ["dexa_crupe", "adrenalina_neb"] },
+                    { nome: "Manejo Avançado e Outros Respiratórios", remedios: ["pulmicort", "salb_neb", "hidro_ev", "ipra"] }
                 ]
             },
             { 
@@ -3550,9 +3699,12 @@
         function renderizarInfoMed(idRemedio, med) {
             let d = !med.custom && detalhesMedicacoes[idRemedio];
             if (!d) return `<div class="med-info-row">${med.info}</div>`;
+            // Se o remédio já tem ficha completa com dose (da equipe ou padrão), a dose fica só lá, para não poluir o card.
+            let ficha = fichasMedicamentos[idRemedio] || fichasPadrao[idRemedio];
+            let dose = (ficha && ficha.dose) ? "Ver 📋 Ficha completa, abaixo." : escaparHtml(d.dose);
             return `<dl class="med-detalhes">
                 <dt>Indicação</dt><dd>${escaparHtml(d.indicacao)}</dd>
-                <dt>Dose</dt><dd>${escaparHtml(d.dose)}</dd>
+                <dt>Dose</dt><dd>${dose}</dd>
                 <dt class="det-atencao">⚠️ Atenção</dt><dd class="det-atencao">${escaparHtml(d.atencao)}</dd>
             </dl>`;
         }
@@ -3572,24 +3724,29 @@
                 return `<div class="ficha-completa-area">${botaoEditar}</div>`;
             }
 
-            let linhas = "";
-            if (ficha.indicacoes) linhas += `<div class="ficha-campo"><strong>Indicações:</strong> ${escaparHtml(ficha.indicacoes)}</div>`;
-            if (ficha.dose) linhas += `<div class="ficha-campo"><strong>Dose:</strong> ${escaparHtml(ficha.dose)}</div>`;
-            if (ficha.doseMaxima) linhas += `<div class="ficha-campo"><strong>Dose máxima:</strong> ${escaparHtml(ficha.doseMaxima)}</div>`;
-            if (ficha.apresentacoes) linhas += `<div class="ficha-campo"><strong>Apresentações/Concentrações:</strong> ${escaparHtml(ficha.apresentacoes)}</div>`;
-            if (ficha.via) linhas += `<div class="ficha-campo"><strong>Via:</strong> ${escaparHtml(ficha.via)}</div>`;
-            if (ficha.intervalo) linhas += `<div class="ficha-campo"><strong>Intervalo:</strong> ${escaparHtml(ficha.intervalo)}</div>`;
-            if (ficha.contraindicacoes) linhas += `<div class="ficha-campo"><strong>Contraindicações:</strong> ${escaparHtml(ficha.contraindicacoes)}</div>`;
-            if (ficha.alertasPediatricos) linhas += `<div class="ficha-campo"><strong>Alertas pediátricos:</strong> ${escaparHtml(ficha.alertasPediatricos)}</div>`;
-            if (ficha.efeitosAdversos) linhas += `<div class="ficha-campo"><strong>Efeitos adversos importantes:</strong> ${escaparHtml(ficha.efeitosAdversos)}</div>`;
-            if (ficha.interacoes) linhas += `<div class="ficha-campo"><strong>Interações importantes:</strong> ${escaparHtml(ficha.interacoes)}</div>`;
-            if (ficha.ajusteRenal) linhas += `<div class="ficha-campo"><strong>Ajuste na insuficiência renal:</strong> ${escaparHtml(ficha.ajusteRenal)}</div>`;
-            if (ficha.ajusteHepatico) linhas += `<div class="ficha-campo"><strong>Ajuste na insuficiência hepática:</strong> ${escaparHtml(ficha.ajusteHepatico)}</div>`;
-            if (ficha.fonteRevisao) linhas += `<div class="ficha-campo"><strong>Fonte / Data de revisão:</strong> ${escaparHtml(ficha.fonteRevisao)}</div>`;
-            if (ficha.diluicao) linhas += `<div class="ficha-campo"><strong>Diluição:</strong> ${escaparHtml(ficha.diluicao)}</div>`;
-            if (ficha.reconstituicao) linhas += `<div class="ficha-campo"><strong>Reconstituição:</strong> ${escaparHtml(ficha.reconstituicao)}</div>`;
-            if (ficha.infusao) linhas += `<div class="ficha-campo"><strong>Infusão:</strong> ${escaparHtml(ficha.infusao)}</div>`;
-            if (ficha.conservacao) linhas += `<div class="ficha-campo"><strong>Conservação:</strong> ${escaparHtml(ficha.conservacao)}</div>`;
+            // Ordem da ficha: Apresentação > Indicação > Dose (uma indicação por linha) > Dose máxima > Via > Diluição > Infusão > Alertas > ... > Fonte (sempre por último).
+            let campo = (rotulo, valor) => valor ? `<div class="ficha-campo"><strong>${rotulo}:</strong> ${escaparHtml(valor)}</div>` : "";
+            let linhasDose = ficha.dose ? String(ficha.dose).split("\n").map(l => l.trim()).filter(Boolean) : [];
+            let blocoDose = linhasDose.length > 1
+                ? `<div class="ficha-campo"><strong>Dose:</strong><ul class="ficha-lista">${linhasDose.map(l => `<li>${escaparHtml(l)}</li>`).join("")}</ul></div>`
+                : campo("Dose", linhasDose[0]);
+            let linhas = campo("Apresentações/Concentrações", ficha.apresentacoes)
+                + campo("Indicações", ficha.indicacoes)
+                + blocoDose
+                + campo("Dose máxima", ficha.doseMaxima)
+                + campo("Via", ficha.via)
+                + campo("Intervalo", ficha.intervalo)
+                + campo("Reconstituição", ficha.reconstituicao)
+                + campo("Diluição", ficha.diluicao)
+                + campo("Infusão", ficha.infusao)
+                + campo("Alertas pediátricos", ficha.alertasPediatricos)
+                + campo("Contraindicações", ficha.contraindicacoes)
+                + campo("Efeitos adversos importantes", ficha.efeitosAdversos)
+                + campo("Interações importantes", ficha.interacoes)
+                + campo("Ajuste na insuficiência renal", ficha.ajusteRenal)
+                + campo("Ajuste na insuficiência hepática", ficha.ajusteHepatico)
+                + campo("Conservação", ficha.conservacao)
+                + campo("Fonte / Data de revisão", ficha.fonteRevisao);
 
             return `
                 <div class="ficha-completa-area">
