@@ -34,7 +34,16 @@
 .cond-tabela { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 520px; }
 .cond-tabela th, .cond-tabela td { border: 1px solid var(--border); padding: 6px 8px; text-align: left; vertical-align: top; }
 .cond-tabela thead th { background: color-mix(in srgb, var(--cor-cat) 12%, #fff); }
-.cond-tabela thead th:nth-child(2) { color: #15803d; } .cond-tabela thead th:nth-child(3) { color: #b45309; } .cond-tabela thead th:nth-child(4) { color: #b91c1c; }
+.cond-tabela-gravidade thead th:nth-child(2) { color: #15803d; } .cond-tabela-gravidade thead th:nth-child(3) { color: #b45309; } .cond-tabela-gravidade thead th:nth-child(4) { color: #b91c1c; }
+.cond-tabela-titulo { font-weight: 800; font-size: 13px; margin: 12px 0 6px; }
+.cond-nota { font-size: 12px; color: var(--text-muted); margin-top: 6px; line-height: 1.45; }
+.cond-legenda { font-size: 12px; color: var(--text-muted); background: var(--surface); border: 1px dashed var(--border); border-radius: 8px; padding: 8px 12px; margin-bottom: 10px; }
+.tag-imip { display: inline-block; font-size: 10px; font-weight: 800; color: #7c3aed; background: #f3e8ff; border: 1px solid #ddd6fe; border-radius: 4px; padding: 0 5px; margin-left: 4px; vertical-align: 1px; white-space: nowrap; }
+.cond-secao details > summary { list-style: none; cursor: pointer; }
+.cond-secao details > summary::-webkit-details-marker { display: none; }
+.cond-secao details > summary h3::after { content: " ▸ toque para abrir"; font-size: 11px; font-weight: 600; color: var(--text-muted); }
+.cond-secao details[open] > summary h3::after { content: " ▾"; }
+.cond-fonte ul { margin: 4px 0 8px; padding-left: 18px; }
 .cond-tabela tbody th { background: #f8fafc; font-weight: 700; white-space: nowrap; }
 
 .cond-grupo { border-top: 1px dashed var(--border); padding-top: 10px; margin-top: 10px; }
@@ -63,3 +72,4 @@ html[data-theme="dark"] .cond-alerta { background: #3b0d0d; border-color: #7f1d1
 html[data-theme="dark"] .cond-alerta h3 { color: #fca5a5; }
 html[data-theme="dark"] .cond-tabela thead th { background: color-mix(in srgb, var(--cor-cat) 18%, #0f172a); }
 html[data-theme="dark"] .cond-tabela tbody th { background: #0b1220; }
+html[data-theme="dark"] .tag-imip { background: #2e1065; border-color: #5b21b6; color: #ddd6fe; }

@@ -8,7 +8,7 @@ const categorias = [
         id: "cat-exame-fisico", titulo: "Exame Físico e Orientações", dotClass: "dot-exame", cor: "tarja-exame", nome: "Exame Físico", icone: "📋 Exame Físico",
         patologias: [
             { nome: "Avaliação Geral", remedios: ["exame_masculino", "exame_feminino"] },
-            { nome: "Orientações de Alta", remedios: ["orientacoes_gerais", "orientacoes_geca"] }
+            { nome: "Orientações de Alta", remedios: ["orientacoes_gerais", "orientacoes_geca", "orientacoes_bva"] }
         ]
     },
     { 

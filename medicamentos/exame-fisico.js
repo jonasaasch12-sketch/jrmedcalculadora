@@ -37,5 +37,18 @@ registrarMedicamentos({
         info: "<strong>Descrição:</strong> Orientações de alta para Gastroenterite (GECA).",
         badgeSt: "static-blue", badge: "Orientações", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
         calc: () => ({ v: "Orientações", r: "ORIENTAÇÕES GECA - RETORNAR AO HOSPITAL SE HOUVER:\n- Agravamento da diarreia ou vômitos persistentes;\n- Sede intensa;\n- Recusa alimentar acentuada;\n- Presença de sangue nas fezes;\n- Redução da diurese (mais de 6 horas sem urinar);\n- Sonolência excessiva ou prostração;\n- Dor abdominal intensa." })
+    },
+    "orientacoes_bva": {
+        cat: "cat-exame-fisico", sub: "Orientações e Sinais de Alarme",
+        kw: "orientacoes alta sinais alarme alerta bronquiolite bva vsr lactente chiado",
+        nome: "Sinais de Alarme — Bronquiolite", apres: "Termo de Alta",
+        info: "<strong>Descrição:</strong> Orientações para casa e sinais de alerta da bronquiolite viral aguda (Ministério da Saúde, 2026).",
+        badgeSt: "static-blue", badge: "Orientações", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "Orientações", r: "ORIENTAÇÕES BRONQUIOLITE:\n- Lavar o nariz com soro fisiológico 0,9%, principalmente antes das mamadas;\n- Oferecer leite e líquidos em pequenas quantidades e com mais frequência;\n- Lavar as mãos antes de pegar no bebê; evitar contato com pessoas gripadas e locais fechados com muitas pessoas;\n- Não fumar perto da criança;\n- Não usar xaropes para tosse nem descongestionantes;\n- A piora pode acontecer entre o 3º e o 5º dia da doença; a tosse pode durar até 3 a 4 semanas.\n\nRETORNAR IMEDIATAMENTE AO SERVIÇO DE SAÚDE SE:\n- Dificuldade para respirar, respiração rápida, gemido, \"costelas aparecendo\" ou asa do nariz batendo;\n- Pausas na respiração;\n- Lábios, pele ou dedos arroxeados;\n- Recusa para mamar ou dificuldade para sugar o peito;\n- Vômitos frequentes após as mamadas;\n- Pouco xixi, boca seca ou olhos fundos;\n- Sonolência excessiva, irritabilidade ou choro fraco;\n- Convulsão ou movimentos anormais." }),
+        detalhes: {
+            indicacao: "Orientações de alta e sinais de alerta para a família na bronquiolite viral aguda.",
+            dose: "Não se aplica.",
+            atencao: "Conforme o Guia de Manejo Clínico da BVA do Ministério da Saúde (2026)."
+        }
     }
 });
