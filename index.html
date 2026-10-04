@@ -4230,7 +4230,7 @@
                 });
 
                 return linhas.join('\n\n'); // Espaçamento duplo entre as medicações de um grupo
-            }).join('\n\n--------------------------------------------------\n\n'); // Divisória clara entre Vias diferentes
+            }).join('\n\n'); // Entre vias diferentes: só uma linha em branco, sem traço
 
             navigator.clipboard.writeText(texto).then(() => {
                 let btn = document.querySelector('.btn-copiar-receita-completa');
