@@ -67,7 +67,7 @@
             border-bottom: 1px solid var(--border); 
             padding: 8px 20px; 
             position: sticky; 
-            top: 51px; 
+            top: var(--altura-header, 51px); 
             z-index: 105; 
             box-shadow: 0 4px 12px -2px rgba(0,0,0,0.05); 
         }
@@ -82,6 +82,9 @@
         .search-container { flex: 1; }
         .search-input { width: 100%; padding: 7px 12px; font-size: 13.5px; border: 1px solid var(--border); border-radius: 6px; outline: none; background: #f8fafc; transition: all 0.2s; }
         .search-input:focus { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 3px rgba(2,132,199,0.1); }
+
+        /* Ao clicar no menu, a tarja da categoria para logo abaixo do painel (linha do "Novo Paciente"). */
+        .category-group { scroll-margin-top: calc(var(--altura-topo, 100px) + 10px); }
 
         /* LAYOUT PRINCIPAL (DUAS COLUNAS NA HORIZONTAL) */
         .app-layout {
@@ -98,8 +101,10 @@
             width: 220px;
             min-width: 220px;
             position: sticky;
-            top: 100px;
-            height: calc(100vh - 120px);
+            /* Fica logo abaixo do cabeçalho + painel (altura medida em JS), sem ser cortado ao rolar. */
+            top: calc(var(--altura-topo, 100px) + 12px);
+            height: calc(100vh - var(--altura-topo, 100px) - 24px);
+            align-self: flex-start;
             overflow-y: auto;
             padding-right: 10px;
         }
@@ -4025,6 +4030,27 @@
             bottomMenu.innerHTML = htmlMenuBottom;
             calcularTudo();
             filtrarMedicas();
+        }
+
+        // Mede a altura real do cabeçalho e do painel fixo (que muda com A-/A+, com o aviso de peso
+        // e com a largura da tela) e guarda em variáveis CSS usadas pelo menu lateral e pela rolagem.
+        function atualizarAlturaTopo() {
+            let header = document.querySelector('.header-banner');
+            let painel = document.querySelector('.control-panel');
+            if (!header || !painel) return;
+            let hHeader = header.getBoundingClientRect().height;
+            let hPainel = painel.getBoundingClientRect().height;
+            document.documentElement.style.setProperty('--altura-header', hHeader + 'px');
+            document.documentElement.style.setProperty('--altura-topo', (hHeader + hPainel) + 'px');
+        }
+        window.addEventListener('resize', atualizarAlturaTopo);
+        window.addEventListener('load', atualizarAlturaTopo);
+        if (window.ResizeObserver) {
+            let observadorTopo = new ResizeObserver(atualizarAlturaTopo);
+            document.addEventListener('DOMContentLoaded', () => {
+                ['.header-banner', '.control-panel'].forEach(sel => { let el = document.querySelector(sel); if (el) observadorTopo.observe(el); });
+                atualizarAlturaTopo();
+            });
         }
 
         function calcularTudo() {
