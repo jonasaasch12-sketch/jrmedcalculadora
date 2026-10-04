@@ -198,6 +198,23 @@
         }
         .med-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; gap: 10px; width: 100%; }
         .med-name { font-weight: 800; color: #0f172a; font-size: 14.5px; }
+        .icone-injetavel { display: inline-block; vertical-align: -0.2em; margin-right: 2px; }
+        .icone-injetavel svg { width: 1.15em; height: 1.15em; display: block; }
+        /* Título de seção de uso hospitalar: borda forte, fundo clarinho e texto na cor da categoria. */
+        .sub-type-title.sub-type-hosp {
+            color: color-mix(in srgb, var(--cor-cat) 82%, #000);
+            background: color-mix(in srgb, var(--cor-cat) 12%, #fff);
+            border-left: 6px solid var(--cor-cat);
+            border-bottom: none;
+            padding: 9px 14px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            letter-spacing: 0.06em;
+        }
+        html[data-theme="dark"] .sub-type-title.sub-type-hosp {
+            color: color-mix(in srgb, var(--cor-cat) 55%, #fff);
+            background: color-mix(in srgb, var(--cor-cat) 22%, #111827);
+        }
         .med-presentation { font-size: 11px; color: #64748b; margin-top: 2px; display: block; font-weight: 500; }
         
         .result-box { background-color: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; font-weight: 800; font-size: 13px; padding: 5px 10px; border-radius: 6px; text-align: center; min-width: 100px; white-space: pre-line; }
@@ -3967,7 +3984,13 @@
                 htmlFinal += `<div id="${cat.id}" class="category-group"><div class="section-header ${cat.cor || ''}"${estiloCor}>${escaparHtml(cat.titulo)}</div>`;
 
                 cat.patologias.forEach(pat => {
-                    htmlFinal += `<div class="subtype-group"><div class="sub-type-title">${pat.nome}</div>`;
+                    // Seções de uso hospitalar ganham o símbolo do hospital no início e no fim do título.
+                    let ehHosp = /hospitalar/i.test(pat.nome);
+                    let tituloPat = ehHosp ? `🏥 ${escaparHtml(pat.nome)} 🏥` : pat.nome;
+                    let corCat = cat.corHex || CORES_CATEGORIA[cat.cor] || "#0284c7";
+                    htmlFinal += ehHosp
+                        ? `<div class="subtype-group"><div class="sub-type-title sub-type-hosp" style="--cor-cat:${escaparHtml(corCat)}">${tituloPat}</div>`
+                        : `<div class="subtype-group"><div class="sub-type-title">${tituloPat}</div>`;
 
                     pat.remedios.forEach(idRemedio => {
                         let med = buscarMed(idRemedio);
@@ -4000,7 +4023,7 @@
                         htmlFinal += `
                         <div id="card-${instanceId}" class="med-card" data-keywords="${escaparHtml(med.kw)}" data-nome="${escaparHtml(normalizar(med.nome))}">
                             <div class="med-header">
-                                <div><span class="med-name">${escaparHtml(med.nome)}</span><span class="med-presentation">${escaparHtml(med.apres)}</span></div>
+                                <div><span class="med-name">${ehInjetavel(med) ? ICONE_SERINGA : ""}${escaparHtml(med.nome)}</span><span class="med-presentation">${escaparHtml(med.apres)}</span></div>
                                 <div id="res-${instanceId}" class="result-box">—</div>
                             </div>
                             ${renderizarInfoMed(idRemedio, med)}
@@ -4050,6 +4073,29 @@
                 atualizarAlturaTopo();
             });
         }
+
+        // Medicação injetável (EV, IM, IV/IO, infusão em BIC, hemoderivados): detectada pelo texto da receita
+        // de um paciente de exemplo. Nebulizações e inalatórios não entram.
+        function ehInjetavel(med) {
+            if (med._injetavel !== undefined) return med._injetavel;
+            let texto = "";
+            try { texto = String((med.calc && med.calc(20, "5").r) || ""); } catch (e) {}
+            let t = texto.toUpperCase();
+            med._injetavel = !/^(NEBULIZA|VIA INALAT|USO INALAT|ORIENTA)/.test(t.trim())
+                && /ENDOVENOS|INTRAMUSCULAR|\bIV\b|\bEV\b|\bIM\b|INFUS|INFUND|\bBIC\b|HEMOTRANSFUS|VEN[ÓO]CLISE/.test(t);
+            return med._injetavel;
+        }
+
+        // Seringa com líquido vermelho (desenho próprio, igual em qualquer aparelho) para medicações injetáveis.
+        const ICONE_SERINGA = '<span class="icone-injetavel" title="Medicação injetável"><svg viewBox="0 0 24 24" aria-hidden="true"><g transform="rotate(45 12 12)"><rect x="10.6" y="0.5" width="2.8" height="2.2" rx="0.6" fill="#475569"/><rect x="11.4" y="2.6" width="1.2" height="3" fill="#64748b"/><rect x="8" y="5.4" width="8" height="1.6" rx="0.6" fill="#475569"/><rect x="9" y="7" width="6" height="11" rx="1" fill="#f8fafc" stroke="#475569" stroke-width="1.1"/><rect x="9.6" y="10" width="4.8" height="7.4" rx="0.4" fill="#dc2626"/><path d="M10 9.4h1.4M10 12h1.4M10 14.6h1.4" stroke="#475569" stroke-width="0.7"/><rect x="11.2" y="18" width="1.6" height="1.6" fill="#475569"/><rect x="11.75" y="19.6" width="0.5" height="4" fill="#94a3b8"/></g></svg></span> ';
+
+        // Cor de cada categoria (a mesma da tarja), usada nos títulos de uso hospitalar.
+        const CORES_CATEGORIA = {
+            "tarja-exame": "#0d9488", "tarja-sintomaticos": "#dc2626", "tarja-respiratorio": "#0284c7",
+            "tarja-antibioticos": "#16a34a", "tarja-rsi": "#4f46e5", "tarja-urinario": "#d97706",
+            "tarja-diarreia": "#0891b2", "tarja-pele": "#db2777", "tarja-neuro": "#7c3aed",
+            "tarja-alergias": "#c026d3", "tarja-especialidades": "#0d9488", "tarja-personalizada": "#334155"
+        };
 
         function calcularTudo() {
             let pRaw = document.getElementById('pesoInput').value;
