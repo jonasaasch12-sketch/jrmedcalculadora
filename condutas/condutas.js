@@ -90,6 +90,7 @@ function htmlBlocoConduta(b) {
         html += `</tbody></table></div>`;
         if (t.nota) html += `<div class="cond-nota">${t.nota}</div>`;
     });
+    if (b.escore) html += htmlEscore(b.escore);
     if (b.nota) html += `<div class="cond-nota">${b.nota}</div>`;
     if (b.remedios && b.remedios.length) {
         html += `<div class="cond-meds-titulo">💊 Medicações desta etapa</div><div class="cond-meds">`;
@@ -204,4 +205,70 @@ function copiarCondutaMed(botao) {
     setTimeout(() => { botao.innerHTML = original; }, 1200);
 }
 
+// =====================================================
+// ESCORES CLICÁVEIS (ex.: Wood-Downes-Ferrés)
+// Cada item tem opções [pontos, texto]; a soma e a classificação são automáticas.
+// =====================================================
+const escoresConduta = {};   // definição, por id
+const escoresMarcados = {};  // { idEscore: { indiceItem: pontos } }
+
+function htmlEscore(e) {
+    escoresConduta[e.id] = e;
+    escoresMarcados[e.id] = escoresMarcados[e.id] || {};
+    let html = `<div class="escore" id="escore-${e.id}">`;
+    if (e.instrucao) html += `<div class="escore-instrucao">👆 ${e.instrucao}</div>`;
+    e.itens.forEach((item, i) => {
+        html += `<div class="escore-item"><div class="escore-item-nome">${item.nome}</div><div class="escore-opcoes">`;
+        item.opcoes.forEach(([pts, txt]) => {
+            let marcado = escoresMarcados[e.id][i] === pts ? ' marcado' : '';
+            html += `<button type="button" class="escore-opcao${marcado}" onclick="marcarEscore('${e.id}', ${i}, ${pts})"><span class="escore-pts">${pts}</span>${txt}</button>`;
+        });
+        html += `</div></div>`;
+    });
+    html += `<div class="escore-resultado" id="escore-res-${e.id}"></div></div>`;
+    if (e.nota) html += `<div class="cond-nota">${e.nota}</div>`;
+    setTimeout(() => atualizarEscore(e.id), 0);
+    return html;
+}
+
+function marcarEscore(id, item, pts) {
+    let m = escoresMarcados[id];
+    if (m[item] === pts) delete m[item]; else m[item] = pts;   // tocar de novo desmarca
+    let caixa = document.getElementById('escore-' + id);
+    caixa.querySelectorAll('.escore-item').forEach((el, i) => {
+        el.querySelectorAll('.escore-opcao').forEach((b, j) => {
+            b.classList.toggle('marcado', m[i] === escoresConduta[id].itens[i].opcoes[j][0]);
+        });
+    });
+    atualizarEscore(id);
+}
+
+function limparEscore(id) {
+    escoresMarcados[id] = {};
+    document.querySelectorAll(`#escore-${id} .escore-opcao.marcado`).forEach(b => b.classList.remove('marcado'));
+    atualizarEscore(id);
+}
+
+function atualizarEscore(id) {
+    let e = escoresConduta[id], m = escoresMarcados[id] || {};
+    let res = document.getElementById('escore-res-' + id);
+    if (!e || !res) return;
+    let feitos = Object.keys(m).length, total = Object.values(m).reduce((a, b) => a + b, 0);
+    let faixa = e.faixas.find(f => total >= f.min && total <= f.max);
+    let completo = feitos === e.itens.length;
+    let cor = faixa && completo ? faixa.cor : '#64748b';
+    res.style.setProperty('--cor-escore', cor);
+    res.innerHTML = `
+        <div class="escore-total"><span class="escore-total-num">${total}</span><span class="escore-total-de">pontos</span></div>
+        <div class="escore-classe">
+            <strong>${!feitos ? 'Marque os itens acima' : !completo ? `Parcial: ${feitos} de ${e.itens.length} itens` : faixa ? faixa.rotulo : 'Sem pontuação'}</strong>
+            ${completo && faixa ? '' : feitos ? `<span>${faixa ? 'até agora: ' + faixa.rotulo : ''}</span>` : ''}
+        </div>
+        ${feitos ? `<button type="button" class="escore-limpar" onclick="limparEscore('${id}')">Limpar</button>` : ''}`;
+}
+
 montarEstruturaCondutas();
+// "Novo Paciente" também zera os escores marcados
+document.getElementById('btnNovoPaciente')?.addEventListener('click', () => {
+    setTimeout(() => { if (!carrinhoPrescricao.length) Object.keys(escoresMarcados).forEach(limparEscore); }, 0);
+});
