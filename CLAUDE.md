@@ -40,6 +40,9 @@ js/formularios.js          modais (cadastro da equipe, categorias, ficha) + inic
 js/firebase.js             login e Firestore (módulo)
 sw.js                      modo offline (rede primeiro)
 testes/verificar.js        verificação automática (só precisa de Node)
+condutas/condutas.js       área 📖 Condutas (aba ao lado de 💊 Prescrição)
+condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as medicações
+                           são ids de cards (farmaciaJR), a dose nunca é repetida na conduta
 ```
 
 A **ordem dos `<script>` no index.html importa**: base → registro → categorias → menu → app → formularios.
