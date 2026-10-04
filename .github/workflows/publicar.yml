@@ -1,0 +1,62 @@
+# Publica o site no GitHub Pages:
+#   branch main  → jrmedprescricao.com.br        (site oficial)
+#   branch teste → jrmedprescricao.com.br/teste/ (versão de teste, só administradores)
+# Roda sempre a partir da main (exigência do GitHub Pages). Um push na branch
+# "teste" dispara este workflow pelo arquivo avisar-teste.yml.
+name: Publicar site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Baixar a versão oficial (main)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: oficial
+
+      - name: Baixar a versão de teste (teste)
+        uses: actions/checkout@v4
+        with:
+          ref: teste
+          path: teste
+
+      - name: Verificar doses da versão oficial (bloqueia a publicação se falhar)
+        run: node oficial/testes/verificar.js
+
+      - name: Verificar doses da versão de teste (só avisa)
+        continue-on-error: true
+        run: node teste/testes/verificar.js
+
+      - name: Montar o site
+        run: |
+          mkdir _site
+          rsync -a --exclude .git --exclude .github --exclude testes oficial/ _site/
+          mkdir _site/teste
+          rsync -a --exclude .git --exclude .github --exclude testes --exclude CNAME teste/ _site/teste/
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4

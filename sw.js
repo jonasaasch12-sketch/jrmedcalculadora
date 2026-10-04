@@ -7,7 +7,9 @@
 // (ex: hospedado no Netlify/Firebase Hosting). Não funciona abrindo o arquivo
 // direto do computador (file://) — navegadores bloqueiam Service Worker nesse caso.
 
-const CACHE_NOME = "jrmed-cache-v4"; // troque o número (v3, v4...) sempre que quiser forçar a limpeza do cache antigo
+// A versão de teste (/teste/) usa um cache separado, para uma não apagar o da outra.
+const PREFIXO_CACHE = self.registration.scope.includes("/teste/") ? "jrmed-teste-cache-" : "jrmed-cache-";
+const CACHE_NOME = PREFIXO_CACHE + "v5"; // troque o número (v5, v6...) sempre que quiser forçar a limpeza do cache antigo
 
 // Todo arquivo .js/.css carregado pelo index.html PRECISA estar aqui
 // (o teste "node testes/verificar.js" avisa se faltar algum).
@@ -18,6 +20,7 @@ const ARQUIVOS_ESSENCIAIS = [
   "./icon.svg",
   "./css/estilo.css",
   "./js/base.js",
+  "./js/modo-teste.js",
   "./medicamentos/registro.js",
   "./medicamentos/exame-fisico.js",
   "./medicamentos/sintomaticos.js",
@@ -48,7 +51,7 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((nomes) =>
-      Promise.all(nomes.filter((n) => n !== CACHE_NOME).map((n) => caches.delete(n)))
+      Promise.all(nomes.filter((n) => n.startsWith(PREFIXO_CACHE) && n !== CACHE_NOME).map((n) => caches.delete(n)))
     )
   );
   self.clients.claim();
