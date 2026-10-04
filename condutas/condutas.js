@@ -262,7 +262,7 @@ function atualizarEscore(id) {
         <div class="escore-total"><span class="escore-total-num">${total}</span><span class="escore-total-de">pontos</span></div>
         <div class="escore-classe">
             <strong>${!feitos ? 'Marque os itens acima' : !completo ? `Parcial: ${feitos} de ${e.itens.length} itens` : faixa ? faixa.rotulo : 'Sem pontuação'}</strong>
-            ${completo && faixa ? '' : feitos ? `<span>${faixa ? 'até agora: ' + faixa.rotulo : ''}</span>` : ''}
+            ${completo && faixa ? (faixa.texto ? `<span>${faixa.texto}</span>` : '') : feitos ? `<span>${faixa ? 'até agora: ' + faixa.rotulo : ''}</span>` : ''}
         </div>
         ${feitos ? `<button type="button" class="escore-limpar" onclick="limparEscore('${id}')">Limpar</button>` : ''}`;
 }
