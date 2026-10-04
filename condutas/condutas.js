@@ -79,6 +79,29 @@ function renderizarListaCondutas() {
     document.getElementById('area-condutas').innerHTML = html;
 }
 
+// Monta o conteúdo de uma seção ou de um grupo: lista, tabelas, nota e medicações.
+function htmlBlocoConduta(b) {
+    let html = '';
+    if (b.itens) html += `<ul>${b.itens.map(t => `<li>${t}</li>`).join('')}</ul>`;
+    [b.tabela, ...(b.tabelas || [])].filter(Boolean).forEach(t => {
+        if (t.titulo) html += `<div class="cond-tabela-titulo">${t.titulo}</div>`;
+        html += `<div class="cond-tabela-wrap"><table class="cond-tabela${t.gravidade ? ' cond-tabela-gravidade' : ''}"><thead><tr>${t.colunas.map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>`;
+        t.linhas.forEach(l => { html += `<tr>${l.map((c, j) => j === 0 ? `<th>${c}</th>` : `<td>${c}</td>`).join('')}</tr>`; });
+        html += `</tbody></table></div>`;
+        if (t.nota) html += `<div class="cond-nota">${t.nota}</div>`;
+    });
+    if (b.nota) html += `<div class="cond-nota">${b.nota}</div>`;
+    if (b.remedios && b.remedios.length) {
+        html += `<div class="cond-meds-titulo">💊 Medicações desta etapa</div><div class="cond-meds">`;
+        b.remedios.forEach(rid => { html += htmlMedConduta(rid); });
+        html += `</div>`;
+    }
+    (b.grupos || []).forEach(g => {
+        html += `<div class="cond-grupo"><div class="cond-grupo-nome">${g.nome}</div>${htmlBlocoConduta(g)}</div>`;
+    });
+    return html;
+}
+
 function abrirConduta(id) {
     let c = condutasJR[id];
     if (!c) return;
@@ -90,33 +113,29 @@ function abrirConduta(id) {
             <h2>${escCond(c.nome)}</h2>
             <div class="cond-cabecalho-resumo">${escCond(c.resumo || '')}</div>
         </div>
-        <nav class="cond-indice">${c.secoes.map((s, i) => `<a href="#cond-sec-${i}" onclick="document.getElementById('cond-sec-${i}').scrollIntoView({behavior:'smooth'});return false;">${s.icone || ''} ${escCond(s.titulo)}</a>`).join('')}</nav>`;
+        ${c.legenda ? `<div class="cond-legenda">${c.legenda}</div>` : ''}
+        <nav class="cond-indice">${c.secoes.map((s, i) => `<a href="#cond-sec-${i}" onclick="abrirSecaoConduta(${i});return false;">${s.icone || ''} ${escCond(s.titulo)}</a>`).join('')}</nav>`;
 
     c.secoes.forEach((s, i) => {
-        html += `<section class="cond-secao${s.alerta ? ' cond-alerta' : ''}" id="cond-sec-${i}" style="--cor-cat:${c.cor}">
-            <h3>${s.icone || ''} ${escCond(s.titulo)}</h3>`;
-        if (s.itens) html += `<ul>${s.itens.map(t => `<li>${t}</li>`).join('')}</ul>`;
-        if (s.tabela) {
-            html += `<div class="cond-tabela-wrap"><table class="cond-tabela"><thead><tr>${s.tabela.colunas.map(t => `<th>${t}</th>`).join('')}</tr></thead><tbody>`;
-            s.tabela.linhas.forEach(l => { html += `<tr>${l.map((t, j) => j === 0 ? `<th>${t}</th>` : `<td>${t}</td>`).join('')}</tr>`; });
-            html += `</tbody></table></div>`;
-        }
-        (s.grupos || []).forEach(g => {
-            html += `<div class="cond-grupo"><div class="cond-grupo-nome">${g.nome}</div>`;
-            if (g.itens) html += `<ul>${g.itens.map(t => `<li>${t}</li>`).join('')}</ul>`;
-            if (g.remedios && g.remedios.length) {
-                html += `<div class="cond-meds-titulo">💊 Medicações desta etapa</div><div class="cond-meds">`;
-                g.remedios.forEach(rid => { html += htmlMedConduta(rid); });
-                html += `</div>`;
-            }
-            html += `</div>`;
-        });
-        html += `</section>`;
+        let titulo = `<h3>${s.icone || ''} ${escCond(s.titulo)}</h3>`;
+        let corpo = htmlBlocoConduta(s);
+        html += `<section class="cond-secao${s.alerta ? ' cond-alerta' : ''}" id="cond-sec-${i}" style="--cor-cat:${c.cor}">`
+            + (s.recolhida ? `<details><summary>${titulo}</summary>${corpo}</details>` : titulo + corpo)
+            + `</section>`;
     });
-    html += `<div class="cond-fonte"><strong>Fonte:</strong> ${escCond(c.fonte)}<br><strong>Revisão:</strong> ${escCond(c.revisao)}</div>`;
+    html += `<div class="cond-fonte"><strong>Fontes:</strong><ul>${c.fontes.map(f => `<li>${escCond(f)}</li>`).join('')}</ul><strong>Revisão:</strong> ${escCond(c.revisao)}</div>`;
     document.getElementById('area-condutas').innerHTML = html;
     atualizarDosesConduta();
     window.scrollTo(0, 0);
+}
+
+// Atalho do índice: abre a seção (se estiver recolhida) e rola até ela.
+function abrirSecaoConduta(i) {
+    let sec = document.getElementById('cond-sec-' + i);
+    if (!sec) return;
+    let det = sec.querySelector('details');
+    if (det) det.open = true;
+    sec.scrollIntoView({ behavior: 'smooth' });
 }
 
 function htmlMedConduta(rid) {
