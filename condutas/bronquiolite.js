@@ -163,9 +163,8 @@ registrarConduta({
                         "Aspiração profunda cuidadosa por equipe treinada pode ser considerada em casos graves na UTIP.",
                         `Isolamento (ou coorte), precaução respiratória. Considerar posição prona nas etapas avançadas. ${IMIP}`,
                         `<strong>Sedação</strong> é medida de exceção, em UTI, para adaptação à VNI quando as medidas não farmacológicas falham (presença ativa dos pais, otimizar interface e alimentação, sacarose). Ter material de intubação e drogas de urgência à mão. ${IMIP}`,
-                        `Sedação leve, esquema sugerido: 1ª linha <strong>dexmedetomidina 0,1–1 mcg/kg/h</strong> EV em infusão contínua. 2ª linha <strong>clonidina 4–6 mcg/kg/dose VO 6/6h</strong>. 3ª linha (se bradicardia impedir as anteriores) <strong>midazolam</strong> EV em ataque, repetido se necessário, e depois 1–4 mcg/kg/min contínuo; prescrever flumazenil. ${IMIP}`
+                        `Sedação leve, esquema sugerido: 1ª linha <strong>dexmedetomidina 0,1–1 mcg/kg/h</strong> EV em infusão contínua. 2ª linha <strong>clonidina 4–6 mcg/kg/dose VO 6/6h</strong>. ${IMIP}`
                     ],
-                    nota: "⚠️ No protocolo do IMIP, a dose de ataque do midazolam está escrita como \"0,1–0,2 micrograma/kg/dose\" (provável erro de digitação: o usual é mg/kg). Por isso não foi transcrita aqui; conferir antes de usar.",
                     remedios: ["rsi_cont_precedex"]
                 }
             ]

@@ -59,7 +59,6 @@ const categorias = [
                     "ampicilina", "cef_resp_ev", "cef_resp_im", "azi_ev", "genta"
                 ] 
             },
-            { nome: "Bronquiolite Viral Aguda", remedios: ["salina_hipertonica"] },
             { nome: "Tosse (Antitussígenos e Expectorantes)", remedios: ["koid_d", "torante", "acebrofilina"] },
             { nome: "Laringite Viral Aguda (Crupe)", remedios: ["dexa_crupe", "adrenalina_neb"] },
             { nome: "Manejo Avançado e Outros Respiratórios", remedios: ["pulmicort", "salb_neb", "hidro_ev", "ipra"] }

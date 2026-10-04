@@ -326,17 +326,6 @@ registrarMedicamentos({
             atencao: "Máximo 10 jatos por dose. Pode causar taquicardia e tremor."
         }
     },
-    "salina_hipertonica": {
-        cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)",
-        kw: "salina hipertonica nacl 3% nebulizacao bronquiolite bva", nome: "Salina Hipertônica 3% (Nebulização)", apres: "NaCl 20% 1,5 mL + AD 8,5 mL",
-        info: "<strong>Conduta:</strong> Nebulizar 4 mL de NaCl 3% de 8/8h, junto com broncodilatador.", badgeSt: "static-blue", badge: "4 mL 8/8h", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
-        calc: () => ({ v: "4 mL", r: `NEBULIZAÇÃO (BRONQUIOLITE VIRAL AGUDA)\n\n Preparar NaCl 3%: 1,5 mL de NaCl 20% + 8,5 mL de AD (total 10 mL).\n Retirar 4 mL e nebulizar de 8/8 horas.\n Fazer broncodilatador junto, para evitar broncoespasmo.` }),
-        detalhes: {
-            indicacao: "Bronquiolite viral aguda (nebulização).",
-            dose: "4 mL de NaCl 3% nebulizados de 8/8h.",
-            atencao: "Fazer junto com broncodilatador, para evitar broncoespasmo."
-        }
-    },
     "koid_d": {
         cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais / Inalatórios)",
         kw: "koid d betametasona dexclorfeniramina tosse alergica xarope antitussigeno", nome: "Koid D Xarope (Betametasona + Dexclorfeniramina)", apres: "0,25 mg + 2 mg / 5 mL",
