@@ -36,6 +36,10 @@ const TETOS = {
     ipra: 40,             // gotas
     genta: 3,             // mL por dose 12/12h (120 mg)
     pen_cristalina_pac: 12, // mL (6 milhões UI/dose)
+    claritro_pac: 10,     // mL de 250 mg/5 mL (500 mg)
+    eritro_pac: 10,       // mL de 250 mg/5 mL (500 mg)
+    amoxclav_ev: 20,      // mL (1 g de amoxicilina)
+    linezolida_ev: 300,   // mL (600 mg)
 };
 
 const PESOS = [2.5, 4, 7, 10, 15, 22, 30, 45, 70];

@@ -406,5 +406,146 @@ registrarMedicamentos({
             dose: "Peso ÷ 5 mL VO de 12/12h por 5 dias.",
             atencao: "Máximo 10 mL por dose."
         }
+    },
+    // ---------- Pneumonia: antibióticos e fibrinolítico dos Documentos Científicos da SBP (2022 e 2024) ----------
+    "claritro_pac": {
+        cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "claritromicina klaricid suspensao pneumonia atipica macrolideo alergia penicilina oral",
+        nome: "Claritromicina Suspensão (Pneumonia)", apres: "125 mg/5 mL ou 250 mg/5 mL",
+        info: "<strong>Posologia (SBP):</strong> 15 mg/kg/dia VO de 12/12h por 7–10 dias. Máx. 1 g/dia.", badge: "Teto: 500 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* SBP: 15 mg/kg/dia de 12/12h (7,5 mg/kg/dose), máx. 1 g/dia (500 mg/dose), 7 a 10 dias. */
+            let mg = Math.min(p * 7.5, 500);
+            let v250 = Math.min(parseFloat(round05(mg / 50)), 10).toFixed(1), v125 = Math.min(parseFloat(round05(mg / 25)), 20).toFixed(1);
+            return { v: v250 + " mL (250/5)", r: `${recHead}1) CLARITROMICINA SUSPENSÃO 250 MG/5ML --------- 1 FR\nDAR ${v250} ML, VIA ORAL, DE 12/12 HORAS, POR 7 A 10 DIAS.\n\n(OU, SE CLARITROMICINA 125 MG/5ML: DAR ${v125} ML DE 12/12 HORAS.)` };
+        },
+        detalhes: {
+            indicacao: "Pneumonia com suspeita de agente atípico (Mycoplasma, Chlamydia); alergia à penicilina mediada por IgE.",
+            dose: "15 mg/kg/dia VO de 12/12h por 7 a 10 dias (SBP). No internado: 7,5 mg/kg/dose de 12/12h por 10 dias.",
+            atencao: "Máximo 1 g/dia (500 mg/dose). Macrolídeo só se suspeita de atípica. Cautela em QT longo e interações (CYP3A4)."
+        }
+    },
+    "eritro_pac": {
+        cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "eritromicina estolato suspensao pneumonia atipica clamydia trachomatis conjuntivite macrolideo oral",
+        nome: "Eritromicina Suspensão (Pneumonia)", apres: "125 mg/5 mL ou 250 mg/5 mL",
+        info: "<strong>Posologia (SBP):</strong> 40 mg/kg/dia VO de 6/6h por 7–10 dias. Máx. 2 g/dia.", badge: "Teto: 500 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* SBP: 40 mg/kg/dia de 6/6h (10 mg/kg/dose), máx. 2 g/dia (500 mg/dose), 7 a 10 dias. */
+            let mg = Math.min(p * 10, 500);
+            let v250 = Math.min(parseFloat(round05(mg / 50)), 10).toFixed(1), v125 = Math.min(parseFloat(round05(mg / 25)), 20).toFixed(1);
+            return { v: v250 + " mL (250/5)", r: `${recHead}1) ERITROMICINA SUSPENSÃO 250 MG/5ML ---------- 1 FR\nDAR ${v250} ML, VIA ORAL, DE 6/6 HORAS, POR 7 A 10 DIAS.\n\n(OU, SE ERITROMICINA 125 MG/5ML: DAR ${v125} ML DE 6/6 HORAS.)` };
+        },
+        detalhes: {
+            indicacao: "Pneumonia com suspeita de atípico; < 2 meses com conjuntivite (C. trachomatis): antibiótico de escolha.",
+            dose: "40 mg/kg/dia VO de 6/6h por 7 a 10 dias (SBP).",
+            atencao: "Máximo 2 g/dia (500 mg/dose). Intolerância gastrointestinal frequente. Em < 6 semanas, risco de estenose hipertrófica de piloro."
+        }
+    },
+    "cefotax_pac": {
+        cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)",
+        kw: "cefotaxima claforan pneumonia grave complicada menor de 2 meses cefalosporina terceira geracao ev injetavel hospitalar",
+        nome: "Cefotaxima EV (Pneumonia)", apres: "FA 1 g (+ 10 mL AD = 100 mg/mL)",
+        info: "<strong>Conduta (SBP):</strong> 150 mg/kg/dia EV de 8/8h ou 6/6h. Máx. 8 g/dia.", badge: "Máx: 8 g/dia", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* SBP 2024: 150 mg/kg/dia de 8/8h ou 6/6h, máx. 8 g/dia. FA 1 g em 10 mL de AD = 100 mg/mL. */
+            let dia = Math.min(p * 150, 8000), mg8 = dia / 3, mg6 = dia / 4;
+            let txt = (mg, h) => `Aspirar ${(mg / 100).toFixed(1)} mL (${mg.toFixed(0)} mg) e administrar EV, de ${h}/${h}h.`;
+            return { v: `8/8h: ${(mg8 / 100).toFixed(1)} mL\n6/6h: ${(mg6 / 100).toFixed(1)} mL`, r: `VIA ENDOVENOSA (USO HOSPITALAR - PNEUMONIA)\n\n Reconstituir cada FA de Cefotaxima 1 g em 10 mL de AD (100 mg/mL).\n\nOPÇÃO 8/8H (150 MG/KG/DIA):\n ${txt(mg8, 8)}\n\nOPÇÃO 6/6H (150 MG/KG/DIA):\n ${txt(mg6, 6)}` };
+        },
+        detalhes: {
+            indicacao: "PAC grave ou complicada; criança gravemente doente, não imunizada contra pneumococo ou com HIV; em < 2 meses, substitui a gentamicina (preferir à ceftriaxona).",
+            dose: "150 mg/kg/dia EV de 8/8h ou 6/6h (SBP).",
+            atencao: "Máximo 8 g/dia. Diluição e tempo de infusão conforme o protocolo do serviço. Não cobre MRSA."
+        }
+    },
+    "amoxclav_ev": {
+        cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)",
+        kw: "amoxicilina clavulanato ev injetavel clavulin pneumonia complicada necrosante segunda opcao hospitalar",
+        nome: "Amoxicilina + Clavulanato EV (Pneumonia)", apres: "FA 1 g + 200 mg (+ 20 mL AD = 50 mg/mL de amoxicilina)",
+        info: "<strong>Conduta (SBP):</strong> 75 mg/kg/dia de amoxicilina EV de 8/8h. Máx. 1 g/dose.", badge: "Máx: 1 g/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* SBP 2024: 75 mg/kg/dia de amoxicilina de 8/8h (25 mg/kg/dose), máx. 1 g/dose. FA 1 g em 20 mL de AD = 50 mg/mL. */
+            let mg = Math.min(p * 25, 1000), ml = mg / 50;
+            return { v: ml.toFixed(1) + " mL", r: `VIA ENDOVENOSA (USO HOSPITALAR - PNEUMONIA)\n\n Reconstituir 1 FA de Amoxicilina + Clavulanato 1 g/200 mg em 20 mL de AD (50 mg/mL de amoxicilina). Aspirar ${ml.toFixed(1)} mL (${mg.toFixed(0)} mg de amoxicilina) e administrar EV, de 8/8h.` };
+        },
+        detalhes: {
+            indicacao: "PAC: 2ª opção EV; pneumonia necrosante em paciente clinicamente estável (se ainda não usada no episódio).",
+            dose: "75 mg/kg/dia de amoxicilina EV de 8/8h (SBP).",
+            atencao: "Máximo 1 g de amoxicilina por dose. Diluição e tempo de infusão conforme o protocolo do serviço. Não refrigerar a solução reconstituída."
+        }
+    },
+    "ampisulb_ev": {
+        cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)",
+        kw: "ampicilina sulbactam unasyn ev injetavel pneumonia complicada necrosante aspirativa hospitalar",
+        nome: "Ampicilina + Sulbactam EV (Pneumonia)", apres: "FA 3 g (2 g ampicilina + 1 g sulbactam)",
+        info: "<strong>Conduta (SBP):</strong> 150–200 mg/kg/dia de ampicilina EV, de 6/6h.", badge: "Máx: 2 g ampicilina/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* SBP 2024: 150-200 mg/kg/dia de ampicilina. Intervalo de 6/6h e teto de 2 g de ampicilina/dose (1 FA de 3 g) conforme bula. FA 3 g reconstituído até 10 mL = 200 mg/mL de ampicilina. */
+            let opc = (mgKgDia) => { let mg = Math.min(p * mgKgDia / 4, 2000); return { mg, ml: mg / 200 }; };
+            let a = opc(150), b = opc(200);
+            return { v: `150: ${a.ml.toFixed(1)} mL\n200: ${b.ml.toFixed(1)} mL`, r: `VIA ENDOVENOSA (USO HOSPITALAR - PNEUMONIA)\n\n Reconstituir 1 FA de Ampicilina + Sulbactam 3 g em AD até 10 mL (200 mg/mL de ampicilina).\n\nOPÇÃO 150 MG/KG/DIA DE AMPICILINA:\n Aspirar ${a.ml.toFixed(1)} mL (${a.mg.toFixed(0)} mg de ampicilina) e administrar EV, de 6/6h.\n\nOPÇÃO 200 MG/KG/DIA DE AMPICILINA:\n Aspirar ${b.ml.toFixed(1)} mL (${b.mg.toFixed(0)} mg de ampicilina) e administrar EV, de 6/6h.` };
+        },
+        detalhes: {
+            indicacao: "PAC: 2ª opção EV; pneumonia necrosante em paciente clinicamente estável (se ainda não usada no episódio).",
+            dose: "150–200 mg/kg/dia de ampicilina EV, de 6/6h (SBP; intervalo conforme bula).",
+            atencao: "Máximo 2 g de ampicilina por dose. Diluição e tempo de infusão conforme o protocolo do serviço."
+        }
+    },
+    "linezolida_ev": {
+        cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)",
+        kw: "linezolida zyvox mrsa staphylococcus pneumonia complicada necrosante falha terapeutica ev injetavel hospitalar",
+        nome: "Linezolida EV (Pneumonia)", apres: "Bolsa 600 mg / 300 mL (2 mg/mL)",
+        info: "<strong>Conduta (SBP):</strong> < 12 anos: 30 mg/kg/dia de 8/8h | ≥ 12 anos: 600 mg/dose. Máx. 600 mg/dose.", badge: "Máx: 600 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            /* SBP 2024: < 12 anos 30 mg/kg/dia de 8/8h (10 mg/kg/dose); >= 12 anos 600 mg de 8/8h (como no documento). Máx. 600 mg/dose. Solução 2 mg/mL. */
+            if (i === "") return { v: "—", r: "Insira a idade acima." };
+            let maior = parseFloat(i) >= 12;
+            let mg = maior ? 600 : Math.min(p * 10, 600), ml = mg / 2;
+            return { v: ml.toFixed(0) + " mL", r: `VIA ENDOVENOSA (USO HOSPITALAR - PNEUMONIA)\n\n Linezolida solução 2 mg/mL: infundir ${ml.toFixed(0)} mL (${mg.toFixed(0)} mg) EV em 30-120 minutos, de 8/8h.` };
+        },
+        detalhes: {
+            indicacao: "PAC complicada por S. aureus MRSA (alternativa à vancomicina); falha terapêutica com possível pneumococo ou S. aureus resistente.",
+            dose: "< 12 anos: 30 mg/kg/dia de 8/8h. ≥ 12 anos: 600 mg de 8/8h, como na tabela da SBP (na bula, ≥ 12 anos é 600 mg de 12/12h: conferir).",
+            atencao: "Máximo 600 mg/dose. Mielossupressão (hemograma semanal), neuropatia em uso prolongado. Interação com ISRS (síndrome serotoninérgica)."
+        }
+    },
+    "levoflox_ev": {
+        cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)",
+        kw: "levofloxacino levaquin quinolona pneumonia atipica alergia grave betalactamico ev injetavel hospitalar",
+        nome: "Levofloxacino EV (Pneumonia)", apres: "Bolsa 500 mg / 100 mL (5 mg/mL)",
+        info: "<strong>Conduta (SBP):</strong> 6 m – < 5 a: 20 mg/kg/dia de 12/12h | 5 – < 16 a: 10 mg/kg 1x/dia. Máx. 750 mg/dia.", badge: "Máx: 750 mg/dia", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            /* SBP 2024: >= 6 meses e < 5 anos: 20 mg/kg/dia de 12/12h; >= 5 e < 16 anos: 10 mg/kg 1x/dia. Máx. 750 mg/dia. Solução 5 mg/mL. */
+            if (i === "") return { v: "—", r: "Insira a idade acima." };
+            let id = parseFloat(i);
+            if (id < 0.5) return { v: "Contraind.", r: "ATENÇÃO: a SBP não indica levofloxacino abaixo de 6 meses." };
+            let h = id < 5 ? 12 : 24;
+            let mg = id < 5 ? Math.min(p * 10, 375) : Math.min(p * 10, 750), ml = mg / 5;
+            return { v: `${ml.toFixed(0)} mL ${h}/${h}h`, r: `VIA ENDOVENOSA (USO HOSPITALAR - PNEUMONIA)\n\n Levofloxacino solução 5 mg/mL: infundir ${ml.toFixed(0)} mL (${mg.toFixed(0)} mg) EV em 60-90 minutos, de ${h}/${h}h.` };
+        },
+        detalhes: {
+            indicacao: "PAC com suspeita ou confirmação de atípico (opção ao macrolídeo); alergia grave a betalactâmicos.",
+            dose: "≥ 6 meses e < 5 anos: 20 mg/kg/dia de 12/12h. ≥ 5 e < 16 anos: 10 mg/kg 1x/dia (SBP).",
+            atencao: "Máximo 750 mg/dia. Quinolona em criança: reservar para as indicações acima. Cautela em QT longo."
+        }
+    },
+    "uroquinase": {
+        cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)",
+        kw: "uroquinase fibrinolitico dreno toracico empiema derrame pleural septado loculado intrapleural pneumonia complicada",
+        nome: "Uroquinase Intrapleural (Empiema)", apres: "Frasco-ampola (UI)",
+        info: "<strong>Conduta (SBP):</strong> < 1 ano: 10.000 UI em 10 mL de SF | ≥ 1 ano: 40.000 UI em 40 mL de SF, pelo dreno, 2x/dia por 3 dias.", badge: "Pelo dreno", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: (p, i) => {
+            /* SBP 2024: < 1 ano 10.000 UI em 10 mL de SF 0,9%; > 1 ano 40.000 UI em 40 mL de SF 0,9%. Dreno pinçado por 4 h com mudanças de decúbito, 2x/dia por 3 dias (ciclo pode ser repetido por mais 3 dias). */
+            if (i === "") return { v: "—", r: "Insira a idade acima." };
+            let menor = parseFloat(i) < 1;
+            let ui = menor ? "10.000" : "40.000", ml = menor ? 10 : 40;
+            return { v: `${ui} UI`, r: `VIA INTRAPLEURAL (PELO DRENO TORÁCICO)\n\n Diluir ${ui} UI de Uroquinase em ${ml} mL de SF 0,9% e instilar pelo dreno torácico. Manter o dreno pinçado por 4 horas, com mudanças de decúbito. Depois, abrir o dreno. Fazer 2 vezes ao dia, por 3 dias (o ciclo pode ser repetido por mais 3 dias, se necessário).` };
+        },
+        detalhes: {
+            indicacao: "Derrame parapneumônico complicado e empiema com septações (rompe a fibrina), pelo dreno torácico.",
+            dose: "< 1 ano: 10.000 UI em 10 mL de SF 0,9%. ≥ 1 ano: 40.000 UI em 40 mL de SF 0,9%. 2x/dia por 3 dias (SBP).",
+            atencao: "Dreno pinçado por 4 h com mudanças de decúbito. Menos alergênica e pirogênica que a estreptoquinase."
+        }
     }
 });
