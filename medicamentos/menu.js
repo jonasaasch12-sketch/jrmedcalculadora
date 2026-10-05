@@ -56,7 +56,7 @@ const categorias = [
                     // Prescrição Ambulatorial
                     "amox", "amox400", "clav", "azi_oral",
                     // Prescrição Hospitalar
-                    "ampicilina", "cef_resp_ev", "cef_resp_im", "azi_ev", "genta"
+                    "ampicilina", "pen_cristalina_pac", "cef_resp_ev", "cef_resp_im", "azi_ev", "genta"
                 ] 
             },
             { nome: "Tosse (Antitussígenos e Expectorantes)", remedios: ["koid_d", "torante", "acebrofilina"] },

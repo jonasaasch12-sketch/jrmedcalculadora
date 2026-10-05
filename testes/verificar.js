@@ -34,6 +34,8 @@ const TETOS = {
     cef_resp_ev: 20,      // mL 24/24h (2 g)
     metil: 0.96,          // mL (60 mg)
     ipra: 40,             // gotas
+    genta: 3,             // mL por dose 12/12h (120 mg)
+    pen_cristalina_pac: 12, // mL (6 milhões UI/dose)
 };
 
 const PESOS = [2.5, 4, 7, 10, 15, 22, 30, 45, 70];
