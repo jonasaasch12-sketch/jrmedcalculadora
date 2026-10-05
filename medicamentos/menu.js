@@ -8,7 +8,7 @@ const categorias = [
         id: "cat-exame-fisico", titulo: "Exame Físico e Orientações", dotClass: "dot-exame", cor: "tarja-exame", nome: "Exame Físico", icone: "📋 Exame Físico",
         patologias: [
             { nome: "Avaliação Geral", remedios: ["exame_masculino", "exame_feminino"] },
-            { nome: "Orientações de Alta", remedios: ["orientacoes_gerais", "orientacoes_geca"] }
+            { nome: "Orientações de Alta", remedios: ["orientacoes_gerais", "orientacoes_geca", "orientacoes_bva"] }
         ]
     },
     { 
@@ -54,15 +54,14 @@ const categorias = [
                 nome: "Pneumonia", 
                 remedios: [
                     // Prescrição Ambulatorial
-                    "amox", "amox400", "clav", "azi_oral",
+                    "amox", "amox400", "clav", "azi_oral", "claritro_pac", "eritro_pac",
                     // Prescrição Hospitalar
-                    "ampicilina", "cef_resp_ev", "cef_resp_im", "azi_ev", "genta"
+                    "ampicilina", "pen_cristalina_pac", "cef_resp_ev", "cef_resp_im", "cefotax_pac", "amoxclav_ev", "ampisulb_ev", "azi_ev", "levoflox_ev", "genta", "linezolida_ev"
                 ] 
             },
-            { nome: "Bronquiolite Viral Aguda", remedios: ["salina_hipertonica"] },
             { nome: "Tosse (Antitussígenos e Expectorantes)", remedios: ["koid_d", "torante", "acebrofilina"] },
             { nome: "Laringite Viral Aguda (Crupe)", remedios: ["dexa_crupe", "adrenalina_neb"] },
-            { nome: "Manejo Avançado e Outros Respiratórios", remedios: ["pulmicort", "salb_neb", "hidro_ev", "ipra"] }
+            { nome: "Manejo Avançado e Outros Respiratórios", remedios: ["pulmicort", "hidro_ev", "ipra"] }
         ]
     },
     { 
