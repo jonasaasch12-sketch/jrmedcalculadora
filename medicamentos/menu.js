@@ -56,7 +56,7 @@ const categorias = [
                     // Prescrição Ambulatorial
                     "amox", "amox400", "clav", "azi_oral", "claritro_pac", "eritro_pac",
                     // Prescrição Hospitalar
-                    "ampicilina", "pen_cristalina_pac", "cef_resp_ev", "cef_resp_im", "cefotax_pac", "amoxclav_ev", "ampisulb_ev", "azi_ev", "levoflox_ev", "genta", "linezolida_ev", "uroquinase"
+                    "ampicilina", "pen_cristalina_pac", "cef_resp_ev", "cef_resp_im", "cefotax_pac", "amoxclav_ev", "ampisulb_ev", "azi_ev", "levoflox_ev", "genta", "linezolida_ev"
                 ] 
             },
             { nome: "Tosse (Antitussígenos e Expectorantes)", remedios: ["koid_d", "torante", "acebrofilina"] },
