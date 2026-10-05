@@ -54,9 +54,9 @@ const categorias = [
                 nome: "Pneumonia", 
                 remedios: [
                     // Prescrição Ambulatorial
-                    "amox", "amox400", "clav", "azi_oral",
+                    "amox", "amox400", "clav", "azi_oral", "claritro_pac", "eritro_pac",
                     // Prescrição Hospitalar
-                    "ampicilina", "pen_cristalina_pac", "cef_resp_ev", "cef_resp_im", "azi_ev", "genta"
+                    "ampicilina", "pen_cristalina_pac", "cef_resp_ev", "cef_resp_im", "cefotax_pac", "amoxclav_ev", "ampisulb_ev", "azi_ev", "levoflox_ev", "genta", "linezolida_ev", "uroquinase"
                 ] 
             },
             { nome: "Tosse (Antitussígenos e Expectorantes)", remedios: ["koid_d", "torante", "acebrofilina"] },

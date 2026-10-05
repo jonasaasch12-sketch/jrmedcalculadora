@@ -207,7 +207,7 @@ registrarConduta({
                         "<strong>Suspeita de atípica:</strong> azitromicina 10 mg/kg/dia, dose única diária, por 5 dias, ou claritromicina 7,5 mg/kg/dose de 12/12 h por 10 dias. < 2 meses com conjuntivite (C. trachomatis): <strong>eritromicina</strong>.",
                         "<strong>O₂</strong> se SatO₂ < 92% em ar ambiente: cânula nasal, alto fluxo ou máscara facial."
                     ],
-                    remedios: ["amox", "amox400", "ampicilina", "pen_cristalina_pac", "clav", "cef_resp_ev", "genta", "azi_oral", "azi_ev"]
+                    remedios: ["amox", "amox400", "ampicilina", "pen_cristalina_pac", "clav", "amoxclav_ev", "ampisulb_ev", "cef_resp_ev", "cefotax_pac", "genta", "azi_oral", "azi_ev", "claritro_pac", "eritro_pac"]
                 },
                 {
                     titulo: "Antibiótico na PAC complicada",
@@ -224,7 +224,7 @@ registrarConduta({
                                 "<strong>Penicilina cristalina ou ampicilina</strong>, além da abordagem cirúrgica adequada.",
                                 "Suspeita ou confirmação de <strong>M. pneumoniae ou C. pneumoniae</strong>: associar <strong>macrolídeo</strong>. Levofloxacino é opção, inclusive na alergia grave a betalactâmicos."
                             ],
-                            remedios: ["pen_cristalina_pac", "ampicilina", "azi_ev"]
+                            remedios: ["pen_cristalina_pac", "ampicilina", "azi_ev", "levoflox_ev"]
                         },
                         {
                             nome: "🟠 PACC grave",
@@ -233,7 +233,7 @@ registrarConduta({
                                 "Em áreas com <strong>alta prevalência de MRSA</strong> na comunidade: associar <strong>vancomicina</strong> até o resultado das culturas.",
                                 "Alternativas à vancomicina para MRSA: linezolida ou clindamicina. Ceftarolina em monoterapia é opção possível."
                             ],
-                            remedios: ["cef_resp_ev", "vancomicina", "clindamicina"]
+                            remedios: ["cef_resp_ev", "cefotax_pac", "vancomicina", "linezolida_ev", "clindamicina"]
                         },
                         {
                             nome: "🔴 PACC muito grave (choque, ventilação, UTI)",
@@ -241,7 +241,7 @@ registrarConduta({
                                 "<strong>Vancomicina + ceftriaxona (ou cefotaxima) + azitromicina.</strong>",
                                 "Na sazonalidade do influenza: considerar <strong>oseltamivir</strong>."
                             ],
-                            remedios: ["vancomicina", "cef_resp_ev", "azi_ev"]
+                            remedios: ["vancomicina", "cef_resp_ev", "cefotax_pac", "azi_ev"]
                         },
                         {
                             nome: "Pneumonia necrosante",
@@ -250,7 +250,7 @@ registrarConduta({
                                 "Se clinicamente estável: amoxicilina-clavulanato/sulbactam ou ampicilina-sulbactam EV, a critério médico, se ainda não usados neste episódio.",
                                 "Abordagem cirúrgica conforme o fluxograma (abaixo)."
                             ],
-                            remedios: ["vancomicina", "cef_resp_ev", "cefepime"]
+                            remedios: ["vancomicina", "cef_resp_ev", "cefotax_pac", "cefepime", "amoxclav_ev", "ampisulb_ev"]
                         },
                         {
                             nome: "Abscesso pulmonar",
@@ -334,7 +334,8 @@ registrarConduta({
                                 "Opções: estreptoquinase, uroquinase (mais descrita, menos alergênica e pirogênica) e alteplase.",
                                 "<strong>Uroquinase:</strong> <strong>10.000 UI em 10 mL de SF 0,9%</strong> se < 1 ano; <strong>40.000 UI em 40 mL de SF 0,9%</strong> se > 1 ano.",
                                 "Instilar pelo dreno e mantê-lo <strong>pinçado por 4 h</strong>, com mudanças de decúbito. Uroquinase e estreptoquinase 2×/dia; alteplase 1×/dia, por 3 dias (o ciclo pode ser repetido por mais 3 dias)."
-                            ]
+                            ],
+                            remedios: ["uroquinase"]
                         },
                         {
                             nome: "Falha da drenagem torácica",
@@ -390,7 +391,7 @@ registrarConduta({
                         "<strong>Alergia à penicilina não mediada por IgE:</strong> cefuroxima ou ceftriaxona. <strong>Mediada por IgE (tipo 1):</strong> clindamicina ou macrolídeo.",
                         "<strong>Macrolídeo</strong> só na suspeita clínica de <strong>pneumonia atípica</strong> (em > 5 anos não é mais eficaz que a amoxicilina): eritromicina 40 mg/kg/dia de 6/6 h (máx. 2 g/dia) por 7–10 dias; claritromicina 15 mg/kg/dia de 12/12 h (máx. 1 g/dia) por 7–10 dias; ou azitromicina 10 mg/kg/dia, dose única diária, por 5 dias."
                     ],
-                    remedios: ["amox", "amox400", "azi_oral", "clav"]
+                    remedios: ["amox", "amox400", "azi_oral", "claritro_pac", "eritro_pac", "clav"]
                 },
                 {
                     titulo: "Orientações e reavaliação",
@@ -413,7 +414,7 @@ registrarConduta({
                         "<strong>Possível pneumococo ou S. aureus resistente</strong> (MSSA ou MRSA): substituir por <strong>clindamicina ou linezolida</strong>.",
                         "Se melhorar com a troca: manter até completar 7 dias. <strong>Se piorar ou não mudar: avaliar internação.</strong>"
                     ],
-                    remedios: ["azi_oral", "clindamicina"]
+                    remedios: ["azi_oral", "claritro_pac", "clindamicina", "linezolida_ev"]
                 },
                 {
                     titulo: "Vacinas pneumocócicas",
