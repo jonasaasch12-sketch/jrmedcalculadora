@@ -24,6 +24,76 @@ registrarConduta({
             cor: "#0284c7",
             secoes: [
         {
+            resumo: "Quadro clínico, evolução e exames.",
+            titulo: "Definição e diagnóstico",
+            icone: "🔎",
+            itens: [
+                "<strong>Definição:</strong> síndrome clínica manifestada por dificuldade respiratória em crianças <strong>menores de 2 anos</strong>, provocada por infecção viral aguda do trato respiratório, com inflamação das vias aéreas inferiores.",
+                "<strong>Agentes:</strong> VSR (até 80% dos casos), seguido do rinovírus. Outros: parainfluenza, metapneumovírus, influenza, adenovírus, coronavírus (incluindo SARS-CoV-2) e bocavírus. Cerca de 1/3 dos hospitalizados tem 2 ou mais vírus.",
+                "<strong>Quadro:</strong> rinorreia, obstrução nasal e tosse, seguidos (2º–3º dia) de taquipneia, sibilos, crepitações difusas e/ou uso de musculatura acessória. Febre baixa ou ausente. Contactantes com sintomas gripais corroboram.",
+                "<strong>Evolução:</strong> pico de gravidade entre o <strong>3º e o 5º dia</strong>. Duração de cerca de 10 dias. Tosse resolve em até 3 semanas em 90%, podendo persistir até 4 semanas.",
+                "Avaliar FR, FC e esforço fora do choro, da febre e da agitação. A saturação pode cair no sono.",
+                "<strong>Diagnóstico essencialmente clínico.</strong>",
+                "<strong>Radiografia de tórax:</strong> não indicada de rotina. Reservar para casos graves, evolução desfavorável, suspeita de complicação/coinfecção bacteriana ou diagnóstico diferencial (especialmente cardiopatas). Tomografia não indicada de rotina. USG pulmonar à beira-leito pode ser considerada em casos graves/UTI.",
+                "<strong>Exames laboratoriais:</strong> não rotineiros. Hemograma e proteínas de fase aguda nos casos graves ou com dúvida diagnóstica. Eletrólitos e função renal se desidratação. Gasometria arterial nos casos graves com indicação de VNI/VMI.",
+                "<strong>Pesquisa viral (RT-PCR de nasofaringe):</strong> recomendada nos hospitalizados com doença grave / SRAG, na admissão, conforme fluxo local.",
+                "<strong>CID-10:</strong> J21 Bronquiolite aguda · J21.0 por vírus sincicial respiratório."
+            ]
+        },
+        {
+            resumo: "Outras causas a considerar.",
+            titulo: "Diagnóstico diferencial",
+            icone: "🧭",
+            itens: [
+                "<strong>Sibilância recorrente / asma desencadeada por vírus:</strong> mais provável em > 12 meses com sibilância prévia, atopia pessoal ou história familiar de asma.",
+                "<strong>Pneumonia bacteriana:</strong> aspecto toxemiado, febre mais alta, sem sibilância, achados localizados.",
+                "<strong>Coqueluche:</strong> guincho e tosse paroxística (podem faltar). Avaliar situação vacinal e contactantes.",
+                "<strong>Anomalias de vias aéreas / doença pulmonar crônica:</strong> sintomas prolongados ou recorrentes, estridor, baixo ganho de peso, aspiração recorrente.",
+                "<strong>Aspiração de corpo estranho:</strong> engasgo, início súbito, assimetria do murmúrio vesicular, sibilo focal/monofônico.",
+                "<strong>Pneumonia aspirativa:</strong> DRGE, disfunção de deglutição. Cianose, tosse ou engasgo ao mamar.",
+                "<strong>Cardiopatia congênita / insuficiência cardíaca:</strong> dificuldade alimentar, baixo ganho de peso, sopro, galope, hepatomegalia, cardiomegalia."
+            ]
+        },
+        {
+            resumo: "Quem tem mais risco de evoluir mal.",
+            titulo: "Fatores de risco para BVA grave",
+            icone: "⚠️",
+            itens: [
+                "Prematuridade (IG < 37 semanas) e baixo peso ao nascer.",
+                "Idade < 12 meses, particularmente < 6 meses.",
+                "Doença pulmonar crônica, especialmente displasia broncopulmonar.",
+                "Erros inatos da imunidade e imunodeficiência adquirida.",
+                "Defeitos anatômicos das vias aéreas (laringomalácia, fístula traqueoesofágica).",
+                "Cardiopatia congênita com repercussão hemodinâmica.",
+                "Doença neuromuscular · trissomia do 21 · fibrose cística.",
+                "Ambientais: tabagismo passivo, poluição do ar, desmame precoce (especialmente < 2 meses).",
+                `Baixa ingesta alimentar e/ou hídrica; vulnerabilidade social, dificuldade de acesso ao serviço de saúde e pais com dificuldade de reconhecer sinais de alarme. ${IMIP}`
+            ]
+        },
+        {
+            resumo: "Taquipneia e taquicardia por idade.",
+            titulo: "Sinais vitais e esforço respiratório",
+            icone: "📈",
+            tabelas: [
+                {
+                    titulo: "Taquipneia (contar em 1 minuto)",
+                    colunas: ["Idade", "FR"],
+                    linhas: [["< 2 meses", "> 60 irpm"], ["2 meses – 1 ano", "> 50 irpm"], ["1 – 5 anos", "> 40 irpm"]]
+                },
+                {
+                    titulo: "Taquicardia",
+                    colunas: ["Idade", "FC"],
+                    linhas: [["0 – 3 meses", "> 180 bpm"], ["3 – 6 meses", "> 175 bpm"], ["6 – 9 meses", "> 168 bpm"], ["9 – 12 meses", "> 161 bpm"], ["12 – 18 meses", "> 156 bpm"], ["18 – 24 meses", "> 149 bpm"]],
+                    nota: "Fonte: adaptado de Fleming et al., 2011. Contar FR e FC com a criança afebril e sem agitação."
+                }
+            ],
+            itens: [
+                "<strong>Outros sinais de esforço:</strong> batimento de asas nasais, retração de fúrcula, tiragem intercostal e subcostal, balanço tóraco-abdominal, balanço da cabeça, gemência, tempo expiratório prolongado.",
+                "Hipoxemia (SatO₂ < 92%) ou cianose · apneia · alteração do estado mental (agitação, choro inconsolável, letargia).",
+                "Dificuldade para sugar o seio materno · TEC > 2 segundos."
+            ]
+        },
+        {
             aberta: true,
             resumo: "Tabela do Ministério da Saúde e escore WDF clicável.",
             titulo: "Classificação de gravidade",
@@ -62,76 +132,6 @@ registrarConduta({
                         nota: "1–3 = leve · 4–7 = moderada · 8–14 = grave (máximo 14). Antes de aplicar: desobstruir o nariz (lavagem nasal se necessário), decúbito a 30–45° e aguardar o fim de acesso de tosse. No IMIP: escore > 3 é critério de admissão em UTI e > 7 indica insucesso da VNI. A conduta deste app segue a classificação do Ministério da Saúde (tabela acima)."
                     }
                 }
-            ]
-        },
-        {
-            resumo: "Quadro clínico, evolução e exames.",
-            titulo: "Definição e diagnóstico",
-            icone: "🔎",
-            itens: [
-                "<strong>Definição:</strong> síndrome clínica manifestada por dificuldade respiratória em crianças <strong>menores de 2 anos</strong>, provocada por infecção viral aguda do trato respiratório, com inflamação das vias aéreas inferiores.",
-                "<strong>Agentes:</strong> VSR (até 80% dos casos), seguido do rinovírus. Outros: parainfluenza, metapneumovírus, influenza, adenovírus, coronavírus (incluindo SARS-CoV-2) e bocavírus. Cerca de 1/3 dos hospitalizados tem 2 ou mais vírus.",
-                "<strong>Quadro:</strong> rinorreia, obstrução nasal e tosse, seguidos (2º–3º dia) de taquipneia, sibilos, crepitações difusas e/ou uso de musculatura acessória. Febre baixa ou ausente. Contactantes com sintomas gripais corroboram.",
-                "<strong>Evolução:</strong> pico de gravidade entre o <strong>3º e o 5º dia</strong>. Duração de cerca de 10 dias. Tosse resolve em até 3 semanas em 90%, podendo persistir até 4 semanas.",
-                "Avaliar FR, FC e esforço fora do choro, da febre e da agitação. A saturação pode cair no sono.",
-                "<strong>Diagnóstico essencialmente clínico.</strong>",
-                "<strong>Radiografia de tórax:</strong> não indicada de rotina. Reservar para casos graves, evolução desfavorável, suspeita de complicação/coinfecção bacteriana ou diagnóstico diferencial (especialmente cardiopatas). Tomografia não indicada de rotina. USG pulmonar à beira-leito pode ser considerada em casos graves/UTI.",
-                "<strong>Exames laboratoriais:</strong> não rotineiros. Hemograma e proteínas de fase aguda nos casos graves ou com dúvida diagnóstica. Eletrólitos e função renal se desidratação. Gasometria arterial nos casos graves com indicação de VNI/VMI.",
-                "<strong>Pesquisa viral (RT-PCR de nasofaringe):</strong> recomendada nos hospitalizados com doença grave / SRAG, na admissão, conforme fluxo local.",
-                "<strong>CID-10:</strong> J21 Bronquiolite aguda · J21.0 por vírus sincicial respiratório."
-            ]
-        },
-        {
-            resumo: "Taquipneia e taquicardia por idade.",
-            titulo: "Sinais vitais e esforço respiratório",
-            icone: "📈",
-            tabelas: [
-                {
-                    titulo: "Taquipneia (contar em 1 minuto)",
-                    colunas: ["Idade", "FR"],
-                    linhas: [["< 2 meses", "> 60 irpm"], ["2 meses – 1 ano", "> 50 irpm"], ["1 – 5 anos", "> 40 irpm"]]
-                },
-                {
-                    titulo: "Taquicardia",
-                    colunas: ["Idade", "FC"],
-                    linhas: [["0 – 3 meses", "> 180 bpm"], ["3 – 6 meses", "> 175 bpm"], ["6 – 9 meses", "> 168 bpm"], ["9 – 12 meses", "> 161 bpm"], ["12 – 18 meses", "> 156 bpm"], ["18 – 24 meses", "> 149 bpm"]],
-                    nota: "Fonte: adaptado de Fleming et al., 2011. Contar FR e FC com a criança afebril e sem agitação."
-                }
-            ],
-            itens: [
-                "<strong>Outros sinais de esforço:</strong> batimento de asas nasais, retração de fúrcula, tiragem intercostal e subcostal, balanço tóraco-abdominal, balanço da cabeça, gemência, tempo expiratório prolongado.",
-                "Hipoxemia (SatO₂ < 92%) ou cianose · apneia · alteração do estado mental (agitação, choro inconsolável, letargia).",
-                "Dificuldade para sugar o seio materno · TEC > 2 segundos."
-            ]
-        },
-        {
-            resumo: "Quem tem mais risco de evoluir mal.",
-            titulo: "Fatores de risco para BVA grave",
-            icone: "⚠️",
-            itens: [
-                "Prematuridade (IG < 37 semanas) e baixo peso ao nascer.",
-                "Idade < 12 meses, particularmente < 6 meses.",
-                "Doença pulmonar crônica, especialmente displasia broncopulmonar.",
-                "Erros inatos da imunidade e imunodeficiência adquirida.",
-                "Defeitos anatômicos das vias aéreas (laringomalácia, fístula traqueoesofágica).",
-                "Cardiopatia congênita com repercussão hemodinâmica.",
-                "Doença neuromuscular · trissomia do 21 · fibrose cística.",
-                "Ambientais: tabagismo passivo, poluição do ar, desmame precoce (especialmente < 2 meses).",
-                `Baixa ingesta alimentar e/ou hídrica; vulnerabilidade social, dificuldade de acesso ao serviço de saúde e pais com dificuldade de reconhecer sinais de alarme. ${IMIP}`
-            ]
-        },
-        {
-            resumo: "Outras causas a considerar.",
-            titulo: "Diagnóstico diferencial",
-            icone: "🧭",
-            itens: [
-                "<strong>Sibilância recorrente / asma desencadeada por vírus:</strong> mais provável em > 12 meses com sibilância prévia, atopia pessoal ou história familiar de asma.",
-                "<strong>Pneumonia bacteriana:</strong> aspecto toxemiado, febre mais alta, sem sibilância, achados localizados.",
-                "<strong>Coqueluche:</strong> guincho e tosse paroxística (podem faltar). Avaliar situação vacinal e contactantes.",
-                "<strong>Anomalias de vias aéreas / doença pulmonar crônica:</strong> sintomas prolongados ou recorrentes, estridor, baixo ganho de peso, aspiração recorrente.",
-                "<strong>Aspiração de corpo estranho:</strong> engasgo, início súbito, assimetria do murmúrio vesicular, sibilo focal/monofônico.",
-                "<strong>Pneumonia aspirativa:</strong> DRGE, disfunção de deglutição. Cianose, tosse ou engasgo ao mamar.",
-                "<strong>Cardiopatia congênita / insuficiência cardíaca:</strong> dificuldade alimentar, baixo ganho de peso, sopro, galope, hepatomegalia, cardiomegalia."
             ]
         }
             ]

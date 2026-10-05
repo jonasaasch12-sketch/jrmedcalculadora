@@ -45,6 +45,20 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
                            são ids de cards (farmaciaJR), a dose nunca é repetida na conduta
 ```
 
+## Padrão das condutas (definido pelo Dr. Jonas)
+
+- 3 blocos, nesta ordem: **🔎 Diagnóstico e apresentação clínica** (azul) → **🚨 Condução na
+  emergência / hospitalar** (vermelho) → **🏠 Ambulatório: casa e manutenção** (verde).
+- **O diagnóstico vem SEMPRE primeiro** (1ª seção do 1º bloco). Depois: diferencial, fatores de
+  risco, sinais vitais e, por último no bloco, a gravidade/escore.
+- Seções são sanfona (fechadas). `aberta: true` só no essencial do plantão: gravidade/escore,
+  conduta da emergência e prescrição para casa. Cada seção tem `resumo` de uma linha.
+- Escores clínicos (WDF, PRAM...) sempre **clicáveis** (`escore: {...}`), com soma automática.
+- Medicações: linkar os cards; se a fonte diverge do card, **não mudar o card sem perguntar**.
+  Quando o Dr. Jonas escolhe a dose do card (ex.: salbutamol peso/2, magnésio do serviço),
+  a conduta passa a usar o card.
+- Texto em português, técnico; fontes no final.
+
 A **ordem dos `<script>` no index.html importa**: base → registro → categorias → menu → app → formularios.
 Os scripts são clássicos (não módulos) e compartilham variáveis globais (`farmaciaJR`, `categorias`...).
 
