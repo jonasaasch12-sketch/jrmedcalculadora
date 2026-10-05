@@ -21,51 +21,6 @@ registrarConduta({
             cor: "#0284c7",
             secoes: [
         {
-            aberta: true,
-            resumo: "Tabela de gravidade e escore clicável.",
-            titulo: "Gravidade da crise + escore PRAM",
-            icone: "📊",
-            tabela: {
-                gravidade: true,
-                colunas: ["", "Leve (todos)", "Moderada", "Grave (qualquer)", "Ameaça à vida"],
-                linhas: [
-                    ["Consciência", "Normal", "Normal", "Normal", "Sonolento, confuso"],
-                    ["Cianose central", "Ausente", "Não", "Pode estar presente", "Cianótico"],
-                    ["SpO₂ em ar ambiente*", "≥ 94%", "≥ 92%", "< 92%", ""],
-                    ["Fala†", "Frases", "Expressões", "Palavras", ""],
-                    ["Frequência respiratória", "≤ 40/min", "Aumentada, mas ≤ 40/min", "> 40/min", ""],
-                    ["Musculatura acessória", "Ausente", "Alguma", "Presente; retração de escalenos", ""],
-                    ["Entrada de ar", "Normal ou ↓ leve nas bases", "↓ (bases ou difusa)", "Tórax silencioso ou só sibilo inspiratório", ""],
-                    ["Sibilância", "Nenhuma ou expiratória leve", "Expiratória ± inspiratória", "Tórax pode estar silencioso", ""],
-                    ["PRAM", "1–3", "4–7", "8–10", "11–12"]
-                ],
-                nota: "Tabela do GINA para ≤ 5 anos (Box 12-1). *Antes do O₂; a oximetria pode superestimar a saturação em pele escura. †Considerar o desenvolvimento da criança. Agitação, sonolência e confusão sugerem hipoxemia cerebral. Tórax silencioso = ventilação mínima. SpO₂ < 92% na chegada (sobretudo < 88%) indica alta chance de internação."
-            },
-            grupos: [
-                {
-                    nome: "Escore PRAM (Pediatric Respiratory Assessment Measure) · 2 a 17 anos",
-                    escore: {
-                        id: "pram",
-                        instrucao: "Toque no que o paciente apresenta em cada item. A soma é feita automaticamente.",
-                        itens: [
-                            { nome: "Saturação de O₂", opcoes: [[0, "≥ 95%"], [1, "92–94%"], [2, "< 92%"]] },
-                            { nome: "Retração supraesternal", opcoes: [[0, "Ausente"], [2, "Presente"]] },
-                            { nome: "Contração dos escalenos (palpação)", opcoes: [[0, "Ausente"], [2, "Presente"]] },
-                            { nome: "Entrada de ar*", opcoes: [[0, "Normal"], [1, "Diminuída nas bases"], [2, "Diminuída em ápices e bases"], [3, "Mínima ou ausente"]] },
-                            { nome: "Sibilância§", opcoes: [[0, "Ausente"], [1, "Só expiratória"], [2, "Inspiratória (± expiratória)"], [3, "Audível sem estetoscópio ou tórax silencioso"]] }
-                        ],
-                        faixas: [
-                            { min: 0, max: 3, rotulo: "Crise leve", cor: "#16a34a" },
-                            { min: 4, max: 7, rotulo: "Crise moderada", cor: "#d97706" },
-                            { min: 8, max: 10, rotulo: "Crise grave", cor: "#dc2626" },
-                            { min: 11, max: 12, rotulo: "Crise grave: risco de vida", cor: "#7f1d1d", texto: "Pior categoria do escore. Tratar imediatamente e chamar UTI." }
-                        ],
-                        nota: "Máximo 12. Classificação: 0–3 leve · 4–7 moderada · 8–12 grave (11–12 = ameaça à vida, pela tabela de gravidade do GINA). *Se assimetria, vale o campo pulmonar (ápice-base) mais acometido. §Se assimetria, valem as duas zonas de ausculta mais acometidas. O escore é um guia e não substitui a avaliação clínica. PRAM © 2011 Francine Ducharme."
-                    }
-                }
-            ]
-        },
-        {
             resumo: "Os 3 critérios do GINA, asma suspeita e exames.",
             titulo: "Diagnóstico (≤ 5 anos)",
             icone: "🔎",
@@ -112,6 +67,51 @@ registrarConduta({
                         "Hipoxemia (< 95%) acordado, fora de crise.",
                         "Lactente < 12 meses com ≥ 2 episódios de sibilância."
                     ]
+                }
+            ]
+        },
+        {
+            aberta: true,
+            resumo: "Tabela de gravidade e escore clicável.",
+            titulo: "Gravidade da crise + escore PRAM",
+            icone: "📊",
+            tabela: {
+                gravidade: true,
+                colunas: ["", "Leve (todos)", "Moderada", "Grave (qualquer)", "Ameaça à vida"],
+                linhas: [
+                    ["Consciência", "Normal", "Normal", "Normal", "Sonolento, confuso"],
+                    ["Cianose central", "Ausente", "Não", "Pode estar presente", "Cianótico"],
+                    ["SpO₂ em ar ambiente*", "≥ 94%", "≥ 92%", "< 92%", ""],
+                    ["Fala†", "Frases", "Expressões", "Palavras", ""],
+                    ["Frequência respiratória", "≤ 40/min", "Aumentada, mas ≤ 40/min", "> 40/min", ""],
+                    ["Musculatura acessória", "Ausente", "Alguma", "Presente; retração de escalenos", ""],
+                    ["Entrada de ar", "Normal ou ↓ leve nas bases", "↓ (bases ou difusa)", "Tórax silencioso ou só sibilo inspiratório", ""],
+                    ["Sibilância", "Nenhuma ou expiratória leve", "Expiratória ± inspiratória", "Tórax pode estar silencioso", ""],
+                    ["PRAM", "1–3", "4–7", "8–10", "11–12"]
+                ],
+                nota: "Tabela do GINA para ≤ 5 anos (Box 12-1). *Antes do O₂; a oximetria pode superestimar a saturação em pele escura. †Considerar o desenvolvimento da criança. Agitação, sonolência e confusão sugerem hipoxemia cerebral. Tórax silencioso = ventilação mínima. SpO₂ < 92% na chegada (sobretudo < 88%) indica alta chance de internação."
+            },
+            grupos: [
+                {
+                    nome: "Escore PRAM (Pediatric Respiratory Assessment Measure) · 2 a 17 anos",
+                    escore: {
+                        id: "pram",
+                        instrucao: "Toque no que o paciente apresenta em cada item. A soma é feita automaticamente.",
+                        itens: [
+                            { nome: "Saturação de O₂", opcoes: [[0, "≥ 95%"], [1, "92–94%"], [2, "< 92%"]] },
+                            { nome: "Retração supraesternal", opcoes: [[0, "Ausente"], [2, "Presente"]] },
+                            { nome: "Contração dos escalenos (palpação)", opcoes: [[0, "Ausente"], [2, "Presente"]] },
+                            { nome: "Entrada de ar*", opcoes: [[0, "Normal"], [1, "Diminuída nas bases"], [2, "Diminuída em ápices e bases"], [3, "Mínima ou ausente"]] },
+                            { nome: "Sibilância§", opcoes: [[0, "Ausente"], [1, "Só expiratória"], [2, "Inspiratória (± expiratória)"], [3, "Audível sem estetoscópio ou tórax silencioso"]] }
+                        ],
+                        faixas: [
+                            { min: 0, max: 3, rotulo: "Crise leve", cor: "#16a34a" },
+                            { min: 4, max: 7, rotulo: "Crise moderada", cor: "#d97706" },
+                            { min: 8, max: 10, rotulo: "Crise grave", cor: "#dc2626" },
+                            { min: 11, max: 12, rotulo: "Crise grave: risco de vida", cor: "#7f1d1d", texto: "Pior categoria do escore. Tratar imediatamente e chamar UTI." }
+                        ],
+                        nota: "Máximo 12. Classificação: 0–3 leve · 4–7 moderada · 8–12 grave (11–12 = ameaça à vida, pela tabela de gravidade do GINA). *Se assimetria, vale o campo pulmonar (ápice-base) mais acometido. §Se assimetria, valem as duas zonas de ausculta mais acometidas. O escore é um guia e não substitui a avaliação clínica. PRAM © 2011 Francine Ducharme."
+                    }
                 }
             ]
         }
