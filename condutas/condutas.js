@@ -273,7 +273,7 @@ function atualizarEscore(id) {
     let cor = faixa && completo ? faixa.cor : '#64748b';
     res.style.setProperty('--cor-escore', cor);
     res.innerHTML = `
-        <div class="escore-total"><span class="escore-total-num">${total}</span><span class="escore-total-de">pontos</span></div>
+        <div class="escore-total"><span class="escore-total-num">${total}</span><span class="escore-total-de">${e.unidade || "pontos"}</span></div>
         <div class="escore-classe">
             <strong>${!feitos ? 'Marque os itens acima' : !completo ? `Parcial: ${feitos} de ${e.itens.length} itens` : faixa ? faixa.rotulo : 'Sem pontuação'}</strong>
             ${completo && faixa ? (faixa.texto ? `<span>${faixa.texto}</span>` : '') : feitos ? `<span>${faixa ? 'até agora: ' + faixa.rotulo : ''}</span>` : ''}

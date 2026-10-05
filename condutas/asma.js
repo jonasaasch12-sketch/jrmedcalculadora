@@ -260,6 +260,7 @@ registrarConduta({
             icone: "🎯",
             escore: {
                 id: "controle_asma",
+                unidade: "itens \"sim\"",
                 instrucao: "Nas últimas 4 semanas, a criança teve… (toque Sim ou Não em cada item)",
                 itens: [
                     { nome: "Sintomas diurnos de asma mais de 2×/semana?", opcoes: [[0, "Não"], [1, "Sim"]] },
