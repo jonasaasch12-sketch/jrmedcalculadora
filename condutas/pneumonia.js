@@ -331,9 +331,8 @@ registrarConduta({
                             nome: "Fibrinolíticos pelo dreno",
                             itens: [
                                 "Rompem septações. Alguns autores indicam como 1ª opção não operatória no DP complicado e no empiema.",
-                                "Opções: estreptoquinase, uroquinase (mais descrita, menos alergênica e pirogênica) e alteplase.",
-                                "<strong>Uroquinase:</strong> <strong>10.000 UI em 10 mL de SF 0,9%</strong> se < 1 ano; <strong>40.000 UI em 40 mL de SF 0,9%</strong> se > 1 ano.",
-                                "Instilar pelo dreno e mantê-lo <strong>pinçado por 4 h</strong>, com mudanças de decúbito. Uroquinase e estreptoquinase 2×/dia; alteplase 1×/dia, por 3 dias (o ciclo pode ser repetido por mais 3 dias)."
+                                "Opções: estreptoquinase e alteplase.",
+                                "Instilar pelo dreno e mantê-lo <strong>pinçado por 4 h</strong>, com mudanças de decúbito. Estreptoquinase 2×/dia; alteplase 1×/dia, por 3 dias (o ciclo pode ser repetido por mais 3 dias)."
                             ]
                         },
                         {
