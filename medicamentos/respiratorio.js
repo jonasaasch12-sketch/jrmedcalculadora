@@ -529,23 +529,5 @@ registrarMedicamentos({
             dose: "≥ 6 meses e < 5 anos: 20 mg/kg/dia de 12/12h. ≥ 5 e < 16 anos: 10 mg/kg 1x/dia (SBP).",
             atencao: "Máximo 750 mg/dia. Quinolona em criança: reservar para as indicações acima. Cautela em QT longo."
         }
-    },
-    "uroquinase": {
-        cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)",
-        kw: "uroquinase fibrinolitico dreno toracico empiema derrame pleural septado loculado intrapleural pneumonia complicada",
-        nome: "Uroquinase Intrapleural (Empiema)", apres: "Frasco-ampola (UI)",
-        info: "<strong>Conduta (SBP):</strong> < 1 ano: 10.000 UI em 10 mL de SF | ≥ 1 ano: 40.000 UI em 40 mL de SF, pelo dreno, 2x/dia por 3 dias.", badge: "Pelo dreno", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
-        calc: (p, i) => {
-            /* SBP 2024: < 1 ano 10.000 UI em 10 mL de SF 0,9%; > 1 ano 40.000 UI em 40 mL de SF 0,9%. Dreno pinçado por 4 h com mudanças de decúbito, 2x/dia por 3 dias (ciclo pode ser repetido por mais 3 dias). */
-            if (i === "") return { v: "—", r: "Insira a idade acima." };
-            let menor = parseFloat(i) < 1;
-            let ui = menor ? "10.000" : "40.000", ml = menor ? 10 : 40;
-            return { v: `${ui} UI`, r: `VIA INTRAPLEURAL (PELO DRENO TORÁCICO)\n\n Diluir ${ui} UI de Uroquinase em ${ml} mL de SF 0,9% e instilar pelo dreno torácico. Manter o dreno pinçado por 4 horas, com mudanças de decúbito. Depois, abrir o dreno. Fazer 2 vezes ao dia, por 3 dias (o ciclo pode ser repetido por mais 3 dias, se necessário).` };
-        },
-        detalhes: {
-            indicacao: "Derrame parapneumônico complicado e empiema com septações (rompe a fibrina), pelo dreno torácico.",
-            dose: "< 1 ano: 10.000 UI em 10 mL de SF 0,9%. ≥ 1 ano: 40.000 UI em 40 mL de SF 0,9%. 2x/dia por 3 dias (SBP).",
-            atencao: "Dreno pinçado por 4 h com mudanças de decúbito. Menos alergênica e pirogênica que a estreptoquinase."
-        }
     }
 });
