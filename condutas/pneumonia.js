@@ -207,7 +207,7 @@ registrarConduta({
                         "<strong>Suspeita de atípica:</strong> azitromicina 10 mg/kg/dia, dose única diária, por 5 dias, ou claritromicina 7,5 mg/kg/dose de 12/12 h por 10 dias. < 2 meses com conjuntivite (C. trachomatis): <strong>eritromicina</strong>.",
                         "<strong>O₂</strong> se SatO₂ < 92% em ar ambiente: cânula nasal, alto fluxo ou máscara facial."
                     ],
-                    remedios: ["amox", "amox400", "ampicilina", "pen_cristalina", "clav", "cef_resp_ev", "genta", "azi_oral", "azi_ev"]
+                    remedios: ["amox", "amox400", "ampicilina", "pen_cristalina_pac", "clav", "cef_resp_ev", "genta", "azi_oral", "azi_ev"]
                 },
                 {
                     titulo: "Antibiótico na PAC complicada",
@@ -224,7 +224,7 @@ registrarConduta({
                                 "<strong>Penicilina cristalina ou ampicilina</strong>, além da abordagem cirúrgica adequada.",
                                 "Suspeita ou confirmação de <strong>M. pneumoniae ou C. pneumoniae</strong>: associar <strong>macrolídeo</strong>. Levofloxacino é opção, inclusive na alergia grave a betalactâmicos."
                             ],
-                            remedios: ["pen_cristalina", "ampicilina", "azi_ev"]
+                            remedios: ["pen_cristalina_pac", "ampicilina", "azi_ev"]
                         },
                         {
                             nome: "🟠 PACC grave",
