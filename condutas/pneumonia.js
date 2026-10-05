@@ -1,18 +1,19 @@
 // =====================================================
-// CONDUTA: PNEUMONIA ADQUIRIDA NA COMUNIDADE COMPLICADA (PACC)
-// Base: SBP — Documento Científico nº 151 (29/04/2024), Departamentos de
-// Pneumologia e Infectologia: "Pneumonias Adquiridas na Comunidade
-// Complicadas: Atualização 2024".
+// CONDUTA: PNEUMONIA ADQUIRIDA NA COMUNIDADE (PAC), NÃO COMPLICADA E COMPLICADA
+// Base: SBP, Departamento de Pneumologia. Documento Científico nº 8 (23/02/2022):
+// "Abordagem Diagnóstica e Terapêutica das PAC Não Complicadas"; e
+// Documento Científico nº 151 (29/04/2024), Pneumologia e Infectologia:
+// "Pneumonias Adquiridas na Comunidade Complicadas: Atualização 2024".
 // Os remédios são ids dos cards (farmaciaJR): a dose é calculada lá.
 // =====================================================
 registrarConduta({
-    id: "pac_complicada",
-    nome: "Pneumonia Complicada (PACC)",
+    id: "pneumonia",
+    nome: "Pneumonia (PAC)",
     categoria: "Respiratório",
     cor: "#0284c7",
-    kw: "pneumonia complicada pac pacc derrame pleural parapneumonico empiema necrosante abscesso pulmonar pneumatocele dreno toracico",
-    resumo: "Derrame parapneumônico, empiema, pneumonia necrosante e abscesso pulmonar: diagnóstico, antibiótico e abordagem cirúrgica.",
-    legenda: "Conduta conforme o <strong>Documento Científico da SBP nº 151 (2024)</strong>: Pneumonias Adquiridas na Comunidade Complicadas.",
+    kw: "pneumonia pac broncopneumonia pneumonia complicada pacc derrame pleural parapneumonico empiema necrosante abscesso pulmonar pneumatocele dreno toracico amoxicilina",
+    resumo: "Diagnóstico, gravidade, tratamento ambulatorial e hospitalar, falha terapêutica e complicações (derrame, empiema, necrosante, abscesso).",
+    legenda: "Conduta conforme os Documentos Científicos da <strong>SBP</strong>: PAC não complicadas (nº 8, 2022) e PAC complicadas (nº 151, 2024).",
 
     blocos: [
         {
@@ -21,7 +22,52 @@ registrarConduta({
             cor: "#0284c7",
             secoes: [
                 {
-                    titulo: "Definição e etiologia",
+                    titulo: "Diagnóstico",
+                    icone: "🔎",
+                    resumo: "Definição, agentes, quadro clínico e classificação da OMS.",
+                    itens: [
+                        "<strong>PAC:</strong> pneumonia em criança <strong>não hospitalizada no último mês</strong> (germes do domicílio, escola e comunidade). Principal causa de morbimortalidade em < 5 anos.",
+                        "<strong>Agentes:</strong> vírus predominam em todas as idades, sobretudo o <strong>VSR</strong> (mais frequente em < 5 anos); também metapneumovírus e bocavírus. Bactérias: <strong>pneumococo</strong>, H. influenzae e S. aureus.",
+                        "<strong>Diagnóstico eminentemente clínico.</strong> Quadro clássico: <strong>febre de início agudo, taquipneia e tosse</strong>. Pode ser sutil (só inapetência e agitação). Em < 5 anos é comum pródromo de febre baixa e coriza.",
+                        "Febre pode faltar em lactentes muito pequenos com C. trachomatis, B. pertussis ou Ureaplasma. Crianças maiores podem referir dor pleurítica ou rigidez de nuca (acometimento de lobo).",
+                        "<strong>Mais associados à pneumonia radiográfica</strong> (< 5 anos): hipoxemia moderada (<strong>SatO₂ ≤ 96%</strong>) e aumento do esforço respiratório (gemência, batimento de asas nasais, retrações). SatO₂ > 96% diminui a probabilidade; taquipneia (FR > 40) isolada não foi fortemente associada.",
+                        "<strong>Sibilância:</strong> asma, bronquiolite e sibilância viral também causam taquipneia. <strong>Tratar com broncodilatador antes de classificar como PAC</strong> (evita antibiótico desnecessário).",
+                        "<strong>Classificação da OMS:</strong> < 2 meses com tosse, dificuldade respiratória e <strong>FR ≥ 60</strong> (com ou sem tiragem) = pneumonia grave → internar. > 2 meses: <strong>pneumonia</strong> (só FR aumentada para a idade) → tratamento ambulatorial com antibiótico; <strong>pneumonia grave</strong> (FR aumentada + <strong>tiragem subcostal</strong>) → internação."
+                    ]
+                },
+                {
+                    titulo: "Fluxograma: tosse ou dificuldade respiratória (2 meses a 5 anos)",
+                    icone: "🧭",
+                    resumo: "Com sibilos: pensar em BVA, asma ou sibilância viral. Sem sibilos: classificar.",
+                    tabela: {
+                        colunas: ["Achado", "Conduta"],
+                        linhas: [
+                            ["<strong>Com sibilos</strong> e < 2 anos", "Considerar <strong>bronquiolite viral aguda</strong>. Se sim, manejar como BVA. Se não, seguir como abaixo."],
+                            ["<strong>Com sibilos</strong> (2–5 anos ou BVA afastada)", "<strong>Prova terapêutica com broncodilatador</strong> de curta ação (curso curto, sugestão: 3 vezes de 20/20 min). Boa resposta: crise de asma ou sibilância viral. Mantém tosse e/ou dificuldade respiratória: seguir como \"sem sibilos\"."],
+                            ["<strong>Sem sibilos</strong>: tosse, resfriado (coriza, obstrução nasal)", "<strong>Não compatível com pneumonia</strong>"],
+                            ["<strong>Sem sibilos</strong>: taquipneia e/ou esforço respiratório", "<strong>Pneumonia</strong>"],
+                            ["<strong>Sem sibilos</strong>: comprometimento do estado geral", "<strong>Pneumonia grave ou muito grave</strong>: 1ª dose do antibiótico o mais breve possível e encaminhar para internação com antibiótico EV. Considerar diferenciais de outras doenças graves."]
+                        ],
+                        nota: "Fonte: Figura 1 do Documento Científico nº 8 da SBP (modificado de Ardura-Garcia & Kuehni)."
+                    }
+                },
+                {
+                    titulo: "Exames complementares (PAC não complicada)",
+                    icone: "🧪",
+                    resumo: "Em geral só nos internados; radiografia não é rotina no ambulatório.",
+                    itens: [
+                        "Exames se aplicam basicamente aos <strong>internados</strong> (PAC grave, não necessariamente complicada). Preferir métodos não invasivos.",
+                        "<strong>Teste rápido de vírus</strong> (swab de nasofaringe, RCP multiplex), se disponível: reduz imagem e antibiótico desnecessários.",
+                        "<strong>Doença grave ou aspecto tóxico:</strong> hemograma, eletrólitos, função hepática e renal e <strong>hemocultura</strong>. Anemia ou plaquetopenia podem sugerir SHU (pneumococo).",
+                        "<strong>Hemocultura:</strong> não de rotina; colher em quem vai internar ou sem boa evolução com o antibiótico.",
+                        "<strong>Marcadores inflamatórios</strong> (VHS, PCR, procalcitonina): não diferenciam viral de bacteriana com segurança; úteis na evolução e como prognóstico. <strong>PCT < 0,25 ng/mL</strong>: baixa probabilidade de PAC bacteriana; <strong>< 0,1 ng/mL</strong>: alto valor preditivo negativo. PCT elevada com vírus identificado pode sugerir coinfecção.",
+                        "Investigar <strong>tuberculose</strong> se área endêmica ou contato com adulto com TB.",
+                        "<strong>Radiografia de tórax:</strong> não indicada no ambulatório. Indicar se hipoxemia, esforço respiratório, má resposta ao tratamento (complicações), febre prolongada com tosse (mesmo sem taquipneia), casos graves, evolução prolongada ou recorrente, suspeita de corpo estranho ou malformação; considerar em < 5 anos com febre e leucocitose sem causa aparente. Não define a etiologia.",
+                        "<strong>Não fazer de rotina:</strong> radiografia em perfil; radiografia de controle se houver melhora clínica (considerar na pneumonia redonda, colapso, pneumonia recorrente localizada ou sintomas persistentes); reagentes de fase aguda; investigação microbiológica no ambulatório; sorologias (diagnóstico retrospectivo); <strong>antígeno urinário para pneumococo</strong>."
+                    ]
+                },
+                {
+                    titulo: "PAC complicada: definição e agentes",
                     icone: "🔎",
                     resumo: "O que é PACC e principais agentes.",
                     itens: [
@@ -33,10 +79,9 @@ registrarConduta({
                     ]
                 },
                 {
-                    titulo: "Quadro clínico",
+                    titulo: "PAC complicada: quadro clínico",
                     icone: "🩺",
-                    aberta: true,
-                    resumo: "Derrame/empiema, necrosante, abscesso e aspirativa.",
+                    resumo: "Derrame/empiema, pneumonia necrosante, abscesso e aspirativa.",
                     grupos: [
                         {
                             nome: "Derrame parapneumônico (DPP) e empiema (EP)",
@@ -80,9 +125,9 @@ registrarConduta({
                     ]
                 },
                 {
-                    titulo: "Exames laboratoriais e microbiológicos",
+                    titulo: "PAC complicada: líquido pleural e culturas",
                     icone: "🧪",
-                    resumo: "Hemocultura, líquido pleural e critérios de empiema.",
+                    resumo: "Hemocultura, toracocentese e critérios de empiema.",
                     itens: [
                         "<strong>Provas de fase aguda</strong> (leucócitos, neutrófilos, PCR, VHS, procalcitonina): pouco eficientes para distinguir viral de bacteriana; úteis em <strong>medidas seriadas</strong> para monitorar a resposta.",
                         "<strong>Hemocultura em todas as crianças</strong> (positiva em < 10%).",
@@ -105,7 +150,7 @@ registrarConduta({
                     }
                 },
                 {
-                    titulo: "Exames de imagem",
+                    titulo: "PAC complicada: exames de imagem",
                     icone: "🩻",
                     resumo: "Radiografia, ultrassonografia e tomografia.",
                     itens: [
@@ -113,6 +158,32 @@ registrarConduta({
                         "<strong>Ultrassonografia de tórax:</strong> o método <strong>mais sensível para o espaço pleural</strong> e o recomendado para estimar o volume do derrame (decisivo para a conduta). Superior à TC para ver loculações e fibrina. Sem radiação, portátil e sem sedação. Com Doppler, áreas hipoecoicas ou hipoperfundidas predizem necrose e diferenciam abscesso de empiema (operador-dependente).",
                         "<strong>TC de tórax com contraste:</strong> padrão para diagnosticar <strong>pneumonia necrosante</strong> (consolidação com baixa atenuação e sem realce; múltiplas cavidades de paredes finas sem borda de realce). <strong>Abscesso:</strong> cavidade com parede de realce bem definida. Útil para indicar intervenção. Fístula broncopleural só é definida se a comunicação for vista."
                     ]
+                },
+                {
+                    titulo: "Gravidade e critérios de internação",
+                    icone: "🏥",
+                    aberta: true,
+                    resumo: "Marque o que o paciente apresenta: qualquer \"Sim\" indica internação.",
+                    escore: {
+                        id: "internacao_pac",
+                        unidade: "critérios",
+                        instrucao: "Toque Sim ou Não em cada critério.",
+                        itens: [
+                            { nome: "Hipoxemia: SatO₂ < 92% em ar ambiente?", opcoes: [[0, "Não"], [1, "Sim"]] },
+                            { nome: "Desidratação ou incapaz de manter hidratação/alimentação VO?", opcoes: [[0, "Não"], [1, "Sim"]] },
+                            { nome: "Desconforto moderado a grave: FR > 70 (< 12 meses) ou > 50 (maiores)?", opcoes: [[0, "Não"], [1, "Sim"]] },
+                            { nome: "Dificuldade respiratória: gemência, batimento de asas nasais, retrações (tiragem subcostal) ou apneia?", opcoes: [[0, "Não"], [1, "Sim"]] },
+                            { nome: "< 2 meses com FR ≥ 60 (pneumonia grave pela OMS)?", opcoes: [[0, "Não"], [1, "Sim"]] },
+                            { nome: "Aparência tóxica, sonolência, rebaixamento da consciência ou recusa alimentar?", opcoes: [[0, "Não"], [1, "Sim"]] },
+                            { nome: "Doença de base (cardiopulmonar, síndrome genética, neurológica) ou desnutrição grave?", opcoes: [[0, "Não"], [1, "Sim"]] },
+                            { nome: "Complicação: derrame/empiema, pneumonia necrosante, abscesso (ou murmúrio abolido)?", opcoes: [[0, "Não"], [1, "Sim"]] }
+                        ],
+                        faixas: [
+                            { min: 0, max: 0, rotulo: "Sem critério de internação", cor: "#16a34a", texto: "Tratamento ambulatorial, se boas condições clínicas e família capaz de reavaliar em 48–72 h." },
+                            { min: 1, max: 8, rotulo: "Internação indicada", cor: "#dc2626", texto: "Ver o bloco Condução hospitalar." }
+                        ],
+                        nota: "A decisão de internar é individualizada (idade, doença de base e fatores de gravidade). Fatores de risco para evolução desfavorável: desnutrição, comorbidades, baixa idade, condições socioeconômicas e sanitárias precárias, baixa cobertura vacinal, desmame precoce e poluentes intradomiciliares."
+                    }
                 }
             ]
         },
@@ -122,9 +193,25 @@ registrarConduta({
             cor: "#dc2626",
             secoes: [
                 {
-                    titulo: "Antibioticoterapia empírica",
+                    titulo: "Antibiótico na internação (PAC não complicada)",
                     icone: "💊",
                     aberta: true,
+                    resumo: "Amoxicilina VO se aceitar; EV: ampicilina ou penicilina cristalina.",
+                    itens: [
+                        "<strong>Antibiótico oral é seguro e eficaz mesmo na PAC grave:</strong> amoxicilina 50 mg/kg/dia de 8/8 h ou 12/12 h, por 7 dias.",
+                        "<strong>EV</strong> se não aceitar líquidos ou antibiótico VO, sinais de septicemia ou pneumonia complicada.",
+                        "<strong>1ª opção EV</strong> (resistência mínima à penicilina no nosso meio): <strong>ampicilina 50 mg/kg/dose de 6/6 h</strong> ou <strong>penicilina cristalina 150.000 UI/kg/dia de 6/6 h</strong>.",
+                        "<strong>2ª opção</strong> (VO ou EV, doses habituais): amoxicilina-clavulanato ou sulbactam, ou cefuroxima.",
+                        "<strong>Ceftriaxona ou cefotaxima:</strong> crianças gravemente doentes, não totalmente imunizadas contra o pneumococo ou com HIV.",
+                        "<strong>< 2 meses:</strong> <strong>gentamicina 7,5 mg/kg/dia de 12/12 h</strong> + penicilina cristalina ou ampicilina. Cefalosporina pode substituir a gentamicina: preferir <strong>cefotaxima</strong> (ceftriaxona desloca a bilirrubina da albumina, com risco de kernicterus).",
+                        "<strong>Suspeita de atípica:</strong> azitromicina 10 mg/kg/dia, dose única diária, por 5 dias, ou claritromicina 7,5 mg/kg/dose de 12/12 h por 10 dias. < 2 meses com conjuntivite (C. trachomatis): <strong>eritromicina</strong>.",
+                        "<strong>O₂</strong> se SatO₂ < 92% em ar ambiente: cânula nasal, alto fluxo ou máscara facial."
+                    ],
+                    remedios: ["amox", "amox400", "ampicilina", "pen_cristalina", "clav", "cef_resp_ev", "genta", "azi_oral", "azi_ev"]
+                },
+                {
+                    titulo: "Antibiótico na PAC complicada",
+                    icone: "💊",
                     resumo: "Esquema por gravidade; parenteral por pelo menos 2–3 semanas.",
                     itens: [
                         "Escolha conforme <strong>gravidade clínica</strong>, resistência local e comorbidades. Tratamento parenteral prolongado: <strong>pelo menos 2–3 semanas</strong>.",
@@ -175,7 +262,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    titulo: "Doses sugeridas pela SBP (Quadro 2)",
+                    titulo: "Doses EV sugeridas pela SBP (PAC complicada)",
                     icone: "📋",
                     resumo: "Tabela de referência do documento (antibióticos EV).",
                     tabela: {
@@ -288,10 +375,46 @@ registrarConduta({
             ]
         },
         {
-            titulo: "Prevenção",
-            icone: "🛡️",
+            titulo: "Ambulatório: casa e seguimento",
+            icone: "🏠",
             cor: "#16a34a",
             secoes: [
+                {
+                    titulo: "Tratamento ambulatorial",
+                    icone: "📝",
+                    aberta: true,
+                    resumo: "Amoxicilina 50 mg/kg/dia por 7 dias; alternativas na alergia e na atípica.",
+                    itens: [
+                        "Criança <strong>sem sinais de gravidade e em boas condições</strong>: tratar em casa. Iniciar o antibiótico imediatamente.",
+                        "<strong>1ª opção: amoxicilina VO 50 mg/kg/dia</strong>, de 8/8 h ou 12/12 h (eficácia equivalente), máx. 4 g/dia, por <strong>7 dias</strong> (diretriz nacional). Em crianças sem gravidade, 5 dias mostrou a mesma eficácia que 10 dias.",
+                        "<strong>Alergia à penicilina não mediada por IgE:</strong> cefuroxima ou ceftriaxona. <strong>Mediada por IgE (tipo 1):</strong> clindamicina ou macrolídeo.",
+                        "<strong>Macrolídeo</strong> só na suspeita clínica de <strong>pneumonia atípica</strong> (em > 5 anos não é mais eficaz que a amoxicilina): eritromicina 40 mg/kg/dia de 6/6 h (máx. 2 g/dia) por 7–10 dias; claritromicina 15 mg/kg/dia de 12/12 h (máx. 1 g/dia) por 7–10 dias; ou azitromicina 10 mg/kg/dia, dose única diária, por 5 dias."
+                    ],
+                    remedios: ["amox", "amox400", "azi_oral", "clav"]
+                },
+                {
+                    titulo: "Orientações e reavaliação",
+                    icone: "🏠",
+                    resumo: "Febre, hidratação, sinais de piora e retorno em 48–72 h.",
+                    itens: [
+                        "Orientar o manejo da <strong>febre e da dor</strong>, manter <strong>hidratação e alimentação</strong> adequadas e reconhecer <strong>sinais de piora</strong>.",
+                        "<strong>Reavaliação obrigatória em 48–72 h</strong> do início do tratamento, ou a qualquer momento se piorar.",
+                        "<strong>Prevenção:</strong> aleitamento materno exclusivo nos primeiros meses, eliminar o tabagismo passivo, higiene (lavagem das mãos) e vacinação (pneumococo e influenza)."
+                    ]
+                },
+                {
+                    titulo: "Falha terapêutica (48–72 h sem melhora)",
+                    icone: "⚠️",
+                    resumo: "Causas, troca de antibiótico e quando internar.",
+                    itens: [
+                        "<strong>Falha:</strong> sem melhora após 48–72 h de amoxicilina na PAC não complicada. Rever condições associadas, aprofundar a investigação e trocar o tratamento.",
+                        "<strong>Causas frequentes:</strong> (1) derrame/empiema, pneumonia necrosante ou abscesso; (2) agentes não esperados: vírus, atípicos, 1ª manifestação de <strong>tuberculose</strong>; (3) não cumprimento do tratamento (dose, intervalo, tempo); (4) doença de base: imunossupressão, fibrose cística, asma, desnutrição, bronquiectasias; (5) diferenciais: corpo estranho, malformação pulmonar (sequestro), hérnia diafragmática.",
+                        "<strong>Suspeita de M. pneumoniae ou C. pneumoniae:</strong> acrescentar macrolídeo à amoxicilina ou substituí-la.",
+                        "<strong>Possível pneumococo ou S. aureus resistente</strong> (MSSA ou MRSA): substituir por <strong>clindamicina ou linezolida</strong>.",
+                        "Se melhorar com a troca: manter até completar 7 dias. <strong>Se piorar ou não mudar: avaliar internação.</strong>"
+                    ],
+                    remedios: ["azi_oral", "clindamicina"]
+                },
                 {
                     titulo: "Vacinas pneumocócicas",
                     icone: "💉",
@@ -308,6 +431,7 @@ registrarConduta({
     ],
 
     fontes: [
+        "Sociedade Brasileira de Pediatria. Departamento Científico de Pneumologia. Documento Científico nº 8: Abordagem Diagnóstica e Terapêutica das Pneumonias Adquiridas na Comunidade Não Complicadas (atualização). 23/02/2022.",
         "Sociedade Brasileira de Pediatria. Departamentos Científicos de Pneumologia e Infectologia. Documento Científico nº 151: Pneumonias Adquiridas na Comunidade Complicadas: Atualização 2024. 29/04/2024."
     ],
     revisao: "10/2026"
