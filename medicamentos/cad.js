@@ -8,14 +8,14 @@
 registrarMedicamentos({
     "insulina_cad": {
         cat: "cat-cad", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
-        kw: "insulina regular cetoacidose diabetica cad diabetes infusao continua endovenosa", nome: "Insulina Regular (Cetoacidose Diabética)", apres: "50 U em 500 mL SF 0,9% (0,1 U/mL)",
+        kw: "insulina regular cetoacidose diabetica cad diabetes infusao continua endovenosa", nome: "Insulina Regular (Cetoacidose Diabética)", apres: "100 U (1 mL) em 100 mL SF 0,9% (1 U/mL)",
         info: "<strong>Conduta (IMIP):</strong> < 5 anos 0,05 U/kg/h; ≥ 5 anos 0,1 U/kg/h EV em BIC, após 1h de expansão. Máx 10 U/h. Sem bolus.", badge: "Não iniciar se K < 3,3", recLabel: "Texto para selecionar e copiar:",
         calc: (p, i) => {
             let id = parseFloat(i);
-            let mlh = u => Math.min(p * u, 10) / 0.1;
+            let mlh = u => Math.min(p * u, 10);
             let a = mlh(0.05), b = mlh(0.1), c = mlh(0.15), d = mlh(0.2);
             let v = isNaN(id) ? `< 5 a: ${a.toFixed(1)} mL/h\n≥ 5 a: ${b.toFixed(1)} mL/h` : id < 5 ? `0,05 U/kg/h: ${a.toFixed(1)} mL/h` : `0,1 U/kg/h: ${b.toFixed(1)} mL/h`;
-            return { v, r: `VIA ENDOVENOSA (CETOACIDOSE DIABÉTICA - APÓS 1 HORA DE EXPANSÃO)\n\nPREPARO: Insulina Regular 50 U em 500 mL de SF 0,9% (0,1 U/mL). Lavar o equipo com a solução e trocar o frasco a cada 6 horas.\n\nDOSE INICIAL (correr em BIC):\n• < 5 anos: 0,05 U/kg/h = ${a.toFixed(1)} mL/h.\n• ≥ 5 anos: 0,1 U/kg/h = ${b.toFixed(1)} mL/h.\n• Máximo: 10 U/h (100 mL/h). NÃO FAZER BOLUS (DOSE DE ATAQUE).\n\nAJUSTES:\n• HGT não cai 60 mg/dL/h ou acidose corrigindo muito devagar: aumentar para 0,15 a 0,2 U/kg/h (${c.toFixed(1)} a ${d.toFixed(1)} mL/h).\n• HGT < 300 com acidose: NÃO DIMINUIR A INSULINA. Acrescentar glicose ao soro.\n• Acidose parcialmente compensada, ainda sem critério de suspensão: 0,05 U/kg/h (${a.toFixed(1)} mL/h) + glicose no soro.\n\nSEM BIC: Insulina Regular ${(p * 0.2).toFixed(1)} U (0,2 U/kg) IM de 2/2h.\n\n* Não iniciar se K < 3,3. HGT 1/1h; gasometria e eletrólitos 2/2h.` };
+            return { v, r: `VIA ENDOVENOSA (CETOACIDOSE DIABÉTICA - APÓS 1 HORA DE EXPANSÃO)\n\nPREPARO (IMIP): Insulina Regular 100 U/mL 1 mL (100 U) + SF 0,9% 100 mL (1 U/mL: 0,05 a 0,1 mL/kg/h). Desprezar 50 mL no equipo. Trocar o frasco de 6/6 horas.\n\nDOSE INICIAL (correr em BIC):\n• < 5 anos: 0,05 U/kg/h = ${a.toFixed(1)} mL/h.\n• ≥ 5 anos: 0,1 U/kg/h = ${b.toFixed(1)} mL/h.\n• Máximo: 10 U/h (10 mL/h). NÃO FAZER BOLUS (DOSE DE ATAQUE).\n\nAJUSTES:\n• HGT não cai 60 mg/dL/h ou acidose corrigindo muito devagar: aumentar para 0,15 a 0,2 U/kg/h (${c.toFixed(1)} a ${d.toFixed(1)} mL/h).\n• HGT < 300 com acidose: NÃO DIMINUIR A INSULINA. Acrescentar glicose ao soro.\n• Acidose parcialmente compensada, ainda sem critério de suspensão: 0,05 U/kg/h (${a.toFixed(1)} mL/h) + glicose no soro.\n\nSEM BIC: Insulina Regular ${(p * 0.2).toFixed(1)} U (0,2 U/kg) IM de 2/2h.\n\n* Não iniciar se K < 3,3. HGT 1/1h; gasometria e eletrólitos 2/2h.` };
         },
         detalhes: {
             indicacao: "Cetoacidose diabética, após pelo menos 1 hora de expansão.",
@@ -39,18 +39,19 @@ registrarMedicamentos({
     },
     "cad_hidratacao": {
         cat: "cat-cad", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
-        kw: "cetoacidose diabetica cad hidratacao 48 horas deficit manutencao potassio kcl duas solucoes soro glicosado", nome: "Hidratação da Cetoacidose em 48h (+ Potássio)", apres: "SF 0,9% + KCl 19,1% (40 mEq/L)",
-        info: "<strong>Conduta:</strong> (Déficit + 2 x Manutenção − Expansão) ÷ 48h. Déficit = % desidratação x Peso x 10.", badge: "K: máx 0,5 mEq/kg/h", recLabel: "Texto para selecionar e copiar:",
+        kw: "cetoacidose diabetica cad hidratacao 48 horas deficit manutencao potassio kcl solucao padrao imip solucao a b duas solucoes soro glicosado", nome: "Hidratação da Cetoacidose em 48h (Solução Padrão A/B)", apres: "Solução padrão IMIP: K 40 mEq/L, Na 136 mEq/L",
+        info: "<strong>Conduta:</strong> (Déficit + 2 x Manutenção − Expansão) ÷ 48h, com a solução padrão A/B do IMIP em Y. Déficit = % desidratação x Peso x 10.", badge: "K: máx 0,5 mEq/kg/h", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             let man = p <= 10 ? p * 4 : p <= 20 ? 40 + (p - 10) * 2 : 60 + (p - 20);
             let taxa = d => Math.min(man + d * p * 10 / 48, man * 2);
             let t5 = taxa(5), t7 = taxa(7), t10 = taxa(10);
             let kMax = p * 0.5;
-            return { v: `5%: ${t5.toFixed(0)} | 7%: ${t7.toFixed(0)} | 10%: ${t10.toFixed(0)} mL/h`, r: `VIA ENDOVENOSA (CETOACIDOSE DIABÉTICA - HIDRATAÇÃO EM 48 HORAS)\n\nVOLUME POR HORA (manutenção + déficit em 48h):\n• Desidratação 5%: ${t5.toFixed(0)} mL/h\n• Desidratação 7% (CAD moderada): ${t7.toFixed(0)} mL/h\n• Desidratação 10% (CAD grave): ${t10.toFixed(0)} mL/h\n(Manutenção: ${man.toFixed(0)} mL/h. Total limitado a 2 x a manutenção.)\n\nDESCONTAR A EXPANSÃO: tirar (volume da expansão ÷ 48) da velocidade. Ex.: expansão de ${(p * 10).toFixed(0)} mL (10 mL/kg) = menos ${(p * 10 / 48).toFixed(1)} mL/h.\n\nSOLUÇÃO SEM GLICOSE: SF 0,9% 500 mL + KCl 19,1% 7,8 mL (40 mEq/L de K).\nSOLUÇÃO COM GLICOSE (após iniciar a insulina): SG 10% 478 mL + NaCl 20% 22 mL + KCl 19,1% 7,8 mL (SG 10% em SF + 40 mEq/L de K).\nCorrer as duas em Y, somando a velocidade total; a proporção entre elas segue a glicemia (tabela da conduta).\n\nPOTÁSSIO (pelo K inicial):\n• K < 4,5: iniciar já.\n• K 4,5 a 5,4: iniciar junto com a insulina.\n• K ≥ 5,5: só após diurese e K < 5,5.\n* Se a velocidade for ≥ 10 mL/kg/h: usar 20 mEq/L. Máximo de K: ${kMax.toFixed(1)} mEq/h (0,5 mEq/kg/h).` };
+            let escada = (rot, t) => `• ${rot} (${t.toFixed(0)} mL/h): 0% = B ${t.toFixed(0)} | 2,5% = A ${(t / 4).toFixed(0)} + B ${(t * 3 / 4).toFixed(0)} | 5% = A ${(t / 2).toFixed(0)} + B ${(t / 2).toFixed(0)} | 7,5% = A ${(t * 3 / 4).toFixed(0)} + B ${(t / 4).toFixed(0)} | 10% = A ${t.toFixed(0)}`;
+            return { v: `5%: ${t5.toFixed(0)} | 7%: ${t7.toFixed(0)} | 10%: ${t10.toFixed(0)} mL/h`, r: `VIA ENDOVENOSA (CETOACIDOSE DIABÉTICA - HIDRATAÇÃO EM 48 HORAS)\n\nVOLUME TOTAL POR HORA (manutenção + déficit em 48h):\n• Desidratação 5%: ${t5.toFixed(0)} mL/h\n• Desidratação 7% (CAD moderada): ${t7.toFixed(0)} mL/h\n• Desidratação 10% (CAD grave): ${t10.toFixed(0)} mL/h\n(Manutenção: ${man.toFixed(0)} mL/h. Total limitado a 2 x a manutenção.)\n\nDESCONTAR A EXPANSÃO: tirar (volume da expansão ÷ 48) da velocidade. Ex.: expansão de ${(p * 10).toFixed(0)} mL (10 mL/kg) = menos ${(p * 10 / 48).toFixed(1)} mL/h.\n\nSOLUÇÃO PADRÃO (IMIP), em Y - K 40 mEq/L e Na 136 mEq/L:\n• SOLUÇÃO A: SG 10% 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL.\n• SOLUÇÃO B: AD 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL.\n\nGLICOSE FINAL = PROPORÇÃO ENTRE A E B (a velocidade total não muda):\n${escada('Desidratação 5%', t5)}\n${escada('Desidratação 7%', t7)}\n${escada('Desidratação 10%', t10)}\nSem glicose: só B. Glicose a partir de HGT ≤ 300 mg/dL ou queda > 90 mg/dL/h (SPP): começar com 5% e subir para 7,5% ou 10% se o HGT continuar caindo com a acidose presente.\n\nPOTÁSSIO (pelo K inicial):\n• K < 4,5: solução padrão já.\n• K 4,5 a 5,4: começar o K junto com a insulina (até lá, A e B sem KCl).\n• K ≥ 5,5: preparar A e B SEM o KCl até haver diurese e K < 5,5.\n* Velocidade ≥ 10 mL/kg/h: usar KCl 19,1% 2 mL em cada solução (20 mEq/L). Máximo de K: ${kMax.toFixed(1)} mEq/h (0,5 mEq/kg/h).` };
         },
         detalhes: {
             indicacao: "Reposição do déficit e manutenção na cetoacidose diabética, após a expansão.",
-            dose: "(Déficit + 2 x Manutenção − Expansão) ÷ 48h, com 40 mEq/L de potássio.",
+            dose: "(Déficit + 2 x Manutenção − Expansão) ÷ 48h, com a solução padrão A/B do IMIP (K 40 mEq/L).",
             atencao: "Total até 2 x a manutenção. Obeso: peso ideal. Edema cerebral: corrigir em 72h e reduzir a 1/3."
         }
     },
