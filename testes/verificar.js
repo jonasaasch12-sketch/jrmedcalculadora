@@ -45,6 +45,7 @@ const TETOS = {
     insulina_cad: 10,     // mL/h de 1 U/mL (10 U/h, IMIP)
     kcl_ev: 530,          // mL/h na periférica (40 mEq em 2h)
     kcl_xarope: 50,       // mL por dose (40 mEq)
+    omeprazol: 20,        // mg/dia (faixa ≥ 20 kg, Whitebook)
 };
 
 const PESOS = [2.5, 4, 7, 10, 15, 22, 30, 45, 70];

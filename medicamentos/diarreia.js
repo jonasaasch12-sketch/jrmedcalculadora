@@ -255,6 +255,38 @@ registrarMedicamentos({
             fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Domperidona, atualizado em 15/09/2026."
         }
     },
+    "omeprazol": {
+        cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "omeprazol ibp inibidor de bomba de protons refluxo drge esofagite erosiva ulcera gastrite azia losec mups", nome: "Omeprazol", apres: "Cápsula / comprimido 10, 20 e 40 mg",
+        info: "<strong>Posologia (DRGE e esofagite erosiva):</strong> 5-10 kg: 5 mg; 10-20 kg: 10 mg; ≥ 20 kg: 20 mg VO 1x/dia.", badge: "Máx: 20 mg/dia", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            /* Whitebook: dose fixa por faixa de peso, VO de 24/24h (DRGE a partir de 5 kg; esofagite erosiva a partir de 3 kg) */
+            let id = parseFloat(i);
+            if (!isNaN(id) && id < 28 / 365) return { v: `Neo: ${(p * 1).toFixed(1)}-${(p * 2.5).toFixed(1)} mg/dia`, r: `ORIENTAÇÕES (OMEPRAZOL EM NEONATO)\n\nNeonatos - DRGE: dados limitados, o uso rotineiro NÃO é recomendado.\n• < 32 semanas de idade gestacional: 2,5 mg/kg/dia = ${(p * 2.5).toFixed(1)} mg/dia.\n• ≥ 32 semanas de idade gestacional: 1 mg/kg/dia = ${(p * 1).toFixed(1)} mg/dia.` };
+            if (p < 3) return { v: "—", r: "Abaixo de 3 kg não há dose por peso no Whitebook (em neonato, digite a idade para ver a dose em mg/kg)." };
+            if (p < 5) return { v: "EE: 2,5 mg/dia", r: `USO ORAL\n\n1) OMEPRAZOL 2,5 MG (FORMULAÇÃO MANIPULADA) ------------ 30 DOSES\nDAR 2,5 MG, VIA ORAL, 1 VEZ AO DIA (DE 24/24 HORAS).\n\n* Dose para ESOFAGITE EROSIVA (3-5 kg). Para DRGE, o Whitebook só traz dose a partir de 5 kg.` };
+            let mg = p < 10 ? 5 : p < 20 ? 10 : 20;
+            let item = mg === 5
+                ? `1) OMEPRAZOL 5 MG (FORMULAÇÃO MANIPULADA) ------------ 30 DOSES\nDAR 5 MG, VIA ORAL, 1 VEZ AO DIA (DE 24/24 HORAS).\n\n* 5 mg é menor que a menor apresentação comercial (10 mg).`
+                : `1) OMEPRAZOL ${mg} MG (CÁPSULA OU COMPRIMIDO) ------------ 30 UN\nTOMAR 1 CÁPSULA/COMPRIMIDO, VIA ORAL, 1 VEZ AO DIA (DE 24/24 HORAS).\n\n* Comprimido MUPS: pode ser disperso em copo de água sem gás ou suco de fruta, mexendo até desintegrar.`;
+            return { v: `${mg} mg 24/24h`, r: `USO ORAL\n\n${item}\n* Mesma dose para DRGE, esofagite erosiva e manutenção do tratamento da esofagite (Whitebook).` };
+        },
+        detalhes: {
+            indicacao: "DRGE sintomática, esofagite erosiva (tratamento e manutenção), úlcera péptica, erradicação do H. pylori.",
+            dose: "Ver 📋 Ficha completa, abaixo.",
+            atencao: "Neonatos: dados limitados, uso rotineiro não recomendado. Dose fixa por faixa de peso, 1 vez ao dia."
+        },
+        ficha: {
+            apresentacoes: "Cápsula: 10 mg, 20 mg e 40 mg. Comprimidos revestidos: 10 mg, 20 mg e 40 mg (na formulação MUPS® é permitida a diluição em copo de água sem gás ou suco de fruta, mexendo até o comprimido se desintegrar). Pó para solução injetável: 40 mg + ampola diluente com 10 mL.",
+            indicacoes: "Inibidor de bomba de prótons. Doença do refluxo gastroesofágico (DRGE) sintomática, esofagite erosiva (EE) devido à DRGE ácido-mediada, manutenção da cicatrização da EE, úlcera péptica e erradicação de Helicobacter pylori.",
+            dose: "Neonatos - DRGE (dados limitados, uso rotineiro não recomendado): < 32 semanas de idade gestacional 2,5 mg/kg/dia; ≥ 32 semanas 1 mg/kg/dia.\nDRGE: 5-10 kg: 5 mg/dose; 10-20 kg: 10 mg/dose; ≥ 20 kg: 20 mg/dose VO de 24/24 horas.\nEsofagite erosiva: 3-5 kg: 2,5 mg/dose; 5-10 kg: 5 mg/dose; 10-20 kg: 10 mg/dose; ≥ 20 kg: 20 mg/dose VO de 24/24 horas.\nEsofagite erosiva (manutenção do tratamento): 5-10 kg: 5 mg/dose; 10-20 kg: 10 mg/dose; ≥ 20 kg: 20 mg/dose VO de 24/24 horas.",
+            doseMaxima: "20 mg/dose (faixa ≥ 20 kg).",
+            via: "Oral.",
+            intervalo: "24/24 horas.",
+            alertasPediatricos: "Neonatos: dados limitados, o uso rotineiro não é recomendado. As informações podem não estar totalmente alinhadas com a bula da indústria, e sim com evidências científicas voltadas à prática pediátrica.",
+            fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Omeprazol, atualizado em 05/02/2026."
+        }
+    },
     "lactulose": {
         cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
         kw: "lactulose lactulona constipacao intestino preso laxativo xarope", nome: "Lactulose Xarope (Lactulona)", apres: "667 mg / mL",
