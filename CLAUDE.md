@@ -53,6 +53,10 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
   risco, sinais vitais e, por último no bloco, a gravidade/escore.
 - Seções são sanfona (fechadas). `aberta: true` só no essencial do plantão: gravidade/escore,
   conduta da emergência e prescrição para casa. Cada seção tem `resumo` de uma linha.
+- **Condução na emergência = passo a passo cronológico** (pedido do Dr. Jonas): 1ª seção "⏱️ Linha do
+  tempo (resumo)" (`lista: "passos"`), depois uma seção por passo com `passo: N` (número em destaque),
+  na ordem em que se faz: chegada/exames → hidratação → medicação... Cada passo diz o que fazer,
+  em frases curtas e imperativas, com o card daquela etapa. Complicações "a qualquer momento" no fim.
 - Escores clínicos (WDF, PRAM...) sempre **clicáveis** (`escore: {...}`), com soma automática.
 - Medicações: linkar os cards; se a fonte diverge do card, **não mudar o card sem perguntar**.
   Quando o Dr. Jonas escolhe a dose do card (ex.: salbutamol peso/2, magnésio do serviço),
