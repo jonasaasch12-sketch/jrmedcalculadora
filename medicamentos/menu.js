@@ -119,11 +119,18 @@ const categorias = [
         ]
     },
     { 
+        id: "cat-cad", titulo: "CAD (Cetoacidose Diabética)", dotClass: "dot-cad", cor: "tarja-cad", nome: "CAD", icone: "🩸 CAD",
+        patologias: [
+            { nome: "Expansão, Hidratação e Potássio", remedios: ["cad_expansao", "cad_hidratacao", "kcl_ev"] },
+            { nome: "Insulina EV e Transição para SC", remedios: ["insulina_cad", "cad_insulina_sc"] },
+            { nome: "Complicações: Edema Cerebral, Acidose Grave e Hipoglicemia", remedios: ["cad_manitol", "cad_nacl3", "cad_bicarbonato", "glicose_pals"] }
+        ]
+    },
+    { 
         id: "cat-especialidades", titulo: "Especialidades", dotClass: "dot-especialidades", cor: "tarja-especialidades", nome: "Especialidades", icone: "👁️‍🗨️ Espec.",
         patologias: [
             { nome: "Otologia e Oftalmologia", remedios: ["espec_otociriax", "espec_cerumin", "espec_tobra", "espec_tobra_dexa", "espec_lacribell"] },
-            { nome: "Hematologia (Ferro e Hemoderivados)", remedios: ["sulfato_ferroso", "sulfato_ferroso_prof", "hemacias", "plaquetas", "plasma"] },
-            { nome: "Endócrino (Cetoacidose Diabética)", remedios: ["cad_expansao", "cad_hidratacao", "insulina_cad", "cad_insulina_sc", "cad_manitol", "cad_nacl3", "cad_bicarbonato"] }
+            { nome: "Hematologia (Ferro e Hemoderivados)", remedios: ["sulfato_ferroso", "sulfato_ferroso_prof", "hemacias", "plaquetas", "plasma"] }
         ]
     }
 ];
