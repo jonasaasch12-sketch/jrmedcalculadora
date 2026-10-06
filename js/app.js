@@ -387,16 +387,22 @@ function inicializarApp() {
                 `;
         htmlMenuBottom += `<button class="nav-btn ${cat.cor || ''}"${estiloCor} onclick="document.getElementById('${cat.id}').scrollIntoView({behavior: 'smooth', block: 'start'})">${escaparHtml(cat.icone)}</button>`;
 
-        htmlFinal += `<div id="${cat.id}" class="category-group"><div class="section-header ${cat.cor || ''}"${estiloCor}>${escaparHtml(cat.titulo)}</div>`;
+        // Categoria ou seção com conduta (conduta: "<id>" no menu.js): botão que abre a conduta já na
+        // condução (emergência/hospital). Só aparece onde a aba Condutas existe (body.condutas-on).
+        let corCat = cat.corHex || CORES_CATEGORIA[cat.cor] || "#0284c7";
+        let botaoConduta = (item) => item.conduta
+            ? `<button type="button" class="link-conduta" style="--cor-link:${escaparHtml(corCat)}" onclick="event.stopPropagation(); irParaConduta('${item.conduta}', 'condução')">📖 ${escaparHtml(item.condutaNome || 'Conduta passo a passo')} ›</button>` : '';
+        let linkConduta = botaoConduta(cat);
+        htmlFinal += `<div id="${cat.id}" class="category-group"><div class="section-header ${cat.cor || ''}${linkConduta ? ' com-link-conduta' : ''}"${estiloCor}><span>${escaparHtml(cat.titulo)}</span>${linkConduta}</div>`;
 
         cat.patologias.forEach(pat => {
             // Seções de uso hospitalar ganham o símbolo do hospital no início e no fim do título.
             let ehHosp = /hospitalar/i.test(pat.nome) || SECOES_HOSPITALARES.includes(pat.nome);
             let tituloPat = ehHosp ? `🏥 ${escaparHtml(pat.nome)} 🏥` : pat.nome;
-            let corCat = cat.corHex || CORES_CATEGORIA[cat.cor] || "#0284c7";
+            let linkPat = botaoConduta(pat), comLink = linkPat ? ' com-link-conduta' : '';
             htmlFinal += ehHosp
-                ? `<div class="subtype-group"><div class="sub-type-title sub-type-hosp" style="--cor-cat:${escaparHtml(corCat)}">${tituloPat}</div>`
-                : `<div class="subtype-group"><div class="sub-type-title">${tituloPat}</div>`;
+                ? `<div class="subtype-group"><div class="sub-type-title sub-type-hosp${comLink}" style="--cor-cat:${escaparHtml(corCat)}"><span>${tituloPat}</span>${linkPat}</div>`
+                : `<div class="subtype-group"><div class="sub-type-title${comLink}"><span>${tituloPat}</span>${linkPat}</div>`;
 
             pat.remedios.forEach(idRemedio => {
                 let med = buscarMed(idRemedio);

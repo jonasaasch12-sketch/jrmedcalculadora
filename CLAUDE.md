@@ -62,6 +62,8 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
   Quando o Dr. Jonas escolhe a dose do card (ex.: salbutamol peso/2, magnésio do serviço),
   a conduta passa a usar o card.
 - Texto em português, técnico; fontes no final.
+- Categoria ou seção da Prescrição ligada a uma conduta: `conduta: "<id>"` (e `condutaNome` opcional) no menu.js põe o botão
+  "📖 Conduta passo a passo" na tarja/título, que abre a conduta já no bloco "Condução..." (só onde a aba Condutas existe).
 - **Condutas ficam só no teste** até o Dr. Jonas liberar: `CONDUTAS_LIBERADAS = false` em
   `condutas/condutas.js` esconde a aba no site oficial. Trocar para `true` só quando ele pedir.
 - **Cards criados ou ajustados durante uma conduta podem ir direto para o oficial** (autorizado
