@@ -114,3 +114,9 @@ html[data-theme="dark"] .escore-pts { background: #334155; color: #e2e8f0; }
 .cond-lista-passos { list-style: none; padding-left: 0 !important; }
 .cond-lista-passos li { margin-bottom: 10px !important; padding-left: 36px; text-indent: -36px; }
 .cond-lista-passos .cond-passo { text-indent: 0; margin-right: 6px; }
+
+/* Link "Conduta passo a passo" na tarja da categoria da Prescrição (só onde a aba Condutas existe) */
+.link-conduta { display: none; }
+body.condutas-on .section-header.com-link-conduta { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+body.condutas-on .link-conduta { display: inline-flex; align-items: center; background: #fff; color: #be123c; border: none; border-radius: 999px; padding: 6px 12px; font-size: 12px; font-weight: 800; text-transform: none; letter-spacing: 0; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+.cond-bloco { scroll-margin-top: calc(var(--altura-topo, 100px) + 10px); }

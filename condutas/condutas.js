@@ -22,6 +22,7 @@ function montarEstruturaCondutas() {
     let layout = document.querySelector('#aplicativo-principal .app-layout');
     if (!painel || !layout || document.getElementById('abasModo')) return;
     if (!CONDUTAS_LIBERADAS && !MODO_TESTE) return; // site oficial: só a Prescrição
+    document.body.classList.add('condutas-on'); // mostra os links "Conduta passo a passo" das tarjas
 
     let abas = document.createElement('div');
     abas.id = 'abasModo';
@@ -151,6 +152,18 @@ function abrirTodasSecoes(abrir) {
 }
 
 // Atalho do índice: abre a seção (se estiver recolhida) e rola até ela.
+// Vem da Prescrição (link na tarja da categoria): abre a conduta já no bloco pedido
+// (ex.: 'emerg' = primeiro bloco cujo título tem "emerg").
+function irParaConduta(id, bloco) {
+    if (!condutasJR[id] || !document.getElementById('area-condutas')) return;
+    condutaAberta = id;
+    trocarModo('condutas');
+    let blocos = condutasJR[id].blocos || [];
+    let bi = bloco ? blocos.findIndex(b => (b.titulo || '').toLowerCase().includes(bloco)) : -1;
+    let alvo = bi >= 0 ? document.getElementById('cond-bloco-' + bi) : null;
+    if (alvo) setTimeout(() => alvo.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+}
+
 function abrirSecaoConduta(i) {
     let sec = document.getElementById('cond-sec-' + i);
     if (!sec) return;

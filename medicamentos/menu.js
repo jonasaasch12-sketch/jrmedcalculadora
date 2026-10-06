@@ -119,7 +119,7 @@ const categorias = [
         ]
     },
     { 
-        id: "cat-cad", titulo: "CAD (Cetoacidose Diabética)", dotClass: "dot-cad", cor: "tarja-cad", nome: "CAD", icone: "🩸 CAD",
+        id: "cat-cad", titulo: "CAD (Cetoacidose Diabética)", dotClass: "dot-cad", cor: "tarja-cad", nome: "CAD", icone: "🩸 CAD", conduta: "cetoacidose",
         patologias: [
             { nome: "Expansão, Hidratação e Potássio", remedios: ["cad_expansao", "cad_hidratacao", "kcl_ev"] },
             { nome: "Insulina EV e Transição para SC", remedios: ["insulina_cad", "cad_insulina_sc"] },
