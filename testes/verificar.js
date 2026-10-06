@@ -42,7 +42,7 @@ const TETOS = {
     linezolida_ev: 300,   // mL (600 mg)
     cef_disenteria: 20,   // mL (2 g; EV 100 mg/mL, IM 7 mL)
     metro_parasitas: 6.25, // mL de 40 mg/mL na giardíase (250 mg/dose)
-    cad_bicarbonato: 100, // mL de 8,4% (100 mEq, dose de adulto da SBD)
+    insulina_cad: 100,    // mL/h de 0,1 U/mL (10 U/h, IMIP)
 };
 
 const PESOS = [2.5, 4, 7, 10, 15, 22, 30, 45, 70];
