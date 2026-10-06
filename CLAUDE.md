@@ -58,6 +58,9 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
   Quando o Dr. Jonas escolhe a dose do card (ex.: salbutamol peso/2, magnésio do serviço),
   a conduta passa a usar o card.
 - Texto em português, técnico; fontes no final.
+- **Condutas ficam só no teste** até o Dr. Jonas liberar: `CONDUTAS_LIBERADAS = false` em
+  `condutas/condutas.js` esconde a aba no site oficial. "Pode liberar" leva só os cards;
+  trocar para `true` apenas quando ele pedir para liberar as condutas.
 
 A **ordem dos `<script>` no index.html importa**: base → registro → categorias → menu → app → formularios.
 Os scripts são clássicos (não módulos) e compartilham variáveis globais (`farmaciaJR`, `categorias`...).
