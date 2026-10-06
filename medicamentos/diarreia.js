@@ -315,6 +315,19 @@ registrarMedicamentos({
             indicacao: "Hipocalemia grave (K < 2,5) ou com arritmia; ou quando não é possível a via oral.",
             dose: "0,5 a 1 mEq/kg por dose (máx 40 mEq), EV em 2 horas. Periférica: SF 0,9% 500 mL + KCl 19,1% 7,5 mL (3,8 mEq/100 mL). Central: SF 0,9% 100 mL + KCl 19,1% 6 mL (14,5 mEq/100 mL).",
             atencao: "Sempre em BIC. ECG contínuo se > 0,5 mEq/kg/h. Dosar o K 1 a 2h após o fim. Periférica: máximo 40 mEq/L. Nunca em bolus."
+        },
+        ficha: {
+            apresentacoes: "KCl 19,1%: 2,56 mEq/mL (ampola).",
+            indicacoes: "Hipocalemia grave (K < 2,5 mEq/L) ou com arritmia; hipocalemia quando a reposição por via oral não é possível. O cloreto de potássio é o sal mais usado: maior retenção e aumento mais rápido do K sérico do que outros sais.",
+            dose: "Hipocalemia grave: 0,5 a 1 mEq/kg por dose EV (StatPearls). Pode ser necessária dose mais elevada (DynaMed).\nHipocalemia leve a moderada (2,5 a 3,4 mEq/L) sem via oral possível: 1 mEq/kg em 1 a 2 horas (DynaMed).",
+            doseMaxima: "40 mEq por infusão (StatPearls).",
+            via: "Endovenosa, sempre diluído e em bomba de infusão. Nunca em bolus.",
+            intervalo: "Dose por infusão; dosar o K 1 a 2 horas após o término e repetir, se necessário, conforme o exame (StatPearls).",
+            diluicao: "SF 0,9%. Padrão do app — periférica: SF 0,9% 500 mL + KCl 19,1% 7,5 mL = 38 mEq/L (máximo periférico 40 mEq/L, DynaMed); central: SF 0,9% 100 mL + KCl 19,1% 6 mL = 145 mEq/L (máximo 15 mEq/100 mL).",
+            infusao: "Em 1 a 2 horas (DynaMed); o app usa 2 horas (até 0,5 mEq/kg/h). Velocidade acima de 0,5 mEq/kg/h: monitorização contínua do ECG (StatPearls).",
+            alertasPediatricos: "Concentração periférica acima de 40 mEq/L causa dor e flebite: concentrações maiores exigem acesso central, exceto em situação de risco de vida (DynaMed). O volume da diluição periférica é alto: descontar da hidratação do dia. ECG obrigatório (ondas U, T achatada, depressão de ST, QT longo). Avaliar hipomagnesemia associada (HCFMRP).",
+            efeitosAdversos: "Dor e flebite na infusão periférica (DynaMed).",
+            fonteRevisao: "StatPearls/NCBI - Potassium Chloride (pacientes pediátricos); DynaMed - Hipocalemia em crianças: terapia de reposição de potássio por via intravenosa; Revista QualidadeHC (HCFMRP-USP) - Hipocalemia (2017). Consultados em 10/2026."
         }
     },
     "kcl_xarope": {
@@ -329,6 +342,16 @@ registrarMedicamentos({
             indicacao: "Hipocalemia leve a moderada.",
             dose: "2 a 5 mEq/kg/dia VO de 6/6h (1 mL = 0,8 mEq).",
             atencao: "Dar após as refeições para reduzir a irritação gástrica. Máximo 40 mEq (50 mL) por dose."
+        },
+        ficha: {
+            apresentacoes: "Xarope de cloreto de potássio 6%: 0,8 mEq/mL (15 mL = 12 mEq).",
+            indicacoes: "Hipocalemia leve a moderada, quando a via oral é possível e não há alteração no ECG.",
+            dose: "Hipocalemia leve a moderada: 1 a 2 mEq/kg/dia em doses divididas; faixa típica de 1 a 5 mEq/kg/dia, ajustando pela resposta clínica (StatPearls). Esquema do app: 2 a 5 mEq/kg/dia de 6/6 horas.",
+            doseMaxima: "2 mEq/kg por dose, no máximo 40 mEq por dose (StatPearls).",
+            via: "Oral.",
+            intervalo: "Doses divididas (app: 6/6 horas).",
+            alertasPediatricos: "Dosar o K pelo menos 2 horas após a dose e repetir conforme os exames (StatPearls). Dar após as refeições para reduzir a irritação gástrica. Após normalizar o K sérico, podem ser necessários vários dias de reposição para recompor o estoque corporal (HCFMRP).",
+            fonteRevisao: "StatPearls/NCBI - Potassium Chloride (pacientes pediátricos); DynaMed - Hipocalemia em crianças: terapia de reposição de potássio por via intravenosa; Revista QualidadeHC (HCFMRP-USP) - Hipocalemia (2017). Consultados em 10/2026."
         }
     },
     "nacl3_hiponatremia": {
