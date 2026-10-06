@@ -218,9 +218,9 @@ registrarConduta({
                         "<span class=\"cond-passo\">1</span> <strong>Chegada (0 min):</strong> Monitor, ABC, pesar, <strong>2 acessos</strong> e <strong>colher os exames</strong>",
                         "<span class=\"cond-passo\">2</span> <strong>0 a 1 h:</strong> <strong>Expansão:</strong> SF 0,9% 10 mL/kg em 1h (choque: 10 a 20 mL/kg). <strong>Ainda sem insulina</strong>",
                         "<span class=\"cond-passo\">3</span> <strong>Saiu o K:</strong> Decidir <strong>quando começar o potássio</strong>. Insulina só com <strong>K ≥ 3,3</strong>",
-                        "<span class=\"cond-passo\">4</span> <strong>A partir da 2ª hora:</strong> <strong>Hidratação de 48h</strong> com KCl 40 mEq/L (card calcula o mL/h)",
+                        "<span class=\"cond-passo\">4</span> <strong>A partir da 2ª hora:</strong> <strong>Hidratação de 48h</strong> com a <strong>solução padrão A/B</strong> (só B no início; card calcula o mL/h)",
                         "<span class=\"cond-passo\">5</span> <strong>Após 1 h de expansão:</strong> <strong>Insulina regular EV contínua</strong>: < 5 anos 0,05 U/kg/h; ≥ 5 anos 0,1 U/kg/h (máx 10 U/h). <strong>Nunca bolus</strong>",
-                        "<span class=\"cond-passo\">6</span> <strong>HGT ≤ 300:</strong> <strong>Colocar glicose no soro</strong> (duas soluções). Não baixar a insulina",
+                        "<span class=\"cond-passo\">6</span> <strong>HGT ≤ 300:</strong> <strong>Colocar glicose no soro</strong>: 5% = ½ A + ½ B. Não diminuir a insulina",
                         "<span class=\"cond-passo\">7</span> <strong>De 1/1h e 2/2h:</strong> HGT, sinais vitais e Glasgow 1/1h; gasometria, eletrólitos e cetonemia 2/2h",
                         "<span class=\"cond-passo\">8</span> <strong>CAD resolvida:</strong> pH > 7,30, HCO₃ > 15, cetonemia < 1 e aceitando VO: <strong>insulina SC</strong>",
                         "⚠️ <strong>A qualquer hora:</strong> Cefaleia, vômitos, sonolência, bradicardia: <strong>edema cerebral</strong>. HGT < 60: <strong>hipoglicemia</strong>"
@@ -284,9 +284,9 @@ registrarConduta({
                             ["3,0 a 3,2 mEq/L", "<strong>KCl no soro já</strong> (40 mEq/L). <strong>Adiar a insulina</strong> até K ≥ 3,3"],
                             ["3,3 a 4,4 mEq/L", "<strong>KCl no soro já</strong> (40 mEq/L)"],
                             ["4,5 a 5,4 mEq/L", "KCl no soro <strong>junto com o início da insulina</strong>"],
-                            ["≥ 5,5 mEq/L", "Sem K por enquanto. Só <strong>após diurese</strong> e K < 5,5"]
+                            ["≥ 5,5 mEq/L", "Sem K por enquanto (A e B <strong>sem KCl</strong>). Só <strong>após diurese</strong> e K < 5,5"]
                         ],
-                        nota: "<strong>Dose:</strong> 40 mEq/L no soro (20 mEq/L se a velocidade for ≥ 10 mL/kg/h). <strong>Máximo: 0,5 mEq/kg/h.</strong> Sem diurese ou insuficiência renal: não repor. Sem resultado ainda? O ECG ajuda: T achatada, onda U, QT longo = K baixo; T apiculada = K alto. Fonte: SPP; K mínimo de 3,3 para a insulina e correção rápida com K < 3,0: IMIP 2018 (igual à SBD). SPSP 2024: 60 mEq/L se K < 3,5."
+                        nota: "<strong>Dose:</strong> 40 mEq/L no soro = KCl 19,1% 4 mL em cada solução A e B (20 mEq/L = 2 mL, se a velocidade for ≥ 10 mL/kg/h). <strong>Máximo: 0,5 mEq/kg/h.</strong> Sem diurese ou insuficiência renal: não repor. Sem resultado ainda? O ECG ajuda: T achatada, onda U, QT longo = K baixo; T apiculada = K alto. Fonte: SPP; K mínimo de 3,3 para a insulina e correção rápida com K < 3,0: IMIP 2018 (igual à SBD). SPSP 2024: 60 mEq/L se K < 3,5."
                     },
                     remedios: ["kcl_ev"]
                 },
@@ -298,7 +298,7 @@ registrarConduta({
                     itens: [
                         "<strong>Escolher a desidratação:</strong> CAD moderada <strong>5 a 7%</strong>; CAD grave <strong>7 a 10%</strong>.",
                         "<strong>Velocidade (mL/h) = (déficit + 2 x manutenção − expansão) ÷ 48.</strong> Déficit = % x peso x 10. O card abaixo já faz a conta.",
-                        "<strong>Soro:</strong> SF 0,9% + KCl 19,1% (40 mEq/L), conforme o passo 3. Na corrigido ≥ 150 ou osmolaridade muito alta: considerar NaCl 0,45%; hipercloremia (Cl:Na > 0,79): trocar por Ringer lactato.",
+                        "<strong>Soro: solução padrão do IMIP em Y</strong> (K 40 mEq/L, Na 136 mEq/L). <strong>A:</strong> SG 10% 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. <strong>B:</strong> AD 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. <strong>Sem glicose: correr só a B</strong> no volume total; a glicose entra no passo 6.",
                         "<strong>Não repor a diurese.</strong> Descontar o que beber. Total de até 2 x a manutenção.",
                         "Na que não sobe enquanto a glicemia cai: aumentar o sódio do soro e vigiar edema cerebral."
                     ],
@@ -318,55 +318,34 @@ registrarConduta({
                         "Acidose parcialmente compensada, ainda sem critério de suspensão: <strong>0,05 U/kg/h + glicose</strong>.",
                         "<strong>CAD leve</strong>, sem vômitos e aceitando VO: pode ser insulina SC + hidratação oral; sem melhora, voltar para este esquema."
                     ],
-                    nota: "Preparo do card: 50 U em 500 mL de SF 0,9% (0,1 U/mL). Outros preparos: SPP 50 U em 50 mL (1 U/mL, trocar a cada 24h); IMIP 100 U (1 mL) em 100 mL de SF (≈ 1 U/mL = 0,05 a 0,1 mL/kg/h; desprezar 50 mL no equipo, trocar de 6/6h).",
+                    nota: "<strong>Preparo (IMIP):</strong> insulina regular 100 U/mL 1 mL + SF 0,9% 100 mL (1 U/mL: 0,05 a 0,1 mL/kg/h). Desprezar 50 mL no equipo. Trocar o frasco de 6/6h.",
                     remedios: ["insulina_cad"]
                 },
                 {
                     passo: 6,
                     titulo: "HGT caiu: colocar glicose no soro",
                     aberta: true,
-                    resumo: "HGT ≤ 300 ou queda > 90/h: glicose no soro. Não diminuir a insulina.",
+                    resumo: "HGT ≤ 300 ou queda > 90/h: glicose pela proporção A/B. Não diminuir a insulina.",
                     itens: [
-                        "<strong>Gatilho:</strong> HGT <strong>≤ 300 mg/dL</strong> ou queda <strong>> 90 mg/dL/h</strong> (SPP: já pode entrar SG 5% junto com a insulina).",
-                        "<strong>Sistema de duas soluções:</strong> soro <strong>sem glicose</strong> + soro <strong>com SG 10%</strong> (mesmo sódio e potássio), correndo em Y. A velocidade total do passo 4 não muda: só a proporção entre os dois, pelo HGT de 1/1h (tabela).",
-                        "HGT normal mas <strong>acidose ainda presente</strong>: aumentar a glicose (até 12,5%) e <strong>manter a insulina</strong>.",
-                        "Queda ideal: até 50 mg/dL/h após as 2 primeiras horas; até 600 mg/dL nas primeiras 6 horas."
+                        "<strong>Gatilho (SPP):</strong> HGT <strong>≤ 300 mg/dL</strong> ou queda <strong>> 90 mg/dL/h</strong>.",
+                        "<strong>Começar com glicose a 5%</strong> = metade solução A + metade solução B. A <strong>velocidade total do passo 4 não muda</strong>: só a proporção entre A e B.",
+                        "CAD ainda não resolvida e HGT continua ≤ 300 ou caindo > 90 mg/dL/h: <strong>subir para 7,5%</strong> (¾ A + ¼ B) e depois <strong>10%</strong> (só A).",
+                        "HGT normal mas <strong>acidose ainda presente</strong>: aumentar a glicose e <strong>manter a insulina</strong> (SPP admite até 12,5%).",
+                        "O card do passo 4 já mostra os mL/h de A e de B para cada concentração."
                     ],
-                    tabelas: [
-                        {
-                            titulo: "Proporção entre as duas soluções (J Pediatr 2001)",
-                            colunas: ["HGT atual<br>(inicial > 800)", "HGT atual<br>(inicial < 800)", "Sem glicose", "Com glicose"],
-                            linhas: [
-                                ["> 500", "> 350", "100%", "0"],
-                                ["401 a 500", "301 a 350", "75%", "25%"],
-                                ["301 a 400", "251 a 300", "50%", "50%"],
-                                ["201 a 300", "201 a 250", "25%", "75%"],
-                                ["< 200", "< 200", "0", "100%"]
-                            ],
-                            nota: "Exemplo: 120 mL/h no total e 50% de cada = 60 mL/h de cada solução. Os preparos das duas soluções estão no card do passo 4."
-                        },
-                        {
-                            titulo: "Preparo prático das duas soluções (solução padrão do IMIP)",
-                            colunas: ["Solução", "Preparo"],
-                            linhas: [
-                                ["A (com glicose)", "SG 10% 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL"],
-                                ["B (sem glicose)", "AD 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL"],
-                                ["Glicose final", "0% = só B · 2,5% = ¼ A + ¾ B · 5% = metade de cada · 7,5% = ¾ A + ¼ B · 10% = só A"]
-                            ],
-                            nota: "As duas têm K 40 mEq/L e Na 136 mEq/L, correndo em Y. O momento de pôr glicose segue a SPP (HGT ≤ 300)."
-                        },
-                        {
-                            titulo: "Outros preparos de soro glicosado (SPP)",
-                            colunas: ["Solução", "Preparo para 500 mL"],
-                            linhas: [
-                                ["SG 7,5% em SF", "450 mL de SG 5% em SF + 50 mL de SG 30%"],
-                                ["SG 10% em SF", "400 mL de SG 5% em SF + 100 mL de SG 30% (ou 478 mL de SG 10% + 22 mL de NaCl 20%)"],
-                                ["SG 12,5% em SF", "350 mL de SG 5% em SF + 150 mL de SG 30%"],
-                                ["SG 5% em Ringer lactato", "417 mL de RL + 83 mL de SG 30%"],
-                                ["SG 10% em Ringer lactato", "334 mL de RL + 166 mL de SG 30%"]
-                            ]
-                        }
-                    ]
+                    tabela: {
+                        titulo: "Solução padrão do IMIP (em Y): K 40 mEq/L, Na 136 mEq/L",
+                        colunas: ["Glicose final", "Solução A", "Solução B"],
+                        linhas: [
+                            ["0% (sem glicose)", "—", "Todo o volume"],
+                            ["2,5%", "¼", "¾"],
+                            ["5%", "½", "½"],
+                            ["7,5%", "¾", "¼"],
+                            ["10%", "Todo o volume", "—"]
+                        ],
+                        nota: "<strong>A:</strong> SG 10% 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. <strong>B:</strong> AD 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. K ≥ 5,5: preparar sem o KCl. Se precisar de 12,5% (SPP): SG 5% em SF 350 mL + SG 30% 150 mL."
+                    },
+                    remedios: ["cad_hidratacao"]
                 },
                 {
                     passo: 7,
