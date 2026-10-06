@@ -237,7 +237,7 @@ function htmlEscore(e) {
     let html = `<div class="escore" id="escore-${e.id}">`;
     if (e.instrucao) html += `<div class="escore-instrucao">👆 ${e.instrucao}</div>`;
     e.itens.forEach((item, i) => {
-        html += `<div class="escore-item"><div class="escore-item-nome">${item.nome}</div><div class="escore-opcoes">`;
+        html += `<div class="escore-item">${item.nome ? `<div class="escore-item-nome">${item.nome}</div>` : ''}<div class="escore-opcoes">`;
         item.opcoes.forEach(([pts, txt, selo]) => {
             let marcado = escoresMarcados[e.id][i] === pts ? ' marcado' : '';
             html += `<button type="button" class="escore-opcao${marcado}" onclick="marcarEscore('${e.id}', ${i}, ${pts})"><span class="escore-pts">${selo !== undefined ? selo : pts}</span>${txt}</button>`;
@@ -281,7 +281,8 @@ function atualizarEscore(id) {
     } else {
         faixa = e.faixas.find(f => total >= f.min && total <= f.max);
     }
-    let completo = feitos === e.itens.length;
+    // checklist: só se marca o que está presente; o resultado sai já com o 1º item marcado
+    let completo = e.checklist ? feitos > 0 : feitos === e.itens.length;
     let cor = faixa && completo ? faixa.cor : '#64748b';
     res.style.setProperty('--cor-escore', cor);
     res.innerHTML = `
