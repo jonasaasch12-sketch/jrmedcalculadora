@@ -123,7 +123,7 @@ const categorias = [
         patologias: [
             { nome: "Otologia e Oftalmologia", remedios: ["espec_otociriax", "espec_cerumin", "espec_tobra", "espec_tobra_dexa", "espec_lacribell"] },
             { nome: "Hematologia (Ferro e Hemoderivados)", remedios: ["sulfato_ferroso", "sulfato_ferroso_prof", "hemacias", "plaquetas", "plasma"] },
-            { nome: "Endócrino (Cetoacidose Diabética)", remedios: ["insulina_cad"] }
+            { nome: "Endócrino (Cetoacidose Diabética)", remedios: ["cad_expansao", "cad_hidratacao", "insulina_cad", "cad_insulina_sc", "cad_manitol", "cad_nacl3", "cad_bicarbonato"] }
         ]
     }
 ];
