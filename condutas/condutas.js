@@ -233,9 +233,9 @@ function htmlEscore(e) {
     if (e.instrucao) html += `<div class="escore-instrucao">👆 ${e.instrucao}</div>`;
     e.itens.forEach((item, i) => {
         html += `<div class="escore-item"><div class="escore-item-nome">${item.nome}</div><div class="escore-opcoes">`;
-        item.opcoes.forEach(([pts, txt]) => {
+        item.opcoes.forEach(([pts, txt, selo]) => {
             let marcado = escoresMarcados[e.id][i] === pts ? ' marcado' : '';
-            html += `<button type="button" class="escore-opcao${marcado}" onclick="marcarEscore('${e.id}', ${i}, ${pts})"><span class="escore-pts">${pts}</span>${txt}</button>`;
+            html += `<button type="button" class="escore-opcao${marcado}" onclick="marcarEscore('${e.id}', ${i}, ${pts})"><span class="escore-pts">${selo !== undefined ? selo : pts}</span>${txt}</button>`;
         });
         html += `</div></div>`;
     });
@@ -268,7 +268,14 @@ function atualizarEscore(id) {
     let res = document.getElementById('escore-res-' + id);
     if (!e || !res) return;
     let feitos = Object.keys(m).length, total = Object.values(m).reduce((a, b) => a + b, 0);
-    let faixa = e.faixas.find(f => total >= f.min && total <= f.max);
+    let faixa;
+    if (e.classificar) {
+        // Regra própria (ex.: Plano A/B/C da desidratação): devolve { num, rotulo, cor, texto }
+        let r = e.classificar(Object.values(m));
+        total = r.num; faixa = r;
+    } else {
+        faixa = e.faixas.find(f => total >= f.min && total <= f.max);
+    }
     let completo = feitos === e.itens.length;
     let cor = faixa && completo ? faixa.cor : '#64748b';
     res.style.setProperty('--cor-escore', cor);

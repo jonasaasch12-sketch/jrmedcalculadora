@@ -444,18 +444,20 @@ registrarMedicamentos({
     },
     "cefotax_pac": {
         cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)",
-        kw: "cefotaxima claforan pneumonia grave complicada menor de 2 meses cefalosporina terceira geracao ev injetavel hospitalar",
-        nome: "Cefotaxima EV (Pneumonia)", apres: "FA 1 g (+ 10 mL AD = 100 mg/mL)",
-        info: "<strong>Conduta (SBP):</strong> 150 mg/kg/dia EV de 8/8h ou 6/6h. Máx. 8 g/dia.", badge: "Máx: 8 g/dia", recLabel: "Texto para selecionar e copiar:",
+        kw: "cefotaxima claforan disenteria diarreia com sangue pneumonia grave complicada menor de 2 meses cefalosporina terceira geracao ev injetavel hospitalar",
+        nome: "Cefotaxima EV (Pneumonia / Disenteria)", apres: "FA 1 g (+ 10 mL AD = 100 mg/mL)",
+        info: "<strong>Pneumonia (SBP):</strong> 150 mg/kg/dia de 8/8h ou 6/6h | <strong>Disenteria grave (MS):</strong> 100 mg/kg/dia de 6/6h. Máx. 8 g/dia.", badge: "Máx: 8 g/dia", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             /* SBP 2024: 150 mg/kg/dia de 8/8h ou 6/6h, máx. 8 g/dia. FA 1 g em 10 mL de AD = 100 mg/mL. */
             let dia = Math.min(p * 150, 8000), mg8 = dia / 3, mg6 = dia / 4;
             let txt = (mg, h) => `Aspirar ${(mg / 100).toFixed(1)} mL (${mg.toFixed(0)} mg) e administrar EV, de ${h}/${h}h.`;
-            return { v: `8/8h: ${(mg8 / 100).toFixed(1)} mL\n6/6h: ${(mg6 / 100).toFixed(1)} mL`, r: `VIA ENDOVENOSA (USO HOSPITALAR - PNEUMONIA)\n\n Reconstituir cada FA de Cefotaxima 1 g em 10 mL de AD (100 mg/mL).\n\nOPÇÃO 8/8H (150 MG/KG/DIA):\n ${txt(mg8, 8)}\n\nOPÇÃO 6/6H (150 MG/KG/DIA):\n ${txt(mg6, 6)}` };
+            /* MS 2023 (disenteria grave): 100 mg/kg/dia dividido em 4 doses. */
+            let mgD = Math.min(p * 100, 8000) / 4;
+            return { v: `8/8h: ${(mg8 / 100).toFixed(1)} mL\n6/6h: ${(mg6 / 100).toFixed(1)} mL`, r: `VIA ENDOVENOSA (USO HOSPITALAR)\n\n Reconstituir cada FA de Cefotaxima 1 g em 10 mL de AD (100 mg/mL).\n\nPNEUMONIA - OPÇÃO 8/8H (150 MG/KG/DIA):\n ${txt(mg8, 8)}\n\nPNEUMONIA - OPÇÃO 6/6H (150 MG/KG/DIA):\n ${txt(mg6, 6)}\n\nDISENTERIA GRAVE (MS: 100 MG/KG/DIA EM 4 DOSES):\n ${txt(mgD, 6)}` };
         },
         detalhes: {
             indicacao: "PAC grave ou complicada; criança gravemente doente, não imunizada contra pneumococo ou com HIV; em < 2 meses, substitui a gentamicina (preferir à ceftriaxona).",
-            dose: "150 mg/kg/dia EV de 8/8h ou 6/6h (SBP).",
+            dose: "Pneumonia: 150 mg/kg/dia EV de 8/8h ou 6/6h (SBP). Disenteria grave: 100 mg/kg/dia dividido em 4 doses (MS 2023).",
             atencao: "Máximo 8 g/dia. Diluição e tempo de infusão conforme o protocolo do serviço. Não cobre MRSA."
         }
     },
