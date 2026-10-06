@@ -108,3 +108,9 @@ html[data-theme="dark"] .tag-imip { background: #2e1065; border-color: #5b21b6; 
 .escore-classe span { font-size: 12px; color: var(--text-muted); }
 .escore-limpar { background: none; border: 1px solid var(--border); color: var(--text-muted); border-radius: 6px; padding: 4px 10px; font-size: 12px; cursor: pointer; }
 html[data-theme="dark"] .escore-pts { background: #334155; color: #e2e8f0; }
+
+/* Passo a passo numerado (ex.: condução da emergência) */
+.cond-passo { display: inline-flex; align-items: center; justify-content: center; min-width: 26px; height: 26px; padding: 0 6px; margin-right: 4px; border-radius: 13px; background: var(--cor-cat); color: #fff; font-size: 13px; font-weight: 900; vertical-align: 1px; }
+.cond-lista-passos { list-style: none; padding-left: 0 !important; }
+.cond-lista-passos li { margin-bottom: 10px !important; padding-left: 36px; text-indent: -36px; }
+.cond-lista-passos .cond-passo { text-indent: 0; margin-right: 6px; }
