@@ -9,7 +9,7 @@
 
 // A versão de teste (/teste/) usa um cache separado, para uma não apagar o da outra.
 const PREFIXO_CACHE = self.registration.scope.includes("/teste/") ? "jrmed-teste-cache-" : "jrmed-cache-";
-const CACHE_NOME = PREFIXO_CACHE + "v18"; // troque o número (v5, v6...) sempre que quiser forçar a limpeza do cache antigo
+const CACHE_NOME = PREFIXO_CACHE + "v19"; // troque o número (v5, v6...) sempre que quiser forçar a limpeza do cache antigo
 
 // Todo arquivo .js/.css carregado pelo index.html PRECISA estar aqui
 // (o teste "node testes/verificar.js" avisa se faltar algum).
@@ -44,7 +44,8 @@ const ARQUIVOS_ESSENCIAIS = [
   "./condutas/bronquiolite.js",
   "./condutas/asma.js",
   "./condutas/pneumonia.js",
-  "./condutas/diarreia.js"
+  "./condutas/diarreia.js",
+  "./condutas/cetoacidose.js"
 ];
 
 self.addEventListener("install", (event) => {
