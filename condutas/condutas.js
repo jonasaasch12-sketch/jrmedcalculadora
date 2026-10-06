@@ -5,6 +5,10 @@
 // os mesmos cards da prescrição (farmaciaJR): a dose é calculada
 // com o peso/idade digitados no topo, nunca repetida aqui.
 // =====================================================
+// Enquanto for false, a aba 📖 Condutas só aparece na versão de teste (/teste/).
+// Para liberar as condutas para toda a equipe, trocar para true.
+const CONDUTAS_LIBERADAS = false;
+
 const condutasJR = {};
 let modoAtual = "prescricao";
 let condutaAberta = null;
@@ -17,6 +21,7 @@ function montarEstruturaCondutas() {
     let painel = document.querySelector('#aplicativo-principal .control-panel');
     let layout = document.querySelector('#aplicativo-principal .app-layout');
     if (!painel || !layout || document.getElementById('abasModo')) return;
+    if (!CONDUTAS_LIBERADAS && !MODO_TESTE) return; // site oficial: só a Prescrição
 
     let abas = document.createElement('div');
     abas.id = 'abasModo';
