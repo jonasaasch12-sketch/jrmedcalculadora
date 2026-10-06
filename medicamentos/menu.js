@@ -38,9 +38,9 @@ const categorias = [
     { 
         id: "cat-respiratorio", titulo: "Respiratório", dotClass: "dot-respiratorio", cor: "tarja-respiratorio", nome: "Respiratório", icone: "🫁 Resp",
         patologias: [
-            { nome: "Lavagem Nasal", remedios: ["soro_nasal"] },
+            { nome: "Lavagem Nasal", conduta: "bronquiolite", condutaNome: "Bronquiolite", remedios: ["soro_nasal"] },
             { 
-                nome: "Asma", 
+                nome: "Asma", conduta: "asma",
                 remedios: [
                     // Prescrição Ambulatorial
                     "clenil_hfa", "pred_sol", "salb_spray",
@@ -51,7 +51,7 @@ const categorias = [
                 ] 
             },
             { 
-                nome: "Pneumonia", 
+                nome: "Pneumonia", conduta: "pneumonia",
                 remedios: [
                     // Prescrição Ambulatorial
                     "amox", "amox400", "clav", "azi_oral", "claritro_pac", "eritro_pac",
@@ -105,7 +105,7 @@ const categorias = [
     { 
         id: "cat-diarreia", titulo: "TGI", dotClass: "dot-diarreia", cor: "tarja-diarreia", nome: "TGI", icone: "💧 TGI",
         patologias: [
-            { nome: "Gastroenterite e Reidratação Oral", remedios: ["tgi_sro", "tgi_planob", "tgi_zinco", "tgi_provance_mini", "tiorfan", "ondif_cp", "tgi_provance_gg", "tgi_flora", "tgi_azitro", "cipro_disenteria", "metro_parasitas", "vit_a_diarreia", "tgi_alben", "tgi_meben", "nitazoxanida"] },
+            { nome: "Gastroenterite e Reidratação Oral", conduta: "diarreia", condutaNome: "Diarreia aguda", remedios: ["tgi_sro", "tgi_planob", "tgi_zinco", "tgi_provance_mini", "tiorfan", "ondif_cp", "tgi_provance_gg", "tgi_flora", "tgi_azitro", "cipro_disenteria", "metro_parasitas", "vit_a_diarreia", "tgi_alben", "tgi_meben", "nitazoxanida"] },
             { nome: "Constipação, Refluxo e Mucosite", remedios: ["lactulose", "oleo_mineral", "domperidona", "solucao_mucosite"] },
             { nome: "Hidratação IV e Hidroeletrolíticos (Choque/Manutenção)", remedios: ["tgi_planoc", "tgi_manut_planoc", "tgi_manutencao", "vig_4", "vig_5"] },
             { nome: "Disenteria: Antibiótico Hospitalar", remedios: ["cef_disenteria", "cefotax_pac"] },

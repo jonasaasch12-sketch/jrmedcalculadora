@@ -117,6 +117,8 @@ html[data-theme="dark"] .escore-pts { background: #334155; color: #e2e8f0; }
 
 /* Link "Conduta passo a passo" na tarja da categoria da Prescrição (só onde a aba Condutas existe) */
 .link-conduta { display: none; }
-body.condutas-on .section-header.com-link-conduta { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-body.condutas-on .link-conduta { display: inline-flex; align-items: center; background: #fff; color: #be123c; border: none; border-radius: 999px; padding: 6px 12px; font-size: 12px; font-weight: 800; text-transform: none; letter-spacing: 0; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+body.condutas-on .com-link-conduta { display: flex; align-items: center; justify-content: space-between; gap: 8px 10px; flex-wrap: wrap; }
+body.condutas-on .link-conduta { display: inline-flex; align-items: center; background: #fff; color: var(--cor-link, #be123c); border: none; border-radius: 999px; padding: 6px 12px; font-size: 12px; font-weight: 800; text-transform: none; letter-spacing: 0; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.15); white-space: nowrap; }
+/* Nos títulos de seção (fundo claro) o botão fica na cor da categoria */
+body.condutas-on .sub-type-title .link-conduta { background: var(--cor-link, #0284c7); color: #fff; padding: 4px 10px; font-size: 11px; box-shadow: none; }
 .cond-bloco { scroll-margin-top: calc(var(--altura-topo, 100px) + 10px); }
