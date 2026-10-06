@@ -40,6 +40,8 @@ const TETOS = {
     eritro_pac: 10,       // mL de 250 mg/5 mL (500 mg)
     amoxclav_ev: 20,      // mL (1 g de amoxicilina)
     linezolida_ev: 300,   // mL (600 mg)
+    cef_disenteria: 20,   // mL (2 g; EV 100 mg/mL, IM 7 mL)
+    metro_parasitas: 6.25, // mL de 40 mg/mL na giardíase (250 mg/dose)
 };
 
 const PESOS = [2.5, 4, 7, 10, 15, 22, 30, 45, 70];

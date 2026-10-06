@@ -43,11 +43,12 @@ registrarMedicamentos({
     "tgi_sro": {
         cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
         kw: "sais reidratacao oral sro plano a desidratacao diarreia soro oral ambulatorial idade sachê", nome: "Sais de Reidratação Oral (OMS)", apres: "Sachê Padrão",
-        info: "<strong>Conduta:</strong> <2a: 50-100 mL | >2a: 100-200 mL pós-evacuação.", badge: "", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        info: "<strong>Conduta (MS):</strong> <1a: 50-100 mL | 1-10a: 100-200 mL | >10a: volume tolerado, após cada evacuação.", badge: "", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
         calc: (p, i) => { 
             if(i === "") return { v: "—", r: "Insira a idade acima." };
             let id = parseFloat(i);
-            let v = id >= 2 ? "100 a 200 mL" : "50 a 100 mL"; 
+            /* MS 2023 (Manejo do paciente com diarreia): < 1 ano 50-100 mL | 1 a 10 anos 100-200 mL | > 10 anos o volume tolerado. */
+            let v = id < 1 ? "50 a 100 mL" : id <= 10 ? "100 a 200 mL" : "O VOLUME TOLERADO"; 
             return { v: v, r: `${recHead}1) SAIS DE REIDRATAÇÃO ORAL (OMS) ------------ 05 SACHÊS\nDILUIR 1 SACHÊ EM 1L DE ÁGUA. OFERECER ${v} APÓS CADA EVACUAÇÃO LÍQUIDA.` }; 
         },
         detalhes: {
@@ -59,11 +60,13 @@ registrarMedicamentos({
     "tgi_zinco": {
         cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
         kw: "biozinc zinco suplemento diarreia tgi oral ambulatorial idade", nome: "Biozinc Solução (Zinco por Idade)", apres: "2 mg / 0,5 mL",
-        info: "<strong>Conduta:</strong> <6m: 2,5 mL | >6m: 5 mL 1x ao dia por 10 dias.", badge: "", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        info: "<strong>Conduta (SBP/MS):</strong> até 6m: 10 mg (2,5 mL) | 6m a 5 anos: 20 mg (5 mL), 1x ao dia por 10 a 14 dias.", badge: "", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
         calc: (p, i) => { 
             if(i === "") return { v: "—", r: "Insira a idade acima." };
             let id = parseFloat(i);
-            let v = id < 0.6 ? "2.5 mL" : "5.0 mL"; 
+            /* SBP/MS: até 6 meses 10 mg/dia (2,5 mL); > 6 meses até 5 anos 20 mg/dia (5 mL), por 10 a 14 dias. */
+            if (id >= 5) return { v: "> 5 anos", r: "ATENÇÃO: o zinco na diarreia aguda está indicado para menores de 5 anos (SBP/MS)." };
+            let v = id < 0.5 ? "2.5 mL" : "5.0 mL"; 
             return { v: v, r: `${recHead}1) BIOZINC SOLUÇÃO 2MG/0,5ML --------------- 1 FR\nDAR ${v} VIA ORAL, 1 VEZ AO DIA, DURANTE 10 DIAS.` }; 
         },
         detalhes: {
@@ -152,7 +155,8 @@ registrarMedicamentos({
             let id = i !== "" ? parseFloat(i) : 2;
             let vol1 = p * 30, vol2 = p * 70;
             let t1 = id <= 1 ? "1 hora" : "30 minutos", t2 = id <= 1 ? "5 horas" : "2h 30min";
-            return { v: (p * 100).toFixed(1) + " mL", r: `VIA ENDOVENOSA (PLANO C)\n\n ETAPA 1 (30 ML/KG): ${vol1.toFixed(1)} mL SF 0,9% EV em ${t1}.\n ETAPA 2 (70 ML/KG): ${vol2.toFixed(1)} mL SF 0,9% EV em ${t2}.` }; 
+            /* MS 2023: SF 0,9% ou Ringer lactato. RN e < 5 anos com cardiopatia grave: 10 mL/kg, ajustando pela clínica. */
+            return { v: (p * 100).toFixed(1) + " mL", r: `VIA ENDOVENOSA (PLANO C)\n\n ETAPA 1 (30 ML/KG): ${vol1.toFixed(1)} mL de SF 0,9% (ou Ringer lactato) EV em ${t1}.\n ETAPA 2 (70 ML/KG): ${vol2.toFixed(1)} mL de SF 0,9% (ou Ringer lactato) EV em ${t2}.\n Reavaliar após 2 horas: se persistirem sinais de choque, repetir; se não, iniciar manutenção.\n\n RN E < 5 ANOS COM CARDIOPATIA GRAVE: ${(p * 10).toFixed(1)} mL (10 mL/kg), ajustando a velocidade pela clínica.` }; 
         },
         detalhes: {
             indicacao: "Desidratação grave ou choque (Plano C).",
@@ -334,6 +338,115 @@ registrarMedicamentos({
             indicacao: "Hiponatremia grave (Na < 120) ou sintomática.",
             dose: "(Na desejado − Na atual) x 0,6 x Peso, em 4 a 6 horas. O app calcula para subir 8 mEq/L.",
             atencao: "Não subir mais que 12 mEq/L por dia (ideal 6 a 8): risco de mielinólise. Ajustar o cálculo ao Na real do paciente."
+        }
+    },
+    // ---------- Diarreia aguda: Guia Prático SBP nº 74 (2023) / Manejo do paciente com diarreia (MS, 2023) ----------
+    "tgi_planob": {
+        cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "plano b sro sais de reidratacao oral desidratacao unidade de saude terapia de reidratacao oral tro gastroclise",
+        nome: "SRO na Unidade (Plano B)", apres: "Sais de reidratação oral",
+        info: "<strong>Conduta (MS):</strong> 50 a 100 mL/kg de SRO em 4 a 6 horas, na unidade, até desaparecerem os sinais de desidratação.", badge: "50-100 mL/kg", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* MS 2023 / SBP: Plano B = 50 a 100 mL/kg de SRO em 4 a 6 horas. */
+            let a = p * 50, b = p * 100;
+            return { v: `${a.toFixed(0)}–${b.toFixed(0)} mL`, r: `USO ORAL (PLANO B - NA UNIDADE DE SAÚDE)\n\n SAIS DE REIDRATAÇÃO ORAL: ${a.toFixed(0)} a ${b.toFixed(0)} mL (50 a 100 mL/kg) em 4 a 6 horas.\n Oferecer em pequenos volumes, aumentando a oferta aos poucos, conforme a sede, até desaparecerem os sinais de desidratação.\n Reavaliar continuamente. Se não melhorar, considerar gastróclise. Sem melhora em 6 horas (na prática, 3 a 4 h): encaminhar para internação.` };
+        },
+        detalhes: {
+            indicacao: "Desidratação sem gravidade (Plano B), com capacidade de ingerir líquidos.",
+            dose: "50 a 100 mL/kg de SRO em 4 a 6 horas, na unidade de saúde (MS/SBP).",
+            atencao: "Terminou o Plano B (sem sinais de desidratação): passar para o Plano A. Vômitos persistentes: 1 dose de ondansetrona. Evoluiu para grave: Plano C."
+        }
+    },
+    "tgi_manut_planoc": {
+        cat: "cat-diarreia", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Expansão)",
+        kw: "plano c manutencao reposicao soro glicosado fisiologico 4:1 1:1 kcl desidratacao grave diarreia hospitalar",
+        nome: "Manutenção + Reposição (Plano C)", apres: "SG 5% + SF 0,9% + KCl 10%",
+        info: "<strong>Conduta (MS):</strong> manutenção SG 5% + SF 0,9% 4:1 (Holliday) + reposição SG 5% + SF 0,9% 1:1 (50 mL/kg/dia) + KCl 10% 2 mL/100 mL da manutenção, em 24 h.", badge: "24 h", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* MS 2023 (Plano C, fase de manutenção/reposição): manutenção SG5%:SF0,9% 4:1 pelo Holliday (máx. 2.000 mL); reposição SG5%:SF0,9% 1:1, iniciar 50 mL/kg/dia; KCl 10% 2 mL para cada 100 mL da manutenção. */
+            let man = Math.min(p <= 10 ? p * 100 : (p <= 20 ? 1000 + (p - 10) * 50 : 1500 + (p - 20) * 20), 2000);
+            let rep = p * 50, kcl = man / 100 * 2;
+            let sgM = man * 0.8, sfM = man * 0.2, sgR = rep / 2, sfR = rep / 2;
+            let vel = (man + kcl + rep) / 24;
+            return { v: `${vel.toFixed(1)} mL/h`, r: `VIA ENDOVENOSA (PLANO C - MANUTENÇÃO E REPOSIÇÃO EM 24 HORAS)\n\n MANUTENÇÃO (4:1): SG 5% ${sgM.toFixed(0)} mL + SF 0,9% ${sfM.toFixed(0)} mL + KCl 10% ${kcl.toFixed(1)} mL.\n REPOSIÇÃO (1:1): SG 5% ${sgR.toFixed(0)} mL + SF 0,9% ${sfR.toFixed(0)} mL (50 mL/kg/dia; reavaliar conforme as perdas).\n Total: ${(man + kcl + rep).toFixed(0)} mL em 24 h = ${vel.toFixed(1)} mL/h.` };
+        },
+        detalhes: {
+            indicacao: "Plano C: após corrigida a desidratação grave (fase de manutenção e reposição).",
+            dose: "Manutenção (Holliday, máx. 2.000 mL) em SG 5% + SF 0,9% 4:1 + reposição 50 mL/kg/dia em SG 5% + SF 0,9% 1:1 + KCl 10% 2 mL/100 mL da manutenção, em 24 h (MS).",
+            atencao: "Iniciar SRO assim que aceitar (em geral 2–3 h após o início da EV). Suspender a EV quando hidratado, tolerando SRO e sem vômitos."
+        }
+    },
+    "cef_disenteria": {
+        cat: "cat-diarreia", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Expansão)",
+        kw: "ceftriaxona disenteria diarreia com sangue shigella colera antibiotico im ev injetavel",
+        nome: "Ceftriaxona IM / EV (Disenteria)", apres: "FA 1 g",
+        info: "<strong>Conduta (MS):</strong> 50 a 100 mg/kg IM 1x ao dia por 3 a 5 dias. < 3 meses, imunodeficiência ou casos graves: EV.", badge: "Teto: 2 g/dia", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            /* MS 2023: 50-100 mg/kg/dia, 1x/dia, 3 a 5 dias. IM; EV se < 3 meses, imunodeficiência ou grave. Teto do app: 2 g/dia. IM: 1 g + 3,5 mL de lidocaína 1% (285,7 mg/mL). EV: 1 g em 10 mL de AD (100 mg/mL). */
+            let opc = (k) => { let mg = Math.min(p * k, 2000); return { mg, im: mg / 285.7, ev: mg / 100, fa: mg > 1000 ? 2 : 1 }; };
+            let a = opc(50), b = opc(100);
+            let ev = i !== "" && parseFloat(i) < 0.25;
+            let lin = (o, k) => ev
+                ? `${k} MG/KG: reconstituir ${o.fa} FA de 1 g em 10 mL de AD cada; aspirar ${o.ev.toFixed(1)} mL (${o.mg.toFixed(0)} mg), diluir em SF 0,9% e infundir EV em 30 min, 1 vez ao dia.`
+                : `${k} MG/KG: reconstituir ${o.fa} FA de 1 g com 3,5 mL de lidocaína 1% cada; aspirar ${o.im.toFixed(1)} mL (${o.mg.toFixed(0)} mg) e aplicar IM profunda, 1 vez ao dia.`;
+            return { v: ev ? `EV: ${a.ev.toFixed(1)}–${b.ev.toFixed(1)} mL` : `IM: ${a.im.toFixed(1)}–${b.im.toFixed(1)} mL`, r: `${ev ? "VIA ENDOVENOSA" : "VIA INTRAMUSCULAR"} (DISENTERIA - 3 A 5 DIAS)\n\n ${lin(a, 50)}\n ${lin(b, 100)}${ev ? "\n (Menor de 3 meses: via EV.)" : "\n Se < 3 meses, imunodeficiência ou caso grave: fazer EV."}` };
+        },
+        detalhes: {
+            indicacao: "Diarreia com sangue (disenteria) com comprometimento do estado geral, ou cólera grave.",
+            dose: "50 a 100 mg/kg 1x ao dia por 3 a 5 dias, IM. EV se < 3 meses, imunodeficiência ou caso grave (MS 2023).",
+            atencao: "Máximo 2 g/dia (teto do app). Não usar antibiótico na diarreia aquosa sem sangue (exceto cólera grave)."
+        }
+    },
+    "cipro_disenteria": {
+        cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "ciprofloxacino disenteria diarreia com sangue shigella colera antibiotico oral adolescente",
+        nome: "Ciprofloxacino (Disenteria > 10 anos)", apres: "Comprimido 500 mg",
+        info: "<strong>Conduta (MS):</strong> > 10 anos ou > 30 kg: 500 mg VO de 12/12h por 3 dias.", badge: "> 10 anos / > 30 kg", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: (p, i) => {
+            /* MS 2023: > 10 anos / > 30 kg: 1 comprimido de 500 mg de 12/12h, VO, por 3 dias. Até 10 anos / 30 kg: azitromicina ou ceftriaxona. */
+            let maior = (i !== "" && parseFloat(i) > 10) || p > 30;
+            if (!maior) return { v: "≤ 10 anos", r: "ATENÇÃO: até 10 anos e 30 kg, o MS indica azitromicina (ou ceftriaxona) na disenteria." };
+            return { v: "500 mg 12/12h", r: `${recHead}1) CIPROFLOXACINO 500 MG ---------------------- 6 COMPRIMIDOS\nTOMAR 1 COMPRIMIDO, VIA ORAL, DE 12/12 HORAS, POR 3 DIAS.` };
+        },
+        detalhes: {
+            indicacao: "Diarreia com sangue (disenteria) com comprometimento do estado geral, ou cólera grave, em > 10 anos ou > 30 kg.",
+            dose: "500 mg VO de 12/12h por 3 dias (MS 2023).",
+            atencao: "Até 10 anos / 30 kg: azitromicina. Cautela em QT longo."
+        }
+    },
+    "metro_parasitas": {
+        cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "metronidazol amebiase entamoeba giardia giardiase diarreia antiparasitario oral",
+        nome: "Metronidazol (Amebíase / Giardíase)", apres: "Suspensão 40 mg/mL",
+        info: "<strong>Conduta (MS):</strong> amebíase 50 mg/kg/dia de 8/8h por 10 dias | giardíase 15 mg/kg/dia de 8/8h por 5 dias.", badge: "Ver teto", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* MS 2023: amebíase 50 mg/kg/dia em 3 doses por 10 dias; giardíase 15 mg/kg/dia em 3 doses por 5 dias. Tetos por dose (750 mg e 250 mg) da literatura/bula: conferir. Suspensão 40 mg/mL. */
+            let ame = Math.min(p * 50 / 3, 750), gia = Math.min(p * 5, 250);
+            let vA = Math.min(parseFloat(round05(ame / 40)), 18.5).toFixed(1), vG = Math.min(parseFloat(round05(gia / 40)), 6).toFixed(1);
+            return { v: `Ameb: ${vA} | Giard: ${vG} mL`, r: `${recHead}1) METRONIDAZOL SUSPENSÃO 40 MG/ML -------- 1 FR\n• AMEBÍASE: DAR ${vA} ML, VIA ORAL, DE 8/8 HORAS, POR 10 DIAS.\n• GIARDÍASE: DAR ${vG} ML, VIA ORAL, DE 8/8 HORAS, POR 5 DIAS.\n(USAR SÓ A LINHA DO DIAGNÓSTICO.)` };
+        },
+        detalhes: {
+            indicacao: "Amebíase (falha do tratamento da Shigella ou trofozoítos de E. histolytica com hemácias) e giardíase (diarreia ≥ 14 dias com cistos/trofozoítos).",
+            dose: "Amebíase: 50 mg/kg/dia de 8/8h por 10 dias. Giardíase: 15 mg/kg/dia de 8/8h por 5 dias (MS 2023).",
+            atencao: "Tetos por dose usados no app (literatura/bula, conferir): amebíase 750 mg, giardíase 250 mg. Efeito antabuse e gosto metálico."
+        }
+    },
+    "vit_a_diarreia": {
+        cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "vitamina a megadose desnutrido diarreia suplementacao retinol",
+        nome: "Vitamina A (Megadose)", apres: "Cápsulas 100.000 UI e 200.000 UI",
+        info: "<strong>Conduta (SBP):</strong> < 6 m: 50.000 UI | 6–12 m: 100.000 UI | > 12 m: 200.000 UI, VO.", badge: "Por idade", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: (p, i) => {
+            /* SBP GPA nº 74: em geral 50.000 UI (< 6 meses), 100.000 UI (6 a 12 meses), 200.000 UI (maiores); dose variável conforme o quadro nutricional. */
+            if (i === "") return { v: "—", r: "Insira a idade acima." };
+            let id = parseFloat(i);
+            let ui = id < 0.5 ? "50.000" : id <= 1 ? "100.000" : "200.000";
+            return { v: `${ui} UI`, r: `${recHead}1) VITAMINA A ${ui} UI\nADMINISTRAR ${ui} UI, VIA ORAL, EM DOSE ÚNICA.` };
+        },
+        detalhes: {
+            indicacao: "Diarreia em populações com alto risco de deficiência de vitamina A (ex.: desnutridos): reduz mortalidade e internações.",
+            dose: "< 6 meses: 50.000 UI | 6 a 12 meses: 100.000 UI | > 12 meses: 200.000 UI, VO (SBP 2023).",
+            atencao: "Dose variável conforme o quadro nutricional. Não repetir sem indicação (risco de hipervitaminose A)."
         }
     }
 });

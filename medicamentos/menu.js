@@ -105,9 +105,10 @@ const categorias = [
     { 
         id: "cat-diarreia", titulo: "TGI", dotClass: "dot-diarreia", cor: "tarja-diarreia", nome: "TGI", icone: "💧 TGI",
         patologias: [
-            { nome: "Gastroenterite e Reidratação Oral", remedios: ["tgi_sro", "tgi_zinco", "tgi_provance_mini", "tiorfan", "ondif_cp", "tgi_provance_gg", "tgi_flora", "tgi_azitro", "tgi_alben", "tgi_meben", "nitazoxanida"] },
+            { nome: "Gastroenterite e Reidratação Oral", remedios: ["tgi_sro", "tgi_planob", "tgi_zinco", "tgi_provance_mini", "tiorfan", "ondif_cp", "tgi_provance_gg", "tgi_flora", "tgi_azitro", "cipro_disenteria", "metro_parasitas", "vit_a_diarreia", "tgi_alben", "tgi_meben", "nitazoxanida"] },
             { nome: "Constipação, Refluxo e Mucosite", remedios: ["lactulose", "oleo_mineral", "domperidona", "solucao_mucosite"] },
-            { nome: "Hidratação IV e Hidroeletrolíticos (Choque/Manutenção)", remedios: ["tgi_planoc", "tgi_manutencao", "vig_4", "vig_5"] },
+            { nome: "Hidratação IV e Hidroeletrolíticos (Choque/Manutenção)", remedios: ["tgi_planoc", "tgi_manut_planoc", "tgi_manutencao", "vig_4", "vig_5"] },
+            { nome: "Disenteria: Antibiótico Hospitalar", remedios: ["cef_disenteria", "cefotax_pac"] },
             { nome: "Correção de Potássio e Sódio", remedios: ["kcl_ev", "kcl_xarope", "nacl3_hiponatremia"] }
         ]
     },
