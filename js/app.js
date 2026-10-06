@@ -500,7 +500,8 @@ const SECOES_HOSPITALARES = [
     "Escolha de Material e Dispositivos", "Pré-medicação e Indução em Bólus", "Manutenção por Infusão Contínua", // RSI
     "Parada e Arritmias", // PALS
     "Crise Convulsiva Aguda", // Neuro
-    "Hidratação IV e Hidroeletrolíticos (Choque/Manutenção)", "Correção de Potássio e Sódio" // TGI
+    "Hidratação IV e Hidroeletrolíticos (Choque/Manutenção)", "Correção de Potássio e Sódio", // TGI
+    "Expansão, Hidratação e Potássio", "Insulina EV e Transição para SC", "Complicações: Edema Cerebral, Acidose Grave e Hipoglicemia" // CAD
 ];
 
 // Cor de cada categoria (a mesma da tarja), usada nos títulos de uso hospitalar.
@@ -508,7 +509,7 @@ const CORES_CATEGORIA = {
     "tarja-exame": "#0d9488", "tarja-sintomaticos": "#dc2626", "tarja-respiratorio": "#0284c7",
     "tarja-antibioticos": "#16a34a", "tarja-rsi": "#4f46e5", "tarja-urinario": "#d97706",
     "tarja-diarreia": "#0891b2", "tarja-pele": "#db2777", "tarja-neuro": "#7c3aed",
-    "tarja-alergias": "#c026d3", "tarja-especialidades": "#0d9488", "tarja-personalizada": "#334155"
+    "tarja-alergias": "#c026d3", "tarja-especialidades": "#0d9488", "tarja-cad": "#be123c", "tarja-personalizada": "#334155"
 };
 
 function calcularTudo() {

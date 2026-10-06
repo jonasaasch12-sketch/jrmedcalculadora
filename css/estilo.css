@@ -172,6 +172,7 @@ body { margin: 0; padding: 0; background-color: var(--bg-app); color: var(--text
 .dot-neuro, .tarja-neuro { background-color: #7c3aed; } 
 .dot-alergias, .tarja-alergias { background-color: #c026d3; } 
 .dot-especialidades, .tarja-especialidades { background-color: #0d9488; }
+.dot-cad, .tarja-cad { background-color: #be123c; }
 
 /* CARDS DE MEDICAMENTO / EXAME */
 .med-card { 
