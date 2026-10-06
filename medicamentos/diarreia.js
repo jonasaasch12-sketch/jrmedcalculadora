@@ -299,21 +299,22 @@ registrarMedicamentos({
     "kcl_ev": {
         cat: "cat-diarreia", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Expansão)",
         kw: "potassio kcl hipocalemia hipopotassemia correcao reposicao endovenosa hidroeletrolitico diluicao padrao periferica central", nome: "KCl 19,1% EV (Hipocalemia Grave, K < 2,5)", apres: "KCl 19,1% = 2,56 mEq/mL",
-        info: "<strong>Conduta:</strong> 0,3 a 0,5 mEq/kg/h por 4h, em diluição padrão: periférica 3,8 mEq/100 mL ou central 14,5 mEq/100 mL.", badge: "Periférica: máx 40 mEq/L", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Conduta:</strong> 0,5 a 1 mEq/kg por dose (máx 40 mEq), EV em 2h, em diluição padrão: periférica 3,8 mEq/100 mL ou central 14,5 mEq/100 mL.", badge: "Máx: 40 mEq por infusão", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
-            /* Diluições padrão (iguais para qualquer peso): o peso muda só a velocidade */
+            /* Diluições padrão (iguais para qualquer peso): o peso muda só o volume e a velocidade */
             let mEqAmp = 2.562;
-            let dil = (sf, kcl) => { let meq = kcl * mEqAmp, vol = sf + kcl; return { sf, kcl, vol, por100: meq / vol * 100 }; };
+            let dil = (sf, kcl) => { let meq = kcl * mEqAmp, vol = sf + kcl; return { sf, kcl, vol, porMl: meq / vol }; };
             let per = dil(500, 7.5), cen = dil(100, 6);
-            let mlh = (d, taxa) => p * taxa / (d.por100 / 100);
-            let linha = (d, taxa) => { let v = mlh(d, taxa); return `• ${String(taxa).replace('.', ',')} mEq/kg/h (${(p * taxa).toFixed(1)} mEq/h): correr a ${v.toFixed(0)} mL/h em BIC por 4 horas (total ${(v * 4).toFixed(0)} mL = ${(p * taxa * 4).toFixed(1)} mEq; ${Math.ceil(v * 4 / d.vol)} frasco${Math.ceil(v * 4 / d.vol) > 1 ? 's' : ''}).`; };
-            let conc = d => `${d.por100.toFixed(1)} mEq/100 mL (${(d.por100 * 10).toFixed(0)} mEq/L = ${(d.por100 / 100).toFixed(3)} mEq/mL)`;
-            return { v: `Perif.: ${mlh(per, 0.3).toFixed(0)}–${mlh(per, 0.5).toFixed(0)} mL/h\nCentral: ${mlh(cen, 0.3).toFixed(0)}–${mlh(cen, 0.5).toFixed(0)} mL/h`, r: `VIA ENDOVENOSA (HIPOCALEMIA GRAVE - REPOSIÇÃO DE POTÁSSIO)\n\nDOSE: 0,3 a 0,5 mEq/kg/h por 4 horas = ${(p * 0.3).toFixed(1)} a ${(p * 0.5).toFixed(1)} mEq/h.\n\n1) DILUIÇÃO PADRÃO - VEIA PERIFÉRICA\nSF 0,9% ${per.sf} mL + KCl 19,1% ${String(per.kcl).replace('.', ',')} mL\nConcentração final: ${conc(per)}. Máximo periférico: 40 mEq/L.\n${linha(per, 0.3)}\n${linha(per, 0.5)}\n\n2) DILUIÇÃO PADRÃO - VEIA CENTRAL\nSF 0,9% ${cen.sf} mL + KCl 19,1% ${cen.kcl} mL\nConcentração final: ${conc(cen)}. Máximo central: 15 mEq/100 mL.\n${linha(cen, 0.3)}\n${linha(cen, 0.5)}\n\nOBSERVAÇÕES:\n* KCl 19,1% = 2,56 mEq/mL. Nunca fazer KCl em bolus ou sem diluir.\n* Sempre em BIC, com monitorização cardíaca (ECG). Dosar o K ao término.\n* A diluição periférica exige volume alto: em dose maior ou restrição hídrica, preferir a via central. O limite periférico não se aplica em situação de risco de vida (DynaMed).\n* Hipocalemia leve a moderada (2,5 a 3,4) sem via oral possível: 1 mEq/kg em 1 a 2 horas (DynaMed).` };
+            let dose = d => Math.min(p * d, 40);
+            let vol = (dl, d) => dose(d) / dl.porMl;
+            let linha = (dl, d) => { let v = vol(dl, d), n = Math.ceil(v / dl.vol); return `• ${String(d).replace('.', ',')} mEq/kg = ${dose(d).toFixed(1)} mEq${p * d > 40 ? ' (teto de 40 mEq)' : ''}: ${v.toFixed(0)} mL (${n} frasco${n > 1 ? 's' : ''}), correr a ${(v / 2).toFixed(0)} mL/h em 2 horas.`; };
+            let conc = dl => `${(dl.porMl * 100).toFixed(1)} mEq/100 mL (${(dl.porMl * 1000).toFixed(0)} mEq/L = ${dl.porMl.toFixed(3)} mEq/mL)`;
+            return { v: `Perif.: ${(vol(per, 0.5) / 2).toFixed(0)}–${(vol(per, 1) / 2).toFixed(0)} mL/h\nCentral: ${(vol(cen, 0.5) / 2).toFixed(0)}–${(vol(cen, 1) / 2).toFixed(0)} mL/h`, r: `VIA ENDOVENOSA (HIPOCALEMIA GRAVE - REPOSIÇÃO DE POTÁSSIO)\n\nDOSE: 0,5 a 1 mEq/kg por dose = ${dose(0.5).toFixed(1)} a ${dose(1).toFixed(1)} mEq (máximo 40 mEq por infusão), EV em 2 horas.\n\n1) DILUIÇÃO PADRÃO - VEIA PERIFÉRICA\nSF 0,9% ${per.sf} mL + KCl 19,1% 7,5 mL\nConcentração final: ${conc(per)}. Máximo periférico: 40 mEq/L.\n${linha(per, 0.5)}\n${linha(per, 1)}\n\n2) DILUIÇÃO PADRÃO - VEIA CENTRAL\nSF 0,9% ${cen.sf} mL + KCl 19,1% ${cen.kcl} mL\nConcentração final: ${conc(cen)}. Máximo central: 15 mEq/100 mL.\n${linha(cen, 0.5)}\n${linha(cen, 1)}\n\nOBSERVAÇÕES:\n* KCl 19,1% = 2,56 mEq/mL. Nunca fazer KCl em bolus ou sem diluir. Sempre em BIC.\n* Em 2 horas a velocidade fica ≤ 0,5 mEq/kg/h. Se correr mais rápido (1 a 2 horas, DynaMed), acima de 0,5 mEq/kg/h: ECG contínuo.\n* Dosar o K 1 a 2 horas após o fim da infusão e repetir a dose, se necessário, conforme o exame.\n* O volume da diluição periférica é alto: descontar da hidratação do dia; com dose maior ou restrição hídrica, preferir a via central ou a via oral. O limite periférico não se aplica em situação de risco de vida (DynaMed).` };
         },
         detalhes: {
             indicacao: "Hipocalemia grave (K < 2,5) ou com arritmia; ou quando não é possível a via oral.",
-            dose: "0,3 a 0,5 mEq/kg/h por 4 horas. Diluição padrão periférica: SF 0,9% 500 mL + KCl 19,1% 7,5 mL (3,8 mEq/100 mL). Central: SF 0,9% 100 mL + KCl 19,1% 6 mL (14,5 mEq/100 mL).",
-            atencao: "Sempre em BIC e com ECG. Periférica: máximo 40 mEq/L (DynaMed). Central: máximo 15 mEq/100 mL. Nunca em bolus."
+            dose: "0,5 a 1 mEq/kg por dose (máx 40 mEq), EV em 2 horas. Periférica: SF 0,9% 500 mL + KCl 19,1% 7,5 mL (3,8 mEq/100 mL). Central: SF 0,9% 100 mL + KCl 19,1% 6 mL (14,5 mEq/100 mL).",
+            atencao: "Sempre em BIC. ECG contínuo se > 0,5 mEq/kg/h. Dosar o K 1 a 2h após o fim. Periférica: máximo 40 mEq/L. Nunca em bolus."
         }
     },
     "kcl_xarope": {
@@ -321,13 +322,13 @@ registrarMedicamentos({
         kw: "potassio kcl xarope hipocalemia leve moderada reposicao oral", nome: "KCl 6% Xarope (Hipocalemia Leve/Moderada)", apres: "6% = 0,8 mEq/mL",
         info: "<strong>Posologia:</strong> 2 a 5 mEq/kg/dia de 6/6h.", badge: "", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
-            let min = (p * 2 / 4 / 0.8).toFixed(1), max = (p * 5 / 4 / 0.8).toFixed(1);
-            return { v: `${min}-${max} mL`, r: `${recHead}1) CLORETO DE POTÁSSIO XAROPE 6% ------------ 1 FR\nDAR ${min} A ${max} ML, VIA ORAL, DE 6/6 HORAS (2 A 5 MEQ/KG/DIA).` };
+            let min = Math.min(p * 2 / 4, 40) / 0.8, max = Math.min(p * 5 / 4, 40) / 0.8; min = min.toFixed(1); max = max.toFixed(1);
+            return { v: `${min}-${max} mL`, r: `${recHead}1) CLORETO DE POTÁSSIO XAROPE 6% ------------ 1 FR\nDAR ${min} A ${max} ML, VIA ORAL, DE 6/6 HORAS (2 A 5 MEQ/KG/DIA; MÁXIMO 40 MEQ = 50 ML POR DOSE).` };
         },
         detalhes: {
             indicacao: "Hipocalemia leve a moderada.",
             dose: "2 a 5 mEq/kg/dia VO de 6/6h (1 mL = 0,8 mEq).",
-            atencao: "Dar após as refeições para reduzir a irritação gástrica."
+            atencao: "Dar após as refeições para reduzir a irritação gástrica. Máximo 40 mEq (50 mL) por dose."
         }
     },
     "nacl3_hiponatremia": {
