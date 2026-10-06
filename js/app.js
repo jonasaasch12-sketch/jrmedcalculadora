@@ -387,7 +387,9 @@ function inicializarApp() {
                 `;
         htmlMenuBottom += `<button class="nav-btn ${cat.cor || ''}"${estiloCor} onclick="document.getElementById('${cat.id}').scrollIntoView({behavior: 'smooth', block: 'start'})">${escaparHtml(cat.icone)}</button>`;
 
-        htmlFinal += `<div id="${cat.id}" class="category-group"><div class="section-header ${cat.cor || ''}"${estiloCor}>${escaparHtml(cat.titulo)}</div>`;
+        // Categoria com conduta (ex.: CAD): link para o passo a passo da emergência (só aparece onde a aba Condutas existe)
+        let linkConduta = cat.conduta ? `<button type="button" class="link-conduta" onclick="irParaConduta('${cat.conduta}', 'emerg')">📖 Conduta passo a passo ›</button>` : '';
+        htmlFinal += `<div id="${cat.id}" class="category-group"><div class="section-header ${cat.cor || ''}${linkConduta ? ' com-link-conduta' : ''}"${estiloCor}><span>${escaparHtml(cat.titulo)}</span>${linkConduta}</div>`;
 
         cat.patologias.forEach(pat => {
             // Seções de uso hospitalar ganham o símbolo do hospital no início e no fim do título.
