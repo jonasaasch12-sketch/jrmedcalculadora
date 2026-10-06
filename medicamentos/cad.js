@@ -9,15 +9,18 @@ registrarMedicamentos({
     "insulina_cad": {
         cat: "cat-cad", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
         kw: "insulina regular cetoacidose diabetica cad diabetes infusao continua endovenosa", nome: "Insulina Regular (Cetoacidose Diabética)", apres: "50 U em 500 mL SF 0,9% (0,1 U/mL)",
-        info: "<strong>Conduta:</strong> 0,1 U/kg/h EV em BIC, após a expansão. Reduzir para 0,05 U/kg/h se glicemia ~250.", badge: "Não iniciar se K < 3,3", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => {
-            let r1 = p * 0.1 / 0.1, r05 = p * 0.05 / 0.1;
-            return { v: `0,1: ${r1.toFixed(1)} mL/h\n0,05: ${r05.toFixed(1)} mL/h`, r: `VIA ENDOVENOSA (CETOACIDOSE DIABÉTICA - 2ª HORA)\n\nPREPARO: Insulina Regular 50 U em 500 mL de SF 0,9% (0,1 U/mL). Lavar o equipo com a solução e trocar o frasco a cada 6 horas.\n\n• 0,1 U/kg/h: correr em BIC a ${r1.toFixed(1)} mL/h.\n• Reduzir para 0,05 U/kg/h (${r05.toFixed(1)} mL/h) quando a glicemia ficar perto de 250 mg/dL ou cair mais de 100 mg/dL/h com acidose ainda presente.\n\nSEM BIC: Insulina Regular ${(p * 0.2).toFixed(1)} U (0,2 U/kg) IM de 2/2h; reduzir para ${(p * 0.1).toFixed(1)} U (0,1 U/kg) nas mesmas situações.\n\n* Não iniciar se K < 3,3. Glicemia capilar 1/1h, cetonúria e gasometria 2/2h.` };
+        info: "<strong>Conduta (IMIP):</strong> < 5 anos 0,05 U/kg/h; ≥ 5 anos 0,1 U/kg/h EV em BIC, após 1h de expansão. Máx 10 U/h. Sem bolus.", badge: "Não iniciar se K < 3,3", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            let id = parseFloat(i);
+            let mlh = u => Math.min(p * u, 10) / 0.1;
+            let a = mlh(0.05), b = mlh(0.1), c = mlh(0.15), d = mlh(0.2);
+            let v = isNaN(id) ? `< 5 a: ${a.toFixed(1)} mL/h\n≥ 5 a: ${b.toFixed(1)} mL/h` : id < 5 ? `0,05 U/kg/h: ${a.toFixed(1)} mL/h` : `0,1 U/kg/h: ${b.toFixed(1)} mL/h`;
+            return { v, r: `VIA ENDOVENOSA (CETOACIDOSE DIABÉTICA - APÓS 1 HORA DE EXPANSÃO)\n\nPREPARO: Insulina Regular 50 U em 500 mL de SF 0,9% (0,1 U/mL). Lavar o equipo com a solução e trocar o frasco a cada 6 horas.\n\nDOSE INICIAL (correr em BIC):\n• < 5 anos: 0,05 U/kg/h = ${a.toFixed(1)} mL/h.\n• ≥ 5 anos: 0,1 U/kg/h = ${b.toFixed(1)} mL/h.\n• Máximo: 10 U/h (100 mL/h). NÃO FAZER BOLUS (DOSE DE ATAQUE).\n\nAJUSTES:\n• HGT não cai 60 mg/dL/h ou acidose corrigindo muito devagar: aumentar para 0,15 a 0,2 U/kg/h (${c.toFixed(1)} a ${d.toFixed(1)} mL/h).\n• HGT < 300 com acidose: NÃO DIMINUIR A INSULINA. Acrescentar glicose ao soro.\n• Acidose parcialmente compensada, ainda sem critério de suspensão: 0,05 U/kg/h (${a.toFixed(1)} mL/h) + glicose no soro.\n\nSEM BIC: Insulina Regular ${(p * 0.2).toFixed(1)} U (0,2 U/kg) IM de 2/2h.\n\n* Não iniciar se K < 3,3. HGT 1/1h; gasometria e eletrólitos 2/2h.` };
         },
         detalhes: {
-            indicacao: "Cetoacidose diabética, após a expansão inicial.",
-            dose: "0,1 U/kg/h EV em BIC; reduzir para 0,05 U/kg/h. Sem BIC: 0,2 U/kg IM de 2/2h.",
-            atencao: "Não iniciar se K < 3,3. Queda da glicemia entre 50 e 100 mg/dL/h. Glicemia 1/1h e gasometria 2/2h."
+            indicacao: "Cetoacidose diabética, após pelo menos 1 hora de expansão.",
+            dose: "< 5 anos: 0,05 U/kg/h; ≥ 5 anos: 0,1 U/kg/h EV em BIC (máx 10 U/h). Sem BIC: 0,2 U/kg IM de 2/2h.",
+            atencao: "Não iniciar se K < 3,3. Nunca bolus. Com acidose, não diminuir a insulina: acrescentar glicose."
         }
     },
     "cad_expansao": {
@@ -59,7 +62,7 @@ registrarMedicamentos({
             let f = (x) => (Math.round(x * 2) / 2).toFixed(1).replace('.0', '');
             let ddt = (a, b) => `${f(p * a)} a ${f(p * b)} U/dia`;
             let faixa = (k, a, b) => `${(k / (p * b)).toFixed(0)} a ${(k / (p * a)).toFixed(0)}`;
-            return { v: `DDT: ${f(p * 0.5)} a ${f(p * 1)} U/dia`, r: `VIA SUBCUTÂNEA (TRANSIÇÃO APÓS A CETOACIDOSE)\n\nDOSE DIÁRIA TOTAL (DDT):\n• Pré-púbere (0,5 a 0,6 U/kg/dia): ${ddt(0.5, 0.6)}\n• Púbere (0,7 a 1 U/kg/dia): ${ddt(0.7, 1)}\n\nINSULINA BASAL (glargina/detemir) = 50% da DDT, 1 vez ao dia (< 5 anos: de manhã; ≥ 5 anos: à noite):\n• Pré-púbere: ${f(p * 0.25)} a ${f(p * 0.3)} U\n• Púbere: ${f(p * 0.35)} a ${f(p * 0.5)} U\n\nINSULINA RÁPIDA (lispro/asparte) = 50% da DDT, antes das refeições:\n• Bolus = correção + refeição.\n• Correção: (glicemia − 120) ÷ FSI. FSI = 1800 ÷ DDT (pré-púbere ${faixa(1800, 0.5, 0.6)}; púbere ${faixa(1800, 0.7, 1)} mg/dL por unidade).\n• Refeição: gramas de carboidrato ÷ razão. Razão = 500 ÷ DDT (pré-púbere ${faixa(500, 0.5, 0.6)} g; púbere ${faixa(500, 0.7, 1)} g por unidade).\n• Alvo: 120 mg/dL de dia; 140 mg/dL ao deitar e de madrugada.\n\n* Fazer a transição antes de uma refeição: desligar a insulina EV 15 a 30 minutos após a rápida SC. Glicemia capilar de 3/3h.` };
+            return { v: `DDT: ${f(p * 0.5)} a ${f(p * 1)} U/dia`, r: `VIA SUBCUTÂNEA (TRANSIÇÃO APÓS A CETOACIDOSE)\n\nDOSE DIÁRIA TOTAL (DDT):\n• Pré-púbere (0,5 a 0,6 U/kg/dia): ${ddt(0.5, 0.6)}\n• Púbere (0,7 a 1 U/kg/dia): ${ddt(0.7, 1)}\n\nINSULINA BASAL (glargina/detemir) = 50% da DDT, 1 vez ao dia (< 5 anos: de manhã; ≥ 5 anos: à noite):\n• Pré-púbere: ${f(p * 0.25)} a ${f(p * 0.3)} U\n• Púbere: ${f(p * 0.35)} a ${f(p * 0.5)} U\n\nINSULINA RÁPIDA (lispro/asparte) = 50% da DDT, antes das refeições:\n• Bolus = correção + refeição.\n• Correção: (glicemia − 120) ÷ FSI. FSI = 1800 ÷ DDT (pré-púbere ${faixa(1800, 0.5, 0.6)}; púbere ${faixa(1800, 0.7, 1)} mg/dL por unidade).\n• Refeição: gramas de carboidrato ÷ razão. Razão = 500 ÷ DDT (pré-púbere ${faixa(500, 0.5, 0.6)} g; púbere ${faixa(500, 0.7, 1)} g por unidade).\n• Alvo: 120 mg/dL de dia; 140 mg/dL ao deitar e de madrugada.\n\n* Fazer a transição antes de uma refeição: desligar a insulina EV 15 a 30 minutos após a rápida SC. HGT de 3/3h.` };
         },
         detalhes: {
             indicacao: "Cetoacidose resolvida (pH > 7,30, bicarbonato > 15 e cetonemia < 1) e tolerando a via oral.",
@@ -97,15 +100,16 @@ registrarMedicamentos({
     },
     "cad_bicarbonato": {
         cat: "cat-cad", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
-        kw: "bicarbonato de sodio cetoacidose diabetica cad acidose grave ph hipercalemia", nome: "Bicarbonato de Sódio na CAD (pH < 6,9)", apres: "Bicarbonato de sódio 8,4% (1 mEq/mL)",
-        info: "<strong>Conduta:</strong> Só se pH < 6,9 ou hipercalemia grave com disfunção cardíaca: 1 a 2 mEq/kg EV em 60 min, em UTI.", badge: "Não usar de rotina", recLabel: "Texto para selecionar e copiar:",
+        kw: "bicarbonato de sodio cetoacidose diabetica cad acidose grave ph hipercalemia", nome: "Bicarbonato de Sódio na CAD (pH ≤ 6,9)", apres: "Bicarbonato de sódio 8,4% (1 mEq/mL)",
+        info: "<strong>Conduta:</strong> Só se pH ≤ 6,9. Dose (IMIP) = (12 − HCO₃ encontrado) x 0,3 x Peso. Fazer metade em 2h, diluído 1:5 em AD.", badge: "Não usar de rotina", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
-            let a = Math.min(p * 1, 100), b = Math.min(p * 2, 100);
-            return { v: `${a.toFixed(0)} a ${b.toFixed(0)} mL`, r: `VIA ENDOVENOSA (CETOACIDOSE - ACIDOSE GRAVE, pH < 6,9)\n\nBicarbonato de sódio 8,4% (1 mEq/mL): ${a.toFixed(0)} a ${b.toFixed(0)} mL (1 a 2 mEq/kg), diluído, EV em 60 minutos, em UTI.\n\n* Indicação: pH venoso < 6,9 ou hipercalemia com risco de vida e comprometimento da contratilidade cardíaca.\n* Risco: hipocalemia (monitorar o K), acidose paradoxal do líquor e edema cerebral.` };
+            let fator = 0.3 * p;
+            let linha = hco3 => { let total = (12 - hco3) * fator, metade = Math.min(total / 2, 100); return `• HCO₃ ${hco3}: dose total ${total.toFixed(0)} mEq → fazer ${metade.toFixed(0)} mL de bicarbonato 8,4% + ${(metade * 5).toFixed(0)} mL de AD em 2 horas.`; };
+            return { v: `${fator.toFixed(1)} mEq por ponto`, r: `VIA ENDOVENOSA (CETOACIDOSE - ACIDOSE GRAVE, pH ≤ 6,9)\n\nDOSE (IMIP) = (12 − HCO₃ encontrado) x 0,3 x ${p} kg = (12 − HCO₃) x ${fator.toFixed(1)} mEq.\nFazer METADE da dose em 2 horas, diluído 1:5 em AD (1 mL de bicarbonato 8,4% + 5 mL de AD).\n\n${[2, 4, 6, 8].map(linha).join('\n')}\n\n* Bicarbonato de sódio 8,4% = 1 mEq/mL. Teto de 100 mEq por infusão (dose de adulto da SBD).\n* Só com pH ≤ 6,9 (ou hipercalemia grave com disfunção cardíaca). Em UTI.\n* Risco: hipocalemia (monitorar o K), acidose paradoxal do líquor e edema cerebral. Reavaliar a gasometria ao final.` };
         },
         detalhes: {
-            indicacao: "Cetoacidose com pH < 6,9 ou hipercalemia grave com disfunção cardíaca.",
-            dose: "1 a 2 mEq/kg EV em 60 min (teto de 100 mEq, dose de adulto da SBD).",
+            indicacao: "Cetoacidose com pH ≤ 6,9 ou hipercalemia grave com disfunção cardíaca.",
+            dose: "(12 − HCO₃) x 0,3 x Peso: fazer metade em 2h, diluído 1:5 em AD.",
             atencao: "Não é rotina: aumenta o risco de hipocalemia e de edema cerebral."
         }
     }

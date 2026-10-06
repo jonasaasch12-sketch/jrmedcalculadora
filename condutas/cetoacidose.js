@@ -2,7 +2,7 @@
 // CONDUTA: CETOACIDOSE DIABÉTICA (CAD) NA CRIANÇA E NO ADOLESCENTE
 // Base pediátrica: Sociedade Portuguesa de Pediatria / SEDP — Protocolo de
 // Cetoacidose Diabética (2019, baseado no ISPAD 2018).
-// Adicionais: Diretriz SBD 2026 (só o que vale para a criança), Collett-Solberg
+// Adicionais: UTI pediátrica do IMIP (2018), Diretriz SBD 2026 (só o que vale para a criança), Collett-Solberg
 // (J Pediatr 2001, sistema de duas soluções), SPSP 2024 e ISPAD 2022 (DynaMed).
 // Os remédios são ids dos cards (farmaciaJR): a dose é calculada lá.
 // =====================================================
@@ -13,7 +13,7 @@ registrarConduta({
     cor: "#7c3aed",
     kw: "cetoacidose diabetica cad diabetes mellitus tipo 1 dm1 hiperglicemia cetonemia acidose insulina edema cerebral kussmaul",
     resumo: "Diagnóstico e gravidade, expansão, hidratação em 48h com potássio, insulina, duas soluções, edema cerebral e transição para insulina SC.",
-    legenda: "Conduta conforme o <strong>Protocolo de CAD da Sociedade Portuguesa de Pediatria (2019, ISPAD)</strong>, com adicionais da <strong>Diretriz SBD 2026</strong>, do <strong>J Pediatr 2001 (duas soluções)</strong>, da <strong>SPSP 2024</strong> e do <strong>ISPAD 2022</strong>.",
+    legenda: "Conduta conforme o <strong>Protocolo de CAD da Sociedade Portuguesa de Pediatria (2019, ISPAD)</strong>, com adicionais da <strong>UTI pediátrica do IMIP (2018)</strong>, da <strong>Diretriz SBD 2026</strong>, do <strong>J Pediatr 2001 (duas soluções)</strong>, da <strong>SPSP 2024</strong> e do <strong>ISPAD 2022</strong>.",
 
     blocos: [
         {
@@ -105,7 +105,7 @@ registrarConduta({
                     icone: "🧪",
                     resumo: "Gasometria, eletrólitos, osmolaridade, Na corrigido e ânion gap.",
                     itens: [
-                        "<strong>Na chegada:</strong> glicemia e cetonemia capilares, gasometria venosa com eletrólitos, <strong>ECG contínuo</strong> (onda T: potássio).",
+                        "<strong>Na chegada:</strong> HGT e cetonemia capilar, gasometria venosa com eletrólitos, <strong>ECG contínuo</strong> (onda T: potássio).",
                         "<strong>Sangue:</strong> glicose; Na, K, Cl, Ca, fósforo e magnésio; ureia e creatinina; osmolaridade; hemograma (leucocitose pode ser só estresse); HbA1c.",
                         "<strong>Suspeita de infecção:</strong> EAS, culturas, swab de orofaringe, radiografia de tórax.",
                         "<strong>K da gasometria não substitui o K plasmático.</strong> Na 1ª hora o pH venoso pode piorar (lavagem do lactato com a hidratação).",
@@ -217,13 +217,13 @@ registrarConduta({
                     itens: [
                         "<span class=\"cond-passo\">1</span> <strong>Chegada (0 min):</strong> Monitor, ABC, pesar, <strong>2 acessos</strong> e <strong>colher os exames</strong>",
                         "<span class=\"cond-passo\">2</span> <strong>0 a 1 h:</strong> <strong>Expansão:</strong> SF 0,9% 10 mL/kg em 1h (choque: 10 a 20 mL/kg). <strong>Ainda sem insulina</strong>",
-                        "<span class=\"cond-passo\">3</span> <strong>Saiu o K:</strong> Decidir <strong>quando começar o potássio</strong> (e se a insulina pode começar)",
+                        "<span class=\"cond-passo\">3</span> <strong>Saiu o K:</strong> Decidir <strong>quando começar o potássio</strong>. Insulina só com <strong>K ≥ 3,3</strong>",
                         "<span class=\"cond-passo\">4</span> <strong>A partir da 2ª hora:</strong> <strong>Hidratação de 48h</strong> com KCl 40 mEq/L (card calcula o mL/h)",
-                        "<span class=\"cond-passo\">5</span> <strong>Após 1 h de expansão:</strong> <strong>Insulina regular EV contínua</strong> 0,05 a 0,1 U/kg/h. <strong>Nunca bolus</strong>",
-                        "<span class=\"cond-passo\">6</span> <strong>Glicemia ≤ 300:</strong> <strong>Colocar glicose no soro</strong> (duas soluções). Não baixar a insulina",
-                        "<span class=\"cond-passo\">7</span> <strong>De 1/1h e 2/2h:</strong> Glicemia, sinais vitais e Glasgow 1/1h; gasometria, eletrólitos e cetonemia 2/2h",
+                        "<span class=\"cond-passo\">5</span> <strong>Após 1 h de expansão:</strong> <strong>Insulina regular EV contínua</strong>: < 5 anos 0,05 U/kg/h; ≥ 5 anos 0,1 U/kg/h (máx 10 U/h). <strong>Nunca bolus</strong>",
+                        "<span class=\"cond-passo\">6</span> <strong>HGT ≤ 300:</strong> <strong>Colocar glicose no soro</strong> (duas soluções). Não baixar a insulina",
+                        "<span class=\"cond-passo\">7</span> <strong>De 1/1h e 2/2h:</strong> HGT, sinais vitais e Glasgow 1/1h; gasometria, eletrólitos e cetonemia 2/2h",
                         "<span class=\"cond-passo\">8</span> <strong>CAD resolvida:</strong> pH > 7,30, HCO₃ > 15, cetonemia < 1 e aceitando VO: <strong>insulina SC</strong>",
-                        "⚠️ <strong>A qualquer hora:</strong> Cefaleia, vômitos, sonolência, bradicardia: <strong>edema cerebral</strong>. Glicemia < 60: <strong>hipoglicemia</strong>"
+                        "⚠️ <strong>A qualquer hora:</strong> Cefaleia, vômitos, sonolência, bradicardia: <strong>edema cerebral</strong>. HGT < 60: <strong>hipoglicemia</strong>"
                     ],
                     lista: "passos"
                 },
@@ -246,7 +246,7 @@ registrarConduta({
                         titulo: "🧪 Exames para pedir na chegada",
                         colunas: ["Exame", "Para quê"],
                         linhas: [
-                            ["Glicemia capilar", "Confirmar; depois de 1/1h"],
+                            ["HGT (glicemia capilar)", "Confirmar; depois de 1/1h"],
                             ["Cetonemia capilar (beta-hidroxibutirato)", "Confirmar (≥ 3 mmol/L); depois de 2/2h"],
                             ["Gasometria venosa", "pH e bicarbonato: gravidade"],
                             ["Na, K, Cl", "K decide o passo 3; Na corrigido e ânion gap"],
@@ -280,13 +280,15 @@ registrarConduta({
                     tabela: {
                         colunas: ["K do exame", "O que fazer"],
                         linhas: [
-                            ["< 2,5 mEq/L", "<strong>Repor K já, mais rápido</strong>. <strong>Adiar a insulina</strong> até K > 2,5"],
-                            ["2,5 a 4,4 mEq/L", "<strong>KCl no soro já</strong> (40 mEq/L)"],
+                            ["< 3,0 mEq/L", "<strong>KCl no soro já</strong> + <strong>correção rápida</strong> 0,3 a 0,5 mEq/kg/h em 2 a 4h (card KCl EV). <strong>Adiar a insulina</strong> até K ≥ 3,3"],
+                            ["3,0 a 3,2 mEq/L", "<strong>KCl no soro já</strong> (40 mEq/L). <strong>Adiar a insulina</strong> até K ≥ 3,3"],
+                            ["3,3 a 4,4 mEq/L", "<strong>KCl no soro já</strong> (40 mEq/L)"],
                             ["4,5 a 5,4 mEq/L", "KCl no soro <strong>junto com o início da insulina</strong>"],
                             ["≥ 5,5 mEq/L", "Sem K por enquanto. Só <strong>após diurese</strong> e K < 5,5"]
                         ],
-                        nota: "<strong>Dose:</strong> 40 mEq/L no soro (20 mEq/L se a velocidade for ≥ 10 mL/kg/h). <strong>Máximo: 0,5 mEq/kg/h.</strong> Sem diurese ou insuficiência renal: não repor. Sem resultado ainda? O ECG ajuda: T achatada, onda U, QT longo = K baixo; T apiculada = K alto. Fonte: SPP. O card de insulina do app usa K ≥ 3,3 para iniciar (SBD); SPSP 2024: 60 mEq/L se K < 3,5."
-                    }
+                        nota: "<strong>Dose:</strong> 40 mEq/L no soro (20 mEq/L se a velocidade for ≥ 10 mL/kg/h). <strong>Máximo: 0,5 mEq/kg/h.</strong> Sem diurese ou insuficiência renal: não repor. Sem resultado ainda? O ECG ajuda: T achatada, onda U, QT longo = K baixo; T apiculada = K alto. Fonte: SPP; K mínimo de 3,3 para a insulina e correção rápida com K < 3,0: IMIP 2018 (igual à SBD). SPSP 2024: 60 mEq/L se K < 3,5."
+                    },
+                    remedios: ["kcl_ev"]
                 },
                 {
                     passo: 4,
@@ -306,33 +308,34 @@ registrarConduta({
                     passo: 5,
                     titulo: "Após 1 hora de expansão: insulina contínua",
                     aberta: true,
-                    resumo: "Insulina regular EV 0,05 a 0,1 U/kg/h, em BIC. Nunca bolus.",
+                    resumo: "< 5 anos 0,05 U/kg/h; ≥ 5 anos 0,1 U/kg/h (máx 10 U/h). Nunca bolus.",
                     itens: [
-                        "<strong>Conferir antes:</strong> já passou 1 hora de expansão? O K permite (passo 3)?",
-                        "<strong>Insulina regular EV contínua: 0,05 a 0,1 U/kg/h</strong> em bomba de infusão, em equipo próprio (pode ir em Y com o soro).",
+                        "<strong>Conferir antes:</strong> já passou 1 hora de expansão? <strong>K ≥ 3,3</strong> (passo 3)?",
+                        "<strong>Insulina regular EV contínua</strong> em bomba de infusão, equipo próprio (pode ir em Y com o soro): <strong>< 5 anos: 0,05 U/kg/h</strong>; <strong>≥ 5 anos: 0,1 U/kg/h</strong>. <strong>Máximo 10 U/h</strong> (IMIP).",
                         "❌ <strong>Bolus de insulina é proibido</strong> na criança (edema cerebral, choque, hipocalemia).",
-                        "<strong>Não reduzir nem desligar a insulina até a CAD resolver.</strong> Se a glicemia cair demais, aumentar a glicose do soro (passo 6).",
-                        "Esperado: glicemia caindo 35 a 90 mg/dL/h. Não cai? Checar acesso, equipo, preparo e dose.",
+                        "<strong>HGT < 300 com acidose: NÃO diminuir a insulina</strong>, acrescentar glicose ao soro (passo 6). Não desligar até a CAD resolver.",
+                        "<strong>HGT não cai 60 mg/dL/h ou acidose corrigindo muito devagar:</strong> checar acesso, equipo e preparo e <strong>aumentar para 0,15 a 0,2 U/kg/h</strong>.",
+                        "Acidose parcialmente compensada, ainda sem critério de suspensão: <strong>0,05 U/kg/h + glicose</strong>.",
                         "<strong>CAD leve</strong>, sem vômitos e aceitando VO: pode ser insulina SC + hidratação oral; sem melhora, voltar para este esquema."
                     ],
-                    nota: "Preparo da SPP: 50 U em 50 mL de SF 0,9% (1 U/mL), trocar a cada 24h. O card do app usa 50 U em 500 mL (0,1 U/mL).",
+                    nota: "Preparo do card: 50 U em 500 mL de SF 0,9% (0,1 U/mL). Outros preparos: SPP 50 U em 50 mL (1 U/mL, trocar a cada 24h); IMIP 100 U (1 mL) em 100 mL de SF (≈ 1 U/mL = 0,05 a 0,1 mL/kg/h; desprezar 50 mL no equipo, trocar de 6/6h).",
                     remedios: ["insulina_cad"]
                 },
                 {
                     passo: 6,
-                    titulo: "Glicemia caiu: colocar glicose no soro",
+                    titulo: "HGT caiu: colocar glicose no soro",
                     aberta: true,
-                    resumo: "Glicemia ≤ 300 ou queda > 90/h: glicose no soro. A insulina continua igual.",
+                    resumo: "HGT ≤ 300 ou queda > 90/h: glicose no soro. Não diminuir a insulina.",
                     itens: [
-                        "<strong>Gatilho:</strong> glicemia <strong>≤ 300 mg/dL</strong> ou queda <strong>> 90 mg/dL/h</strong> (SPP: já pode entrar SG 5% junto com a insulina).",
-                        "<strong>Sistema de duas soluções:</strong> soro <strong>sem glicose</strong> + soro <strong>com SG 10%</strong> (mesmo sódio e potássio), correndo em Y. A velocidade total do passo 4 não muda: só a proporção entre os dois, pela glicemia de 1/1h (tabela).",
-                        "Glicemia normal mas <strong>acidose ainda presente</strong>: aumentar a glicose (até 12,5%) e <strong>manter a insulina</strong>.",
+                        "<strong>Gatilho:</strong> HGT <strong>≤ 300 mg/dL</strong> ou queda <strong>> 90 mg/dL/h</strong> (SPP: já pode entrar SG 5% junto com a insulina).",
+                        "<strong>Sistema de duas soluções:</strong> soro <strong>sem glicose</strong> + soro <strong>com SG 10%</strong> (mesmo sódio e potássio), correndo em Y. A velocidade total do passo 4 não muda: só a proporção entre os dois, pelo HGT de 1/1h (tabela).",
+                        "HGT normal mas <strong>acidose ainda presente</strong>: aumentar a glicose (até 12,5%) e <strong>manter a insulina</strong>.",
                         "Queda ideal: até 50 mg/dL/h após as 2 primeiras horas; até 600 mg/dL nas primeiras 6 horas."
                     ],
                     tabelas: [
                         {
                             titulo: "Proporção entre as duas soluções (J Pediatr 2001)",
-                            colunas: ["Glicemia atual<br>(inicial > 800)", "Glicemia atual<br>(inicial < 800)", "Sem glicose", "Com glicose"],
+                            colunas: ["HGT atual<br>(inicial > 800)", "HGT atual<br>(inicial < 800)", "Sem glicose", "Com glicose"],
                             linhas: [
                                 ["> 500", "> 350", "100%", "0"],
                                 ["401 a 500", "301 a 350", "75%", "25%"],
@@ -341,6 +344,16 @@ registrarConduta({
                                 ["< 200", "< 200", "0", "100%"]
                             ],
                             nota: "Exemplo: 120 mL/h no total e 50% de cada = 60 mL/h de cada solução. Os preparos das duas soluções estão no card do passo 4."
+                        },
+                        {
+                            titulo: "Preparo prático das duas soluções (solução padrão do IMIP)",
+                            colunas: ["Solução", "Preparo"],
+                            linhas: [
+                                ["A (com glicose)", "SG 10% 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL"],
+                                ["B (sem glicose)", "AD 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL"],
+                                ["Glicose final", "0% = só B · 2,5% = ¼ A + ¾ B · 5% = metade de cada · 7,5% = ¾ A + ¼ B · 10% = só A"]
+                            ],
+                            nota: "As duas têm K 40 mEq/L e Na 136 mEq/L, correndo em Y. O momento de pôr glicose segue a SPP (HGT ≤ 300)."
                         },
                         {
                             titulo: "Outros preparos de soro glicosado (SPP)",
@@ -363,12 +376,12 @@ registrarConduta({
                     tabela: {
                         colunas: ["Quando", "O que checar"],
                         linhas: [
-                            ["1/1h", "PA, FC, FR, SatO₂, ECG, <strong>Glasgow e sinais neurológicos</strong>, <strong>glicemia capilar</strong>, balanço hídrico, soro e insulina (velocidades)"],
+                            ["1/1h", "PA, FC, FR, SatO₂, ECG, <strong>Glasgow e sinais neurológicos</strong>, <strong>HGT</strong>, balanço hídrico, soro e insulina (velocidades)"],
                             ["2/2h", "Gasometria (pH, HCO₃), Na, K, Cl, glicose, osmolaridade, ânion gap, cetonemia capilar"],
                             ["4/4h", "Fósforo, cálcio e magnésio"],
                             ["6/6h", "Ureia, creatinina e hemograma (se alterados)"]
                         ],
-                        nota: "Esperado: glicemia −35 a 90 mg/dL/h; cetonemia −0,5 mmol/L/h; HCO₃ +3 mEq/L/h; Na subindo 0,5 a 1 mEq/L/h. Perfusão ruim: glicemia venosa ou arterial, não capilar."
+                        nota: "Esperado: HGT −35 a 90 mg/dL/h; cetonemia −0,5 mmol/L/h; HCO₃ +3 mEq/L/h; Na subindo 0,5 a 1 mEq/L/h. Perfusão ruim: glicemia venosa ou arterial, não capilar."
                     },
                     grupos: [
                         {
@@ -381,10 +394,11 @@ registrarConduta({
                             ]
                         },
                         {
-                            nome: "Bicarbonato: só se pH < 6,9",
+                            nome: "Bicarbonato: só se pH ≤ 6,9",
                             itens: [
                                 "<strong>Não é rotina</strong> (piora o K e aumenta o risco de edema cerebral).",
-                                "Só com <strong>pH venoso < 6,9</strong> ou hipercalemia grave com disfunção cardíaca: <strong>1 a 2 mEq/kg EV em 60 min, em UTI</strong>."
+                                "Só com <strong>pH ≤ 6,9</strong> (SPP) ou hipercalemia grave com disfunção cardíaca, em UTI.",
+                                "<strong>Dose (IMIP) = (12 − HCO₃ encontrado) x 0,3 x peso.</strong> Fazer <strong>metade da dose em 2 horas</strong>, diluído <strong>1:5 em AD</strong>. Repetir a gasometria ao final."
                             ],
                             remedios: ["cad_bicarbonato"]
                         }
@@ -457,9 +471,9 @@ registrarConduta({
                     titulo: "A qualquer momento: hipoglicemia e outras complicações",
                     icone: "🩸",
                     alerta: true,
-                    resumo: "Glicemia < 60: aumentar a glicose. Não desligar a insulina.",
+                    resumo: "HGT < 60: aumentar a glicose. Não desligar a insulina.",
                     itens: [
-                        "<strong>Glicemia < 60 mg/dL sem sintomas:</strong> aumentar a glicose infundida em 25% (J Pediatr 2001).",
+                        "<strong>HGT < 60 mg/dL sem sintomas:</strong> aumentar a glicose infundida em 25% (J Pediatr 2001).",
                         "<strong>Inconsciente ou convulsionando:</strong> glicose 25% 1 a 2 mL/kg EV e depois aumentar a glicose do soro em 25%. Acidose já corrigida: pode reduzir a insulina em 25%.",
                         "<strong>Outras complicações:</strong> hipocalemia, hipofosfatemia, hipocalcemia, hipomagnesemia, acidose hiperclorêmica; trombose venosa e de seios venosos, AVC; sepse, pneumonia aspirativa, SDRA; pneumotórax e pneumomediastino; rabdomiólise, isquemia intestinal, pancreatite, insuficiência renal aguda."
                     ],
@@ -482,7 +496,7 @@ registrarConduta({
                         "<strong>Melhor momento: antes de uma refeição.</strong> Fazer a insulina rápida SC (correção + refeição) e <strong>desligar a insulina EV 15 a 30 min depois</strong>. Se for a hora da insulina basal, fazer também.",
                         "Já usava insulina: retomar a dose prévia (50% basal e 50% bolus) ou recolocar a bomba de insulina.",
                         "Diabetes novo: dose diária total de <strong>0,5 a 0,6 U/kg/dia (pré-púbere)</strong> ou <strong>0,7 a 1 U/kg/dia (púbere)</strong>: 50% basal (glargina/detemir, 1 vez ao dia: de manhã se < 5 anos, à noite se ≥ 5 anos) e 50% rápida antes das refeições.",
-                        "Glicemia capilar antes das refeições e às 3h da madrugada; corrigir com insulina rápida."
+                        "HGT antes das refeições e às 3h da madrugada; corrigir com insulina rápida."
                     ],
                     tabela: {
                         titulo: "Exemplo da SPP: 6 anos, 22 kg, glicemia 240, lanche com 36 g de carboidrato",
@@ -529,6 +543,7 @@ registrarConduta({
 
     fontes: [
         "Sociedade Portuguesa de Pediatria / Sociedade de Endocrinologia e Diabetologia Pediátrica — Grupo de Trabalho de Diabetes Mellitus. Cetoacidose Diabética (protocolo, 20/05/2019), baseado no ISPAD 2018.",
+        "UTI Pediátrica — IMIP. Protocolo de Cetoacidose Diabética (2018): dose da insulina, solução padrão em Y, potássio e fórmula do bicarbonato.",
         "Sociedade Brasileira de Diabetes. Diretriz SBD 2026: Diagnóstico e tratamento da cetoacidose diabética (rev. 13/08/2026). Usada só a parte aplicável à criança.",
         "Collett-Solberg PF. Cetoacidose diabética em crianças: revisão da fisiopatologia e tratamento com o uso do método de duas soluções salinas. J Pediatr (Rio J) 2001;77(1):9-16.",
         "SPSP — Anais do congresso: Tratamento de emergência da cetoacidose diabética em crianças (10/04/2024).",
