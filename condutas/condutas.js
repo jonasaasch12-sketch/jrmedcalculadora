@@ -153,7 +153,7 @@ function abrirTodasSecoes(abrir) {
 
 // Atalho do índice: abre a seção (se estiver recolhida) e rola até ela.
 // Vem da Prescrição (link na tarja da categoria): abre a conduta já no bloco pedido
-// (ex.: 'emerg' = primeiro bloco cujo título tem "emerg").
+// (ex.: 'condução' = primeiro bloco cujo título tem "condução": emergência/hospital).
 function irParaConduta(id, bloco) {
     if (!condutasJR[id] || !document.getElementById('area-condutas')) return;
     condutaAberta = id;
