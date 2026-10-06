@@ -280,13 +280,13 @@ registrarConduta({
                     tabela: {
                         colunas: ["K do exame", "O que fazer"],
                         linhas: [
-                            ["< 3,0 mEq/L", "<strong>KCl no soro já</strong> + <strong>correção rápida</strong> 0,3 a 0,5 mEq/kg/h em 2 a 4h (card KCl EV). <strong>Adiar a insulina</strong> até K ≥ 3,3"],
+                            ["< 3,0 mEq/L", "<strong>KCl no soro já</strong> + <strong>correção rápida</strong> com o card KCl EV (0,5 a 1 mEq/kg em 2h, máx 40 mEq; dosar o K 1 a 2h após). <strong>Adiar a insulina</strong> até K ≥ 3,3"],
                             ["3,0 a 3,2 mEq/L", "<strong>KCl no soro já</strong> (40 mEq/L). <strong>Adiar a insulina</strong> até K ≥ 3,3"],
                             ["3,3 a 4,4 mEq/L", "<strong>KCl no soro já</strong> (40 mEq/L)"],
                             ["4,5 a 5,4 mEq/L", "KCl no soro <strong>junto com o início da insulina</strong>"],
                             ["≥ 5,5 mEq/L", "Sem K por enquanto (A e B <strong>sem KCl</strong>). Só <strong>após diurese</strong> e K < 5,5"]
                         ],
-                        nota: "<strong>Dose:</strong> 40 mEq/L no soro = KCl 19,1% 4 mL em cada solução A e B (20 mEq/L = 2 mL, se a velocidade for ≥ 10 mL/kg/h). <strong>Máximo: 0,5 mEq/kg/h.</strong> Sem diurese ou insuficiência renal: não repor. Sem resultado ainda? O ECG ajuda: T achatada, onda U, QT longo = K baixo; T apiculada = K alto. Fonte: SPP; K mínimo de 3,3 para a insulina e correção rápida com K < 3,0: IMIP 2018 (igual à SBD). SPSP 2024: 60 mEq/L se K < 3,5."
+                        nota: "<strong>Dose:</strong> 40 mEq/L no soro = KCl 19,1% 4 mL em cada solução A e B (20 mEq/L = 2 mL, se a velocidade for ≥ 10 mL/kg/h). <strong>Máximo: 0,5 mEq/kg/h.</strong> Sem diurese ou insuficiência renal: não repor. Sem resultado ainda? O ECG ajuda: T achatada, onda U, QT longo = K baixo; T apiculada = K alto. Fonte: SPP; K mínimo de 3,3 para a insulina e correção rápida com K < 3,0: IMIP 2018 (igual à SBD); dose da correção pelo card KCl EV (StatPearls). SPSP 2024: 60 mEq/L se K < 3,5."
                     },
                     remedios: ["kcl_ev"]
                 },

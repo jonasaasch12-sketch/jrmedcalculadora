@@ -43,6 +43,8 @@ const TETOS = {
     cef_disenteria: 20,   // mL (2 g; EV 100 mg/mL, IM 7 mL)
     metro_parasitas: 6.25, // mL de 40 mg/mL na giardíase (250 mg/dose)
     insulina_cad: 10,     // mL/h de 1 U/mL (10 U/h, IMIP)
+    kcl_ev: 530,          // mL/h na periférica (40 mEq em 2h)
+    kcl_xarope: 50,       // mL por dose (40 mEq)
 };
 
 const PESOS = [2.5, 4, 7, 10, 15, 22, 30, 45, 70];
