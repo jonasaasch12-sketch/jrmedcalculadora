@@ -298,18 +298,22 @@ registrarMedicamentos({
     },
     "kcl_ev": {
         cat: "cat-diarreia", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Expansão)",
-        kw: "potassio kcl hipocalemia hipopotassemia correcao reposicao endovenosa hidroeletrolitico", nome: "KCl 10% EV (Hipocalemia Grave, K < 2,5)", apres: "KCl 10% = 1,34 mEq/mL",
-        info: "<strong>Conduta:</strong> 0,3 a 0,5 mEq/kg/h por 4h, a 4 mEq/100 mL.", badge: "Máx periférica: 8 mEq/100 mL", recLabel: "Texto para selecionar e copiar:",
+        kw: "potassio kcl hipocalemia hipopotassemia correcao reposicao endovenosa hidroeletrolitico diluicao padrao periferica central", nome: "KCl 19,1% EV (Hipocalemia Grave, K < 2,5)", apres: "KCl 19,1% = 2,56 mEq/mL",
+        info: "<strong>Conduta:</strong> 0,3 a 0,5 mEq/kg/h por 4h, em diluição padrão: periférica 3,8 mEq/100 mL ou central 14,5 mEq/100 mL.", badge: "Periférica: máx 40 mEq/L", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
-            let op = taxa => { let meq = taxa * p * 4, vol = meq / 4 * 100, kcl = meq / 1.34; return { meq, vol, kcl, bic: vol / 4 }; };
-            let a = op(0.3), b = op(0.5);
-            let txt = (o, t) => `${t} MEQ/KG/H (${o.meq.toFixed(1)} mEq em 4h):\n SG 5% ou SF 0,9% ..... ${Math.round(o.vol)} mL\n KCl 10% ..... ${o.kcl.toFixed(1)} mL\n Correr EV em 4 horas, em BIC a ${o.bic.toFixed(0)} mL/h.`;
-            return { v: `0,3: ${a.kcl.toFixed(1)} mL KCl\n0,5: ${b.kcl.toFixed(1)} mL KCl`, r: `VIA ENDOVENOSA (HIPOCALEMIA GRAVE - FASE RÁPIDA)\n\n${txt(a, "0,3")}\n\n${txt(b, "0,5")}\n\n* Concentração de 4 mEq/100 mL. Máximo em veia periférica: 8 mEq/100 mL; veia central: 15 mEq/100 mL.` };
+            /* Diluições padrão (iguais para qualquer peso): o peso muda só a velocidade */
+            let mEqAmp = 2.562;
+            let dil = (sf, kcl) => { let meq = kcl * mEqAmp, vol = sf + kcl; return { sf, kcl, vol, por100: meq / vol * 100 }; };
+            let per = dil(500, 7.5), cen = dil(100, 6);
+            let mlh = (d, taxa) => p * taxa / (d.por100 / 100);
+            let linha = (d, taxa) => { let v = mlh(d, taxa); return `• ${String(taxa).replace('.', ',')} mEq/kg/h (${(p * taxa).toFixed(1)} mEq/h): correr a ${v.toFixed(0)} mL/h em BIC por 4 horas (total ${(v * 4).toFixed(0)} mL = ${(p * taxa * 4).toFixed(1)} mEq; ${Math.ceil(v * 4 / d.vol)} frasco${Math.ceil(v * 4 / d.vol) > 1 ? 's' : ''}).`; };
+            let conc = d => `${d.por100.toFixed(1)} mEq/100 mL (${(d.por100 * 10).toFixed(0)} mEq/L = ${(d.por100 / 100).toFixed(3)} mEq/mL)`;
+            return { v: `Perif.: ${mlh(per, 0.3).toFixed(0)}–${mlh(per, 0.5).toFixed(0)} mL/h\nCentral: ${mlh(cen, 0.3).toFixed(0)}–${mlh(cen, 0.5).toFixed(0)} mL/h`, r: `VIA ENDOVENOSA (HIPOCALEMIA GRAVE - REPOSIÇÃO DE POTÁSSIO)\n\nDOSE: 0,3 a 0,5 mEq/kg/h por 4 horas = ${(p * 0.3).toFixed(1)} a ${(p * 0.5).toFixed(1)} mEq/h.\n\n1) DILUIÇÃO PADRÃO - VEIA PERIFÉRICA\nSF 0,9% ${per.sf} mL + KCl 19,1% ${String(per.kcl).replace('.', ',')} mL\nConcentração final: ${conc(per)}. Máximo periférico: 40 mEq/L.\n${linha(per, 0.3)}\n${linha(per, 0.5)}\n\n2) DILUIÇÃO PADRÃO - VEIA CENTRAL\nSF 0,9% ${cen.sf} mL + KCl 19,1% ${cen.kcl} mL\nConcentração final: ${conc(cen)}. Máximo central: 15 mEq/100 mL.\n${linha(cen, 0.3)}\n${linha(cen, 0.5)}\n\nOBSERVAÇÕES:\n* KCl 19,1% = 2,56 mEq/mL. Nunca fazer KCl em bolus ou sem diluir.\n* Sempre em BIC, com monitorização cardíaca (ECG). Dosar o K ao término.\n* A diluição periférica exige volume alto: em dose maior ou restrição hídrica, preferir a via central. O limite periférico não se aplica em situação de risco de vida (DynaMed).\n* Hipocalemia leve a moderada (2,5 a 3,4) sem via oral possível: 1 mEq/kg em 1 a 2 horas (DynaMed).` };
         },
         detalhes: {
-            indicacao: "Hipocalemia grave (K < 2,5).",
-            dose: "0,3 a 0,5 mEq/kg/h por 4 horas, a 4 mEq/100 mL de SG 5% ou SF 0,9%.",
-            atencao: "Sempre em BIC. Máximo 8 mEq/100 mL em veia periférica e 15 mEq/100 mL em veia central. Monitorar ECG."
+            indicacao: "Hipocalemia grave (K < 2,5) ou com arritmia; ou quando não é possível a via oral.",
+            dose: "0,3 a 0,5 mEq/kg/h por 4 horas. Diluição padrão periférica: SF 0,9% 500 mL + KCl 19,1% 7,5 mL (3,8 mEq/100 mL). Central: SF 0,9% 100 mL + KCl 19,1% 6 mL (14,5 mEq/100 mL).",
+            atencao: "Sempre em BIC e com ECG. Periférica: máximo 40 mEq/L (DynaMed). Central: máximo 15 mEq/100 mL. Nunca em bolus."
         }
     },
     "kcl_xarope": {
