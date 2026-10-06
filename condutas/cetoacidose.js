@@ -204,80 +204,130 @@ registrarConduta({
             ]
         },
         {
-            titulo: "Condução na emergência / hospitalar",
+            titulo: "Condução na emergência: passo a passo",
             icone: "🚨",
             cor: "#dc2626",
+            subtitulo: "Siga na ordem. Os passos 1 a 7 acontecem nas primeiras horas.",
             secoes: [
                 {
-                    titulo: "Abordagem inicial e expansão",
-                    icone: "🚑",
+                    titulo: "Linha do tempo (resumo)",
+                    icone: "⏱️",
                     aberta: true,
-                    resumo: "ABC do PALS, 2 acessos, SF 0,9% 10 mL/kg em 1h (choque: 10 a 20 mL/kg).",
-                    alerta: true,
+                    resumo: "Toda a condução numa olhada. Os detalhes estão em cada passo abaixo.",
                     itens: [
-                        "<strong>Avaliação imediata (PALS):</strong> sinais vitais e SatO₂ contínuos, <strong>peso atual</strong> (não o informado), grau de desidratação, Glasgow, glicemia e cetonemia capilares, gasometria com eletrólitos, ECG contínuo, sinais de infecção.",
-                        "<strong>A — Via aérea:</strong> Glasgow ≤ 8: proteger a via aérea e esvaziar o estômago (SNG). Evitar intubar (a subida da pCO₂ piora o pH do líquor e o risco de edema cerebral).",
-                        "<strong>B — Respiração:</strong> inconsciente, insuficiência respiratória ou choque: O₂ a 100% por máscara de alto fluxo.",
-                        "<strong>C — Circulação:</strong> <strong>2 acessos venosos periféricos</strong>. <strong>Sem choque: SF 0,9% 10 mL/kg em 60 min.</strong> <strong>Choque: 10 a 20 mL/kg em 30 a 60 min</strong> (hipoperfusão grave: 15 a 30 min). Reavaliar e repetir se preciso. <strong>Não passar de 30 mL/kg.</strong>",
-                        "<strong>D — Neurológico:</strong> Glasgow (≤ 13: UTI). Cefaleia + alteração da consciência: pensar já em edema cerebral. Inconsciente: sondagem vesical.",
-                        "<strong>E — Exposição:</strong> procurar infecção e tratar com antibiótico quando indicado.",
-                        "Bomba de insulina (infusão SC contínua): <strong>retirar</strong>.",
-                        "<strong>Insulina só depois de pelo menos 1 hora de expansão.</strong>"
+                        "<span class=\"cond-passo\">1</span> <strong>Chegada (0 min):</strong> Monitor, ABC, pesar, <strong>2 acessos</strong> e <strong>colher os exames</strong>",
+                        "<span class=\"cond-passo\">2</span> <strong>0 a 1 h:</strong> <strong>Expansão:</strong> SF 0,9% 10 mL/kg em 1h (choque: 10 a 20 mL/kg). <strong>Ainda sem insulina</strong>",
+                        "<span class=\"cond-passo\">3</span> <strong>Saiu o K:</strong> Decidir <strong>quando começar o potássio</strong> (e se a insulina pode começar)",
+                        "<span class=\"cond-passo\">4</span> <strong>A partir da 2ª hora:</strong> <strong>Hidratação de 48h</strong> com KCl 40 mEq/L (card calcula o mL/h)",
+                        "<span class=\"cond-passo\">5</span> <strong>Após 1 h de expansão:</strong> <strong>Insulina regular EV contínua</strong> 0,05 a 0,1 U/kg/h. <strong>Nunca bolus</strong>",
+                        "<span class=\"cond-passo\">6</span> <strong>Glicemia ≤ 300:</strong> <strong>Colocar glicose no soro</strong> (duas soluções). Não baixar a insulina",
+                        "<span class=\"cond-passo\">7</span> <strong>De 1/1h e 2/2h:</strong> Glicemia, sinais vitais e Glasgow 1/1h; gasometria, eletrólitos e cetonemia 2/2h",
+                        "<span class=\"cond-passo\">8</span> <strong>CAD resolvida:</strong> pH > 7,30, HCO₃ > 15, cetonemia < 1 e aceitando VO: <strong>insulina SC</strong>",
+                        "⚠️ <strong>A qualquer hora:</strong> Cefaleia, vômitos, sonolência, bradicardia: <strong>edema cerebral</strong>. Glicemia < 60: <strong>hipoglicemia</strong>"
+                    ],
+                    lista: "passos"
+                },
+                {
+                    passo: 1,
+                    titulo: "Chegada: estabilizar e pedir os exames",
+                    aberta: true,
+                    resumo: "Minuto 0. Monitor, ABC, peso, 2 acessos e exames.",
+                    itens: [
+                        "<strong>Monitorizar:</strong> FC, FR, PA, SatO₂ e <strong>ECG contínuo</strong> (onda T mostra o potássio).",
+                        "<strong>A — Via aérea:</strong> Glasgow ≤ 8: proteger a via aérea e passar SNG. Evitar intubar; se intubar, não hiperventilar (pCO₂ > 35).",
+                        "<strong>B — Respiração:</strong> choque, inconsciente ou insuficiência respiratória: O₂ a 100% por máscara.",
+                        "<strong>C — Circulação:</strong> <strong>2 acessos venosos periféricos</strong> (um para soro/insulina, outro para coletas).",
+                        "<strong>D — Neurológico:</strong> Glasgow (escala no bloco 🔎). ≤ 13: UTI. Inconsciente: sonda vesical.",
+                        "<strong>Pesar a criança</strong> (peso atual, não o informado). Obeso: usar o peso ideal.",
+                        "Usa bomba de insulina: <strong>retirar</strong>.",
+                        "Marcar a <strong>gravidade</strong> (pH/bicarbonato) no bloco 🔎: grave ou choque → UTI."
+                    ],
+                    tabela: {
+                        titulo: "🧪 Exames para pedir na chegada",
+                        colunas: ["Exame", "Para quê"],
+                        linhas: [
+                            ["Glicemia capilar", "Confirmar; depois de 1/1h"],
+                            ["Cetonemia capilar (beta-hidroxibutirato)", "Confirmar (≥ 3 mmol/L); depois de 2/2h"],
+                            ["Gasometria venosa", "pH e bicarbonato: gravidade"],
+                            ["Na, K, Cl", "K decide o passo 3; Na corrigido e ânion gap"],
+                            ["Glicose sérica, ureia e creatinina", "Osmolaridade e função renal"],
+                            ["Cálcio, fósforo e magnésio", "Basal (para eventual reposição)"],
+                            ["Hemograma", "Infecção (leucocitose pode ser só estresse)"],
+                            ["HbA1c", "Controle prévio / diabetes de início"],
+                            ["Se suspeita de infecção", "EAS, urocultura, hemocultura, RX de tórax, swab de orofaringe"]
+                        ],
+                        nota: "Fórmulas (Na corrigido, osmolaridade, ânion gap) e o que se espera da correção: seção 🧪 Exames e cálculos, no bloco 🔎. K da gasometria não substitui o K do sangue."
+                    }
+                },
+                {
+                    passo: 2,
+                    titulo: "0 a 1 hora: expansão (ainda sem insulina)",
+                    aberta: true,
+                    resumo: "SF 0,9% 10 mL/kg em 1h. Choque: 10 a 20 mL/kg. Máximo 30 mL/kg.",
+                    itens: [
+                        "<strong>Sem choque:</strong> SF 0,9% <strong>10 mL/kg em 60 minutos</strong>.",
+                        "<strong>Com choque:</strong> SF 0,9% <strong>10 a 20 mL/kg em 30 a 60 minutos</strong> (hipoperfusão grave: em 15 a 30 min). Reavaliar e repetir se preciso.",
+                        "<strong>Não passar de 30 mL/kg</strong> no total. <strong>Anotar o volume dado</strong>: ele é descontado no passo 4.",
+                        "❌ <strong>Não iniciar insulina nesta 1ª hora.</strong> ❌ <strong>Não dar bicarbonato.</strong>"
                     ],
                     remedios: ["cad_expansao"]
                 },
                 {
-                    titulo: "Hidratação em 48h e potássio",
-                    icone: "💧",
+                    passo: 3,
+                    titulo: "Saiu o potássio: decidir quando repor",
                     aberta: true,
-                    resumo: "(Déficit + 2 x manutenção − expansão) ÷ 48h, com 40 mEq/L de K.",
+                    resumo: "O K do exame decide quando o potássio entra no soro.",
+                    tabela: {
+                        colunas: ["K do exame", "O que fazer"],
+                        linhas: [
+                            ["< 2,5 mEq/L", "<strong>Repor K já, mais rápido</strong>. <strong>Adiar a insulina</strong> até K > 2,5"],
+                            ["2,5 a 4,4 mEq/L", "<strong>KCl no soro já</strong> (40 mEq/L)"],
+                            ["4,5 a 5,4 mEq/L", "KCl no soro <strong>junto com o início da insulina</strong>"],
+                            ["≥ 5,5 mEq/L", "Sem K por enquanto. Só <strong>após diurese</strong> e K < 5,5"]
+                        ],
+                        nota: "<strong>Dose:</strong> 40 mEq/L no soro (20 mEq/L se a velocidade for ≥ 10 mL/kg/h). <strong>Máximo: 0,5 mEq/kg/h.</strong> Sem diurese ou insuficiência renal: não repor. Sem resultado ainda? O ECG ajuda: T achatada, onda U, QT longo = K baixo; T apiculada = K alto. Fonte: SPP. O card de insulina do app usa K ≥ 3,3 para iniciar (SBD); SPSP 2024: 60 mEq/L se K < 3,5."
+                    }
+                },
+                {
+                    passo: 4,
+                    titulo: "A partir da 2ª hora: hidratação de 48h com potássio",
+                    aberta: true,
+                    resumo: "O card calcula o mL/h por % de desidratação. Descontar a expansão.",
                     itens: [
-                        "Corrigir a desidratação em <strong>24 a 48 horas</strong> (72h se edema cerebral), junto com a manutenção. Soro: <strong>SF 0,9%</strong> (ou NaCl 0,45% ou Ringer lactato, conforme o Na e a osmolaridade).",
-                        "<strong>Déficit (mL) = % desidratação x peso x 10.</strong> <strong>Total por hora = (déficit + 2 x manutenção − expansão) ÷ 48.</strong>",
-                        "Total de líquidos <strong>até 1,5 a 2 x a manutenção</strong>. Obeso: peso ideal para sexo e estatura. Descontar o que o paciente beber; <strong>não repor a diurese</strong>.",
-                        "Na baixo ou que não sobe com a queda da glicemia: aumentar o sódio do soro. Muito SF pode causar <strong>acidose hiperclorêmica</strong> (Cl:Na > 0,79): trocar por Ringer lactato.",
-                        "<strong>Na corrigido ≥ 150</strong> (SBD): considerar NaCl 0,45%.",
-                        "SPSP 2024: manutenção de 1.500 a 2.000 mL/m²/dia (Holliday-Segar)."
-                    ],
-                    tabelas: [
-                        {
-                            titulo: "Potássio: quando começar (pelo K inicial)",
-                            colunas: ["K inicial", "Conduta"],
-                            linhas: [
-                                ["< 4,5 mEq/L", "Iniciar <strong>imediatamente</strong> (40 mEq/L no soro)"],
-                                ["4,5 a 5,4 mEq/L", "Iniciar <strong>junto com a insulina</strong>"],
-                                ["≥ 5,5 mEq/L", "Só <strong>após diurese</strong> e K < 5,5"]
-                            ],
-                            nota: "<strong>Dose:</strong> 40 mEq/L no soro (SPP: metade KCl + metade fosfato de potássio, se disponível); 20 mEq/L se a velocidade for ≥ 10 mL/kg/h; <strong>máximo 0,5 mEq/kg/h</strong>. Déficit corporal de K: 3 a 6 mEq/kg. Insuficiência renal: não repor de rotina. <strong>Hipocalemia grave:</strong> repor mais rápido e só começar a insulina com K > 2,5 (SPP); a SBD e o card de insulina usam K ≥ 3,3. SPSP 2024: 60 mEq/L se K < 3,5. ECG ajuda: hipocalemia (T achatada, onda U, QT longo); hipercalemia (T apiculada)."
-                        }
+                        "<strong>Escolher a desidratação:</strong> CAD moderada <strong>5 a 7%</strong>; CAD grave <strong>7 a 10%</strong>.",
+                        "<strong>Velocidade (mL/h) = (déficit + 2 x manutenção − expansão) ÷ 48.</strong> Déficit = % x peso x 10. O card abaixo já faz a conta.",
+                        "<strong>Soro:</strong> SF 0,9% + KCl 19,1% (40 mEq/L), conforme o passo 3. Na corrigido ≥ 150 ou osmolaridade muito alta: considerar NaCl 0,45%; hipercloremia (Cl:Na > 0,79): trocar por Ringer lactato.",
+                        "<strong>Não repor a diurese.</strong> Descontar o que beber. Total de até 2 x a manutenção.",
+                        "Na que não sobe enquanto a glicemia cai: aumentar o sódio do soro e vigiar edema cerebral."
                     ],
                     remedios: ["cad_hidratacao"]
                 },
                 {
-                    titulo: "Insulina em infusão contínua",
-                    icone: "💉",
+                    passo: 5,
+                    titulo: "Após 1 hora de expansão: insulina contínua",
                     aberta: true,
-                    resumo: "0,05 a 0,1 U/kg/h após 1h de expansão. Nunca fazer bolus.",
+                    resumo: "Insulina regular EV 0,05 a 0,1 U/kg/h, em BIC. Nunca bolus.",
                     itens: [
-                        "<strong>Iniciar após pelo menos 1 hora de expansão</strong> (e com K adequado).",
-                        "<strong>Dose: 0,05 a 0,1 U/kg/h</strong> de insulina regular EV em BIC. <strong>Bolus de insulina: contraindicação absoluta</strong> na criança (edema cerebral, choque, hipocalemia).",
-                        "Preparo da SPP: insulina regular 50 U em 50 mL de SF 0,9% (1 U = 1 mL), em equipo separado (pode ir em Y com o soro). Trocar a solução e o equipo a cada 24h. O card do app usa 50 U em 500 mL (0,1 U/mL).",
-                        "<strong>Manter a dose até resolver a CAD.</strong> Se a glicemia chegar a ≤ 300 mg/dL ou cair mais de 90 mg/dL/h: <strong>não reduzir a insulina, aumentar a glicose do soro</strong> (SPP).",
-                        "pH, cetonemia, bicarbonato e ânion gap não melhoram: rever a dose, o tempo de preparo da solução, o equipo e o acesso, e pensar em infecção.",
-                        "SBD (adultos): glicemia não cai 50 a 70 mg/dL na 1ª hora → checar o acesso; desprezar os primeiros 10% da solução (adsorção no equipo).",
-                        "CAD leve com tolerância oral: insulina SC + hidratação oral (SPP); sem melhora, passar para o tratamento EV."
+                        "<strong>Conferir antes:</strong> já passou 1 hora de expansão? O K permite (passo 3)?",
+                        "<strong>Insulina regular EV contínua: 0,05 a 0,1 U/kg/h</strong> em bomba de infusão, em equipo próprio (pode ir em Y com o soro).",
+                        "❌ <strong>Bolus de insulina é proibido</strong> na criança (edema cerebral, choque, hipocalemia).",
+                        "<strong>Não reduzir nem desligar a insulina até a CAD resolver.</strong> Se a glicemia cair demais, aumentar a glicose do soro (passo 6).",
+                        "Esperado: glicemia caindo 35 a 90 mg/dL/h. Não cai? Checar acesso, equipo, preparo e dose.",
+                        "<strong>CAD leve</strong>, sem vômitos e aceitando VO: pode ser insulina SC + hidratação oral; sem melhora, voltar para este esquema."
                     ],
+                    nota: "Preparo da SPP: 50 U em 50 mL de SF 0,9% (1 U/mL), trocar a cada 24h. O card do app usa 50 U em 500 mL (0,1 U/mL).",
                     remedios: ["insulina_cad"]
                 },
                 {
-                    titulo: "Glicose no soro (sistema de duas soluções)",
-                    icone: "🍬",
-                    resumo: "Ajustar a proporção entre soro sem e com glicose pela glicemia de 1/1h.",
+                    passo: 6,
+                    titulo: "Glicemia caiu: colocar glicose no soro",
+                    aberta: true,
+                    resumo: "Glicemia ≤ 300 ou queda > 90/h: glicose no soro. A insulina continua igual.",
                     itens: [
-                        "Ao iniciar a insulina, o soro passa a ter <strong>glicose a 5%</strong> (SPP). Se a CAD não resolveu e a glicemia ≤ 300 mg/dL ou cai > 90 mg/dL/h: subir para 7,5%, 10% ou 12,5%.",
-                        "<strong>Sistema de duas soluções:</strong> uma sem glicose e outra com SG 10 a 12,5%, as duas com o mesmo sódio e potássio, correndo em Y. A velocidade total não muda; só muda a proporção entre elas conforme a glicemia. Permite ajustar a glicose na hora, sem preparar soro novo.",
-                        "Queda da glicemia: até 50 mg/dL/h após as 2 primeiras horas e até 600 mg/dL nas primeiras 6 horas (J Pediatr 2001).",
-                        "Glicemia já corrigida mas acidose persistente: <strong>aumentar a glicose (até 12,5% ou mais com acesso central)</strong> e manter a insulina."
+                        "<strong>Gatilho:</strong> glicemia <strong>≤ 300 mg/dL</strong> ou queda <strong>> 90 mg/dL/h</strong> (SPP: já pode entrar SG 5% junto com a insulina).",
+                        "<strong>Sistema de duas soluções:</strong> soro <strong>sem glicose</strong> + soro <strong>com SG 10%</strong> (mesmo sódio e potássio), correndo em Y. A velocidade total do passo 4 não muda: só a proporção entre os dois, pela glicemia de 1/1h (tabela).",
+                        "Glicemia normal mas <strong>acidose ainda presente</strong>: aumentar a glicose (até 12,5%) e <strong>manter a insulina</strong>.",
+                        "Queda ideal: até 50 mg/dL/h após as 2 primeiras horas; até 600 mg/dL nas primeiras 6 horas."
                     ],
                     tabelas: [
                         {
@@ -290,10 +340,10 @@ registrarConduta({
                                 ["201 a 300", "201 a 250", "25%", "75%"],
                                 ["< 200", "< 200", "0", "100%"]
                             ],
-                            nota: "Exemplo: 120 mL/h no total e 50% de cada = 60 mL/h de cada solução. Os valores podem variar entre serviços."
+                            nota: "Exemplo: 120 mL/h no total e 50% de cada = 60 mL/h de cada solução. Os preparos das duas soluções estão no card do passo 4."
                         },
                         {
-                            titulo: "Preparos de soro glicosado (SPP)",
+                            titulo: "Outros preparos de soro glicosado (SPP)",
                             colunas: ["Solução", "Preparo para 500 mL"],
                             linhas: [
                                 ["SG 7,5% em SF", "450 mL de SG 5% em SF + 50 mL de SG 30%"],
@@ -306,29 +356,52 @@ registrarConduta({
                     ]
                 },
                 {
-                    titulo: "Monitorização",
-                    icone: "📈",
-                    resumo: "Sinais vitais, Glasgow, glicemia e balanço de 1/1h; eletrólitos de 2/2h.",
-                    itens: [
-                        "<strong>De 1/1h:</strong> PA, FC, FR, SatO₂, ECG (onda T), Glasgow e sinais neurológicos, glicemia capilar, balanço hídrico, soro e velocidade, insulina.",
-                        "<strong>De 2/2h:</strong> cetonemia capilar, gasometria (pH, bicarbonato), Na, K, Cl, glicose, osmolaridade e ânion gap.",
-                        "<strong>De 4/4h:</strong> fósforo, cálcio e magnésio. <strong>De 6/6h:</strong> ureia, creatinina e hemograma (se alterados).",
-                        "Em perfusão periférica ruim, medir a glicemia no sangue venoso ou arterial, não no capilar.",
-                        "Registrar tudo em folha própria, hora a hora."
+                    passo: 7,
+                    titulo: "De hora em hora: monitorizar e reavaliar",
+                    aberta: true,
+                    resumo: "O que checar, quando, e o que fazer se não melhorar.",
+                    tabela: {
+                        colunas: ["Quando", "O que checar"],
+                        linhas: [
+                            ["1/1h", "PA, FC, FR, SatO₂, ECG, <strong>Glasgow e sinais neurológicos</strong>, <strong>glicemia capilar</strong>, balanço hídrico, soro e insulina (velocidades)"],
+                            ["2/2h", "Gasometria (pH, HCO₃), Na, K, Cl, glicose, osmolaridade, ânion gap, cetonemia capilar"],
+                            ["4/4h", "Fósforo, cálcio e magnésio"],
+                            ["6/6h", "Ureia, creatinina e hemograma (se alterados)"]
+                        ],
+                        nota: "Esperado: glicemia −35 a 90 mg/dL/h; cetonemia −0,5 mmol/L/h; HCO₃ +3 mEq/L/h; Na subindo 0,5 a 1 mEq/L/h. Perfusão ruim: glicemia venosa ou arterial, não capilar."
+                    },
+                    grupos: [
+                        {
+                            nome: "Não está melhorando? (pH, cetonemia, HCO₃ e ânion gap parados)",
+                            itens: [
+                                "Rever a <strong>insulina</strong>: dose, preparo (há quanto tempo), equipo, acesso venoso.",
+                                "Rever a <strong>hidratação</strong> e se precisa de nova expansão.",
+                                "Procurar <strong>infecção</strong> (sepse).",
+                                "Fosfato < 2,5 mg/dL com sintomas: repor fosfato de potássio, vigiando o cálcio. Não repor de rotina."
+                            ]
+                        },
+                        {
+                            nome: "Bicarbonato: só se pH < 6,9",
+                            itens: [
+                                "<strong>Não é rotina</strong> (piora o K e aumenta o risco de edema cerebral).",
+                                "Só com <strong>pH venoso < 6,9</strong> ou hipercalemia grave com disfunção cardíaca: <strong>1 a 2 mEq/kg EV em 60 min, em UTI</strong>."
+                            ],
+                            remedios: ["cad_bicarbonato"]
+                        }
                     ]
                 },
                 {
-                    titulo: "Bicarbonato e fosfato",
-                    icone: "⚗️",
-                    resumo: "Não usar de rotina. Bicarbonato só se pH < 6,9.",
+                    passo: 8,
+                    titulo: "CAD resolvida: passar para insulina SC",
+                    resumo: "pH > 7,30, HCO₃ > 15, cetonemia < 1 e aceitando a via oral.",
                     itens: [
-                        "<strong>Bicarbonato não é recomendado</strong> (hipocalemia, acidose paradoxal do líquor, edema cerebral). Exceção: <strong>pH venoso < 6,9</strong> ou hipercalemia com risco de vida e disfunção cardíaca: <strong>1 a 2 mEq/kg EV em 60 min, em UTI</strong>.",
-                        "<strong>Fosfato:</strong> não repor de rotina (risco de hipocalcemia). Repor se fósforo < 2,5 mg/dL com sintomas (encefalopatia, disfunção miocárdica, insuficiência respiratória, fraqueza muscular, disfagia, íleo), como fosfato de potássio, monitorando o cálcio."
-                    ],
-                    remedios: ["cad_bicarbonato"]
+                        "<strong>Critérios:</strong> pH > 7,30, bicarbonato > 15 mEq/L, cetonemia < 1 mmol/L e aceitando a via oral.",
+                        "Suspender o soro e fazer a <strong>insulina SC antes de uma refeição</strong>; <strong>desligar a insulina EV 15 a 30 min depois</strong>.",
+                        "Doses e cálculo: seção ✅ <strong>Resolução e transição para insulina SC</strong>, no bloco 🏠 abaixo."
+                    ]
                 },
                 {
-                    titulo: "Edema cerebral",
+                    titulo: "A qualquer momento: edema cerebral",
                     icone: "🧠",
                     alerta: true,
                     resumo: "Primeiras 12h. Tratar na suspeita: manitol ou NaCl 3%, sem esperar tomografia.",
@@ -381,12 +454,13 @@ registrarConduta({
                     ]
                 },
                 {
-                    titulo: "Hipoglicemia e outras complicações",
+                    titulo: "A qualquer momento: hipoglicemia e outras complicações",
                     icone: "🩸",
-                    resumo: "Hipoglicemia: aumentar a glicose, não desligar a insulina.",
+                    alerta: true,
+                    resumo: "Glicemia < 60: aumentar a glicose. Não desligar a insulina.",
                     itens: [
-                        "<strong>Hipoglicemia (< 60 mg/dL) sem sintomas:</strong> aumentar a glicose infundida em 25% (J Pediatr 2001).",
-                        "<strong>Inconsciente ou convulsionando:</strong> glicose 25% 1 a 2 mL/kg EV, e depois aumentar a glicose do soro em 25%. Acidose já corrigida: pode reduzir a insulina em 25%.",
+                        "<strong>Glicemia < 60 mg/dL sem sintomas:</strong> aumentar a glicose infundida em 25% (J Pediatr 2001).",
+                        "<strong>Inconsciente ou convulsionando:</strong> glicose 25% 1 a 2 mL/kg EV e depois aumentar a glicose do soro em 25%. Acidose já corrigida: pode reduzir a insulina em 25%.",
                         "<strong>Outras complicações:</strong> hipocalemia, hipofosfatemia, hipocalcemia, hipomagnesemia, acidose hiperclorêmica; trombose venosa e de seios venosos, AVC; sepse, pneumonia aspirativa, SDRA; pneumotórax e pneumomediastino; rabdomiólise, isquemia intestinal, pancreatite, insuficiência renal aguda."
                     ],
                     remedios: ["glicose_pals"]

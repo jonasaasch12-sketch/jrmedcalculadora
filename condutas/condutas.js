@@ -87,7 +87,7 @@ function renderizarListaCondutas() {
 // Monta o conteúdo de uma seção ou de um grupo: lista, tabelas, nota e medicações.
 function htmlBlocoConduta(b) {
     let html = '';
-    if (b.itens) html += `<ul>${b.itens.map(t => `<li>${t}</li>`).join('')}</ul>`;
+    if (b.itens) html += `<ul${b.lista === 'passos' ? ' class="cond-lista-passos"' : ''}>${b.itens.map(t => `<li>${t}</li>`).join('')}</ul>`;
     [b.tabela, ...(b.tabelas || [])].filter(Boolean).forEach(t => {
         if (t.titulo) html += `<div class="cond-tabela-titulo">${t.titulo}</div>`;
         html += `<div class="cond-tabela-wrap"><table class="cond-tabela${t.gravidade ? ' cond-tabela-gravidade' : ''}"><thead><tr>${t.colunas.map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>`;
@@ -135,7 +135,7 @@ function abrirConduta(id) {
         b.secoes.forEach(s => {
             let i = n++;
             html += `<details class="cond-secao${s.alerta ? ' cond-alerta' : ''}" id="cond-sec-${i}" style="--cor-cat:${c.cor}"${s.aberta ? ' open' : ''}>
-                <summary><h3>${s.icone || ''} ${escCond(s.titulo)}</h3>${s.resumo ? `<div class="cond-secao-resumo">${s.resumo}</div>` : ''}</summary>
+                <summary><h3>${s.passo ? `<span class="cond-passo">${s.passo}</span>` : (s.icone || '')} ${escCond(s.titulo)}</h3>${s.resumo ? `<div class="cond-secao-resumo">${s.resumo}</div>` : ''}</summary>
                 <div class="cond-secao-corpo">${htmlBlocoConduta(s)}</div>
             </details>`;
         });
