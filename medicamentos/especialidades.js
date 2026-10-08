@@ -114,6 +114,32 @@ registrarMedicamentos({
             fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Sulfato Ferroso, atualizado em 14/08/2025."
         }
     },
+    "hexomedine": {
+        cat: "cat-especialidades", sub: "🏠 Tópicos Orais (Orofaringe)",
+        kw: "hexomedine colutorio spray garganta dor de garganta orofaringe faringite hexamidina tetracaina antisseptico anestesico local",
+        nome: "Hexomedine Colutório Spray", apres: "Hexamidina 1 mg/mL + Tetracaína 0,5 mg/mL",
+        info: "<strong>Conduta:</strong> 3 jatos do spray na orofaringe de 4/4h, por no máximo 5 dias. Contraindicado < 3 anos.", badgeSt: "static-blue", badge: "3 Jatos", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: (p, i) => {
+            let alerta = (i !== "" && parseFloat(i) < 3) ? "ATENÇÃO: MEDICAMENTO CONTRAINDICADO PARA MENORES DE 3 ANOS.\n\n" : "";
+            return { v: "3 Jatos", r: `${alerta}USO TÓPICO ORAL\n\n1) HEXOMEDINE COLUTÓRIO SPRAY ----------------------- 1 FR\nAPLICAR 3 JATOS NA CAVIDADE BUCAL, DIRECIONANDO O APLICADOR PARA A OROFARINGE, DE 4/4 HORAS, POR ATÉ 5 DIAS. NÃO USAR ANTES DE SE ALIMENTAR OU DE INGERIR BEBIDAS.` };
+        },
+        detalhes: {
+            indicacao: "Antisséptico e anestésico local da orofaringe.",
+            dose: "Ver 📋 Ficha completa, abaixo.",
+            atencao: "Contraindicado para menores de 3 anos. Máximo 5 dias. Não usar antes de comer ou beber."
+        },
+        ficha: {
+            apresentacoes: "Colutório: isetionato de hexamidina 1 mg/mL + cloridrato de tetracaína 0,5 mg/mL, frasco-spray com 50 mL (Hexomedine®).",
+            indicacoes: "Antisséptico (hexamidina, grupo das diaminas) e anestésico local (tetracaína) de uso na orofaringe.",
+            dose: "Dose usual: 3 jatos (aplicações do spray) de 4/4 horas, na cavidade bucal, direcionando o aplicador para a orofaringe.",
+            via: "Tópica oral (spray na orofaringe).",
+            intervalo: "4/4 horas, por no máximo 5 dias.",
+            alertasPediatricos: "Contraindicado para menores de 3 anos. Não administrar antes da alimentação ou da ingestão de bebidas. Monitorar sinais de hipersensibilidade e reações adversas sistêmicas (neurológicas e cardiovasculares).",
+            contraindicacoes: "Menores de 3 anos.",
+            efeitosAdversos: "Hipersensibilidade; reações adversas sistêmicas (neurológicas e cardiovasculares).",
+            fonteRevisao: "Whitebook (Afya) - Medicamentos/Bulário: Isetionato de Hexamidina + Cloridrato de Tetracaína, atualizado em 30/10/2025. No Whitebook a dose aparece como \"3 nebulizações\"; trata-se de 3 jatos do spray (correção do Dr. Jonas)."
+        }
+    },
     "hemacias": {
         cat: "cat-especialidades", sub: "🏥 Uso Hospitalar (Hemoderivados)",
         kw: "concentrado de hemacias transfusao anemia hemoderivado sangue", nome: "Concentrado de Hemácias", apres: "1 unidade = 250 a 300 mL",

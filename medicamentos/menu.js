@@ -14,7 +14,7 @@ const categorias = [
     { 
         id: "cat-sintomaticos", titulo: "Sintomáticos", dotClass: "dot-sintomaticos", cor: "tarja-sintomaticos", nome: "Sintomáticos", icone: "💊 Sintom.",
         patologias: [
-            { nome: "Febre e Dor (Vias Orais)", remedios: ["dip_gts", "dip_xpe", "pct_gts", "pct_bebe", "ibu_gts", "ibu_50", "ceto_oral"] },
+            { nome: "Febre e Dor (Vias Orais)", conduta: "fssl", condutaNome: "Febre sem sinais localizatórios", remedios: ["dip_gts", "dip_xpe", "pct_gts", "pct_bebe", "ibu_gts", "ibu_50", "ceto_oral"] },
             { nome: "Cólicas e Distensão Abdominal", remedios: ["buscopan", "buscopan_composto", "simet", "colikids"] },
             { nome: "Dor Moderada a Intensa (Via Oral)", remedios: ["tramadol_gts"] },
             { nome: "Analgesia e Antitérmico Hospitalar", remedios: ["dip_inj", "buscopan_composto_ev"] }
@@ -69,6 +69,7 @@ const categorias = [
         patologias: [
             { nome: "Infecções de Vias Aéreas e Partes Moles", remedios: ["amox", "amox400", "clav"] },
             { nome: "Faringite / Amigdalite (Dose Única)", remedios: ["benza"] },
+            { nome: "Febre sem Sinais Localizatórios (Bacteremia Oculta)", conduta: "fssl", condutaNome: "Febre sem sinais localizatórios", remedios: ["cef_fssl"] },
             { nome: "Outros Antibióticos Orais", remedios: ["cefadroxila", "pen_v", "smx_tmp", "metronidazol_vo", "cipro_vo"] },
             { nome: "Antibióticos Hospitalares (EV)", remedios: ["amicacina", "cefalotina", "cefepime", "ceftazidima", "cipro_ev", "clindamicina", "meropenem", "metronidazol_ev", "oxacilina", "pen_cristalina", "vancomicina"] }
         ]
@@ -106,7 +107,7 @@ const categorias = [
         id: "cat-diarreia", titulo: "TGI", dotClass: "dot-diarreia", cor: "tarja-diarreia", nome: "TGI", icone: "💧 TGI",
         patologias: [
             { nome: "Gastroenterite e Reidratação Oral", conduta: "diarreia", condutaNome: "Diarreia aguda", remedios: ["tgi_sro", "tgi_planob", "tgi_zinco", "tgi_provance_mini", "tiorfan", "ondif_cp", "tgi_provance_gg", "tgi_flora", "tgi_azitro", "cipro_disenteria", "metro_parasitas", "vit_a_diarreia", "tgi_alben", "tgi_meben", "nitazoxanida"] },
-            { nome: "Constipação, Refluxo e Mucosite", remedios: ["lactulose", "oleo_mineral", "domperidona", "solucao_mucosite"] },
+            { nome: "Constipação, Refluxo e Mucosite", remedios: ["lactulose", "oleo_mineral", "domperidona", "omeprazol", "solucao_mucosite"] },
             { nome: "Hidratação IV e Hidroeletrolíticos (Choque/Manutenção)", remedios: ["tgi_planoc", "tgi_manut_planoc", "tgi_manutencao", "vig_4", "vig_5"] },
             { nome: "Disenteria: Antibiótico Hospitalar", remedios: ["cef_disenteria", "cefotax_pac"] },
             { nome: "Correção de Potássio e Sódio", remedios: ["kcl_ev", "kcl_xarope", "nacl3_hiponatremia"] }
@@ -130,6 +131,7 @@ const categorias = [
         id: "cat-especialidades", titulo: "Especialidades", dotClass: "dot-especialidades", cor: "tarja-especialidades", nome: "Especialidades", icone: "👁️‍🗨️ Espec.",
         patologias: [
             { nome: "Otologia e Oftalmologia", remedios: ["espec_otociriax", "espec_cerumin", "espec_tobra", "espec_tobra_dexa", "espec_lacribell"] },
+            { nome: "Orofaringe (Dor de Garganta)", remedios: ["hexomedine"] },
             { nome: "Hematologia (Ferro e Hemoderivados)", remedios: ["sulfato_ferroso", "sulfato_ferroso_prof", "hemacias", "plaquetas", "plasma"] }
         ]
     }
