@@ -531,5 +531,99 @@ registrarMedicamentos({
             dose: "≥ 6 meses e < 5 anos: 20 mg/kg/dia de 12/12h. ≥ 5 e < 16 anos: 10 mg/kg 1x/dia (SBP).",
             atencao: "Máximo 750 mg/dia. Quinolona em criança: reservar para as indicações acima. Cautela em QT longo."
         }
+    },
+    "predsin_cp": {
+        cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "predsin prednisolona comprimido 20 mg corticoide asma", nome: "Predsin 20 mg Comprimido (Prednisolona)", apres: "Comprimido 20 mg",
+        info: "<strong>Posologia:</strong> 1 comprimido 1x ao dia, pela manhã, por 5 dias.", badgeSt: "static-blue", badge: "1 Comprimido", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "1 Comprimido", r: `${recHead}1) PREDSIN 20 MG ---------------------------------------- 1 CX\nTOMAR 01 COMPRIMIDO UMA VEZ AO DIA, PELA MANHÃ, POR 5 DIAS.` }),
+        detalhes: {
+            indicacao: "Crise de asma em crianças maiores (corticoide oral).",
+            dose: "1 comprimido de 20 mg 1x ao dia, pela manhã, por 5 dias.",
+            atencao: "Dose fixa: indicada para crianças maiores/adolescentes."
+        }
+    },
+    "rinosoro_inf": {
+        cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Tópico Nasal)",
+        kw: "rinosoro infantil soro nasal spray obstrucao nasal lavagem", nome: "Rinosoro Infantil Spray", apres: "Cloreto de sódio 0,9%",
+        info: "<strong>Conduta:</strong> 2 jatos em cada narina de 2/2h e antes das refeições e de dormir.", badgeSt: "static-blue", badge: "2 Jatos", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "2 Jatos", r: `USO NASAL\n\n1) RINOSORO INFANTIL ---------------------------------- 1 FR\nAPLICAR 02 JATOS EM CADA NARINA DE 2/2 HORAS E ANTES DAS REFEIÇÕES E DE DORMIR.` }),
+        detalhes: {
+            indicacao: "Obstrução nasal.",
+            dose: "2 jatos em cada narina de 2/2h + antes das refeições e de dormir.",
+            atencao: "—"
+        }
+    },
+    "rinosoro_3": {
+        cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Tópico Nasal)",
+        kw: "rinosoro hipertonico 3% spray soro nasal obstrucao nasal", nome: "Rinosoro Hipertônico 3% Spray", apres: "Cloreto de sódio 3%",
+        info: "<strong>Conduta:</strong> 1 jato em cada narina de 4/4h.", badgeSt: "static-blue", badge: "1 Jato", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "1 Jato", r: `USO NASAL\n\n1) RINOSORO HIPERTÔNICO SPRAY 3% ---------------------- 1 FR\nAPLICAR 01 JATO EM CADA NARINA DE 4/4 HORAS.` }),
+        detalhes: {
+            indicacao: "Obstrução nasal.",
+            dose: "1 jato em cada narina de 4/4h.",
+            atencao: "—"
+        }
+    },
+    "neb_sf": {
+        cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Nebulização)",
+        kw: "nebulizacao soro fisiologico inalacao umidificacao vias aereas", nome: "Nebulização com Soro Fisiológico 0,9%", apres: "SF 0,9%",
+        info: "<strong>Conduta:</strong> 5 mL de SF 0,9% de 6/6h por 3 dias.", badgeSt: "static-blue", badge: "5 mL", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "5 mL", r: `NEBULIZAÇÃO\n\n1) SORO FISIOLÓGICO 0,9% ----------------------------- 1 FR\nFAZER NEBULIZAÇÃO COM 5 ML DE SORO FISIOLÓGICO 0,9% DE 6/6 HORAS POR 3 DIAS.` }),
+        detalhes: {
+            indicacao: "Umidificação das vias aéreas.",
+            dose: "5 mL de SF 0,9% por nebulização, de 6/6h, por 3 dias.",
+            atencao: "—"
+        }
+    },
+    "antux_xpe": {
+        cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "antux xarope tosse seca antitussigeno", nome: "Antux Xarope", apres: "1,5 mg / mL",
+        info: "<strong>Posologia:</strong> 2-3 anos: 2,5-5 mL de 6/6 a 8/8h; > 3 anos: 10 mL de 6/6h.", badge: "Tosse seca", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: (p, i) => {
+            let id = parseFloat(i);
+            if (isNaN(id)) return { v: "Digite a idade", r: "Digite a idade: 2-3 anos: 2,5 a 5 mL de 6/6 a 8/8 horas; > 3 anos: 10 mL de 6/6 horas." };
+            if (id < 2) return { v: "< 2 anos", r: "Sem dose definida para menores de 2 anos." };
+            let txt = id <= 3 ? "TOMAR 2,5 A 5 ML A CADA 6 A 8 HORAS SE TOSSE." : "TOMAR 10 ML DE 6/6 HORAS SE TOSSE.";
+            return { v: id <= 3 ? "2,5-5 mL" : "10 mL", r: `${recHead}1) ANTUX XAROPE 1,5 MG/ML ---------------------------- 1 FR\n${txt}` };
+        },
+        detalhes: {
+            indicacao: "Tosse seca.",
+            dose: "2-3 anos: 2,5-5 mL a cada 6-8h; > 3 anos: 10 mL de 6/6h.",
+            atencao: "Sem dose definida para menores de 2 anos."
+        }
+    },
+    "antux_gts": {
+        cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "antux gotas tosse seca antitussigeno", nome: "Antux Gotas", apres: "30 mg / mL",
+        info: "<strong>Posologia:</strong> 2-3 anos: 4-8 gotas; > 3 anos: 15 gotas; adolescente: 30 gotas, de 6/6h.", badge: "Tosse seca", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: (p, i) => {
+            let id = parseFloat(i);
+            if (isNaN(id)) return { v: "Digite a idade", r: "Digite a idade: 2-3 anos: 4 a 8 gotas; > 3 anos: 15 gotas; adolescente: 30 gotas, de 6/6 horas." };
+            if (id < 2) return { v: "< 2 anos", r: "Sem dose definida para menores de 2 anos." };
+            let g = id <= 3 ? "4 A 8" : id < 12 ? "15" : "30";
+            return { v: `${g.replace(' A ', '-')} gts`, r: `${recHead}1) ANTUX GOTAS 30 MG/ML ------------------------------ 1 FR\nTOMAR ${g} GOTAS DE 6/6 HORAS SE TOSSE.` };
+        },
+        detalhes: {
+            indicacao: "Tosse seca.",
+            dose: "2-3 anos: 4-8 gotas; > 3 anos: 15 gotas; adolescente: 30 gotas, de 6/6h.",
+            atencao: "Sem dose definida para menores de 2 anos. Adolescente considerado a partir de 12 anos."
+        }
+    },
+    "percoff": {
+        cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "percoff levodropropizina tosse seca antitussigeno xarope", nome: "Percoff Xarope", apres: "6 mg / mL",
+        info: "<strong>Posologia:</strong> < 12 anos: 5 mL; > 12 anos: 10 mL, de 8/8h por 5 dias.", badge: "Tosse seca", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: (p, i) => {
+            let id = parseFloat(i);
+            let ml = !isNaN(id) && id >= 12 ? 10 : 5;
+            let obs = isNaN(id) ? "\n(< 12 anos: 5 mL; > 12 anos: 10 mL.)" : "";
+            return { v: ml + " mL", r: `${recHead}1) PERCOFF 6 MG/ML ------------------------------------ 1 FR\nTOMAR ${ml} ML DE 8/8 HORAS POR 5 DIAS.${obs}` };
+        },
+        detalhes: {
+            indicacao: "Tosse seca.",
+            dose: "< 12 anos: 5 mL; > 12 anos: 10 mL, de 8/8h por 5 dias.",
+            atencao: "—"
+        }
     }
 });

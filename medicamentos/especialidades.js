@@ -182,5 +182,107 @@ registrarMedicamentos({
             dose: "10-20 mL/kg EV, correndo aberto.",
             atencao: "Tempo máximo de 1 hora."
         }
+    },
+    "bismujet": {
+        cat: "cat-especialidades", sub: "🏠 Tópicos Orais (Orofaringe)",
+        kw: "bismu-jet bismujet aftas estomatite lesao oral", nome: "Bismu-Jet", apres: "Solução oral",
+        info: "<strong>Conduta:</strong> 5 gotas na boca 3 vezes ao dia antes das refeições.", badgeSt: "static-blue", badge: "5 Gotas", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "5 Gotas", r: `USO TÓPICO ORAL\n\n1) BISMU-JET ------------------------------------- 1 FR\nAPLICAR 05 GOTAS NA BOCA 3 VEZES AO DIA, ANTES DAS REFEIÇÕES.` }),
+        detalhes: {
+            indicacao: "Aftas.",
+            dose: "5 gotas na boca 3x/dia antes das refeições.",
+            atencao: "—"
+        }
+    },
+    "otosporin": {
+        cat: "cat-especialidades", sub: "🏠 Tópicos Otológicos",
+        kw: "otosporin polimixina neomicina hidrocortisona ouvido otite externa", nome: "Otosporin Solução Otológica", apres: "Uso Otológico (corticoide + antibiótico)",
+        info: "<strong>Conduta:</strong> 3 gotas no ouvido de 8/8h por 7 dias.", badgeSt: "static-blue", badge: "3 Gotas", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "3 Gotas", r: `USO OTOLÓGICO\n\n1) OTOSPORIN SOLUÇÃO OTOLÓGICA ------------------- 1 FR\nAPLICAR 03 GOTAS NO OUVIDO ______ DE 8/8 HORAS POR 7 DIAS.` }),
+        detalhes: {
+            indicacao: "Otite externa (sem IVAS; manipulação ou piscina).",
+            dose: "3 gotas no ouvido de 8/8h por 7 dias.",
+            atencao: "Otite média aguda (IVAS recente + abaulamento, hiperemia ou otorreia): tratar com amoxicilina."
+        }
+    },
+    "lacrifilm": {
+        cat: "cat-especialidades", sub: "🏠 Tópicos Oftalmológicos",
+        kw: "lacrifilm colirio lubrificante olho seco lagrima", nome: "Lacrifilm Colírio", apres: "Uso Oftalmológico (lubrificante)",
+        info: "<strong>Conduta:</strong> 1 gota em cada olho de 4/4h.", badgeSt: "static-blue", badge: "1 Gota", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "1 Gota", r: `USO OFTALMOLÓGICO\n\n1) LACRIFILM ------------------------------------- 1 FR\nAPLICAR 1 GOTA EM CADA OLHO DE 4/4 HORAS.` }),
+        detalhes: {
+            indicacao: "Lubrificação ocular.",
+            dose: "1 gota em cada olho de 4/4h.",
+            atencao: "—"
+        }
+    },
+    "tobracort": {
+        cat: "cat-especialidades", sub: "🏠 Tópicos Oftalmológicos",
+        kw: "tobracort pomada oftalmologica tobramicina dexametasona hordeolo terçol", nome: "Tobracort Pomada Oftalmológica", apres: "Tobramicina + Dexametasona (pomada)",
+        info: "<strong>Conduta:</strong> Aplicar no olho de 8/8h por 7 dias.", badgeSt: "static-blue", badge: "Uso Oftálmico", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "Uso Oftálmico", r: `USO OFTALMOLÓGICO\n\n1) TOBRACORT POMADA OFTALMOLÓGICA -------------- 1 TUBO\nAPLICAR NO OLHO ______ DE 8/8 HORAS POR 7 DIAS.` }),
+        detalhes: {
+            indicacao: "Hordéolo (terçol).",
+            dose: "Aplicar no olho de 8/8h por 7 dias.",
+            atencao: "Associar compressa morna; considerar cefalexina oral."
+        }
+    },
+    "compressa_morna": {
+        cat: "cat-especialidades", sub: "🏠 Tópicos Oftalmológicos",
+        kw: "compressa morna hordeolo tercol calazio olho", nome: "Compressa Morna (Hordéolo)", apres: "Orientação",
+        info: "<strong>Conduta:</strong> Aplicar 4 vezes ao dia por 3 a 5 dias.", badgeSt: "static-blue", badge: "Orientação", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "Orientação", r: `ORIENTAÇÕES\n\n1) COMPRESSA MORNA ---------------------------------- —\nAPLICAR COMPRESSA MORNA NO OLHO 4 VEZES AO DIA POR 3 A 5 DIAS.` }),
+        detalhes: {
+            indicacao: "Hordéolo (terçol).",
+            dose: "4 vezes ao dia por 3 a 5 dias.",
+            atencao: "—"
+        }
+    },
+    "premarin": {
+        cat: "cat-especialidades", sub: "🏠 Tópicos Genitais",
+        kw: "premarin creme vaginal estrogenio sinequia de pequenos labios coalescencia", nome: "Premarin Creme Vaginal (Sinéquia)", apres: "Creme vaginal (estrogênios conjugados)",
+        info: "<strong>Conduta:</strong> Aplicar 2x ao dia com leve tração, por 3 meses.", badgeSt: "static-blue", badge: "Uso Tópico", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "Uso Tópico", r: `USO TÓPICO\n\n1) PREMARIN CREME VAGINAL ---------------------- 1 TUBO\nAPLICAR 2 VEZES AO DIA, COM A PELE LIMPA, FAZENDO UMA LEVE TRAÇÃO, POR 3 MESES.` }),
+        detalhes: {
+            indicacao: "Sinéquia de pequenos lábios.",
+            dose: "Aplicar 2x/dia com leve tração por 3 meses.",
+            atencao: "—"
+        }
+    },
+    "postec": {
+        cat: "cat-especialidades", sub: "🏠 Tópicos Genitais",
+        kw: "postec creme fimose betametasona hialuronidase", nome: "Postec (Fimose)", apres: "Creme",
+        info: "<strong>Conduta:</strong> Aplicar 2 vezes ao dia por 3 meses.", badgeSt: "static-blue", badge: "Uso Tópico", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "Uso Tópico", r: `USO TÓPICO\n\n1) POSTEC -------------------------------------- 1 TUBO\nAPLICAR 2 VEZES AO DIA POR 3 MESES.` }),
+        detalhes: {
+            indicacao: "Fimose.",
+            dose: "Aplicar 2x/dia por 3 meses.",
+            atencao: "—"
+        }
+    },
+    "flogo_rosa": {
+        cat: "cat-especialidades", sub: "🏠 Tópicos Genitais",
+        kw: "flogo rosa benzidamina banho de assento vaginite vulvovaginite", nome: "Flogo-Rosa (Banho de Assento)", apres: "Sachê",
+        info: "<strong>Conduta:</strong> 1 sachê em 1 L de água morna, banho de assento 2x ao dia por 5 dias.", badgeSt: "static-blue", badge: "1 Sachê", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "1 Sachê", r: `USO TÓPICO\n\n1) FLOGO-ROSA ------------------------------- 10 SACHÊS\nDILUIR 01 SACHÊ EM 1 LITRO DE ÁGUA MORNA E FAZER BANHO DE ASSENTO 2 VEZES AO DIA POR 5 DIAS.` }),
+        detalhes: {
+            indicacao: "Vulvovaginite.",
+            dose: "1 sachê em 1 L de água morna, banho de assento 2x/dia por 5 dias.",
+            atencao: "—"
+        }
+    },
+    "carvao": {
+        cat: "cat-especialidades", sub: "🏥 Uso Hospitalar (Toxicologia)",
+        kw: "carvao ativado intoxicacao envenenamento sng sonda nasogastrica toxicologia", nome: "Carvão Ativado (Intoxicação)", apres: "Pó para suspensão",
+        info: "<strong>Conduta:</strong> 1 g/kg/dose por SNG.", badge: "Máx: 50 g", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            let g = Math.min(p * 1, 50);
+            return { v: `${g.toFixed(0)} g`, r: `VIA SONDA NASOGÁSTRICA\n\n1) CARVÃO ATIVADO: ${g.toFixed(0)} g (1 g/kg/dose) por SNG.` };
+        },
+        detalhes: {
+            indicacao: "Intoxicações (descontaminação gastrointestinal).",
+            dose: "1 g/kg/dose por SNG.",
+            atencao: "Máximo 50 g por dose."
+        }
     }
 });

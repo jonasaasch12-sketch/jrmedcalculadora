@@ -49,5 +49,19 @@ registrarMedicamentos({
             dose: "1 mg/kg (Peso x 0,1 mL) EV em bolus, de 12/12h.",
             atencao: "Máximo 10 mg (1 mL) por dose, 20 mg por dia. Monitorar diurese, PA e potássio."
         }
+    },
+    "monuril": {
+        cat: "cat-urinario", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "monuril fosfomicina sache cistite itu infeccao urinaria dose unica", nome: "Monuril (Fosfomicina) Sachê", apres: "Envelope 3 g",
+        info: "<strong>Conduta:</strong> > 12 anos: 1 envelope diluído em 1 copo de água, à noite, dose única.", badgeSt: "static-blue", badge: "1 Envelope", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: (p, i) => {
+            let alerta = (i !== "" && parseFloat(i) <= 12) ? "ATENÇÃO: indicado para maiores de 12 anos.\n\n" : "";
+            return { v: "1 Envelope", r: `${alerta}${recHead}1) MONURIL ---------------------------------------- 01 SACHÊ\nDILUIR 01 ENVELOPE EM 01 COPO DE ÁGUA E TOMAR À NOITE, DOSE ÚNICA.` };
+        },
+        detalhes: {
+            indicacao: "Cistite (maiores de 12 anos).",
+            dose: "1 envelope em 1 copo de água, à noite, dose única.",
+            atencao: "Indicado para maiores de 12 anos."
+        }
     }
 });
