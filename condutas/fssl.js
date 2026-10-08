@@ -216,7 +216,7 @@ registrarConduta({
                         "→ Leucócitos ≤ 20.000/mm³ <strong>e</strong> neutrófilos ≤ 10.000/mm³: <strong>reavaliação diária</strong>.",
                         "→ Leucócitos ≥ 20.000/mm³ <strong>ou</strong> neutrófilos ≥ 10.000/mm³: <strong>hemocultura + RX de tórax</strong>. RX alterado = <strong>pneumonia</strong> (tratar). RX normal = <strong>risco de bacteremia oculta</strong> (passo 6)."
                     ],
-                    nota: "No fluxograma impresso os dois ramos da temperatura aparecem como \"Tax ≤ 39 °C\"; pela lógica do protocolo, o ramo que segue para EAS/urocultura é o de Tax > 39 °C. Leucocitúria de corte no fluxograma: ≤ 5 x 10⁴/mL × > 5 x 10⁵/mL."
+                    nota: "Corte de leucocitúria no fluxograma da SBP: ≤ 5 x 10⁴/mL (seguir para hemograma) × > 5 x 10⁵/mL (tratar ITU)."
                 },
                 {
                     passo: 6,
