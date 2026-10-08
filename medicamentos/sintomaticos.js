@@ -300,5 +300,62 @@ registrarMedicamentos({
             dose: "5 gotas VO 1x ao dia.",
             atencao: "Não misturar com líquidos quentes."
         }
+    },
+    "dip_cp": {
+        cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "dipirona comprimido 500 mg novalgina febre dor analgesico antitermico", nome: "Dipirona 500 mg Comprimido", apres: "Comprimido 500 mg",
+        info: "<strong>Posologia:</strong> 1 comprimido de 6/6h se dor ou febre.", badgeSt: "static-blue", badge: "1 Comprimido", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: (p) => {
+            let alerta = (p && p < 31) ? "ATENÇÃO: 500 mg passa de 16 mg/kg/dose para menos de 31 kg (SBP: 10 a 16 mg/kg/dose). Preferir gotas ou solução.\n\n" : "";
+            return { v: "1 Comprimido", r: `${alerta}${recHead}1) DIPIRONA 500 MG ------------------------------------ 1 CX\nTOMAR 01 COMPRIMIDO DE 6/6 HORAS SE DOR OU FEBRE.` };
+        },
+        detalhes: {
+            indicacao: "Febre e dor em crianças maiores e adolescentes.",
+            dose: "1 comprimido de 500 mg de 6/6h se dor ou febre.",
+            atencao: "500 mg corresponde a 10-16 mg/kg a partir de ~31 kg. Em crianças menores, usar gotas ou solução."
+        }
+    },
+    "pct_cp": {
+        cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "paracetamol comprimido 500 mg tylenol febre dor analgesico antitermico", nome: "Paracetamol 500 mg Comprimido", apres: "Comprimido 500 mg",
+        info: "<strong>Posologia:</strong> 1 comprimido de 6/6h se dor ou febre.", badgeSt: "static-blue", badge: "1 Comprimido", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: (p) => {
+            let alerta = (p && p < 33) ? "ATENÇÃO: 500 mg passa de 15 mg/kg/dose para menos de 33 kg (SBP: 10 a 15 mg/kg/dose). Preferir gotas.\n\n" : "";
+            return { v: "1 Comprimido", r: `${alerta}${recHead}1) PARACETAMOL 500 MG --------------------------------- 1 CX\nTOMAR 01 COMPRIMIDO DE 6/6 HORAS SE DOR OU FEBRE.` };
+        },
+        detalhes: {
+            indicacao: "Febre e dor em crianças maiores e adolescentes.",
+            dose: "1 comprimido de 500 mg de 6/6h se dor ou febre.",
+            atencao: "500 mg corresponde a 10-15 mg/kg a partir de ~33 kg. Em crianças menores, usar gotas."
+        }
+    },
+    "tramadol_ev": {
+        cat: "cat-sintomaticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+        kw: "tramadol tramal injetavel endovenoso ev dor intensa analgesico opioide", nome: "Tramadol EV", apres: "Ampola 50 mg / mL",
+        info: "<strong>Conduta:</strong> 1 mg/kg/dose de 8/8h, diluído em 50-100 mL de SF 0,9%.", badge: "Máx: 100 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            let mg = Math.min(p * 1, 100), ml = mg / 50;
+            return { v: `${ml.toFixed(1)} mL`, r: `VIA ENDOVENOSA\n\n1) TRAMADOL 50 MG/ML: aspirar ${ml.toFixed(1)} mL (${mg.toFixed(0)} mg = 1 mg/kg) + 50 a 100 mL de SF 0,9%, EV, de 8/8 horas, se dor intensa.` };
+        },
+        detalhes: {
+            indicacao: "Dor moderada a intensa (uso hospitalar).",
+            dose: "1 mg/kg/dose EV de 8/8h, diluído em 50-100 mL de SF 0,9%.",
+            atencao: "Máximo 100 mg por dose (teto do card de tramadol do app). Risco de depressão respiratória e sonolência."
+        }
+    },
+    "ceto_im": {
+        cat: "cat-sintomaticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+        kw: "cetoprofeno injetavel intramuscular im profenid dor anti-inflamatorio", nome: "Cetoprofeno IM", apres: "Ampola 50 mg / mL (100 mg / 2 mL)",
+        info: "<strong>Conduta:</strong> > 1 ano: 1 mg/kg/dose de 8/8h.", badge: "> 1 ano | Máx: 100 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            if (i !== "" && parseFloat(i) < 1) return { v: "Contraind.", r: "ATENÇÃO: cetoprofeno injetável indicado a partir de 1 ano." };
+            let mg = Math.min(p * 1, 100), ml = mg / 50;
+            return { v: `${ml.toFixed(1)} mL`, r: `VIA INTRAMUSCULAR\n\n1) CETOPROFENO 50 MG/ML: aplicar ${ml.toFixed(1)} mL (${mg.toFixed(0)} mg = 1 mg/kg) IM profunda, de 8/8 horas, se dor.` };
+        },
+        detalhes: {
+            indicacao: "Dor e inflamação (uso hospitalar), acima de 1 ano.",
+            dose: "1 mg/kg/dose IM de 8/8h.",
+            atencao: "A partir de 1 ano. Teto do app: 100 mg por dose (1 ampola)."
+        }
     }
 });

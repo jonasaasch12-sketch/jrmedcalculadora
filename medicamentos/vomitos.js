@@ -103,5 +103,36 @@ registrarMedicamentos({
             dose: "Peso x 0,03 mL (0,15 mg/kg) EV.",
             atencao: "Risco de reação extrapiramidal (distonia)."
         }
+    },
+    "dramin_sol": {
+        cat: "cat-vomitos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "dramin dimenidrinato solucao oral 2,5 mg/ml vomito nausea antiemetico", nome: "Dimenidrinato Solução Oral (Dramin)", apres: "2,5 mg / mL",
+        info: "<strong>Posologia:</strong> 2-6 anos: 5-10 mL; 6-12 anos: 10-20 mL; > 12 anos: 20-40 mL, de 6/6h.", badge: "≥ 2 anos", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: (p, i) => {
+            let id = parseFloat(i);
+            if (isNaN(id)) return { v: "Digite a idade", r: "Digite a idade: 2-6 anos: 5 a 10 mL; 6-12 anos: 10 a 20 mL; > 12 anos: 20 a 40 mL, de 6/6 horas." };
+            if (id < 2) return { v: "< 2 anos", r: "ATENÇÃO: dimenidrinato liberado a partir de 2 anos." };
+            let f = id < 6 ? "5 A 10" : id <= 12 ? "10 A 20" : "20 A 40";
+            return { v: f.replace(' A ', '-') + " mL", r: `${recHead}1) DIMENIDRINATO SOLUÇÃO ORAL 2,5 MG/ML (DRAMIN) --- 1 FR\nTOMAR ${f} ML DE 6/6 HORAS SE NÁUSEAS OU VÔMITOS.` };
+        },
+        detalhes: {
+            indicacao: "Náuseas, vômitos e cinetose.",
+            dose: "2-6 anos: 5-10 mL; 6-12 anos: 10-20 mL; > 12 anos: 20-40 mL, de 6/6h.",
+            atencao: "A partir de 2 anos. Causa sonolência."
+        }
+    },
+    "dramin_im": {
+        cat: "cat-vomitos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+        kw: "dramin dimenidrinato injetavel intramuscular im vomito nausea", nome: "Dimenidrinato IM (Dramin)", apres: "Ampola 50 mg / mL",
+        info: "<strong>Conduta:</strong> 0,02 a 0,03 mL/kg (1 a 1,5 mg/kg) IM de 8/8h.", badge: "Máx: 50 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            let a = Math.min(p * 0.02, 1), b = Math.min(p * 0.03, 1);
+            return { v: `${a.toFixed(2)}-${b.toFixed(2)} mL`, r: `VIA INTRAMUSCULAR\n\n1) DIMENIDRINATO 50 MG/ML: aplicar ${a.toFixed(2)} a ${b.toFixed(2)} mL (${(a * 50).toFixed(0)} a ${(b * 50).toFixed(0)} mg) IM, de 8/8 horas, se náuseas ou vômitos.` };
+        },
+        detalhes: {
+            indicacao: "Náuseas e vômitos (uso hospitalar).",
+            dose: "0,02 a 0,03 mL/kg (1 a 1,5 mg/kg) IM de 8/8h.",
+            atencao: "Teto do app: 50 mg (1 mL) por dose. Causa sonolência."
+        }
     }
 });
