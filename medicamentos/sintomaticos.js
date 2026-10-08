@@ -319,15 +319,16 @@ registrarMedicamentos({
     "pct_cp": {
         cat: "cat-sintomaticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
         kw: "paracetamol comprimido 500 mg tylenol febre dor analgesico antitermico", nome: "Paracetamol 500 mg Comprimido", apres: "Comprimido 500 mg",
-        info: "<strong>Posologia:</strong> 1 comprimido de 6/6h se dor ou febre.", badgeSt: "static-blue", badge: "1 Comprimido", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        info: "<strong>Posologia:</strong> a partir de 40 kg: 1 comprimido de 6/6h se dor ou febre.", badge: "Só a partir de 40 kg", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
-            let alerta = (p && p < 33) ? "ATENÇÃO: 500 mg passa de 15 mg/kg/dose para menos de 33 kg (SBP: 10 a 15 mg/kg/dose). Preferir gotas.\n\n" : "";
-            return { v: "1 Comprimido", r: `${alerta}${recHead}1) PARACETAMOL 500 MG --------------------------------- 1 CX\nTOMAR 01 COMPRIMIDO DE 6/6 HORAS SE DOR OU FEBRE.` };
+            /* 500 mg só cabe na faixa de 10-15 mg/kg/dose (SBP) a partir de 40 kg (500/40 = 12,5 mg/kg) */
+            if (p < 40) return { v: "< 40 kg", r: `PESO ABAIXO DE 40 KG: NÃO PRESCREVER O COMPRIMIDO DE 500 MG.\nUsar paracetamol gotas (dose por kg).` };
+            return { v: "1 Comprimido", r: `${recHead}1) PARACETAMOL 500 MG --------------------------------- 1 CX\nTOMAR 01 COMPRIMIDO DE 6/6 HORAS SE DOR OU FEBRE.` };
         },
         detalhes: {
-            indicacao: "Febre e dor em crianças maiores e adolescentes.",
+            indicacao: "Febre e dor em crianças maiores e adolescentes (a partir de 40 kg).",
             dose: "1 comprimido de 500 mg de 6/6h se dor ou febre.",
-            atencao: "500 mg corresponde a 10-15 mg/kg a partir de ~33 kg. Em crianças menores, usar gotas."
+            atencao: "Só a partir de 40 kg (500 mg = até 12,5 mg/kg). Abaixo disso, usar gotas."
         }
     },
     "nimesulida_gts": {
