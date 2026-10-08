@@ -106,7 +106,8 @@ const categorias = [
     { 
         id: "cat-diarreia", titulo: "TGI", dotClass: "dot-diarreia", cor: "tarja-diarreia", nome: "TGI", icone: "💧 TGI",
         patologias: [
-            { nome: "Gastroenterite e Reidratação Oral", conduta: "diarreia", condutaNome: "Diarreia aguda", remedios: ["tgi_sro", "tgi_planob", "tgi_zinco", "tgi_provance_mini", "tiorfan", "ondif_cp", "tgi_provance_gg", "tgi_flora", "tgi_azitro", "cipro_disenteria", "metro_parasitas", "vit_a_diarreia", "tgi_alben", "tgi_meben", "nitazoxanida", "florax", "floralyte", "rehidrat"] },
+            { nome: "Gastroenterite e Reidratação Oral", conduta: "diarreia", condutaNome: "Diarreia aguda", remedios: ["tgi_sro", "tgi_planob", "tgi_zinco", "tgi_provance_mini", "tiorfan", "ondif_cp", "tgi_provance_gg", "tgi_flora", "tgi_azitro", "cipro_disenteria", "metro_parasitas", "vit_a_diarreia", "florax", "floralyte", "rehidrat"] },
+            { nome: "Parasitoses Intestinais (Verminoses)", conduta: "parasitoses", condutaNome: "Parasitoses intestinais", remedios: ["tgi_alben", "tgi_meben", "nitazoxanida", "metro_parasitas", "pele_iver", "smx_tmp"] },
             { nome: "Constipação, Refluxo e Mucosite", remedios: ["lactulose", "oleo_mineral", "domperidona", "omeprazol", "solucao_mucosite", "omeprazol_ev", "leite_magnesia", "muvinlax", "fleet"] },
             { nome: "Hidratação IV e Hidroeletrolíticos (Choque/Manutenção)", remedios: ["tgi_planoc", "tgi_manut_planoc", "tgi_manutencao", "vig_4", "vig_5"] },
             { nome: "Disenteria: Antibiótico Hospitalar", remedios: ["cef_disenteria", "cefotax_pac"] },
