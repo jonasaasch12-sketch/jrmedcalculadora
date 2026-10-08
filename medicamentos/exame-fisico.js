@@ -50,5 +50,13 @@ registrarMedicamentos({
             dose: "Não se aplica.",
             atencao: "Conforme o Guia de Manejo Clínico da BVA do Ministério da Saúde (2026)."
         }
+    },
+    "orientacoes_dengue": {
+        cat: "cat-exame-fisico", sub: "Orientações e Sinais de Alarme",
+        kw: "orientacoes alta sinais alarme dengue arbovirose retorno reavaliacao",
+        nome: "Sinais de Alarme — Dengue", apres: "Termo de Alta",
+        info: "<strong>Descrição:</strong> Orientações de alta para dengue.",
+        badgeSt: "static-blue", badge: "Orientações", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "Orientações", r: "ORIENTAÇÕES DENGUE - RETORNAR PARA REAVALIAÇÃO EM 48 HORAS OU A QUALQUER MOMENTO SE:\n- Dor abdominal intensa;\n- Vômitos persistentes;\n- Sangramento no nariz, na gengiva, na urina ou nas fezes;\n- Sonolência ou irritabilidade;\n- Tonturas ou desmaio." })
     }
 });

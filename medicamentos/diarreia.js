@@ -508,5 +508,97 @@ registrarMedicamentos({
             dose: "< 6 meses: 50.000 UI | 6 a 12 meses: 100.000 UI | > 12 meses: 200.000 UI, VO (SBP 2023).",
             atencao: "Dose variável conforme o quadro nutricional. Não repetir sem indicação (risco de hipervitaminose A)."
         }
+    },
+    "florax": {
+        cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "florax probiotico flaconete diarreia gastroenterite", nome: "Florax SM Pediátrico (Probiótico)", apres: "Flaconete",
+        info: "<strong>Conduta:</strong> 1 flaconete de 12/12h por 5 dias. < 1 mês: 1 flaconete de 24/24h.", badgeSt: "static-blue", badge: "1 Flaconete", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: (p, i) => {
+            let rn = i !== "" && parseFloat(i) < 1 / 12;
+            return { v: "1 Flaconete", r: `${recHead}1) FLORAX SM PEDIÁTRICO ------------------------------ 1 CX\nDAR 1 FLACONETE, PELA BOCA, ${rn ? "DE 24/24 HORAS" : "DE 12/12 HORAS"} POR 5 DIAS.${i === "" ? "\n(Menor de 1 mês: 1 flaconete de 24/24 horas.)" : ""}` };
+        },
+        detalhes: {
+            indicacao: "Diarreia aguda (probiótico).",
+            dose: "1 flaconete de 12/12h por 5 dias; < 1 mês: 1 flaconete de 24/24h.",
+            atencao: "—"
+        }
+    },
+    "floralyte": {
+        cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "floralyte soro de reidratacao pronto diarreia vomito hidratacao oral", nome: "Floralyte (Solução de Reidratação Pronta)", apres: "Frasco",
+        info: "<strong>Conduta:</strong> oferecer 100 mL após cada evacuação diarreica ou vômito.", badgeSt: "static-blue", badge: "100 mL", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "100 mL", r: `${recHead}1) FLORALYTE ------------------------------------------ 1 FR\nOFERECER 100 ML APÓS CADA EVACUAÇÃO DIARREICA OU VÔMITO.` }),
+        detalhes: {
+            indicacao: "Reidratação oral na diarreia e nos vômitos.",
+            dose: "100 mL após cada evacuação diarreica ou vômito.",
+            atencao: "—"
+        }
+    },
+    "rehidrat": {
+        cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "rehidrat 50 sache soro de reidratacao diarreia vomito hidratacao oral", nome: "Rehidrat 50 (Sachê)", apres: "Sachê para 250 mL",
+        info: "<strong>Conduta:</strong> diluir 1 sachê em 250 mL de água e oferecer após vômitos ou diarreia.", badgeSt: "static-blue", badge: "1 Sachê", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "1 Sachê", r: `${recHead}1) REHIDRAT 50 ---------------------------------------- 1 CX\nDILUIR 01 SACHÊ EM 250 ML DE ÁGUA E OFERECER APÓS VÔMITOS OU DIARREIA.` }),
+        detalhes: {
+            indicacao: "Reidratação oral na diarreia e nos vômitos.",
+            dose: "1 sachê em 250 mL de água, oferecido após vômitos ou diarreia.",
+            atencao: "—"
+        }
+    },
+    "omeprazol_ev": {
+        cat: "cat-diarreia", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Expansão)",
+        kw: "omeprazol endovenoso ev injetavel protetor gastrico ibp", nome: "Omeprazol EV", apres: "FA 40 mg + diluente 10 mL (4 mg/mL)",
+        info: "<strong>Conduta:</strong> 1 mg/kg/dia EV, pela manhã.", badge: "Máx: 40 mg/dia", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            let mg = Math.min(p * 1, 40), ml = mg / 4;
+            return { v: `${ml.toFixed(1)} mL`, r: `VIA ENDOVENOSA\n\n1) OMEPRAZOL 40 MG: reconstituir 1 FA com o diluente de 10 mL (4 mg/mL); aplicar ${ml.toFixed(1)} mL (${mg.toFixed(0)} mg = 1 mg/kg) EV, 1 vez ao dia, pela manhã.` };
+        },
+        detalhes: {
+            indicacao: "Proteção gástrica (uso hospitalar).",
+            dose: "1 mg/kg/dia EV, pela manhã.",
+            atencao: "Teto do app: 40 mg/dia (1 frasco-ampola)."
+        }
+    },
+    "leite_magnesia": {
+        cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "leite de magnesia hidroxido de magnesio laxante constipacao intestino preso", nome: "Leite de Magnésia", apres: "Suspensão oral",
+        info: "<strong>Posologia:</strong> 1 a 3 mL/kg/dia, em 1 a 2 tomadas.", badge: "Máx: 30 mL/dia", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            let a = Math.min(p * 1, 30), b = Math.min(p * 3, 30);
+            return { v: `${a.toFixed(0)}-${b.toFixed(0)} mL/dia`, r: `${recHead}1) LEITE DE MAGNÉSIA ----------------------------------- 1 FR\nTOMAR ${a.toFixed(0)} A ${b.toFixed(0)} ML POR DIA, DIVIDIDOS EM 1 A 2 VEZES AO DIA (MÁXIMO 30 ML POR DIA).` };
+        },
+        detalhes: {
+            indicacao: "Constipação intestinal.",
+            dose: "1 a 3 mL/kg/dia, em 1 a 2 tomadas.",
+            atencao: "Máximo 30 mL/dia."
+        }
+    },
+    "muvinlax": {
+        cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "muvinlax macrogol polietilenoglicol peg laxante constipacao", nome: "Muvinlax (Macrogol)", apres: "Sachê",
+        info: "<strong>Posologia:</strong> diluir 8 sachês em 1 L de água e dar 10 mL/kg/dia, 1x ao dia.", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            let ml = Math.round(p * 10);
+            return { v: `${ml} mL/dia`, r: `${recHead}1) MUVINLAX ------------------------------------------- 1 CX\nDILUIR 08 SACHÊS EM 1 LITRO DE ÁGUA E DAR ${ml} ML DA SOLUÇÃO 1 VEZ AO DIA.` };
+        },
+        detalhes: {
+            indicacao: "Constipação intestinal.",
+            dose: "8 sachês em 1 L de água; 10 mL/kg/dia da solução, 1x ao dia.",
+            atencao: "—"
+        }
+    },
+    "fleet": {
+        cat: "cat-diarreia", sub: "🏥 Uso Hospitalar (Via Retal)",
+        kw: "fleet enema lavagem intestinal fecaloma constipacao via retal", nome: "Fleet Enema", apres: "Solução retal",
+        info: "<strong>Conduta:</strong> 2,5 mL/kg via retal.", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            let ml = Math.round(p * 2.5);
+            return { v: `${ml} mL`, r: `VIA RETAL\n\n1) FLEET ENEMA: aplicar ${ml} mL (2,5 mL/kg) via retal.` };
+        },
+        detalhes: {
+            indicacao: "Constipação / fecaloma.",
+            dose: "2,5 mL/kg via retal.",
+            atencao: "—"
+        }
     }
 });

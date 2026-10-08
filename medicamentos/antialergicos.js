@@ -110,5 +110,19 @@ registrarMedicamentos({
             dose: "2-5 anos: 5 mL | ≥6 anos ou >30 kg: 10 mL. VO 1x ao dia.",
             atencao: "Evitar em menores de 2 anos. Precisa da idade para calcular."
         }
+    },
+    "dexa_elixir": {
+        cat: "cat-antialergicos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "dexametasona elixir decadron corticoide oral alergia inflamacao", nome: "Dexametasona Elixir (Decadron)", apres: "0,1 mg / mL",
+        info: "<strong>Posologia:</strong> peso/3 mL por dose, de 8/8h, por 3 a 5 dias.", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            let ml = (p / 3).toFixed(1);
+            return { v: `${ml} mL`, r: `${recHead}1) DEXAMETASONA ELIXIR 0,1 MG/ML (DECADRON) --------- 1 FR\nTOMAR ${ml} ML DE 8/8 HORAS POR 3 A 5 DIAS.` };
+        },
+        detalhes: {
+            indicacao: "Corticoide oral (alergia / inflamação).",
+            dose: "Peso/3 mL por dose (≈ 0,033 mg/kg/dose) de 8/8h, por 3 a 5 dias.",
+            atencao: "—"
+        }
     }
 });

@@ -47,6 +47,12 @@ const TETOS = {
     kcl_xarope: 50,       // mL por dose (40 mEq)
     omeprazol: 20,        // mg/dia (faixa ≥ 20 kg, Whitebook)
     cef_fssl: 7,          // mL IM 285,7 mg/mL (2 g)
+    tramadol_ev: 2,       // mL de 50 mg/mL (100 mg)
+    ceto_im: 2,           // mL de 50 mg/mL (100 mg)
+    omeprazol_ev: 10,     // mL de 4 mg/mL (40 mg)
+    dramin_im: 1,         // mL de 50 mg/mL (50 mg)
+    leite_magnesia: 30,   // mL/dia
+    fluconazol: 10,       // mL da diluição 15 mg/mL (150 mg)
 };
 
 const PESOS = [2.5, 4, 7, 10, 15, 22, 30, 45, 70];

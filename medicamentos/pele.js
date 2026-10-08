@@ -156,5 +156,74 @@ registrarMedicamentos({
             dose: "Fina camada 1 a 2 vezes ao dia.",
             atencao: "Contém corticoide: máximo 2 semanas. Evitar no rosto e na área da fralda por tempo prolongado."
         }
+    },
+    "trok_n": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "trok n cetoconazol betametasona neomicina creme pomada dermatite micose", nome: "Trok-N", apres: "Cetoconazol + Betametasona + Neomicina",
+        info: "<strong>Conduta:</strong> Aplicar na lesão 3 vezes ao dia por 10 dias.", badgeSt: "static-blue", badge: "Uso Tópico", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "Uso Tópico", r: `USO TÓPICO\n\n1) TROK-N -------------------------------------- 1 TUBO\nAPLICAR NA LESÃO 3 VEZES AO DIA POR 10 DIAS.` }),
+        detalhes: {
+            indicacao: "Dermatites com infecção fúngica/bacteriana associada.",
+            dose: "Aplicar 3x/dia por 10 dias.",
+            atencao: "Contém corticoide."
+        }
+    },
+    "quadriderm": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "quadriderm creme betametasona gentamicina tolnaftato clioquinol dermatite", nome: "Quadriderm Creme", apres: "Creme",
+        info: "<strong>Conduta:</strong> Aplicar 2 vezes ao dia por 5 dias.", badgeSt: "static-blue", badge: "Uso Tópico", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "Uso Tópico", r: `USO TÓPICO\n\n1) QUADRIDERM CREME ---------------------------- 1 TUBO\nAPLICAR 2 VEZES AO DIA POR 5 DIAS.` }),
+        detalhes: {
+            indicacao: "Dermatites com infecção associada.",
+            dose: "Aplicar 2x/dia por 5 dias.",
+            atencao: "Contém corticoide."
+        }
+    },
+    "cetoconazol_cr": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "cetoconazol creme micose antifungico tinea candidiase pele", nome: "Cetoconazol Creme", apres: "Creme 2%",
+        info: "<strong>Conduta:</strong> Aplicar 2 vezes ao dia por 14 dias.", badgeSt: "static-blue", badge: "Uso Tópico", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "Uso Tópico", r: `USO TÓPICO\n\n1) CETOCONAZOL CREME --------------------------- 1 TUBO\nAPLICAR 2 VEZES AO DIA POR 14 DIAS.` }),
+        detalhes: {
+            indicacao: "Micoses cutâneas.",
+            dose: "Aplicar 2x/dia por 14 dias.",
+            atencao: "—"
+        }
+    },
+    "nistatina_zinco": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "nistatina oxido de zinco pomada dermatite das fraldas assadura candidiase", nome: "Nistatina + Óxido de Zinco Pomada", apres: "Pomada",
+        info: "<strong>Conduta:</strong> Aplicar 3 vezes ao dia por 7 dias.", badgeSt: "static-blue", badge: "Uso Tópico", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "Uso Tópico", r: `USO TÓPICO\n\n1) NISTATINA + ÓXIDO DE ZINCO POMADA ----------- 1 TUBO\nAPLICAR 3 VEZES AO DIA POR 7 DIAS.` }),
+        detalhes: {
+            indicacao: "Dermatite das fraldas.",
+            dose: "Aplicar 3x/dia por 7 dias.",
+            atencao: "—"
+        }
+    },
+    "penvir": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "penvir penciclovir pomada herpes labial", nome: "Penvir Pomada (Penciclovir)", apres: "Pomada",
+        info: "<strong>Conduta:</strong> Aplicar nas lesões de 8/8h por 7 dias.", badgeSt: "static-blue", badge: "Uso Tópico", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "Uso Tópico", r: `USO TÓPICO\n\n1) PENVIR POMADA ------------------------------- 1 TUBO\nAPLICAR NAS LESÕES DE 8/8 HORAS POR 7 DIAS.` }),
+        detalhes: {
+            indicacao: "Herpes labial.",
+            dose: "Aplicar nas lesões de 8/8h por 7 dias.",
+            atencao: "—"
+        }
+    },
+    "fluconazol": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "fluconazol 150 mg antifungico candidiase dose unica", nome: "Fluconazol 150 mg (Diluído)", apres: "Cápsula 150 mg",
+        info: "<strong>Conduta:</strong> 3 mg/kg VO dose única. Diluir a cápsula em 10 mL (15 mg/mL).", badge: "Máx: 150 mg", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            let mg = Math.min(p * 3, 150), ml = mg / 15;
+            return { v: `${ml.toFixed(1)} mL`, r: `${recHead}1) FLUCONAZOL 150 MG ---------------------------------- 1 CP\nABRIR/DILUIR 1 CÁPSULA EM 10 ML DE ÁGUA (CADA ML = 15 MG) E DAR ${ml.toFixed(1)} ML (${mg.toFixed(0)} MG), VIA ORAL, DOSE ÚNICA.` };
+        },
+        detalhes: {
+            indicacao: "Candidíase (antifúngico oral).",
+            dose: "3 mg/kg VO dose única; cápsula diluída em 10 mL (15 mg/mL).",
+            atencao: "Máximo 150 mg (cápsula inteira)."
+        }
     }
 });
