@@ -6,6 +6,22 @@
 // medicamentos/menu.js.
 // =====================================================
 registrarMedicamentos({
+    "cef_fssl": {
+        cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar / UBS (Vias Injetáveis)",
+        kw: "ceftriaxona febre sem sinais localizatorios fssl bacteremia oculta im intramuscular antibiotico injetavel",
+        nome: "Ceftriaxona IM (Febre sem Sinais Localizatórios)", apres: "FA 1 g + 3,5 mL Lidocaína 1%",
+        info: "<strong>Conduta (SBP):</strong> risco de bacteremia oculta (3 a 36 meses): 50 mg/kg IM 1x/dia, com reavaliação diária até o final das culturas.", badge: "Teto: 2 g/dia", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* SBP (Tratado 2017 / DC nº 206, 2025): 50 mg/kg IM 1x/dia. IM: 1 g + 3,5 mL de lidocaína 1% (285,7 mg/mL). Teto do app: 2 g/dia. */
+            let mg = Math.min(p * 50, 2000), ml = mg / 285.7, fa = mg > 1000 ? 2 : 1;
+            return { v: `IM: ${ml.toFixed(1)} mL`, r: `VIA INTRAMUSCULAR (FEBRE SEM SINAIS LOCALIZATÓRIOS - RISCO DE BACTEREMIA OCULTA)\n\n Reconstituir ${fa} FA de Ceftriaxona 1 g com 3,5 mL de lidocaína 1% cada.\n Aspirar ${ml.toFixed(1)} mL (${mg.toFixed(0)} mg = 50 mg/kg) e aplicar IM profunda, 1 vez ao dia.\n\n * Colher hemocultura antes da 1ª dose. Reavaliação diária até o resultado final das culturas.` };
+        },
+        detalhes: {
+            indicacao: "Febre sem sinais localizatórios, 3 a 36 meses, vacinação incompleta, Tax > 39 °C, leucócitos ≥ 20.000 ou neutrófilos ≥ 10.000 e RX de tórax normal (risco de bacteremia oculta).",
+            dose: "50 mg/kg IM 1 vez ao dia, com reavaliação diária até o final das culturas (SBP).",
+            atencao: "Colher hemocultura antes. Teto do app: 2 g/dia."
+        }
+    },
     "amox": {
         cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
         kw: "amoxicilina suspensao pneumonia faringo antibiotico oral ambulatorial", nome: "Amoxicilina Suspensão (Regular)", apres: "250 mg / 5 mL",
