@@ -1,11 +1,11 @@
 :root {
-    --bg-app: #f8fafc;
+    --bg-app: #eef2f7;
     --surface: #ffffff;
     --text-main: #0f172a;
-    --text-muted: #64748b;
-    --primary: #0284c7;
-    --primary-dark: #0369a1;
-    --border: #e2e8f0;
+    --text-muted: #475569;
+    --primary: #0369a1;
+    --primary-dark: #075985;
+    --border: #cbd5e1;
 }
 
 * { box-sizing: border-box; font-family: 'Segoe UI', -apple-system, Helvetica, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -45,7 +45,7 @@ body { margin: 0; padding: 0; background-color: var(--bg-app); color: var(--text
 .header-banner { background-color: #ffffff; color: #0f172a; padding: 8px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 110; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
 .header-left { display: flex; align-items: center; }
 .brand-title { font-size: 18px; font-weight: 800; margin: 0; letter-spacing: -0.5px; color: #0f172a; }
-.brand-subtitle { font-size: 9px; color: var(--text-muted); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+.brand-subtitle { font-size: 9.5px; color: var(--text-muted); margin: 0; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
 .btn-logout { background: transparent; color: #dc2626; border: 1px solid #fecaca; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 11px; cursor: pointer; transition: all 0.2s; }
 .btn-logout:hover { background: #fef2f2; }
 
@@ -116,7 +116,7 @@ body { margin: 0; padding: 0; background-color: var(--bg-app); color: var(--text
     padding: 7px 4px;
     font-size: 12.5px;
     font-weight: 600;
-    color: #334155;
+    color: #1e293b;
     cursor: pointer;
     border-radius: 6px;
     transition: background 0.15s;
@@ -159,7 +159,7 @@ body { margin: 0; padding: 0; background-color: var(--bg-app); color: var(--text
 
 /* TARJAS DE CATEGORIA E PONTOS */
 .section-header { padding: 10px 16px; font-size: 12.5px; font-weight: 800; border-radius: 6px; margin: 20px 0 10px 0; text-transform: uppercase; letter-spacing: 0.8px; color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
-.sub-type-title { font-size: 11.5px; font-weight: 800; color: #0284c7; text-transform: uppercase; margin: 18px 0 8px 4px; border-bottom: 2px solid #e0f2fe; padding-bottom: 4px; letter-spacing: 0.5px; }
+.sub-type-title { font-size: 11.5px; font-weight: 800; color: #0369a1; text-transform: uppercase; margin: 18px 0 8px 4px; border-bottom: 2px solid #e0f2fe; padding-bottom: 4px; letter-spacing: 0.5px; }
 
 .dot-exame, .tarja-exame { background-color: #0d9488; }
 .dot-sintomaticos, .tarja-sintomaticos { background-color: #dc2626; }
@@ -205,31 +205,31 @@ html[data-theme="dark"] .sub-type-title.sub-type-hosp {
     color: color-mix(in srgb, var(--cor-cat) 55%, #fff);
     background: color-mix(in srgb, var(--cor-cat) 22%, #111827);
 }
-.med-presentation { font-size: 11px; color: #64748b; margin-top: 2px; display: block; font-weight: 500; }
+.med-presentation { font-size: 12px; color: var(--text-muted); margin-top: 2px; display: block; font-weight: 500; }
 
 .result-box { background-color: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; font-weight: 800; font-size: 13px; padding: 5px 10px; border-radius: 6px; text-align: center; min-width: 100px; white-space: pre-line; }
 .result-box.static-blue { background:#f0f9ff; color:#0369a1; border-color:#bae6fd; }
 .result-box.static-gray { background:#f1f5f9; color:#475569; border-color:#cbd5e1; }
 
-.med-info-row { font-size: 12px; color: #334155; margin-top: 3px; margin-bottom: 6px; line-height: 1.4; width: 100%; }
+.med-info-row { font-size: 13px; color: #1e293b; margin-top: 3px; margin-bottom: 6px; line-height: 1.4; width: 100%; }
 .ficha-lista { margin: 4px 0 0; padding-left: 18px; display: grid; gap: 4px; }
-.med-detalhes { font-size: 12px; color: #334155; margin: 3px 0 8px; line-height: 1.4; width: 100%; display: grid; grid-template-columns: max-content 1fr; column-gap: 8px; row-gap: 3px; }
+.med-detalhes { font-size: 13px; color: #1e293b; margin: 3px 0 8px; line-height: 1.4; width: 100%; display: grid; grid-template-columns: max-content 1fr; column-gap: 8px; row-gap: 3px; }
 .med-detalhes dt { font-weight: 800; color: #0f172a; }
 .med-detalhes dd { margin: 0; }
 .med-detalhes .det-atencao { color: #b91c1c; }
-html[data-theme="dark"] .med-detalhes, html[data-theme="dark"] .med-info-row { color: #cbd5e1; }
+html[data-theme="dark"] .med-detalhes, html[data-theme="dark"] .med-info-row { color: #e2e8f0; }
 html[data-theme="dark"] .med-detalhes dt { color: var(--text-main); }
 html[data-theme="dark"] .med-detalhes .det-atencao { color: #f87171; }
 .badge-teto { background-color: #fef2f2; color: #991b1b; font-size: 9.5px; font-weight: 700; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 8px; text-transform: uppercase; border: 1px solid #fecaca; align-self: flex-start; }
 
 .prescription-header-row { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; background: #f8fafc; padding: 5px 10px; border-radius: 6px 6px 0 0; border: 1px solid var(--border); border-bottom: none; width: 100%; }
-.prescription-label { font-size: 10px; font-weight: 800; color: #64748b; text-transform: uppercase; }
+.prescription-label { font-size: 10.5px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
 
 .btn-copiar { background-color: #ffffff; color: var(--primary); border: 1px solid #bae6fd; padding: 3px 8px; border-radius: 4px; font-size: 10.5px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 4px; }
 .btn-copiar:hover { background-color: #0369a1; color: white; border-color: #0369a1; }
 .btn-copiar.copiado { background-color: #16a34a !important; color: white !important; border-color: #16a34a !important; }
 
-.prescription-text-box { background-color: #fafafa; border: 1px solid var(--border); border-radius: 0 0 6px 6px; padding: 10px; font-family: 'Courier New', Courier, monospace; font-size: 11.5px; color: #1e293b; white-space: pre-wrap; word-break: break-word; line-height: 1.45; -webkit-user-select: text; user-select: text; width: 100%; }
+.prescription-text-box { background-color: #fafafa; border: 1px solid var(--border); border-radius: 0 0 6px 6px; padding: 10px; font-family: Consolas, 'Liberation Mono', Menlo, 'Courier New', monospace; font-size: 12.5px; color: #0f172a; white-space: pre-wrap; word-break: break-word; line-height: 1.45; -webkit-user-select: text; user-select: text; width: 100%; }
 
 .copyright-card { background-color: #ffffff; border: 1px dashed var(--border); border-radius: 8px; margin-top: 30px; margin-bottom: 15px; padding: 15px; text-align: center; color: var(--text-muted); font-size: 11px; line-height: 1.5; }
 .copyright-card strong { color: var(--text-main); font-size: 12px; display: block; margin-bottom: 2px; }
@@ -258,9 +258,9 @@ html[data-theme="dark"] .med-detalhes .det-atencao { color: #f87171; }
 html[data-theme="dark"] {
     --bg-app: #0b1220;
     --surface: #111827;
-    --text-main: #e5e7eb;
-    --text-muted: #94a3b8;
-    --border: #1f2937;
+    --text-main: #f1f5f9;
+    --text-muted: #b6c2d1;
+    --border: #334155;
 }
 html[data-theme="dark"] body { background-color: var(--bg-app); }
 html[data-theme="dark"] .header-banner,
@@ -277,11 +277,18 @@ html[data-theme="dark"] .input-group,
 html[data-theme="dark"] .form-input,
 html[data-theme="dark"] .form-select,
 html[data-theme="dark"] .form-textarea { background-color: #0b1220; border-color: var(--border); color: var(--text-main); }
-html[data-theme="dark"] .prescription-text-box { background-color: #0b1220; color: #cbd5e1; border-color: var(--border); }
+html[data-theme="dark"] .prescription-text-box { background-color: #0b1220; color: #e2e8f0; border-color: var(--border); }
 html[data-theme="dark"] .btn-toggle-ficha,
 html[data-theme="dark"] .ficha-conteudo { background-color: #0b1220; border-color: var(--border); }
 html[data-theme="dark"] .prescription-header-row { background-color: #0b1220; border-color: var(--border); }
-html[data-theme="dark"] .sidebar-link { color: #cbd5e1; }
+html[data-theme="dark"] .sidebar-link { color: #e2e8f0; }
+html[data-theme="dark"] .sub-type-title { color: #7dd3fc; }
+html[data-theme="dark"] .allergy-input { background-color: #2a0f0f; border-color: #7f1d1d; color: #fecaca; }
+html[data-theme="dark"] .allergy-input::placeholder { color: #fdba74; }
+html[data-theme="dark"] .btn-novo-paciente { background-color: transparent; border-color: #7f1d1d; color: #f87171; }
+html[data-theme="dark"] .result-box { background-color: #052e1a; border-color: #166534; color: #86efac; }
+html[data-theme="dark"] .result-box.static-blue { background-color: #0c2a3f; border-color: #075985; color: #bae6fd; }
+html[data-theme="dark"] .result-box.static-gray { background-color: #1e293b; border-color: #334155; color: #e2e8f0; }
 html[data-theme="dark"] .sub-type-title { border-bottom-color: #1e3a5f; }
 html[data-theme="dark"] .clinical-disclaimer { background-color: #3b2f0b; border-color: #78350f; color: #fde68a; }
 html[data-theme="dark"] .clinical-disclaimer strong { color: #fde68a; }
@@ -302,7 +309,7 @@ html[data-theme="dark"] .clinical-disclaimer strong { color: #fde68a; }
 /* ===================================================== */
 .linha-secundaria { display: flex; gap: 10px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
 .allergy-input { flex: 1; min-width: 160px; max-width: 250px; padding: 6px 10px; font-size: 12.5px; border: 1px solid var(--border); border-radius: 6px; outline: none; background: #fff5f5; color: #7f1d1d; }
-.allergy-input::placeholder { color: #b45309; opacity: 0.7; }
+.allergy-input::placeholder { color: #b45309; opacity: 1; }
 .btn-novo-paciente { background: #fff; color: #dc2626; border: 1px solid #fecaca; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 11.5px; cursor: pointer; white-space: nowrap; }
 .btn-novo-paciente:hover { background: #fef2f2; }
 .aviso-peso-idade { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; font-size: 11px; font-weight: 700; padding: 5px 10px; border-radius: 6px; margin-top: 6px; display: none; }
@@ -338,9 +345,9 @@ html[data-theme="dark"] .clinical-disclaimer strong { color: #fde68a; }
 .cart-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
 .cart-item-nome { font-weight: 700; font-size: 13px; color: var(--text-main); }
 .btn-remover-item { background: transparent; border: none; color: #dc2626; font-size: 12px; cursor: pointer; font-weight: 700; }
-.cart-item-texto { font-size: 11px; color: var(--text-muted); white-space: pre-wrap; font-family: 'Courier New', monospace; }
+.cart-item-texto { font-size: 11px; color: var(--text-muted); white-space: pre-wrap; font-family: Consolas, 'Liberation Mono', Menlo, 'Courier New', monospace; }
 .btn-copiar-receita-completa { width: 100%; background: #16a34a; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; margin-top: 10px; }
-.btn-limpar-carrinho { width: 100%; background: transparent; color: #64748b; border: 1px solid var(--border); padding: 8px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; margin-top: 8px; }
+.btn-limpar-carrinho { width: 100%; background: transparent; color: var(--text-muted); border: 1px solid var(--border); padding: 8px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; margin-top: 8px; }
 .carrinho-vazio { text-align: center; color: var(--text-muted); font-size: 12.5px; padding: 30px 10px; }
 
 /* FORMULÁRIO DE ADICIONAR MEDICAMENTO */

@@ -19,7 +19,7 @@
 .cond-cabecalho { background: color-mix(in srgb, var(--cor-cat) 12%, #fff); border-left: 6px solid var(--cor-cat); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; }
 .cond-cabecalho h2 { margin: 2px 0 4px; font-size: 21px; color: color-mix(in srgb, var(--cor-cat) 82%, #000); }
 .cond-cabecalho-cat { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: var(--cor-cat); }
-.cond-cabecalho-resumo { font-size: 13.5px; color: #334155; }
+.cond-cabecalho-resumo { font-size: 13.5px; color: #1e293b; }
 .cond-indice { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
 .cond-indice a { font-size: 11.5px; font-weight: 700; text-decoration: none; color: var(--text-main); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; }
 
@@ -81,7 +81,7 @@ details.cond-secao[open] > summary { border-bottom: 1px solid var(--border); }
 
 html[data-theme="dark"] .cond-cabecalho { background: color-mix(in srgb, var(--cor-cat) 18%, #0f172a); }
 html[data-theme="dark"] .cond-cabecalho h2, html[data-theme="dark"] .cond-secao h3 { color: color-mix(in srgb, var(--cor-cat) 60%, #fff); }
-html[data-theme="dark"] .cond-cabecalho-resumo { color: #cbd5e1; }
+html[data-theme="dark"] .cond-cabecalho-resumo { color: #e2e8f0; }
 html[data-theme="dark"] .cond-alerta { background: #3b0d0d; border-color: #7f1d1d; }
 html[data-theme="dark"] .cond-alerta h3 { color: #fca5a5; }
 html[data-theme="dark"] .cond-tabela thead th { background: color-mix(in srgb, var(--cor-cat) 18%, #0f172a); }
