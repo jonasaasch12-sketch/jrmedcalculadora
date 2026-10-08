@@ -532,20 +532,6 @@ registrarMedicamentos({
             atencao: "Máximo 750 mg/dia. Quinolona em criança: reservar para as indicações acima. Cautela em QT longo."
         }
     },
-    "pred_gts": {
-        cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais)",
-        kw: "prednisolona gotas 11 mg/ml predsim corticoide asma crise sibilancia", nome: "Prednisolona Gotas", apres: "11 mg / mL",
-        info: "<strong>Posologia:</strong> 2 gotas/kg 1x ao dia, pela manhã, por 5 dias.", badge: "", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => {
-            let gts = Math.round(p * 2);
-            return { v: gts + " gts", r: `${recHead}1) PREDNISOLONA GOTAS 11 MG/ML ------------------ 1 FR\nTOMAR ${gts} GOTAS UMA VEZ AO DIA, PELA MANHÃ, POR 5 DIAS.` };
-        },
-        detalhes: {
-            indicacao: "Crise de asma / sibilância (corticoide oral).",
-            dose: "2 gotas/kg 1x ao dia, pela manhã, por 5 dias.",
-            atencao: "Conferir a dose máxima diária de prednisolona por idade (card Prednisolona Solução)."
-        }
-    },
     "predsin_cp": {
         cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais)",
         kw: "predsin prednisolona comprimido 20 mg corticoide asma", nome: "Predsin 20 mg Comprimido (Prednisolona)", apres: "Comprimido 20 mg",

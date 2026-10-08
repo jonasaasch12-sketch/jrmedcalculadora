@@ -14,10 +14,10 @@ const categorias = [
     { 
         id: "cat-sintomaticos", titulo: "Sintomáticos", dotClass: "dot-sintomaticos", cor: "tarja-sintomaticos", nome: "Sintomáticos", icone: "💊 Sintom.",
         patologias: [
-            { nome: "Febre e Dor (Vias Orais)", conduta: "fssl", condutaNome: "Febre sem sinais localizatórios", remedios: ["dip_gts", "dip_xpe", "pct_gts", "pct_bebe", "ibu_gts", "ibu_50", "ceto_oral", "dip_cp", "pct_cp"] },
+            { nome: "Febre e Dor (Vias Orais)", conduta: "fssl", condutaNome: "Febre sem sinais localizatórios", remedios: ["dip_gts", "dip_xpe", "pct_gts", "pct_bebe", "ibu_gts", "ibu_50", "ceto_oral", "dip_cp", "pct_cp", "nimesulida_gts"] },
             { nome: "Cólicas e Distensão Abdominal", remedios: ["buscopan", "buscopan_composto", "simet", "colikids"] },
             { nome: "Dor Moderada a Intensa (Via Oral)", remedios: ["tramadol_gts"] },
-            { nome: "Analgesia e Antitérmico Hospitalar", remedios: ["dip_inj", "buscopan_composto_ev", "tramadol_ev", "ceto_im"] }
+            { nome: "Analgesia e Antitérmico Hospitalar", remedios: ["dip_inj", "buscopan_composto_ev", "tramadol_ev"] }
         ]
     },
     { 
@@ -43,7 +43,7 @@ const categorias = [
                 nome: "Asma", conduta: "asma",
                 remedios: [
                     // Prescrição Ambulatorial
-                    "clenil_hfa", "pred_sol", "pred_gts", "predsin_cp", "salb_spray",
+                    "clenil_hfa", "pred_sol", "predsin_cp", "salb_spray",
                     // Prescrição para Emergência
                     "salb_spray", "pred_sol", "metil", "magnesio_ev",
                     // Adicionados (manual HIAS)
