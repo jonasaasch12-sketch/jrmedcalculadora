@@ -380,12 +380,18 @@ function inicializarApp() {
 
     todasCategorias.forEach(cat => {
         let estiloCor = cat.corHex ? ` style="background-color:${escaparHtml(cat.corHex)};"` : "";
+        // Computador: ao clicar na categoria, abre embaixo a lista das doenças (seções) dela.
+        let subSidebar = cat.patologias.map((pat, pi) => {
+            let hosp = /hospitalar/i.test(pat.nome) || SECOES_HOSPITALARES.includes(pat.nome);
+            return `<button class="sidebar-sublink" onclick="irParaSecao('${cat.id}', ${pi})">${hosp ? '🏥 ' : ''}${escaparHtml(pat.nome)}</button>`;
+        }).join('');
         htmlMenuSidebar += `
-                    <button class="sidebar-link" onclick="document.getElementById('${cat.id}').scrollIntoView({behavior: 'smooth', block: 'start'})">
+                    <button class="sidebar-link" data-cat="${cat.id}" onclick="clicarCategoriaMenu('${cat.id}')">
                         <span class="dot ${cat.dotClass || ''}"${estiloCor}></span> ${escaparHtml(cat.nome)}
                     </button>
+                    <div class="sidebar-sub" data-cat="${cat.id}" style="--cor-cat:${escaparHtml(cat.corHex || CORES_CATEGORIA[cat.cor] || '#0284c7')}">${subSidebar}</div>
                 `;
-        htmlMenuBottom += `<button class="nav-btn ${cat.cor || ''}"${estiloCor} onclick="document.getElementById('${cat.id}').scrollIntoView({behavior: 'smooth', block: 'start'})">${escaparHtml(cat.icone)}</button>`;
+        htmlMenuBottom += `<button class="nav-btn ${cat.cor || ''}"${estiloCor} onclick="irParaCategoria('${cat.id}')">${escaparHtml(cat.icone)}</button>`;
 
         // Categoria ou seção com conduta (conduta: "<id>" no menu.js): botão que abre a conduta já na
         // condução (emergência/hospital). Só aparece onde a aba Condutas existe (body.condutas-on).
@@ -395,14 +401,14 @@ function inicializarApp() {
         let linkConduta = botaoConduta(cat);
         htmlFinal += `<div id="${cat.id}" class="category-group"><div class="section-header ${cat.cor || ''}${linkConduta ? ' com-link-conduta' : ''}"${estiloCor}><span>${escaparHtml(cat.titulo)}</span>${linkConduta}</div>`;
 
-        cat.patologias.forEach(pat => {
+        cat.patologias.forEach((pat, pi) => {
             // Seções de uso hospitalar ganham o símbolo do hospital no início e no fim do título.
             let ehHosp = /hospitalar/i.test(pat.nome) || SECOES_HOSPITALARES.includes(pat.nome);
             let tituloPat = ehHosp ? `🏥 ${escaparHtml(pat.nome)} 🏥` : pat.nome;
             let linkPat = botaoConduta(pat), comLink = linkPat ? ' com-link-conduta' : '';
             htmlFinal += ehHosp
-                ? `<div class="subtype-group"><div class="sub-type-title sub-type-hosp${comLink}" style="--cor-cat:${escaparHtml(corCat)}"><span>${tituloPat}</span>${linkPat}</div>`
-                : `<div class="subtype-group"><div class="sub-type-title${comLink}"><span>${tituloPat}</span>${linkPat}</div>`;
+                ? `<div class="subtype-group" id="${cat.id}-s${pi}"><div class="sub-type-title sub-type-hosp${comLink}" style="--cor-cat:${escaparHtml(corCat)}"><span>${tituloPat}</span>${linkPat}</div>`
+                : `<div class="subtype-group" id="${cat.id}-s${pi}"><div class="sub-type-title${comLink}"><span>${tituloPat}</span>${linkPat}</div>`;
 
             pat.remedios.forEach(idRemedio => {
                 let med = buscarMed(idRemedio);
@@ -496,6 +502,40 @@ function ehInjetavel(med) {
     med._injetavel = !/^(NEBULIZA|VIA INALAT|USO INALAT|ORIENTA)/.test(t.trim())
         && /ENDOVENOS|INTRAMUSCULAR|\bIV\b|\bEV\b|\bIM\b|INFUS|INFUND|\bBIC\b|HEMOTRANSFUS|VEN[ÓO]CLISE/.test(t);
     return med._injetavel;
+}
+
+// Menu de navegação: vai direto para a categoria (sem rolar) e a tarja pisca uma vez.
+function piscarElemento(el) {
+    if (!el) return;
+    el.classList.remove('piscar');
+    void el.offsetWidth; // reinicia a animação se clicar de novo no mesmo lugar
+    el.classList.add('piscar');
+}
+function irParaCategoria(id) {
+    let cat = document.getElementById(id);
+    if (!cat) return;
+    cat.scrollIntoView({ behavior: 'instant', block: 'start' });
+    piscarElemento(cat.querySelector('.section-header'));
+    // Menu lateral (computador): abre a lista de doenças só desta categoria.
+    document.querySelectorAll('.sidebar-sub, .sidebar-link').forEach(el => el.classList.toggle('aberto', el.dataset.cat === id));
+}
+// Menu lateral: clicar de novo na categoria aberta fecha a lista de doenças.
+function clicarCategoriaMenu(id) {
+    let sub = document.querySelector(`.sidebar-sub[data-cat="${id}"]`);
+    if (sub && sub.classList.contains('aberto')) {
+        document.querySelectorAll(`[data-cat="${id}"]`).forEach(el => el.classList.remove('aberto'));
+        return;
+    }
+    irParaCategoria(id);
+}
+function irParaSecao(catId, i) {
+    let sec = document.getElementById(catId + '-s' + i);
+    if (!sec) return;
+    sec.scrollIntoView({ behavior: 'instant', block: 'start' });
+    piscarElemento(sec.querySelector('.sub-type-title'));
+    document.querySelectorAll('.sidebar-sublink').forEach(b => b.classList.remove('ativo'));
+    let sub = document.querySelector(`.sidebar-sub[data-cat="${catId}"]`);
+    if (sub && sub.children[i]) sub.children[i].classList.add('ativo');
 }
 
 // Seringa com líquido vermelho (desenho próprio, igual em qualquer aparelho) para medicações injetáveis.
