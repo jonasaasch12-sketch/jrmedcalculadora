@@ -506,7 +506,7 @@ const SECOES_HOSPITALARES = [
     "Escolha de Material e Dispositivos", "Pré-medicação e Indução em Bólus", "Manutenção por Infusão Contínua", // RSI
     "Parada e Arritmias", // PALS
     "Crise Convulsiva Aguda", // Neuro
-    "Hidratação IV e Hidroeletrolíticos (Choque/Manutenção)", "Correção de Potássio e Sódio", // TGI
+    "Correção de Potássio e Sódio", // TGI
     "Expansão, Hidratação e Potássio", "Insulina EV e Transição para SC", "Complicações: Edema Cerebral, Acidose Grave e Hipoglicemia" // CAD
 ];
 
