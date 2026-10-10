@@ -402,7 +402,7 @@ registrarMedicamentos({
     },
     // ---------- Diarreia aguda: Guia Prático SBP nº 74 (2023) / Manejo do paciente com diarreia (MS, 2023) ----------
     "tgi_planob": {
-        cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        cat: "cat-diarreia", sub: "🏥 Uso Hospitalar (Reidratação na Unidade)",
         kw: "plano b sro sais de reidratacao oral desidratacao unidade de saude terapia de reidratacao oral tro gastroclise",
         nome: "SRO na Unidade (Plano B)", apres: "Sais de reidratação oral",
         info: "<strong>Conduta (MS):</strong> 50 a 100 mL/kg de SRO em 4 a 6 horas, na unidade, até desaparecerem os sinais de desidratação.", badge: "50-100 mL/kg", recLabel: "Texto para selecionar e copiar:",
