@@ -45,7 +45,7 @@ const categorias = [
                     // Prescrição Ambulatorial
                     "clenil_hfa", "pred_sol", "predsin_cp", "salb_spray",
                     // Prescrição para Emergência
-                    "salb_spray", "pred_sol", "metil", "magnesio_ev",
+                    "metil", "magnesio_ev",
                     // Adicionados (manual HIAS)
                     "fenoterol_spray", "fenoterol_gts"
                 ] 
@@ -106,7 +106,7 @@ const categorias = [
     { 
         id: "cat-diarreia", titulo: "TGI", dotClass: "dot-diarreia", cor: "tarja-diarreia", nome: "TGI", icone: "💧 TGI",
         patologias: [
-            { nome: "Gastroenterite e Reidratação Oral", conduta: "diarreia", condutaNome: "Diarreia aguda", remedios: ["tgi_sro", "tgi_planob", "tgi_zinco", "tgi_provance_mini", "tiorfan", "ondif_cp", "tgi_provance_gg", "tgi_flora", "tgi_azitro", "cipro_disenteria", "vit_a_diarreia", "florax", "floralyte", "rehidrat"] },
+            { nome: "Gastroenterite e Reidratação Oral", conduta: "diarreia", condutaNome: "Diarreia aguda", remedios: ["tgi_sro", "tgi_planob", "tgi_zinco", "tgi_provance_mini", "tiorfan", "tgi_provance_gg", "tgi_flora", "tgi_azitro", "cipro_disenteria", "vit_a_diarreia", "florax", "floralyte", "rehidrat"] },
             { nome: "Parasitoses Intestinais (Verminoses)", conduta: "parasitoses", condutaNome: "Parasitoses intestinais", remedios: ["tgi_alben", "tgi_meben", "nitazoxanida", "metro_parasitas", "pele_iver", "smx_tmp"] },
             { nome: "Constipação, Refluxo e Mucosite", remedios: ["lactulose", "oleo_mineral", "domperidona", "omeprazol", "solucao_mucosite", "omeprazol_ev", "leite_magnesia", "muvinlax", "fleet"] },
             { nome: "Hidratação IV e Hidroeletrolíticos (Choque/Manutenção)", remedios: ["tgi_planoc", "tgi_manut_planoc", "tgi_manutencao", "vig_4", "vig_5"] },

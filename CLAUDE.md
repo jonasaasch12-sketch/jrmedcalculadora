@@ -106,6 +106,8 @@ funcionar na raiz e em `/teste/`. `js/modo-teste.js` detecta `/teste/` (constant
   Fichas da equipe (Firestore `fichas_medicamentos`) têm prioridade sobre `ficha`.
 - Injetáveis ganham a seringa 💉 automaticamente (pelo texto da receita).
   Seções hospitalares ganham 🏥 pelo nome ("hospitalar") ou pela lista `SECOES_HOSPITALARES` (js/app.js).
+- **Sem repetição no menu para a mesma finalidade** (pedido do Dr. Jonas): cada card aparece numa seção só.
+  Repetir em outra seção só quando lá ele serve para outra coisa (ex.: ivermectina em Pele = sarna; em Parasitoses = verme).
 - Novo remédio: criar o bloco no arquivo da categoria **e** colocar o id em `medicamentos/menu.js`.
   Se tiver teto de dose, acrescentar em `TETOS` (testes/verificar.js).
 
