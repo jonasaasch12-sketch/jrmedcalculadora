@@ -73,7 +73,7 @@ body { margin: 0; padding: 0; background-color: var(--bg-app); color: var(--text
 .search-input:focus { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 3px rgba(2,132,199,0.1); }
 
 /* Ao clicar no menu, a tarja da categoria para logo abaixo do painel (linha do "Novo Paciente"). */
-.category-group { scroll-margin-top: calc(var(--altura-topo, 100px) + 10px); }
+.category-group, .subtype-group { scroll-margin-top: calc(var(--altura-topo, 100px) + 10px); }
 
 /* LAYOUT PRINCIPAL (DUAS COLUNAS NA HORIZONTAL) */
 .app-layout {
@@ -388,4 +388,15 @@ html[data-theme="dark"] .clinical-disclaimer strong { color: #fde68a; }
 
 /* Menu de navegação: a tarja da categoria pisca ao chegar */
 @keyframes piscar-tarja { 0%, 100% { filter: none; transform: none; } 30% { filter: brightness(1.35); transform: scale(1.015); } }
-.section-header.piscar { animation: piscar-tarja 0.5s ease-out 1; }
+.section-header.piscar, .sub-type-title.piscar { animation: piscar-tarja 0.5s ease-out 1; }
+
+/* Menu lateral (computador): lista das doenças da categoria clicada */
+.sidebar-sub { display: none; margin: 0 0 6px 7px; padding-left: 10px; border-left: 2px solid var(--cor-cat, var(--primary)); }
+.sidebar-sub.aberto { display: block; }
+.sidebar-link.aberto { background: #e2e8f0; color: var(--text-main); }
+.sidebar-sublink { display: block; width: 100%; text-align: left; background: transparent; border: none; padding: 5px 6px; font-size: 12px; font-weight: 500; line-height: 1.3; color: #334155; cursor: pointer; border-radius: 5px; }
+.sidebar-sublink:hover { background: #f1f5f9; color: var(--primary); }
+.sidebar-sublink.ativo { background: color-mix(in srgb, var(--cor-cat, #0284c7) 14%, transparent); color: var(--text-main); font-weight: 700; }
+html[data-theme="dark"] .sidebar-link.aberto { background: #1e293b; }
+html[data-theme="dark"] .sidebar-sublink { color: #cbd5e1; }
+html[data-theme="dark"] .sidebar-sublink:hover { background: #1e293b; }
