@@ -388,4 +388,4 @@ html[data-theme="dark"] .clinical-disclaimer strong { color: #fde68a; }
 
 /* Menu de navegação: a tarja da categoria pisca ao chegar */
 @keyframes piscar-tarja { 0%, 100% { filter: none; transform: none; } 30% { filter: brightness(1.35); transform: scale(1.015); } }
-.section-header.piscar { animation: piscar-tarja 0.5s ease-out 2; }
+.section-header.piscar { animation: piscar-tarja 0.5s ease-out 1; }
