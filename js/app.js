@@ -381,11 +381,11 @@ function inicializarApp() {
     todasCategorias.forEach(cat => {
         let estiloCor = cat.corHex ? ` style="background-color:${escaparHtml(cat.corHex)};"` : "";
         htmlMenuSidebar += `
-                    <button class="sidebar-link" onclick="document.getElementById('${cat.id}').scrollIntoView({behavior: 'smooth', block: 'start'})">
+                    <button class="sidebar-link" onclick="irParaCategoria('${cat.id}')">
                         <span class="dot ${cat.dotClass || ''}"${estiloCor}></span> ${escaparHtml(cat.nome)}
                     </button>
                 `;
-        htmlMenuBottom += `<button class="nav-btn ${cat.cor || ''}"${estiloCor} onclick="document.getElementById('${cat.id}').scrollIntoView({behavior: 'smooth', block: 'start'})">${escaparHtml(cat.icone)}</button>`;
+        htmlMenuBottom += `<button class="nav-btn ${cat.cor || ''}"${estiloCor} onclick="irParaCategoria('${cat.id}')">${escaparHtml(cat.icone)}</button>`;
 
         // Categoria ou seção com conduta (conduta: "<id>" no menu.js): botão que abre a conduta já na
         // condução (emergência/hospital). Só aparece onde a aba Condutas existe (body.condutas-on).
@@ -496,6 +496,18 @@ function ehInjetavel(med) {
     med._injetavel = !/^(NEBULIZA|VIA INALAT|USO INALAT|ORIENTA)/.test(t.trim())
         && /ENDOVENOS|INTRAMUSCULAR|\bIV\b|\bEV\b|\bIM\b|INFUS|INFUND|\bBIC\b|HEMOTRANSFUS|VEN[ÓO]CLISE/.test(t);
     return med._injetavel;
+}
+
+// Menu de navegação: vai direto para a categoria (sem rolar) e a tarja pisca uma vez.
+function irParaCategoria(id) {
+    let cat = document.getElementById(id);
+    if (!cat) return;
+    cat.scrollIntoView({ behavior: 'instant', block: 'start' });
+    let tarja = cat.querySelector('.section-header');
+    if (!tarja) return;
+    tarja.classList.remove('piscar');
+    void tarja.offsetWidth; // reinicia a animação se clicar de novo na mesma categoria
+    tarja.classList.add('piscar');
 }
 
 // Seringa com líquido vermelho (desenho próprio, igual em qualquer aparelho) para medicações injetáveis.
