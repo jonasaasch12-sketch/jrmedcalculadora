@@ -385,3 +385,7 @@ html[data-theme="dark"] .clinical-disclaimer strong { color: #fde68a; }
 .faixa-teste { background: #dc2626; color: #fff; font-size: 12.5px; text-align: center; padding: 6px 12px; line-height: 1.4; }
 .faixa-teste a { color: #fff; font-weight: 800; text-decoration: underline; white-space: nowrap; }
 .selo-teste { display: inline-block; vertical-align: middle; background: #dc2626; color: #fff; font-size: 10px; font-weight: 800; letter-spacing: .5px; padding: 2px 6px; border-radius: 4px; }
+
+/* Menu de navegação: a tarja da categoria pisca ao chegar */
+@keyframes piscar-tarja { 0%, 100% { filter: none; transform: none; } 30% { filter: brightness(1.35); transform: scale(1.015); } }
+.section-header.piscar { animation: piscar-tarja 0.5s ease-out 2; }
