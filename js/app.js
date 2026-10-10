@@ -386,7 +386,7 @@ function inicializarApp() {
             return `<button class="sidebar-sublink" onclick="irParaSecao('${cat.id}', ${pi})">${hosp ? '🏥 ' : ''}${escaparHtml(pat.nome)}</button>`;
         }).join('');
         htmlMenuSidebar += `
-                    <button class="sidebar-link" data-cat="${cat.id}" onclick="irParaCategoria('${cat.id}')">
+                    <button class="sidebar-link" data-cat="${cat.id}" onclick="clicarCategoriaMenu('${cat.id}')">
                         <span class="dot ${cat.dotClass || ''}"${estiloCor}></span> ${escaparHtml(cat.nome)}
                     </button>
                     <div class="sidebar-sub" data-cat="${cat.id}" style="--cor-cat:${escaparHtml(cat.corHex || CORES_CATEGORIA[cat.cor] || '#0284c7')}">${subSidebar}</div>
@@ -518,6 +518,15 @@ function irParaCategoria(id) {
     piscarElemento(cat.querySelector('.section-header'));
     // Menu lateral (computador): abre a lista de doenças só desta categoria.
     document.querySelectorAll('.sidebar-sub, .sidebar-link').forEach(el => el.classList.toggle('aberto', el.dataset.cat === id));
+}
+// Menu lateral: clicar de novo na categoria aberta fecha a lista de doenças.
+function clicarCategoriaMenu(id) {
+    let sub = document.querySelector(`.sidebar-sub[data-cat="${id}"]`);
+    if (sub && sub.classList.contains('aberto')) {
+        document.querySelectorAll(`[data-cat="${id}"]`).forEach(el => el.classList.remove('aberto'));
+        return;
+    }
+    irParaCategoria(id);
 }
 function irParaSecao(catId, i) {
     let sec = document.getElementById(catId + '-s' + i);
