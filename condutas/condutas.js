@@ -111,7 +111,7 @@ function htmlBlocoConduta(b) {
 
 // Uma conduta pode ter "blocos" (ex.: Diagnóstico · Emergência · Ambulatório),
 // cada um com suas seções; ou só "secoes" (um bloco sem título).
-// As seções abrem e fecham com um toque (fechadas por padrão; "aberta: true" começa aberta).
+// As seções abrem e fecham com um toque. Todas começam fechadas (pedido do Dr. Jonas); "aberta" é ignorado.
 function abrirConduta(id) {
     let c = condutasJR[id];
     if (!c) return;
@@ -135,7 +135,7 @@ function abrirConduta(id) {
         if (b.titulo) html += `<div class="cond-bloco" id="cond-bloco-${bi}" style="--cor-bloco:${b.cor || c.cor}"><span>${b.icone || ''} ${escCond(b.titulo)}</span>${b.subtitulo ? `<small>${b.subtitulo}</small>` : ''}</div>`;
         b.secoes.forEach(s => {
             let i = n++;
-            html += `<details class="cond-secao${s.alerta ? ' cond-alerta' : ''}" id="cond-sec-${i}" style="--cor-cat:${c.cor}"${s.aberta ? ' open' : ''}>
+            html += `<details class="cond-secao${s.alerta ? ' cond-alerta' : ''}" id="cond-sec-${i}" style="--cor-cat:${c.cor}">
                 <summary><h3>${s.passo ? `<span class="cond-passo">${s.passo}</span>` : (s.icone || '')} ${escCond(s.titulo)}</h3>${s.resumo ? `<div class="cond-secao-resumo">${s.resumo}</div>` : ''}</summary>
                 <div class="cond-secao-corpo">${htmlBlocoConduta(s)}</div>
             </details>`;
