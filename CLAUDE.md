@@ -51,8 +51,8 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
   emergência / hospitalar** (vermelho) → **🏠 Ambulatório: casa e manutenção** (verde).
 - **O diagnóstico vem SEMPRE primeiro** (1ª seção do 1º bloco). Depois: diferencial, fatores de
   risco, sinais vitais e, por último no bloco, a gravidade/escore.
-- Seções são sanfona (fechadas). `aberta: true` só no essencial do plantão: gravidade/escore,
-  conduta da emergência e prescrição para casa. Cada seção tem `resumo` de uma linha.
+- Seções são sanfona e **todas começam fechadas** (pedido do Dr. Jonas); quem quiser usa
+  "Abrir tudo". O campo `aberta: true` ainda existe nos arquivos, mas é ignorado. Cada seção tem `resumo` de uma linha.
 - **Condução na emergência = passo a passo cronológico** (pedido do Dr. Jonas): 1ª seção "⏱️ Linha do
   tempo (resumo)" (`lista: "passos"`), depois uma seção por passo com `passo: N` (número em destaque),
   na ordem em que se faz: chegada/exames → hidratação → medicação... Cada passo diz o que fazer,
