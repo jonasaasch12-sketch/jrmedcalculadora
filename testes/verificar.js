@@ -23,6 +23,7 @@ const atualizar = process.argv.includes('--atualizar');
 
 // Tetos por dose: o 1º número do resultado (quadro azul do card) nunca pode passar disso.
 const TETOS = {
+    dexa_crupe: 5,        // mL (20 mg)
     dip_gts: 40,          // gotas (1 g)
     dip_xpe: 20,          // mL (1 g)
     dip_inj: 2,           // mL (1 g)
