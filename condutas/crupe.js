@@ -156,7 +156,7 @@ registrarConduta({
                     resumo: "Efeito quase imediato, dura cerca de 2 h.",
                     itens: [
                         "<strong>Indicação:</strong> crupe <strong>moderado ou grave</strong>, e criança com procedimento ou manipulação prévia da via aérea.",
-                        "<strong>Dose:</strong> adrenalina 1:1000, <strong>0,5 mL/kg, máximo 5 mL</strong> por dose, nebulizada.",
+                        "<strong>Dose:</strong> adrenalina 1:1000, <strong>0,5 mL/kg, máximo 5 mL</strong> por dose, <strong>pura, sem diluir</strong>, nebulizada.",
                         "<strong>Não</strong> indicada no crupe leve (só dexametasona e alta).",
                         "Efeito em minutos, mas <strong>dura cerca de 2 h</strong>: o desconforto pode voltar. Sempre junto com o corticoide.",
                         "Uma dose é segura. Nos casos de falência respiratória, a experiência clínica sugere que pode ser <strong>repetida a cada 2 horas</strong>; há relato de taquicardia ventricular e infarto em criança saudável com crupe grave. Monitorar."
