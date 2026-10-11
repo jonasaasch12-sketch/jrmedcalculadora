@@ -31,7 +31,7 @@ const categorias = [
         id: "cat-antialergicos", titulo: "Antialérgicos", dotClass: "dot-alergias", cor: "tarja-alergias", nome: "Antialérgicos", icone: "🤧 Alerg.",
         patologias: [
             { nome: "Prurido e Rinite (Vias Orais)", remedios: ["hixizine", "dexclor", "deslo", "loratadina", "dexa_elixir"] },
-            { nome: "Anafilaxia (Emergência)", remedios: ["adrenalina_im"] },
+            { nome: "Anafilaxia (Emergência)", conduta: "anafilaxia", condutaNome: "Anafilaxia", remedios: ["adrenalina_im", "anaf_expansao"] },
             { nome: "Urticária / Reação Alérgica (Hospitalar)", remedios: ["prometa"] }
         ]
     },
