@@ -119,7 +119,7 @@ registrarConduta({
                     lista: "passos",
                     itens: [
                         "<span class=\"cond-passo\">1</span> <strong>Chegada:</strong> criança calma no colo, oximetria, escore e sinais de alarme",
-                        "<span class=\"cond-passo\">2</span> <strong>Corticoide para todos:</strong> dexametasona 0,5 mg/kg dose única",
+                        "<span class=\"cond-passo\">2</span> <strong>Corticoide para todos:</strong> dexametasona 0,6 mg/kg dose única",
                         "<span class=\"cond-passo\">3</span> <strong>Moderado ou grave:</strong> adrenalina inalatória",
                         "<span class=\"cond-passo\">4</span> <strong>SpO₂ &lt; 92%:</strong> O₂ umidificado e UTI",
                         "<span class=\"cond-passo\">5</span> <strong>Observar 3 a 4 h</strong> após a adrenalina (rebote em ~2 h)",
@@ -143,7 +143,7 @@ registrarConduta({
                     titulo: "Corticoide: dexametasona para todos",
                     resumo: "Dose única, VO, IM ou EV. Reduz gravidade, internação e UTI.",
                     itens: [
-                        "<strong>Dexametasona 0,5 mg/kg, dose única</strong> (padrão do serviço), VO ou parenteral. Ação longa (> 48 h).",
+                        "<strong>Dexametasona 0,6 mg/kg, dose única</strong> (padrão do serviço), VO ou parenteral. Ação longa (> 48 h).",
                         "Vomitando: <strong>IM</strong>. Já com acesso venoso: <strong>EV</strong>.",
                         "Referência SBP: leve 0,15 a 0,3 mg/kg · moderado 0,3 a 0,6 mg/kg · grave 0,6 mg/kg IM.",
                         "<strong>Alternativas:</strong> budesonida inalatória <strong>2 mg</strong> (8 mL da 0,25 mg/mL), dose única, no leve/moderado ou se vomita e recusa a dexametasona oral · <strong>(Einstein)</strong> prednisolona 1 a 2 mg/kg/dia por 3 dias, se não houver dexametasona."
