@@ -286,19 +286,19 @@ registrarMedicamentos({
         kw: "adrenalina epinefrina inalatoria nebulizacao crupe laringite estridor", nome: "Adrenalina Inalatória (Crupe)", apres: "Ampola 1 mg / mL (1:1000)",
         info: "<strong>Conduta:</strong> 0,5 mL/kg nebulizado (Peso ÷ 2 em mL). Máx. 5 mL.", badge: "Máx: 5 mL", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
-            // Manual HIAS (2017): adrenalina 1:1000, 0,5 mL/kg (Peso ÷ 2 em mL), máximo 5 mL; pode ou não diluir com igual volume de SF 0,9%.
+            // Adrenalina 1:1000 PURA (sem diluir, padrão do Dr. Jonas; SBP: "epinefrina não diluída"), 0,5 mL/kg (Peso ÷ 2 em mL), máximo 5 mL.
             // SBP (Crupe viral e bacteriano): efeito ultrarrápido no estridor, com duração de cerca de 2 horas.
             let v = Math.min(p * 0.5, 5).toFixed(1);
-            return { v: v + " mL", r: `NEBULIZAÇÃO (LARINGITE / CRUPE)\n\n Colocar ${v} mL de Adrenalina 1 mg/mL (1:1000) no nebulizador (pode completar com igual volume de SF 0,9%) e nebulizar com O2.\n Manter observação por pelo menos 2 horas após a nebulização (risco de retorno dos sintomas).` };
+            return { v: v + " mL", r: `NEBULIZAÇÃO (LARINGITE / CRUPE)\n\n Colocar ${v} mL de Adrenalina 1 mg/mL (1:1000) PURA, SEM DILUIR, no nebulizador e nebulizar com O2.\n Manter observação por pelo menos 2 horas após a nebulização (risco de retorno dos sintomas).` };
         },
         detalhes: {
             indicacao: "Laringite viral aguda (crupe) com estridor em repouso ou desconforto respiratório.",
-            dose: "0,5 mL/kg (Peso ÷ 2 em mL) da adrenalina 1:1000 nebulizada. Pode diluir com igual volume de SF 0,9%.",
+            dose: "0,5 mL/kg (Peso ÷ 2 em mL) da adrenalina 1:1000 pura (sem diluir), nebulizada.",
             atencao: "Máximo 5 mL. Efeito ultrarrápido, mas dura cerca de 2 horas: observar o retorno dos sintomas. Associar dexametasona."
         },
         ficha: {
             indicacoes: "Laringite viral aguda (crupe) com estridor ou desconforto respiratório.",
-            dose: "Crupe: 0,5 mL/kg (Peso ÷ 2 em mL) da adrenalina 1:1000 nebulizada, pode diluir com igual volume de SF 0,9%",
+            dose: "Crupe: 0,5 mL/kg (Peso ÷ 2 em mL) da adrenalina 1:1000 pura (sem diluir), nebulizada",
             doseMaxima: "5 mL por nebulização.",
             apresentacoes: "Ampola 1 mg/mL (1:1000).",
             via: "Inalatória (nebulização).",
