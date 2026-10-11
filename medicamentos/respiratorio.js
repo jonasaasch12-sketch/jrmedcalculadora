@@ -309,20 +309,20 @@ registrarMedicamentos({
     "dexa_crupe": {
         cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Nebulização)", 
         kw: "dexametasona injetavel crupe laringite anafilaxia alergia hospitalar", nome: "Dexametasona Injetável", apres: "4 mg / mL",
-        info: "<strong>Conduta:</strong> Crupe: 0,5 mg/kg, dose única (padrão do serviço).", badge: "Teto Máx: 5 mL (20 mg)", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Conduta:</strong> Crupe: 0,6 mg/kg, dose única (padrão do serviço).", badge: "Teto Máx: 5 mL (20 mg)", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
-            // Crupe: dose fixa de 0,5 mg/kg, dose única, VO ou parenteral (escolha do Dr. Jonas; SBP: 0,15 a 0,6 mg/kg conforme a gravidade). Teto do app: 5 mL (20 mg).
-            let v = Math.min(Math.round(p * 0.5 / 4 * 10) / 10, 5).toFixed(1);
-            return { v: v + " mL", r: `VIA ENDOVENOSA / INTRAMUSCULAR (CRUPE)\n\n1) DEXAMETASONA 4 MG/ML ------------ ${v} ML\nFAZER ${v} ML (0,5 MG/KG) EV OU IM, DOSE ÚNICA.` };
+            // Crupe: dose fixa de 0,6 mg/kg, dose única, VO ou parenteral (escolha do Dr. Jonas; SBP: 0,15 a 0,6 mg/kg conforme a gravidade). Teto do app: 5 mL (20 mg).
+            let v = Math.min(Math.round(p * 0.6 / 4 * 10) / 10, 5).toFixed(1);
+            return { v: v + " mL", r: `VIA ENDOVENOSA / INTRAMUSCULAR (CRUPE)\n\n1) DEXAMETASONA 4 MG/ML ------------ ${v} ML\nFAZER ${v} ML (0,6 MG/KG) EV OU IM, DOSE ÚNICA.` };
         },
         detalhes: {
             indicacao: "Laringite viral aguda (crupe).",
-            dose: "0,5 mg/kg, dose única, VO ou parenteral (IM/EV).",
+            dose: "0,6 mg/kg, dose única, VO ou parenteral (IM/EV).",
             atencao: "Máximo 5 mL (20 mg). Vomitando: IM. Com acesso venoso: EV. A associação com adrenalina inalatória (moderado/grave) reduz as taxas de internação."
         },
         ficha: {
             indicacoes: "Laringite viral aguda (crupe).",
-            dose: "Crupe: 0,5 mg/kg, dose única, VO ou parenteral (padrão do serviço)\nReferência SBP: 0,15 mg/kg (leve) até 0,6 mg/kg (grave), dose única",
+            dose: "Crupe: 0,6 mg/kg, dose única, VO ou parenteral (padrão do serviço)\nReferência SBP: 0,15 mg/kg (leve) até 0,6 mg/kg (grave), dose única",
             doseMaxima: "Teto do app: 5 mL (20 mg).",
             apresentacoes: "Injetável 4 mg/mL.",
             via: "Oral, intramuscular ou endovenosa.",
