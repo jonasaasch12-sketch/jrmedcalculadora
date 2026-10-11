@@ -79,6 +79,31 @@ registrarMedicamentos({
             fonteRevisao: "SBP - Guia Prático de Atualização Anafilaxia: atualização 2021: https://www.sbp.com.br/fileadmin/user_upload/22970c-GPA-Anafilaxia_-_Atualizacao_2021.pdf; ASBAI - Autoinjetores de adrenalina no manejo da anafilaxia (2024) - consultados em out/2026."
         }
     },
+    "anaf_expansao": {
+        cat: "cat-antialergicos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+        kw: "anafilaxia choque anafilatico expansao volemica soro fisiologico ringer bolus hipotensao", nome: "Expansão na Anafilaxia (SF 0,9% / Ringer)", apres: "SF 0,9% ou Ringer lactato",
+        info: "<strong>Conduta:</strong> 5 a 10 mL/kg EV nos primeiros 5 minutos e até 30 mL/kg na primeira hora.", badge: "Máx: 30 mL/kg na 1ª hora", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* SBP (Anafilaxia: atualização 2021): crianças 5-10 mL/kg IV nos primeiros 5 min e 30 mL/kg na 1ª hora; adultos/adolescentes 1-2 L rápido. */
+            let b5 = Math.min(p * 5, 1000), b10 = Math.min(p * 10, 1000), h1 = Math.min(p * 30, 2000);
+            return { v: `${b5.toFixed(0)}–${b10.toFixed(0)} mL em 5 min`, r: `VIA ENDOVENOSA (ANAFILAXIA - EXPANSÃO)\n\nSF 0,9% OU RINGER LACTATO ${b5.toFixed(0)} a ${b10.toFixed(0)} mL (5 a 10 mL/kg) EV EM 5 MINUTOS.\nRepetir conforme pulso e pressão arterial, até ${h1.toFixed(0)} mL (30 mL/kg) na primeira hora.\n\n* Acesso venoso do maior calibre possível. Monitorar sobrecarga de volume.\n* Manter decúbito dorsal com membros inferiores elevados.` };
+        },
+        detalhes: {
+            indicacao: "Anafilaxia com hipotensão ou má perfusão (sempre depois da adrenalina IM).",
+            dose: "5 a 10 mL/kg EV nos primeiros 5 minutos e até 30 mL/kg na primeira hora. Adolescentes/adultos: 1 a 2 L rápido.",
+            atencao: "A velocidade é regulada pelo pulso e pela pressão arterial. Monitorar sobrecarga de volume."
+        },
+        ficha: {
+            indicacoes: "Expansão volêmica na anafilaxia com hipotensão ou sinais de má perfusão.",
+            dose: "Crianças: 5-10 mL/kg EV nos primeiros 5 minutos e 30 mL/kg na primeira hora\nAdultos/adolescentes: 1-2 litros EV rapidamente",
+            doseMaxima: "Teto do app: 1.000 mL por bolus e 2.000 mL na primeira hora.",
+            apresentacoes: "Soro fisiológico 0,9% ou Ringer lactato.",
+            via: "Endovenosa, pelo acesso de maior calibre possível.",
+            intervalo: "Bolus repetidos conforme pulso e pressão arterial.",
+            alertasPediatricos: "Levantar-se ou sentar-se subitamente está associado a desfechos fatais (síndrome do ventrículo vazio): manter decúbito dorsal com membros inferiores elevados. Monitorar sobrecarga de volume.",
+            fonteRevisao: "SBP - Guia Prático de Atualização Anafilaxia: atualização 2021 (Quadro 3): https://www.sbp.com.br/fileadmin/user_upload/22970c-GPA-Anafilaxia_-_Atualizacao_2021.pdf - consultado em out/2026."
+        }
+    },
     "prometa": {
         cat: "cat-antialergicos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)", 
         kw: "prometazina fenergan alergia prurido injetavel im hospitalar", nome: "Prometazina IM", apres: "Ampola 25 mg / mL",
