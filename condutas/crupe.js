@@ -119,7 +119,7 @@ registrarConduta({
                     lista: "passos",
                     itens: [
                         "<span class=\"cond-passo\">1</span> <strong>Chegada:</strong> criança calma no colo, oximetria, escore e sinais de alarme",
-                        "<span class=\"cond-passo\">2</span> <strong>Corticoide para todos:</strong> dexametasona dose única",
+                        "<span class=\"cond-passo\">2</span> <strong>Corticoide para todos:</strong> dexametasona 0,5 mg/kg dose única",
                         "<span class=\"cond-passo\">3</span> <strong>Moderado ou grave:</strong> adrenalina inalatória",
                         "<span class=\"cond-passo\">4</span> <strong>SpO₂ &lt; 92%:</strong> O₂ umidificado e UTI",
                         "<span class=\"cond-passo\">5</span> <strong>Observar 3 a 4 h</strong> após a adrenalina (rebote em ~2 h)",
@@ -143,9 +143,9 @@ registrarConduta({
                     titulo: "Corticoide: dexametasona para todos",
                     resumo: "Dose única, VO, IM ou EV. Reduz gravidade, internação e UTI.",
                     itens: [
-                        "<strong>Dexametasona dose única</strong>, VO ou parenteral. Ação longa (> 48 h).",
-                        "<strong>SBP:</strong> leve 0,15 a 0,3 mg/kg · moderado 0,3 a 0,6 mg/kg · grave 0,6 mg/kg IM.",
-                        "<strong>(Einstein)</strong> 0,6 mg/kg para todos, <strong>máximo 10 mg</strong>. Vomitando: IM. Já com acesso venoso: EV. VO: comprimido de 4 mg diluído em água ou líquido adocicado.",
+                        "<strong>Dexametasona 0,5 mg/kg, dose única</strong> (padrão do serviço), VO ou parenteral. Ação longa (> 48 h).",
+                        "Vomitando: <strong>IM</strong>. Já com acesso venoso: <strong>EV</strong>.",
+                        "Referência SBP: leve 0,15 a 0,3 mg/kg · moderado 0,3 a 0,6 mg/kg · grave 0,6 mg/kg IM.",
                         "<strong>Alternativas:</strong> budesonida inalatória <strong>2 mg</strong> (8 mL da 0,25 mg/mL), dose única, no leve/moderado ou se vomita e recusa a dexametasona oral · <strong>(Einstein)</strong> prednisolona 1 a 2 mg/kg/dia por 3 dias, se não houver dexametasona."
                     ],
                     remedios: ["dexa_crupe"]
@@ -157,9 +157,9 @@ registrarConduta({
                     itens: [
                         "<strong>Indicação:</strong> crupe <strong>moderado ou grave</strong>, e criança com procedimento ou manipulação prévia da via aérea.",
                         "<strong>Dose:</strong> adrenalina 1:1000, <strong>0,5 mL/kg, máximo 5 mL</strong> por dose, nebulizada.",
-                        "<strong>(Einstein)</strong> No máximo <strong>2 doses na 1ª hora</strong>. <strong>Não</strong> usar no crupe leve.",
+                        "<strong>Não</strong> indicada no crupe leve (só dexametasona e alta).",
                         "Efeito em minutos, mas <strong>dura cerca de 2 h</strong>: o desconforto pode voltar. Sempre junto com o corticoide.",
-                        "Doses repetidas: há relato de taquicardia ventricular e infarto em criança saudável. Monitorar."
+                        "Uma dose é segura. Nos casos de falência respiratória, a experiência clínica sugere que pode ser <strong>repetida a cada 2 horas</strong>; há relato de taquicardia ventricular e infarto em criança saudável com crupe grave. Monitorar."
                     ],
                     remedios: ["adrenalina_neb"]
                 },
@@ -218,7 +218,7 @@ registrarConduta({
                     titulo: "Grave sem resposta: UTI e via aérea",
                     resumo: "Adrenalina repetida, O₂, heliox, VNI; IOT pelo mais experiente.",
                     itens: [
-                        "<strong>(Einstein)</strong> Na UTI: adrenalina inalatória até <strong>2×/hora</strong>, O₂ se SpO₂ &lt; 92%, <strong>heliox</strong> (30% O₂ + 70% hélio) se risco de falência e pouca resposta, <strong>VNI</strong>, IOT se necessário.",
+                        "Na UTI: adrenalina inalatória repetida <strong>a cada 2 horas</strong> se falência respiratória (SBP), O₂ se SpO₂ &lt; 92%. <strong>(Einstein)</strong> <strong>heliox</strong> (30% O₂ + 70% hélio) se risco de falência e pouca resposta, <strong>VNI</strong>, IOT se necessário.",
                         "<strong>Intubação:</strong> em ambiente controlado, pelo profissional <strong>mais experiente</strong>. Cânula com <strong>0,5 mm a menos</strong> de diâmetro interno que a calculada para a idade.",
                         "A maioria das crianças <strong>não</strong> precisa de intubação após adrenalina + dexametasona."
                     ]
