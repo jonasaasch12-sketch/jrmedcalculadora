@@ -96,6 +96,8 @@ function htmlBlocoConduta(b) {
         html += `</tbody></table></div>`;
         if (t.nota) html += `<div class="cond-nota">${t.nota}</div>`;
     });
+    // Ferramenta própria de uma conduta (ex.: boneco clicável dos queimados): nome de uma função global que devolve o HTML.
+    if (b.ferramenta && typeof window[b.ferramenta] === 'function') html += window[b.ferramenta]();
     if (b.escore) html += htmlEscore(b.escore);
     if (b.remedios && b.remedios.length) {
         html += `<div class="cond-meds-titulo">💊 Medicações desta etapa</div><div class="cond-meds">`;
