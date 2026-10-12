@@ -142,3 +142,9 @@ body.condutas-on .sub-type-title .link-conduta { background: var(--cor-link, #02
 .qm-cor-metade { background: repeating-linear-gradient(45deg, #f97316 0 3px, #fed7aa 3px 6px); margin-left: 8px; }
 .qm-lista ul { margin: 8px 0 0; padding-left: 18px; font-size: 13px; }
 html[data-theme="dark"] .qm-reg:not(.qm-inteira):not(.qm-metade) { fill: #334155; stroke: #94a3b8; }
+.qm-hid { margin-top: 12px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-app); }
+.qm-hid-titulo { font-weight: 800; color: #0369a1; margin: 6px 0; }
+.qm-hid ul { margin: 0; padding-left: 18px; font-size: 13.5px; }
+.qm-hid li { margin-bottom: 4px; }
+.qm-eletrica { display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; }
+html[data-theme="dark"] .qm-hid-titulo { color: #7dd3fc; }
