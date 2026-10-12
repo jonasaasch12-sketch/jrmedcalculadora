@@ -58,6 +58,8 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
   na ordem em que se faz: chegada/exames → hidratação → medicação... Cada passo diz o que fazer,
   em frases curtas e imperativas, com o card daquela etapa. Complicações "a qualquer momento" no fim.
 - Escores clínicos (WDF, PRAM...) sempre **clicáveis** (`escore: {...}`), com soma automática.
+- Ferramenta própria numa seção: `ferramenta: "<nomeDaFunção>"` (função global que devolve o HTML), ex.: boneco
+  clicável de Lund-Browder em `condutas/queimados.js`.
 - Medicações: linkar os cards; se a fonte diverge do card, **não mudar o card sem perguntar**.
   Quando o Dr. Jonas escolhe a dose do card (ex.: salbutamol peso/2, magnésio do serviço),
   a conduta passa a usar o card.
