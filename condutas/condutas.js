@@ -291,7 +291,7 @@ function atualizarEscore(id) {
     let faixa;
     if (e.classificar) {
         // Regra própria (ex.: Plano A/B/C da desidratação): devolve { num, rotulo, cor, texto }
-        let r = e.classificar(Object.values(m));
+        let r = e.classificar(Object.values(m), m, e.itens.length); // m: { índice do item: valor }
         total = r.num; faixa = r;
     } else {
         faixa = e.faixas.find(f => total >= f.min && total <= f.max);
