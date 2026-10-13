@@ -280,7 +280,7 @@ registrarConduta({
                         "Orientar que as <strong>primeiras 24 a 48 horas</strong> são as mais importantes. Pode dormir, mas um adulto deve conseguir acordá-la e ela deve responder normalmente.",
                         "Analgesia simples (paracetamol ou dipirona) para dor de cabeça leve."
                     ],
-                    remedios: ["pct_gts", "dip_gts"],
+                    remedios: ["orientacoes_tce", "pct_gts", "dip_gts"],
                     grupos: [
                         {
                             nome: "Voltar imediatamente se",

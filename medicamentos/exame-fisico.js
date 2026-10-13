@@ -58,5 +58,18 @@ registrarMedicamentos({
         info: "<strong>Descrição:</strong> Orientações de alta para dengue.",
         badgeSt: "static-blue", badge: "Orientações", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
         calc: () => ({ v: "Orientações", r: "ORIENTAÇÕES DENGUE - RETORNAR PARA REAVALIAÇÃO EM 48 HORAS OU A QUALQUER MOMENTO SE:\n- Dor abdominal intensa;\n- Vômitos persistentes;\n- Sangramento no nariz, na gengiva, na urina ou nas fezes;\n- Sonolência ou irritabilidade;\n- Tonturas ou desmaio." })
+    },
+    "orientacoes_tce": {
+        cat: "cat-exame-fisico", sub: "Orientações e Sinais de Alarme",
+        kw: "orientacoes alta sinais alarme tce trauma craniano traumatismo cranioencefalico batida na cabeca queda concussao retorno",
+        nome: "Sinais de Alarme — TCE (Batida na Cabeça)", apres: "Termo de Alta",
+        info: "<strong>Descrição:</strong> Orientações de alta após trauma de crânio (TCE leve).",
+        badgeSt: "static-blue", badge: "Orientações", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "Orientações", r: "ORIENTAÇÕES TCE (BATIDA NA CABEÇA) - AS PRIMEIRAS 24 A 48 HORAS SÃO AS MAIS IMPORTANTES.\n- A criança pode dormir normalmente, mas um adulto deve ficar por perto e conseguir acordá-la, e ela deve responder normalmente;\n- Manter repouso relativo por 24 a 48 horas, com menos telas e sem brincadeiras de impacto; voltar à escola e ao esporte aos poucos, conforme orientação médica;\n- Para dor de cabeça leve, usar somente o analgésico receitado.\n\nRETORNAR IMEDIATAMENTE AO PRONTO-SOCORRO SE:\n- Sonolência excessiva, dificuldade para acordar, confusão ou comportamento diferente do habitual;\n- Vômitos repetidos (3 ou mais vezes);\n- Dor de cabeça forte ou que piora;\n- Convulsão, desmaio ou perda de consciência;\n- Fraqueza, formigamento, dificuldade para andar ou falar, visão dupla ou pupilas de tamanhos diferentes;\n- Saída de líquido claro ou sangue pelo nariz ou pelo ouvido;\n- Bebê: choro inconsolável, recusa alimentar ou moleira estufada." }),
+        detalhes: {
+            indicacao: "Alta após TCE leve (PECARN de baixo risco, observação sem piora ou TC normal).",
+            dose: "Entregar e explicar aos responsáveis.",
+            atencao: "Primeiras 24 a 48 h são as mais críticas. Suspeita de maus-tratos: não dar alta sem avaliação."
+        }
     }
 });
