@@ -122,3 +122,29 @@ body.condutas-on .link-conduta { display: inline-flex; align-items: center; back
 /* Nos títulos de seção (fundo claro) o botão fica na cor da categoria */
 body.condutas-on .sub-type-title .link-conduta { background: var(--cor-link, #0284c7); color: #fff; padding: 4px 10px; font-size: 11px; box-shadow: none; }
 .cond-bloco { scroll-margin-top: calc(var(--altura-topo, 100px) + 10px); }
+
+/* Queimados: boneco clicável (tabela de Lund-Browder) */
+.qm-faixas { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.qm-faixa { border: 1px solid var(--border); background: var(--surface); color: var(--text-main); border-radius: 16px; padding: 5px 10px; font-size: 12.5px; cursor: pointer; }
+.qm-faixa.ativa { background: var(--primary); border-color: var(--primary); color: #fff; font-weight: 700; }
+.qm-figuras { display: flex; gap: 8px; justify-content: center; }
+.qm-fig { margin: 0; flex: 1; max-width: 230px; text-align: center; }
+.qm-fig figcaption { font-weight: 800; font-size: 13px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 2px; }
+.qm-fig svg { width: 100%; height: auto; touch-action: manipulation; }
+.qm-reg { fill: #e2e8f0; stroke: #64748b; stroke-width: 1.2; cursor: pointer; transition: fill .12s; }
+.qm-reg:hover { stroke: #ea580c; stroke-width: 2; }
+.qm-reg.qm-inteira { fill: #dc2626; stroke: #7f1d1d; }
+.qm-reg.qm-metade { stroke: #9a3412; }
+.qm-lado { font-size: 12px; font-weight: 800; fill: var(--text-muted); }
+.qm-legenda { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px; color: var(--text-muted); margin: 4px 0; }
+.qm-cor { display: inline-block; width: 14px; height: 14px; border-radius: 3px; border: 1px solid #7f1d1d; }
+.qm-cor-inteira { background: #dc2626; }
+.qm-cor-metade { background: repeating-linear-gradient(45deg, #f97316 0 3px, #fed7aa 3px 6px); margin-left: 8px; }
+.qm-lista ul { margin: 8px 0 0; padding-left: 18px; font-size: 13px; }
+html[data-theme="dark"] .qm-reg:not(.qm-inteira):not(.qm-metade) { fill: #334155; stroke: #94a3b8; }
+.qm-hid { margin-top: 12px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-app); }
+.qm-hid-titulo { font-weight: 800; color: #0369a1; margin: 6px 0; }
+.qm-hid ul { margin: 0; padding-left: 18px; font-size: 13.5px; }
+.qm-hid li { margin-bottom: 4px; }
+.qm-eletrica { display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; }
+html[data-theme="dark"] .qm-hid-titulo { color: #7dd3fc; }
