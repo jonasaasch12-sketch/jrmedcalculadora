@@ -336,3 +336,8 @@ html[data-theme="dark"] .login-box { background: var(--surface); }
     .prescription-label { font-size: 9.5px; letter-spacing: .05em; }
     .section-header { margin-top: 22px; }
 }
+
+/* Menu lateral (computador): com o mouse em cima, a rodinha rola só o menu, nunca a página. */
+.sidebar-nav { overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
+.sidebar-nav::-webkit-scrollbar { width: 6px; }
+.sidebar-nav::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 6px; }
