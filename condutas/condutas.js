@@ -55,8 +55,8 @@ function trocarModo(modo) {
     document.getElementById('area-condutas').style.display = modo === 'condutas' ? 'block' : 'none';
     let busca = document.getElementById('searchInput');
     busca.placeholder = modo === 'condutas'
-        ? "🔍 Buscar doença ou conduta (bronquiolite, asma, crupe...)"
-        : "🔍 Buscar medicamento, indicação, sintoma, RSI, asma, sarna...";
+        ? "Buscar doença ou conduta (bronquiolite, asma, crupe...)"
+        : "Buscar medicamento, indicação, sintoma, RSI, asma, sarna...";
     if (modo === 'condutas') { condutaAberta ? abrirConduta(condutaAberta) : renderizarListaCondutas(); }
     if (typeof atualizarAlturaTopo === 'function') atualizarAlturaTopo();
     window.scrollTo(0, 0);

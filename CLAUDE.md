@@ -29,7 +29,8 @@ está no repositório é exatamente o que vai para o ar. Login e dados da equipe
 
 ```
 index.html                 telas (login, cabeçalho, painel, modais) + lista de <script>
-css/estilo.css             toda a aparência (inclui tema escuro: html[data-theme="dark"])
+css/estilo.css             aparência base (inclui tema escuro: html[data-theme="dark"])
+css/visual.css             camada visual "profissional" (tokens, Inter, cabeçalho, menu de configurações); carregada por último
 js/base.js                 auxiliares usados nos cálculos (recHead, round05, ceftriaxona)
 js/modo-teste.js           versão de teste: faixa, selo e bloqueio de quem não é admin
 medicamentos/registro.js   registrarMedicamentos(): cria farmaciaJR, detalhesMedicacoes, fichasPadrao

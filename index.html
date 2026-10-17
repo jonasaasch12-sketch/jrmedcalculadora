@@ -7,9 +7,13 @@
     <title>JR MED - Manual & Calculadora de Bolso</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="icon.svg" type="image/svg+xml">
-    <meta name="theme-color" content="#0284c7">
+    <meta name="theme-color" content="#0b4f86">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="css/estilo.css">
     <link rel="stylesheet" href="condutas/condutas.css">
+    <link rel="stylesheet" href="css/visual.css">
 </head>
 <body>
 
@@ -18,49 +22,91 @@
     <!-- ========================================== -->
     <div id="tela-login" class="login-container">
         <div class="login-box">
-            <div class="logo-futurista logo-login">JR</div>
-            <h2 style="color: #0f172a; margin: 0 0 5px 0; font-size: 22px;">Acesso Restrito</h2>
-            <p style="color: #64748b; font-size: 13px; margin-bottom: 25px; font-weight: 600;">MANUAL CLÍNICO DE BOLSO</p>
-            
+            <div class="logo-futurista logo-login" aria-hidden="true">JR</div>
+            <h2 class="login-titulo">JR MED</h2>
+            <p class="login-sub">Prescrição e condutas pediátricas<br><span>Acesso restrito a profissionais de saúde</span></p>
+
+            <label class="login-label" for="emailInput">E-mail</label>
             <div class="login-input-group">
-                <input type="email" id="emailInput" class="login-input" placeholder="Digite seu e-mail">
+                <input type="email" id="emailInput" class="login-input" placeholder="seu@email.com" autocomplete="email">
             </div>
-            
+
+            <label class="login-label" for="senhaInput">Senha</label>
             <div class="login-input-group">
-                <input type="password" id="senhaInput" class="login-input" placeholder="Digite sua senha">
+                <input type="password" id="senhaInput" class="login-input" placeholder="Sua senha" autocomplete="current-password">
                 <button type="button" class="btn-toggle-password" onclick="toggleSenha()" title="Mostrar/Ocultar Senha">👁️</button>
             </div>
-            
+
             <button id="btnEntrar" class="btn-login">Entrar</button>
-            <button id="btnCadastrar" class="btn-register">Criar Conta</button>
-            
-            <p id="mensagemErro" style="color: #dc2626; font-size: 13px; font-weight: bold; margin-top: 15px; min-height: 20px;"></p>
-            <button type="button" id="btnReenviarVerificacao" style="display:none; width:100%; padding:10px; background:#fff; color:#0284c7; border:1px solid #bae6fd; border-radius:8px; font-weight:700; cursor:pointer; margin-top:5px;">Reenviar e-mail de confirmação</button>
+            <button id="btnCadastrar" class="btn-register">Criar conta</button>
+
+            <p id="mensagemErro" class="login-erro"></p>
+            <button type="button" id="btnReenviarVerificacao" class="login-reenviar" style="display:none;">Reenviar e-mail de confirmação</button>
         </div>
+        <p class="login-rodape">© 2026 JR MED · Dr. Jonas Raasch</p>
     </div>
 
     <!-- ========================================== -->
     <!-- APLICATIVO PRINCIPAL                       -->
     <!-- ========================================== -->
     <div id="aplicativo-principal" style="display: none;">
-        <div class="header-banner">
+        <header class="header-banner">
             <div class="header-left">
-                <div class="logo-futurista logo-header">JR</div>
+                <div class="logo-futurista logo-header" aria-hidden="true">JR</div>
                 <div>
                     <h1 class="brand-title">JR MED</h1>
-                    <p class="brand-subtitle">Manual & Calculadora de Bolso</p>
+                    <p class="brand-subtitle">Prescrição Pediátrica</p>
                 </div>
             </div>
-            <div class="header-actions">
-                <span id="userEmailTag" class="user-email-tag"></span>
-                <button id="btnCategorias" class="btn-add-med" style="display:none; background:#7c3aed;" title="Gerenciar categorias e subcategorias">🗂️ Categorias</button>
-                <button id="btnAddMed" class="btn-add-med" style="display:none;" title="Adicionar medicamento para a equipe">➕ Medicamento</button>
-                <button id="btnFontMinus" class="icon-btn" title="Diminuir fonte">A-</button>
-                <button id="btnFontPlus" class="icon-btn" title="Aumentar fonte">A+</button>
-                <button id="btnTema" class="icon-btn" title="Alternar modo escuro">🌙</button>
-                <button id="btnSair" class="btn-logout">Sair</button>
+            <button type="button" id="btnAbrirConfig" class="btn-config" aria-haspopup="dialog" aria-controls="painelConfig" title="Menu e configurações" onclick="abrirConfig()">
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+                <span class="btn-config-texto">Menu</span>
+            </button>
+        </header>
+
+        <!-- MENU DE CONFIGURAÇÕES (painel lateral) -->
+        <div id="configOverlay" class="config-overlay" onclick="fecharConfig()"></div>
+        <aside id="painelConfig" class="config-drawer" role="dialog" aria-modal="true" aria-labelledby="configTitulo" aria-hidden="true">
+            <div class="config-topo">
+                <h2 id="configTitulo">Configurações</h2>
+                <button type="button" class="config-fechar" onclick="fecharConfig()" title="Fechar">✕</button>
             </div>
-        </div>
+
+            <div class="config-conta">
+                <div class="config-avatar" id="configAvatar" aria-hidden="true">JR</div>
+                <div class="config-conta-info">
+                    <span class="config-conta-rotulo">Conectado como</span>
+                    <span id="userEmailTag" class="user-email-tag"></span>
+                </div>
+            </div>
+
+            <div class="config-secao">
+                <div class="config-secao-titulo">Aparência</div>
+                <div class="config-linha">
+                    <div><strong>Modo escuro</strong><small>Mais confortável à noite e no plantão</small></div>
+                    <button type="button" id="btnTema" class="config-switch" role="switch" aria-pressed="false" title="Alternar modo escuro"><span></span></button>
+                </div>
+                <div class="config-linha">
+                    <div><strong>Tamanho do texto</strong><small>Vale só para este aparelho</small></div>
+                    <div class="config-fonte">
+                        <button type="button" id="btnFontMinus" class="config-fonte-btn" title="Diminuir texto">A−</button>
+                        <span id="fonteValor" class="config-fonte-valor">100%</span>
+                        <button type="button" id="btnFontPlus" class="config-fonte-btn" title="Aumentar texto">A+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="config-secao" id="cfgEquipe" style="display:none;">
+                <div class="config-secao-titulo">Equipe (administrador)</div>
+                <button id="btnAddMed" class="config-acao" style="display:none;" title="Adicionar medicamento para a equipe"><span>➕</span> Adicionar medicamento</button>
+                <button id="btnCategorias" class="config-acao" style="display:none;" title="Gerenciar categorias e subcategorias"><span>🗂️</span> Gerenciar categorias</button>
+            </div>
+
+            <div class="config-rodape">
+                <button id="btnSair" class="config-sair"><span>⎋</span> Sair da conta</button>
+                <p>© 2026 JR MED · Dr. Jonas Raasch</p>
+            </div>
+        </aside>
 
         <!-- PAINEL FIXO E ESTREITO -->
         <div class="control-panel">
@@ -68,20 +114,22 @@
                 <div class="inputs-inline">
                     <div class="input-group">
                         <span class="input-label">Idade</span>
-                        <input type="number" id="idadeInput" class="age-input" value="" min="0" step="0.1" placeholder="" oninput="calcularTudo()">
+                        <input type="number" id="idadeInput" class="age-input" value="" min="0" step="0.1" placeholder="—" inputmode="decimal" oninput="calcularTudo()">
+                        <span class="input-unidade">anos</span>
                     </div>
                     <div class="input-group">
                         <span class="input-label">Peso</span>
-                        <input type="number" id="pesoInput" class="weight-input numeric-input" value="" min="0" step="0.1" placeholder="" oninput="calcularTudo()">
+                        <input type="number" id="pesoInput" class="weight-input numeric-input" value="" min="0" step="0.1" placeholder="—" inputmode="decimal" oninput="calcularTudo()">
+                        <span class="input-unidade">kg</span>
                     </div>
                 </div>
                 <div class="search-container">
-                    <input type="text" id="searchInput" class="search-input" placeholder="🔍 Buscar medicamento, indicação, sintoma, RSI, asma, sarna..." oninput="filtrarMedicas()">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Buscar medicamento, indicação, sintoma, RSI, asma, sarna..." oninput="filtrarMedicas()">
                 </div>
             </div>
             <div class="linha-secundaria">
-                <input type="text" id="alergiaInput" class="allergy-input" placeholder="⚠️ Alergias do paciente (ex: dipirona, penicilina)" oninput="calcularTudo()">
-                <button id="btnNovoPaciente" class="btn-novo-paciente" title="Limpar peso, idade, alergias e o carrinho de prescrição">🔄 Novo Paciente</button>
+                <input type="text" id="alergiaInput" class="allergy-input" placeholder="Alergias do paciente (ex.: dipirona, penicilina)" oninput="calcularTudo()">
+                <button id="btnNovoPaciente" class="btn-novo-paciente" title="Limpar peso, idade, alergias e o carrinho de prescrição">↺ Novo paciente</button>
             </div>
             <div id="avisoPesoIdade" class="aviso-peso-idade"></div>
         </div>

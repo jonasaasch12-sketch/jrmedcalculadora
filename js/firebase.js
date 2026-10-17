@@ -256,6 +256,10 @@ onAuthStateChanged(auth, (user) => {
         if (btnAdd) btnAdd.style.display = ehAdmin ? "inline-flex" : "none";
         let btnCat = document.getElementById('btnCategorias');
         if (btnCat) btnCat.style.display = ehAdmin ? "inline-flex" : "none";
+        let secEquipe = document.getElementById('cfgEquipe');
+        if (secEquipe) secEquipe.style.display = ehAdmin ? "block" : "none";
+        let avatar = document.getElementById('configAvatar');
+        if (avatar && user.email) avatar.innerText = user.email.charAt(0).toUpperCase();
         iniciarListenerMedicamentos();
         iniciarListenerCategorias();
         iniciarListenerFichas();
