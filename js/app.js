@@ -776,3 +776,13 @@ function ajustarFonte(delta) {
     localStorage.setItem('jrmed_fonte', nivel);
     aplicarFonteSalva();
 }
+
+// Menu lateral (computador): com o mouse em cima dele, a rodinha nunca rola a página,
+// mesmo quando o menu inteiro cabe na tela (o CSS "overscroll-behavior" cobre o resto).
+document.addEventListener('DOMContentLoaded', () => {
+    const menu = document.getElementById('sidebar-menu');
+    if (!menu) return;
+    menu.addEventListener('wheel', e => {
+        if (menu.scrollHeight <= menu.clientHeight + 1) e.preventDefault();
+    }, { passive: false });
+});
