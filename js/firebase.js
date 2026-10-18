@@ -99,12 +99,12 @@ btnCadastrar.addEventListener('click', () => {
                     cadastroEm: cred.user.metadata?.creationTime || new Date().toUTCString()
                 }, { merge: true });
             } catch (e) { console.warn("Perfil não gravado no cadastro:", e.code || e.message); }
-            await sendEmailVerification(cred.user);
+            await enviarConfirmacao(cred.user);
             await signOut(auth);
             trocarModoCadastro(false);
             emailInput.value = email;
             msgErro.style.color = "#16a34a";
-            msgErro.innerText = "Conta criada! Enviamos um e-mail de confirmação — verifique sua caixa de entrada antes de entrar.";
+            msgErro.innerText = "Conta criada! Enviamos um e-mail de confirmação com o assunto \"Verifique seu e-mail para JR MED Prescrição\" (remetente noreply@jrmed-calculadora.firebaseapp.com). Toque no link do e-mail e depois volte aqui para entrar. Confira também o spam.";
         })
         .catch((error) => {
             msgErro.style.color = "#dc2626";
@@ -166,10 +166,10 @@ btnReenviar.addEventListener('click', () => {
     msgErro.innerText = "Reenviando e-mail de confirmação...";
     signInWithEmailAndPassword(auth, emailInput.value, senhaInput.value)
         .then(async (cred) => {
-            await sendEmailVerification(cred.user);
+            await enviarConfirmacao(cred.user);
             await signOut(auth);
             msgErro.style.color = "#16a34a";
-            msgErro.innerText = "E-mail reenviado! Confira sua caixa de entrada (e o spam) nos próximos minutos.";
+            msgErro.innerText = "E-mail reenviado! Procure o assunto \"Verifique seu e-mail para JR MED Prescrição\" na caixa de entrada (e no spam).";
             btnReenviar.style.display = "none";
         })
         .catch((error) => {
@@ -190,10 +190,10 @@ document.getElementById('btnEsqueciSenha').addEventListener('click', () => {
     }
     msgErro.style.color = "#0f172a";
     msgErro.innerText = "Enviando o link para criar uma nova senha...";
-    sendPasswordResetEmail(auth, email)
+    enviarNovaSenha(email)
         .then(() => {
             msgErro.style.color = "#16a34a";
-            msgErro.innerText = "Se existir conta com esse e-mail, enviamos um link para criar uma nova senha. Confira a caixa de entrada e o spam.";
+            msgErro.innerText = "Se existir conta com esse e-mail, enviamos um link para criar uma nova senha (remetente noreply@jrmed-calculadora.firebaseapp.com). Confira a caixa de entrada e o spam.";
         })
         .catch((error) => {
             msgErro.style.color = "#dc2626";
@@ -452,6 +452,27 @@ window.carregarUsuarios = async function () {
             : `<div class="usu-erro">Não foi possível carregar: ${e.message}</div>`;
     }
 };
+
+// E-mails do Firebase (o texto do modelo não pode ser editado neste projeto): ao terminar
+// no link do e-mail, a página do Firebase mostra "Continuar", que volta ao JR MED com um aviso.
+function urlDeVolta(param) { return location.origin + location.pathname + '?' + param + '=1'; }
+async function enviarConfirmacao(user) {
+    try { await sendEmailVerification(user, { url: urlDeVolta('emailConfirmado') }); }
+    catch (e) { if (String(e.code || '').includes('continue-uri') || String(e.code || '').includes('unauthorized')) await sendEmailVerification(user); else throw e; }
+}
+async function enviarNovaSenha(email) {
+    try { await sendPasswordResetEmail(auth, email, { url: urlDeVolta('senhaRedefinida') }); }
+    catch (e) { if (String(e.code || '').includes('continue-uri') || String(e.code || '').includes('unauthorized')) await sendPasswordResetEmail(auth, email); else throw e; }
+}
+(function avisoDeVolta() {
+    let q = new URLSearchParams(location.search), txt = null;
+    if (q.has('emailConfirmado')) txt = "✅ E-mail confirmado! Agora entre com o seu e-mail e senha.";
+    if (q.has('senhaRedefinida')) txt = "✅ Senha alterada! Entre com a nova senha.";
+    if (!txt) return;
+    msgErro.style.color = "#16a34a";
+    msgErro.innerText = txt;
+    history.replaceState(null, '', location.pathname);
+})();
 
 const telaPerfil = document.getElementById('tela-perfil');
 function lerPerfilLocal(uid) { try { let d = JSON.parse(localStorage.getItem('jrmed_perfil') || 'null'); return d && d.uid === uid ? d.perfil : null; } catch (e) { return null; } }
