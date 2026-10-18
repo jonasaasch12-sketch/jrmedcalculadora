@@ -256,7 +256,13 @@ if (infoSessao) infoSessao.innerText = LIMITE_MS
     : "No celular a sessão fica aberta. Para proteger, ative a digital acima.";
 window.sairDaConta = () => { limparAtividade(); signOut(auth); };
 
-btnSair.addEventListener('click', () => {
+btnSair.addEventListener('click', async () => {
+    let u = window.__usuarioAtual;
+    if (u && window.digitalAtivadaPara && digitalAtivadaPara(u.uid)) {
+        if (window.fecharConfig) fecharConfig();
+        if (!(await exigirDigital())) window.sairDaConta();
+        return;
+    }
     limparAtividade();
     signOut(auth);
 });
@@ -448,6 +454,8 @@ window.carregarUsuarios = async function () {
 };
 
 const telaPerfil = document.getElementById('tela-perfil');
+function lerPerfilLocal(uid) { try { let d = JSON.parse(localStorage.getItem('jrmed_perfil') || 'null'); return d && d.uid === uid ? d.perfil : null; } catch (e) { return null; } }
+function guardarPerfilLocal(uid, perfil) { try { localStorage.setItem('jrmed_perfil', JSON.stringify({ uid, perfil })); } catch (e) { } }
 
 function mostrarApp(user, perfil) {
     telaLogin.style.display = "none";
@@ -490,6 +498,7 @@ function pedirPerfil(user, perfil, motivo) {
         erroEl.style.color = "#0f172a"; erroEl.innerText = "Salvando...";
         try {
             await setDoc(doc(db, COLECAO_USUARIOS, user.uid), { email: user.email, perfil: lido.perfil }, { merge: true });
+            guardarPerfilLocal(user.uid, lido.perfil);
             mostrarApp(user, lido.perfil);
         } catch (e) {
             erroEl.style.color = "#dc2626";
@@ -504,15 +513,16 @@ onAuthStateChanged(auth, async (user) => {
         if (conferirInatividade()) return;
         if (!lerAtividade()) marcarAtividade();
         let ehAdmin = EMAILS_ADMIN.includes(user.email);
-        registrarAcesso(user);
         // Versão de teste (/teste/): só administradores entram.
-        if (MODO_TESTE && !ehAdmin) { telaLogin.style.display = "none"; appPrincipal.style.display = "block"; mostrarBloqueioTeste(user.email); return; }
+        if (MODO_TESTE && !ehAdmin) { registrarAcesso(user); telaLogin.style.display = "none"; appPrincipal.style.display = "block"; mostrarBloqueioTeste(user.email); return; }
         // Celular com digital ativada: pede a digital antes de mostrar o app.
         if (!entrouComSenha && window.digitalAtivadaPara && digitalAtivadaPara(user.uid)) {
             telaLogin.style.display = "none";
             if (!(await exigirDigital())) { window.sairDaConta(); return; }
         }
         entrouComSenha = false;
+        // Lê o perfil ANTES de gravar o acesso: com uma gravação pendente, o Firebase devolvia a cópia
+        // local (só com os dados do acesso, sem o perfil) e o app pedia o cadastro de novo a cada entrada.
         let perfil = null, lido = false;
         try {
             let snap = await getDoc(doc(db, COLECAO_USUARIOS, user.uid));
@@ -522,6 +532,14 @@ onAuthStateChanged(auth, async (user) => {
             // Sem permissão de leitura (regra antiga) ou sem internet: não trava o acesso.
             console.warn("Perfil não lido:", e.code || e.message);
         }
+        registrarAcesso(user);
+        // Cópia do perfil salva neste aparelho: se o servidor não trouxer, usa e regrava.
+        let copia = lerPerfilLocal(user.uid);
+        if (pendenciaPerfil(perfil) && copia && !pendenciaPerfil(copia)) {
+            perfil = copia;
+            setDoc(doc(db, COLECAO_USUARIOS, user.uid), { email: user.email, perfil: copia }, { merge: true }).catch(() => { });
+        }
+        if (perfil && !pendenciaPerfil(perfil)) guardarPerfilLocal(user.uid, perfil);
         let motivo = lido ? pendenciaPerfil(perfil) : null;
         if (motivo) pedirPerfil(user, perfil, motivo);
         else mostrarApp(user, perfil);

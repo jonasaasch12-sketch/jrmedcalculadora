@@ -76,11 +76,19 @@ async function atualizarBotaoDigital() {
     let linha = document.getElementById('linhaDigital'), btn = document.getElementById('btnDigital');
     if (!linha || !btn) return;
     let u = window.__usuarioAtual;
-    if (!u || !(await digitalDisponivel())) { linha.style.display = 'none'; return; }
+    if (!u || !(await digitalDisponivel())) {
+        linha.style.display = 'none';
+        let sair = document.getElementById('btnSair');
+        if (sair) sair.innerHTML = '<span>⎋</span> Sair da conta';
+        return;
+    }
     linha.style.display = 'block';
     let ligado = digitalAtivadaPara(u.uid);
     btn.classList.toggle('ligado', ligado);
     btn.setAttribute('aria-pressed', ligado ? 'true' : 'false');
+    // Com a digital ativada, "Sair" vira "Bloquear": a tela de bloqueio pede a digital para entrar.
+    let sair = document.getElementById('btnSair');
+    if (sair) sair.innerHTML = ligado ? '<span>🔒</span> Bloquear (entrar com digital)' : '<span>⎋</span> Sair da conta';
 }
 
 async function alternarDigital() {
