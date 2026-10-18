@@ -403,6 +403,19 @@ aplicarTemaSalvo();
 aplicarFonteSalva();
 
 document.getElementById('btnNovoPaciente').addEventListener('click', novoPaciente);
+// Menu de configurações (painel lateral): fonte, tema, equipe e sair ficam aqui, não no cabeçalho.
+function abrirConfig() {
+    document.body.classList.add('config-aberto');
+    document.getElementById('painelConfig').setAttribute('aria-hidden', 'false');
+}
+function fecharConfig() {
+    document.body.classList.remove('config-aberto');
+    document.getElementById('painelConfig').setAttribute('aria-hidden', 'true');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('config-aberto')) fecharConfig(); });
+// Ao escolher "Adicionar medicamento" ou "Categorias", o painel fecha antes de abrir o formulário.
+['btnAddMed', 'btnCategorias'].forEach(id => document.getElementById(id).addEventListener('click', fecharConfig));
+
 document.getElementById('btnTema').addEventListener('click', alternarTema);
 document.getElementById('btnFontPlus').addEventListener('click', () => ajustarFonte(0.1));
 document.getElementById('btnFontMinus').addEventListener('click', () => ajustarFonte(-0.1));

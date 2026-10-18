@@ -148,3 +148,30 @@ html[data-theme="dark"] .qm-reg:not(.qm-inteira):not(.qm-metade) { fill: #334155
 .qm-hid li { margin-bottom: 4px; }
 .qm-eletrica { display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; }
 html[data-theme="dark"] .qm-hid-titulo { color: #7dd3fc; }
+
+/* Icterícia neonatal: calculadora AAP 2022 com gráfico */
+.ict-rotulo { font-weight: 800; font-size: 13px; margin: 10px 0 4px; }
+.ict-campos { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin: 8px 0; }
+.ict-campo { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 700; color: var(--text-muted); }
+.ict-campo input { height: 40px; border: 1px solid var(--border-strong, var(--border)); border-radius: 8px; padding: 0 10px; font-size: 16px; background: var(--surface); color: var(--text-main); }
+.ict-datas { margin: 6px 0; font-size: 13px; }
+.ict-datas summary { cursor: pointer; color: var(--primary); font-weight: 700; }
+.ict-fatores { flex-direction: column; align-items: stretch; }
+.ict-check { display: flex; gap: 8px; align-items: flex-start; font-size: 12.5px; margin: 10px 0 4px; color: var(--text-main); }
+.ict-check input { margin-top: 2px; width: 16px; height: 16px; flex: none; }
+.ict-lista ul { margin: 10px 0 6px; padding-left: 18px; font-size: 13px; line-height: 1.45; }
+.ict-lista li { margin-bottom: 6px; }
+.ict-grafico svg { width: 100%; max-width: 560px; height: auto; display: block; margin: 6px auto 0; }
+.ict-g-grade { stroke: var(--border); stroke-width: 1; }
+.ict-g-txt { font-size: 9px; fill: var(--text-muted); }
+.ict-g-foto, .ict-g-esc, .ict-g-ext { fill: none; stroke-width: 2.2; }
+.ict-g-foto { stroke: #d97706; }
+.ict-g-esc { stroke: #ea580c; stroke-dasharray: 5 4; }
+.ict-g-ext { stroke: #dc2626; }
+.ict-g-pac { fill: #0b5cad; stroke: #fff; stroke-width: 2; }
+.ict-g-ant { fill: #94a3b8; stroke: #fff; stroke-width: 1.5; }
+.ict-g-legenda { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 10px; font-size: 11.5px; color: var(--text-muted); margin: 4px 0 8px; }
+.ict-l { display: inline-block; width: 16px; height: 3px; border-radius: 2px; margin-right: -6px; }
+.ict-l-foto { background: #d97706; } .ict-l-esc { background: repeating-linear-gradient(90deg, #ea580c 0 5px, transparent 5px 8px); } .ict-l-ext { background: #dc2626; }
+.ict-l-pac { width: 10px; height: 10px; border-radius: 50%; background: #0b5cad; }
+html[data-theme="dark"] .ict-g-pac { fill: #4ea8f0; stroke: #0a0f1a; }

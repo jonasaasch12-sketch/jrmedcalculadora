@@ -379,7 +379,9 @@ function inicializarApp() {
     let todasCategorias = construirCategoriasComCustom();
 
     todasCategorias.forEach(cat => {
-        let estiloCor = cat.corHex ? ` style="background-color:${escaparHtml(cat.corHex)};"` : "";
+        let corCat = cat.corHex || CORES_CATEGORIA[cat.cor] || "#0284c7";
+        // --cor-cat: cor da categoria para o visual (tarja clara com faixa colorida, chips do menu de baixo).
+        let estiloCor = ` style="--cor-cat:${escaparHtml(corCat)};${cat.corHex ? `background-color:${escaparHtml(cat.corHex)};` : ''}"`;
         // Computador: ao clicar na categoria, abre embaixo a lista das doenças (seções) dela.
         let subSidebar = cat.patologias.map((pat, pi) => {
             let hosp = /hospitalar/i.test(pat.nome) || SECOES_HOSPITALARES.includes(pat.nome);
@@ -395,7 +397,6 @@ function inicializarApp() {
 
         // Categoria ou seção com conduta (conduta: "<id>" no menu.js): botão que abre a conduta já na
         // condução (emergência/hospital). Só aparece onde a aba Condutas existe (body.condutas-on).
-        let corCat = cat.corHex || CORES_CATEGORIA[cat.cor] || "#0284c7";
         let botaoConduta = (item) => item.conduta
             ? `<button type="button" class="link-conduta" style="--cor-link:${escaparHtml(corCat)}" onclick="event.stopPropagation(); irParaConduta('${item.conduta}', 'condução')">📖 ${escaparHtml(item.condutaNome || 'Conduta passo a passo')} ›</button>` : '';
         let linkConduta = botaoConduta(cat);
@@ -753,7 +754,9 @@ function atualizarCarrinhoUI() {
 function aplicarTemaSalvo() {
     let tema = localStorage.getItem('jrmed_tema') || 'claro';
     document.documentElement.setAttribute('data-theme', tema === 'escuro' ? 'dark' : 'light');
-    document.getElementById('btnTema').innerText = tema === 'escuro' ? '☀️' : '🌙';
+    let btn = document.getElementById('btnTema');
+    btn.setAttribute('aria-pressed', tema === 'escuro' ? 'true' : 'false');
+    btn.classList.toggle('ligado', tema === 'escuro');
 }
 function alternarTema() {
     let atual = localStorage.getItem('jrmed_tema') || 'claro';
@@ -764,6 +767,8 @@ function alternarTema() {
 function aplicarFonteSalva() {
     let nivel = parseFloat(localStorage.getItem('jrmed_fonte') || "1");
     document.body.style.zoom = nivel; // suportado por Chrome/Edge/Safari mobile, base do público-alvo deste app
+    let valor = document.getElementById('fonteValor');
+    if (valor) valor.innerText = Math.round(nivel * 100) + '%';
 }
 function ajustarFonte(delta) {
     let nivel = parseFloat(localStorage.getItem('jrmed_fonte') || "1");
@@ -771,3 +776,13 @@ function ajustarFonte(delta) {
     localStorage.setItem('jrmed_fonte', nivel);
     aplicarFonteSalva();
 }
+
+// Menu lateral (computador): com o mouse em cima dele, a rodinha nunca rola a página,
+// mesmo quando o menu inteiro cabe na tela (o CSS "overscroll-behavior" cobre o resto).
+document.addEventListener('DOMContentLoaded', () => {
+    const menu = document.getElementById('sidebar-menu');
+    if (!menu) return;
+    menu.addEventListener('wheel', e => {
+        if (menu.scrollHeight <= menu.clientHeight + 1) e.preventDefault();
+    }, { passive: false });
+});
