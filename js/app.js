@@ -317,9 +317,9 @@ function filtrarMedicas() {
                 card.style.display = isMatch ? "flex" : "none";
                 if (isMatch) { subHasVisible = true; catHasVisible = true; }
             });
-            sub.style.display = subHasVisible ? "block" : "none";
+            sub.style.display = subHasVisible ? "" : "none"; // "" mantém a grade de cards do Layout B
         });
-        cat.style.display = catHasVisible ? "block" : "none";
+        cat.style.display = catHasVisible ? "" : "none";
     });
 }
 
@@ -387,9 +387,13 @@ function inicializarApp() {
             let hosp = /hospitalar/i.test(pat.nome) || SECOES_HOSPITALARES.includes(pat.nome);
             return `<button class="sidebar-sublink" onclick="irParaSecao('${cat.id}', ${pi})">${hosp ? '🏥 ' : ''}${escaparHtml(pat.nome)}</button>`;
         }).join('');
+        // Layout B: barra lateral com ícone (emoji do início de cat.icone) e rótulo curto.
+        let partesIcone = String(cat.icone || '').trim().split(/\s+/);
+        let emojiCat = partesIcone.length > 1 ? partesIcone[0] : '•';
+        let rotuloCat = partesIcone.length > 1 ? partesIcone.slice(1).join(' ') : cat.nome;
         htmlMenuSidebar += `
-                    <button class="sidebar-link" data-cat="${cat.id}" onclick="clicarCategoriaMenu('${cat.id}')">
-                        <span class="dot ${cat.dotClass || ''}"${estiloCor}></span> ${escaparHtml(cat.nome)}
+                    <button class="sidebar-link" data-cat="${cat.id}" onclick="clicarCategoriaMenu('${cat.id}')" title="${escaparHtml(cat.titulo || cat.nome)}">
+                        <span class="dot ${cat.dotClass || ''}"${estiloCor}></span><span class="rail-ico" aria-hidden="true">${escaparHtml(emojiCat)}</span><span class="rail-txt">${escaparHtml(rotuloCat)}</span><span class="rail-nome">${escaparHtml(cat.nome)}</span>
                     </button>
                     <div class="sidebar-sub" data-cat="${cat.id}" style="--cor-cat:${escaparHtml(cat.corHex || CORES_CATEGORIA[cat.cor] || '#0284c7')}">${subSidebar}</div>
                 `;
@@ -453,6 +457,7 @@ function inicializarApp() {
                                 <div class="card-actions-row">
                                     <button id="${btnCarrinhoId}" class="btn-add-carrinho" onclick="adicionarAoCarrinho('${instanceId}', '${btnCarrinhoId}')">➕ Receita</button>
                                     <button id="${btnCopiarId}" class="btn-copiar" onclick="copiarTexto('${btnCopiarId}', '${instanceId}')">📋 Copiar</button>
+                                    <button type="button" class="btn-ver-texto" onclick="alternarTextoCard(this)">Ver texto</button>
                                 </div>
                             </div>
                             <div id="rec-${instanceId}" class="prescription-text-box">Insira o peso ou digite a idade acima.</div>
@@ -519,6 +524,26 @@ function irParaCategoria(id) {
     piscarElemento(cat.querySelector('.section-header'));
     // Menu lateral (computador): abre a lista de doenças só desta categoria.
     document.querySelectorAll('.sidebar-sub, .sidebar-link').forEach(el => el.classList.toggle('aberto', el.dataset.cat === id));
+    posicionarSubmenu(id);
+}
+// Layout B: a lista de doenças abre ao lado da barra de ícones, na altura da categoria.
+function posicionarSubmenu(id) {
+    let link = document.querySelector(`.sidebar-link[data-cat="${id}"]`), sub = document.querySelector(`.sidebar-sub[data-cat="${id}"]`);
+    if (!link || !sub) return;
+    let r = link.getBoundingClientRect();
+    let topo = Math.max(r.top, 8);
+    sub.style.top = Math.min(topo, window.innerHeight - Math.min(sub.scrollHeight, window.innerHeight * 0.7) - 12) + 'px';
+}
+// Mostra/esconde o texto da receita dentro do card (Layout B deixa o card enxuto).
+function alternarTextoCard(btn) {
+    let card = btn.closest('.med-card');
+    let aberto = card.classList.toggle('mostrar-texto');
+    btn.innerText = aberto ? 'Ocultar texto' : 'Ver texto';
+}
+// Barra inferior do celular: Prescrição / Condutas.
+function irParaModo(modo) {
+    if (typeof trocarModo === 'function' && document.getElementById('area-condutas')) trocarModo(modo);
+    else window.scrollTo(0, 0);
 }
 // Menu lateral: clicar de novo na categoria aberta fecha a lista de doenças.
 function clicarCategoriaMenu(id) {
@@ -537,6 +562,7 @@ function irParaSecao(catId, i) {
     document.querySelectorAll('.sidebar-sublink').forEach(b => b.classList.remove('ativo'));
     let sub = document.querySelector(`.sidebar-sub[data-cat="${catId}"]`);
     if (sub && sub.children[i]) sub.children[i].classList.add('ativo');
+    document.querySelectorAll(`[data-cat="${catId}"]`).forEach(el => el.classList.remove('aberto'));
 }
 
 // Seringa com líquido vermelho (desenho próprio, igual em qualquer aparelho) para medicações injetáveis.
@@ -627,7 +653,7 @@ let carrinhoPrescricao = []; // { nome, apres, texto }
     if (!med || !recBox) return;
 
     // Extrai o texto gerado
-    let textoCompleto = recBox.innerText.trim();
+    let textoCompleto = textoDaCaixa(recBox).trim();
     // A "Via" será identificada automaticamente pela 1ª linha do texto do card
     let primeiraLinha = textoCompleto.split('\n')[0].trim();
     let primeiraLinhaUpper = primeiraLinha.toUpperCase();
@@ -785,4 +811,10 @@ document.addEventListener('DOMContentLoaded', () => {
     menu.addEventListener('wheel', e => {
         if (menu.scrollHeight <= menu.clientHeight + 1) e.preventDefault();
     }, { passive: false });
+});
+
+// Layout B: clicar fora fecha a lista de doenças que abre ao lado da barra de ícones.
+document.addEventListener('click', e => {
+    if (e.target.closest('.sidebar-nav')) return;
+    document.querySelectorAll('.sidebar-sub.aberto, .sidebar-link.aberto').forEach(el => el.classList.remove('aberto'));
 });

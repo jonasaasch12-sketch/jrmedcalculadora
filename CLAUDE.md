@@ -30,7 +30,10 @@ está no repositório é exatamente o que vai para o ar. Login e dados da equipe
 ```
 index.html                 telas (login, cabeçalho, painel, modais) + lista de <script>
 css/estilo.css             aparência base (inclui tema escuro: html[data-theme="dark"])
-css/visual.css             camada visual "profissional" (tokens, Inter, cabeçalho, menu de configurações); carregada por último
+css/visual.css             camada visual "profissional" (tokens, Inter, cabeçalho, menu de configurações)
+css/layout-b.css           Layout B (proposta do Figma): barra lateral de ícones, faixa do paciente, cards em grade,
+                           receita fixa à direita (≥1280px); celular: cabeçalho azul-marinho, chips de categoria,
+                           barra inferior. Carregado por último. Texto da receita lido com textoDaCaixa() (js/base.js)
 js/base.js                 auxiliares usados nos cálculos (recHead, round05, ceftriaxona)
 js/modo-teste.js           versão de teste: faixa, selo e bloqueio de quem não é admin
 medicamentos/registro.js   registrarMedicamentos(): cria farmaciaJR, detalhesMedicacoes, fichasPadrao
