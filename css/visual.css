@@ -375,3 +375,10 @@ html[data-theme="dark"] .login-box { background: var(--surface); }
 .usu-perfil { font-size: 12.5px; color: var(--text-soft); margin-top: 2px; }
 .usu-tag-pend { background: #d97706; }
 .config-sessao { margin: 10px 0 0; font-size: 11.5px; color: var(--text-muted); text-align: center; }
+/* Digital (celular): tela de bloqueio e aviso no menu */
+.tela-bloqueio { position: fixed; inset: 0; z-index: 5000; }
+.bloqueio-box { text-align: center; }
+.bloqueio-box .btn-register { margin-top: 10px; }
+body.bloqueado-digital { overflow: hidden; }
+.config-digital-aviso { margin: 0; font-size: 12px; color: var(--text-muted); }
+.config-digital-aviso:empty { display: none; }

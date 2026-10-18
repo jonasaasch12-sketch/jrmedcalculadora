@@ -136,8 +136,10 @@ function mensagemDeErro(error) {
     }
 }
 
+let entrouComSenha = false; // acabou de digitar a senha: não pede a digital logo em seguida
 btnEntrar.addEventListener('click', () => {
     marcarAtividade();
+    entrouComSenha = true;
     btnReenviar.style.display = "none";
     msgErro.style.color = "#0f172a";
     msgErro.innerText = "Verificando credenciais...";
@@ -212,14 +214,15 @@ senhaInput.addEventListener('keydown', (e) => {
 });
 
 // ===== Sessão: sai sozinho depois de um tempo sem uso =====
-// Computador (muitas vezes compartilhado no hospital): 1 h. Celular (pessoal, com bloqueio de tela): 6 h.
+// Computador (muitas vezes compartilhado no hospital): 1 h. Celular: sem limite (pedido do Dr. Jonas);
+// no celular a proteção é a digital (js/digital.js). null = sem limite.
 // A última atividade fica no aparelho (localStorage) e vale para todas as abas abertas.
 const LIMITE_INATIVIDADE_COMPUTADOR_H = 1;
-const LIMITE_INATIVIDADE_CELULAR_H = 6;
+const LIMITE_INATIVIDADE_CELULAR_H = null;
 const CHAVE_ATIVIDADE = 'jrmed_ultimaAtividade';
 const EH_CELULAR = window.matchMedia('(pointer: coarse)').matches;
 const LIMITE_HORAS = EH_CELULAR ? LIMITE_INATIVIDADE_CELULAR_H : LIMITE_INATIVIDADE_COMPUTADOR_H;
-const LIMITE_MS = LIMITE_HORAS * 3600 * 1000;
+const LIMITE_MS = LIMITE_HORAS ? LIMITE_HORAS * 3600 * 1000 : null;
 let sessaoExpirada = false, ultimaGravacao = 0;
 
 function lerAtividade() { try { return +localStorage.getItem(CHAVE_ATIVIDADE) || 0; } catch (e) { return 0; } }
@@ -235,7 +238,7 @@ function aoUsarApp() {
 
 // true = passou do limite e a sessão foi encerrada.
 function conferirInatividade() {
-    if (!auth.currentUser) return false;
+    if (!auth.currentUser || !LIMITE_MS) return false;
     let ultima = lerAtividade();
     if (ultima && Date.now() - ultima > LIMITE_MS) {
         sessaoExpirada = true;
@@ -248,7 +251,10 @@ function conferirInatividade() {
 setInterval(conferirInatividade, 60 * 1000);
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') conferirInatividade(); });
 const infoSessao = document.getElementById('infoSessao');
-if (infoSessao) infoSessao.innerText = `Por segurança, a sessão se encerra após ${LIMITE_HORAS} h sem uso neste ${EH_CELULAR ? 'celular' : 'computador'}.`;
+if (infoSessao) infoSessao.innerText = LIMITE_MS
+    ? `Por segurança, a sessão se encerra após ${LIMITE_HORAS} h sem uso neste computador.`
+    : "No celular a sessão fica aberta. Para proteger, ative a digital acima.";
+window.sairDaConta = () => { limparAtividade(); signOut(auth); };
 
 btnSair.addEventListener('click', () => {
     limparAtividade();
@@ -450,6 +456,8 @@ function mostrarApp(user, perfil) {
     let tag = document.getElementById('userEmailTag');
     let ehAdmin = EMAILS_ADMIN.includes(user.email);
     window.usuarioEhAdmin = ehAdmin;
+    window.__usuarioAtual = { uid: user.uid, email: user.email, nome: perfil?.nome || "" };
+    if (window.atualizarBotaoDigital) atualizarBotaoDigital();
     if (tag) tag.innerText = (perfil?.nome ? perfil.nome + " · " : "") + user.email + (ehAdmin ? " (admin)" : "");
     let btnAdd = document.getElementById('btnAddMed');
     if (btnAdd) btnAdd.style.display = ehAdmin ? "inline-flex" : "none";
@@ -499,6 +507,12 @@ onAuthStateChanged(auth, async (user) => {
         registrarAcesso(user);
         // Versão de teste (/teste/): só administradores entram.
         if (MODO_TESTE && !ehAdmin) { telaLogin.style.display = "none"; appPrincipal.style.display = "block"; mostrarBloqueioTeste(user.email); return; }
+        // Celular com digital ativada: pede a digital antes de mostrar o app.
+        if (!entrouComSenha && window.digitalAtivadaPara && digitalAtivadaPara(user.uid)) {
+            telaLogin.style.display = "none";
+            if (!(await exigirDigital())) { window.sairDaConta(); return; }
+        }
+        entrouComSenha = false;
         let perfil = null, lido = false;
         try {
             let snap = await getDoc(doc(db, COLECAO_USUARIOS, user.uid));
@@ -522,6 +536,7 @@ onAuthStateChanged(auth, async (user) => {
             msgErro.innerText = `Por segurança, sua sessão foi encerrada após ${LIMITE_HORAS} h sem uso. Entre novamente.`;
         }
         window.usuarioEhAdmin = false;
+        window.__usuarioAtual = null;
         pararListenerMedicamentos();
         pararListenerCategorias();
         pararListenerFichas();

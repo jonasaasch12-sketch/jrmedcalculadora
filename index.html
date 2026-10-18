@@ -49,6 +49,18 @@
         <p class="login-rodape">© 2026 JR MED · Dr. Jonas Raasch</p>
     </div>
 
+    <!-- Bloqueio com digital (celular): cobre o app até confirmar a digital -->
+    <div id="tela-bloqueio" class="login-container tela-bloqueio" style="display:none;">
+        <div class="login-box bloqueio-box">
+            <div class="logo-futurista logo-login" aria-hidden="true">JR</div>
+            <h2 class="login-titulo">JR MED bloqueado</h2>
+            <p class="login-sub">Use a digital (ou o rosto) deste celular para continuar.</p>
+            <button type="button" id="btnDesbloquear" class="btn-login">🔓 Desbloquear</button>
+            <button type="button" id="btnBloqueioSenha" class="btn-register">Entrar com e-mail e senha</button>
+            <p id="bloqueioMsg" class="login-erro"></p>
+        </div>
+    </div>
+
     <!-- Completar cadastro (contas antigas, dados faltando ou acadêmico após a formatura) -->
     <div id="tela-perfil" class="login-container" style="display:none;">
         <div class="login-box">
@@ -111,6 +123,15 @@
                         <button type="button" id="btnFontPlus" class="config-fonte-btn" title="Aumentar texto">A+</button>
                     </div>
                 </div>
+            </div>
+
+            <div class="config-secao" id="linhaDigital" style="display:none;">
+                <div class="config-secao-titulo">Segurança</div>
+                <div class="config-linha">
+                    <div><strong>Entrar com digital</strong><small>Ao abrir o app, pede a digital (ou o rosto) deste celular</small></div>
+                    <button type="button" id="btnDigital" class="config-switch" role="switch" aria-pressed="false" title="Ativar ou desativar a digital" onclick="alternarDigital()"><span></span></button>
+                </div>
+                <p class="config-digital-aviso" id="digitalAviso"></p>
             </div>
 
             <div class="config-secao" id="cfgEquipe" style="display:none;">
@@ -499,6 +520,7 @@
     <script src="medicamentos/cad.js"></script>
     <script src="medicamentos/menu.js"></script>
     <script src="js/cadastro.js"></script>
+    <script src="js/digital.js"></script>
     <script src="js/app.js"></script>
     <script src="js/formularios.js"></script>
     <!-- Área de Condutas: cada doença em condutas/<doenca>.js -->
