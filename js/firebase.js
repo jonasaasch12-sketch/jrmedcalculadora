@@ -3,7 +3,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import {
     getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-    onAuthStateChanged, signOut, sendEmailVerification
+    onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import {
     getFirestore, collection, addDoc, updateDoc, deleteDoc, setDoc, doc, onSnapshot, serverTimestamp, query, orderBy, getDocs, increment
@@ -21,6 +21,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+auth.languageCode = 'pt-BR'; // e-mails do Firebase (confirmação e nova senha) em português
 const db = getFirestore(app);
 
 // ⚠️ IMPORTANTE — EDITE ESTA LISTA ⚠️
@@ -136,6 +137,41 @@ btnReenviar.addEventListener('click', () => {
             msgErro.style.color = "#dc2626";
             msgErro.innerText = mensagemDeErro(error);
         });
+});
+
+// "Esqueci minha senha": o Firebase envia um link para a pessoa criar uma senha nova.
+document.getElementById('btnEsqueciSenha').addEventListener('click', () => {
+    btnReenviar.style.display = "none";
+    let email = emailInput.value.trim();
+    if (!email) {
+        msgErro.style.color = "#dc2626";
+        msgErro.innerText = "Digite seu e-mail no campo acima e toque de novo em \"Esqueci minha senha\".";
+        emailInput.focus();
+        return;
+    }
+    msgErro.style.color = "#0f172a";
+    msgErro.innerText = "Enviando o link para criar uma nova senha...";
+    sendPasswordResetEmail(auth, email)
+        .then(() => {
+            msgErro.style.color = "#16a34a";
+            msgErro.innerText = "Se existir conta com esse e-mail, enviamos um link para criar uma nova senha. Confira a caixa de entrada e o spam.";
+        })
+        .catch((error) => {
+            msgErro.style.color = "#dc2626";
+            msgErro.innerText = mensagemDeErro(error);
+        });
+});
+
+// Tecla Enter no login: no e-mail passa para a senha (ou entra, se já preenchida); na senha, entra.
+emailInput.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    if (senhaInput.value) btnEntrar.click(); else senhaInput.focus();
+});
+senhaInput.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    btnEntrar.click();
 });
 
 btnSair.addEventListener('click', () => {
@@ -278,7 +314,7 @@ window.renderizarUsuarios = function () {
     let seteDias = Date.now() - 7 * 864e5;
     let recentes = usuariosCarregados.filter(u => u.ultimo && u.ultimo.getTime() >= seteDias).length;
     let esc = t => String(t).replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
-    caixa.innerHTML = `<div class="usu-resumo"><strong>${usuariosCarregados.length}</strong> usuário(s) · <strong>${recentes}</strong> entraram nos últimos 7 dias</div>` +
+    caixa.innerHTML = `<div class="usu-resumo"><strong>${usuariosCarregados.length}</strong> usuário(s) no total · ${recentes} acessaram nos últimos 7 dias</div>` +
         (lista.length ? lista.map(u => `<div class="usu-item">
             <div class="usu-avatar">${esc((u.email || "?").charAt(0).toUpperCase())}</div>
             <div class="usu-dados">

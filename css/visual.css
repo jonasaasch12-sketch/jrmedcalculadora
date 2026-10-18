@@ -353,3 +353,7 @@ html[data-theme="dark"] .login-box { background: var(--surface); }
 .usu-info { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 .usu-tag { font-size: 10.5px; font-weight: 800; background: var(--primary); color: #fff; border-radius: 999px; padding: 1px 7px; vertical-align: 1px; }
 .usu-erro { background: var(--surface-2); border: 1px solid var(--border-strong); border-left: 4px solid #d97706; border-radius: 10px; padding: 12px; font-size: 13px; color: var(--text-main); }
+
+/* Login: "Esqueci minha senha" (link discreto, alinhado à direita, abaixo da senha) */
+.login-esqueci { display: block; margin: -4px 0 14px auto; background: none; border: none; padding: 4px 2px; color: var(--primary); font-size: 13px; font-weight: 600; cursor: pointer; }
+.login-esqueci:hover { text-decoration: underline; }
