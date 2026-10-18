@@ -36,12 +36,41 @@
                 <input type="password" id="senhaInput" class="login-input" placeholder="Sua senha" autocomplete="current-password">
                 <button type="button" class="btn-toggle-password" onclick="toggleSenha()" title="Mostrar/Ocultar Senha">👁️</button>
             </div>
+            <button type="button" id="btnEsqueciSenha" class="login-esqueci">Esqueci minha senha</button>
+            <div id="cadastroExtra" style="display:none;"></div>
 
             <button id="btnEntrar" class="btn-login">Entrar</button>
             <button id="btnCadastrar" class="btn-register">Criar conta</button>
+            <button type="button" id="btnVoltarLogin" class="login-esqueci login-voltar" style="display:none;">← Já tenho conta: entrar</button>
 
             <p id="mensagemErro" class="login-erro"></p>
             <button type="button" id="btnReenviarVerificacao" class="login-reenviar" style="display:none;">Reenviar e-mail de confirmação</button>
+        </div>
+        <p class="login-rodape">© 2026 JR MED · Dr. Jonas Raasch</p>
+    </div>
+
+    <!-- Bloqueio com digital (celular): cobre o app até confirmar a digital -->
+    <div id="tela-bloqueio" class="login-container tela-bloqueio" style="display:none;">
+        <div class="login-box bloqueio-box">
+            <div class="logo-futurista logo-login" aria-hidden="true">JR</div>
+            <h2 class="login-titulo">JR MED bloqueado</h2>
+            <p class="login-sub">Use a digital (ou o rosto) deste celular para continuar.</p>
+            <button type="button" id="btnDesbloquear" class="btn-login">🔓 Desbloquear</button>
+            <button type="button" id="btnBloqueioSenha" class="btn-register">Sair e entrar com e-mail e senha</button>
+            <p id="bloqueioMsg" class="login-erro"></p>
+        </div>
+    </div>
+
+    <!-- Completar cadastro (contas antigas, dados faltando ou acadêmico após a formatura) -->
+    <div id="tela-perfil" class="login-container" style="display:none;">
+        <div class="login-box">
+            <div class="logo-futurista logo-login" aria-hidden="true">JR</div>
+            <h2 class="login-titulo">Complete seu cadastro</h2>
+            <p class="login-sub" id="perfilMotivo"></p>
+            <div id="perfilForm"></div>
+            <button id="btnSalvarPerfil" class="btn-login">Salvar e entrar</button>
+            <button id="btnSairPerfil" class="btn-register">Sair</button>
+            <p id="perfilErro" class="login-erro"></p>
         </div>
         <p class="login-rodape">© 2026 JR MED · Dr. Jonas Raasch</p>
     </div>
@@ -96,14 +125,25 @@
                 </div>
             </div>
 
+            <div class="config-secao" id="linhaDigital" style="display:none;">
+                <div class="config-secao-titulo">Segurança</div>
+                <div class="config-linha">
+                    <div><strong>Entrar com digital</strong><small>Ao abrir o app, pede a digital (ou o rosto) deste celular</small></div>
+                    <button type="button" id="btnDigital" class="config-switch" role="switch" aria-pressed="false" title="Ativar ou desativar a digital" onclick="alternarDigital()"><span></span></button>
+                </div>
+                <p class="config-digital-aviso" id="digitalAviso"></p>
+            </div>
+
             <div class="config-secao" id="cfgEquipe" style="display:none;">
                 <div class="config-secao-titulo">Equipe (administrador)</div>
                 <button id="btnAddMed" class="config-acao" style="display:none;" title="Adicionar medicamento para a equipe"><span>➕</span> Adicionar medicamento</button>
                 <button id="btnCategorias" class="config-acao" style="display:none;" title="Gerenciar categorias e subcategorias"><span>🗂️</span> Gerenciar categorias</button>
+                <button id="btnUsuarios" class="config-acao" style="display:none;" title="Ver quem já entrou no app"><span>👥</span> Usuários cadastrados</button>
             </div>
 
             <div class="config-rodape">
                 <button id="btnSair" class="config-sair"><span>⎋</span> Sair da conta</button>
+                <p class="config-sessao" id="infoSessao"></p>
                 <p>© 2026 JR MED · Dr. Jonas Raasch</p>
             </div>
         </aside>
@@ -173,6 +213,21 @@
         </div>
 
         <!-- MODAL: GERENCIAR CATEGORIAS E SUBCATEGORIAS (COR + EMOJI) -->
+        <div id="modalUsuarios" class="modal-overlay">
+            <div class="modal-box">
+                <div class="modal-header-row">
+                    <h3 class="modal-title">👥 Usuários cadastrados</h3>
+                    <button class="btn-fechar-modal" onclick="fecharModal('modalUsuarios')">✕</button>
+                </div>
+                <p class="form-hint" style="margin-bottom:12px;">Quem já entrou no app (oficial ou teste) desde que esta tela foi criada; cada pessoa aparece no primeiro acesso. A lista completa de cadastros fica no console do Firebase → Authentication → Usuários.</p>
+                <div class="usu-topo">
+                    <input type="text" id="buscaUsuarios" class="usu-busca" placeholder="Filtrar por nome, e-mail ou registro" oninput="renderizarUsuarios()">
+                    <button type="button" class="usu-csv" onclick="baixarUsuariosCSV()" title="Baixar a lista em planilha (Excel)">⬇️ Planilha</button>
+                </div>
+                <div id="listaUsuarios" class="usu-lista"></div>
+            </div>
+        </div>
+
         <div id="modalCategorias" class="modal-overlay">
             <div class="modal-box">
                 <div class="modal-header-row">
@@ -464,6 +519,8 @@
     <script src="medicamentos/especialidades.js"></script>
     <script src="medicamentos/cad.js"></script>
     <script src="medicamentos/menu.js"></script>
+    <script src="js/cadastro.js"></script>
+    <script src="js/digital.js"></script>
     <script src="js/app.js"></script>
     <script src="js/formularios.js"></script>
     <!-- Área de Condutas: cada doença em condutas/<doenca>.js -->
