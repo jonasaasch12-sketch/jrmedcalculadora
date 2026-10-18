@@ -137,6 +137,7 @@ function mensagemDeErro(error) {
 }
 
 btnEntrar.addEventListener('click', () => {
+    marcarAtividade();
     btnReenviar.style.display = "none";
     msgErro.style.color = "#0f172a";
     msgErro.innerText = "Verificando credenciais...";
@@ -210,7 +211,47 @@ senhaInput.addEventListener('keydown', (e) => {
     (modoCadastro ? btnCadastrar : btnEntrar).click();
 });
 
+// ===== Sessão: sai sozinho depois de um tempo sem uso =====
+// Computador (muitas vezes compartilhado no hospital): 1 h. Celular (pessoal, com bloqueio de tela): 6 h.
+// A última atividade fica no aparelho (localStorage) e vale para todas as abas abertas.
+const LIMITE_INATIVIDADE_COMPUTADOR_H = 1;
+const LIMITE_INATIVIDADE_CELULAR_H = 6;
+const CHAVE_ATIVIDADE = 'jrmed_ultimaAtividade';
+const EH_CELULAR = window.matchMedia('(pointer: coarse)').matches;
+const LIMITE_HORAS = EH_CELULAR ? LIMITE_INATIVIDADE_CELULAR_H : LIMITE_INATIVIDADE_COMPUTADOR_H;
+const LIMITE_MS = LIMITE_HORAS * 3600 * 1000;
+let sessaoExpirada = false, ultimaGravacao = 0;
+
+function lerAtividade() { try { return +localStorage.getItem(CHAVE_ATIVIDADE) || 0; } catch (e) { return 0; } }
+function marcarAtividade() { try { localStorage.setItem(CHAVE_ATIVIDADE, String(Date.now())); } catch (e) { } }
+function limparAtividade() { try { localStorage.removeItem(CHAVE_ATIVIDADE); } catch (e) { } }
+
+function aoUsarApp() {
+    if (!auth.currentUser) return;
+    let agora = Date.now();
+    if (agora - ultimaGravacao > 30000) { ultimaGravacao = agora; marcarAtividade(); }
+}
+['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(ev => window.addEventListener(ev, aoUsarApp, { passive: true, capture: true }));
+
+// true = passou do limite e a sessão foi encerrada.
+function conferirInatividade() {
+    if (!auth.currentUser) return false;
+    let ultima = lerAtividade();
+    if (ultima && Date.now() - ultima > LIMITE_MS) {
+        sessaoExpirada = true;
+        limparAtividade();
+        signOut(auth);
+        return true;
+    }
+    return false;
+}
+setInterval(conferirInatividade, 60 * 1000);
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') conferirInatividade(); });
+const infoSessao = document.getElementById('infoSessao');
+if (infoSessao) infoSessao.innerText = `Por segurança, a sessão se encerra após ${LIMITE_HORAS} h sem uso neste ${EH_CELULAR ? 'celular' : 'computador'}.`;
+
 btnSair.addEventListener('click', () => {
+    limparAtividade();
     signOut(auth);
 });
 
@@ -452,6 +493,8 @@ document.getElementById('btnSairPerfil').addEventListener('click', () => signOut
 
 onAuthStateChanged(auth, async (user) => {
     if (user && user.emailVerified) {
+        if (conferirInatividade()) return;
+        if (!lerAtividade()) marcarAtividade();
         let ehAdmin = EMAILS_ADMIN.includes(user.email);
         registrarAcesso(user);
         // Versão de teste (/teste/): só administradores entram.
@@ -473,6 +516,11 @@ onAuthStateChanged(auth, async (user) => {
         telaPerfil.style.display = "none";
         appPrincipal.style.display = "none";
         if (!modoCadastro) { emailInput.value = ""; senhaInput.value = ""; }
+        if (sessaoExpirada) {
+            sessaoExpirada = false;
+            msgErro.style.color = "#0f172a";
+            msgErro.innerText = `Por segurança, sua sessão foi encerrada após ${LIMITE_HORAS} h sem uso. Entre novamente.`;
+        }
         window.usuarioEhAdmin = false;
         pararListenerMedicamentos();
         pararListenerCategorias();
