@@ -6,7 +6,7 @@ import {
     onAuthStateChanged, signOut, sendEmailVerification
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import {
-    getFirestore, collection, addDoc, updateDoc, deleteDoc, setDoc, doc, onSnapshot, serverTimestamp, query, orderBy
+    getFirestore, collection, addDoc, updateDoc, deleteDoc, setDoc, doc, onSnapshot, serverTimestamp, query, orderBy, getDocs, increment
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -242,12 +242,79 @@ window.JRFirestore = {
     }
 };
 
+// ===== Usuários cadastrados (tela só do administrador) =====
+// O navegador não consegue listar as contas do Firebase Authentication. Por isso,
+// a cada acesso com e-mail confirmado, o app grava/atualiza um documento do próprio
+// usuário em "usuarios" (id = uid). Só o administrador lê a coleção (regra no Firestore).
+const COLECAO_USUARIOS = "usuarios";
+let usuariosCarregados = [];
+
+async function registrarAcesso(user) {
+    try {
+        await setDoc(doc(db, COLECAO_USUARIOS, user.uid), {
+            email: user.email,
+            cadastroEm: user.metadata?.creationTime || null,
+            ultimoAcesso: serverTimestamp(),
+            acessos: increment(1),
+            versao: MODO_TESTE ? "teste" : "oficial"
+        }, { merge: true });
+    } catch (e) {
+        // Sem a regra do Firestore, o registro é recusado: o app segue normalmente.
+        console.warn("Registro de acesso não gravado:", e.code || e.message);
+    }
+}
+
+function dataBR(d, comHora) {
+    if (!d || isNaN(d)) return "—";
+    let txt = d.toLocaleDateString('pt-BR');
+    return comHora ? txt + " " + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : txt;
+}
+
+window.renderizarUsuarios = function () {
+    let caixa = document.getElementById('listaUsuarios');
+    if (!caixa) return;
+    let termo = (document.getElementById('buscaUsuarios')?.value || "").trim().toLowerCase();
+    let lista = usuariosCarregados.filter(u => (u.email || "").toLowerCase().includes(termo));
+    let seteDias = Date.now() - 7 * 864e5;
+    let recentes = usuariosCarregados.filter(u => u.ultimo && u.ultimo.getTime() >= seteDias).length;
+    let esc = t => String(t).replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+    caixa.innerHTML = `<div class="usu-resumo"><strong>${usuariosCarregados.length}</strong> usuário(s) · <strong>${recentes}</strong> entraram nos últimos 7 dias</div>` +
+        (lista.length ? lista.map(u => `<div class="usu-item">
+            <div class="usu-avatar">${esc((u.email || "?").charAt(0).toUpperCase())}</div>
+            <div class="usu-dados">
+                <div class="usu-email">${esc(u.email || "(sem e-mail)")}${EMAILS_ADMIN.includes(u.email) ? ' <span class="usu-tag">admin</span>' : ''}</div>
+                <div class="usu-info">Cadastro: ${dataBR(u.cadastro)} · Último acesso: ${dataBR(u.ultimo, true)}${u.versao === 'teste' ? ' (teste)' : ''} · ${u.acessos || 1} acesso(s)</div>
+            </div>
+        </div>`).join('') : '<p class="form-hint">Nenhum usuário encontrado.</p>');
+};
+
+window.carregarUsuarios = async function () {
+    let caixa = document.getElementById('listaUsuarios');
+    if (!caixa) return;
+    caixa.innerHTML = '<p class="form-hint">Carregando…</p>';
+    try {
+        if (!EMAILS_ADMIN.includes(auth.currentUser?.email)) throw new Error("Apenas o administrador pode ver os usuários.");
+        let snap = await getDocs(query(collection(db, COLECAO_USUARIOS), orderBy("ultimoAcesso", "desc")));
+        usuariosCarregados = snap.docs.map(d => {
+            let x = d.data();
+            return { email: x.email, cadastro: x.cadastroEm ? new Date(x.cadastroEm) : null, ultimo: x.ultimoAcesso?.toDate ? x.ultimoAcesso.toDate() : null, acessos: x.acessos, versao: x.versao };
+        });
+        window.renderizarUsuarios();
+    } catch (e) {
+        let semPermissao = (e.code || "").includes("permission");
+        caixa.innerHTML = semPermissao
+            ? '<div class="usu-erro"><strong>Falta liberar a coleção "usuarios" no Firebase.</strong> No console do Firebase → Firestore Database → Regras, acrescente o bloco de regras que o Claude enviou e clique em Publicar.</div>'
+            : `<div class="usu-erro">Não foi possível carregar: ${e.message}</div>`;
+    }
+};
+
 onAuthStateChanged(auth, (user) => {
     if (user && user.emailVerified) {
         telaLogin.style.display = "none";
         appPrincipal.style.display = "block";
         let tag = document.getElementById('userEmailTag');
         let ehAdmin = EMAILS_ADMIN.includes(user.email);
+        registrarAcesso(user);
         // Versão de teste (/teste/): só administradores entram.
         if (MODO_TESTE && !ehAdmin) { mostrarBloqueioTeste(user.email); return; }
         window.usuarioEhAdmin = ehAdmin;
@@ -256,6 +323,8 @@ onAuthStateChanged(auth, (user) => {
         if (btnAdd) btnAdd.style.display = ehAdmin ? "inline-flex" : "none";
         let btnCat = document.getElementById('btnCategorias');
         if (btnCat) btnCat.style.display = ehAdmin ? "inline-flex" : "none";
+        let btnUsu = document.getElementById('btnUsuarios');
+        if (btnUsu) btnUsu.style.display = ehAdmin ? "inline-flex" : "none";
         let secEquipe = document.getElementById('cfgEquipe');
         if (secEquipe) secEquipe.style.display = ehAdmin ? "block" : "none";
         let avatar = document.getElementById('configAvatar');

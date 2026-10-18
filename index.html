@@ -100,6 +100,7 @@
                 <div class="config-secao-titulo">Equipe (administrador)</div>
                 <button id="btnAddMed" class="config-acao" style="display:none;" title="Adicionar medicamento para a equipe"><span>➕</span> Adicionar medicamento</button>
                 <button id="btnCategorias" class="config-acao" style="display:none;" title="Gerenciar categorias e subcategorias"><span>🗂️</span> Gerenciar categorias</button>
+                <button id="btnUsuarios" class="config-acao" style="display:none;" title="Ver quem já entrou no app"><span>👥</span> Usuários cadastrados</button>
             </div>
 
             <div class="config-rodape">
@@ -173,6 +174,18 @@
         </div>
 
         <!-- MODAL: GERENCIAR CATEGORIAS E SUBCATEGORIAS (COR + EMOJI) -->
+        <div id="modalUsuarios" class="modal-overlay">
+            <div class="modal-box">
+                <div class="modal-header-row">
+                    <h3 class="modal-title">👥 Usuários cadastrados</h3>
+                    <button class="btn-fechar-modal" onclick="fecharModal('modalUsuarios')">✕</button>
+                </div>
+                <p class="form-hint" style="margin-bottom:12px;">Quem já entrou no app (oficial ou teste) desde que esta tela foi criada; cada pessoa aparece no primeiro acesso. A lista completa de cadastros fica no console do Firebase → Authentication → Usuários.</p>
+                <input type="text" id="buscaUsuarios" class="usu-busca" placeholder="Filtrar por e-mail" oninput="renderizarUsuarios()">
+                <div id="listaUsuarios" class="usu-lista"></div>
+            </div>
+        </div>
+
         <div id="modalCategorias" class="modal-overlay">
             <div class="modal-box">
                 <div class="modal-header-row">

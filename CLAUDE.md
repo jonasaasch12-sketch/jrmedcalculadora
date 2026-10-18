@@ -38,7 +38,8 @@ medicamentos/<categoria>.js um arquivo por categoria (cat: "cat-<categoria>")
 medicamentos/menu.js       árvore do menu: categoria → seções → ids dos remédios (ordem de exibição)
 js/app.js                  renderização, busca, cálculo, alergias, carrinho/receita, tema, fonte
 js/formularios.js          modais (cadastro da equipe, categorias, ficha) + inicialização (no final)
-js/firebase.js             login e Firestore (módulo)
+js/firebase.js             login e Firestore (módulo); grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
+                           precisa da regra da coleção `usuarios` publicada no console do Firebase)
 sw.js                      modo offline (rede primeiro)
 testes/verificar.js        verificação automática (só precisa de Node)
 condutas/condutas.js       área 📖 Condutas (aba ao lado de 💊 Prescrição)
