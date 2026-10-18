@@ -357,3 +357,20 @@ html[data-theme="dark"] .login-box { background: var(--surface); }
 /* Login: "Esqueci minha senha" (link discreto, alinhado à direita, abaixo da senha) */
 .login-esqueci { display: block; margin: -4px 0 14px auto; background: none; border: none; padding: 4px 2px; color: var(--primary); font-size: 13px; font-weight: 600; cursor: pointer; }
 .login-esqueci:hover { text-decoration: underline; }
+
+/* Cadastro profissional (Criar conta e "Complete seu cadastro") */
+.perfil-form select.login-input { width: 100%; padding: 0 12px; appearance: auto; }
+.perfil-linha { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.perfil-linha:has(.perfil-uf) { grid-template-columns: 1fr 96px; }
+.perfil-opc { font-weight: 500; color: var(--text-muted); }
+.perfil-dica { margin: -6px 0 14px 2px; font-size: 12px; color: var(--text-muted); }
+.perfil-aceite { display: flex; gap: 10px; align-items: flex-start; font-size: 12px; line-height: 1.45; color: var(--text-soft); margin: 4px 0 6px; cursor: pointer; }
+.perfil-aceite input { flex: none; width: 18px; height: 18px; margin-top: 1px; accent-color: var(--primary); }
+.login-voltar { margin: 10px auto 0; }
+#tela-perfil .login-box { max-width: 440px; }
+/* Lista de usuários: perfil e planilha */
+.usu-topo { display: flex; gap: 8px; align-items: flex-start; }
+.usu-topo .usu-busca { flex: 1; }
+.usu-csv { flex: none; height: 40px; padding: 0 12px; border: 1px solid var(--border-strong); border-radius: 10px; background: var(--surface); color: var(--primary); font-weight: 700; font-size: 13px; cursor: pointer; white-space: nowrap; }
+.usu-perfil { font-size: 12.5px; color: var(--text-soft); margin-top: 2px; }
+.usu-tag-pend { background: #d97706; }
