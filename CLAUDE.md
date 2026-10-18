@@ -43,6 +43,8 @@ js/cadastro.js             cadastro profissional (nome, atividade, CRM/COREN/CRF
 js/digital.js              celular: desbloqueio com digital/rosto (WebAuthn, só no aparelho); computador: sessão sai após 1 h sem uso (firebase.js)
 js/firebase.js             login e Firestore (módulo); grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)
+privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; contato jrmedprescricao@gmail.com). Mudou o texto?
+                           Subir VERSAO_TERMOS em js/cadastro.js (todos aceitam de novo). "Meus dados" (ver/corrigir/baixar/excluir) em js/firebase.js
 sw.js                      modo offline (rede primeiro)
 testes/verificar.js        verificação automática (só precisa de Node)
 condutas/condutas.js       área 📖 Condutas (aba ao lado de 💊 Prescrição)

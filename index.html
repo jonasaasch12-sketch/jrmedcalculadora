@@ -46,7 +46,7 @@
             <p id="mensagemErro" class="login-erro"></p>
             <button type="button" id="btnReenviarVerificacao" class="login-reenviar" style="display:none;">Reenviar e-mail de confirmação</button>
         </div>
-        <p class="login-rodape">© 2026 JR MED · Dr. Jonas Raasch</p>
+        <p class="login-rodape">© 2026 JR MED · Dr. Jonas Raasch · <a href="termos.html" target="_blank" rel="noopener">Termos de Uso</a> · <a href="privacidade.html" target="_blank" rel="noopener">Privacidade</a></p>
     </div>
 
     <!-- Bloqueio com digital (celular): cobre o app até confirmar a digital -->
@@ -125,6 +125,11 @@
                 </div>
             </div>
 
+            <div class="config-secao">
+                <div class="config-secao-titulo">Minha conta</div>
+                <button type="button" id="btnMeusDados" class="config-acao" title="Ver, corrigir, baixar ou excluir os seus dados"><span>👤</span> Meus dados</button>
+            </div>
+
             <div class="config-secao" id="linhaDigital" style="display:none;">
                 <div class="config-secao-titulo">Segurança</div>
                 <div class="config-linha">
@@ -145,6 +150,7 @@
                 <button id="btnSair" class="config-sair"><span>⎋</span> Sair da conta</button>
                 <p class="config-sessao" id="infoSessao"></p>
                 <p>© 2026 JR MED · Dr. Jonas Raasch</p>
+                <p><a href="termos.html" target="_blank" rel="noopener">Termos de Uso</a> · <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a></p>
             </div>
         </aside>
 
@@ -213,6 +219,28 @@
         </div>
 
         <!-- MODAL: GERENCIAR CATEGORIAS E SUBCATEGORIAS (COR + EMOJI) -->
+        <div id="modalMeusDados" class="modal-overlay">
+            <div class="modal-box">
+                <div class="modal-header-row">
+                    <h3 class="modal-title">👤 Meus dados</h3>
+                    <button class="btn-fechar-modal" onclick="fecharModal('modalMeusDados')">✕</button>
+                </div>
+                <p class="form-hint">Conta: <strong id="mdEmail"></strong>. Corrija o que precisar e salve. Seus direitos estão na <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.</p>
+                <div id="meusDadosForm"></div>
+                <button type="button" id="btnSalvarMeusDados" class="btn-login">Salvar alterações</button>
+                <div class="md-acoes">
+                    <button type="button" id="btnBaixarMeusDados" class="btn-register">⬇️ Baixar meus dados</button>
+                </div>
+                <details class="md-excluir">
+                    <summary>Excluir minha conta</summary>
+                    <p>Apaga o seu login e o seu cadastro do JR MED. <strong>Não dá para desfazer.</strong> Para confirmar, digite a sua senha:</p>
+                    <input type="password" id="mdSenhaExcluir" class="login-input" placeholder="Sua senha" autocomplete="current-password">
+                    <button type="button" id="btnExcluirConta" class="md-btn-excluir">Excluir minha conta definitivamente</button>
+                </details>
+                <p id="mdMsg" class="login-erro"></p>
+            </div>
+        </div>
+
         <div id="modalUsuarios" class="modal-overlay">
             <div class="modal-box">
                 <div class="modal-header-row">
