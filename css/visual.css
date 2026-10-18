@@ -341,3 +341,15 @@ html[data-theme="dark"] .login-box { background: var(--surface); }
 .sidebar-nav { overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent; }
 .sidebar-nav::-webkit-scrollbar { width: 6px; }
 .sidebar-nav::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 6px; }
+
+/* Tela "Usuários cadastrados" (só administrador) */
+.usu-busca { width: 100%; height: 40px; border: 1px solid var(--border-strong); border-radius: 10px; padding: 0 12px; font-size: 15px; background: var(--surface); color: var(--text-main); margin-bottom: 10px; }
+.usu-resumo { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+.usu-lista { max-height: 60vh; overflow-y: auto; }
+.usu-item { display: flex; gap: 12px; align-items: center; padding: 10px 4px; border-bottom: 1px solid var(--border); }
+.usu-avatar { flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--primary-soft); color: var(--primary); font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.usu-dados { min-width: 0; }
+.usu-email { font-weight: 700; font-size: 14px; color: var(--text-main); overflow-wrap: anywhere; }
+.usu-info { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.usu-tag { font-size: 10.5px; font-weight: 800; background: var(--primary); color: #fff; border-radius: 999px; padding: 1px 7px; vertical-align: 1px; }
+.usu-erro { background: var(--surface-2); border: 1px solid var(--border-strong); border-left: 4px solid #d97706; border-radius: 10px; padding: 12px; font-size: 13px; color: var(--text-main); }

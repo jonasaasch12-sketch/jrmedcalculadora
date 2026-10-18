@@ -414,7 +414,8 @@ function fecharConfig() {
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('config-aberto')) fecharConfig(); });
 // Ao escolher "Adicionar medicamento" ou "Categorias", o painel fecha antes de abrir o formulário.
-['btnAddMed', 'btnCategorias'].forEach(id => document.getElementById(id).addEventListener('click', fecharConfig));
+['btnAddMed', 'btnCategorias', 'btnUsuarios'].forEach(id => document.getElementById(id).addEventListener('click', fecharConfig));
+document.getElementById('btnUsuarios').addEventListener('click', () => { abrirModal('modalUsuarios'); if (window.carregarUsuarios) window.carregarUsuarios(); });
 
 document.getElementById('btnTema').addEventListener('click', alternarTema);
 document.getElementById('btnFontPlus').addEventListener('click', () => ajustarFonte(0.1));
