@@ -614,7 +614,6 @@ function calcularTudo() {
 // NOVO PACIENTE                                            
 // ===================================================== 
 function novoPaciente() {
-    if (carrinhoPrescricao.length > 0 && !confirm("Isso vai limpar peso, idade, alergias e a receita em construção. Continuar?")) return;
     document.getElementById('pesoInput').value = "";
     document.getElementById('idadeInput').value = "";
     document.getElementById('alergiaInput').value = "";
@@ -684,11 +683,15 @@ function atualizarCarrinhoUI() {
     fab.classList.toggle('visivel', carrinhoPrescricao.length > 0);
 
     let lista = document.getElementById('listaCarrinho');
+    document.body.classList.toggle('carrinho-vazio', carrinhoPrescricao.length === 0);
     if (carrinhoPrescricao.length === 0) {
-        lista.innerHTML = `<div class="carrinho-vazio">Nenhum item ainda. Toque em "➕ Receita" em algum medicamento para começar a montar a prescrição.</div>`;
+        // Receita vazia: some sem mensagem (no celular fecha a janela; no computador o painel some).
+        lista.innerHTML = "";
+        let modal = document.getElementById('modalCarrinho');
+        if (modal) modal.classList.remove('aberto');
         return;
     }
-    let html = "";
+    let html = `<div class="cart-itens">`;
     carrinhoPrescricao.forEach((item, idx) => {
         html += `
                 <div class="cart-item">
@@ -699,8 +702,9 @@ function atualizarCarrinhoUI() {
                     <div class="cart-item-texto">${item.texto}</div>
                 </div>`;
     });
+    html += `</div><div class="cart-acoes">`;
     html += `<button class="btn-copiar-receita-completa" onclick="copiarReceitaCompleta()">📋 Copiar Receita Completa (${carrinhoPrescricao.length} itens)</button>`;
-    html += `<button class="btn-limpar-carrinho" onclick="limparCarrinho()">Limpar tudo</button>`;
+    html += `<button class="btn-limpar-carrinho" onclick="limparCarrinho()">🗑️ Limpar receita</button></div>`;
     lista.innerHTML = html;
 }
 

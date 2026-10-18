@@ -206,3 +206,13 @@ html[data-theme="dark"] #app-container .btn-add-carrinho { color: #04201d; }
 
     #app-container .section-header { font-size: 20px; margin-top: 22px !important; }
 }
+
+/* Receita: botões "Copiar" e "Limpar receita" sempre visíveis no fim, mesmo com muitos itens */
+#modalCarrinho .cart-acoes { position: sticky; bottom: -18px; margin: 8px -18px -18px; padding: 10px 18px 18px; background: var(--surface); border-top: 1px solid var(--border); z-index: 2; }
+#modalCarrinho .cart-acoes .btn-copiar-receita-completa { margin-top: 0; }
+#modalCarrinho .btn-limpar-carrinho { font-size: 13px; color: var(--danger); border-color: color-mix(in srgb, var(--danger) 35%, var(--border)); }
+/* Computador largo: receita vazia = painel some e os cards usam a largura toda */
+@media (min-width: 1280px) and (orientation: landscape) {
+    body.carrinho-vazio #modalCarrinho { display: none !important; }
+    body.carrinho-vazio #aplicativo-principal .app-layout { padding-right: 24px; }
+}
