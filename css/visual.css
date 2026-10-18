@@ -382,3 +382,14 @@ html[data-theme="dark"] .login-box { background: var(--surface); }
 body.bloqueado-digital { overflow: hidden; }
 .config-digital-aviso { margin: 0; font-size: 12px; color: var(--text-muted); }
 .config-digital-aviso:empty { display: none; }
+/* LGPD: links dos documentos, Meus dados */
+.login-rodape a, .config-rodape a { color: var(--primary); text-decoration: none; }
+.perfil-aceite a { color: var(--primary); font-weight: 600; }
+.md-acoes { margin: 10px 0; }
+.md-acoes .btn-register { width: 100%; }
+.md-excluir { margin-top: 14px; border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px; }
+.md-excluir summary { cursor: pointer; color: var(--danger); font-weight: 700; font-size: 14px; }
+.md-excluir p { font-size: 13px; color: var(--text-soft); }
+.md-excluir .login-input { width: 100%; margin-bottom: 10px; padding: 0 12px; }
+.md-btn-excluir { width: 100%; height: 44px; border: none; border-radius: 10px; background: var(--danger); color: #fff; font-weight: 700; cursor: pointer; }
+#modalMeusDados .btn-login { width: 100%; }
