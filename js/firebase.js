@@ -3,7 +3,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import {
     getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-    onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail
+    onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail,
+    deleteUser, EmailAuthProvider, reauthenticateWithCredential
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import {
     getFirestore, collection, addDoc, updateDoc, deleteDoc, setDoc, doc, onSnapshot, serverTimestamp, query, orderBy, getDocs, getDoc, increment
@@ -403,7 +404,10 @@ window.renderizarUsuarios = function () {
     let seteDias = Date.now() - 7 * 864e5;
     let recentes = usuariosCarregados.filter(u => u.ultimo && u.ultimo.getTime() >= seteDias).length;
     let esc = t => String(t).replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+    let limiteInativo = Date.now() - PRAZO_INATIVO_MS;
+    let nInativos = usuariosCarregados.filter(u => u.ultimo && u.ultimo.getTime() < limiteInativo && !EMAILS_ADMIN.includes(u.email)).length;
     caixa.innerHTML = `<div class="usu-resumo"><strong>${usuariosCarregados.length}</strong> usuário(s) no total · ${recentes} acessaram nos últimos 7 dias</div>` +
+        (nInativos ? `<div class="usu-erro">${nInativos} cadastro(s) sem acesso há mais de 5 anos devem ser excluídos (Política de Privacidade). <button type="button" class="usu-csv" onclick="excluirInativos()">Excluir agora</button></div>` : '') +
         (lista.length ? lista.map(u => `<div class="usu-item">
             <div class="usu-avatar">${esc((u.email || "?").charAt(0).toUpperCase())}</div>
             <div class="usu-dados">
@@ -413,6 +417,88 @@ window.renderizarUsuarios = function () {
                 <div class="usu-info">Cadastro: ${dataBR(u.cadastro)} · Último acesso: ${dataBR(u.ultimo, true)}${u.versao === 'teste' ? ' (teste)' : ''} · ${u.acessos || 1} acesso(s)</div>
             </div>
         </div>`).join('') : '<p class="form-hint">Nenhum usuário encontrado.</p>');
+};
+
+// ===== Meus dados (LGPD, art. 18): ver, corrigir, baixar e excluir a própria conta =====
+const PRAZO_INATIVO_MS = 5 * 365.25 * 864e5; // contas sem acesso por 5 anos são excluídas (Política de Privacidade)
+function baixarArquivo(nome, conteudo, tipo) {
+    let a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([conteudo], { type: tipo }));
+    a.download = nome;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+function msgMeusDados(txt, cor) { let m = document.getElementById('mdMsg'); m.style.color = cor || "#0f172a"; m.innerText = txt; }
+
+document.getElementById('btnMeusDados').addEventListener('click', () => {
+    if (window.fecharConfig) fecharConfig();
+    let u = auth.currentUser;
+    if (!u) return;
+    document.getElementById('mdEmail').innerText = u.email;
+    document.getElementById('meusDadosForm').innerHTML = htmlFormPerfil('md', window.__perfilAtual || lerPerfilLocal(u.uid) || {});
+    document.getElementById('mdSenhaExcluir').value = "";
+    msgMeusDados("");
+    abrirModal('modalMeusDados');
+});
+
+document.getElementById('btnSalvarMeusDados').addEventListener('click', async () => {
+    let u = auth.currentUser, lido = lerFormPerfil('md');
+    if (!u) return;
+    if (lido.erro) { msgMeusDados(lido.erro, "#dc2626"); document.getElementById('md' + lido.campo)?.focus(); return; }
+    msgMeusDados("Salvando...");
+    try {
+        await setDoc(doc(db, COLECAO_USUARIOS, u.uid), { email: u.email, perfil: lido.perfil }, { merge: true });
+        guardarPerfilLocal(u.uid, lido.perfil);
+        window.__perfilAtual = lido.perfil;
+        let tag = document.getElementById('userEmailTag');
+        if (tag) tag.innerText = lido.perfil.nome + " · " + u.email + (EMAILS_ADMIN.includes(u.email) ? " (admin)" : "");
+        msgMeusDados("✅ Dados atualizados.", "#16a34a");
+    } catch (e) { msgMeusDados("Não foi possível salvar (" + (e.code || e.message) + ").", "#dc2626"); }
+});
+
+document.getElementById('btnBaixarMeusDados').addEventListener('click', async () => {
+    let u = auth.currentUser;
+    if (!u) return;
+    let dados = { email: u.email, cadastroEm: u.metadata?.creationTime || null, ultimoLogin: u.metadata?.lastSignInTime || null };
+    try {
+        let snap = await getDoc(doc(db, COLECAO_USUARIOS, u.uid));
+        if (snap.exists()) {
+            let x = snap.data();
+            Object.assign(dados, { perfil: x.perfil || null, acessos: x.acessos || null, ultimoAcesso: x.ultimoAcesso?.toDate ? x.ultimoAcesso.toDate().toISOString() : null });
+        }
+    } catch (e) { dados.perfil = window.__perfilAtual || null; }
+    baixarArquivo("meus-dados-jrmed.json", JSON.stringify(dados, null, 2), "application/json");
+    msgMeusDados("Arquivo \"meus-dados-jrmed.json\" baixado.", "#16a34a");
+});
+
+document.getElementById('btnExcluirConta').addEventListener('click', async () => {
+    let u = auth.currentUser, senha = document.getElementById('mdSenhaExcluir').value;
+    if (!u) return;
+    if (!senha) { msgMeusDados("Digite a sua senha para confirmar a exclusão.", "#dc2626"); return; }
+    if (!confirm("Excluir a sua conta do JR MED? O login e o cadastro serão apagados e isso não pode ser desfeito.")) return;
+    msgMeusDados("Excluindo...");
+    try {
+        await reauthenticateWithCredential(u, EmailAuthProvider.credential(u.email, senha));
+        await deleteDoc(doc(db, COLECAO_USUARIOS, u.uid));
+        ['jrmed_perfil', 'jrmed_digital', CHAVE_ATIVIDADE].forEach(k => { try { localStorage.removeItem(k); } catch (e) { } });
+        await deleteUser(u);
+        fecharModal('modalMeusDados');
+        msgErro.style.color = "#16a34a";
+        msgErro.innerText = "Sua conta foi excluída. Obrigado por ter usado o JR MED.";
+    } catch (e) {
+        msgMeusDados(e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential' ? "Senha incorreta." : mensagemDeErro(e), "#dc2626");
+    }
+});
+
+// Administrador: excluir os cadastros sem acesso há mais de 5 anos.
+window.excluirInativos = async function () {
+    let limite = Date.now() - PRAZO_INATIVO_MS;
+    let inativos = usuariosCarregados.filter(u => u.ultimo && u.ultimo.getTime() < limite && !EMAILS_ADMIN.includes(u.email));
+    if (!inativos.length) return;
+    if (!confirm(`Excluir ${inativos.length} cadastro(s) sem acesso há mais de 5 anos?\n\nO login (e-mail) dessas pessoas também deve ser apagado no console do Firebase → Authentication → Usuários.`)) return;
+    for (let u of inativos) { try { await deleteDoc(doc(db, COLECAO_USUARIOS, u.uid)); } catch (e) { console.warn(e); } }
+    alert("Cadastros excluídos:\n" + inativos.map(u => u.email).join("\n"));
+    window.carregarUsuarios();
 };
 
 // Planilha (CSV com ";" e acentos, abre direto no Excel).
@@ -442,7 +528,7 @@ window.carregarUsuarios = async function () {
         let snap = await getDocs(query(collection(db, COLECAO_USUARIOS), orderBy("ultimoAcesso", "desc")));
         usuariosCarregados = snap.docs.map(d => {
             let x = d.data();
-            return { email: x.email, perfil: x.perfil || null, cadastro: x.cadastroEm ? new Date(x.cadastroEm) : null, ultimo: x.ultimoAcesso?.toDate ? x.ultimoAcesso.toDate() : null, acessos: x.acessos, versao: x.versao };
+            return { uid: d.id, email: x.email, perfil: x.perfil || null, cadastro: x.cadastroEm ? new Date(x.cadastroEm) : null, ultimo: x.ultimoAcesso?.toDate ? x.ultimoAcesso.toDate() : null, acessos: x.acessos, versao: x.versao };
         });
         window.renderizarUsuarios();
     } catch (e) {
@@ -486,6 +572,7 @@ function mostrarApp(user, perfil) {
     let ehAdmin = EMAILS_ADMIN.includes(user.email);
     window.usuarioEhAdmin = ehAdmin;
     window.__usuarioAtual = { uid: user.uid, email: user.email, nome: perfil?.nome || "" };
+    window.__perfilAtual = perfil || null;
     if (window.atualizarBotaoDigital) atualizarBotaoDigital();
     if (tag) tag.innerText = (perfil?.nome ? perfil.nome + " · " : "") + user.email + (ehAdmin ? " (admin)" : "");
     let btnAdd = document.getElementById('btnAddMed');

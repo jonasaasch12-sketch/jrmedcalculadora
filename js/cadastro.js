@@ -10,7 +10,11 @@ const ATIVIDADES_PERFIL = {
 };
 const UFS_PERFIL = ["AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"];
 const MESES_PERFIL = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-const TEXTO_ACEITE_PERFIL = "Declaro que as informações são verdadeiras, que sou profissional ou estudante da área da saúde e que entendo que o JR MED é ferramenta de apoio: doses e condutas devem ser conferidas pelo prescritor. Autorizo o armazenamento destes dados para controle de acesso (LGPD).";
+const TEXTO_ACEITE_PERFIL = "Declaro que as informações são verdadeiras, que sou profissional ou estudante da área da saúde e que entendo que o JR MED é ferramenta de apoio: doses e condutas devem ser conferidas pelo prescritor.";
+// Versão dos Termos de Uso e da Política de Privacidade (termos.html / privacidade.html).
+// Mudou a versão = todos aceitam de novo no próximo acesso.
+const VERSAO_TERMOS = "2026-10";
+const TEXTO_ACEITE_TERMOS = 'Li e concordo com os <a href="termos.html" target="_blank" rel="noopener">Termos de Uso</a> e a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.';
 
 function escPerfil(t) { return String(t ?? "").replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch])); }
 
@@ -58,6 +62,7 @@ function htmlFormPerfil(px, d) {
         <div class="login-input-group"><input type="tel" id="${px}Cel" class="login-input" inputmode="tel" autocomplete="tel" placeholder="(DDD) 9 0000-0000" value="${escPerfil(d.celular)}"></div>
 
         <label class="perfil-aceite"><input type="checkbox" id="${px}Aceite"${d.aceiteEm ? ' checked' : ''}> <span>${TEXTO_ACEITE_PERFIL}</span></label>
+        <label class="perfil-aceite"><input type="checkbox" id="${px}Termos"${d.aceiteVersao === VERSAO_TERMOS ? ' checked' : ''}> <span>${TEXTO_ACEITE_TERMOS}</span></label>
     </div>`;
 }
 
@@ -103,13 +108,16 @@ function lerFormPerfil(px) {
         perfil.celular = v('Cel');
     }
     if (!document.getElementById(px + 'Aceite')?.checked) return { erro: "Para continuar, marque a declaração no final do formulário.", campo: 'Aceite' };
+    if (!document.getElementById(px + 'Termos')?.checked) return { erro: "Para continuar, leia e aceite os Termos de Uso e a Política de Privacidade.", campo: 'Termos' };
     perfil.aceiteEm = new Date().toISOString();
+    perfil.aceiteVersao = VERSAO_TERMOS;
     return { perfil };
 }
 
 // null = perfil completo. Senão, o motivo (texto) para pedir que complete.
 function pendenciaPerfil(p) {
     if (!p || !p.nome || !ATIVIDADES_PERFIL[p.atividade] || !p.aceiteEm) return "Para continuar usando o JR MED, complete o seu cadastro profissional.";
+    if (p.aceiteVersao !== VERSAO_TERMOS) return "Publicamos os Termos de Uso e a Política de Privacidade do JR MED (LGPD). Confira os seus dados, leia os documentos e marque o aceite no final.";
     if (ATIVIDADES_PERFIL[p.atividade].conselho && (!p.registro || !p.uf)) return `Falta informar o seu ${ATIVIDADES_PERFIL[p.atividade].conselho} e a UF.`;
     if (p.atividade === 'academico') {
         if (!p.formaturaMes || !p.formaturaAno || !p.instituicao) return "Falta informar a faculdade e a previsão de formatura.";
