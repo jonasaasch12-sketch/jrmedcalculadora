@@ -37,12 +37,28 @@
                 <button type="button" class="btn-toggle-password" onclick="toggleSenha()" title="Mostrar/Ocultar Senha">👁️</button>
             </div>
             <button type="button" id="btnEsqueciSenha" class="login-esqueci">Esqueci minha senha</button>
+            <div id="cadastroExtra" style="display:none;"></div>
 
             <button id="btnEntrar" class="btn-login">Entrar</button>
             <button id="btnCadastrar" class="btn-register">Criar conta</button>
+            <button type="button" id="btnVoltarLogin" class="login-esqueci login-voltar" style="display:none;">← Já tenho conta: entrar</button>
 
             <p id="mensagemErro" class="login-erro"></p>
             <button type="button" id="btnReenviarVerificacao" class="login-reenviar" style="display:none;">Reenviar e-mail de confirmação</button>
+        </div>
+        <p class="login-rodape">© 2026 JR MED · Dr. Jonas Raasch</p>
+    </div>
+
+    <!-- Completar cadastro (contas antigas, dados faltando ou acadêmico após a formatura) -->
+    <div id="tela-perfil" class="login-container" style="display:none;">
+        <div class="login-box">
+            <div class="logo-futurista logo-login" aria-hidden="true">JR</div>
+            <h2 class="login-titulo">Complete seu cadastro</h2>
+            <p class="login-sub" id="perfilMotivo"></p>
+            <div id="perfilForm"></div>
+            <button id="btnSalvarPerfil" class="btn-login">Salvar e entrar</button>
+            <button id="btnSairPerfil" class="btn-register">Sair</button>
+            <p id="perfilErro" class="login-erro"></p>
         </div>
         <p class="login-rodape">© 2026 JR MED · Dr. Jonas Raasch</p>
     </div>
@@ -182,7 +198,10 @@
                     <button class="btn-fechar-modal" onclick="fecharModal('modalUsuarios')">✕</button>
                 </div>
                 <p class="form-hint" style="margin-bottom:12px;">Quem já entrou no app (oficial ou teste) desde que esta tela foi criada; cada pessoa aparece no primeiro acesso. A lista completa de cadastros fica no console do Firebase → Authentication → Usuários.</p>
-                <input type="text" id="buscaUsuarios" class="usu-busca" placeholder="Filtrar por e-mail" oninput="renderizarUsuarios()">
+                <div class="usu-topo">
+                    <input type="text" id="buscaUsuarios" class="usu-busca" placeholder="Filtrar por nome, e-mail ou registro" oninput="renderizarUsuarios()">
+                    <button type="button" class="usu-csv" onclick="baixarUsuariosCSV()" title="Baixar a lista em planilha (Excel)">⬇️ Planilha</button>
+                </div>
                 <div id="listaUsuarios" class="usu-lista"></div>
             </div>
         </div>
@@ -478,6 +497,7 @@
     <script src="medicamentos/especialidades.js"></script>
     <script src="medicamentos/cad.js"></script>
     <script src="medicamentos/menu.js"></script>
+    <script src="js/cadastro.js"></script>
     <script src="js/app.js"></script>
     <script src="js/formularios.js"></script>
     <!-- Área de Condutas: cada doença em condutas/<doenca>.js -->
