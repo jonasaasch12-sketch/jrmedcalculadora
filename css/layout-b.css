@@ -60,8 +60,8 @@ body.condutas-on .slot-abas .abas-modo { margin: 0; }
     font-size: 17px; font-weight: 800; padding: 8px 14px; border-radius: 12px;
 }
 #app-container .badge-teto { background: var(--surface-3); color: var(--text-soft); border: none; text-transform: none; letter-spacing: 0; font-size: 11.5px; font-weight: 600; padding: 5px 10px; }
-#app-container .prescription-header-row { background: transparent; border: none; padding: 0; margin-top: 12px; }
-#app-container .prescription-label { display: none; }
+#app-container .prescription-header-row { background: transparent; border: none; padding: 0; margin-top: 12px; flex-wrap: wrap; gap: 8px; }
+#app-container .prescription-label { flex: 1 0 100%; }
 #app-container .card-actions-row { width: 100%; gap: 8px; }
 #app-container .btn-add-carrinho {
     flex: 1; justify-content: center; background: var(--primary); color: #fff; border: none;
@@ -70,13 +70,12 @@ body.condutas-on .slot-abas .abas-modo { margin: 0; }
 #app-container .btn-add-carrinho:hover { background: var(--primary-dark); color: #fff; }
 html[data-theme="dark"] #app-container .btn-add-carrinho { color: #04201d; }
 #app-container .btn-add-carrinho.adicionado { background: #15803d !important; color: #fff !important; }
-#app-container .btn-copiar, .btn-ver-texto {
+#app-container .btn-copiar {
     background: var(--surface); color: var(--text-soft); border: 1px solid var(--border-strong);
     padding: 9px 12px; font-size: 13px; font-weight: 600; border-radius: 10px; cursor: pointer; white-space: nowrap;
 }
-#app-container .btn-copiar:hover, .btn-ver-texto:hover { border-color: var(--primary); color: var(--primary); background: var(--surface); }
-#app-container .prescription-text-box { display: none; }
-#app-container .med-card.mostrar-texto .prescription-text-box { display: block; margin-top: 10px; border-radius: 10px; border: 1px solid var(--border); }
+#app-container .btn-copiar:hover { border-color: var(--primary); color: var(--primary); background: var(--surface); }
+#app-container .prescription-text-box { margin-top: 10px; border-radius: 10px; border: 1px solid var(--border); }
 
 /* ---------- Receita (modal no celular; painel fixo no computador largo) ---------- */
 #modalCarrinho .modal-title::before { content: "🧾 "; }
@@ -92,31 +91,26 @@ html[data-theme="dark"] #app-container .btn-add-carrinho { color: #04201d; }
     #aplicativo-principal .app-layout { max-width: none; margin: 0; padding: 0 24px 0 0; gap: 24px; }
     .main-content { padding-top: 18px; min-width: 0; }
 
-    /* Barra lateral escura com ícones */
+    /* Barra lateral escura: ícone + nome; as doenças abrem logo abaixo da categoria */
     .sidebar-nav {
-        width: 88px; min-width: 88px; padding: 12px 8px 24px; background: var(--navy);
+        width: 224px; min-width: 224px; padding: 14px 10px 24px; background: var(--navy);
         top: var(--altura-topo, 100px); height: calc(100vh - var(--altura-topo, 100px));
-        margin: 0; border-radius: 0; scrollbar-width: none;
+        margin: 0; border-radius: 0; scrollbar-width: thin; scrollbar-color: var(--navy-2) transparent;
     }
-    .sidebar-nav::-webkit-scrollbar { display: none; }
-    .sidebar-nav .nav-category-title, .sidebar-link .dot, .sidebar-link .rail-nome { display: none; }
+    .sidebar-nav .nav-category-title { color: var(--rail-txt); margin: 2px 10px 10px; }
+    .sidebar-link .dot, .sidebar-link .rail-txt { display: none; }
     .sidebar-link {
-        flex-direction: column; justify-content: center; text-align: center; gap: 3px;
-        width: 100%; height: auto; padding: 9px 2px; margin: 0 0 4px; border-radius: 12px;
-        color: var(--rail-txt); font-size: 10.5px; font-weight: 600; line-height: 1.15; background: transparent;
+        width: 100%; height: auto; padding: 9px 10px; margin: 0 0 2px; gap: 10px; border-radius: 10px;
+        color: #d6e1ec; font-size: 13.5px; font-weight: 600; background: transparent; text-align: left;
     }
-    .rail-ico { font-size: 20px; line-height: 1; }
+    .rail-ico { font-size: 17px; line-height: 1; width: 22px; text-align: center; flex: none; }
     .sidebar-link:hover { background: var(--navy-2); color: #fff; }
     .sidebar-link.aberto, html[data-theme="dark"] .sidebar-link.aberto { background: var(--navy-2); color: var(--rail-ativo); font-weight: 800; }
-    html[data-theme="dark"] .sidebar-link { color: var(--rail-txt); }
-
-    /* Lista de doenças: abre ao lado da barra, na altura da categoria */
-    .sidebar-sub {
-        position: fixed; left: 96px; width: 270px; max-height: 70vh; overflow-y: auto; z-index: 160;
-        margin: 0; padding: 8px; border: 1px solid var(--border); border-radius: 14px;
-        background: var(--surface); box-shadow: var(--shadow-lg);
-    }
-    .sidebar-sublink { padding: 8px 10px; font-size: 13px; border-radius: 8px; }
+    html[data-theme="dark"] .sidebar-link { color: #d6e1ec; }
+    .sidebar-sub { margin: 2px 0 8px 21px; padding-left: 10px; border-left: 2px solid var(--rail-ativo); }
+    .sidebar-sublink, html[data-theme="dark"] .sidebar-sublink { color: var(--rail-txt); font-size: 12.5px; padding: 6px 8px; border-radius: 8px; }
+    .sidebar-sublink:hover, html[data-theme="dark"] .sidebar-sublink:hover { background: var(--navy-2); color: #fff; }
+    .sidebar-sublink.ativo { background: color-mix(in srgb, var(--rail-ativo) 18%, transparent); color: #fff; font-weight: 700; }
 
     /* Faixa do paciente numa linha só */
     .control-panel { display: flex; align-items: center; gap: 12px; padding: 10px 24px; }
@@ -162,7 +156,7 @@ html[data-theme="dark"] #app-container .btn-add-carrinho { color: #04201d; }
     }
     .header-banner .brand-title { color: #fff; }
     .header-banner .brand-subtitle { color: var(--rail-txt); }
-    .header-banner .btn-config { background: var(--navy-2); color: #fff; border-color: transparent; margin-left: auto; }
+    .header-banner .btn-config { display: none; } /* o Menu fica só na barra de baixo */
     .slot-abas { display: none; }
     .header-banner .search-container { order: 5; flex: 1 0 100%; max-width: none; }
     .header-banner .search-input, html[data-theme="dark"] .header-banner .search-input { background-color: #fff; color: #0f172a; border-color: transparent; }

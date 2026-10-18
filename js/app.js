@@ -457,7 +457,6 @@ function inicializarApp() {
                                 <div class="card-actions-row">
                                     <button id="${btnCarrinhoId}" class="btn-add-carrinho" onclick="adicionarAoCarrinho('${instanceId}', '${btnCarrinhoId}')">➕ Receita</button>
                                     <button id="${btnCopiarId}" class="btn-copiar" onclick="copiarTexto('${btnCopiarId}', '${instanceId}')">📋 Copiar</button>
-                                    <button type="button" class="btn-ver-texto" onclick="alternarTextoCard(this)">Ver texto</button>
                                 </div>
                             </div>
                             <div id="rec-${instanceId}" class="prescription-text-box">Insira o peso ou digite a idade acima.</div>
@@ -524,21 +523,6 @@ function irParaCategoria(id) {
     piscarElemento(cat.querySelector('.section-header'));
     // Menu lateral (computador): abre a lista de doenças só desta categoria.
     document.querySelectorAll('.sidebar-sub, .sidebar-link').forEach(el => el.classList.toggle('aberto', el.dataset.cat === id));
-    posicionarSubmenu(id);
-}
-// Layout B: a lista de doenças abre ao lado da barra de ícones, na altura da categoria.
-function posicionarSubmenu(id) {
-    let link = document.querySelector(`.sidebar-link[data-cat="${id}"]`), sub = document.querySelector(`.sidebar-sub[data-cat="${id}"]`);
-    if (!link || !sub) return;
-    let r = link.getBoundingClientRect();
-    let topo = Math.max(r.top, 8);
-    sub.style.top = Math.min(topo, window.innerHeight - Math.min(sub.scrollHeight, window.innerHeight * 0.7) - 12) + 'px';
-}
-// Mostra/esconde o texto da receita dentro do card (Layout B deixa o card enxuto).
-function alternarTextoCard(btn) {
-    let card = btn.closest('.med-card');
-    let aberto = card.classList.toggle('mostrar-texto');
-    btn.innerText = aberto ? 'Ocultar texto' : 'Ver texto';
 }
 // Barra inferior do celular: Prescrição / Condutas.
 function irParaModo(modo) {
@@ -562,7 +546,6 @@ function irParaSecao(catId, i) {
     document.querySelectorAll('.sidebar-sublink').forEach(b => b.classList.remove('ativo'));
     let sub = document.querySelector(`.sidebar-sub[data-cat="${catId}"]`);
     if (sub && sub.children[i]) sub.children[i].classList.add('ativo');
-    document.querySelectorAll(`[data-cat="${catId}"]`).forEach(el => el.classList.remove('aberto'));
 }
 
 // Seringa com líquido vermelho (desenho próprio, igual em qualquer aparelho) para medicações injetáveis.
@@ -813,8 +796,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: false });
 });
 
-// Layout B: clicar fora fecha a lista de doenças que abre ao lado da barra de ícones.
-document.addEventListener('click', e => {
-    if (e.target.closest('.sidebar-nav')) return;
-    document.querySelectorAll('.sidebar-sub.aberto, .sidebar-link.aberto').forEach(el => el.classList.remove('aberto'));
-});
