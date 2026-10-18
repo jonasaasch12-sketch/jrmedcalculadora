@@ -413,9 +413,10 @@ registrarConduta({
                         "<strong>Fototerapia intensiva de emergência</strong> + <strong>hidratação VO e EV</strong>.",
                         "<strong>BT pelo menos a cada 2 h</strong> até sair da faixa de escalada; abaixo dela, voltar ao monitoramento do passo 4.",
                         "<strong>Neonatologista</strong> e transferência urgente para UTI neonatal que faça exsanguineotransfusão, se o serviço não fizer. Manter a fototerapia e a hidratação durante o transporte, se possível.",
-                        "Doença hemolítica isoimune (Coombs +) com BT na escalada: <strong>imunoglobulina EV 0,5 a 1 g/kg em 2 h</strong> é uma opção (pode repetir em 12 h). Benefício incerto e possível risco de enterocolite necrosante. Não substitui os outros passos da escalada.",
+                        "Doença hemolítica isoimune (Coombs +) com BT na escalada: <strong>imunoglobulina EV</strong> é uma opção (card abaixo). Benefício incerto e possível risco de enterocolite necrosante. Não substitui os outros passos da escalada.",
                         "Calcular a <strong>relação B/A</strong> (BT ÷ albumina) com a albumina do STAT (campo opcional da calculadora)."
-                    ]
+                    ],
+                    remedios: ["ivig_neo"]
                 },
                 {
                     passo: 6,
