@@ -136,7 +136,7 @@ const categorias = [
             { nome: "Otorrino: Orofaringe (Dor de Garganta)", remedios: ["hexomedine", "bismujet"] },
             { nome: "Genital (Sinéquia, Fimose, Vulvovaginite)", remedios: ["premarin", "postec", "flogo_rosa"] },
             { nome: "Toxicologia (Intoxicações)", remedios: ["carvao"] },
-            { nome: "Hematologia (Ferro e Hemoderivados)", remedios: ["sulfato_ferroso", "sulfato_ferroso_prof", "hemacias", "plaquetas", "plasma"] }
+            { nome: "Hematologia (Ferro e Hemoderivados)", remedios: ["sulfato_ferroso", "sulfato_ferroso_prof", "hemacias", "plaquetas", "plasma", "ivig_neo"] }
         ]
     }
 ];

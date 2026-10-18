@@ -183,6 +183,33 @@ registrarMedicamentos({
             atencao: "Tempo máximo de 1 hora."
         }
     },
+    "ivig_neo": {
+        cat: "cat-especialidades", sub: "🏥 Uso Hospitalar (Hemoderivados)",
+        kw: "imunoglobulina humana endovenosa ivig igiv doenca hemolitica isoimune coombs ictericia neonatal hiperbilirrubinemia rn recem nascido escalada exsanguineotransfusao",
+        nome: "Imunoglobulina Humana EV (IGIV) — Doença hemolítica isoimune do RN", apres: "Solução a 5% (50 mg/mL) ou 10% (100 mg/mL)",
+        info: "<strong>Conduta (AAP 2022):</strong> 0,5 a 1 g/kg EV em 2 horas; pode repetir em 12 h.", badge: "Só com BT na escalada de cuidado", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* AAP 2022 (KAS 21): 0,5-1 g/kg EV em 2 h, pode repetir em 12 h. Volume para solução a 5% (50 mg/mL) e 10% (100 mg/mL). */
+            let a = Math.round(p * 0.5 * 10) / 10, b = Math.round(p * 1 * 10) / 10;
+            let f = x => String(x).replace('.', ',');
+            return { v: `${f(a)}-${f(b)} g`, r: `VIA ENDOVENOSA (USO HOSPITALAR)\n\n1) IMUNOGLOBULINA HUMANA ENDOVENOSA\nFAZER ${f(a)} A ${f(b)} G (0,5 A 1 G/KG) EV EM 2 HORAS.\n(SOLUÇÃO A 5%: ${f(Math.round(a * 20))} A ${f(Math.round(b * 20))} ML | SOLUÇÃO A 10%: ${f(Math.round(a * 10))} A ${f(Math.round(b * 10))} ML)\nPODE REPETIR EM 12 HORAS.` };
+        },
+        detalhes: {
+            indicacao: "Doença hemolítica isoimune (Coombs direto positivo) com BT na escalada de cuidado ou acima (2 mg/dL abaixo do limiar de exsanguineotransfusão).",
+            dose: "0,5 a 1 g/kg EV em 2 horas. Pode repetir em 12 horas.",
+            atencao: "Benefício incerto, sobretudo em Rh; possível risco de enterocolite necrosante. Não substitui fototerapia intensiva, hidratação EV, BT a cada 2 h nem o preparo para exsanguineotransfusão. Conferir a concentração do frasco disponível."
+        },
+        ficha: {
+            apresentacoes: "Imunoglobulina humana endovenosa, solução a 5% (50 mg/mL) ou 10% (100 mg/mL). Conferir a concentração do produto disponível no serviço.",
+            indicacoes: "RN ≥ 35 semanas com doença hemolítica isoimune (Coombs direto positivo) cuja BT atinge ou ultrapassa o limiar de escalada de cuidado (2 mg/dL abaixo do limiar de exsanguineotransfusão).",
+            dose: "0,5 a 1 g/kg por dose.",
+            via: "Endovenosa.",
+            intervalo: "Dose única; pode ser repetida em 12 horas.",
+            infusao: "Em 2 horas.",
+            alertasPediatricos: "Evidência limitada de eficácia para evitar exsanguineotransfusão, especialmente em RN Rh positivo, com possível risco de enterocolite necrosante. Todas as medidas da escalada de cuidado devem continuar se a imunoglobulina for usada.",
+            fonteRevisao: "Kemper AR et al. Clinical Practice Guideline Revision: Management of Hyperbilirubinemia in the Newborn Infant 35 or More Weeks of Gestation. Pediatrics. 2022;150(3):e2022058859 (KAS 21) - consultado em out/2026."
+        }
+    },
     "bismujet": {
         cat: "cat-especialidades", sub: "🏠 Tópicos Orais (Orofaringe)",
         kw: "bismu-jet bismujet aftas estomatite lesao oral", nome: "Bismu-Jet", apres: "Solução oral",
