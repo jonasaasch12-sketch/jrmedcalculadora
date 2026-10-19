@@ -683,7 +683,7 @@ function atualizarCarrinhoUI() {
     fab.classList.toggle('visivel', carrinhoPrescricao.length > 0);
 
     let lista = document.getElementById('listaCarrinho');
-    document.body.classList.toggle('carrinho-vazio', carrinhoPrescricao.length === 0);
+    document.body.classList.toggle('receita-vazia', carrinhoPrescricao.length === 0);
     if (carrinhoPrescricao.length === 0) {
         // Receita vazia: some sem mensagem (no celular fecha a janela; no computador o painel some).
         lista.innerHTML = "";

@@ -213,6 +213,6 @@ html[data-theme="dark"] #app-container .btn-add-carrinho { color: #04201d; }
 #modalCarrinho .btn-limpar-carrinho { font-size: 13px; color: var(--danger); border-color: color-mix(in srgb, var(--danger) 35%, var(--border)); }
 /* Computador largo: receita vazia = painel some e os cards usam a largura toda */
 @media (min-width: 1280px) and (orientation: landscape) {
-    body.carrinho-vazio #modalCarrinho { display: none !important; }
-    body.carrinho-vazio #aplicativo-principal .app-layout { padding-right: 24px; }
+    body.receita-vazia #modalCarrinho { display: none !important; }
+    body.receita-vazia #aplicativo-principal .app-layout { padding-right: 24px; }
 }
