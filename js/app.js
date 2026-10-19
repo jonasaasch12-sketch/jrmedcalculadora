@@ -317,9 +317,9 @@ function filtrarMedicas() {
                 card.style.display = isMatch ? "flex" : "none";
                 if (isMatch) { subHasVisible = true; catHasVisible = true; }
             });
-            sub.style.display = subHasVisible ? "block" : "none";
+            sub.style.display = subHasVisible ? "" : "none"; // "" mantém a grade de cards do Layout B
         });
-        cat.style.display = catHasVisible ? "block" : "none";
+        cat.style.display = catHasVisible ? "" : "none";
     });
 }
 
@@ -387,9 +387,13 @@ function inicializarApp() {
             let hosp = /hospitalar/i.test(pat.nome) || SECOES_HOSPITALARES.includes(pat.nome);
             return `<button class="sidebar-sublink" onclick="irParaSecao('${cat.id}', ${pi})">${hosp ? '🏥 ' : ''}${escaparHtml(pat.nome)}</button>`;
         }).join('');
+        // Layout B: barra lateral com ícone (emoji do início de cat.icone) e rótulo curto.
+        let partesIcone = String(cat.icone || '').trim().split(/\s+/);
+        let emojiCat = partesIcone.length > 1 ? partesIcone[0] : '•';
+        let rotuloCat = partesIcone.length > 1 ? partesIcone.slice(1).join(' ') : cat.nome;
         htmlMenuSidebar += `
-                    <button class="sidebar-link" data-cat="${cat.id}" onclick="clicarCategoriaMenu('${cat.id}')">
-                        <span class="dot ${cat.dotClass || ''}"${estiloCor}></span> ${escaparHtml(cat.nome)}
+                    <button class="sidebar-link" data-cat="${cat.id}" onclick="clicarCategoriaMenu('${cat.id}')" title="${escaparHtml(cat.titulo || cat.nome)}">
+                        <span class="dot ${cat.dotClass || ''}"${estiloCor}></span><span class="rail-ico" aria-hidden="true">${escaparHtml(emojiCat)}</span><span class="rail-txt">${escaparHtml(rotuloCat)}</span><span class="rail-nome">${escaparHtml(cat.nome)}</span>
                     </button>
                     <div class="sidebar-sub" data-cat="${cat.id}" style="--cor-cat:${escaparHtml(cat.corHex || CORES_CATEGORIA[cat.cor] || '#0284c7')}">${subSidebar}</div>
                 `;
@@ -520,6 +524,11 @@ function irParaCategoria(id) {
     // Menu lateral (computador): abre a lista de doenças só desta categoria.
     document.querySelectorAll('.sidebar-sub, .sidebar-link').forEach(el => el.classList.toggle('aberto', el.dataset.cat === id));
 }
+// Barra inferior do celular: Prescrição / Condutas.
+function irParaModo(modo) {
+    if (typeof trocarModo === 'function' && document.getElementById('area-condutas')) trocarModo(modo);
+    else window.scrollTo(0, 0);
+}
 // Menu lateral: clicar de novo na categoria aberta fecha a lista de doenças.
 function clicarCategoriaMenu(id) {
     let sub = document.querySelector(`.sidebar-sub[data-cat="${id}"]`);
@@ -605,7 +614,6 @@ function calcularTudo() {
 // NOVO PACIENTE                                            
 // ===================================================== 
 function novoPaciente() {
-    if (carrinhoPrescricao.length > 0 && !confirm("Isso vai limpar peso, idade, alergias e a receita em construção. Continuar?")) return;
     document.getElementById('pesoInput').value = "";
     document.getElementById('idadeInput').value = "";
     document.getElementById('alergiaInput').value = "";
@@ -627,7 +635,7 @@ let carrinhoPrescricao = []; // { nome, apres, texto }
     if (!med || !recBox) return;
 
     // Extrai o texto gerado
-    let textoCompleto = recBox.innerText.trim();
+    let textoCompleto = textoDaCaixa(recBox).trim();
     // A "Via" será identificada automaticamente pela 1ª linha do texto do card
     let primeiraLinha = textoCompleto.split('\n')[0].trim();
     let primeiraLinhaUpper = primeiraLinha.toUpperCase();
@@ -675,11 +683,15 @@ function atualizarCarrinhoUI() {
     fab.classList.toggle('visivel', carrinhoPrescricao.length > 0);
 
     let lista = document.getElementById('listaCarrinho');
+    document.body.classList.toggle('receita-vazia', carrinhoPrescricao.length === 0);
     if (carrinhoPrescricao.length === 0) {
-        lista.innerHTML = `<div class="carrinho-vazio">Nenhum item ainda. Toque em "➕ Receita" em algum medicamento para começar a montar a prescrição.</div>`;
+        // Receita vazia: some sem mensagem (no celular fecha a janela; no computador o painel some).
+        lista.innerHTML = "";
+        let modal = document.getElementById('modalCarrinho');
+        if (modal) modal.classList.remove('aberto');
         return;
     }
-    let html = "";
+    let html = `<div class="cart-itens">`;
     carrinhoPrescricao.forEach((item, idx) => {
         html += `
                 <div class="cart-item">
@@ -690,8 +702,9 @@ function atualizarCarrinhoUI() {
                     <div class="cart-item-texto">${item.texto}</div>
                 </div>`;
     });
+    html += `</div><div class="cart-acoes">`;
     html += `<button class="btn-copiar-receita-completa" onclick="copiarReceitaCompleta()">📋 Copiar Receita Completa (${carrinhoPrescricao.length} itens)</button>`;
-    html += `<button class="btn-limpar-carrinho" onclick="limparCarrinho()">Limpar tudo</button>`;
+    html += `<button class="btn-limpar-carrinho" onclick="limparCarrinho()">🗑️ Limpar receita</button></div>`;
     lista.innerHTML = html;
 }
 
@@ -786,3 +799,4 @@ document.addEventListener('DOMContentLoaded', () => {
         if (menu.scrollHeight <= menu.clientHeight + 1) e.preventDefault();
     }, { passive: false });
 });
+

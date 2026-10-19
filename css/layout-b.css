@@ -1,0 +1,218 @@
+/* =====================================================
+   JR MED — LAYOUT B (proposta do Figma, página "Proposta B")
+   Carregado por último. Computador: barra lateral escura com ícones, faixa do
+   paciente, cards em grade e receita fixa à direita. Celular: cabeçalho escuro
+   com o paciente, categorias em botões que deslizam, barra inferior com
+   Prescrição · Condutas · Receita · Menu e botão flutuante da receita.
+   ===================================================== */
+
+:root {
+    --primary: #0f766e;
+    --primary-dark: #115e59;
+    --primary-soft: #e6f4f2;
+    --brand-1: #0f766e;
+    --brand-2: #14b8a6;
+    --navy: #0b1f33;
+    --navy-2: #13304d;
+    --rail-txt: #9fb3c8;
+    --rail-ativo: #5eead4;
+    --largura-receita: 340px;
+}
+html[data-theme="dark"] {
+    --primary: #2dd4bf;
+    --primary-dark: #5eead4;
+    --primary-soft: #0f2e2c;
+    --navy: #060d17;
+    --navy-2: #13263d;
+}
+.logo-futurista { box-shadow: 0 6px 16px -6px rgba(15, 118, 110, .55), inset 0 1px 0 rgba(255, 255, 255, .25); }
+
+/* ---------- Cabeçalho: marca · abas · busca · menu ---------- */
+.header-banner { gap: 14px; }
+.slot-abas { display: flex; align-items: center; }
+body.condutas-on .slot-abas .abas-modo { margin: 0; }
+.header-banner .search-container { flex: 1; max-width: 720px; }
+.header-banner .search-input { height: 42px; border-radius: 12px; border: 1px solid transparent; background-color: var(--surface-3); }
+.header-banner .search-input:focus { background-color: var(--surface); border-color: var(--primary); }
+
+/* ---------- Faixa do paciente ---------- */
+.pac-rotulo { font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); flex: none; }
+.input-group { border: 1.5px solid color-mix(in srgb, var(--primary) 55%, var(--border-strong)); }
+.input-group:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 18%, transparent); }
+
+/* ---------- Títulos de categoria e de seção ---------- */
+#app-container .section-header {
+    background: transparent !important; border: none !important; box-shadow: none !important;
+    color: var(--text-main) !important; padding: 0 !important; margin: 30px 0 2px !important;
+    font-size: 22px; font-weight: 800; letter-spacing: -0.02em; text-transform: none;
+    display: flex; align-items: center; gap: 10px;
+}
+#app-container .section-header::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--cor-cat, var(--primary)); flex: none; }
+#app-container .section-header.com-link-conduta { justify-content: flex-start; }
+#app-container .section-header .link-conduta { margin-left: auto; }
+#app-container .category-group:first-child .section-header { margin-top: 6px !important; }
+
+/* ---------- Cards enxutos ---------- */
+#app-container .med-card { border-radius: 16px; padding: 18px; }
+#app-container .med-name { font-size: 16px; font-weight: 700; }
+#app-container .med-header .result-box:not(.static-blue):not(.static-gray) {
+    background: var(--primary-soft); color: var(--primary-dark); border: none;
+    font-size: 17px; font-weight: 800; padding: 8px 14px; border-radius: 12px;
+}
+#app-container .badge-teto { background: var(--surface-3); color: var(--text-soft); border: none; text-transform: none; letter-spacing: 0; font-size: 11.5px; font-weight: 600; padding: 5px 10px; }
+#app-container .prescription-header-row { background: transparent; border: none; padding: 0; margin-top: 12px; flex-wrap: wrap; gap: 8px; }
+#app-container .prescription-label { flex: 1 0 100%; }
+#app-container .card-actions-row { width: 100%; gap: 8px; }
+#app-container .btn-add-carrinho {
+    flex: 1; justify-content: center; background: var(--primary); color: #fff; border: none;
+    padding: 10px 14px; font-size: 13.5px; font-weight: 700; border-radius: 10px;
+}
+#app-container .btn-add-carrinho:hover { background: var(--primary-dark); color: #fff; }
+html[data-theme="dark"] #app-container .btn-add-carrinho { color: #04201d; }
+#app-container .btn-add-carrinho.adicionado { background: #15803d !important; color: #fff !important; }
+#app-container .btn-copiar {
+    background: var(--surface); color: var(--text-soft); border: 1px solid var(--border-strong);
+    padding: 9px 12px; font-size: 13px; font-weight: 600; border-radius: 10px; cursor: pointer; white-space: nowrap;
+}
+#app-container .btn-copiar:hover { border-color: var(--primary); color: var(--primary); background: var(--surface); }
+#app-container .prescription-text-box { margin-top: 10px; border-radius: 10px; border: 1px solid var(--border); }
+
+/* ---------- Receita (modal no celular; painel fixo no computador largo) ---------- */
+#modalCarrinho .modal-title::before { content: "🧾 "; }
+.btn-copiar-receita-completa { background: var(--primary); border-radius: 12px; }
+
+/* ---------- Barra inferior (só celular) ---------- */
+.barra-abas { display: none; }
+
+/* =====================================================
+   COMPUTADOR
+   ===================================================== */
+@media (min-width: 850px) and (orientation: landscape) {
+    #aplicativo-principal .app-layout { max-width: none; margin: 0; padding: 0 24px 0 0; gap: 24px; }
+    .main-content { padding-top: 18px; min-width: 0; }
+
+    /* Barra lateral escura: ícone + nome; as doenças abrem logo abaixo da categoria */
+    .sidebar-nav {
+        width: 224px; min-width: 224px; padding: 14px 10px 24px; background: var(--navy);
+        top: var(--altura-topo, 100px); height: calc(100vh - var(--altura-topo, 100px));
+        margin: 0; border-radius: 0; scrollbar-width: thin; scrollbar-color: var(--navy-2) transparent;
+    }
+    .sidebar-nav .nav-category-title { color: var(--rail-txt); margin: 2px 10px 10px; }
+    .sidebar-link .dot, .sidebar-link .rail-txt { display: none; }
+    .sidebar-link {
+        width: 100%; height: auto; padding: 9px 10px; margin: 0 0 2px; gap: 10px; border-radius: 10px;
+        color: #d6e1ec; font-size: 13.5px; font-weight: 600; background: transparent; text-align: left;
+    }
+    .rail-ico { font-size: 17px; line-height: 1; width: 22px; text-align: center; flex: none; }
+    .sidebar-link:hover { background: var(--navy-2); color: #fff; }
+    .sidebar-link.aberto, html[data-theme="dark"] .sidebar-link.aberto { background: var(--navy-2); color: var(--rail-ativo); font-weight: 800; }
+    html[data-theme="dark"] .sidebar-link { color: #d6e1ec; }
+    .sidebar-sub { margin: 2px 0 8px 21px; padding-left: 10px; border-left: 2px solid var(--rail-ativo); }
+    .sidebar-sublink, html[data-theme="dark"] .sidebar-sublink { color: var(--rail-txt); font-size: 12.5px; padding: 6px 8px; border-radius: 8px; }
+    .sidebar-sublink:hover, html[data-theme="dark"] .sidebar-sublink:hover { background: var(--navy-2); color: #fff; }
+    .sidebar-sublink.ativo { background: color-mix(in srgb, var(--rail-ativo) 18%, transparent); color: #fff; font-weight: 700; }
+
+    /* Faixa do paciente numa linha só */
+    .control-panel { display: flex; align-items: center; gap: 12px; padding: 10px 24px; }
+    .control-panel .panel-inner { margin: 0; max-width: none; flex: none; }
+    .control-panel .linha-secundaria { margin: 0; flex: 1; max-width: none; flex-wrap: nowrap; }
+    .control-panel .allergy-input { flex: 1; max-width: 460px; }
+    .control-panel .btn-novo-paciente { margin-left: auto; }
+    .control-panel .aviso-peso-idade:empty { display: none; }
+
+    /* Cards em grade */
+    #app-container .subtype-group { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 16px; align-items: start; }
+    #app-container .subtype-group > .sub-type-title { grid-column: 1 / -1; margin: 16px 0 0; }
+    #app-container .med-card { margin: 0; }
+}
+
+/* Receita fixa à direita (tela larga) */
+@media (min-width: 1280px) and (orientation: landscape) {
+    #aplicativo-principal .app-layout { padding-right: calc(var(--largura-receita) + 48px); }
+    #modalCarrinho {
+        display: block !important; position: fixed; inset: auto; top: calc(var(--altura-topo, 100px) + 18px); right: 24px;
+        width: var(--largura-receita); background: transparent; z-index: 90; pointer-events: none;
+    }
+    #modalCarrinho .modal-box {
+        pointer-events: auto; max-width: none; width: 100%; max-height: calc(100vh - var(--altura-topo, 100px) - 36px);
+        border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-md); padding: 18px;
+    }
+    #modalCarrinho .btn-fechar-modal { display: none; }
+    #modalCarrinho .modal-title { font-size: 16px; }
+    body.modo-condutas #modalCarrinho { display: none !important; }
+    .cart-fab, .cart-fab.visivel { display: none !important; }
+}
+
+/* =====================================================
+   CELULAR
+   ===================================================== */
+@media (max-width: 849px), (orientation: portrait) {
+    body { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
+
+    /* Cabeçalho e paciente em azul-marinho */
+    .header-banner, html[data-theme="dark"] .header-banner {
+        background: var(--navy); border-bottom: none; flex-wrap: wrap; gap: 10px; padding: 10px 14px 6px;
+        backdrop-filter: none; -webkit-backdrop-filter: none;
+    }
+    .header-banner .brand-title { color: #fff; }
+    .header-banner .brand-subtitle { color: var(--rail-txt); }
+    .header-banner .btn-config { display: none; } /* o Menu fica só na barra de baixo */
+    .slot-abas { display: none; }
+    .header-banner .search-container { order: 5; flex: 1 0 100%; max-width: none; }
+    .header-banner .search-input, html[data-theme="dark"] .header-banner .search-input { background-color: #fff; color: #0f172a; border-color: transparent; }
+
+    .control-panel, html[data-theme="dark"] .control-panel { background: var(--navy); border-bottom: none; box-shadow: 0 10px 20px -16px rgba(0, 0, 0, .5); padding: 6px 14px 12px; }
+    .pac-rotulo { display: none; }
+    .input-group, html[data-theme="dark"] .input-group { background: var(--navy-2); border: 1.5px solid transparent; }
+    .input-group:focus-within { border-color: var(--rail-ativo); box-shadow: none; }
+    .input-group .input-label, .input-group .input-unidade { color: var(--rail-txt); }
+    .input-group:focus-within, html[data-theme="dark"] .input-group:focus-within { background: var(--navy-2); }
+    .input-group input, .input-group input:focus { color: #fff !important; -webkit-text-fill-color: #fff; background: transparent !important; }
+    .category-group, .subtype-group { scroll-margin-top: calc(var(--altura-topo, 100px) + 66px); }
+    .input-group input::placeholder { color: var(--rail-txt); }
+    .allergy-input, html[data-theme="dark"] .allergy-input { background-color: color-mix(in srgb, #dc2626 22%, var(--navy-2)); border-color: transparent; color: #ffd7d5; }
+    .allergy-input::placeholder { color: #ffb3b0; }
+    .btn-novo-paciente, html[data-theme="dark"] .btn-novo-paciente { background: transparent; color: #fff; border-color: color-mix(in srgb, #fff 35%, transparent); }
+
+    /* Categorias em botões que deslizam, logo abaixo do paciente */
+    .bottom-nav, html[data-theme="dark"] .bottom-nav {
+        position: sticky; top: var(--altura-topo, 100px); bottom: auto; z-index: 100;
+        background: var(--bg-app); border-top: none; box-shadow: 0 8px 12px -12px rgba(16, 24, 40, .35);
+        padding: 10px 12px; backdrop-filter: none; -webkit-backdrop-filter: none;
+    }
+    .bottom-nav .nav-btn { background: var(--surface) !important; border-color: var(--border-strong); color: var(--text-soft); }
+    body.modo-condutas .bottom-nav { display: none !important; }
+
+    /* Barra inferior fixa */
+    .barra-abas {
+        display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 120;
+        background: var(--surface); border-top: 1px solid var(--border);
+        padding: 6px 6px calc(8px + env(safe-area-inset-bottom));
+    }
+    .tab-b { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; background: none; border: none; padding: 4px 0; font-size: 11px; font-weight: 600; color: var(--text-muted); cursor: pointer; }
+    .tab-b span { font-size: 19px; line-height: 1.1; }
+    .tab-b.ativa { color: var(--primary); font-weight: 800; }
+    body:not(.condutas-on) .tab-condutas { display: none; }
+
+    /* Botão flutuante da receita, centralizado acima da barra */
+    .cart-fab {
+        left: 50%; right: auto; transform: translateX(-50%); bottom: calc(76px + env(safe-area-inset-bottom));
+        background: var(--primary); box-shadow: 0 10px 24px -8px rgba(15, 118, 110, .6); padding: 12px 20px; gap: 4px;
+    }
+    .cart-fab .badge-count { background: none; color: #fff; width: auto; height: auto; font-size: 14px; }
+    html[data-theme="dark"] .cart-fab { color: #04201d; }
+    html[data-theme="dark"] .cart-fab .badge-count { color: #04201d; }
+    body.modo-condutas .cart-fab { display: none !important; }
+
+    #app-container .section-header { font-size: 20px; margin-top: 22px !important; }
+}
+
+/* Receita: botões "Copiar" e "Limpar receita" sempre visíveis no fim, mesmo com muitos itens */
+#modalCarrinho .cart-acoes { position: sticky; bottom: -18px; margin: 8px -18px -18px; padding: 10px 18px 18px; background: var(--surface); border-top: 1px solid var(--border); z-index: 2; }
+#modalCarrinho .cart-acoes .btn-copiar-receita-completa { margin-top: 0; }
+#modalCarrinho .btn-limpar-carrinho { font-size: 13px; color: var(--danger); border-color: color-mix(in srgb, var(--danger) 35%, var(--border)); }
+/* Computador largo: receita vazia = painel some e os cards usam a largura toda */
+@media (min-width: 1280px) and (orientation: landscape) {
+    body.receita-vazia #modalCarrinho { display: none !important; }
+    body.receita-vazia #aplicativo-principal .app-layout { padding-right: 24px; }
+}

@@ -34,9 +34,16 @@ function toggleSenha() {
     senhaInput.type = senhaInput.type === 'password' ? 'text' : 'password';
 }
 
+// Texto da caixa da receita com as quebras de linha, mesmo com a caixa escondida
+// (innerText de elemento oculto perde as quebras; o texto é gravado com <br>).
+function textoDaCaixa(el) {
+    if (!el) return "";
+    return Array.from(el.childNodes).map(n => n.nodeName === 'BR' ? '\n' : n.textContent).join('');
+}
+
 function copiarTexto(idBtn, idBox) {
     const caixaTexto = document.getElementById('rec-' + idBox);
-    const textoParaCopiar = caixaTexto.innerText;
+    const textoParaCopiar = textoDaCaixa(caixaTexto);
     const botao = document.getElementById(idBtn);
 
     navigator.clipboard.writeText(textoParaCopiar).then(() => {

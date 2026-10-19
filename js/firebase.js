@@ -90,6 +90,9 @@ btnCadastrar.addEventListener('click', () => {
         return;
     }
     let email = emailInput.value.trim(), senha = senhaInput.value;
+    if (criandoConta) return; // evita o 2º toque (ou Enter) criar de novo e mostrar "já está em uso"
+    criandoConta = true;
+    btnCadastrar.disabled = true;
     msgErro.style.color = "#0f172a";
     msgErro.innerText = "Criando conta e validando acesso...";
     createUserWithEmailAndPassword(auth, email, senha)
@@ -107,17 +110,50 @@ btnCadastrar.addEventListener('click', () => {
             msgErro.style.color = "#16a34a";
             msgErro.innerText = "Conta criada! Enviamos um e-mail de confirmação com o assunto \"Verifique seu e-mail para JR MED Prescrição\" (remetente noreply@jrmed-calculadora.firebaseapp.com). Toque no link do e-mail e depois volte aqui para entrar. Confira também o spam.";
         })
-        .catch((error) => {
+        .catch(async (error) => {
             msgErro.style.color = "#dc2626";
-            if(error.code === 'auth/email-already-in-use') {
-                msgErro.innerText = "Este e-mail já está em uso.";
-            } else if(error.code === 'auth/weak-password') {
+            if (error.code === 'auth/email-already-in-use') {
+                await tratarEmailJaCadastrado(email, senha, lido.perfil);
+            } else if (error.code === 'auth/weak-password') {
                 msgErro.innerText = "A senha deve ter pelo menos 6 caracteres.";
             } else {
-               msgErro.innerText = mensagemDeErro(error);
+                msgErro.innerText = mensagemDeErro(error);
             }
-        });
+        })
+        .finally(() => { criandoConta = false; btnCadastrar.disabled = false; });
 });
+let criandoConta = false;
+
+// E-mail já cadastrado: em geral é um cadastro começado antes e não confirmado.
+// Tenta entrar com a mesma senha: se a conta não foi confirmada, completa o cadastro e reenvia o e-mail.
+async function tratarEmailJaCadastrado(email, senha, perfil) {
+    try {
+        entrouComSenha = true;
+        let cred = await signInWithEmailAndPassword(auth, email, senha);
+        if (!cred.user.emailVerified) {
+            try { await setDoc(doc(db, COLECAO_USUARIOS, cred.user.uid), { email: cred.user.email, perfil }, { merge: true }); } catch (e) { }
+            await enviarConfirmacao(cred.user);
+            await signOut(auth);
+            trocarModoCadastro(false);
+            emailInput.value = email;
+            msgErro.style.color = "#16a34a";
+            msgErro.innerText = "Você já tinha começado o cadastro com este e-mail. Atualizamos os seus dados e reenviamos o e-mail de confirmação (assunto \"Verifique seu e-mail para JR MED Prescrição\"). Toque no link do e-mail e depois entre. Confira também o spam.";
+            return;
+        }
+        // Conta já confirmada e a senha está certa: é só entrar.
+        trocarModoCadastro(false);
+        msgErro.style.color = "#16a34a";
+        msgErro.innerText = "Este e-mail já tem cadastro ativo. Entrando...";
+    } catch (e) {
+        trocarModoCadastro(false);
+        emailInput.value = email;
+        senhaInput.value = "";
+        msgErro.style.color = "#dc2626";
+        msgErro.innerText = e.code === 'auth/too-many-requests'
+            ? mensagemDeErro(e)
+            : "Este e-mail já tem cadastro no JR MED. Entre com a sua senha. Se não lembrar, toque em \"Esqueci minha senha\" para criar uma nova.";
+    }
+}
 
 function mensagemDeErro(error) {
     switch (error.code) {

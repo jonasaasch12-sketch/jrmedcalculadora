@@ -30,7 +30,8 @@ function montarEstruturaCondutas() {
     abas.innerHTML = `
         <button type="button" data-modo="prescricao" class="aba-modo ativa">💊 Prescrição</button>
         <button type="button" data-modo="condutas" class="aba-modo">📖 Condutas</button>`;
-    painel.insertBefore(abas, painel.firstChild);
+    let slot = document.getElementById('slotAbas'); // Layout B: abas no cabeçalho
+    if (slot) slot.appendChild(abas); else painel.insertBefore(abas, painel.firstChild);
     abas.querySelectorAll('.aba-modo').forEach(b => b.addEventListener('click', () => trocarModo(b.dataset.modo)));
 
     let area = document.createElement('div');
@@ -50,7 +51,8 @@ function montarEstruturaCondutas() {
 
 function trocarModo(modo) {
     modoAtual = modo;
-    document.querySelectorAll('.aba-modo').forEach(b => b.classList.toggle('ativa', b.dataset.modo === modo));
+    document.querySelectorAll('.aba-modo, .tab-b[data-modo]').forEach(b => b.classList.toggle('ativa', b.dataset.modo === modo));
+    document.body.classList.toggle('modo-condutas', modo === 'condutas');
     document.querySelector('#aplicativo-principal .app-layout').style.display = modo === 'condutas' ? 'none' : '';
     document.getElementById('area-condutas').style.display = modo === 'condutas' ? 'block' : 'none';
     let busca = document.getElementById('searchInput');
