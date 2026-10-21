@@ -105,11 +105,11 @@ registrarMedicamentos({
     "pele_mupi": {
         cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)", 
         kw: "mupirocina pomada impetigo bacteriana pele ambulatorial tópica", nome: "Mupirocina 2% Creme (Impetigo)", apres: "Creme Tópico",
-        info: "<strong>Conduta:</strong> Aplicar de 8/8h por 8 dias.", badgeSt: "static-blue", badge: "Uso Tópico", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
-        calc: () => ({ v: "Uso Tópico", r: `USO TÓPICO\n\n1) MUPIROCINA 2% CREME ----------------------------------- 1 BISNAGA\nLAVAR COM ÁGUA E SABÃO E APLICAR DE 8/8 HORAS POR 8 DIAS.` }),
+        info: "<strong>Conduta:</strong> Aplicar de 8/8h por 7 dias.", badgeSt: "static-blue", badge: "Uso Tópico", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "Uso Tópico", r: `USO TÓPICO\n\n1) MUPIROCINA 2% CREME ----------------------------------- 1 BISNAGA\nLAVAR COM ÁGUA E SABÃO E APLICAR DE 8/8 HORAS POR 7 DIAS.` }),
         detalhes: {
             indicacao: "Impetigo e infecções bacterianas superficiais da pele.",
-            dose: "Aplicar de 8/8h por 8 dias.",
+            dose: "Aplicar de 8/8h por 7 dias.",
             atencao: "Lesões extensas podem precisar de antibiótico oral."
         }
     },
