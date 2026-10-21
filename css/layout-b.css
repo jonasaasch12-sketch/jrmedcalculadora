@@ -16,6 +16,10 @@
     --navy-2: #13304d;
     --rail-txt: #9fb3c8;
     --rail-ativo: #5eead4;
+    --rail-link: #d6e1ec;   /* nomes das categorias na barra lateral */
+    --rail-forte: #fff;     /* texto em destaque (hover, peso digitado) */
+    --alergia-txt: #ffd7d5;
+    --alergia-ph: #ffb3b0;
     --largura-receita: 340px;
 }
 html[data-theme="dark"] {
@@ -101,16 +105,16 @@ html[data-theme="dark"] #app-container .btn-add-carrinho { color: #04201d; }
     .sidebar-link .dot, .sidebar-link .rail-txt { display: none; }
     .sidebar-link {
         width: 100%; height: auto; padding: 9px 10px; margin: 0 0 2px; gap: 10px; border-radius: 10px;
-        color: #d6e1ec; font-size: 13.5px; font-weight: 600; background: transparent; text-align: left;
+        color: var(--rail-link); font-size: 13.5px; font-weight: 600; background: transparent; text-align: left;
     }
     .rail-ico { font-size: 17px; line-height: 1; width: 22px; text-align: center; flex: none; }
-    .sidebar-link:hover { background: var(--navy-2); color: #fff; }
+    .sidebar-link:hover { background: var(--navy-2); color: var(--rail-forte); }
     .sidebar-link.aberto, html[data-theme="dark"] .sidebar-link.aberto { background: var(--navy-2); color: var(--rail-ativo); font-weight: 800; }
-    html[data-theme="dark"] .sidebar-link { color: #d6e1ec; }
+    html[data-theme="dark"] .sidebar-link { color: var(--rail-link); }
     .sidebar-sub { margin: 2px 0 8px 21px; padding-left: 10px; border-left: 2px solid var(--rail-ativo); }
     .sidebar-sublink, html[data-theme="dark"] .sidebar-sublink { color: var(--rail-txt); font-size: 12.5px; padding: 6px 8px; border-radius: 8px; }
-    .sidebar-sublink:hover, html[data-theme="dark"] .sidebar-sublink:hover { background: var(--navy-2); color: #fff; }
-    .sidebar-sublink.ativo { background: color-mix(in srgb, var(--rail-ativo) 18%, transparent); color: #fff; font-weight: 700; }
+    .sidebar-sublink:hover, html[data-theme="dark"] .sidebar-sublink:hover { background: var(--navy-2); color: var(--rail-forte); }
+    .sidebar-sublink.ativo { background: color-mix(in srgb, var(--rail-ativo) 18%, transparent); color: var(--rail-forte); font-weight: 700; }
 
     /* Faixa do paciente numa linha só */
     .control-panel { display: flex; align-items: center; gap: 12px; padding: 10px 24px; }
@@ -125,13 +129,25 @@ html[data-theme="dark"] #app-container .btn-add-carrinho { color: #04201d; }
     .control-panel .input-group, html[data-theme="dark"] .control-panel .input-group { background: var(--navy-2); border: 1.5px solid transparent; }
     .control-panel .input-group:focus-within, html[data-theme="dark"] .control-panel .input-group:focus-within { background: var(--navy-2); border-color: var(--rail-ativo); box-shadow: none; }
     .control-panel .input-group .input-label, .control-panel .input-group .input-unidade { color: var(--rail-txt); }
-    .control-panel .input-group input, .control-panel .input-group input:focus { color: #fff !important; -webkit-text-fill-color: #fff; background: transparent !important; }
+    .control-panel .input-group input, .control-panel .input-group input:focus { color: var(--rail-forte) !important; -webkit-text-fill-color: var(--rail-forte); background: transparent !important; }
     .control-panel .input-group input::placeholder { color: var(--rail-txt); }
-    .control-panel .allergy-input, html[data-theme="dark"] .control-panel .allergy-input { background-color: color-mix(in srgb, #dc2626 22%, var(--navy-2)); border-color: transparent; color: #ffd7d5; }
-    .control-panel .allergy-input::placeholder { color: #ffb3b0; }
-    .control-panel .btn-novo-paciente, html[data-theme="dark"] .control-panel .btn-novo-paciente { background: transparent; color: #fff; border-color: color-mix(in srgb, #fff 35%, transparent); }
-    .control-panel .btn-novo-paciente:hover { background: color-mix(in srgb, #fff 12%, transparent); }
+    .control-panel .allergy-input, html[data-theme="dark"] .control-panel .allergy-input { background-color: color-mix(in srgb, #dc2626 22%, var(--navy-2)); border-color: transparent; color: var(--alergia-txt); }
+    .control-panel .allergy-input::placeholder { color: var(--alergia-ph); }
+    .control-panel .btn-novo-paciente, html[data-theme="dark"] .control-panel .btn-novo-paciente { background: transparent; color: var(--rail-forte); border-color: color-mix(in srgb, var(--rail-forte) 35%, transparent); }
+    .control-panel .btn-novo-paciente:hover { background: color-mix(in srgb, var(--rail-forte) 12%, transparent); }
     .control-panel .aviso-peso-idade:empty { display: none; }
+
+    /* Tema claro: cabeçalho + faixa do paciente em azul-gelo, como um bloco só (opção 3 escolhida pelo Dr. Jonas).
+       O menu lateral continua azul-marinho. No tema escuro fica como antes. */
+    html:not([data-theme="dark"]) { --gelo: #e3ebf4; }
+    html:not([data-theme="dark"]) .control-panel {
+        --navy: var(--gelo); --navy-2: #fff; --rail-txt: #4f6580; --rail-forte: #0b1f33; --rail-ativo: #0f766e;
+        --alergia-txt: #9f1d1d; --alergia-ph: #b45454;
+        box-shadow: 0 10px 20px -18px rgba(11, 31, 51, .45);
+    }
+    html:not([data-theme="dark"]) .header-banner { background: var(--gelo); backdrop-filter: none; -webkit-backdrop-filter: none; border-bottom: 1px solid color-mix(in srgb, #0b1f33 8%, transparent); }
+    html:not([data-theme="dark"]) .header-banner .search-input { background-color: #fff; }
+    html:not([data-theme="dark"]) body.condutas-on .slot-abas .abas-modo { background: color-mix(in srgb, #0b1f33 8%, transparent); }
 
     /* Cards um debaixo do outro (pedido do Dr. Jonas: nada de 2 colunas) */
     #app-container .subtype-group { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: start; }
