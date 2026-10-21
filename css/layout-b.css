@@ -139,7 +139,7 @@ html[data-theme="dark"] #app-container .btn-add-carrinho { color: #04201d; }
 
     /* Tema claro: cabeçalho + faixa do paciente em azul-gelo, como um bloco só (opção 3 escolhida pelo Dr. Jonas).
        O menu lateral continua azul-marinho. No tema escuro fica como antes. */
-    html:not([data-theme="dark"]) { --gelo: #e3ebf4; }
+    html:not([data-theme="dark"]) { --gelo: #c6d5e6; }
     html:not([data-theme="dark"]) .control-panel {
         --navy: var(--gelo); --navy-2: #fff; --rail-txt: #4f6580; --rail-forte: #0b1f33; --rail-ativo: #0f766e;
         --alergia-txt: #9f1d1d; --alergia-ph: #b45454;
