@@ -120,8 +120,8 @@ html[data-theme="dark"] #app-container .btn-add-carrinho { color: #04201d; }
     .control-panel .btn-novo-paciente { margin-left: auto; }
     .control-panel .aviso-peso-idade:empty { display: none; }
 
-    /* Cards em grade */
-    #app-container .subtype-group { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 16px; align-items: start; }
+    /* Cards um debaixo do outro (pedido do Dr. Jonas: nada de 2 colunas) */
+    #app-container .subtype-group { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: start; }
     #app-container .subtype-group > .sub-type-title { grid-column: 1 / -1; margin: 16px 0 0; }
     #app-container .med-card { margin: 0; }
 }
