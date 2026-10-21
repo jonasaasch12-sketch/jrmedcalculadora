@@ -137,6 +137,18 @@ html[data-theme="dark"] #app-container .btn-add-carrinho { color: #04201d; }
     .control-panel .btn-novo-paciente:hover { background: color-mix(in srgb, var(--rail-forte) 12%, transparent); }
     .control-panel .aviso-peso-idade:empty { display: none; }
 
+    /* Tema claro: cabeçalho + faixa do paciente em azul-gelo, como um bloco só (opção 3 escolhida pelo Dr. Jonas).
+       O menu lateral continua azul-marinho. No tema escuro fica como antes. */
+    html:not([data-theme="dark"]) { --gelo: #e3ebf4; }
+    html:not([data-theme="dark"]) .control-panel {
+        --navy: var(--gelo); --navy-2: #fff; --rail-txt: #4f6580; --rail-forte: #0b1f33; --rail-ativo: #0f766e;
+        --alergia-txt: #9f1d1d; --alergia-ph: #b45454;
+        box-shadow: 0 10px 20px -18px rgba(11, 31, 51, .45);
+    }
+    html:not([data-theme="dark"]) .header-banner { background: var(--gelo); backdrop-filter: none; -webkit-backdrop-filter: none; border-bottom: 1px solid color-mix(in srgb, #0b1f33 8%, transparent); }
+    html:not([data-theme="dark"]) .header-banner .search-input { background-color: #fff; }
+    html:not([data-theme="dark"]) body.condutas-on .slot-abas .abas-modo { background: color-mix(in srgb, #0b1f33 8%, transparent); }
+
     /* Cards um debaixo do outro (pedido do Dr. Jonas: nada de 2 colunas) */
     #app-container .subtype-group { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: start; }
     #app-container .subtype-group > .sub-type-title { grid-column: 1 / -1; margin: 16px 0 0; }
