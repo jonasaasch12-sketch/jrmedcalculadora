@@ -44,7 +44,7 @@ js/formularios.js          modais (cadastro da equipe, categorias, ficha) + inic
 js/cadastro.js             cadastro profissional (nome, atividade, CRM/COREN/CRF+UF ou faculdade+formatura, aceite);
                            pendenciaPerfil() decide quando pedir "Complete seu cadastro"
 js/digital.js              celular: desbloqueio com digital/rosto (WebAuthn, só no aparelho); computador: sessão sai após 1 h sem uso (firebase.js)
-js/firebase.js             login e Firestore (módulo); grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
+js/firebase.js             login e Firestore (módulo); sem e-mail de confirmação (suspenso: não chegava), o cadastro pede o e-mail 2x; grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)
 privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; contato jrmedprescricao@gmail.com). Mudou o texto?
                            Subir VERSAO_TERMOS em js/cadastro.js (todos aceitam de novo). "Meus dados" (ver/corrigir/baixar/excluir) em js/firebase.js

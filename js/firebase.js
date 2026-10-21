@@ -3,7 +3,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import {
     getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-    onAuthStateChanged, signOut, sendEmailVerification, sendPasswordResetEmail,
+    onAuthStateChanged, signOut, sendPasswordResetEmail,
     deleteUser, EmailAuthProvider, reauthenticateWithCredential
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import {
@@ -58,14 +58,16 @@ const btnEntrar = document.getElementById('btnEntrar');
 const btnCadastrar = document.getElementById('btnCadastrar');
 const btnSair = document.getElementById('btnSair');
 const msgErro = document.getElementById('mensagemErro');
-const btnReenviar = document.getElementById('btnReenviarVerificacao');
 
 // Criar conta: o 1º toque abre o formulário profissional; o 2º valida e cria a conta.
 let modoCadastro = false;
 function trocarModoCadastro(ligar) {
     modoCadastro = ligar;
     let extra = document.getElementById('cadastroExtra');
-    if (ligar && !extra.innerHTML) extra.innerHTML = htmlFormPerfil('cad');
+    // E-mail digitado 2 vezes: sem e-mail de confirmação, é o que garante que o "Esqueci minha senha" chegue à pessoa.
+    if (ligar && !extra.innerHTML) extra.innerHTML = `<label class="login-label" for="cadEmail2">Confirme o e-mail</label>
+        <div class="login-input-group"><input type="email" id="cadEmail2" class="login-input" placeholder="Digite o e-mail de novo" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+        <p class="perfil-dica">É para este e-mail que enviamos o link de "Esqueci minha senha". Confira se está certo.</p>` + htmlFormPerfil('cad');
     extra.style.display = ligar ? 'block' : 'none';
     btnEntrar.style.display = ligar ? 'none' : 'block';
     document.getElementById('btnEsqueciSenha').style.display = ligar ? 'none' : 'block';
@@ -75,12 +77,10 @@ function trocarModoCadastro(ligar) {
     btnCadastrar.classList.toggle('btn-register', !ligar);
     senhaInput.setAttribute('autocomplete', ligar ? 'new-password' : 'current-password');
     msgErro.innerText = "";
-    btnReenviar.style.display = "none";
 }
 document.getElementById('btnVoltarLogin').addEventListener('click', () => trocarModoCadastro(false));
 
 btnCadastrar.addEventListener('click', () => {
-    btnReenviar.style.display = "none";
     if (!modoCadastro) { trocarModoCadastro(true); document.getElementById('cadNome')?.focus(); return; }
     let lido = lerFormPerfil('cad');
     if (lido.erro) {
@@ -90,28 +90,34 @@ btnCadastrar.addEventListener('click', () => {
         return;
     }
     let email = emailInput.value.trim(), senha = senhaInput.value;
+    let email2 = (document.getElementById('cadEmail2')?.value || "").trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msgErro.style.color = "#dc2626"; msgErro.innerText = "Digite um e-mail válido no campo E-mail, lá em cima."; emailInput.focus(); return; }
+    if (email.toLowerCase() !== email2.toLowerCase()) { msgErro.style.color = "#dc2626"; msgErro.innerText = "Os dois e-mails não estão iguais. Confira: é por ele que você recupera a senha."; document.getElementById('cadEmail2')?.focus(); return; }
     if (criandoConta) return; // evita o 2º toque (ou Enter) criar de novo e mostrar "já está em uso"
     criandoConta = true;
     btnCadastrar.disabled = true;
+    perfilDoCadastro = { email: email.toLowerCase(), perfil: lido.perfil };
+    entrouComSenha = true;
     msgErro.style.color = "#0f172a";
     msgErro.innerText = "Criando conta e validando acesso...";
     createUserWithEmailAndPassword(auth, email, senha)
         .then(async (cred) => {
+            // Sem e-mail de confirmação (suspenso a pedido do Dr. Jonas: não chegava): a conta já entra.
+            // O perfil fica guardado no aparelho também, para a entrada não pedir o cadastro de novo.
+            guardarPerfilLocal(cred.user.uid, lido.perfil);
             try {
                 await setDoc(doc(db, COLECAO_USUARIOS, cred.user.uid), {
                     email: cred.user.email, perfil: lido.perfil,
                     cadastroEm: cred.user.metadata?.creationTime || new Date().toUTCString()
                 }, { merge: true });
             } catch (e) { console.warn("Perfil não gravado no cadastro:", e.code || e.message); }
-            await enviarConfirmacao(cred.user);
-            await signOut(auth);
             trocarModoCadastro(false);
-            emailInput.value = email;
             msgErro.style.color = "#16a34a";
-            msgErro.innerText = "Conta criada! Enviamos um e-mail de confirmação com o assunto \"Verifique seu e-mail para JR MED Prescrição\" (remetente noreply@jrmed-calculadora.firebaseapp.com). Toque no link do e-mail e depois volte aqui para entrar. Confira também o spam.";
+            msgErro.innerText = "Conta criada! Entrando...";
         })
         .catch(async (error) => {
             msgErro.style.color = "#dc2626";
+            if (error.code !== 'auth/email-already-in-use') perfilDoCadastro = null;
             if (error.code === 'auth/email-already-in-use') {
                 await tratarEmailJaCadastrado(email, senha, lido.perfil);
             } else if (error.code === 'auth/weak-password') {
@@ -123,6 +129,9 @@ btnCadastrar.addEventListener('click', () => {
         .finally(() => { criandoConta = false; btnCadastrar.disabled = false; });
 });
 let criandoConta = false;
+// Perfil recém-preenchido em "Criar conta": o app pode abrir antes de o Firebase terminar de gravar,
+// então a entrada usa esta cópia em vez de pedir o cadastro de novo.
+let perfilDoCadastro = null;
 
 // E-mail já cadastrado: em geral é um cadastro começado antes e não confirmado.
 // Tenta entrar com a mesma senha: se a conta não foi confirmada, completa o cadastro e reenvia o e-mail.
@@ -130,21 +139,14 @@ async function tratarEmailJaCadastrado(email, senha, perfil) {
     try {
         entrouComSenha = true;
         let cred = await signInWithEmailAndPassword(auth, email, senha);
-        if (!cred.user.emailVerified) {
-            try { await setDoc(doc(db, COLECAO_USUARIOS, cred.user.uid), { email: cred.user.email, perfil }, { merge: true }); } catch (e) { }
-            await enviarConfirmacao(cred.user);
-            await signOut(auth);
-            trocarModoCadastro(false);
-            emailInput.value = email;
-            msgErro.style.color = "#16a34a";
-            msgErro.innerText = "Você já tinha começado o cadastro com este e-mail. Atualizamos os seus dados e reenviamos o e-mail de confirmação (assunto \"Verifique seu e-mail para JR MED Prescrição\"). Toque no link do e-mail e depois entre. Confira também o spam.";
-            return;
-        }
-        // Conta já confirmada e a senha está certa: é só entrar.
+        // Senha certa: cadastro começado antes (quando o e-mail de confirmação não chegava). Grava os dados e entra.
+        guardarPerfilLocal(cred.user.uid, perfil);
+        try { await setDoc(doc(db, COLECAO_USUARIOS, cred.user.uid), { email: cred.user.email, perfil }, { merge: true }); } catch (e) { }
         trocarModoCadastro(false);
         msgErro.style.color = "#16a34a";
-        msgErro.innerText = "Este e-mail já tem cadastro ativo. Entrando...";
+        msgErro.innerText = "Você já tinha cadastro com este e-mail. Entrando...";
     } catch (e) {
+        perfilDoCadastro = null;
         trocarModoCadastro(false);
         emailInput.value = email;
         senhaInput.value = "";
@@ -177,38 +179,9 @@ let entrouComSenha = false; // acabou de digitar a senha: não pede a digital lo
 btnEntrar.addEventListener('click', () => {
     marcarAtividade();
     entrouComSenha = true;
-    btnReenviar.style.display = "none";
     msgErro.style.color = "#0f172a";
     msgErro.innerText = "Verificando credenciais...";
     signInWithEmailAndPassword(auth, emailInput.value, senhaInput.value)
-        .then(async (cred) => {
-            if (!cred.user.emailVerified) {
-                // Conta existe e a senha está certa, só falta confirmar o e-mail.
-                // Isso acontece com contas criadas ANTES da checagem de e-mail
-                // existir (nenhum e-mail chegou a ser enviado na época).
-                msgErro.style.color = "#dc2626";
-                msgErro.innerText = "Confirme seu e-mail antes de entrar. Se nunca recebeu o e-mail, toque no botão abaixo para reenviar.";
-                btnReenviar.style.display = "block";
-                await signOut(auth);
-            }
-        })
-        .catch((error) => {
-            msgErro.style.color = "#dc2626";
-            msgErro.innerText = mensagemDeErro(error);
-        });
-});
-
-btnReenviar.addEventListener('click', () => {
-    msgErro.style.color = "#0f172a";
-    msgErro.innerText = "Reenviando e-mail de confirmação...";
-    signInWithEmailAndPassword(auth, emailInput.value, senhaInput.value)
-        .then(async (cred) => {
-            await enviarConfirmacao(cred.user);
-            await signOut(auth);
-            msgErro.style.color = "#16a34a";
-            msgErro.innerText = "E-mail reenviado! Procure o assunto \"Verifique seu e-mail para JR MED Prescrição\" na caixa de entrada (e no spam).";
-            btnReenviar.style.display = "none";
-        })
         .catch((error) => {
             msgErro.style.color = "#dc2626";
             msgErro.innerText = mensagemDeErro(error);
@@ -217,7 +190,6 @@ btnReenviar.addEventListener('click', () => {
 
 // "Esqueci minha senha": o Firebase envia um link para a pessoa criar uma senha nova.
 document.getElementById('btnEsqueciSenha').addEventListener('click', () => {
-    btnReenviar.style.display = "none";
     let email = emailInput.value.trim();
     if (!email) {
         msgErro.style.color = "#dc2626";
@@ -230,7 +202,7 @@ document.getElementById('btnEsqueciSenha').addEventListener('click', () => {
     enviarNovaSenha(email)
         .then(() => {
             msgErro.style.color = "#16a34a";
-            msgErro.innerText = "Se existir conta com esse e-mail, enviamos um link para criar uma nova senha (remetente noreply@jrmed-calculadora.firebaseapp.com). Confira a caixa de entrada e o spam.";
+            msgErro.innerText = `Enviamos o link para criar uma nova senha para ${email} (se esse e-mail tiver conta no JR MED). Procure na caixa de entrada e no spam o e-mail de noreply@jrmed-calculadora.firebaseapp.com. O link vale por 1 hora.`;
         })
         .catch((error) => {
             msgErro.style.color = "#dc2626";
@@ -578,10 +550,6 @@ window.carregarUsuarios = async function () {
 // E-mails do Firebase (o texto do modelo não pode ser editado neste projeto): ao terminar
 // no link do e-mail, a página do Firebase mostra "Continuar", que volta ao JR MED com um aviso.
 function urlDeVolta(param) { return location.origin + location.pathname + '?' + param + '=1'; }
-async function enviarConfirmacao(user) {
-    try { await sendEmailVerification(user, { url: urlDeVolta('emailConfirmado') }); }
-    catch (e) { if (String(e.code || '').includes('continue-uri') || String(e.code || '').includes('unauthorized')) await sendEmailVerification(user); else throw e; }
-}
 async function enviarNovaSenha(email) {
     try { await sendPasswordResetEmail(auth, email, { url: urlDeVolta('senhaRedefinida') }); }
     catch (e) { if (String(e.code || '').includes('continue-uri') || String(e.code || '').includes('unauthorized')) await sendPasswordResetEmail(auth, email); else throw e; }
@@ -653,7 +621,7 @@ function pedirPerfil(user, perfil, motivo) {
 document.getElementById('btnSairPerfil').addEventListener('click', () => signOut(auth));
 
 onAuthStateChanged(auth, async (user) => {
-    if (user && user.emailVerified) {
+    if (user) { // e-mail de confirmação suspenso: qualquer conta logada entra
         if (conferirInatividade()) return;
         if (!lerAtividade()) marcarAtividade();
         let ehAdmin = EMAILS_ADMIN.includes(user.email);
@@ -679,6 +647,7 @@ onAuthStateChanged(auth, async (user) => {
         registrarAcesso(user);
         // Cópia do perfil salva neste aparelho: se o servidor não trouxer, usa e regrava.
         let copia = lerPerfilLocal(user.uid);
+        if (perfilDoCadastro && perfilDoCadastro.email === (user.email || '').toLowerCase()) { copia = perfilDoCadastro.perfil; perfilDoCadastro = null; }
         if (pendenciaPerfil(perfil) && copia && !pendenciaPerfil(copia)) {
             perfil = copia;
             setDoc(doc(db, COLECAO_USUARIOS, user.uid), { email: user.email, perfil: copia }, { merge: true }).catch(() => { });
