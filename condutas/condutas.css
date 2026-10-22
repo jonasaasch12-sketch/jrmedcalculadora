@@ -215,12 +215,15 @@ a.cond-cit.piscando { background: color-mix(in srgb, #f59e0b 35%, transparent); 
 .sy-h { font-weight: 900; font-size: 16px; margin-bottom: 6px; }
 .sy-total { font-size: 30px; font-weight: 900; color: var(--cor-cat); line-height: 1.1; margin: 8px 0 4px; }
 .sy-total small { display: block; font-size: 12.5px; color: var(--text-muted); font-weight: 700; margin-top: 2px; }
-.sy-bags { display: flex; align-items: flex-start; justify-content: center; gap: 18px; margin: 12px 0 4px; }
+.sy-bags { display: flex; align-items: flex-start; justify-content: center; gap: 18px; margin: 12px 0 0; }
 .sy-bag { width: 110px; text-align: center; }
 .sy-bag-c { height: 90px; border-radius: 12px 12px 18px 18px; border: 3px solid var(--c); background: linear-gradient(to top, color-mix(in srgb, var(--c) 30%, var(--surface)) var(--n), var(--surface) var(--n)); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 26px; color: var(--c); }
 .sy-bag-l { font-size: 12.5px; font-weight: 800; margin-top: 4px; min-height: 32px; }
 .sy-bag-v { font-size: 15px; font-weight: 900; }
-.sy-y { text-align: center; font-size: 13px; color: var(--text-muted); font-weight: 700; }
+.sy-y { display: block; width: 240px; max-width: 100%; height: auto; margin: 0 auto -2px; }
+.sy-y-letra { font: 800 14px Inter, sans-serif; fill: var(--text-muted); }
+.sy-paciente { width: max-content; margin: 0 auto; border: 2.5px solid #334155; border-radius: 12px; padding: 7px 16px; font-weight: 800; font-size: 15px; background: var(--surface); }
+.sy-paciente b { margin-left: 6px; }
 .sy-agora { text-align: center; font-weight: 900; font-size: 14px; margin-top: 10px; }
 .sy-fases-tit { font-weight: 800; font-size: 13px; color: var(--text-muted); margin: 12px 0 6px; }
 .sy-fases { display: grid; gap: 8px; margin: 0 0 6px; }
