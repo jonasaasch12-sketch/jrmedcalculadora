@@ -108,7 +108,7 @@ function atualizarCadGlicose() {
     let bomba = c => { let fA = c / 10, r = n => Math.round(n); return c === 0 ? `B ${r(vel)}` : c === 10 ? `A ${r(vel)}` : `A ${r(vel * fA)} + B ${r(vel * (1 - fA))}`; };
     let tab = [0, 2.5, 5, 7.5, 10].map((c, k) => `<tr${c === E.atual ? ' class="cadg-atual"' : ''}><th>${c ? fmtConc(c) : '0%'}</th><td>${mistura[k]}</td>${vel > 0 ? `<td>${bomba(c)}</td>` : ''}</tr>`).join('');
     document.getElementById('cadg-tabela').innerHTML = `<div class="cond-tabela-wrap"><table class="cond-tabela"><thead><tr><th>Glicose</th><th>Mistura</th>${vel > 0 ? '<th>Bomba (mL/h)</th>' : ''}</tr></thead><tbody>${tab}</tbody></table></div>
-        <div class="cond-nota">2,5% é degrau opcional (não está na escada da SPP). 12,5% (SPP): SG 5% em SF 350 mL + SG 30% 150 mL.${auto === null ? ' Digite o <strong>peso</strong> no topo para o soro total vir do passo 4.' : ''}</div>`;
+        <div class="cond-nota"><strong>Solução padrão do IMIP (em Y), K 40 mEq/L e Na 136 mEq/L. A:</strong> SG 10% 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. <strong>B:</strong> AD 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. K ≥ 5,5: preparar sem o KCl. 2,5% é degrau opcional (não está na escada da SPP). 12,5% (SPP): SG 5% em SF 350 mL + SG 30% 150 mL.${auto === null ? ' Digite o <strong>peso</strong> no topo para o soro total vir do passo 4.' : ''}</div>`;
     let caixa = (cor, icone, titulo, linhas) => `<div class="cadg-acao" style="--cor-acao:${cor}"><div class="cadg-acao-tit">${icone} ${titulo}</div><ul>${linhas.map(l => `<li>${l}</li>`).join('')}</ul></div>`;
     let insul = 'Manter a insulina na mesma velocidade.';
     if (!(hgt > 0)) { res.innerHTML = `<div class="cond-nota">👆 Digite o <strong>HGT agora</strong> (e o de 1 h atrás, se tiver) para ver o que fazer.</div>`; return; }
@@ -500,21 +500,9 @@ registrarConduta({
                         "<strong>Começar com glicose a 5%</strong> = metade solução A + metade solução B. A <strong>velocidade total do passo 4 não muda</strong>: só a proporção entre A e B.",
                         "CAD ainda não resolvida e HGT continua ≤ 300 ou caindo > 90 mg/dL/h: <strong>subir para 7,5%</strong> (¾ A + ¼ B) e depois <strong>10%</strong> (só A).",
                         "HGT normal mas <strong>acidose ainda presente</strong>: aumentar a glicose e <strong>manter a insulina</strong> (SPP admite até 12,5%).",
-                        "O card do passo 4 já mostra os mL/h de A e de B para cada concentração."
+                        "<strong>Use o assistente abaixo</strong> a cada HGT: ele mostra a glicose certa e os mL/h de A e de B na bomba."
                     ],
                     ferramenta: "ferramentaCadGlicose",
-                    tabela: {
-                        titulo: "Solução padrão do IMIP (em Y): K 40 mEq/L, Na 136 mEq/L",
-                        colunas: ["Glicose final", "Solução A", "Solução B"],
-                        linhas: [
-                            ["0% (sem glicose)", "—", "Todo o volume"],
-                            ["2,5%", "¼", "¾"],
-                            ["5%", "½", "½"],
-                            ["7,5%", "¾", "¼"],
-                            ["10%", "Todo o volume", "—"]
-                        ],
-                        nota: "<strong>A:</strong> SG 10% 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. <strong>B:</strong> AD 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. K ≥ 5,5: preparar sem o KCl. Se precisar de 12,5% (SPP): SG 5% em SF 350 mL + SG 30% 150 mL."
-                    },
                     remedios: ["cad_hidratacao"]
                 },
                 {
