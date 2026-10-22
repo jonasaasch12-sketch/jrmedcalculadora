@@ -82,7 +82,7 @@ function ferramentaCadGlicose() {
         <div id="cadg-tabela"></div>
     </div>`;
 }
-function cadGliEscolher(campo, v) { cadGliEstado[campo] = v; atualizarCadGlicose(); }
+function cadGliEscolher(campo, v) { cadGliEstado[campo] = v; atualizarCadGlicose(); if (campo === 'atual') atualizarCadSoroY(); }
 function cadAB(conc, vel) {
     let fA = conc / 10, f = n => Math.round(n).toLocaleString('pt-BR');
     if (!(vel > 0)) return conc === 0 ? 'só B' : conc >= 10 ? 'só A' : `A ${fA * 100}% + B ${100 - fA * 100}% do volume`;
@@ -186,7 +186,11 @@ function ferramentaCadPasso4() {
         <div id="sy-corpo"></div>
     </div>` + ferramentaCadHidratacao();
 }
-function textoSoroY(t) {
+function cadMixSoroY(t, c) {
+    let r = Math.round, a = t * c / 10, b = t - a;
+    return { a, b, txt: c === 0 ? `SOLUÇÃO B ${r(t)} ML/H + SOLUÇÃO A PARADA` : c >= 10 ? `SOLUÇÃO A ${r(t)} ML/H + SOLUÇÃO B PARADA` : `SOLUÇÃO A ${r(a)} ML/H + SOLUÇÃO B ${r(b)} ML/H (GLICOSE FINAL ${String(c).replace('.', ',')}%)` };
+}
+function textoSoroY(t, c) {
     let r = Math.round(t);
     return `VIA ENDOVENOSA (CETOACIDOSE DIABÉTICA - SORO EM Y, 48 HORAS)
 
@@ -200,8 +204,14 @@ function textoSoroY(t) {
    KCL 19,1% -------------- 4 ML
 
 CORRER EM Y, EM BIC. VELOCIDADE TOTAL: ${r} ML/H.
-AGORA: SOLUÇÃO B ${r} ML/H + SOLUÇÃO A PARADA.
+AGORA: ${cadMixSoroY(t, c).txt}.
 AJUSTAR A PROPORÇÃO A/B PELO HGT DE 1/1H, SEM MUDAR A VELOCIDADE TOTAL.`;
+}
+// Tocar num momento escolhe a glicose que está correndo (a mesma do assistente do passo 6).
+function escolherFaseSoroY(c) {
+    cadGliEstado.atual = c;
+    atualizarCadSoroY();
+    if (document.getElementById('cadg')) atualizarCadGlicose();
 }
 function atualizarCadSoroY() {
     let corpo = document.getElementById('sy-corpo');
@@ -209,24 +219,33 @@ function atualizarCadSoroY() {
     let t = cadTaxaPasso4();
     if (t === null) { corpo.innerHTML = '<div class="cond-nota">Digite o <strong>peso</strong> no topo para calcular o soro.</div>'; return; }
     let p = parseFloat(document.getElementById('pesoInput').value), r = n => Math.round(n);
-    let exp = cadHidEstado.expMlKg;
-    let fase = (n, tit, sub, bomba, on) => `<div class="sy-fase${on ? ' on' : ''}"><div class="sy-fase-n">${n}</div><div><b>${tit}</b><span>${sub}</span></div><div class="sy-fase-bomba">${bomba}</div></div>`;
+    let exp = cadHidEstado.expMlKg, c = cadGliEstado.atual, mix = cadMixSoroY(t, c);
+    let pc = x => String(x).replace('.', ',') + '%';
+    let fase = (conc, tit, sub) => {
+        let m = cadMixSoroY(t, conc), bomba = conc === 0 ? `B ${r(t)}` : conc >= 10 ? `A ${r(t)}` : `A ${r(m.a)} · B ${r(m.b)}`;
+        return `<button type="button" class="sy-fase${conc === c ? ' on' : ''}" style="--mix:${conc * 10}%" onclick="escolherFaseSoroY(${conc})">
+            <span class="sy-fase-pc">${pc(conc)}</span><span class="sy-fase-txt"><b>${tit}</b><span>${sub}</span></span><span class="sy-fase-bomba">${bomba}</span></button>`;
+    };
+    let fora = ![0, 5, 7.5, 10].includes(c);
     corpo.innerHTML = `
         <div class="sy-total">${r(t)} mL/h <small>VELOCIDADE TOTAL · ${String(p).replace('.', ',')} kg · desidratação ${cadHidEstado.pct}%${exp ? ` · expansão ${exp} mL/kg descontada` : ''} · não muda até o fim</small></div>
+        <div class="sy-agora">Agora: glicose ${pc(c)}</div>
         <div class="sy-bags">
-            <div class="sy-bag"><div class="sy-bag-c" style="--c:#d97706;--n:0%">A</div><div class="sy-bag-l">com glicose (SG 10%)</div><div class="sy-bag-v" style="color:#d97706">parada</div></div>
-            <div class="sy-bag"><div class="sy-bag-c" style="--c:#2563eb;--n:100%">B</div><div class="sy-bag-l">sem glicose (AD)</div><div class="sy-bag-v" style="color:#2563eb">${r(t)} mL/h</div></div>
+            <div class="sy-bag"><div class="sy-bag-c" style="--c:#d97706;--n:${c * 10}%">A</div><div class="sy-bag-l">com glicose (SG 10%)</div><div class="sy-bag-v" style="color:#d97706">${c === 0 ? 'parada' : r(mix.a) + ' mL/h'}</div></div>
+            <div class="sy-bag"><div class="sy-bag-c" style="--c:#2563eb;--n:${100 - c * 10}%">B</div><div class="sy-bag-l">sem glicose (AD)</div><div class="sy-bag-v" style="color:#2563eb">${c >= 10 ? 'parada' : r(mix.b) + ' mL/h'}</div></div>
         </div>
         <div class="sy-y">↘ ↙ em Y → paciente</div>
+        <div class="sy-fases-tit">👆 Toque no momento atual:</div>
         <div class="sy-fases">
-            ${fase(1, 'Início (HGT > 300)', 'só B', `B ${r(t)}`, true)}
-            ${fase(2, 'HGT ≤ 300 ou queda > 90/h', 'glicose 5% = ½ A + ½ B', `A ${r(t / 2)} · B ${r(t / 2)}`)}
-            ${fase(3, 'Ainda caindo, com acidose', '7,5% = ¾ A + ¼ B', `A ${r(t * 3 / 4)} · B ${r(t / 4)}`)}
-            ${fase(4, 'Continua caindo', '10% = só A', `A ${r(t)}`)}
+            ${fase(0, 'Início (HGT > 300)', 'só B')}
+            ${fase(5, 'HGT ≤ 300 ou queda > 90/h', '½ A + ½ B')}
+            ${fase(7.5, 'Ainda caindo, com acidose', '¾ A + ¼ B')}
+            ${fase(10, 'Continua caindo', 'só A')}
         </div>
-        <div class="cond-nota">A decisão de cada momento é feita no passo 6, pelo HGT de 1/1h (assistente "Qual glicose no soro agora?").</div>
+        ${fora ? `<div class="cond-nota">Glicose ${pc(c)} escolhida no passo 6 (degrau intermediário).</div>` : ''}
+        <div class="cond-nota">Quem decide o momento é o HGT de 1/1h: use o assistente do passo 6 ("Qual glicose no soro agora?"), que fica sincronizado com este painel.</div>
         <div class="sy-rec-tit">📋 Preparo para o prontuário</div>
-        <div class="cond-med-texto" id="sy-texto">${textoSoroY(t)}</div>
+        <div class="cond-med-texto" id="sy-texto">${textoSoroY(t, c)}</div>
         <div class="cond-med-botoes"><button type="button" class="cond-btn-receita" onclick="addSoroYReceita(this)">+ Receita</button><button type="button" class="cond-btn-copiar" onclick="copiarSoroY(this)">📋 Copiar</button></div>
         <div class="sy-k">
             <div class="sy-kv"><b>K &lt; 4,5:</b> com KCl já</div>
