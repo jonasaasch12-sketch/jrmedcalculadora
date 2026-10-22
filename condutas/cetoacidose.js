@@ -6,6 +6,50 @@
 // (J Pediatr 2001, sistema de duas soluções), SPSP 2024 e ISPAD 2022 (DynaMed).
 // Os remédios são ids dos cards (farmaciaJR): a dose é calculada lá.
 // =====================================================
+// "Como chegar ao cálculo" (passo 4): a mesma conta do card cad_hidratacao, mostrada em 3 peças.
+// Usa o peso do topo; sem peso, mostra o exemplo de 30 kg.
+let cadHidEstado = { pct: 7, expMlKg: 10 };
+function ferramentaCadHidratacao() {
+    setTimeout(atualizarCadHidratacao, 0);
+    return `<div class="cadh" id="cadh">
+        <div class="cadh-titulo">🧮 Como chegar ao cálculo</div>
+        <div class="cadh-linha"><span class="cadh-rot">Desidratação</span><span class="cadh-opcoes" id="cadh-pct"></span></div>
+        <div class="cadh-linha"><span class="cadh-rot">Expansão já feita</span><span class="cadh-opcoes" id="cadh-exp"></span></div>
+        <div id="cadh-conta"></div>
+    </div>`;
+}
+function cadHidEscolher(campo, v) { cadHidEstado[campo] = v; atualizarCadHidratacao(); }
+function atualizarCadHidratacao() {
+    let caixa = document.getElementById('cadh-conta');
+    if (!caixa) return;
+    let botoes = (campo, lista, fmt) => lista.map(v => `<button type="button" class="qm-faixa${cadHidEstado[campo] === v ? ' ativa' : ''}" onclick="cadHidEscolher('${campo}', ${v})">${fmt(v)}</button>`).join('');
+    document.getElementById('cadh-pct').innerHTML = botoes('pct', [5, 7, 10], v => v + '%');
+    document.getElementById('cadh-exp').innerHTML = botoes('expMlKg', [0, 10, 20], v => v ? v + ' mL/kg' : 'nenhuma');
+    let pd = parseFloat((document.getElementById('pesoInput') || {}).value);
+    let exemplo = !(pd > 0), p = exemplo ? 30 : pd, d = cadHidEstado.pct;
+    let f = n => Math.round(n).toLocaleString('pt-BR'), kg = String(p).replace('.', ',');
+    let man = p <= 10 ? p * 4 : p <= 20 ? 40 + (p - 10) * 2 : 60 + (p - 20);
+    let manConta = p <= 10 ? `4 × ${kg}` : p <= 20 ? `40 + 2 × ${String(+(p - 10).toFixed(1)).replace('.', ',')}` : `40 + 20 + ${String(+(p - 20).toFixed(1)).replace('.', ',')}`;
+    let deficit = d * p * 10, man48 = man * 48, exp = cadHidEstado.expMlKg * p;
+    let semTeto = man + deficit / 48, teto = man * 2, comTeto = Math.min(semTeto, teto);
+    let taxa = comTeto - exp / 48, total48 = taxa * 48;
+    caixa.innerHTML = `
+        ${exemplo ? '<div class="cond-nota">Exemplo com <strong>30 kg</strong>. Digite o peso no topo para fazer a conta do seu paciente.</div>' : ''}
+        <ol class="cadh-passos">
+            <li><span class="cadh-num">1</span><div><strong>Déficit</strong> (o que já perdeu) = % × peso × 10<br>${d} × ${kg} × 10 = <strong>${f(deficit)} mL</strong></div></li>
+            <li><span class="cadh-num">2</span><div><strong>Manutenção de 48 h</strong> (Holliday-Segar 4-2-1)<br>${manConta} = ${f(man)} mL/h × 48 h = <strong>${f(man48)} mL</strong></div></li>
+            <li><span class="cadh-num">3</span><div><strong>Expansão</strong> (já entrou, descontar)<br>${cadHidEstado.expMlKg} × ${kg} = <strong>− ${f(exp)} mL</strong></div></li>
+        </ol>
+        <div class="cadh-resultado">${semTeto > teto
+            ? `<div>Pela conta: (${f(deficit)} + ${f(man48)}) ÷ 48 = ${f(semTeto)} mL/h, <strong>acima do teto de ${f(teto)} mL/h</strong> (2 × manutenção)</div>
+               <div class="cadh-taxa">Usar o teto: ${f(teto)} − (${f(exp)} ÷ 48) = <strong>${f(taxa)} mL/h</strong></div>`
+            : `<div>Total em 48 h: ${f(deficit)} + ${f(man48)} − ${f(exp)} = <strong>${f(total48)} mL</strong></div>
+               <div class="cadh-taxa">÷ 48 h = <strong>${f(taxa)} mL/h</strong></div>`}
+        </div>
+        ${semTeto > teto ? `<div class="cond-nota">⚠️ O déficit foi limitado para a velocidade não passar de 2 × a manutenção. Não repor a diurese; descontar o que beber.</div>` : `<div class="cond-nota">Teto de segurança: até 2 × a manutenção (${f(teto)} mL/h). Não repor a diurese; descontar o que beber.</div>`}`;
+}
+['pesoInput'].forEach(id => document.getElementById(id)?.addEventListener('input', () => { if (document.getElementById('cadh')) atualizarCadHidratacao(); }));
+
 registrarConduta({
     id: "cetoacidose",
     nome: "Cetoacidose Diabética (CAD)",
@@ -302,6 +346,7 @@ registrarConduta({
                         "<strong>Não repor a diurese.</strong> Descontar o que beber. Total de até 2 x a manutenção.",
                         "Na que não sobe enquanto a glicemia cai: aumentar o sódio do soro e vigiar edema cerebral."
                     ],
+                    ferramenta: "ferramentaCadHidratacao",
                     remedios: ["cad_hidratacao"]
                 },
                 {
