@@ -516,6 +516,7 @@ registrarConduta({
         }
     ],
 
+    citacoes: { "AAP": 0, "Kemper": 0, "Cochrane": 2 }, // sigla no texto → fonte (índice em fontes)
     fontes: [
         "Kemper AR, Newman TB, Slaughter JL, et al. Clinical Practice Guideline Revision: Management of Hyperbilirubinemia in the Newborn Infant 35 or More Weeks of Gestation. Pediatrics. 2022;150(3):e2022058859. doi:10.1542/peds.2022-058859 (limiares das Tabelas Suplementares 1 a 4).",
         "Slaughter JL, Kemper AR, Newman TB. Technical Report: Diagnosis and Management of Hyperbilirubinemia in the Newborn Infant 35 or More Weeks of Gestation. Pediatrics. 2022;150(3):e2022058865. doi:10.1542/peds.2022-058865.",

@@ -287,6 +287,7 @@ registrarConduta({
         }
     ],
 
+    citacoes: { "SBP": 0, "Einstein": 1 }, // sigla no texto → fonte (índice em fontes)
     fontes: [
         "Sociedade Brasileira de Pediatria — Departamento de Emergências. Guia Prático de Conduta nº 1: Crupe viral e bacteriano (janeiro de 2017).",
         "Hospital Israelita Albert Einstein. Guia do Episódio de Cuidado: Laringite em crianças e adolescentes (CPTW176.2, aprovado em 08/02/2022)."

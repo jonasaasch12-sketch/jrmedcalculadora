@@ -249,6 +249,7 @@ registrarConduta({
         }
     ],
 
+    citacoes: { "SBP": 0, "Einstein": 1, "WAO": 2 }, // sigla no texto → fonte (índice em fontes)
     fontes: [
         "Sociedade Brasileira de Pediatria — Departamento Científico de Alergia. Guia Prático de Atualização nº 6: Anafilaxia: atualização 2021 (31/05/2021).",
         "Hospital Israelita Albert Einstein. Guia do Episódio de Cuidado: Anafilaxia (CPTW58.3, revisão 08/08/2023).",

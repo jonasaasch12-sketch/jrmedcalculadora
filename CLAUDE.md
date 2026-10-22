@@ -74,6 +74,9 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
   Quando o Dr. Jonas escolhe a dose do card (ex.: salbutamol peso/2, magnésio do serviço),
   a conduta passa a usar o card.
 - Texto em português, técnico; fontes no final.
+- Fontes numeradas e **citações clicáveis** (pedido do Dr. Jonas): `citacoes: { "SPP": 0, "AAP": [0, 1] }` no arquivo da conduta
+  (sigla ou trecho do texto → índice em `fontes`). O texto vira link com o número; o clique rola até a fonte e a destaca
+  (com "↩ voltar ao texto"). Fonte nova: acrescentar a sigla em `citacoes`. Não linka dentro de cards, ferramentas e botões.
 - Categoria ou seção da Prescrição ligada a uma conduta: `conduta: "<id>"` (e `condutaNome` opcional) no menu.js põe o botão
   "📖 Conduta passo a passo" na tarja/título, que abre a conduta já no bloco "Condução..." (só onde a aba Condutas existe).
 - **Condutas ficam só no teste** até o Dr. Jonas liberar: `CONDUTAS_LIBERADAS = false` em

@@ -145,10 +145,70 @@ function abrirConduta(id) {
             </details>`;
         });
     });
-    html += `<div class="cond-fonte"><strong>Fontes:</strong><ul>${c.fontes.map(f => `<li>${escCond(f)}</li>`).join('')}</ul><strong>Revisão:</strong> ${escCond(c.revisao)}</div>`;
-    document.getElementById('area-condutas').innerHTML = html;
+    html += `<div class="cond-fonte" id="cond-fontes"><strong>Fontes:</strong><ol>${c.fontes.map((f, k) => `<li id="cond-fonte-${k}"><span class="cond-fonte-txt">${escCond(f)}</span><button type="button" class="cond-fonte-voltar" onclick="voltarDaFonte()">↩ voltar ao texto</button></li>`).join('')}</ol><strong>Revisão:</strong> ${escCond(c.revisao)}</div>`;
+    let area = document.getElementById('area-condutas');
+    area.innerHTML = html;
+    linkarCitacoes(area, c);
     atualizarDosesConduta();
     window.scrollTo(0, 0);
+}
+
+// ===== Citações no texto → fonte numerada no fim =====
+// Cada conduta pode ter citacoes: { "SPP": 0, "IMIP": 1, "AAP": [0, 1] } (sigla ou trecho → índice(s) em fontes).
+// O texto que cita vira um link com o número; o clique rola até a fonte e a destaca.
+// Não mexe no texto das receitas (cards), nas ferramentas, nos botões e nos campos.
+let citacaoOrigem = null;
+function linkarCitacoes(area, c) {
+    let mapa = c.citacoes;
+    if (!mapa || !c.fontes) return;
+    let chaves = Object.keys(mapa).sort((x, y) => y.length - x.length);
+    if (!chaves.length) return;
+    let esc = t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    let re = new RegExp('(?<![\\wÀ-ú])(' + chaves.map(esc).join('|') + ')(?![\\wÀ-ú])', 'g');
+    let pular = 'a, button, input, select, textarea, label, script, .cond-fonte, .cond-med, .cond-indice, .cond-voltar, .cond-acoes, .cadh, .qm, [data-texto], [data-dose]';
+    let walker = document.createTreeWalker(area, NodeFilter.SHOW_TEXT, {
+        acceptNode: n => (!n.nodeValue.trim() || n.parentElement.closest(pular)) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
+    });
+    let nos = [];
+    while (walker.nextNode()) nos.push(walker.currentNode);
+    nos.forEach(no => {
+        let txt = no.nodeValue;
+        re.lastIndex = 0;
+        if (!re.test(txt)) return;
+        re.lastIndex = 0;
+        let frag = document.createDocumentFragment(), ult = 0, m;
+        while ((m = re.exec(txt))) {
+            let idx = [].concat(mapa[m[1]]).filter(k => c.fontes[k] !== undefined);
+            if (!idx.length) continue;
+            frag.appendChild(document.createTextNode(txt.slice(ult, m.index)));
+            let a = document.createElement('a');
+            a.href = '#cond-fontes';
+            a.className = 'cond-cit';
+            a.dataset.fonte = idx.join(',');
+            a.title = idx.map(k => c.fontes[k]).join(' | ');
+            a.innerHTML = `${escCond(m[1])}<sup>${idx.map(k => k + 1).join(',')}</sup>`;
+            a.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); irParaFonte(a); });
+            frag.appendChild(a);
+            ult = m.index + m[1].length;
+        }
+        frag.appendChild(document.createTextNode(txt.slice(ult)));
+        no.parentNode.replaceChild(frag, no);
+    });
+}
+function irParaFonte(link) {
+    citacaoOrigem = link;
+    document.querySelectorAll('#cond-fontes li.destacada').forEach(li => li.classList.remove('destacada'));
+    let alvos = link.dataset.fonte.split(',').map(k => document.getElementById('cond-fonte-' + k)).filter(Boolean);
+    alvos.forEach(li => { li.classList.remove('destacada'); void li.offsetWidth; li.classList.add('destacada'); });
+    if (alvos[0]) alvos[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+function voltarDaFonte() {
+    document.querySelectorAll('#cond-fontes li.destacada').forEach(li => li.classList.remove('destacada'));
+    if (citacaoOrigem && citacaoOrigem.isConnected) {
+        citacaoOrigem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        citacaoOrigem.classList.add('piscando');
+        let el = citacaoOrigem; setTimeout(() => el.classList.remove('piscando'), 1600);
+    }
 }
 
 function abrirTodasSecoes(abrir) {

@@ -268,6 +268,7 @@ registrarConduta({
         }
     ],
 
+    citacoes: { "SBP": 0 }, // sigla no texto → fonte (índice em fontes)
     fontes: [
         "Sociedade Brasileira de Pediatria — Departamentos Científicos de Gastroenterologia e de Infectologia. Guia Prático de Atualização nº 7: Parasitoses intestinais — diagnóstico e tratamento (novembro de 2020)."
     ],
