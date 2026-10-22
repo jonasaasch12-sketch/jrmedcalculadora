@@ -3,7 +3,7 @@
 .aba-modo { flex: 1; max-width: 200px; padding: 8px 12px; border: 1px solid var(--border); background: var(--surface); color: var(--text-muted); border-radius: 8px; font-weight: 800; font-size: 13px; cursor: pointer; }
 .aba-modo.ativa { background: var(--primary); border-color: var(--primary); color: #fff; box-shadow: 0 2px 8px rgba(2,132,199,.25); }
 
-#area-condutas { max-width: 900px; margin: 0 auto; padding: 14px 16px 40px; }
+#area-condutas { max-width: 1400px; margin: 0 auto; padding: 14px 16px 40px; }
 .cond-intro { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
 .cond-intro strong { color: var(--text-main); }
 .cond-vazio { text-align: center; color: var(--text-muted); padding: 30px; }
@@ -64,16 +64,16 @@ details.cond-secao[open] > summary { border-bottom: 1px solid var(--border); }
 .cond-grupo:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
 .cond-grupo-nome { font-weight: 800; font-size: 14px; margin-bottom: 6px; }
 .cond-meds-titulo { font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .4px; color: var(--text-muted); margin: 10px 0 6px; }
-.cond-meds { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 8px; }
-.cond-med { border: 1px solid var(--border); border-left: 4px solid var(--cor-cat); border-radius: 8px; padding: 8px 10px; background: var(--bg-app); display: flex; flex-direction: column; gap: 6px; }
+.cond-meds { display: grid; grid-template-columns: 1fr; gap: 10px; } /* um card por linha, largura toda (pedido do Dr. Jonas) */
+.cond-med { border: 1px solid var(--border); border-left: 4px solid var(--cor-cat); border-radius: 10px; padding: 12px 14px; background: var(--bg-app); display: flex; flex-direction: column; gap: 6px; }
 .cond-med-topo { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
-.cond-med-nome { font-weight: 800; font-size: 13px; }
-.cond-med-apres { font-size: 11.5px; color: var(--text-muted); }
-.cond-med-dose { background: var(--primary); color: #fff; font-weight: 800; font-size: 12px; border-radius: 6px; padding: 3px 8px; white-space: nowrap; }
+.cond-med-nome { font-weight: 800; font-size: 15px; }
+.cond-med-apres { font-size: 13px; color: var(--text-muted); }
+.cond-med-dose { background: var(--primary); color: #fff; font-weight: 800; font-size: 14px; border-radius: 8px; padding: 5px 12px; white-space: nowrap; }
 .cond-med.sem-peso .cond-med-dose { background: #94a3b8; }
-.cond-med-texto { font-family: ui-monospace, Consolas, monospace; font-size: 11px; white-space: pre-wrap; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; max-height: 130px; overflow: auto; }
+.cond-med-texto { font-family: ui-monospace, Consolas, monospace; font-size: 13px; line-height: 1.5; white-space: pre-wrap; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
 .cond-med-botoes { display: flex; gap: 6px; }
-.cond-med-botoes button { flex: 1; padding: 6px; border-radius: 6px; font-weight: 800; font-size: 12px; cursor: pointer; }
+.cond-med-botoes button { flex: 1; padding: 9px; border-radius: 8px; font-weight: 800; font-size: 13.5px; cursor: pointer; }
 .cond-btn-receita { background: #16a34a; color: #fff; border: 1px solid #16a34a; }
 .cond-btn-receita.adicionado { background: #15803d; }
 .cond-btn-copiar { background: var(--surface); color: var(--primary); border: 1px solid #bae6fd; }
@@ -175,3 +175,37 @@ html[data-theme="dark"] .qm-hid-titulo { color: #7dd3fc; }
 .ict-l-foto { background: #d97706; } .ict-l-esc { background: repeating-linear-gradient(90deg, #ea580c 0 5px, transparent 5px 8px); } .ict-l-ext { background: #dc2626; }
 .ict-l-pac { width: 10px; height: 10px; border-radius: 50%; background: #0b5cad; }
 html[data-theme="dark"] .ict-g-pac { fill: #4ea8f0; stroke: #0a0f1a; }
+
+/* CAD: "Como chegar ao cálculo" da hidratação de 48 h */
+.cadh { margin-top: 12px; padding: 12px 14px; border-radius: 10px; border: 1px solid color-mix(in srgb, var(--cor-cat) 35%, var(--border)); background: color-mix(in srgb, var(--cor-cat) 5%, var(--surface)); }
+.cadh-titulo { font-weight: 800; font-size: 15px; margin-bottom: 8px; }
+.cadh-linha { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 6px 0; }
+.cadh-rot { font-size: 12.5px; font-weight: 700; color: var(--text-muted); min-width: 120px; }
+.cadh-opcoes { display: flex; flex-wrap: wrap; gap: 6px; }
+.cadh-passos { list-style: none; padding: 0; margin: 10px 0; display: grid; gap: 8px; }
+.cadh-passos li { display: flex; gap: 10px; align-items: flex-start; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 14px; line-height: 1.5; }
+.cadh-num { flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--cor-cat); color: #fff; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; }
+.cadh-resultado { border-radius: 8px; padding: 10px 12px; background: color-mix(in srgb, var(--cor-cat) 12%, var(--surface)); font-size: 14px; }
+.cadh-taxa { font-size: 18px; margin-top: 2px; color: var(--cor-cat); }
+.cadg-sub { font-weight: 600; font-size: 12.5px; color: var(--text-muted); }
+.cadg-regra { font-size: 13.5px; border-left: 4px solid #dc2626; background: color-mix(in srgb, #dc2626 7%, var(--surface)); padding: 8px 10px; border-radius: 6px; margin-bottom: 8px; }
+.cadg-campos { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin: 8px 0; }
+.cadg-campos input { font-size: 18px; font-weight: 700; }
+.cadg-acao { border: 2px solid var(--cor-acao); background: color-mix(in srgb, var(--cor-acao) 9%, var(--surface)); border-radius: 10px; padding: 10px 12px; margin: 10px 0; }
+.cadg-acao-tit { font-weight: 900; font-size: 17px; color: var(--cor-acao); margin-bottom: 4px; }
+.cadg-acao ul { margin: 0; padding-left: 18px; font-size: 14.5px; line-height: 1.55; }
+.cadg tr.cadg-atual th, .cadg tr.cadg-atual td { background: color-mix(in srgb, var(--cor-cat) 14%, var(--surface)); font-weight: 700; }
+.cadg .cond-tabela { min-width: 0; font-size: 14px; }
+.cadg .cond-tabela td { white-space: nowrap; }
+
+/* Citações: link no texto → fonte numerada destacada */
+.cond-fonte ol { margin: 4px 0 8px; padding-left: 22px; }
+.cond-fonte li { padding: 4px 6px; border-radius: 6px; margin: 2px 0; transition: background .3s; scroll-margin: 120px; }
+.cond-fonte li.destacada { background: color-mix(in srgb, #f59e0b 22%, var(--surface)); color: var(--text-main); outline: 2px solid #f59e0b; animation: cond-fonte-pisca 1.2s ease 2; }
+.cond-fonte-voltar { display: none; margin-left: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--primary); border-radius: 12px; padding: 2px 10px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.cond-fonte li.destacada .cond-fonte-voltar { display: inline-block; }
+@keyframes cond-fonte-pisca { 50% { background: color-mix(in srgb, #f59e0b 45%, var(--surface)); } }
+a.cond-cit { color: inherit; text-decoration: underline dotted color-mix(in srgb, var(--primary) 70%, transparent); text-underline-offset: 2px; cursor: pointer; }
+a.cond-cit sup { color: var(--primary); font-weight: 800; font-size: .7em; margin-left: 1px; }
+a.cond-cit:hover { color: var(--primary); }
+a.cond-cit.piscando { background: color-mix(in srgb, #f59e0b 35%, transparent); border-radius: 4px; }
