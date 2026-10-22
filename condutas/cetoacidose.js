@@ -377,7 +377,7 @@ registrarConduta({
                     itens: [
                         "A CAD é definida pela presença <strong>simultânea</strong> de:",
                         "<strong>Glicemia > 200 mg/dL</strong>;",
-                        "<strong>pH venoso < 7,3</strong> e/ou <strong>bicarbonato < 15 mEq/L</strong> (ISPAD 2022: bicarbonato < 18);",
+                        "<strong>pH venoso < 7,3</strong> e/ou <strong>bicarbonato < 18 mEq/L</strong> (ISPAD 2022; a SPP 2019 usava < 15);",
                         "<strong>Cetonemia ≥ 3 mmol/L</strong> (beta-hidroxibutirato) ou, na impossibilidade, <strong>cetonúria ≥ 2+</strong>.",
                         "<strong>Cetonemia capilar é preferível à cetonúria</strong> (mais acurada para o diagnóstico e o seguimento). Cetonemia de 1,5 a 3 mmol/L: risco aumentado, confirmar com gasometria e ânion gap (> 12).",
                         "A glicemia pode ser < 200 mg/dL (CAD euglicêmica), principalmente em quem já usa insulina.",
@@ -518,28 +518,41 @@ registrarConduta({
                         instrucao: "Toque no pH venoso e/ou no bicarbonato (basta um; vale o pior).",
                         itens: [
                             { nome: "pH venoso", opcoes: [[0, "≥ 7,30", "—"], [1, "7,20 a 7,29", "L"], [2, "7,10 a 7,19", "M"], [3, "< 7,10", "G"]] },
-                            { nome: "Bicarbonato (mEq/L)", opcoes: [[0, "≥ 15", "—"], [1, "10 a 14,9", "L"], [2, "5 a 9,9", "M"], [3, "< 5", "G"]] }
+                            { nome: "Bicarbonato (mEq/L)", opcoes: [[0, "≥ 18", "—"], [1, "10 a 17,9", "L"], [2, "5 a 9,9", "M"], [3, "< 5", "G"]] }
                         ],
                         classificar: (valores) => {
                             let g = Math.max(...valores);
                             if (g === 3) return { num: "G", rotulo: "CAD GRAVE", cor: "#dc2626", texto: "Desidratação ~7 a 10%. Indicação de UTI pediátrica." };
                             if (g === 2) return { num: "M", rotulo: "CAD MODERADA", cor: "#d97706", texto: "Desidratação ~5 a 7%. Tratamento EV com monitorização de 1/1h." };
                             if (g === 1) return { num: "L", rotulo: "CAD LEVE", cor: "#16a34a", texto: "Se tolera via oral e sem vômitos: pode ser insulina SC + hidratação oral, com monitorização." };
-                            return { num: "—", rotulo: "Sem critério de acidose", cor: "#64748b", texto: "pH ≥ 7,30 e bicarbonato ≥ 15: não preenche o critério de CAD." };
+                            return { num: "—", rotulo: "Sem critério de acidose", cor: "#64748b", texto: "pH ≥ 7,30 e bicarbonato ≥ 18: não preenche o critério de CAD." };
                         },
-                        nota: "Fonte: SPP 2019 / ISPAD (leve: pH < 7,3 ou HCO₃ < 15; moderada: pH < 7,2 ou HCO₃ < 10; grave: pH < 7,1 ou HCO₃ < 5)."
+                        nota: "Fonte: ISPAD 2022, Einstein e HC-UFTM (leve: pH < 7,3 ou HCO₃ < 18; moderada: pH < 7,2 ou HCO₃ < 10; grave: pH < 7,1 ou HCO₃ < 5). A SPP 2019 usava HCO₃ < 15 na CAD leve. A glicemia não entra na gravidade."
                     },
                     grupos: [
                         {
-                            nome: "🏥 Critérios para UTI pediátrica",
-                            itens: [
-                                "Choque ou instabilidade hemodinâmica.",
-                                "Alteração do estado de consciência (Glasgow ≤ 13).",
-                                "CAD grave.",
-                                "Tempo de evolução prolongado.",
-                                "Risco aumentado de edema cerebral: <strong>≤ 5 anos</strong>, pCO₂ muito baixa, ureia muito alta.",
-                                "Tratar num centro com experiência em CAD pediátrica; se não for possível, contatar um centro de referência e transferir após estabilizar."
-                            ]
+                            nome: "🏥 Indica UTI pediátrica? (ISPAD 2022)",
+                            escore: {
+                                id: "uti_cad",
+                                unidade: "sinais",
+                                checklist: true,
+                                instrucao: "Toque nos sinais presentes. Basta um para considerar UTI, mesmo com CAD leve ou moderada.",
+                                itens: [
+                                    { nome: "CAD grave (clínica)", opcoes: [[1, "Circulação comprometida / choque", "!"]] },
+                                    { nome: "", opcoes: [[1, "Consciência deprimida (Glasgow ≤ 13)", "!"]] },
+                                    { nome: "", opcoes: [[1, "Sintomas de longa duração", "!"]] },
+                                    { nome: "Risco de edema cerebral", opcoes: [[1, "Idade < 5 anos", "!"]] },
+                                    { nome: "", opcoes: [[1, "pH < 7,1", "!"]] },
+                                    { nome: "", opcoes: [[1, "pCO₂ < 21 mmHg", "!"]] },
+                                    { nome: "", opcoes: [[1, "Ureia > 43 mg/dL (BUN > 20 mg/dL)", "!"]] }
+                                ],
+                                classificar: (valores) => {
+                                    let n = valores.filter(v => v === 1).length;
+                                    if (n) return { num: n, rotulo: "CONSIDERAR UTI PEDIÁTRICA", cor: "#dc2626", texto: "Ou unidade com recursos e supervisão equivalentes. Pacientes de risco de edema cerebral: manitol ou NaCl 3% com a dose calculada à beira do leito." };
+                                    return { num: 0, rotulo: "Nenhum sinal marcado", cor: "#64748b", texto: "Seguir a gravidade pelo pH/bicarbonato acima e reavaliar de 1/1h." };
+                                },
+                                nota: "Fonte: ISPAD 2022, seção 5 (CAD grave: sintomas de longa duração, circulação comprometida ou consciência deprimida; risco de edema cerebral: < 5 anos, pH < 7,1, pCO₂ < 21 mmHg, BUN > 20 mg/dL). Glasgow ≤ 13: SPP. Ureia = BUN × 2,14. Tratar num centro com experiência em CAD pediátrica; se não for possível, contatar um centro de referência e transferir após estabilizar."
+                            }
                         },
                         {
                             nome: "⚠️ Indicadores de risco de complicação (J Pediatr 2001)",
