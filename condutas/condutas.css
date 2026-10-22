@@ -217,7 +217,8 @@ a.cond-cit.piscando { background: color-mix(in srgb, #f59e0b 35%, transparent); 
 .sy-total small { display: block; font-size: 12.5px; color: var(--text-muted); font-weight: 700; margin-top: 2px; }
 .sy-bags { display: flex; align-items: flex-start; justify-content: center; gap: 18px; margin: 12px 0 0; }
 .sy-bag { width: 110px; text-align: center; }
-.sy-bag-c { height: 90px; border-radius: 12px 12px 18px 18px; border: 3px solid var(--c); background: linear-gradient(to top, color-mix(in srgb, var(--c) 30%, var(--surface)) var(--n), var(--surface) var(--n)); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 26px; color: var(--c); }
+.sy-bag-c { height: 90px; border-radius: 12px 12px 18px 18px; border: 3px solid var(--c); background: linear-gradient(to top, color-mix(in srgb, var(--c) 30%, var(--surface)) var(--n), var(--surface) var(--n)); display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 900; font-size: 30px; line-height: 1; color: var(--c); }
+.sy-bag-c small { font-size: 13px; font-weight: 800; letter-spacing: .02em; margin-bottom: 4px; }
 .sy-bag-l { font-size: 12.5px; font-weight: 800; margin-top: 4px; min-height: 32px; }
 .sy-bag-v { font-size: 15px; font-weight: 900; }
 .sy-y { display: block; width: 240px; max-width: 100%; height: auto; margin: 0 auto -2px; }
