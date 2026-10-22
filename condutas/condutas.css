@@ -244,3 +244,13 @@ html[data-theme="dark"] .sy-fase.on { border-color: #e2e8f0; box-shadow: 0 0 0 2
 .sy-kv { background: color-mix(in srgb, #16a34a 10%, var(--surface)); border-color: #16a34a !important; }
 .sy-ka { background: color-mix(in srgb, #d97706 10%, var(--surface)); border-color: #d97706 !important; }
 .sy-kr { background: color-mix(in srgb, #dc2626 10%, var(--surface)); border-color: #dc2626 !important; }
+
+/* CAD passo 8: transição para insulina SC */
+.tr { margin-top: 12px; border: 2px solid #16a34a; border-radius: 14px; background: color-mix(in srgb, #16a34a 5%, var(--surface)); padding: 14px; }
+.tr-crit { font-size: 13.5px; background: var(--surface); border: 1px dashed var(--border-strong, #94a3b8); border-radius: 8px; padding: 8px 10px; margin: 8px 0 10px; }
+.tr-linha { display: grid; gap: 8px; }
+.tr-passo { display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: start; background: var(--surface); border: 1px solid var(--border); border-left: 5px solid var(--c); border-radius: 10px; padding: 8px 10px; }
+.tr-n { width: 30px; height: 30px; border-radius: 8px; background: color-mix(in srgb, var(--c) 14%, var(--surface)); font-size: 17px; display: flex; align-items: center; justify-content: center; }
+.tr-passo b { display: block; font-size: 14.5px; } .tr-passo span { display: block; font-size: 13.5px; color: var(--text-soft, inherit); }
+.tr .cond-med-botoes { margin-top: 8px; }
+.tr .tr-tab { min-width: 0; font-size: 14px; max-width: 420px; }
