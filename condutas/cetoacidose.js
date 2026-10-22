@@ -234,7 +234,14 @@ function atualizarCadSoroY() {
             <div class="sy-bag"><div class="sy-bag-c" style="--c:#d97706;--n:${c * 10}%">A</div><div class="sy-bag-l">com glicose (SG 10%)</div><div class="sy-bag-v" style="color:#d97706">${c === 0 ? 'parada' : r(mix.a) + ' mL/h'}</div></div>
             <div class="sy-bag"><div class="sy-bag-c" style="--c:#2563eb;--n:${100 - c * 10}%">B</div><div class="sy-bag-l">sem glicose (AD)</div><div class="sy-bag-v" style="color:#2563eb">${c >= 10 ? 'parada' : r(mix.b) + ' mL/h'}</div></div>
         </div>
-        <div class="sy-y">↘ ↙ em Y → paciente</div>
+        <svg class="sy-y" viewBox="0 0 240 96" role="img" aria-label="A e B se juntam em Y e vão para o paciente">
+            <defs><marker id="sy-ponta" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="2.8" markerHeight="2.8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker></defs>
+            <path d="M56 2 C56 34 120 30 120 52" fill="none" stroke="#d97706" stroke-width="8" stroke-linecap="round" opacity="${c === 0 ? .3 : 1}"/>
+            <path d="M184 2 C184 34 120 30 120 52" fill="none" stroke="#2563eb" stroke-width="8" stroke-linecap="round" opacity="${c >= 10 ? .3 : 1}"/>
+            <line x1="120" y1="50" x2="120" y2="82" stroke="#334155" stroke-width="8" stroke-linecap="round" marker-end="url(#sy-ponta)"/>
+            <text x="146" y="62" class="sy-y-letra">em Y</text>
+        </svg>
+        <div class="sy-paciente">🧒 Paciente <b>${r(t)} mL/h</b></div>
         <div class="sy-fases-tit">👆 Toque no momento atual:</div>
         <div class="sy-fases">
             ${fase(0, 'Início (HGT > 300)', 'só B')}
