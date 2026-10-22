@@ -231,8 +231,8 @@ function atualizarCadSoroY() {
         <div class="sy-total">${r(t)} mL/h <small>VELOCIDADE TOTAL · ${String(p).replace('.', ',')} kg · desidratação ${cadHidEstado.pct}%${exp ? ` · expansão ${exp} mL/kg descontada` : ''} · não muda até o fim</small></div>
         <div class="sy-agora">Agora: glicose ${pc(c)}</div>
         <div class="sy-bags">
-            <div class="sy-bag"><div class="sy-bag-c" style="--c:#d97706;--n:${c * 10}%">A</div><div class="sy-bag-l">com glicose (SG 10%)</div><div class="sy-bag-v" style="color:#d97706">${c === 0 ? 'parada' : r(mix.a) + ' mL/h'}</div></div>
-            <div class="sy-bag"><div class="sy-bag-c" style="--c:#2563eb;--n:${100 - c * 10}%">B</div><div class="sy-bag-l">sem glicose (AD)</div><div class="sy-bag-v" style="color:#2563eb">${c >= 10 ? 'parada' : r(mix.b) + ' mL/h'}</div></div>
+            <div class="sy-bag"><div class="sy-bag-c" style="--c:#d97706;--n:${c * 10}%"><small>Solução</small>A</div><div class="sy-bag-l">com glicose (SG 10%)</div><div class="sy-bag-v" style="color:#d97706">${c === 0 ? 'parada' : r(mix.a) + ' mL/h'}</div></div>
+            <div class="sy-bag"><div class="sy-bag-c" style="--c:#2563eb;--n:${100 - c * 10}%"><small>Solução</small>B</div><div class="sy-bag-l">sem glicose (AD)</div><div class="sy-bag-v" style="color:#2563eb">${c >= 10 ? 'parada' : r(mix.b) + ' mL/h'}</div></div>
         </div>
         <svg class="sy-y" viewBox="0 0 240 96" role="img" aria-label="A e B se juntam em Y e vão para o paciente">
             <defs><marker id="sy-ponta" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="2.8" markerHeight="2.8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker></defs>
