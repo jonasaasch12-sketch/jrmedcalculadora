@@ -487,7 +487,7 @@ registrarConduta({
                         "Acidose parcialmente compensada, ainda sem critério de suspensão: <strong>0,05 U/kg/h + glicose</strong>.",
                         "<strong>CAD leve</strong>, sem vômitos e aceitando VO: pode ser insulina SC + hidratação oral; sem melhora, voltar para este esquema."
                     ],
-                    nota: "<strong>Preparo (IMIP):</strong> insulina regular 100 U/mL 1 mL + SF 0,9% 100 mL (1 U/mL: 0,05 a 0,1 mL/kg/h). Desprezar 50 mL no equipo. Trocar o frasco de 6/6h.",
+                    nota: "<strong>Preparo:</strong> insulina regular 1 mL (100 unidades) + SF 0,9% 99 mL = 1 U/mL. Trocar o frasco a cada 6 horas.",
                     remedios: ["insulina_cad"]
                 },
                 {
