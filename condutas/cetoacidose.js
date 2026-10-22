@@ -18,7 +18,14 @@ function ferramentaCadHidratacao() {
         <div id="cadh-conta"></div>
     </div>`;
 }
-function cadHidEscolher(campo, v) { cadHidEstado[campo] = v; atualizarCadHidratacao(); }
+function cadHidEscolher(campo, v) { cadHidEstado[campo] = v; atualizarCadHidratacao(); if (document.getElementById('cadg')) { cadGliEstado.vel = null; atualizarCadGlicose(); } }
+// Velocidade total do passo 4 (mL/h) com as escolhas do quadro "Como chegar ao cálculo". null = sem peso.
+function cadTaxaPasso4() {
+    let p = parseFloat((document.getElementById('pesoInput') || {}).value);
+    if (!(p > 0)) return null;
+    let man = p <= 10 ? p * 4 : p <= 20 ? 40 + (p - 10) * 2 : 60 + (p - 20);
+    return Math.min(man + cadHidEstado.pct * p * 10 / 48, man * 2) - cadHidEstado.expMlKg * p / 48;
+}
 function atualizarCadHidratacao() {
     let caixa = document.getElementById('cadh-conta');
     if (!caixa) return;
@@ -48,7 +55,124 @@ function atualizarCadHidratacao() {
         </div>
         ${semTeto > teto ? `<div class="cond-nota">⚠️ O déficit foi limitado para a velocidade não passar de 2 × a manutenção. Não repor a diurese; descontar o que beber.</div>` : `<div class="cond-nota">Teto de segurança: até 2 × a manutenção (${f(teto)} mL/h). Não repor a diurese; descontar o que beber.</div>`}`;
 }
-['pesoInput'].forEach(id => document.getElementById(id)?.addEventListener('input', () => { if (document.getElementById('cadh')) atualizarCadHidratacao(); }));
+['pesoInput'].forEach(id => document.getElementById(id)?.addEventListener('input', () => {
+    if (document.getElementById('cadh')) atualizarCadHidratacao();
+    if (document.getElementById('cadg')) { cadGliEstado.vel = null; atualizarCadGlicose(); }
+}));
+
+// ===== Passo 6: assistente "Qual glicose no soro agora?" =====
+// Só aplica as regras já escritas na conduta (SPP/IMIP): começa sem glicose (só B); HGT ≤ 300 ou queda > 90 mg/dL/h
+// → 5%; CAD não resolvida e HGT ainda caindo → 7,5% → 10% (→ 12,5% SPP); HGT < 60 → glicose +25%; nunca baixar a
+// insulina por causa da glicose enquanto houver acidose. A velocidade total (passo 4) não muda: só a proporção A/B.
+let cadGliEstado = { atual: 0, acidose: true, vel: null };
+const CAD_DEGRAUS = [0, 5, 7.5, 10]; // a escada da conduta (2,5% fica só na tabela, como degrau opcional)
+function ferramentaCadGlicose() {
+    setTimeout(atualizarCadGlicose, 0);
+    return `<div class="cadh cadg" id="cadg">
+        <div class="cadh-titulo">🩸 Qual glicose no soro agora? <span class="cadg-sub">(a cada HGT de 1/1h)</span></div>
+        <div class="cadg-regra">A velocidade total <strong>não muda</strong>: só a proporção entre A e B. <strong>Não diminuir a insulina</strong> por causa da glicose enquanto houver acidose.</div>
+        <div class="cadg-campos">
+            <label class="ict-campo"><span>HGT agora</span><input type="number" inputmode="numeric" id="cadgHgt" placeholder="mg/dL" oninput="atualizarCadGlicose()"></label>
+            <label class="ict-campo"><span>HGT de 1 h atrás</span><input type="number" inputmode="numeric" id="cadgAnt" placeholder="mg/dL (opcional)" oninput="atualizarCadGlicose()"></label>
+            <label class="ict-campo"><span>Soro total (mL/h)</span><input type="number" inputmode="decimal" id="cadgVel" placeholder="passo 4" oninput="cadGliEstado.vel = this.value; atualizarCadGlicose()"></label>
+        </div>
+        <div class="cadh-linha"><span class="cadh-rot">Glicose que está correndo</span><span class="cadh-opcoes" id="cadg-atual"></span></div>
+        <div class="cadh-linha"><span class="cadh-rot">Acidose ainda presente?</span><span class="cadh-opcoes" id="cadg-acid"></span></div>
+        <div id="cadg-res"></div>
+        <div id="cadg-tabela"></div>
+    </div>`;
+}
+function cadGliEscolher(campo, v) { cadGliEstado[campo] = v; atualizarCadGlicose(); }
+function cadAB(conc, vel) {
+    let fA = conc / 10, f = n => Math.round(n).toLocaleString('pt-BR');
+    if (!(vel > 0)) return conc === 0 ? 'só B' : conc >= 10 ? 'só A' : `A ${fA * 100}% + B ${100 - fA * 100}% do volume`;
+    if (conc === 0) return `<strong>B ${f(vel)} mL/h</strong> (A parada)`;
+    if (conc >= 10) return `<strong>A ${f(vel)} mL/h</strong> (B parada)`;
+    return `<strong>A ${f(vel * fA)} mL/h + B ${f(vel * (1 - fA))} mL/h</strong>`;
+}
+function fmtConc(c) { return String(+c.toFixed(2)).replace('.', ',') + '%'; }
+function atualizarCadGlicose() {
+    let res = document.getElementById('cadg-res');
+    if (!res) return;
+    let E = cadGliEstado;
+    let bot = (campo, lista, fmt) => lista.map(v => `<button type="button" class="qm-faixa${E[campo] === v ? ' ativa' : ''}" onclick="cadGliEscolher('${campo}', ${JSON.stringify(v)})">${fmt(v)}</button>`).join('');
+    document.getElementById('cadg-atual').innerHTML = bot('atual', [0, 2.5, 5, 7.5, 10], v => v ? fmtConc(v) : '0% (só B)');
+    document.getElementById('cadg-acid').innerHTML = bot('acidose', [true, false], v => v ? 'Sim' : 'Não (pH > 7,30 e HCO₃ > 15)');
+    let velEl = document.getElementById('cadgVel'), auto = cadTaxaPasso4();
+    if (E.vel === null && auto !== null) velEl.value = Math.round(auto);
+    if (E.vel === null && auto === null) velEl.value = '';
+    let vel = parseFloat(velEl.value);
+    let hgt = parseFloat(document.getElementById('cadgHgt').value), ant = parseFloat(document.getElementById('cadgAnt').value);
+    let queda = (hgt > 0 && ant > 0) ? ant - hgt : null;
+    let mistura = ['só B', '¼ A + ¾ B', '½ A + ½ B', '¾ A + ¼ B', 'só A'];
+    let bomba = c => { let fA = c / 10, r = n => Math.round(n); return c === 0 ? `B ${r(vel)}` : c === 10 ? `A ${r(vel)}` : `A ${r(vel * fA)} + B ${r(vel * (1 - fA))}`; };
+    let tab = [0, 2.5, 5, 7.5, 10].map((c, k) => `<tr${c === E.atual ? ' class="cadg-atual"' : ''}><th>${c ? fmtConc(c) : '0%'}</th><td>${mistura[k]}</td>${vel > 0 ? `<td>${bomba(c)}</td>` : ''}</tr>`).join('');
+    document.getElementById('cadg-tabela').innerHTML = `<div class="cond-tabela-wrap"><table class="cond-tabela"><thead><tr><th>Glicose</th><th>Mistura</th>${vel > 0 ? '<th>Bomba (mL/h)</th>' : ''}</tr></thead><tbody>${tab}</tbody></table></div>
+        <div class="cond-nota">2,5% é degrau opcional (não está na escada da SPP). 12,5% (SPP): SG 5% em SF 350 mL + SG 30% 150 mL.${auto === null ? ' Digite o <strong>peso</strong> no topo para o soro total vir do passo 4.' : ''}</div>`;
+    let caixa = (cor, icone, titulo, linhas) => `<div class="cadg-acao" style="--cor-acao:${cor}"><div class="cadg-acao-tit">${icone} ${titulo}</div><ul>${linhas.map(l => `<li>${l}</li>`).join('')}</ul></div>`;
+    let insul = 'Manter a insulina na mesma velocidade.';
+    if (!(hgt > 0)) { res.innerHTML = `<div class="cond-nota">👆 Digite o <strong>HGT agora</strong> (e o de 1 h atrás, se tiver) para ver o que fazer.</div>`; return; }
+    let txtQueda = queda === null ? '' : queda > 0 ? ` Caiu ${Math.round(queda)} mg/dL na última hora.` : ` ${queda < 0 ? 'Subiu' : 'Estável:'} ${Math.round(Math.abs(queda))} mg/dL na última hora.`;
+    // 1) Hipoglicemia
+    if (hgt < 60) {
+        let nova = E.atual > 0 ? E.atual * 1.25 : 5;
+        let linhas = [
+            E.atual > 0 ? `Aumentar a glicose em 25%: de ${fmtConc(E.atual)} para <strong>${fmtConc(Math.min(nova, 12.5))}</strong> = ${nova <= 10 ? cadAB(nova, vel) : '<strong>acima de 10%: usar a solução de 12,5% (SPP)</strong>'}.` : 'Estava sem glicose: <strong>colocar glicose já (5% = ½ A + ½ B)</strong> e avisar o médico.',
+            '<strong>Inconsciente ou convulsionando:</strong> glicose 25% 1 a 2 mL/kg EV (card na seção de hipoglicemia) e depois a glicose +25% do soro.',
+            '<strong>Não desligar a insulina.</strong> Só com a acidose já corrigida: pode reduzir a insulina em 25%.',
+            'Repetir o HGT logo após o ajuste.'
+        ];
+        res.innerHTML = caixa('#dc2626', '🚨', `HIPOGLICEMIA (HGT ${Math.round(hgt)})`, linhas);
+        return;
+    }
+    // 2) Acidose já resolvida
+    if (!E.acidose) {
+        res.innerHTML = caixa('#16a34a', '✅', 'Acidose corrigida: pensar na transição', [
+            'Confirmar <strong>CAD resolvida</strong>: pH > 7,30, HCO₃ > 15 e cetonemia < 1, aceitando via oral.',
+            'Seguir o <strong>passo 8</strong> (insulina SC antes de uma refeição; desligar a EV 15 a 30 min depois).',
+            `Até lá, manter a glicose atual: ${cadAB(E.atual, vel)}.`]);
+        return;
+    }
+    let caindoRapido = queda !== null && queda > 90;
+    // 3) Sem glicose ainda
+    if (E.atual === 0) {
+        if (hgt <= 300 || caindoRapido) {
+            res.innerHTML = caixa('#d97706', '➕', `COLOCAR GLICOSE NO SORO (HGT ${Math.round(hgt)})`, [
+                `Motivo: ${hgt <= 300 ? 'HGT ≤ 300' : 'queda > 90 mg/dL/h'}.${txtQueda}`,
+                `Passar para <strong>5%</strong> = ${cadAB(5, vel)}.`,
+                insul + ' Repetir o HGT em 1 h.']);
+        } else {
+            res.innerHTML = caixa('#2563eb', '⏸️', `MANTER SÓ B (HGT ${Math.round(hgt)})`, [
+                `HGT > 300${queda !== null ? ' e queda ≤ 90 mg/dL/h' : ''}: ainda sem glicose = ${cadAB(0, vel)}.${txtQueda}`,
+                queda === null ? 'Anote o HGT anterior: queda > 90 mg/dL/h também indica colocar glicose.' : 'Esperado: queda de 35 a 90 mg/dL/h.',
+                insul + ' Repetir o HGT em 1 h.']);
+        }
+        return;
+    }
+    // 4) Já com glicose, acidose presente
+    let ainda_caindo = queda !== null && queda > 0;
+    if (caindoRapido || (hgt <= 300 && ainda_caindo)) {
+        let prox = CAD_DEGRAUS.find(c => c > E.atual);
+        let linhas = [`HGT ${hgt <= 300 ? '≤ 300' : '> 300'} e ainda caindo${caindoRapido ? ' > 90 mg/dL/h' : ''}, com a acidose presente.${txtQueda}`];
+        if (prox !== undefined) linhas.push(`<strong>Subir a glicose</strong> de ${fmtConc(E.atual)} para <strong>${fmtConc(prox)}</strong> = ${cadAB(prox, vel)}.`);
+        else linhas.push('Já está em 10%: a SPP admite <strong>até 12,5%</strong> (SG 5% em SF 350 mL + SG 30% 150 mL). Avisar o médico.');
+        linhas.push('<strong>Não diminuir a insulina</strong>: a insulina é o que fecha a cetose. Repetir o HGT em 1 h.');
+        res.innerHTML = caixa('#d97706', '⬆️', 'SUBIR UM DEGRAU DE GLICOSE', linhas);
+        return;
+    }
+    if (queda === null && hgt <= 300) {
+        res.innerHTML = caixa('#2563eb', '⏸️', `MANTER ${fmtConc(E.atual)} E COMPARAR (HGT ${Math.round(hgt)})`, [
+            `Manter ${cadAB(E.atual, vel)}.`,
+            '<strong>Digite o HGT de 1 h atrás</strong>: se ainda estiver caindo, a conduta manda subir um degrau (7,5% → 10%).',
+            insul]);
+        return;
+    }
+    res.innerHTML = caixa('#16a34a', '✔️', `MANTER ${fmtConc(E.atual)} (HGT ${Math.round(hgt)})`, [
+        `${hgt > 300 ? 'HGT > 300' : 'HGT estável ou subindo'} com glicose no soro: manter ${cadAB(E.atual, vel)}.${txtQueda}`,
+        hgt > 300 ? 'Se o HGT não cai ~60 mg/dL/h ou a acidose melhora devagar: conferir acesso, equipo e preparo da insulina (passo 5).' : 'Objetivo: HGT estável enquanto a insulina corrige a acidose.',
+        insul + ' Repetir o HGT em 1 h.']);
+}
+
 
 registrarConduta({
     id: "cetoacidose",
@@ -378,6 +502,7 @@ registrarConduta({
                         "HGT normal mas <strong>acidose ainda presente</strong>: aumentar a glicose e <strong>manter a insulina</strong> (SPP admite até 12,5%).",
                         "O card do passo 4 já mostra os mL/h de A e de B para cada concentração."
                     ],
+                    ferramenta: "ferramentaCadGlicose",
                     tabela: {
                         titulo: "Solução padrão do IMIP (em Y): K 40 mEq/L, Na 136 mEq/L",
                         colunas: ["Glicose final", "Solução A", "Solução B"],
