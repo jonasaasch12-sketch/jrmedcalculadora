@@ -175,3 +175,15 @@ html[data-theme="dark"] .qm-hid-titulo { color: #7dd3fc; }
 .ict-l-foto { background: #d97706; } .ict-l-esc { background: repeating-linear-gradient(90deg, #ea580c 0 5px, transparent 5px 8px); } .ict-l-ext { background: #dc2626; }
 .ict-l-pac { width: 10px; height: 10px; border-radius: 50%; background: #0b5cad; }
 html[data-theme="dark"] .ict-g-pac { fill: #4ea8f0; stroke: #0a0f1a; }
+
+/* CAD: "Como chegar ao cálculo" da hidratação de 48 h */
+.cadh { margin-top: 12px; padding: 12px 14px; border-radius: 10px; border: 1px solid color-mix(in srgb, var(--cor-cat) 35%, var(--border)); background: color-mix(in srgb, var(--cor-cat) 5%, var(--surface)); }
+.cadh-titulo { font-weight: 800; font-size: 15px; margin-bottom: 8px; }
+.cadh-linha { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 6px 0; }
+.cadh-rot { font-size: 12.5px; font-weight: 700; color: var(--text-muted); min-width: 120px; }
+.cadh-opcoes { display: flex; flex-wrap: wrap; gap: 6px; }
+.cadh-passos { list-style: none; padding: 0; margin: 10px 0; display: grid; gap: 8px; }
+.cadh-passos li { display: flex; gap: 10px; align-items: flex-start; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 14px; line-height: 1.5; }
+.cadh-num { flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--cor-cat); color: #fff; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; }
+.cadh-resultado { border-radius: 8px; padding: 10px 12px; background: color-mix(in srgb, var(--cor-cat) 12%, var(--surface)); font-size: 14px; }
+.cadh-taxa { font-size: 18px; margin-top: 2px; color: var(--cor-cat); }
