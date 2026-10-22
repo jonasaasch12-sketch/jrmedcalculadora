@@ -8,7 +8,7 @@
 registrarMedicamentos({
     "insulina_cad": {
         cat: "cat-cad", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
-        kw: "insulina regular cetoacidose diabetica cad diabetes infusao continua endovenosa", nome: "Insulina Regular (Cetoacidose Diabética)", apres: "100 U (1 mL) em 100 mL SF 0,9% (1 U/mL)",
+        kw: "insulina regular cetoacidose diabetica cad diabetes infusao continua endovenosa", nome: "Insulina Regular (Cetoacidose Diabética)", apres: "1 mL (100 U) + 99 mL SF 0,9% (1 U/mL)",
         info: "<strong>Conduta (IMIP):</strong> < 5 anos 0,05 U/kg/h; ≥ 5 anos 0,1 U/kg/h EV em BIC, após 1h de expansão. Máx 10 U/h. Sem bolus.", badge: "Não iniciar se K < 3,3", recLabel: "Texto para selecionar e copiar:",
         calc: (p, i) => {
             let id = parseFloat(i);
@@ -22,8 +22,8 @@ registrarMedicamentos({
             let v = semIdade ? `< 5 a: ${a.toFixed(1)} mL/h\n≥ 5 a: ${b.toFixed(1)} mL/h` : `${String(u0).replace('.', ',')} U/kg/h: ${m0.toFixed(1)} mL/h${p * u0 > 10 ? ' (máx)' : ''}`;
             let dose = semIdade
                 ? `DOSE INICIAL (correr em BIC) - INFORMAR A IDADE:\n• < 5 anos: 0,05 U/kg/h = ${f(a)} mL/h${teto(0.05)}.\n• ≥ 5 anos: 0,1 U/kg/h = ${f(b)} mL/h${teto(0.1)}.`
-                : `DOSE INICIAL (correr em BIC): ${String(u0).replace('.', ',')} U/kg/h = ${f(m0)} U/h = ${f(m0)} mL/h${teto(u0)}.`;
-            return { v, r: `VIA ENDOVENOSA (CETOACIDOSE DIABÉTICA - APÓS 1 HORA DE EXPANSÃO)\n\nPREPARO (IMIP): Insulina Regular 100 U/mL 1 mL (100 U) + SF 0,9% 100 mL (1 U/mL). Trocar o frasco de 6/6 horas.\n\n${dose}\n• VELOCIDADE MÁXIMA: 10 U/h (10 mL/h). NÃO FAZER BOLUS (DOSE DE ATAQUE).\n\nAJUSTES:\n• HGT não cai 60 mg/dL/h ou acidose corrigindo muito devagar: aumentar para 0,15 a 0,2 U/kg/h (${c >= 10 ? '10,0 mL/h: já é o máximo de 10 U/h' : `${f(c)} a ${f(d)} mL/h${p * 0.2 > 10 ? ', máx 10 U/h' : ''}`}).\n• HGT < 300 com acidose: NÃO DIMINUIR A INSULINA. Acrescentar glicose ao soro.\n• Acidose parcialmente compensada, ainda sem critério de suspensão: 0,05 U/kg/h (${f(a)} mL/h) + glicose no soro.\n\nSEM BIC: Insulina Regular ${f(p * 0.2)} U (0,2 U/kg) IM de 2/2h.\n\n* Não iniciar se K < 3,3. HGT 1/1h; gasometria e eletrólitos 2/2h.` };
+                : `DOSE INICIAL (correr em BIC): ${String(u0).replace('.', ',')} U/kg/h = ${f(m0)} mL/h${teto(u0)}.`;
+            return { v, r: `VIA ENDOVENOSA (CETOACIDOSE DIABÉTICA - APÓS 1 HORA DE EXPANSÃO)\n\nPREPARO: Insulina Regular 1 mL (100 UNIDADES) + SF 0,9% 99 mL = 1 U/mL. Trocar o frasco a cada 6 horas.\n\n${dose}\n• VELOCIDADE MÁXIMA: 10 U/h (10 mL/h). NÃO FAZER BOLUS (DOSE DE ATAQUE).\n\nAJUSTES:\n• HGT não cai 60 mg/dL/h ou acidose corrigindo muito devagar: aumentar para 0,15 a 0,2 U/kg/h (${c >= 10 ? '10,0 mL/h: já é o máximo de 10 U/h' : `${f(c)} a ${f(d)} mL/h${p * 0.2 > 10 ? ', máx 10 U/h' : ''}`}).\n• HGT < 300 com acidose: NÃO DIMINUIR A INSULINA. Acrescentar glicose ao soro.\n• Acidose parcialmente compensada, ainda sem critério de suspensão: 0,05 U/kg/h (${f(a)} mL/h) + glicose no soro.\n\nSEM BIC: Insulina Regular ${f(p * 0.2)} U (0,2 U/kg) IM de 2/2h.\n\n* Não iniciar se K < 3,3. HGT 1/1h; gasometria e eletrólitos 2/2h.` };
         },
         detalhes: {
             indicacao: "Cetoacidose diabética, após pelo menos 1 hora de expansão.",
