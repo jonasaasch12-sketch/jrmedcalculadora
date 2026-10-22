@@ -13,12 +13,10 @@ function ferramentaCadHidratacao() {
     setTimeout(atualizarCadHidratacao, 0);
     return `<div class="cadh" id="cadh">
         <div class="cadh-titulo">🧮 Como chegar ao cálculo</div>
-        <div class="cadh-linha"><span class="cadh-rot">Desidratação</span><span class="cadh-opcoes" id="cadh-pct"></span></div>
-        <div class="cadh-linha"><span class="cadh-rot">Expansão já feita</span><span class="cadh-opcoes" id="cadh-exp"></span></div>
         <div id="cadh-conta"></div>
     </div>`;
 }
-function cadHidEscolher(campo, v) { cadHidEstado[campo] = v; atualizarCadHidratacao(); if (document.getElementById('cadg')) { cadGliEstado.vel = null; atualizarCadGlicose(); } }
+function cadHidEscolher(campo, v) { cadHidEstado[campo] = v; atualizarCadHidratacao(); atualizarCadSoroY(); if (document.getElementById('cadg')) { cadGliEstado.vel = null; atualizarCadGlicose(); } }
 // Velocidade total do passo 4 (mL/h) com as escolhas do quadro "Como chegar ao cálculo". null = sem peso.
 function cadTaxaPasso4() {
     let p = parseFloat((document.getElementById('pesoInput') || {}).value);
@@ -30,8 +28,9 @@ function atualizarCadHidratacao() {
     let caixa = document.getElementById('cadh-conta');
     if (!caixa) return;
     let botoes = (campo, lista, fmt) => lista.map(v => `<button type="button" class="qm-faixa${cadHidEstado[campo] === v ? ' ativa' : ''}" onclick="cadHidEscolher('${campo}', ${v})">${fmt(v)}</button>`).join('');
-    document.getElementById('cadh-pct').innerHTML = botoes('pct', [5, 7, 10], v => v + '%');
-    document.getElementById('cadh-exp').innerHTML = botoes('expMlKg', [0, 10, 20], v => v ? v + ' mL/kg' : 'nenhuma');
+    let elPct = document.getElementById('cadh-pct'), elExp = document.getElementById('cadh-exp');
+    if (elPct) elPct.innerHTML = botoes('pct', [5, 7, 10], v => v + '%');
+    if (elExp) elExp.innerHTML = botoes('expMlKg', [0, 10, 20], v => v ? v + ' mL/kg' : 'nenhuma');
     let pd = parseFloat((document.getElementById('pesoInput') || {}).value);
     let exemplo = !(pd > 0), p = exemplo ? 30 : pd, d = cadHidEstado.pct;
     let f = n => Math.round(n).toLocaleString('pt-BR'), kg = String(p).replace('.', ',');
@@ -57,6 +56,7 @@ function atualizarCadHidratacao() {
 }
 ['pesoInput'].forEach(id => document.getElementById(id)?.addEventListener('input', () => {
     if (document.getElementById('cadh')) atualizarCadHidratacao();
+    atualizarCadSoroY();
     if (document.getElementById('cadg')) { cadGliEstado.vel = null; atualizarCadGlicose(); }
 }));
 
@@ -173,6 +173,79 @@ function atualizarCadGlicose() {
         insul + ' Repetir o HGT em 1 h.']);
 }
 
+
+
+// ===== Passo 4: painel "Soro da CAD em Y" (aprovado pelo Dr. Jonas no lugar do card cad_hidratacao) =====
+// Velocidade total (do cálculo de 48 h), os dois frascos, os 4 momentos da glicose, o preparo para copiar e o potássio.
+function ferramentaCadPasso4() {
+    setTimeout(atualizarCadSoroY, 0);
+    return `<div class="sy" id="sy">
+        <div class="sy-h">💧 Soro da CAD em Y (A + B)</div>
+        <div class="cadh-linha"><span class="cadh-rot">Desidratação</span><span class="cadh-opcoes" id="cadh-pct"></span></div>
+        <div class="cadh-linha"><span class="cadh-rot">Expansão já feita</span><span class="cadh-opcoes" id="cadh-exp"></span></div>
+        <div id="sy-corpo"></div>
+    </div>` + ferramentaCadHidratacao();
+}
+function textoSoroY(t) {
+    let r = Math.round(t);
+    return `VIA ENDOVENOSA (CETOACIDOSE DIABÉTICA - SORO EM Y, 48 HORAS)
+
+1) SOLUÇÃO A (COM GLICOSE):
+   SG 10% --------------- 250 ML
+   NACL 20% -------------- 10 ML
+   KCL 19,1% -------------- 4 ML
+2) SOLUÇÃO B (SEM GLICOSE):
+   ÁGUA DESTILADA ------- 250 ML
+   NACL 20% -------------- 10 ML
+   KCL 19,1% -------------- 4 ML
+
+CORRER EM Y, EM BIC. VELOCIDADE TOTAL: ${r} ML/H.
+AGORA: SOLUÇÃO B ${r} ML/H + SOLUÇÃO A PARADA.
+AJUSTAR A PROPORÇÃO A/B PELO HGT DE 1/1H, SEM MUDAR A VELOCIDADE TOTAL.`;
+}
+function atualizarCadSoroY() {
+    let corpo = document.getElementById('sy-corpo');
+    if (!corpo) return;
+    let t = cadTaxaPasso4();
+    if (t === null) { corpo.innerHTML = '<div class="cond-nota">Digite o <strong>peso</strong> no topo para calcular o soro.</div>'; return; }
+    let p = parseFloat(document.getElementById('pesoInput').value), r = n => Math.round(n);
+    let exp = cadHidEstado.expMlKg;
+    let fase = (n, tit, sub, bomba, on) => `<div class="sy-fase${on ? ' on' : ''}"><div class="sy-fase-n">${n}</div><div><b>${tit}</b><span>${sub}</span></div><div class="sy-fase-bomba">${bomba}</div></div>`;
+    corpo.innerHTML = `
+        <div class="sy-total">${r(t)} mL/h <small>VELOCIDADE TOTAL · ${String(p).replace('.', ',')} kg · desidratação ${cadHidEstado.pct}%${exp ? ` · expansão ${exp} mL/kg descontada` : ''} · não muda até o fim</small></div>
+        <div class="sy-bags">
+            <div class="sy-bag"><div class="sy-bag-c" style="--c:#d97706;--n:0%">A</div><div class="sy-bag-l">com glicose (SG 10%)</div><div class="sy-bag-v" style="color:#d97706">parada</div></div>
+            <div class="sy-bag"><div class="sy-bag-c" style="--c:#2563eb;--n:100%">B</div><div class="sy-bag-l">sem glicose (AD)</div><div class="sy-bag-v" style="color:#2563eb">${r(t)} mL/h</div></div>
+        </div>
+        <div class="sy-y">↘ ↙ em Y → paciente</div>
+        <div class="sy-fases">
+            ${fase(1, 'Início (HGT > 300)', 'só B', `B ${r(t)}`, true)}
+            ${fase(2, 'HGT ≤ 300 ou queda > 90/h', 'glicose 5% = ½ A + ½ B', `A ${r(t / 2)} · B ${r(t / 2)}`)}
+            ${fase(3, 'Ainda caindo, com acidose', '7,5% = ¾ A + ¼ B', `A ${r(t * 3 / 4)} · B ${r(t / 4)}`)}
+            ${fase(4, 'Continua caindo', '10% = só A', `A ${r(t)}`)}
+        </div>
+        <div class="cond-nota">A decisão de cada momento é feita no passo 6, pelo HGT de 1/1h (assistente "Qual glicose no soro agora?").</div>
+        <div class="sy-rec-tit">📋 Preparo para o prontuário</div>
+        <div class="cond-med-texto" id="sy-texto">${textoSoroY(t)}</div>
+        <div class="cond-med-botoes"><button type="button" class="cond-btn-receita" onclick="addSoroYReceita(this)">+ Receita</button><button type="button" class="cond-btn-copiar" onclick="copiarSoroY(this)">📋 Copiar</button></div>
+        <div class="sy-k">
+            <div class="sy-kv"><b>K &lt; 4,5:</b> com KCl já</div>
+            <div class="sy-ka"><b>K 4,5–5,4:</b> KCl junto com a insulina (até lá, A e B sem KCl)</div>
+            <div class="sy-kr"><b>K ≥ 5,5:</b> sem KCl até diurese e K &lt; 5,5</div>
+        </div>
+        <div class="cond-nota">Velocidade ≥ 10 mL/kg/h: KCl 19,1% 2 mL em cada solução (20 mEq/L). Máximo de K: ${(p * 0.5).toFixed(1).replace('.', ',')} mEq/h (0,5 mEq/kg/h). Não repor a diurese; descontar o que beber.</div>`;
+}
+function addSoroYReceita(botao) {
+    let texto = document.getElementById('sy-texto').innerText.trim();
+    carrinhoPrescricao.push({ nome: "Soro da CAD em Y (Solução A + B)", apres: "Solução padrão IMIP", texto, via: texto.split('\n')[0].trim() });
+    atualizarCarrinhoUI();
+    let o = botao.innerHTML; botao.innerHTML = "✓ Na receita"; botao.classList.add('adicionado');
+    setTimeout(() => { botao.innerHTML = o; botao.classList.remove('adicionado'); }, 1200);
+}
+function copiarSoroY(botao) {
+    navigator.clipboard?.writeText(document.getElementById('sy-texto').innerText);
+    let o = botao.innerHTML; botao.innerHTML = "✓ Copiado"; setTimeout(() => { botao.innerHTML = o; }, 1200);
+}
 
 registrarConduta({
     id: "cetoacidose",
@@ -470,8 +543,7 @@ registrarConduta({
                         "<strong>Não repor a diurese.</strong> Descontar o que beber. Total de até 2 x a manutenção.",
                         "Na que não sobe enquanto a glicemia cai: aumentar o sódio do soro e vigiar edema cerebral."
                     ],
-                    ferramenta: "ferramentaCadHidratacao",
-                    remedios: ["cad_hidratacao"]
+                    ferramenta: "ferramentaCadPasso4"
                 },
                 {
                     passo: 5,
@@ -502,8 +574,7 @@ registrarConduta({
                         "HGT normal mas <strong>acidose ainda presente</strong>: aumentar a glicose e <strong>manter a insulina</strong> (SPP admite até 12,5%).",
                         "<strong>Use o assistente abaixo</strong> a cada HGT: ele mostra a glicose certa e os mL/h de A e de B na bomba."
                     ],
-                    ferramenta: "ferramentaCadGlicose",
-                    remedios: ["cad_hidratacao"]
+                    ferramenta: "ferramentaCadGlicose"
                 },
                 {
                     passo: 7,
