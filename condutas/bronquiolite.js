@@ -382,6 +382,7 @@ registrarConduta({
         }
     ],
 
+    citacoes: { "Ministério da Saúde": 0, "MS": 0, "IMIP": 1 }, // sigla no texto → fonte (índice em fontes)
     fontes: [
         "Brasil. Ministério da Saúde. Guia de Manejo Clínico: Bronquiolite Viral Aguda. Brasília: MS, 2026 (1ª edição). Prioridade nas condutas.",
         "Duarte MCMB, Andrade LB et al. Protocolo de Bronquiolite Viral Aguda na Criança. Recife: IMIP, 2024 (informações adicionais, marcadas IMIP)."

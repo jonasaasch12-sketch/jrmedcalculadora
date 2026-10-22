@@ -320,6 +320,7 @@ registrarConduta({
         }
     ],
 
+    citacoes: { "SBP": 0, "Einstein": 1, "PECARN": [2, 3], "Kuppermann": 2, "Holmes": 3, "CATCH": 4, "CHALICE": 4, "Babl": 4, "CDC": 5, "Kochanek": 6 }, // sigla no texto → fonte (índice em fontes)
     fontes: [
         "Sociedade Brasileira de Pediatria — Departamento Científico de Terapia Intensiva. Guia Prático de Atualização nº 1: Trauma Cranioencefálico (abril de 2017).",
         "Hospital Israelita Albert Einstein. Guia do Episódio de Cuidado: Traumatismo Cranioencefálico em Crianças e Adolescentes (CPTW430.1, aprovado em 22/01/2025).",

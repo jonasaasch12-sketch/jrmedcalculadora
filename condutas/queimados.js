@@ -438,6 +438,7 @@ registrarConduta({
         }
     ],
 
+    citacoes: { "ATLS": 0, "ISBI": 1, "American Burn Association": [2, 3], "ABA": [2, 3], "Lund-Browder": 4 }, // sigla no texto → fonte (índice em fontes)
     fontes: [
         "American College of Surgeons — Committee on Trauma. Advanced Trauma Life Support (ATLS), capítulo Lesões térmicas (10ª ed., 2018; 11ª ed., 2025). Coeficientes da hidratação, taxa inicial por idade e diurese-alvo pela 10ª edição, a confirmar no manual da 11ª.",
         "ISBI Practice Guidelines for Burn Care (Burns 2016;42:953-1021) e Part 2 (Burns 2018;44:1617-1706).",

@@ -315,6 +315,7 @@ registrarConduta({
         }
     ],
 
+    citacoes: { "SBP": 0, "Tratado de Pediatria": 1, "Rochester": 2 }, // sigla no texto → fonte (índice em fontes)
     fontes: [
         "Sociedade Brasileira de Pediatria — Departamentos Científicos de Pediatria Ambulatorial e de Infectologia. Documento Científico nº 206: Abordagem da Febre Aguda em Pediatria e Reflexões sobre a febre nas arboviroses (15/05/2025).",
         "Machado MB, Gilio AE. Febre sem sinais localizatórios. In: SBP — Tratado de Pediatria, 4ª ed. Manole, 2017: 899-900 (protocolo HU-USP, baseado em Baraff e Rochester).",

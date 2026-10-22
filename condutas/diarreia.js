@@ -292,6 +292,7 @@ registrarConduta({
         }
     ],
 
+    citacoes: { "SBP": 0, "Ministério da Saúde": 1, "MS": 1 }, // sigla no texto → fonte (índice em fontes)
     fontes: [
         "Sociedade Brasileira de Pediatria. Departamento Científico de Gastroenterologia. Guia Prático de Atualização nº 74: Diarreia Aguda Infecciosa. 06/06/2023.",
         "Brasil. Ministério da Saúde. Manejo do paciente com diarreia. Brasília: MS, 2023 (quadros reproduzidos no Guia da SBP)."

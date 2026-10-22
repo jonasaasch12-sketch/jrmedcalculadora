@@ -197,3 +197,15 @@ html[data-theme="dark"] .ict-g-pac { fill: #4ea8f0; stroke: #0a0f1a; }
 .cadg tr.cadg-atual th, .cadg tr.cadg-atual td { background: color-mix(in srgb, var(--cor-cat) 14%, var(--surface)); font-weight: 700; }
 .cadg .cond-tabela { min-width: 0; font-size: 14px; }
 .cadg .cond-tabela td { white-space: nowrap; }
+
+/* Citações: link no texto → fonte numerada destacada */
+.cond-fonte ol { margin: 4px 0 8px; padding-left: 22px; }
+.cond-fonte li { padding: 4px 6px; border-radius: 6px; margin: 2px 0; transition: background .3s; scroll-margin: 120px; }
+.cond-fonte li.destacada { background: color-mix(in srgb, #f59e0b 22%, var(--surface)); color: var(--text-main); outline: 2px solid #f59e0b; animation: cond-fonte-pisca 1.2s ease 2; }
+.cond-fonte-voltar { display: none; margin-left: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--primary); border-radius: 12px; padding: 2px 10px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.cond-fonte li.destacada .cond-fonte-voltar { display: inline-block; }
+@keyframes cond-fonte-pisca { 50% { background: color-mix(in srgb, #f59e0b 45%, var(--surface)); } }
+a.cond-cit { color: inherit; text-decoration: underline dotted color-mix(in srgb, var(--primary) 70%, transparent); text-underline-offset: 2px; cursor: pointer; }
+a.cond-cit sup { color: var(--primary); font-weight: 800; font-size: .7em; margin-left: 1px; }
+a.cond-cit:hover { color: var(--primary); }
+a.cond-cit.piscando { background: color-mix(in srgb, #f59e0b 35%, transparent); border-radius: 4px; }

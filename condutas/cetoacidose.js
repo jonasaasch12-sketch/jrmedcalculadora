@@ -678,6 +678,7 @@ registrarConduta({
         }
     ],
 
+    citacoes: { "SPP": 0, "Sociedade Portuguesa de Pediatria": 0, "IMIP": 1, "SBD": 2, "J Pediatr 2001": 3, "J Pediatr": 3, "Collett-Solberg": 3, "SPSP": 4, "ISPAD 2022": 5, "DynaMed": 5 }, // sigla no texto → fonte (índice em fontes)
     fontes: [
         "Sociedade Portuguesa de Pediatria / Sociedade de Endocrinologia e Diabetologia Pediátrica — Grupo de Trabalho de Diabetes Mellitus. Cetoacidose Diabética (protocolo, 20/05/2019), baseado no ISPAD 2018.",
         "UTI Pediátrica — IMIP. Protocolo de Cetoacidose Diabética (2018): dose da insulina, solução padrão em Y, potássio e fórmula do bicarbonato.",

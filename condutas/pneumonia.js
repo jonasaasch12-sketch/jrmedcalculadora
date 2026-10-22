@@ -429,6 +429,7 @@ registrarConduta({
         }
     ],
 
+    citacoes: { "SBP": [0, 1] }, // sigla no texto → fonte (índice em fontes)
     fontes: [
         "Sociedade Brasileira de Pediatria. Departamento Científico de Pneumologia. Documento Científico nº 8: Abordagem Diagnóstica e Terapêutica das Pneumonias Adquiridas na Comunidade Não Complicadas (atualização). 23/02/2022.",
         "Sociedade Brasileira de Pediatria. Departamentos Científicos de Pneumologia e Infectologia. Documento Científico nº 151: Pneumonias Adquiridas na Comunidade Complicadas: Atualização 2024. 29/04/2024."

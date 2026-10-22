@@ -424,6 +424,7 @@ registrarConduta({
         }
     ],
 
+    citacoes: { "GINA": 0, "Ducharme": 1 }, // sigla no texto → fonte (índice em fontes)
     fontes: [
         "Global Initiative for Asthma (GINA). Global Strategy for Asthma Management and Prevention, 2026: seção 4 (tratamento de 6–11 anos) e seções 10–12 (diagnóstico, manejo e crises em crianças ≤ 5 anos). Tradução e adaptação.",
         "PRAM: Ducharme FM et al. © 2011, reproduzido no GINA 2026 (Box 12-2)."
