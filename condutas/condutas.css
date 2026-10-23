@@ -72,8 +72,8 @@ details.cond-secao[open] > summary { border-bottom: 1px solid var(--border); }
 .cond-med-dose { background: var(--primary); color: #fff; font-weight: 800; font-size: 14px; border-radius: 8px; padding: 5px 12px; white-space: nowrap; }
 .cond-med.sem-peso .cond-med-dose { background: #94a3b8; }
 .cond-med-texto { font-family: ui-monospace, Consolas, monospace; font-size: 13px; line-height: 1.5; white-space: pre-wrap; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
-.cond-med-botoes { display: flex; gap: 6px; }
-.cond-med-botoes button { flex: 1; padding: 9px; border-radius: 8px; font-weight: 800; font-size: 13.5px; cursor: pointer; }
+.cond-med-botoes { display: flex; gap: 8px; justify-content: flex-end; }
+.cond-med-botoes button { flex: 0 0 auto; min-width: 120px; padding: 9px 16px; border-radius: 999px; font-weight: 800; font-size: 13.5px; cursor: pointer; } /* modelo 3 */
 .cond-btn-receita { background: #16a34a; color: #fff; border: 1px solid #16a34a; }
 .cond-btn-receita.adicionado { background: #15803d; }
 .cond-btn-copiar { background: var(--surface); color: var(--primary); border: 1px solid #bae6fd; }
