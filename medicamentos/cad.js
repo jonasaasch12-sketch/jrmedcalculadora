@@ -47,36 +47,84 @@ registrarMedicamentos({
     },
     "cad_hidratacao": {
         cat: "cat-cad", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
-        kw: "cetoacidose diabetica cad hidratacao 48 horas deficit manutencao potassio kcl solucao padrao imip solucao a b duas solucoes soro glicosado", nome: "Hidratação da Cetoacidose em 48h (Solução Padrão A/B)", apres: "Solução padrão IMIP: K 40 mEq/L, Na 136 mEq/L",
-        info: "<strong>Conduta:</strong> (Déficit + 2 x Manutenção − Expansão) ÷ 48h, com a solução padrão A/B do IMIP em Y. Déficit = % desidratação x Peso x 10.", badge: "K: máx 0,5 mEq/kg/h", recLabel: "Texto para selecionar e copiar:",
+        kw: "cetoacidose diabetica cad hidratacao 48 horas deficit manutencao potassio kcl solucao padrao imip solucao a b duas solucoes soro glicosado em y", nome: "Soro da CAD em Y: Soluções A e B (48h)", apres: "Solução padrão IMIP: K 40 mEq/L, Na 136 mEq/L",
+        info: "<strong>Conduta:</strong> velocidade total = (déficit + 2 x manutenção − expansão) ÷ 48h, que não muda. Começa só com a B; a glicose entra trocando a proporção A/B pelo HGT.", badge: "K: máx 0,5 mEq/kg/h", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             let man = p <= 10 ? p * 4 : p <= 20 ? 40 + (p - 10) * 2 : 60 + (p - 20);
-            let taxa = d => Math.min(man + d * p * 10 / 48, man * 2);
-            let t5 = taxa(5), t7 = taxa(7), t10 = taxa(10);
-            let kMax = p * 0.5;
-            let escada = (rot, t) => `• ${rot} (${t.toFixed(0)} mL/h): 0% = B ${t.toFixed(0)} | 2,5% = A ${(t / 4).toFixed(0)} + B ${(t * 3 / 4).toFixed(0)} | 5% = A ${(t / 2).toFixed(0)} + B ${(t / 2).toFixed(0)} | 7,5% = A ${(t * 3 / 4).toFixed(0)} + B ${(t / 4).toFixed(0)} | 10% = A ${t.toFixed(0)}`;
-            return { v: `5%: ${t5.toFixed(0)} | 7%: ${t7.toFixed(0)} | 10%: ${t10.toFixed(0)} mL/h`, r: `VIA ENDOVENOSA (CETOACIDOSE DIABÉTICA - HIDRATAÇÃO EM 48 HORAS)\n\nVOLUME TOTAL POR HORA (manutenção + déficit em 48h):\n• Desidratação 5%: ${t5.toFixed(0)} mL/h\n• Desidratação 7% (CAD moderada): ${t7.toFixed(0)} mL/h\n• Desidratação 10% (CAD grave): ${t10.toFixed(0)} mL/h\n(Manutenção: ${man.toFixed(0)} mL/h. Total limitado a 2 x a manutenção.)\n\nDESCONTAR A EXPANSÃO: tirar (volume da expansão ÷ 48) da velocidade. Ex.: expansão de ${(p * 10).toFixed(0)} mL (10 mL/kg) = menos ${(p * 10 / 48).toFixed(1)} mL/h.\n\nSOLUÇÃO PADRÃO (IMIP), em Y - K 40 mEq/L e Na 136 mEq/L:\n• SOLUÇÃO A: SG 10% 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL.\n• SOLUÇÃO B: AD 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL.\n\nGLICOSE FINAL = PROPORÇÃO ENTRE A E B (a velocidade total não muda):\n${escada('Desidratação 5%', t5)}\n${escada('Desidratação 7%', t7)}\n${escada('Desidratação 10%', t10)}\nSem glicose: só B. Glicose a partir de HGT ≤ 300 mg/dL ou queda > 90 mg/dL/h (SPP): começar com 5% e subir para 7,5% ou 10% se o HGT continuar caindo com a acidose presente.\n\nPOTÁSSIO (pelo K inicial):\n• K < 4,5: solução padrão já.\n• K 4,5 a 5,4: começar o K junto com a insulina (até lá, A e B sem KCl).\n• K ≥ 5,5: preparar A e B SEM o KCl até haver diurese e K < 5,5.\n* Velocidade ≥ 10 mL/kg/h: usar KCl 19,1% 2 mL em cada solução (20 mEq/L). Máximo de K: ${kMax.toFixed(1)} mEq/h (0,5 mEq/kg/h).` };
+            /* expansão de 10 mL/kg já descontada (passo 2 da conduta, sem choque) */
+            let taxa = d => Math.min(man + d * p * 10 / 48, man * 2) - p * 10 / 48;
+            let t5 = Math.round(taxa(5)), t7 = Math.round(taxa(7)), t10 = Math.round(taxa(10));
+            let kMax = (p * 0.5).toFixed(1).replace('.', ',');
+            return { v: `5%: ${t5} | 7%: ${t7} | 10%: ${t10} mL/h`, r: `VIA ENDOVENOSA (CETOACIDOSE DIABÉTICA - SORO EM Y, 48 HORAS)
+
+1) SOLUÇÃO A (COM GLICOSE):
+   SG 10% --------------- 250 ML
+   NACL 20% -------------- 10 ML
+   KCL 19,1% -------------- 4 ML
+2) SOLUÇÃO B (SEM GLICOSE):
+   ÁGUA DESTILADA ------- 250 ML
+   NACL 20% -------------- 10 ML
+   KCL 19,1% -------------- 4 ML
+
+CORRER EM Y, EM BIC. VELOCIDADE TOTAL (NÃO MUDA ATÉ O FIM):
+• DESIDRATAÇÃO 5%: ${t5} ML/H
+• DESIDRATAÇÃO 7% (CAD MODERADA): ${t7} ML/H
+• DESIDRATAÇÃO 10% (CAD GRAVE): ${t10} ML/H
+(já descontada a expansão de 10 mL/kg; total até 2 x a manutenção)
+
+GLICOSE PELO HGT DE 1/1H (SÓ MUDA A PROPORÇÃO A/B):
+• INÍCIO (HGT > 300): SÓ SOLUÇÃO B.
+• HGT ≤ 300 OU QUEDA > 90 MG/DL/H: ½ A + ½ B (GLICOSE 5%).
+• AINDA CAINDO, COM ACIDOSE: ¾ A + ¼ B (7,5%) E DEPOIS SÓ A (10%).
+
+POTÁSSIO (PELO K INICIAL):
+• K < 4,5: SOLUÇÕES COM KCL JÁ.
+• K 4,5 A 5,4: KCL JUNTO COM A INSULINA (ATÉ LÁ, A E B SEM KCL).
+• K ≥ 5,5: A E B SEM KCL ATÉ HAVER DIURESE E K < 5,5.
+* Velocidade ≥ 10 mL/kg/h: KCl 19,1% 2 mL em cada solução (20 mEq/L). Máximo de K: ${kMax} mEq/h (0,5 mEq/kg/h).
+* Não repor a diurese; descontar o que beber.` };
         },
         detalhes: {
             indicacao: "Reposição do déficit e manutenção na cetoacidose diabética, após a expansão.",
-            dose: "(Déficit + 2 x Manutenção − Expansão) ÷ 48h, com a solução padrão A/B do IMIP (K 40 mEq/L).",
-            atencao: "Total até 2 x a manutenção. Obeso: peso ideal. Edema cerebral: corrigir em 72h e reduzir a 1/3."
+            dose: "Velocidade total = (déficit + 2 x manutenção − expansão) ÷ 48h. Solução padrão A/B do IMIP em Y (K 40 mEq/L).",
+            atencao: "Total até 2 x a manutenção. Obeso: peso ideal. Edema cerebral: corrigir em 72h e reduzir a 1/3. Expansão diferente de 10 mL/kg: usar a calculadora da conduta."
         }
     },
     "cad_insulina_sc": {
         cat: "cat-cad", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
-        kw: "cetoacidose diabetica cad insulina subcutanea transicao basal bolus glargina lispro asparte dose diaria total fator de sensibilidade", nome: "Insulina SC: Transição após a Cetoacidose", apres: "Basal (glargina) + rápida (lispro/asparte)",
-        info: "<strong>Conduta:</strong> Dose diária total 0,5 a 1 U/kg/dia: 50% basal e 50% rápida. Desligar a insulina EV 15 a 30 min após a rápida SC.", badge: "", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => {
-            let f = (x) => (Math.round(x * 2) / 2).toFixed(1).replace('.0', '');
-            let ddt = (a, b) => `${f(p * a)} a ${f(p * b)} U/dia`;
-            let faixa = (k, a, b) => `${(k / (p * b)).toFixed(0)} a ${(k / (p * a)).toFixed(0)}`;
-            return { v: `DDT: ${f(p * 0.5)} a ${f(p * 1)} U/dia`, r: `VIA SUBCUTÂNEA (TRANSIÇÃO APÓS A CETOACIDOSE)\n\nDOSE DIÁRIA TOTAL (DDT):\n• Pré-púbere (0,5 a 0,6 U/kg/dia): ${ddt(0.5, 0.6)}\n• Púbere (0,7 a 1 U/kg/dia): ${ddt(0.7, 1)}\n\nINSULINA BASAL (glargina/detemir) = 50% da DDT, 1 vez ao dia (< 5 anos: de manhã; ≥ 5 anos: à noite):\n• Pré-púbere: ${f(p * 0.25)} a ${f(p * 0.3)} U\n• Púbere: ${f(p * 0.35)} a ${f(p * 0.5)} U\n\nINSULINA RÁPIDA (lispro/asparte) = 50% da DDT, antes das refeições:\n• Bolus = correção + refeição.\n• Correção: (glicemia − 120) ÷ FSI. FSI = 1800 ÷ DDT (pré-púbere ${faixa(1800, 0.5, 0.6)}; púbere ${faixa(1800, 0.7, 1)} mg/dL por unidade).\n• Refeição: gramas de carboidrato ÷ razão. Razão = 500 ÷ DDT (pré-púbere ${faixa(500, 0.5, 0.6)} g; púbere ${faixa(500, 0.7, 1)} g por unidade).\n• Alvo: 120 mg/dL de dia; 140 mg/dL ao deitar e de madrugada.\n\n* Fazer a transição antes de uma refeição: desligar a insulina EV 15 a 30 minutos após a rápida SC. HGT de 3/3h.` };
+        kw: "cetoacidose diabetica cad insulina subcutanea transicao basal nph regular glargina ultrarrapida escala hgt diabetes novo", nome: "Insulina SC: Transição após a Cetoacidose", apres: "NPH ou glargina + regular (IFF/Fiocruz e HC-UFTM)",
+        info: "<strong>Conduta:</strong> antes de uma refeição: regular SC 0,1 a 0,2 U/kg e desligar a bomba 30 a 60 min depois. Basal no diabetes novo: 0,5 U/kg/dia (< 4 anos: 0,3).", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            let u = x => String(Math.round(x * 2) / 2).replace('.', ',');
+            let id = parseFloat(i), semIdade = isNaN(id), menor4 = id < 4;
+            let b5 = p * 0.5, b3 = p * 0.3, base = Math.round(p * 0.1 * 2) / 2;
+            let nph = semIdade
+                ? `• ≥ 4 ANOS: NPH ${u(b5)} U/DIA = ${u(b5 * 2 / 3)} U PELA MANHÃ + ${u(b5 / 3)} U À NOITE (22H) (0,5 U/KG/DIA).\n• < 4 ANOS: NPH ${u(b3)} U PELA MANHÃ (0,3 U/KG/DIA, DOSE ÚNICA).`
+                : menor4 ? `INSULINA NPH ${u(b3)} U SC PELA MANHÃ (0,3 U/KG/DIA, DOSE ÚNICA).`
+                    : `INSULINA NPH ${u(b5)} U/DIA SC = ${u(b5 * 2 / 3)} U PELA MANHÃ + ${u(b5 / 3)} U À NOITE (22H) (0,5 U/KG/DIA).`;
+            let glar = semIdade ? `${u(b5)} U (≥ 4 anos) ou ${u(b3)} U (< 4 anos)` : `${u(menor4 ? b3 : b5)} U`;
+            let v = semIdade ? `Basal: ${u(b3)} a ${u(b5)} U/dia` : `NPH ${u(menor4 ? b3 : b5)} U/dia`;
+            return { v, r: `VIA SUBCUTÂNEA (TRANSIÇÃO APÓS A CETOACIDOSE DIABÉTICA)
+
+1) INSULINA REGULAR: ${u(p * 0.1) === u(p * 0.2) ? u(p * 0.1) : u(p * 0.1) + ' A ' + u(p * 0.2)} U SC ANTES DE UMA REFEIÇÃO (0,1 A 0,2 U/KG).
+   DESLIGAR A INSULINA EV E O SORO 30 A 60 MINUTOS DEPOIS. ALIMENTAR LOGO APÓS.
+2) ${semIdade ? 'INSULINA BASAL (DIABETES NOVO) - INFORMAR A IDADE:\n' : ''}${nph}
+3) INSULINA REGULAR CONFORME HGT, DE 4/4 HORAS OU ANTES DAS REFEIÇÕES:
+   < 150: NÃO FAZER
+   150-199: ${u(base)} U
+   200-299: ${u(base + 1)} U
+   300-399: ${u(base + 2)} U
+   400-499: ${u(base + 3)} U
+   ≥ 500: ${u(base + 4)} U
+
+HGT ANTES DAS REFEIÇÕES E ÀS 3 HORAS DA MADRUGADA.
+* Com glargina no lugar da NPH: ${glar} SC 1 vez ao dia, pela manhã; ultrarrápida no lugar da regular: desligar a bomba 15 a 30 min depois.
+* Já usava insulina: retomar a dose basal habitual de antes da internação.` };
         },
         detalhes: {
-            indicacao: "Cetoacidose resolvida (pH > 7,30, bicarbonato > 15 e cetonemia < 1) e tolerando a via oral.",
-            dose: "DDT 0,5 a 0,6 U/kg/dia (pré-púbere) ou 0,7 a 1 U/kg/dia (púbere): 50% basal e 50% rápida.",
-            atencao: "Paciente que já usava insulina: dividir a dose prévia em 50% basal e 50% bolus."
+            indicacao: "Cetoacidose resolvida (pH > 7,30, bicarbonato > 15 e cetonemia < 1), sem vômitos e aceitando a via oral.",
+            dose: "Regular SC 0,1 a 0,2 U/kg antes da refeição; desligar a bomba 30 a 60 min depois. Basal: 0,5 U/kg/dia (< 4 anos: 0,3) — NPH 2/3 manhã + 1/3 noite.",
+            atencao: "Nunca desligar a bomba antes da SC (rebote). Já usava insulina: retomar a dose habitual. Esquema definitivo com o endocrinologista."
         }
     },
     "cad_manitol": {
