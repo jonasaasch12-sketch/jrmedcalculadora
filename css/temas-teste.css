@@ -1,0 +1,98 @@
+/* =====================================================
+   VISUAIS EM TESTE (só na versão de teste): Menu → 🎨 Visual (teste).
+   A = Hospitalar (NHS/GOV.UK) · B = Plantão noturno · C = Apple Saúde.
+   Ativos pela classe html.visual-a / -b / -c (js/modo-teste.js). Sem a classe, nada muda.
+   Gerado a partir das prévias aprovadas para teste; quando o Dr. Jonas escolher, o vencedor vira o padrão.
+   ===================================================== */
+
+/* ---------- visual-a ---------- */
+html.visual-a { --primary:#005eb8;--primary-dark:#003d78;--primary-soft:#e8f1fa;--bg-app:#f0f4f5;--surface:#fff;--text-main:#212b32;--text-soft:#3a4750;--text-muted:#4c6272;--border:#d8dde0;--border-strong:#aeb7bd;--navy:#005eb8;--navy-2:#1f6fc0;--rail-txt:#cfe1f3;--rail-link:#fff;--rail-forte:#fff;--rail-ativo:#ffeb3b;--gelo:#005eb8; }
+html.visual-a .cond-indice-blocos a.cond-indice-bloco { background:var(--surface)!important;color:var(--text-main)!important;border:1px solid var(--border)!important;border-left:6px solid var(--cor-bloco)!important;text-align:left;padding-left:12px }
+html.visual-a .cond-bloco { background:var(--surface)!important;color:var(--text-main)!important;border:1px solid var(--border);border-left:6px solid var(--cor-bloco) }
+html.visual-a .cond-cabecalho { background:var(--surface)!important;border:1px solid var(--border);border-left:6px solid var(--cor-cat) }
+html.visual-a .cond-cabecalho h2 { color:var(--text-main)!important }
+html.visual-a .cond-btn-receita { background:var(--primary)!important;border-color:var(--primary)!important;color:var(--on-primary,#fff)!important }
+html.visual-a #app-container .section-header::before { background:var(--primary)!important }
+html.visual-a #app-container .btn-add-carrinho { color:var(--on-primary,#fff)!important }
+html.visual-a:not([data-theme=dark]) .header-banner { background:#005eb8!important;border-bottom:0!important }
+html.visual-a .header-banner .brand-title { color:#fff!important }
+html.visual-a .header-banner .brand-subtitle { color:#cfe1f3!important }
+html.visual-a .header-banner .btn-config { background:#fff!important }
+html.visual-a:not([data-theme=dark]) .control-panel { --navy:#003d78!important;--navy-2:#fff!important;--rail-txt:#cfe1f3;--rail-forte:#212b32;--rail-ativo:#ffeb3b;--alergia-txt:#8a1538;--alergia-ph:#a0435c }
+html.visual-a .control-panel .pac-rotulo { color:#cfe1f3!important }
+html.visual-a .control-panel .btn-novo-paciente { color:#fff!important;border-color:rgba(255,255,255,.6)!important }
+html.visual-a .sidebar-nav { --navy:#fff;--navy-2:#e8f1fa;--rail-txt:#4c6272;--rail-link:#212b32;--rail-forte:#003d78;--rail-ativo:#005eb8;border-right:1px solid #d8dde0 }
+html.visual-a .sidebar-link.aberto { box-shadow:inset 4px 0 0 #005eb8 }
+html.visual-a #app-container .med-card { border-radius:4px!important;border:1px solid #d8dde0!important;box-shadow:none!important;border-top:4px solid #005eb8!important }
+html.visual-a #app-container .btn-add-carrinho,
+html.visual-a #app-container .btn-copiar { border-radius:4px!important }
+html.visual-a #app-container .btn-add-carrinho { background:#007f3b!important;box-shadow:0 3px 0 #00401e }
+html.visual-a .cond-btn-receita { background:#007f3b!important;border-color:#007f3b!important }
+html.visual-a .control-panel .input-group { background:#fff!important;border:2px solid #fff!important }
+html.visual-a .control-panel .input-group .input-label,
+html.visual-a .control-panel .input-group .input-unidade { color:#4c6272!important }
+html.visual-a .control-panel .input-group input,
+html.visual-a .control-panel .input-group input:focus { color:#212b32!important;-webkit-text-fill-color:#212b32!important }
+html.visual-a .control-panel .input-group:focus-within { outline:4px solid #ffeb3b!important;outline-offset:0;border-color:#212b32!important }
+html.visual-a .allergy-input { background-color:#fde8ec!important;color:#8a1538!important }
+html.visual-a .allergy-input::placeholder { color:#a0435c!important }
+html.visual-a .bottom-nav { background:#f0f4f5!important }
+html.visual-a .slot-abas .abas-modo { background:rgba(255,255,255,.15)!important }
+html.visual-a .slot-abas .aba-modo:not(.ativa) { color:#fff!important }
+
+/* ---------- visual-b ---------- */
+html.visual-b { --primary:#2dd4bf;--primary-dark:#5eead4;--primary-soft:#0f2f2c;--on-primary:#04201d;--bg-app:#0b0f14;--surface:#141a21;--surface-2:#19212a;--surface-3:#1f2933;--text-main:#e6edf3;--text-soft:#c3cfdb;--text-muted:#8b98a5;--border:#26313c;--border-strong:#34414e;--navy:#0b0f14;--navy-2:#1a232c;--rail-txt:#8b98a5;--rail-link:#c3cfdb;--rail-forte:#fff;--rail-ativo:#2dd4bf; }
+html.visual-b .cond-indice-blocos a.cond-indice-bloco { background:var(--surface)!important;color:var(--text-main)!important;border:1px solid var(--border)!important;border-left:6px solid var(--cor-bloco)!important;text-align:left;padding-left:12px }
+html.visual-b .cond-bloco { background:var(--surface)!important;color:var(--text-main)!important;border:1px solid var(--border);border-left:6px solid var(--cor-bloco) }
+html.visual-b .cond-cabecalho { background:var(--surface)!important;border:1px solid var(--border);border-left:6px solid var(--cor-cat) }
+html.visual-b .cond-cabecalho h2 { color:var(--text-main)!important }
+html.visual-b .cond-btn-receita { background:var(--primary)!important;border-color:var(--primary)!important;color:var(--on-primary,#fff)!important }
+html.visual-b #app-container .section-header::before { background:var(--primary)!important }
+html.visual-b #app-container .btn-add-carrinho { color:var(--on-primary,#fff)!important }
+html.visual-b .header-banner,
+html.visual-b .control-panel { background:#0b0f14!important;border-bottom:1px solid #1f2933!important }
+html.visual-b #app-container .med-card { background:#141a21!important;border:1px solid #26313c!important;box-shadow:none!important }
+html.visual-b #app-container .med-header .result-box:not(.static-blue):not(.static-gray) { background:#3a2a05!important;color:#fbbf24!important }
+html.visual-b .sidebar-nav { border-right:1px solid #1f2933 }
+html.visual-b .control-panel .input-group { background:#1a232c!important;border:1.5px solid #26313c!important }
+html.visual-b .control-panel .input-group input { color:#fff!important;-webkit-text-fill-color:#fff!important }
+html.visual-b .control-panel .input-group .input-label,
+html.visual-b .control-panel .input-group .input-unidade { color:#8b98a5!important }
+html.visual-b .btn-novo-paciente { color:#e6edf3!important;border-color:#34414e!important;background:transparent!important }
+html.visual-b .allergy-input { background-color:#2a1416!important;color:#fca5a5!important;border-color:#4a1f22!important }
+html.visual-b .allergy-input::placeholder { color:#f08b8b!important }
+html.visual-b .cond-cabecalho-resumo,
+html.visual-b .cond-legenda { color:#c3cfdb!important }
+
+/* ---------- visual-c ---------- */
+html.visual-c { --primary:#4f46e5;--primary-dark:#3730a3;--primary-soft:#eef2ff;--bg-app:#f5f5f7;--surface:#fff;--text-main:#1d1d1f;--text-soft:#3a3a3c;--text-muted:#6e6e73;--border:#e5e5ea;--border-strong:#d1d1d6;--navy:#fff;--navy-2:#eef2ff;--rail-txt:#6e6e73;--rail-link:#1d1d1f;--rail-forte:#1d1d1f;--rail-ativo:#4f46e5;--gelo:#ffffff; }
+html.visual-c .cond-indice-blocos a.cond-indice-bloco { background:var(--surface)!important;color:var(--text-main)!important;border:1px solid var(--border)!important;border-left:6px solid var(--cor-bloco)!important;text-align:left;padding-left:12px }
+html.visual-c .cond-bloco { background:var(--surface)!important;color:var(--text-main)!important;border:1px solid var(--border);border-left:6px solid var(--cor-bloco) }
+html.visual-c .cond-cabecalho { background:var(--surface)!important;border:1px solid var(--border);border-left:6px solid var(--cor-cat) }
+html.visual-c .cond-cabecalho h2 { color:var(--text-main)!important }
+html.visual-c .cond-btn-receita { background:var(--primary)!important;border-color:var(--primary)!important;color:var(--on-primary,#fff)!important }
+html.visual-c #app-container .section-header::before { background:var(--primary)!important }
+html.visual-c #app-container .btn-add-carrinho { color:var(--on-primary,#fff)!important }
+html.visual-c:not([data-theme=dark]) .header-banner { background:#fff!important;border-bottom:1px solid #e5e5ea!important }
+html.visual-c .header-banner .brand-title { color:#1d1d1f!important }
+html.visual-c .header-banner .brand-subtitle { color:#6e6e73!important }
+html.visual-c:not([data-theme=dark]) .control-panel { --navy:#fff!important;--navy-2:#f5f5f7!important;--rail-txt:#6e6e73;--rail-forte:#1d1d1f;--rail-ativo:#4f46e5;--alergia-txt:#b42318;--alergia-ph:#d9534f;border-bottom:1px solid #e5e5ea!important;box-shadow:none!important }
+html.visual-c .input-group input,
+html.visual-c .input-group input:focus { color:#1d1d1f!important;-webkit-text-fill-color:#1d1d1f!important }
+html.visual-c .btn-novo-paciente { color:#1d1d1f!important;border-color:#d1d1d6!important }
+html.visual-c .allergy-input { background-color:#fff1f0!important;color:#b42318!important }
+html.visual-c .header-banner .search-input { background-color:#f2f2f7!important }
+html.visual-c .sidebar-nav { border-right:1px solid #e5e5ea }
+html.visual-c .rail-ico { background:#f2f2f7;border-radius:8px;width:30px!important;height:30px;display:inline-flex!important;align-items:center;justify-content:center }
+html.visual-c .sidebar-link.aberto .rail-ico { background:#4f46e5 }
+html.visual-c .sidebar-link.aberto { background:#eef2ff!important;color:#3730a3!important }
+html.visual-c #app-container .med-card { border:none!important;border-radius:20px!important;box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px -12px rgba(0,0,0,.12)!important }
+html.visual-c .chip-cat,
+html.visual-c .bottom-nav a,
+html.visual-c .bottom-nav button { border-color:#e5e5ea!important }
+
+/* Botões da escolha do visual (menu de configurações, versão de teste) */
+.visual-teste-opcoes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
+.visual-teste-btn { border: 1.5px solid var(--border-strong); background: var(--surface); color: var(--text-main); border-radius: 10px; padding: 10px 8px; font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; }
+.visual-teste-btn.ativo { border-color: var(--primary); background: var(--primary-soft); color: var(--primary-dark); box-shadow: inset 0 0 0 1px var(--primary); }
+.visual-teste-dica { display: block; margin-top: 8px; color: var(--text-muted); font-size: 12px; }

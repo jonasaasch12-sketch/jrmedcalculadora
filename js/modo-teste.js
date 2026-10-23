@@ -29,3 +29,28 @@ function mostrarBloqueioTeste(email) {
             <a href="/" class="login-btn" style="display:block; text-decoration:none; text-align:center; padding: 12px; background:#0284c7; color:#fff; border-radius:8px; font-weight:700;">Ir para o site oficial</a>
         </div>`;
 }
+
+// ===== Visuais em teste (css/temas-teste.css): o Dr. Jonas testa A, B e C no teste e escolhe um. =====
+// Só na versão de teste. Fica salvo neste aparelho (localStorage); o site oficial não muda.
+const VISUAIS_TESTE = { atual: "Atual", a: "A · Hospitalar", b: "B · Plantão noturno", c: "C · Apple Saúde" };
+function lerVisualTeste() { try { return localStorage.getItem('jrmed_visual_teste') || 'atual'; } catch (e) { return 'atual'; } }
+function aplicarVisualTeste(v) {
+    if (!VISUAIS_TESTE[v]) v = 'atual';
+    let html = document.documentElement;
+    html.classList.remove('visual-a', 'visual-b', 'visual-c');
+    if (v !== 'atual') html.classList.add('visual-' + v);
+    try { localStorage.setItem('jrmed_visual_teste', v); } catch (e) { }
+    document.querySelectorAll('.visual-teste-btn').forEach(b => b.classList.toggle('ativo', b.dataset.v === v));
+}
+function criarSecaoVisualTeste() {
+    let aparencia = [...document.querySelectorAll('.config-secao')].find(s => /Aparência/.test(s.textContent));
+    if (!aparencia || document.getElementById('cfgVisualTeste')) return;
+    let atual = lerVisualTeste();
+    aparencia.insertAdjacentHTML('afterend', `<div class="config-secao" id="cfgVisualTeste">
+        <div class="config-secao-titulo">🎨 Visual (teste)</div>
+        <div class="visual-teste-opcoes">${Object.entries(VISUAIS_TESTE).map(([k, t]) =>
+            `<button type="button" class="visual-teste-btn${k === atual ? ' ativo' : ''}" data-v="${k}" onclick="aplicarVisualTeste('${k}')">${t}</button>`).join('')}</div>
+        <small class="visual-teste-dica">Só neste aparelho e só na versão de teste. Use com o modo escuro desligado.</small>
+    </div>`);
+}
+if (MODO_TESTE) { aplicarVisualTeste(lerVisualTeste()); criarSecaoVisualTeste(); }

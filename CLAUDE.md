@@ -34,6 +34,7 @@ css/visual.css             camada visual "profissional" (tokens, Inter, cabeçal
 css/layout-b.css           Layout B (proposta do Figma): barra lateral de ícones, faixa do paciente, cards um embaixo do outro,
                            receita fixa à direita (≥1280px); celular: cabeçalho azul-marinho, chips de categoria,
                            barra inferior. Carregado por último. Texto da receita lido com textoDaCaixa() (js/base.js)
+css/temas-teste.css        visuais A/B/C em avaliação (só no teste: Menu → 🎨 Visual (teste); classe html.visual-a/b/c, js/modo-teste.js)
 js/base.js                 auxiliares usados nos cálculos (recHead, round05, ceftriaxona)
 js/modo-teste.js           versão de teste: faixa, selo e bloqueio de quem não é admin
 medicamentos/registro.js   registrarMedicamentos(): cria farmaciaJR, detalhesMedicacoes, fichasPadrao
