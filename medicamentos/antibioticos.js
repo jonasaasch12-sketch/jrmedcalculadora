@@ -26,7 +26,7 @@ registrarMedicamentos({
         cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
         kw: "amoxicilina suspensao pneumonia otite antibiotico oral ambulatorial", nome: "Amoxicilina Suspensão (Regular)", apres: "250 mg / 5 mL",
         info: "<strong>Posologia:</strong> 50 mg/kg/dia de 8/8h por 7 dias.", badge: "", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => { let v = round05((p * 50 * 5) / 750); return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 250 MG/5ML ---------- 1 FR\nDAR ${v} ML, VIA ORAL, DE 8/8 HORAS POR 7 DIAS.` }; },
+        calc: (p) => { let v = round05((p * 50 * 5) / 750), tot = Math.ceil(parseFloat(v) * 3 * 7); /* total do tratamento em mL: 3 doses x 7 dias */ return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 250 MG/5ML ---------- ${tot} ML\nDAR ${v} ML, VIA ORAL, DE 8/8 HORAS POR 7 DIAS.` }; },
         detalhes: {
             indicacao: "Pneumonia e otite média aguda. Faringoamigdalite estreptocócica: usar o card \"Amoxicilina: Faringoamigdalite (10 dias)\".",
             dose: "50 mg/kg/dia VO de 8/8h por 7 dias.",
@@ -37,7 +37,7 @@ registrarMedicamentos({
         cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
         kw: "amoxicilina suspensao 400 oral ambulatorial antibiotico", nome: "Amoxicilina Suspensão (12h)", apres: "400 mg / 5 mL",
         info: "<strong>Posologia:</strong> 50 mg/kg/dia de 12/12h por 7 dias.", badge: "", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => { let v = round05((p * 50 * 5) / 800); return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 400 MG/5ML ---------- 1 FR\nDAR ${v} ML, VIA ORAL, DE 12/12 HORAS POR 7 DIAS.` }; },
+        calc: (p) => { let v = round05((p * 50 * 5) / 800), tot = Math.ceil(parseFloat(v) * 2 * 7); /* total do tratamento em mL: 2 doses x 7 dias */ return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 400 MG/5ML ---------- ${tot} ML\nDAR ${v} ML, VIA ORAL, DE 12/12 HORAS POR 7 DIAS.` }; },
         detalhes: {
             indicacao: "Pneumonia e otite média aguda. Faringoamigdalite estreptocócica: usar o card \"Amoxicilina: Faringoamigdalite (10 dias)\".",
             dose: "50 mg/kg/dia VO de 12/12h por 7 dias.",
@@ -48,7 +48,7 @@ registrarMedicamentos({
         cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
         kw: "amoxicilina clavulanato clavulin pneumonia otite antibiotico oral ambulatorial", nome: "Amoxicilina + Clavulanato", apres: "400 mg + 57 mg / 5 mL",
         info: "<strong>Posologia:</strong> 45 mg/kg/dia de 12/12h por 7 dias.", badge: "", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => { let v = round05((p * 45 * 5) / 800); return { v: v + " mL", r: `${recHead}1) AMOXICILINA + CLAVULANATO 400+57 MG/5ML - 1 FR\nDAR ${v} ML, VIA ORAL, DE 12/12 HORAS POR 7 DIAS.` }; },
+        calc: (p) => { let v = round05((p * 45 * 5) / 800), tot = Math.ceil(parseFloat(v) * 2 * 7); /* total do tratamento em mL: 2 doses x 7 dias */ return { v: v + " mL", r: `${recHead}1) AMOXICILINA + CLAVULANATO 400+57 MG/5ML - ${tot} ML\nDAR ${v} ML, VIA ORAL, DE 12/12 HORAS POR 7 DIAS.` }; },
         detalhes: {
             indicacao: "Pneumonia, otite e sinusite com falha à amoxicilina.",
             dose: "45 mg/kg/dia VO de 12/12h por 7 dias.",
