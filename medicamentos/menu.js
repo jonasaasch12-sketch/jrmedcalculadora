@@ -69,6 +69,7 @@ const categorias = [
         patologias: [
             { nome: "Infecções de Vias Aéreas e Partes Moles", remedios: ["amox", "amox400", "clav"] },
             { nome: "Faringoamigdalite Estreptocócica", conduta: "faringoamigdalite", condutaNome: "Faringoamigdalite", remedios: ["amox_faringo", "benza", "azitro_faringo"] },
+            { nome: "Otite Média Aguda", conduta: "otite_media", condutaNome: "Otite média aguda", remedios: ["amox_oma", "clav_oma", "cef_oma"] },
             { nome: "Febre sem Sinais Localizatórios (Bacteremia Oculta)", conduta: "fssl", condutaNome: "Febre sem sinais localizatórios", remedios: ["cef_fssl"] },
             { nome: "Outros Antibióticos Orais", remedios: ["cefadroxila", "pen_v", "smx_tmp", "metronidazol_vo", "cipro_vo"] },
             { nome: "Antibióticos Hospitalares (EV)", remedios: ["amicacina", "cefalotina", "cefepime", "ceftazidima", "cipro_ev", "clindamicina", "meropenem", "metronidazol_ev", "oxacilina", "pen_cristalina", "vancomicina"] }
@@ -132,7 +133,7 @@ const categorias = [
         id: "cat-especialidades", titulo: "Especialidades", dotClass: "dot-especialidades", cor: "tarja-especialidades", nome: "Especialidades", icone: "👁️‍🗨️ Espec.",
         patologias: [
             { nome: "Oftalmologia (Olhos)", remedios: ["espec_tobra", "espec_tobra_dexa", "espec_lacribell", "lacrifilm", "tobracort", "compressa_morna"] },
-            { nome: "Otorrino: Ouvido", conduta: "otite_media", condutaNome: "Otite média aguda", remedios: ["espec_otociriax", "otosporin", "espec_cerumin"] },
+            { nome: "Otorrino: Ouvido", remedios: ["espec_otociriax", "otosporin", "espec_cerumin"] },
             { nome: "Otorrino: Orofaringe (Dor de Garganta)", remedios: ["hexomedine", "bismujet"] },
             { nome: "Genital (Sinéquia, Fimose, Vulvovaginite)", remedios: ["premarin", "postec", "flogo_rosa"] },
             { nome: "Toxicologia (Intoxicações)", remedios: ["carvao"] },

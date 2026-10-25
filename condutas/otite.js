@@ -166,11 +166,11 @@ registrarConduta({
                     resumo: "Amoxicilina. Amoxicilina + clavulanato se uso recente, conjuntivite purulenta ou recorrência sem resposta.",
                     itens: [
                         "<strong>1ª escolha: amoxicilina</strong> (AAP 2013; SBP; consenso italiano 2025).",
-                        "<strong>Dose:</strong> a <strong>AAP</strong> e o <strong>consenso italiano</strong> usam <strong>dose alta (80 a 90 mg/kg/dia)</strong> pelo pneumococo resistente. A <strong>SBP</strong> aceita a <strong>dose padrão (50 mg/kg/dia)</strong> nos casos simples, com dose alta se menor de 2 anos, creche, antibiótico nos últimos 30 dias ou falha. Os cards abaixo estão na dose padrão.",
+                        "<strong>Dose:</strong> a <strong>AAP</strong> e o <strong>consenso italiano</strong> usam <strong>dose alta (80 a 90 mg/kg/dia)</strong> pelo pneumococo resistente. A <strong>SBP</strong> aceita a dose padrão (50 mg/kg/dia) nos casos simples. <strong>Aqui usamos a dose alta</strong> (cards abaixo), com a duração calculada pela idade.",
                         "<strong>Amoxicilina + clavulanato</strong> (AAP 2013) se: <strong>amoxicilina nos últimos 30 dias</strong>, <strong>conjuntivite purulenta</strong> associada (síndrome otite-conjuntivite, <em>H. influenzae</em>) ou <strong>OMA recorrente sem resposta à amoxicilina</strong>.",
                         "<strong>Vômitos ou não aceita via oral:</strong> ceftriaxona IM (1 dose; 3 doses se falha)."
                     ],
-                    remedios: ["amox", "amox400", "clav"]
+                    remedios: ["amox_oma", "clav_oma", "cef_oma"]
                 },
                 {
                     passo: 6,
@@ -180,7 +180,8 @@ registrarConduta({
                         "<strong>Alergia sem reação imediata</strong> (exantema tardio): <strong>cefalosporina</strong> (cefuroxima VO, cefpodoxima ou ceftriaxona IM) (AAP 2013).",
                         "<strong>Reação imediata ou anafilaxia:</strong> <strong>macrolídeo</strong> (azitromicina, claritromicina) ou clindamicina. Macrolídeos têm eficácia menor contra pneumococo e <em>H. influenzae</em>.",
                         "<strong>Exantema durante a amoxicilina</strong> nem sempre é alergia (viroses, mononucleose): registrar e investigar depois."
-                    ]
+                    ],
+                    remedios: ["cef_oma"]
                 },
                 {
                     passo: 7,
@@ -193,7 +194,8 @@ registrarConduta({
                         "<strong>Estava com amoxicilina + clavulanato:</strong> <strong>ceftriaxona IM por 3 dias</strong> (AAP 2013).",
                         "<strong>Falha de novo:</strong> otorrino (timpanocentese com cultura); clindamicina com ou sem cefalosporina de 3ª geração.",
                         "<strong>Orientar retorno se:</strong> febre persistente, dor que não cede, inchaço atrás da orelha, rigidez de nuca, sonolência, vômitos repetidos ou paralisia facial."
-                    ]
+                    ],
+                    remedios: ["clav_oma", "cef_oma"]
                 }
             ]
         },

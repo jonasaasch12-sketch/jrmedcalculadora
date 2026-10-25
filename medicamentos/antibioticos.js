@@ -71,6 +71,53 @@ registrarMedicamentos({
             atencao: "10 dias completos (prevenção de febre reumática). Mononucleose: exantema com amoxicilina. Perguntar sobre alergia a penicilina."
         }
     },
+    "amox_oma": {
+        cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "amoxicilina dose alta otite media aguda oma ouvido 90 mg 12/12h", nome: "Amoxicilina: Otite Média Aguda (dose alta)", apres: "400 mg / 5 mL",
+        info: "<strong>Posologia (AAP 2013):</strong> 90 mg/kg/dia de 12/12h (45 mg/kg/dose). Máx. 2 g/dose (4 g/dia). Duração pela idade: < 2 anos 10 dias; ≥ 2 anos 7 dias (OMA grave: 10 dias).", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            let v = Math.min(parseFloat(round05(p * 45 * 5 / 400)), 25), t = String(v).replace('.', ',');
+            /* duração AAP: < 2 anos (ou idade não informada) 10 dias; >= 2 anos 7 dias */
+            let id = parseFloat(String(i).replace(',', '.')), d = (isNaN(id) || id < 2) ? 10 : 7, tot = Math.ceil(v * 2 * d);
+            return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 400 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR ${d} DIAS.` };
+        },
+        detalhes: {
+            indicacao: "Otite média aguda (1ª escolha).",
+            dose: "90 mg/kg/dia VO de 12/12h (máx. 2 g/dose). < 2 anos: 10 dias; ≥ 2 anos: 7 dias; OMA grave: 10 dias (AAP 2013).",
+            atencao: "Idade em branco: a receita sai com 10 dias. OMA grave a partir de 2 anos: trocar para 10 dias. Perguntar sobre alergia a penicilina."
+        }
+    },
+    "clav_oma": {
+        cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "amoxicilina clavulanato dose alta es 600 otite media aguda oma falha conjuntivite purulenta", nome: "Amoxicilina + Clavulanato: Otite Média Aguda (dose alta)", apres: "600 mg + 42,9 mg / 5 mL (ES)",
+        info: "<strong>Posologia (AAP 2013):</strong> 90 mg/kg/dia de amoxicilina (+ 6,4 mg/kg/dia de clavulanato) de 12/12h. Máx. 2 g de amoxicilina/dose. Duração pela idade: < 2 anos 10 dias; ≥ 2 anos 7 dias (OMA grave: 10 dias).", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            let v = Math.min(parseFloat(round05(p * 45 * 5 / 600)), 16.5), t = String(v).replace('.', ',');
+            /* formulação ES 14:1; duração AAP: < 2 anos (ou idade não informada) 10 dias; >= 2 anos 7 dias */
+            let id = parseFloat(String(i).replace(',', '.')), d = (isNaN(id) || id < 2) ? 10 : 7, tot = Math.ceil(v * 2 * d);
+            return { v: v + " mL", r: `${recHead}1) AMOXICILINA + CLAVULANATO 600+42,9 MG/5ML (ES) - ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR ${d} DIAS.` };
+        },
+        detalhes: {
+            indicacao: "Otite média aguda com amoxicilina nos últimos 30 dias, conjuntivite purulenta associada, recorrência sem resposta à amoxicilina ou falha da amoxicilina em 48–72 h.",
+            dose: "90 mg/kg/dia de amoxicilina + 6,4 mg/kg/dia de clavulanato VO de 12/12h (máx. 2 g de amoxicilina/dose). < 2 anos: 10 dias; ≥ 2 anos: 7 dias; OMA grave: 10 dias (AAP 2013).",
+            atencao: "Usar a formulação ES (600 + 42,9 mg/5 mL): na 400 + 57 mg/5 mL essa dose dá clavulanato em excesso (mais diarreia). Idade em branco: 10 dias."
+        }
+    },
+    "cef_oma": {
+        cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar / UBS (Vias Injetáveis)",
+        kw: "ceftriaxona im otite media aguda oma falha vomitos 3 dias intramuscular", nome: "Ceftriaxona IM: Otite Média Aguda", apres: "FA 1 g + 3,5 mL Lidocaína 1%",
+        info: "<strong>Posologia (AAP 2013):</strong> 50 mg/kg IM 1 vez ao dia. Falha de amoxicilina + clavulanato: 3 dias. Não aceita via oral: 1 dose. Máx. 1 g/dose.", badge: "Máx: 1 g/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* AAP 2013: 50 mg/kg IM 1x/dia, 1 ou 3 dias. 1 g + 3,5 mL de lidocaína 1% (285,7 mg/mL). Teto 1 g. */
+            let mg = Math.min(p * 50, 1000), ml = mg / 285.7, t = ml.toFixed(1).replace('.', ','), q = mg >= 1000 ? "1 g = dose máxima" : `${mg.toFixed(0)} mg = 50 mg/kg`;
+            return { v: `IM: ${ml.toFixed(1)} mL`, r: `VIA INTRAMUSCULAR (OTITE MÉDIA AGUDA)\n\n Reconstituir 1 FA de Ceftriaxona 1 g com 3,5 mL de lidocaína 1%.\n Aspirar ${t} mL (${q}) e aplicar IM profunda, 1 vez ao dia, por 3 dias.\n\n * Se a indicação for só vômitos/não aceitar via oral: dose única.` };
+        },
+        detalhes: {
+            indicacao: "Otite média aguda com falha de amoxicilina + clavulanato (3 dias) ou que não aceita via oral (1 dose). Alérgico à penicilina sem reação imediata.",
+            dose: "50 mg/kg IM 1 vez ao dia (máx. 1 g): 3 dias na falha; 1 dose se não aceita via oral (AAP 2013).",
+            atencao: "A versão com lidocaína é só IM, nunca EV. Evitar se houve anafilaxia à penicilina."
+        }
+    },
     "azitro_faringo": {
         cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
         kw: "azitromicina faringite amigdalite estreptococica alergia penicilina anafilaxia macrolideo 5 dias", nome: "Azitromicina: Faringoamigdalite (alérgico à penicilina)", apres: "200 mg / 5 mL",
