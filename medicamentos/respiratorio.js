@@ -662,18 +662,19 @@ registrarMedicamentos({
     },
     "clav_oma": {
         cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais)",
-        kw: "amoxicilina clavulanato dose alta es 600 otite media aguda oma falha conjuntivite purulenta", nome: "Amoxicilina + Clavulanato: Otite Média Aguda (dose alta)", apres: "600 mg + 42,9 mg / 5 mL (ES)",
-        info: "<strong>Posologia (AAP 2013):</strong> 90 mg/kg/dia de amoxicilina (+ 6,4 mg/kg/dia de clavulanato) de 12/12h. Máx. 2 g de amoxicilina/dose. Duração pela idade: < 2 anos 10 dias; ≥ 2 anos 7 dias (OMA grave: 10 dias).", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
+        kw: "amoxicilina clavulanato dose alta otite media aguda oma falha conjuntivite purulenta dois frascos",
+        nome: "Amoxicilina + Clavulanato: Otite Média Aguda (dose alta)", apres: "Amoxicilina 400 mg/5 mL + Amoxicilina-clavulanato 400+57 mg/5 mL",
+        info: "<strong>Posologia (AAP 2013):</strong> 90 mg/kg/dia de amoxicilina (+ 6,4 mg/kg/dia de clavulanato) de 12/12h, com <strong>dois frascos</strong>: metade da dose em cada (45 mg/kg/dia de amoxicilina 400 + 45 mg/kg/dia de amoxicilina-clavulanato 400+57). Máx. 2 g de amoxicilina/dose. Duração pela idade: < 2 anos 10 dias; ≥ 2 anos 7 dias (OMA grave: 10 dias).", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p, i) => {
-            let v = Math.min(parseFloat(round05(p * 45 * 5 / 600)), 16.5), t = String(v).replace('.', ',');
-            /* formulação ES 14:1; duração AAP: < 2 anos (ou idade não informada) 10 dias; >= 2 anos 7 dias */
+            /* sem a ES (14:1): 22,5 mg/kg/dose de cada frasco de 400 mg/5 mL; teto 1 g por frasco por dose (2 g de amoxicilina no total) */
+            let v = Math.min(parseFloat(round05(p * 22.5 * 5 / 400)), 12.5), t = String(v).replace('.', ',');
             let id = parseFloat(String(i).replace(',', '.')), d = (isNaN(id) || id < 2) ? 10 : 7, tot = Math.ceil(v * 2 * d);
-            return { v: v + " mL", r: `${recHead}1) AMOXICILINA + CLAVULANATO 600+42,9 MG/5ML (ES) - ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR ${d} DIAS.` };
+            return { v: v + " mL de cada", r: `${recHead}1) AMOXICILINA SUSPENSÃO 400 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR ${d} DIAS.\n\n2) AMOXICILINA + CLAVULANATO 400+57 MG/5ML - ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR ${d} DIAS.\nDAR OS DOIS JUNTOS, NO MESMO HORÁRIO.` };
         },
         detalhes: {
             indicacao: "Otite média aguda com amoxicilina nos últimos 30 dias, conjuntivite purulenta associada, recorrência sem resposta à amoxicilina ou falha da amoxicilina em 48–72 h.",
-            dose: "90 mg/kg/dia de amoxicilina + 6,4 mg/kg/dia de clavulanato VO de 12/12h (máx. 2 g de amoxicilina/dose). < 2 anos: 10 dias; ≥ 2 anos: 7 dias; OMA grave: 10 dias (AAP 2013).",
-            atencao: "Usar a formulação ES (600 + 42,9 mg/5 mL): na 400 + 57 mg/5 mL essa dose dá clavulanato em excesso (mais diarreia). Idade em branco: 10 dias."
+            dose: "90 mg/kg/dia de amoxicilina + 6,4 mg/kg/dia de clavulanato VO de 12/12h (máx. 2 g de amoxicilina/dose), em dois frascos: amoxicilina 400 mg/5 mL + amoxicilina-clavulanato 400+57 mg/5 mL, o mesmo volume de cada. < 2 anos: 10 dias; ≥ 2 anos: 7 dias; OMA grave: 10 dias (AAP 2013).",
+            atencao: "Sem a formulação ES (600 + 42,9) no serviço: usar só o 400+57 na dose alta dobraria o clavulanato (mais diarreia). Por isso, dois frascos. Idade em branco: 10 dias."
         }
     },
     "cef_oma": {
