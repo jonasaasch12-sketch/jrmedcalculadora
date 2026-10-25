@@ -311,5 +311,23 @@ registrarMedicamentos({
             dose: "1 g/kg/dose por SNG.",
             atencao: "Máximo 50 g por dose."
         }
+    },
+    // ===== Doença de Kawasaki: card próprio (AHA 2017) =====
+    "ivig_kawasaki": {
+        cat: "cat-especialidades", sub: "🏥 Uso Hospitalar (Hemoderivados)",
+        kw: "imunoglobulina humana endovenosa ivig igiv kawasaki 2 g/kg aneurisma coronariano",
+        nome: "Imunoglobulina Humana EV (IGIV) — Doença de Kawasaki", apres: "Solução a 5% (50 mg/mL) ou 10% (100 mg/mL)",
+        info: "<strong>Conduta (AHA 2017):</strong> 2 g/kg EV em dose única, infundida em 10 a 12 horas, até o 10º dia de febre.", badge: "Dose única", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* AHA 2017: 2 g/kg EV dose única em 10 a 12 h. Volumes para 5% (50 mg/mL) e 10% (100 mg/mL); velocidade média em 12 h */
+            let g = Math.round(p * 2 * 10) / 10, f = x => String(x).replace('.', ',');
+            let v5 = Math.round(g * 20), v10 = Math.round(g * 10);
+            return { v: `${f(g)} g`, r: `VIA ENDOVENOSA (USO HOSPITALAR - DOENÇA DE KAWASAKI)\n\n1) IMUNOGLOBULINA HUMANA ENDOVENOSA\nFAZER ${f(g)} G (2 G/KG) EV EM DOSE ÚNICA, EM 10 A 12 HORAS.\n SOLUÇÃO A 5%: ${v5} ML (EM 12 H: ${f(Math.round(v5 / 12 * 10) / 10)} ML/H).\n SOLUÇÃO A 10%: ${v10} ML (EM 12 H: ${f(Math.round(v10 / 12 * 10) / 10)} ML/H).\n\n * Começar devagar e aumentar conforme a bula do produto. Monitorar sinais vitais (reação à infusão).` };
+        },
+        detalhes: {
+            indicacao: "Doença de Kawasaki completa ou incompleta com indicação de tratamento; resistência (2ª dose).",
+            dose: "2 g/kg EV em dose única, em 10 a 12 h (AHA 2017).",
+            atencao: "Até o 10º dia de febre (ideal até o 7º). Adiar vacinas de vírus vivo por 11 meses. Seguir a velocidade da bula do produto disponível."
+        }
     }
 });
