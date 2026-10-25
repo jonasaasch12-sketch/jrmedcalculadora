@@ -43,32 +43,6 @@ registrarMedicamentos({
             fonteRevisao: "SBP - Sedação, Analgesia e Bloqueio Neuromuscular: https://www.sbp.com.br/fileadmin/user_upload/pdfs/Sedacao_Analgesia_Bloqueio_Neuromuscular.pdf - consultado em out/2026."
         }
     },
-    "neuro_midaz_nasal": {
-        cat: "cat-neuro", sub: "🏥 Uso Hospitalar (Crise Convulsiva)",
-        kw: "midazolam intranasal nasal bucal oral mucosa convulsao estado de mal sem acesso neuro",
-        nome: "Midazolam Intranasal ou Bucal (Se sem acesso)", apres: "Ampola 5 mg / mL",
-        info: "<strong>Conduta:</strong> 0,2 mg/kg (Peso x 0,04 mL) intranasal ou bucal. Máx. 10 mg (2 mL).", badge: "Teto Máx: 10 mg (2 mL)", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => {
-            /* AES 2016: midazolam intranasal 0,2 mg/kg (máx. 10 mg); bucal 0,2 mg/kg. Ampola 5 mg/mL. */
-            let v = Math.min(parseFloat((p * 0.04).toFixed(2)), 2);
-            let narina = (v / 2).toFixed(2);
-            return { v: v.toFixed(2) + " mL", r: `VIA INTRANASAL OU BUCAL (CRISE CONVULSIVA SEM ACESSO VENOSO)\n\nMIDAZOLAM 5 MG/ML: ${v.toFixed(2)} ML (0,2 MG/KG), DOSE ÚNICA.\n\nINTRANASAL: ${narina} ML EM CADA NARINA, DE PREFERÊNCIA COM ATOMIZADOR (MAD).\nBUCAL: APLICAR ${v.toFixed(2)} ML ENTRE A BOCHECHA E A GENGIVA.\n\nSE A CRISE CONTINUAR APÓS 5 MINUTOS: 2ª DOSE DE BENZODIAZEPÍNICO (EV SE JÁ TIVER ACESSO). NO MÁXIMO 2 DOSES DE BENZODIAZEPÍNICO NO TOTAL.` };
-        },
-        detalhes: {
-            indicacao: "Crise convulsiva com 5 minutos ou mais, sem acesso venoso (inclusive fora do hospital).",
-            dose: "0,2 mg/kg (Peso x 0,04 mL) intranasal (metade em cada narina) ou bucal.",
-            atencao: "Máximo 10 mg (2 mL). No máximo 2 doses de benzodiazepínico no total, contando as feitas antes da chegada. Risco de depressão respiratória: ter material de via aérea pronto."
-        },
-        ficha: {
-            indicacoes: "Tratamento inicial da crise convulsiva prolongada (≥ 5 min) / estado de mal epiléptico sem acesso venoso.",
-            dose: "0,2 mg/kg intranasal ou bucal, dose única; pode ser seguida de uma 2ª dose de benzodiazepínico se a crise persistir após 5 minutos",
-            doseMaxima: "10 mg por dose.",
-            apresentacoes: "Ampola 5 mg/mL (usar a solução injetável pela mucosa).",
-            via: "Intranasal (com atomizador, metade do volume em cada narina) ou bucal (entre a bochecha e a gengiva).",
-            alertasPediatricos: "Intranasal e bucal são provavelmente eficazes na criança (nível B, AES 2016), com tempo até o fim da crise menor que o diazepam EV quando se conta o tempo para conseguir o acesso. Risco de depressão respiratória, maior se mais de 2 doses de benzodiazepínico.",
-            fonteRevisao: "Glauser T et al. Evidence-Based Guideline: Treatment of Convulsive Status Epilepticus in Children and Adults (American Epilepsy Society). Epilepsy Curr 2016;16(1):48-61. doi:10.5698/1535-7597-16.1.48"
-        }
-    },
     "neuro_levetiracetam": {
         cat: "cat-neuro", sub: "🏥 Uso Hospitalar (Crise Convulsiva)",
         kw: "levetiracetam keppra convulsao crise persistente estado de mal epileptico segunda linha neuro hospitalar injetavel",
