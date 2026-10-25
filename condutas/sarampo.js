@@ -7,7 +7,7 @@
 // =====================================================
 function ferramentaSarampoFotos() {
     if (typeof htmlFotoExantema !== 'function') return '';
-    return `<div class="exg ex-galeria">${["sarampo", "sarampo_koplik"].map(k => htmlFotoExantema(k)).join('')}</div>
+    return `<div class="exg ex-galeria">${["sarampo", "sarampo_corpo", "sarampo_koplik"].map(k => htmlFotoExantema(k)).join('')}</div>
         <div class="ex-card-desc">Toque na foto para ampliar.</div>`;
 }
 

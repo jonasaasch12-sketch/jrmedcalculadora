@@ -150,6 +150,13 @@ const FOTOS_EXANTEMA = {
         "licenca": "CC BY 2.0",
         "legenda": "Kawasaki: exantema com acentuação no períneo.",
         "link": "https://commons.wikimedia.org/wiki/File%3AKawasaki_symptoms_C.jpg"
+    },
+    "sarampo_corpo": {
+        "arq": "img/exantemas/sarampo_corpo.jpg",
+        "autor": "CDC (PHIL 4497)",
+        "licenca": "domínio público",
+        "legenda": "Sarampo: exantema maculopapular confluente no tronco, nádegas e membros.",
+        "link": "https://commons.wikimedia.org/wiki/File:Measles_rash_PHIL_4497_lores.jpg"
     }
 };
 
@@ -177,7 +184,7 @@ function abrirFotoExantema(k) {
 // ---------- Guia de identificação ----------
 // tags: lesão (mp/ves/pet/lixa) · febre (febre_antes / febre_junto / febre_pouca) · início (ini_face/ini_tronco/ini_extrem/ini_boca) · sinais
 const DOENCAS_EXANTEMA = [
-    { id: "sarampo", fotos: ["sarampo", "sarampo_koplik"], nome: "Sarampo", tipo: "mp", conduta: "sarampo", alerta: "Notificação imediata (até 24 h). Isolamento respiratório.",
+    { id: "sarampo", fotos: ["sarampo", "sarampo_corpo", "sarampo_koplik"], nome: "Sarampo", tipo: "mp", conduta: "sarampo", alerta: "Notificação imediata (até 24 h). Isolamento respiratório.",
       tags: ["mp", "febre_junto", "ini_face", "s_tosse", "s_koplik"],
       texto: "Febre alta + <strong>tosse, coriza e conjuntivite</strong>; exantema no 3º a 5º dia, ainda com febre, que começa <strong>atrás das orelhas e na face</strong> e desce (craniocaudal), confluente. <strong>Manchas de Koplik</strong> na mucosa jugal." },
     { id: "rubeola", fotos: ["rubeola"], nome: "Rubéola", tipo: "mp", conduta: "rubeola", alerta: "Notificação imediata (até 24 h).",
