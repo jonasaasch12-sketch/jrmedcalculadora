@@ -79,7 +79,10 @@ registrarMedicamentos({
             let mg = Math.min(p * 60, 4500);
             let ml = mg / 100;
             let fr = Math.ceil(ml / 5);
-            return { v: `${ml.toFixed(1)} mL (${mg.toFixed(0)} mg)`, r: `VIA ENDOVENOSA (CRISE CONVULSIVA PERSISTENTE - 2ª LINHA)\n\nLEVETIRACETAM 100 MG/ML (FRASCO 500 MG/5 ML) ---- ${fr} FR\nDOSE: ${mg.toFixed(0)} MG (60 MG/KG) = ${ml.toFixed(1)} ML.\n\nDILUIR EM SF 0,9% E CORRER EM 10 A 15 MINUTOS, EM DOSE ÚNICA.` };
+            /* Bula (DailyMed): diluir a no máximo 15 mg/mL (adulto: em 100 mL) e infundir em 15 min. */
+            let total = Math.max(Math.ceil(mg / 15), Math.ceil(ml));
+            let sf = Math.max(total - ml, 0);
+            return { v: `${ml.toFixed(1)} mL (${mg.toFixed(0)} mg)`, r: `VIA ENDOVENOSA (CRISE CONVULSIVA PERSISTENTE - 2ª LINHA)\n\nLEVETIRACETAM 100 MG/ML (FRASCO 500 MG/5 ML) ---- ${fr} FR\nDOSE: ${mg.toFixed(0)} MG (60 MG/KG) = ${ml.toFixed(1)} ML.\n\nASPIRAR ${ml.toFixed(1)} ML DE LEVETIRACETAM + ${sf.toFixed(1)} ML DE SF 0,9% (TOTAL ${total} ML, NO MÁXIMO 15 MG/ML).\nCORRER EM BIC EM 15 MINUTOS (${(total * 4).toFixed(0)} ML/H), EM DOSE ÚNICA.` };
         },
         detalhes: {
             indicacao: "Crise convulsiva que persiste após 2 doses de benzodiazepínico (2ª linha, alternativa à fenitoína).",
@@ -92,11 +95,11 @@ registrarMedicamentos({
             doseMaxima: "4.500 mg por dose.",
             apresentacoes: "Solução injetável 100 mg/mL, frasco de 5 mL (500 mg).",
             via: "Endovenosa.",
-            diluicao: "Diluir em SF 0,9%, Ringer lactato ou SG 5%.",
-            infusao: "10 a 15 minutos.",
+            diluicao: "Diluir em SF 0,9%, Ringer lactato ou SG 5%, a no máximo 15 mg/mL (adulto: dose em 100 mL). Considerar o volume total de líquidos da criança. Usar em até 4 h após diluir.",
+            infusao: "15 minutos (bula); 10 minutos no ESETT.",
             alertasPediatricos: "No ESETT (crianças e adultos), levetiracetam, fosfenitoína e valproato tiveram eficácia semelhante (cerca de 50% das crises controladas em 60 min) e eventos adversos parecidos. Sem hipotensão nem arritmia; pode causar sonolência e irritabilidade.",
             ajusteRenal: "Ajustar a manutenção pela função renal.",
-            fonteRevisao: "Glauser T et al. AES Guideline. Epilepsy Curr 2016;16(1):48-61. doi:10.5698/1535-7597-16.1.48 | Kapur J et al. Randomized Trial of Three Anticonvulsant Medications for Status Epilepticus (ESETT). N Engl J Med 2019;381:2103-13. doi:10.1056/NEJMoa1905795"
+            fonteRevisao: "Glauser T et al. AES Guideline. Epilepsy Curr 2016;16(1):48-61. doi:10.5698/1535-7597-16.1.48 | Kapur J et al. Randomized Trial of Three Anticonvulsant Medications for Status Epilepticus (ESETT). N Engl J Med 2019;381:2103-13. doi:10.1056/NEJMoa1905795 | Diluição: bula do levetiracetam injetável (FDA/DailyMed), consultada em out/2026."
         }
     },
     "neuro_midaz_continuo": {
