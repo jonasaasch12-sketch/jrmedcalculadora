@@ -68,7 +68,7 @@ const categorias = [
         id: "cat-antibioticos", titulo: "Antibióticos", dotClass: "dot-antibioticos", cor: "tarja-antibioticos", nome: "Antibióticos", icone: "🦠 ATB",
         patologias: [
             { nome: "Infecções de Vias Aéreas e Partes Moles", remedios: ["amox", "amox400", "clav"] },
-            { nome: "Faringite / Amigdalite (Dose Única)", remedios: ["benza"] },
+            { nome: "Faringoamigdalite Estreptocócica", conduta: "faringoamigdalite", condutaNome: "Faringoamigdalite", remedios: ["amox_faringo", "benza", "azitro_faringo"] },
             { nome: "Febre sem Sinais Localizatórios (Bacteremia Oculta)", conduta: "fssl", condutaNome: "Febre sem sinais localizatórios", remedios: ["cef_fssl"] },
             { nome: "Outros Antibióticos Orais", remedios: ["cefadroxila", "pen_v", "smx_tmp", "metronidazol_vo", "cipro_vo"] },
             { nome: "Antibióticos Hospitalares (EV)", remedios: ["amicacina", "cefalotina", "cefepime", "ceftazidima", "cipro_ev", "clindamicina", "meropenem", "metronidazol_ev", "oxacilina", "pen_cristalina", "vancomicina"] }

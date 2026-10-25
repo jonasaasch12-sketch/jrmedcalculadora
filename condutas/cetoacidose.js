@@ -13,12 +13,10 @@ function ferramentaCadHidratacao() {
     setTimeout(atualizarCadHidratacao, 0);
     return `<div class="cadh" id="cadh">
         <div class="cadh-titulo">🧮 Como chegar ao cálculo</div>
-        <div class="cadh-linha"><span class="cadh-rot">Desidratação</span><span class="cadh-opcoes" id="cadh-pct"></span></div>
-        <div class="cadh-linha"><span class="cadh-rot">Expansão já feita</span><span class="cadh-opcoes" id="cadh-exp"></span></div>
         <div id="cadh-conta"></div>
     </div>`;
 }
-function cadHidEscolher(campo, v) { cadHidEstado[campo] = v; atualizarCadHidratacao(); if (document.getElementById('cadg')) { cadGliEstado.vel = null; atualizarCadGlicose(); } }
+function cadHidEscolher(campo, v) { cadHidEstado[campo] = v; atualizarCadHidratacao(); atualizarCadSoroY(); if (document.getElementById('cadg')) { cadGliEstado.vel = null; atualizarCadGlicose(); } }
 // Velocidade total do passo 4 (mL/h) com as escolhas do quadro "Como chegar ao cálculo". null = sem peso.
 function cadTaxaPasso4() {
     let p = parseFloat((document.getElementById('pesoInput') || {}).value);
@@ -30,8 +28,9 @@ function atualizarCadHidratacao() {
     let caixa = document.getElementById('cadh-conta');
     if (!caixa) return;
     let botoes = (campo, lista, fmt) => lista.map(v => `<button type="button" class="qm-faixa${cadHidEstado[campo] === v ? ' ativa' : ''}" onclick="cadHidEscolher('${campo}', ${v})">${fmt(v)}</button>`).join('');
-    document.getElementById('cadh-pct').innerHTML = botoes('pct', [5, 7, 10], v => v + '%');
-    document.getElementById('cadh-exp').innerHTML = botoes('expMlKg', [0, 10, 20], v => v ? v + ' mL/kg' : 'nenhuma');
+    let elPct = document.getElementById('cadh-pct'), elExp = document.getElementById('cadh-exp');
+    if (elPct) elPct.innerHTML = botoes('pct', [5, 7, 10], v => v + '%');
+    if (elExp) elExp.innerHTML = botoes('expMlKg', [0, 10, 20], v => v ? v + ' mL/kg' : 'nenhuma');
     let pd = parseFloat((document.getElementById('pesoInput') || {}).value);
     let exemplo = !(pd > 0), p = exemplo ? 30 : pd, d = cadHidEstado.pct;
     let f = n => Math.round(n).toLocaleString('pt-BR'), kg = String(p).replace('.', ',');
@@ -57,6 +56,7 @@ function atualizarCadHidratacao() {
 }
 ['pesoInput'].forEach(id => document.getElementById(id)?.addEventListener('input', () => {
     if (document.getElementById('cadh')) atualizarCadHidratacao();
+    atualizarCadSoroY();
     if (document.getElementById('cadg')) { cadGliEstado.vel = null; atualizarCadGlicose(); }
 }));
 
@@ -82,7 +82,7 @@ function ferramentaCadGlicose() {
         <div id="cadg-tabela"></div>
     </div>`;
 }
-function cadGliEscolher(campo, v) { cadGliEstado[campo] = v; atualizarCadGlicose(); }
+function cadGliEscolher(campo, v) { cadGliEstado[campo] = v; atualizarCadGlicose(); if (campo === 'atual') atualizarCadSoroY(); }
 function cadAB(conc, vel) {
     let fA = conc / 10, f = n => Math.round(n).toLocaleString('pt-BR');
     if (!(vel > 0)) return conc === 0 ? 'só B' : conc >= 10 ? 'só A' : `A ${fA * 100}% + B ${100 - fA * 100}% do volume`;
@@ -174,6 +174,187 @@ function atualizarCadGlicose() {
 }
 
 
+
+// ===== Passo 4: painel "Soro da CAD em Y" (aprovado pelo Dr. Jonas no lugar do card cad_hidratacao) =====
+// Velocidade total (do cálculo de 48 h), os dois frascos, os 4 momentos da glicose, o preparo para copiar e o potássio.
+function ferramentaCadPasso4() {
+    setTimeout(atualizarCadSoroY, 0);
+    return `<div class="sy" id="sy">
+        <div class="sy-h">💧 Soro da CAD em Y (A + B)</div>
+        <div class="cadh-linha"><span class="cadh-rot">Desidratação</span><span class="cadh-opcoes" id="cadh-pct"></span></div>
+        <div class="cadh-linha"><span class="cadh-rot">Expansão já feita</span><span class="cadh-opcoes" id="cadh-exp"></span></div>
+        <div id="sy-corpo"></div>
+    </div>` + ferramentaCadHidratacao();
+}
+function cadMixSoroY(t, c) {
+    let r = Math.round, a = t * c / 10, b = t - a;
+    return { a, b, txt: c === 0 ? `SOLUÇÃO B ${r(t)} ML/H + SOLUÇÃO A PARADA` : c >= 10 ? `SOLUÇÃO A ${r(t)} ML/H + SOLUÇÃO B PARADA` : `SOLUÇÃO A ${r(a)} ML/H + SOLUÇÃO B ${r(b)} ML/H (GLICOSE FINAL ${String(c).replace('.', ',')}%)` };
+}
+function textoSoroY(t, c) {
+    let r = Math.round(t);
+    return `VIA ENDOVENOSA (CETOACIDOSE DIABÉTICA - SORO EM Y, 48 HORAS)
+
+1) SOLUÇÃO A (COM GLICOSE):
+   SG 10% --------------- 250 ML
+   NACL 20% -------------- 10 ML
+   KCL 19,1% -------------- 4 ML
+2) SOLUÇÃO B (SEM GLICOSE):
+   ÁGUA DESTILADA ------- 250 ML
+   NACL 20% -------------- 10 ML
+   KCL 19,1% -------------- 4 ML
+
+CORRER EM Y, EM BIC. VELOCIDADE TOTAL: ${r} ML/H.
+AGORA: ${cadMixSoroY(t, c).txt}.
+AJUSTAR A PROPORÇÃO A/B PELO HGT DE 1/1H, SEM MUDAR A VELOCIDADE TOTAL.`;
+}
+// Tocar num momento escolhe a glicose que está correndo (a mesma do assistente do passo 6).
+function escolherFaseSoroY(c) {
+    cadGliEstado.atual = c;
+    atualizarCadSoroY();
+    if (document.getElementById('cadg')) atualizarCadGlicose();
+}
+function atualizarCadSoroY() {
+    let corpo = document.getElementById('sy-corpo');
+    if (!corpo) return;
+    let t = cadTaxaPasso4();
+    if (t === null) { corpo.innerHTML = '<div class="cond-nota">Digite o <strong>peso</strong> no topo para calcular o soro.</div>'; return; }
+    let p = parseFloat(document.getElementById('pesoInput').value), r = n => Math.round(n);
+    let exp = cadHidEstado.expMlKg, c = cadGliEstado.atual, mix = cadMixSoroY(t, c);
+    let pc = x => String(x).replace('.', ',') + '%';
+    let fase = (conc, tit, sub) => {
+        let m = cadMixSoroY(t, conc), bomba = conc === 0 ? `B ${r(t)}` : conc >= 10 ? `A ${r(t)}` : `A ${r(m.a)} · B ${r(m.b)}`;
+        return `<button type="button" class="sy-fase${conc === c ? ' on' : ''}" style="--mix:${conc * 10}%" onclick="escolherFaseSoroY(${conc})">
+            <span class="sy-fase-pc">${pc(conc)}</span><span class="sy-fase-txt"><b>${tit}</b><span>${sub}</span></span><span class="sy-fase-bomba">${bomba}</span></button>`;
+    };
+    let fora = ![0, 5, 7.5, 10].includes(c);
+    corpo.innerHTML = `
+        <div class="sy-total">${r(t)} mL/h <small>VELOCIDADE TOTAL · ${String(p).replace('.', ',')} kg · desidratação ${cadHidEstado.pct}%${exp ? ` · expansão ${exp} mL/kg descontada` : ''} · não muda até o fim</small></div>
+        <div class="sy-agora">Agora: glicose ${pc(c)}</div>
+        <div class="sy-bags">
+            <div class="sy-bag"><div class="sy-bag-c" style="--c:#d97706;--n:${c * 10}%"><small>Solução</small>A</div><div class="sy-bag-l">com glicose (SG 10%)</div><div class="sy-bag-v" style="color:#d97706">${c === 0 ? 'parada' : r(mix.a) + ' mL/h'}</div></div>
+            <div class="sy-bag"><div class="sy-bag-c" style="--c:#2563eb;--n:${100 - c * 10}%"><small>Solução</small>B</div><div class="sy-bag-l">sem glicose (AD)</div><div class="sy-bag-v" style="color:#2563eb">${c >= 10 ? 'parada' : r(mix.b) + ' mL/h'}</div></div>
+        </div>
+        <svg class="sy-y" viewBox="0 0 240 96" role="img" aria-label="A e B se juntam em Y e vão para o paciente">
+            <defs><marker id="sy-ponta" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="2.8" markerHeight="2.8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker></defs>
+            <path d="M56 2 C56 34 120 30 120 52" fill="none" stroke="#d97706" stroke-width="8" stroke-linecap="round" opacity="${c === 0 ? .3 : 1}"/>
+            <path d="M184 2 C184 34 120 30 120 52" fill="none" stroke="#2563eb" stroke-width="8" stroke-linecap="round" opacity="${c >= 10 ? .3 : 1}"/>
+            <line x1="120" y1="50" x2="120" y2="82" stroke="#334155" stroke-width="8" stroke-linecap="round" marker-end="url(#sy-ponta)"/>
+            <text x="146" y="62" class="sy-y-letra">em Y</text>
+        </svg>
+        <div class="sy-paciente">🧒 Paciente <b>${r(t)} mL/h</b></div>
+        <div class="sy-fases-tit">👆 Toque no momento atual:</div>
+        <div class="sy-fases">
+            ${fase(0, 'Início (HGT > 300)', 'só B')}
+            ${fase(5, 'HGT ≤ 300 ou queda > 90/h', '½ A + ½ B')}
+            ${fase(7.5, 'Ainda caindo, com acidose', '¾ A + ¼ B')}
+            ${fase(10, 'Continua caindo', 'só A')}
+        </div>
+        ${fora ? `<div class="cond-nota">Glicose ${pc(c)} escolhida no passo 6 (degrau intermediário).</div>` : ''}
+        <div class="cond-nota">Quem decide o momento é o HGT de 1/1h: use o assistente do passo 6 ("Qual glicose no soro agora?"), que fica sincronizado com este painel.</div>
+        <div class="sy-rec-tit">📋 Preparo para o prontuário</div>
+        <div class="cond-med-texto" id="sy-texto">${textoSoroY(t, c)}</div>
+        <div class="cond-med-botoes"><button type="button" class="cond-btn-receita" onclick="addSoroYReceita(this)">+ Receita</button><button type="button" class="cond-btn-copiar" onclick="copiarSoroY(this)">📋 Copiar</button></div>
+        <div class="sy-k">
+            <div class="sy-kv"><b>K &lt; 4,5:</b> com KCl já</div>
+            <div class="sy-ka"><b>K 4,5–5,4:</b> KCl junto com a insulina (até lá, A e B sem KCl)</div>
+            <div class="sy-kr"><b>K ≥ 5,5:</b> sem KCl até diurese e K &lt; 5,5</div>
+        </div>
+        <div class="cond-nota">Velocidade ≥ 10 mL/kg/h: KCl 19,1% 2 mL em cada solução (20 mEq/L). Máximo de K: ${(p * 0.5).toFixed(1).replace('.', ',')} mEq/h (0,5 mEq/kg/h). Não repor a diurese; descontar o que beber.</div>`;
+}
+function addSoroYReceita(botao) {
+    let texto = document.getElementById('sy-texto').innerText.trim();
+    carrinhoPrescricao.push({ nome: "Soro da CAD em Y (Solução A + B)", apres: "Solução padrão IMIP", texto, via: texto.split('\n')[0].trim() });
+    atualizarCarrinhoUI();
+    let o = botao.innerHTML; botao.innerHTML = "✓ Na receita"; botao.classList.add('adicionado');
+    setTimeout(() => { botao.innerHTML = o; botao.classList.remove('adicionado'); }, 1200);
+}
+function copiarSoroY(botao) {
+    navigator.clipboard?.writeText(document.getElementById('sy-texto').innerText);
+    let o = botao.innerHTML; botao.innerHTML = "✓ Copiado"; setTimeout(() => { botao.innerHTML = o; }, 1200);
+}
+
+
+// ===== Passo 8: transição da insulina EV para SC (escolhas do Dr. Jonas: doses do IFF/Fiocruz e do HC-UFTM,
+// CAD resolvida com HCO₃ > 15, regular SC 30 a 60 min antes de desligar a bomba). =====
+let cadTrEstado = { tipo: 'novo', esquema: 'sus' };
+function ferramentaCadTransicao() {
+    setTimeout(atualizarCadTransicao, 0);
+    return `<div class="tr" id="tr">
+        <div class="sy-h">💉 Transição para a insulina SC</div>
+        <div class="cadh-linha"><span class="cadh-rot">Diabetes</span><span class="cadh-opcoes" id="tr-tipo"></span></div>
+        <div class="cadh-linha"><span class="cadh-rot">Esquema</span><span class="cadh-opcoes" id="tr-esq"></span></div>
+        <div id="tr-corpo"></div>
+    </div>`;
+}
+function cadTrEscolher(campo, v) { cadTrEstado[campo] = v; atualizarCadTransicao(); }
+function cadUn(x) { let r = Math.round(x * 2) / 2; return String(r).replace('.', ','); } // 0,5 em 0,5 U
+function textoCadTransicao(d) {
+    let rapida = d.esq === 'sus' ? 'INSULINA REGULAR' : 'INSULINA ULTRARRÁPIDA (LISPRO/ASPARTE)';
+    let tempo = d.esq === 'sus' ? '30 A 60 MINUTOS' : '15 A 30 MINUTOS';
+    let basal = d.tipo === 'previo' ? 'INSULINA BASAL: RETOMAR A DOSE HABITUAL DE ANTES DA INTERNAÇÃO.'
+        : d.esq === 'sus'
+            ? (d.menor4 ? `INSULINA NPH ${d.basal} U SC PELA MANHÃ (0,3 U/KG/DIA, DOSE ÚNICA).` : `INSULINA NPH ${d.basal} U/DIA SC = ${d.nphM} U PELA MANHÃ + ${d.nphN} U À NOITE (22H).`)
+            : `INSULINA GLARGINA ${d.basal} U SC 1 VEZ AO DIA, PELA MANHÃ (${d.menor4 ? '0,3' : '0,5'} U/KG/DIA).`;
+    return `VIA SUBCUTÂNEA (TRANSIÇÃO APÓS A CETOACIDOSE DIABÉTICA)
+
+1) ${rapida}: ${d.pre} U SC ANTES DE UMA REFEIÇÃO.
+   DESLIGAR A INSULINA EV E O SORO ${tempo} DEPOIS. ALIMENTAR LOGO APÓS.
+2) ${basal}
+3) INSULINA REGULAR CONFORME HGT, DE 4/4 HORAS OU ANTES DAS REFEIÇÕES:
+${d.escala.map(([f, u]) => `   ${f}: ${u}`).join('\n')}
+
+HGT ANTES DAS REFEIÇÕES E ÀS 3 HORAS DA MADRUGADA.`;
+}
+function atualizarCadTransicao() {
+    let corpo = document.getElementById('tr-corpo');
+    if (!corpo) return;
+    let E = cadTrEstado;
+    let bot = (campo, lista) => lista.map(([v, t]) => `<button type="button" class="qm-faixa${E[campo] === v ? ' ativa' : ''}" onclick="cadTrEscolher('${campo}', '${v}')">${t}</button>`).join('');
+    document.getElementById('tr-tipo').innerHTML = bot('tipo', [['novo', 'Novo (1ª vez)'], ['previo', 'Já usava insulina']]);
+    document.getElementById('tr-esq').innerHTML = bot('esquema', [['sus', 'NPH + regular (SUS)'], ['analogo', 'Glargina + ultrarrápida']]);
+    let p = parseFloat((document.getElementById('pesoInput') || {}).value);
+    let idade = parseFloat((document.getElementById('idadeInput') || {}).value);
+    if (!(p > 0)) { corpo.innerHTML = '<div class="cond-nota">Digite o <strong>peso</strong> no topo para calcular as doses.</div>'; return; }
+    if (E.tipo === 'novo' && isNaN(idade)) { corpo.innerHTML = '<div class="cond-nota">Digite a <strong>idade</strong> no topo: a dose da basal muda antes e depois dos 4 anos.</div>'; return; }
+    let menor4 = idade < 4, kb = menor4 ? 0.3 : 0.5, basalTot = p * kb;
+    let u01 = p * 0.1, base = Math.round(u01 * 2) / 2;
+    let escala = [['< 150', 'NÃO FAZER'], ['150-199', `${cadUn(base)} U`], ['200-299', `${cadUn(base + 1)} U`], ['300-399', `${cadUn(base + 2)} U`], ['400-499', `${cadUn(base + 3)} U`], ['≥ 500', `${cadUn(base + 4)} U`]];
+    let d = { tipo: E.tipo, esq: E.esquema, menor4, basal: cadUn(basalTot), nphM: cadUn(basalTot * 2 / 3), nphN: cadUn(basalTot / 3), pre: `${cadUn(p * 0.1)} A ${cadUn(p * 0.2)}`, escala };
+    let sus = E.esquema === 'sus';
+    let passo = (n, cor, tit, txt) => `<div class="tr-passo" style="--c:${cor}"><div class="tr-n">${n}</div><div><b>${tit}</b><span>${txt}</span></div></div>`;
+    let basalTxt = E.tipo === 'previo' ? 'Retomar a <strong>dose habitual de antes da internação</strong> (ajustar se preciso).'
+        : sus ? (menor4 ? `<strong>NPH ${d.basal} U pela manhã</strong> (< 4 anos: 0,3 U/kg/dia, dose única).` : `<strong>NPH ${d.basal} U/dia</strong>: <strong>${d.nphM} U de manhã + ${d.nphN} U à noite</strong> (2/3 e 1/3; 0,5 U/kg/dia).`)
+            : `<strong>Glargina ${d.basal} U, 1 vez ao dia, pela manhã</strong> (${menor4 ? '0,3' : '0,5'} U/kg/dia).`;
+    corpo.innerHTML = `
+        <div class="tr-crit"><b>Pode passar?</b> pH > 7,30 · HCO₃ > 15 · cetonemia < 1 · glicemia ≤ 250 · sem vômitos e com vontade de comer</div>
+        <div class="tr-linha">
+            ${passo('💉', '#2563eb', 'Antes de uma refeição', `${sus ? 'Regular' : 'Ultrarrápida'} SC <strong>${d.pre.replace(' A ', ' a ')} U</strong> (0,1 a 0,2 U/kg).`)}
+            ${passo('⏱️', '#d97706', `Esperar ${sus ? '30 a 60 min' : '15 a 30 min'}`, 'Com a bomba ainda ligada: é o tempo da insulina SC começar a agir.')}
+            ${passo('⛔', '#dc2626', 'Desligar a bomba e o soro', 'Alimentar logo em seguida. Nunca desligar antes da SC (rebote).')}
+            ${passo('🌙', '#16a34a', 'Basal', basalTxt)}
+        </div>
+        ${!sus && E.tipo === 'novo' ? '<div class="cond-nota">ISPAD 2022: com análogo, também é possível dar a basal com a bomba ainda ligada (ex.: à noite) e desligar a bomba na manhã seguinte.</div>' : ''}
+        <div class="sy-rec-tit">Depois: regular conforme o HGT, de 4/4 h ou antes das refeições</div>
+        <div class="cond-tabela-wrap"><table class="cond-tabela tr-tab"><thead><tr><th>HGT (mg/dL)</th><th>Insulina regular SC</th></tr></thead><tbody>${escala.map(([f, u]) => `<tr><th>${f}</th><td>${u}</td></tr>`).join('')}</tbody></table></div>
+        <div class="cond-nota">Escala do IFF: 150–199 = 0,1 U/kg; a cada faixa acima, 1 unidade a mais. HGT antes das refeições e às 3 h.</div>
+        <div class="sy-rec-tit">📋 Prescrição para o prontuário</div>
+        <div class="cond-med-texto" id="tr-texto">${textoCadTransicao(d)}</div>
+        <div class="cond-med-botoes"><button type="button" class="cond-btn-receita" onclick="addCadTransicaoReceita(this)">+ Receita</button><button type="button" class="cond-btn-copiar" onclick="copiarCadTransicao(this)">📋 Copiar</button></div>
+        <div class="cond-nota">Doses: IFF/Fiocruz e HC-UFTM. Degludeca: o IFF e a UFTM listam como opção; a SBD não recomenda nessa fase (leva 3 a 4 dias para estabilizar). Depois da alta, ajustar com o endocrinologista.</div>`;
+}
+function addCadTransicaoReceita(botao) {
+    let texto = document.getElementById('tr-texto').innerText.trim();
+    carrinhoPrescricao.push({ nome: "Transição para insulina SC (CAD)", apres: "IFF / HC-UFTM", texto, via: texto.split('\n')[0].trim() });
+    atualizarCarrinhoUI();
+    let o = botao.innerHTML; botao.innerHTML = "✓ Na receita"; botao.classList.add('adicionado');
+    setTimeout(() => { botao.innerHTML = o; botao.classList.remove('adicionado'); }, 1200);
+}
+function copiarCadTransicao(botao) {
+    navigator.clipboard?.writeText(document.getElementById('tr-texto').innerText);
+    let o = botao.innerHTML; botao.innerHTML = "✓ Copiado"; setTimeout(() => { botao.innerHTML = o; }, 1200);
+}
+['pesoInput', 'idadeInput'].forEach(id => document.getElementById(id)?.addEventListener('input', () => atualizarCadTransicao()));
+
 registrarConduta({
     id: "cetoacidose",
     nome: "Cetoacidose Diabética (CAD)",
@@ -196,7 +377,7 @@ registrarConduta({
                     itens: [
                         "A CAD é definida pela presença <strong>simultânea</strong> de:",
                         "<strong>Glicemia > 200 mg/dL</strong>;",
-                        "<strong>pH venoso < 7,3</strong> e/ou <strong>bicarbonato < 15 mEq/L</strong> (ISPAD 2022: bicarbonato < 18);",
+                        "<strong>pH venoso < 7,3</strong> e/ou <strong>bicarbonato < 18 mEq/L</strong> (ISPAD 2022; a SPP 2019 usava < 15);",
                         "<strong>Cetonemia ≥ 3 mmol/L</strong> (beta-hidroxibutirato) ou, na impossibilidade, <strong>cetonúria ≥ 2+</strong>.",
                         "<strong>Cetonemia capilar é preferível à cetonúria</strong> (mais acurada para o diagnóstico e o seguimento). Cetonemia de 1,5 a 3 mmol/L: risco aumentado, confirmar com gasometria e ânion gap (> 12).",
                         "A glicemia pode ser < 200 mg/dL (CAD euglicêmica), principalmente em quem já usa insulina.",
@@ -337,28 +518,41 @@ registrarConduta({
                         instrucao: "Toque no pH venoso e/ou no bicarbonato (basta um; vale o pior).",
                         itens: [
                             { nome: "pH venoso", opcoes: [[0, "≥ 7,30", "—"], [1, "7,20 a 7,29", "L"], [2, "7,10 a 7,19", "M"], [3, "< 7,10", "G"]] },
-                            { nome: "Bicarbonato (mEq/L)", opcoes: [[0, "≥ 15", "—"], [1, "10 a 14,9", "L"], [2, "5 a 9,9", "M"], [3, "< 5", "G"]] }
+                            { nome: "Bicarbonato (mEq/L)", opcoes: [[0, "≥ 18", "—"], [1, "10 a 17,9", "L"], [2, "5 a 9,9", "M"], [3, "< 5", "G"]] }
                         ],
                         classificar: (valores) => {
                             let g = Math.max(...valores);
                             if (g === 3) return { num: "G", rotulo: "CAD GRAVE", cor: "#dc2626", texto: "Desidratação ~7 a 10%. Indicação de UTI pediátrica." };
                             if (g === 2) return { num: "M", rotulo: "CAD MODERADA", cor: "#d97706", texto: "Desidratação ~5 a 7%. Tratamento EV com monitorização de 1/1h." };
                             if (g === 1) return { num: "L", rotulo: "CAD LEVE", cor: "#16a34a", texto: "Se tolera via oral e sem vômitos: pode ser insulina SC + hidratação oral, com monitorização." };
-                            return { num: "—", rotulo: "Sem critério de acidose", cor: "#64748b", texto: "pH ≥ 7,30 e bicarbonato ≥ 15: não preenche o critério de CAD." };
+                            return { num: "—", rotulo: "Sem critério de acidose", cor: "#64748b", texto: "pH ≥ 7,30 e bicarbonato ≥ 18: não preenche o critério de CAD." };
                         },
-                        nota: "Fonte: SPP 2019 / ISPAD (leve: pH < 7,3 ou HCO₃ < 15; moderada: pH < 7,2 ou HCO₃ < 10; grave: pH < 7,1 ou HCO₃ < 5)."
+                        nota: "Fonte: ISPAD 2022, Einstein e HC-UFTM (leve: pH < 7,3 ou HCO₃ < 18; moderada: pH < 7,2 ou HCO₃ < 10; grave: pH < 7,1 ou HCO₃ < 5). A SPP 2019 usava HCO₃ < 15 na CAD leve. A glicemia não entra na gravidade."
                     },
                     grupos: [
                         {
-                            nome: "🏥 Critérios para UTI pediátrica",
-                            itens: [
-                                "Choque ou instabilidade hemodinâmica.",
-                                "Alteração do estado de consciência (Glasgow ≤ 13).",
-                                "CAD grave.",
-                                "Tempo de evolução prolongado.",
-                                "Risco aumentado de edema cerebral: <strong>≤ 5 anos</strong>, pCO₂ muito baixa, ureia muito alta.",
-                                "Tratar num centro com experiência em CAD pediátrica; se não for possível, contatar um centro de referência e transferir após estabilizar."
-                            ]
+                            nome: "🏥 Indica UTI pediátrica? (ISPAD 2022)",
+                            escore: {
+                                id: "uti_cad",
+                                unidade: "sinais",
+                                checklist: true,
+                                instrucao: "Toque nos sinais presentes. Basta um para considerar UTI, mesmo com CAD leve ou moderada.",
+                                itens: [
+                                    { nome: "CAD grave (clínica)", opcoes: [[1, "Circulação comprometida / choque", "!"]] },
+                                    { nome: "", opcoes: [[1, "Consciência deprimida (Glasgow ≤ 13)", "!"]] },
+                                    { nome: "", opcoes: [[1, "Sintomas de longa duração", "!"]] },
+                                    { nome: "Risco de edema cerebral", opcoes: [[1, "Idade < 5 anos", "!"]] },
+                                    { nome: "", opcoes: [[1, "pH < 7,1", "!"]] },
+                                    { nome: "", opcoes: [[1, "pCO₂ < 21 mmHg", "!"]] },
+                                    { nome: "", opcoes: [[1, "Ureia > 43 mg/dL (BUN > 20 mg/dL)", "!"]] }
+                                ],
+                                classificar: (valores) => {
+                                    let n = valores.filter(v => v === 1).length;
+                                    if (n) return { num: n, rotulo: "CONSIDERAR UTI PEDIÁTRICA", cor: "#dc2626", texto: "Ou unidade com recursos e supervisão equivalentes. Pacientes de risco de edema cerebral: manitol ou NaCl 3% com a dose calculada à beira do leito." };
+                                    return { num: 0, rotulo: "Nenhum sinal marcado", cor: "#64748b", texto: "Seguir a gravidade pelo pH/bicarbonato acima e reavaliar de 1/1h." };
+                                },
+                                nota: "Fonte: ISPAD 2022, seção 5 (CAD grave: sintomas de longa duração, circulação comprometida ou consciência deprimida; risco de edema cerebral: < 5 anos, pH < 7,1, pCO₂ < 21 mmHg, BUN > 20 mg/dL). Glasgow ≤ 13: SPP. Ureia = BUN × 2,14. Tratar num centro com experiência em CAD pediátrica; se não for possível, contatar um centro de referência e transferir após estabilizar."
+                            }
                         },
                         {
                             nome: "⚠️ Indicadores de risco de complicação (J Pediatr 2001)",
@@ -390,7 +584,7 @@ registrarConduta({
                         "<span class=\"cond-passo\">5</span> <strong>Após 1 h de expansão:</strong> <strong>Insulina regular EV contínua</strong>: < 5 anos 0,05 U/kg/h; ≥ 5 anos 0,1 U/kg/h (máx 10 U/h). <strong>Nunca bolus</strong>",
                         "<span class=\"cond-passo\">6</span> <strong>HGT ≤ 300:</strong> <strong>Colocar glicose no soro</strong>: 5% = ½ A + ½ B. Não diminuir a insulina",
                         "<span class=\"cond-passo\">7</span> <strong>De 1/1h e 2/2h:</strong> HGT, sinais vitais e Glasgow 1/1h; gasometria, eletrólitos e cetonemia 2/2h",
-                        "<span class=\"cond-passo\">8</span> <strong>CAD resolvida:</strong> pH > 7,30, HCO₃ > 15, cetonemia < 1 e aceitando VO: <strong>insulina SC</strong>",
+                        "<span class=\"cond-passo\">8</span> <strong>CAD resolvida:</strong> pH > 7,30, HCO₃ > 15, cetonemia < 1 e aceitando VO: <strong>insulina SC antes da refeição e desligar a bomba 30 a 60 min depois</strong>",
                         "⚠️ <strong>A qualquer hora:</strong> Cefaleia, vômitos, sonolência, bradicardia: <strong>edema cerebral</strong>. HGT < 60: <strong>hipoglicemia</strong>"
                     ],
                     lista: "passos"
@@ -470,8 +664,7 @@ registrarConduta({
                         "<strong>Não repor a diurese.</strong> Descontar o que beber. Total de até 2 x a manutenção.",
                         "Na que não sobe enquanto a glicemia cai: aumentar o sódio do soro e vigiar edema cerebral."
                     ],
-                    ferramenta: "ferramentaCadHidratacao",
-                    remedios: ["cad_hidratacao"]
+                    ferramenta: "ferramentaCadPasso4"
                 },
                 {
                     passo: 5,
@@ -502,8 +695,7 @@ registrarConduta({
                         "HGT normal mas <strong>acidose ainda presente</strong>: aumentar a glicose e <strong>manter a insulina</strong> (SPP admite até 12,5%).",
                         "<strong>Use o assistente abaixo</strong> a cada HGT: ele mostra a glicose certa e os mL/h de A e de B na bomba."
                     ],
-                    ferramenta: "ferramentaCadGlicose",
-                    remedios: ["cad_hidratacao"]
+                    ferramenta: "ferramentaCadGlicose"
                 },
                 {
                     passo: 7,
@@ -544,12 +736,14 @@ registrarConduta({
                 {
                     passo: 8,
                     titulo: "CAD resolvida: passar para insulina SC",
-                    resumo: "pH > 7,30, HCO₃ > 15, cetonemia < 1 e aceitando a via oral.",
+                    resumo: "Insulina SC antes de uma refeição; desligar a bomba 30 a 60 min depois (regular). Doses pelo peso e idade.",
                     itens: [
-                        "<strong>Critérios:</strong> pH > 7,30, bicarbonato > 15 mEq/L, cetonemia < 1 mmol/L e aceitando a via oral.",
-                        "Suspender o soro e fazer a <strong>insulina SC antes de uma refeição</strong>; <strong>desligar a insulina EV 15 a 30 min depois</strong>.",
-                        "Doses e cálculo: seção ✅ <strong>Resolução e transição para insulina SC</strong>, no bloco 🏠 abaixo."
-                    ]
+                        "<strong>Critérios:</strong> pH > 7,30, bicarbonato > 15 mEq/L, cetonemia < 1 mmol/L, glicemia ≤ 250 (IFF), sem vômitos e aceitando a via oral.",
+                        "<strong>Antes de uma refeição:</strong> insulina SC e <strong>só depois</strong> desligar a bomba: <strong>regular 30 a 60 min depois</strong> (IFF/UFTM); <strong>ultrarrápida 15 a 30 min depois</strong> (ISPAD 2022).",
+                        "<strong>Basal no diabetes novo</strong> (IFF/UFTM): <strong>0,5 U/kg/dia</strong> (< 4 anos: 0,3 U/kg/dia). NPH: 2/3 de manhã e 1/3 à noite; glargina: 1 vez ao dia, de manhã. <strong>Já usava insulina:</strong> retomar a dose de antes da internação.",
+                        "Depois, <strong>regular conforme o HGT</strong> de 4/4 h ou antes das refeições (escala abaixo)."
+                    ],
+                    ferramenta: "ferramentaCadTransicao"
                 },
                 {
                     titulo: "A qualquer momento: edema cerebral",
@@ -630,13 +824,13 @@ registrarConduta({
                     resumo: "pH > 7,30, HCO₃ > 15, cetonemia < 1 e via oral: passar para insulina SC.",
                     itens: [
                         "<strong>CAD resolvida:</strong> pH > 7,30, bicarbonato > 15 mEq/L e cetonemia < 1 mmol/L, com tolerância oral. Então: suspender o soro e planejar a insulina SC intensiva.",
-                        "<strong>Melhor momento: antes de uma refeição.</strong> Fazer a insulina rápida SC (correção + refeição) e <strong>desligar a insulina EV 15 a 30 min depois</strong>. Se for a hora da insulina basal, fazer também.",
+                        "<strong>A troca (hora, doses e prescrição): passo 8</strong>, no bloco 🚨 acima. Antes de uma refeição; regular SC e desligar a bomba 30 a 60 min depois.",
                         "Já usava insulina: retomar a dose prévia (50% basal e 50% bolus) ou recolocar a bomba de insulina.",
-                        "Diabetes novo: dose diária total de <strong>0,5 a 0,6 U/kg/dia (pré-púbere)</strong> ou <strong>0,7 a 1 U/kg/dia (púbere)</strong>: 50% basal (glargina/detemir, 1 vez ao dia: de manhã se < 5 anos, à noite se ≥ 5 anos) e 50% rápida antes das refeições.",
+                        "Diabetes novo, na internação: <strong>basal 0,5 U/kg/dia</strong> (< 4 anos: 0,3 U/kg/dia) + <strong>regular conforme o HGT</strong> (IFF/UFTM). O esquema definitivo (basal-bolus com contagem de carboidratos) é ajustado depois, com o endocrinologista.",
                         "HGT antes das refeições e às 3h da madrugada; corrigir com insulina rápida."
                     ],
                     tabela: {
-                        titulo: "Exemplo da SPP: 6 anos, 22 kg, glicemia 240, lanche com 36 g de carboidrato",
+                        titulo: "Depois da alta, com o endocrinologista: contagem de carboidratos (exemplo da SPP: 6 anos, 22 kg, glicemia 240, lanche com 36 g)",
                         colunas: ["Passo", "Cálculo"],
                         linhas: [
                             ["Dose diária total", "0,6 U/kg x 22 = 13 U"],
@@ -648,7 +842,7 @@ registrarConduta({
                             ["Total antes do lanche", "1,8 U ≈ 2 U de insulina rápida"]
                         ]
                     },
-                    remedios: ["cad_insulina_sc"]
+                    remedios: []
                 },
                 {
                     titulo: "Exames do diabetes de início",
@@ -678,14 +872,16 @@ registrarConduta({
         }
     ],
 
-    citacoes: { "SPP": 0, "Sociedade Portuguesa de Pediatria": 0, "IMIP": 1, "SBD": 2, "J Pediatr 2001": 3, "J Pediatr": 3, "Collett-Solberg": 3, "SPSP": 4, "ISPAD 2022": 5, "DynaMed": 5 }, // sigla no texto → fonte (índice em fontes)
+    citacoes: { "SPP": 0, "Sociedade Portuguesa de Pediatria": 0, "IMIP": 1, "SBD": 2, "J Pediatr 2001": 3, "J Pediatr": 3, "Collett-Solberg": 3, "SPSP": 4, "ISPAD 2022": 5, "DynaMed": 5, "IFF": 6, "UFTM": 7 }, // sigla no texto → fonte (índice em fontes)
     fontes: [
         "Sociedade Portuguesa de Pediatria / Sociedade de Endocrinologia e Diabetologia Pediátrica — Grupo de Trabalho de Diabetes Mellitus. Cetoacidose Diabética (protocolo, 20/05/2019), baseado no ISPAD 2018.",
         "UTI Pediátrica — IMIP. Protocolo de Cetoacidose Diabética (2018): dose da insulina, solução padrão em Y, potássio e fórmula do bicarbonato.",
         "Sociedade Brasileira de Diabetes. Diretriz SBD 2026: Diagnóstico e tratamento da cetoacidose diabética (rev. 13/08/2026). Usada só a parte aplicável à criança.",
         "Collett-Solberg PF. Cetoacidose diabética em crianças: revisão da fisiopatologia e tratamento com o uso do método de duas soluções salinas. J Pediatr (Rio J) 2001;77(1):9-16.",
         "SPSP — Anais do congresso: Tratamento de emergência da cetoacidose diabética em crianças (10/04/2024).",
-        "ISPAD Clinical Practice Consensus Guidelines 2022 (Pediatr Diabetes 2022;23(7):835) e Am Fam Physician 2024;110(5):476, via DynaMed: Tabela de achados na CAD, EHH e estado misto."
+        "ISPAD Clinical Practice Consensus Guidelines 2022 (Pediatr Diabetes 2022;23(7):835; tradução portuguesa: Orientações de Consenso da ISPAD de 2022, cap. 11 — Cetoacidose diabética e estado hiperglicêmico hiperosmolar, seção 6.6: transição para insulina s.c.) e Am Fam Physician 2024;110(5):476, via DynaMed: Tabela de achados na CAD, EHH e estado misto.",
+        "Instituto Fernandes Figueira (IFF/Fiocruz) — Portal de Boas Práticas em Saúde da Mulher, da Criança e do Adolescente. Cetoacidose diabética na infância: fase de transição (regular SC, escala pelo HGT e insulina basal).",
+        "HC-UFTM / Rede Ebserh. Protocolo PRT.HC-UFTM-UCA.004: Manejo da Cetoacidose Diabética na Infância, versão 4, 2026 (transição e insulina basal no diabetes novo)."
     ],
     revisao: "10/2026"
 });

@@ -72,8 +72,8 @@ details.cond-secao[open] > summary { border-bottom: 1px solid var(--border); }
 .cond-med-dose { background: var(--primary); color: #fff; font-weight: 800; font-size: 14px; border-radius: 8px; padding: 5px 12px; white-space: nowrap; }
 .cond-med.sem-peso .cond-med-dose { background: #94a3b8; }
 .cond-med-texto { font-family: ui-monospace, Consolas, monospace; font-size: 13px; line-height: 1.5; white-space: pre-wrap; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
-.cond-med-botoes { display: flex; gap: 6px; }
-.cond-med-botoes button { flex: 1; padding: 9px; border-radius: 8px; font-weight: 800; font-size: 13.5px; cursor: pointer; }
+.cond-med-botoes { display: flex; gap: 8px; justify-content: flex-end; }
+.cond-med-botoes button { flex: 0 0 auto; min-width: 120px; padding: 9px 16px; border-radius: 999px; font-weight: 800; font-size: 13.5px; cursor: pointer; } /* modelo 3 */
 .cond-btn-receita { background: #16a34a; color: #fff; border: 1px solid #16a34a; }
 .cond-btn-receita.adicionado { background: #15803d; }
 .cond-btn-copiar { background: var(--surface); color: var(--primary); border: 1px solid #bae6fd; }
@@ -209,3 +209,49 @@ a.cond-cit { color: inherit; text-decoration: underline dotted color-mix(in srgb
 a.cond-cit sup { color: var(--primary); font-weight: 800; font-size: .7em; margin-left: 1px; }
 a.cond-cit:hover { color: var(--primary); }
 a.cond-cit.piscando { background: color-mix(in srgb, #f59e0b 35%, transparent); border-radius: 4px; }
+
+/* CAD passo 4: painel "Soro da CAD em Y" */
+.sy { margin-top: 12px; border: 2px solid var(--cor-cat); border-radius: 14px; background: color-mix(in srgb, var(--cor-cat) 5%, var(--surface)); padding: 14px; }
+.sy-h { font-weight: 900; font-size: 16px; margin-bottom: 6px; }
+.sy-total { font-size: 30px; font-weight: 900; color: var(--cor-cat); line-height: 1.1; margin: 8px 0 4px; }
+.sy-total small { display: block; font-size: 12.5px; color: var(--text-muted); font-weight: 700; margin-top: 2px; }
+.sy-bags { display: flex; align-items: flex-start; justify-content: center; gap: 18px; margin: 12px 0 0; }
+.sy-bag { width: 110px; text-align: center; }
+.sy-bag-c { height: 90px; border-radius: 12px 12px 18px 18px; border: 3px solid var(--c); background: linear-gradient(to top, color-mix(in srgb, var(--c) 30%, var(--surface)) var(--n), var(--surface) var(--n)); display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 900; font-size: 30px; line-height: 1; color: var(--c); }
+.sy-bag-c small { font-size: 13px; font-weight: 800; letter-spacing: .02em; margin-bottom: 4px; }
+.sy-bag-l { font-size: 12.5px; font-weight: 800; margin-top: 4px; min-height: 32px; }
+.sy-bag-v { font-size: 15px; font-weight: 900; }
+.sy-y { display: block; width: 240px; max-width: 100%; height: auto; margin: 0 auto -2px; }
+.sy-y-letra { font: 800 14px Inter, sans-serif; fill: var(--text-muted); }
+.sy-paciente { width: max-content; margin: 0 auto; border: 2.5px solid #334155; border-radius: 12px; padding: 7px 16px; font-weight: 800; font-size: 15px; background: var(--surface); }
+.sy-paciente b { margin-left: 6px; }
+.sy-agora { text-align: center; font-weight: 900; font-size: 14px; margin-top: 10px; }
+.sy-fases-tit { font-weight: 800; font-size: 13px; color: var(--text-muted); margin: 12px 0 6px; }
+.sy-fases { display: grid; gap: 8px; margin: 0 0 6px; }
+.sy-fase { display: grid; grid-template-columns: 62px 1fr auto; gap: 10px; align-items: center; width: 100%; text-align: left; font: inherit; color: inherit; cursor: pointer;
+    background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 8px 10px; transition: border-color .15s, box-shadow .15s; }
+.sy-fase:hover { border-color: #94a3b8; }
+.sy-fase.on { border-color: #0f172a; box-shadow: 0 0 0 2px #0f172a inset; background: color-mix(in srgb, #d97706 calc(var(--mix) / 5), var(--surface)); }
+html[data-theme="dark"] .sy-fase.on { border-color: #e2e8f0; box-shadow: 0 0 0 2px #e2e8f0 inset; }
+/* etiqueta da glicose: azul (só B) → laranja (só A), sem número de passo */
+.sy-fase-pc { border-radius: 8px; padding: 6px 4px; text-align: center; font-weight: 900; font-size: 14px; color: #fff;
+    background: color-mix(in srgb, #d97706 var(--mix), #2563eb); }
+.sy-fase-txt b { font-size: 14px; display: block; } .sy-fase-txt span { font-size: 12.5px; color: var(--text-muted); display: block; }
+.sy-fase-bomba { font-weight: 900; font-size: 14px; text-align: right; white-space: nowrap; }
+.sy-rec-tit { font-weight: 900; font-size: 14px; margin: 14px 0 6px; }
+.sy .cond-med-botoes { margin-top: 8px; }
+.sy-k { display: grid; gap: 6px; margin-top: 10px; }
+.sy-k div { border-radius: 8px; padding: 7px 10px; font-size: 13.5px; border-left: 5px solid; }
+.sy-kv { background: color-mix(in srgb, #16a34a 10%, var(--surface)); border-color: #16a34a !important; }
+.sy-ka { background: color-mix(in srgb, #d97706 10%, var(--surface)); border-color: #d97706 !important; }
+.sy-kr { background: color-mix(in srgb, #dc2626 10%, var(--surface)); border-color: #dc2626 !important; }
+
+/* CAD passo 8: transição para insulina SC */
+.tr { margin-top: 12px; border: 2px solid #16a34a; border-radius: 14px; background: color-mix(in srgb, #16a34a 5%, var(--surface)); padding: 14px; }
+.tr-crit { font-size: 13.5px; background: var(--surface); border: 1px dashed var(--border-strong, #94a3b8); border-radius: 8px; padding: 8px 10px; margin: 8px 0 10px; }
+.tr-linha { display: grid; gap: 8px; }
+.tr-passo { display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: start; background: var(--surface); border: 1px solid var(--border); border-left: 5px solid var(--c); border-radius: 10px; padding: 8px 10px; }
+.tr-n { width: 30px; height: 30px; border-radius: 8px; background: color-mix(in srgb, var(--c) 14%, var(--surface)); font-size: 17px; display: flex; align-items: center; justify-content: center; }
+.tr-passo b { display: block; font-size: 14.5px; } .tr-passo span { display: block; font-size: 13.5px; color: var(--text-soft, inherit); }
+.tr .cond-med-botoes { margin-top: 8px; }
+.tr .tr-tab { min-width: 0; font-size: 14px; max-width: 420px; }
