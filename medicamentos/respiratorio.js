@@ -634,9 +634,9 @@ registrarMedicamentos({
         info: "<strong>Posologia:</strong> 50 mg/kg/dia de 12/12h (25 mg/kg/dose) por 10 dias. Máx. 500 mg/dose (1 g/dia).", badge: "Máx: 500 mg/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             let v = Math.min(parseFloat(round05(p * 25 / 50)), 10), t = String(v).replace('.', ',');
-            /* frasco de 150 mL: 10 dias x 2 doses */
-            let fr = Math.max(1, Math.ceil(v * 20 / 150));
-            return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 250 MG/5ML ---------- ${fr} FR\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.\nNÃO PARAR ANTES DOS 10 DIAS, MESMO SE MELHORAR.` };
+            /* total do tratamento em mL: 2 doses x 10 dias */
+            let tot = Math.ceil(v * 2 * 10);
+            return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 250 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.\nNÃO PARAR ANTES DOS 10 DIAS, MESMO SE MELHORAR.` };
         },
         detalhes: {
             indicacao: "Faringoamigdalite estreptocócica (estreptococo beta-hemolítico do grupo A).",
