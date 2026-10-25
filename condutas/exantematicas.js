@@ -177,7 +177,7 @@ function abrirFotoExantema(k) {
 // ---------- Guia de identificação ----------
 // tags: lesão (mp/ves/pet/lixa) · febre (febre_antes / febre_junto / febre_pouca) · início (ini_face/ini_tronco/ini_extrem/ini_boca) · sinais
 const DOENCAS_EXANTEMA = [
-    { id: "sarampo", fotos: ["sarampo", "sarampo_koplik"], nome: "Sarampo", tipo: "mp", conduta: null, alerta: "Notificação imediata (até 24 h). Isolamento respiratório.",
+    { id: "sarampo", fotos: ["sarampo", "sarampo_koplik"], nome: "Sarampo", tipo: "mp", conduta: "sarampo", alerta: "Notificação imediata (até 24 h). Isolamento respiratório.",
       tags: ["mp", "febre_junto", "ini_face", "s_tosse", "s_koplik"],
       texto: "Febre alta + <strong>tosse, coriza e conjuntivite</strong>; exantema no 3º a 5º dia, ainda com febre, que começa <strong>atrás das orelhas e na face</strong> e desce (craniocaudal), confluente. <strong>Manchas de Koplik</strong> na mucosa jugal." },
     { id: "rubeola", fotos: ["rubeola"], nome: "Rubéola", tipo: "mp", conduta: null, alerta: "Notificação imediata (até 24 h).",
