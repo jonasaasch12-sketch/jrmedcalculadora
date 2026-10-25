@@ -140,6 +140,7 @@ const categorias = [
             { nome: "Otorrino: Orofaringe (Dor de Garganta)", remedios: ["hexomedine", "bismujet"] },
             { nome: "Genital (Sinéquia, Fimose, Vulvovaginite)", remedios: ["premarin", "postec", "flogo_rosa"] },
             { nome: "Toxicologia (Intoxicações)", remedios: ["carvao"] },
+            { nome: "Doença de Kawasaki", conduta: "kawasaki", condutaNome: "Kawasaki", remedios: ["ivig_kawasaki", "aas_kawasaki_aguda", "aas_kawasaki_baixa"] },
             { nome: "Hematologia (Ferro e Hemoderivados)", remedios: ["sulfato_ferroso", "sulfato_ferroso_prof", "hemacias", "plaquetas", "plasma", "ivig_neo"] }
         ]
     }

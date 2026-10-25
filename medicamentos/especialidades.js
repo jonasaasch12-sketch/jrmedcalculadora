@@ -311,5 +311,57 @@ registrarMedicamentos({
             dose: "1 g/kg/dose por SNG.",
             atencao: "Máximo 50 g por dose."
         }
+    },
+    // ===== Doença de Kawasaki: card próprio (AHA 2017) =====
+    "ivig_kawasaki": {
+        cat: "cat-especialidades", sub: "🏥 Uso Hospitalar (Hemoderivados)",
+        kw: "imunoglobulina humana endovenosa ivig igiv kawasaki 2 g/kg aneurisma coronariano",
+        nome: "Imunoglobulina Humana EV (IGIV) — Doença de Kawasaki", apres: "Solução a 5% (50 mg/mL) ou 10% (100 mg/mL)",
+        info: "<strong>Conduta (AHA 2017):</strong> 2 g/kg EV em dose única, infundida em 10 a 12 horas, até o 10º dia de febre.", badge: "Dose única", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* AHA 2017: 2 g/kg EV dose única em 10 a 12 h. Volumes para 5% (50 mg/mL) e 10% (100 mg/mL); velocidade média em 12 h */
+            let g = Math.round(p * 2 * 10) / 10, f = x => String(x).replace('.', ',');
+            let v5 = Math.round(g * 20), v10 = Math.round(g * 10);
+            return { v: `${f(g)} g`, r: `VIA ENDOVENOSA (USO HOSPITALAR - DOENÇA DE KAWASAKI)\n\n1) IMUNOGLOBULINA HUMANA ENDOVENOSA\nFAZER ${f(g)} G (2 G/KG) EV EM DOSE ÚNICA, EM 10 A 12 HORAS.\n SOLUÇÃO A 5%: ${v5} ML (EM 12 H: ${f(Math.round(v5 / 12 * 10) / 10)} ML/H).\n SOLUÇÃO A 10%: ${v10} ML (EM 12 H: ${f(Math.round(v10 / 12 * 10) / 10)} ML/H).\n\n * Começar devagar e aumentar conforme a bula do produto. Monitorar sinais vitais (reação à infusão).` };
+        },
+        detalhes: {
+            indicacao: "Doença de Kawasaki completa ou incompleta com indicação de tratamento; resistência (2ª dose).",
+            dose: "2 g/kg EV em dose única, em 10 a 12 h (AHA 2017).",
+            atencao: "Até o 10º dia de febre (ideal até o 7º). Adiar vacinas de vírus vivo por 11 meses. Seguir a velocidade da bula do produto disponível."
+        }
+    },
+    "aas_kawasaki_aguda": {
+        cat: "cat-especialidades", sub: "🏥 Uso Hospitalar (Vias Orais)",
+        kw: "aas acido acetilsalicilico aspirina kawasaki fase aguda dose anti inflamatoria moderada alta",
+        nome: "AAS: Kawasaki fase aguda (anti-inflamatória)", apres: "Dose em mg (diluir o comprimido conforme o serviço)",
+        info: "<strong>Conduta (AHA 2017):</strong> moderada 30 a 50 mg/kg/dia ou alta 80 a 100 mg/kg/dia, dividida de 6/6h, até 48 a 72 h sem febre.", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* AHA 2017: 30-50 mg/kg/dia (moderada) ou 80-100 mg/kg/dia (alta) em 4 tomadas. Mostra só a dose em mg por tomada (arredondada de 5 em 5) */
+            let r5 = x => Math.round(x / 5) * 5;
+            let m1 = r5(p * 30 / 4), m2 = r5(p * 50 / 4), a1 = r5(p * 80 / 4), a2 = r5(p * 100 / 4);
+            return { v: `${m1}-${m2} mg 6/6h`, r: `${recHead}1) ÁCIDO ACETILSALICÍLICO (AAS)\nOPÇÃO DOSE MODERADA (30 A 50 MG/KG/DIA): DAR ${m1} A ${m2} MG, VIA ORAL, DE 6/6 HORAS.\nOPÇÃO DOSE ALTA (80 A 100 MG/KG/DIA): DAR ${a1} A ${a2} MG, VIA ORAL, DE 6/6 HORAS.\nMANTER ATÉ 48 A 72 HORAS SEM FEBRE; DEPOIS, PASSAR PARA A DOSE BAIXA (ANTIAGREGANTE).` };
+        },
+        detalhes: {
+            indicacao: "Doença de Kawasaki, fase aguda, junto com a imunoglobulina.",
+            dose: "Moderada 30 a 50 mg/kg/dia ou alta 80 a 100 mg/kg/dia, de 6/6h, até 48 a 72 h sem febre (AHA 2017).",
+            atencao: "Não usar ibuprofeno junto. Influenza ou varicela em uso de AAS: risco de síndrome de Reye, falar com o especialista."
+        }
+    },
+    "aas_kawasaki_baixa": {
+        cat: "cat-especialidades", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "aas acido acetilsalicilico aspirina kawasaki dose baixa antiagregante alta 4 a 6 semanas",
+        nome: "AAS: Kawasaki dose baixa (antiagregante)", apres: "Dose em mg (diluir o comprimido conforme o serviço)",
+        info: "<strong>Conduta (AHA 2017):</strong> 3 a 5 mg/kg/dia, 1 vez ao dia, até o eco de 4 a 6 semanas normal (mais tempo se aneurisma).", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* AHA 2017: 3-5 mg/kg/dia, 1x/dia. Só a dose em mg (arredondada de 5 em 5, mínimo 5 mg) */
+            let r5 = x => Math.max(5, Math.round(x / 5) * 5);
+            let b1 = r5(p * 3), b2 = r5(p * 5);
+            return { v: `${b1}-${b2} mg 1x/dia`, r: `${recHead}1) ÁCIDO ACETILSALICÍLICO (AAS)\nDAR ${b1} A ${b2} MG (3 A 5 MG/KG), VIA ORAL, 1 VEZ AO DIA, ATÉ A REAVALIAÇÃO COM O CARDIOLOGISTA (ECOCARDIOGRAMA DE 4 A 6 SEMANAS).\nNÃO DAR IBUPROFENO JUNTO. SE PEGAR GRIPE OU CATAPORA, PROCURAR O MÉDICO.` };
+        },
+        detalhes: {
+            indicacao: "Doença de Kawasaki após 48 a 72 h sem febre, até o eco de 4 a 6 semanas; por mais tempo se aneurisma.",
+            dose: "3 a 5 mg/kg/dia VO, 1 vez ao dia (AHA 2017).",
+            atencao: "Vacina da influenza inativada enquanto usar AAS. Evitar ibuprofeno."
+        }
     }
 });
