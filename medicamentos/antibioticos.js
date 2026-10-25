@@ -434,5 +434,60 @@ registrarMedicamentos({
             alertasPediatricos: "Ajustar a dose conforme a concentração sérica.",
             fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Cloridrato de Vancomicina, atualizado em 30/10/2025."
         }
+    },
+    // ===== Doença meningocócica: cards próprios (Ministério da Saúde, Guia de Vigilância 2023) =====
+    "cef_meningo": {
+        cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar / UBS (Vias Injetáveis)",
+        kw: "ceftriaxona ev meningococcemia doenca meningococica meningite bacteriana sepse purpura petequias 12/12h",
+        nome: "Ceftriaxona EV: Doença meningocócica / meningite", apres: "FA 1 g",
+        info: "<strong>Posologia (MS):</strong> 100 mg/kg/dia EV de 12/12h (50 mg/kg/dose) por 7 dias. Máx. 4 g/dia (2 g/dose). Iniciar sem atrasar: na 1ª hora.", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* MS: 100 mg/kg/dia de 12/12h, 7 dias; teto 4 g/dia (2 g/dose). FA 1 g + 10 mL de AD (100 mg/mL); diluição no padrão do app */
+            let mg = Math.min(p * 50, 2000), ml = mg / 100, fa = mg > 1000 ? 2 : 1, sf = Math.ceil(Math.max(ml * 2.5, 10));
+            let t = ml.toFixed(1).replace('.', ',');
+            return { v: `${ml.toFixed(1)} mL 12/12h`, r: `VIA ENDOVENOSA (DOENÇA MENINGOCÓCICA / MENINGITE)\n\n Reconstituir ${fa} FA de Ceftriaxona 1 g em 10 mL de AD cada (100 mg/mL).\n Aspirar ${t} mL (${mg.toFixed(0)} mg${mg >= 2000 ? ' = dose máxima' : ' = 50 mg/kg'}), diluir em ${sf} mL de SF 0,9% e infundir em 30 min, de 12/12h, por 7 dias.\n\n * Colher hemocultura antes, sem atrasar o antibiótico.` };
+        },
+        detalhes: {
+            indicacao: "Doença meningocócica (meningococcemia e/ou meningite) e meningite bacteriana suspeita.",
+            dose: "100 mg/kg/dia EV de 12/12h por 7 dias (MS). Máximo 4 g/dia (2 g por dose).",
+            atencao: "Não atrasar por exames ou punção lombar. Quem tratou com ceftriaxona não precisa de quimioprofilaxia na alta."
+        }
+    },
+    "rifampicina_profilaxia": {
+        cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "rifampicina quimioprofilaxia contatos doenca meningococica meningococcemia meningite comunicantes",
+        nome: "Rifampicina: Quimioprofilaxia meningocócica (contatos)", apres: "Suspensão 20 mg / mL",
+        info: "<strong>Posologia (MS):</strong> < 1 mês: 5 mg/kg/dose · ≥ 1 mês: 10 mg/kg/dose (máx. 600 mg), de 12/12h por 2 dias.", badge: "Máx: 600 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            /* MS: < 1 mês 5 mg/kg/dose; >= 1 mês 10 mg/kg/dose (máx. 600 mg) de 12/12h por 2 dias. Suspensão 20 mg/mL. Total: 4 doses */
+            let id = parseFloat(String(i).replace(',', '.')), rn = !isNaN(id) && id < 1 / 12;
+            let mg = Math.min(p * (rn ? 5 : 10), 600), v = Math.min(parseFloat(round05(mg / 20)), 30), t = String(v).replace('.', ','), tot = Math.ceil(v * 4);
+            let aviso = isNaN(id) ? "\n(MENOR DE 1 MÊS: 5 MG/KG/DOSE.)" : "";
+            return { v: v + " mL", r: `${recHead}1) RIFAMPICINA SUSPENSÃO 20 MG/ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 2 DIAS (4 DOSES).${aviso}\nAS SECREÇÕES (URINA, LÁGRIMA, SUOR) FICAM ALARANJADAS.` };
+        },
+        detalhes: {
+            indicacao: "Quimioprofilaxia dos contatos próximos de doença meningocócica (domicílio, mesmo dormitório, creche e escola conforme a vigilância, expostos às secreções), de preferência até 48 h. Também o paciente na alta, se não tratou com ceftriaxona.",
+            dose: "< 1 mês: 5 mg/kg/dose; ≥ 1 mês: 10 mg/kg/dose (máx. 600 mg), de 12/12h por 2 dias (MS).",
+            atencao: "Gestante: preferir ceftriaxona IM. Interage com anticoncepcional oral e outros fármacos. Mancha lentes de contato."
+        }
+    },
+    "cef_profilaxia_meningo": {
+        cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar / UBS (Vias Injetáveis)",
+        kw: "ceftriaxona im quimioprofilaxia contatos doenca meningococica dose unica gestante alternativa rifampicina",
+        nome: "Ceftriaxona IM: Quimioprofilaxia meningocócica (contatos)", apres: "FA 1 g + 3,5 mL Lidocaína 1%",
+        info: "<strong>Posologia (MS):</strong> dose única IM. < 12 anos: 125 mg · ≥ 12 anos: 250 mg.", badge: "Dose única", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: (p, i) => {
+            /* MS: ceftriaxona IM dose única: < 12 anos 125 mg; >= 12 anos 250 mg. 1 g + 3,5 mL lidocaína 1% = 285,7 mg/mL */
+            let id = parseFloat(String(i).replace(',', '.'));
+            let linha = (mg) => `Aspirar ${(mg / 285.7).toFixed(1).replace('.', ',')} mL (${mg} mg) e aplicar IM, dose única.`;
+            let corpo = isNaN(id) ? `< 12 ANOS: ${linha(125)}\n ≥ 12 ANOS: ${linha(250)}` : linha(id >= 12 ? 250 : 125);
+            let v = isNaN(id) ? "125 ou 250 mg" : (id >= 12 ? "250 mg" : "125 mg");
+            return { v: v, r: `VIA INTRAMUSCULAR (QUIMIOPROFILAXIA - DOENÇA MENINGOCÓCICA)\n\n Reconstituir 1 FA de Ceftriaxona 1 g com 3,5 mL de lidocaína 1%.\n ${corpo}` };
+        },
+        detalhes: {
+            indicacao: "Alternativa à rifampicina na quimioprofilaxia dos contatos (gestantes, contraindicação ou falta da rifampicina).",
+            dose: "Dose única IM: < 12 anos 125 mg; ≥ 12 anos 250 mg (MS).",
+            atencao: "A versão com lidocaína é só IM. Desprezar o restante do frasco."
+        }
     }
 });

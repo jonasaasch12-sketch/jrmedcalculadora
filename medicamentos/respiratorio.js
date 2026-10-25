@@ -720,5 +720,54 @@ registrarMedicamentos({
             dose: "IM, dose única. < 27 kg: 600.000 UI | ≥ 27 kg: 1.200.000 UI (IDSA 2012).",
             atencao: "Perguntar sobre alergia a penicilina. Manter em observação por 40 minutos."
         }
+    },
+    // ===== Sinusite bacteriana aguda: cards próprios da doença (AAP 2013 / IDSA 2012) =====
+    "amox_sinusite": {
+        cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "amoxicilina dose alta sinusite rinossinusite bacteriana aguda 10 dias",
+        nome: "Amoxicilina: Sinusite Bacteriana Aguda (dose alta)", apres: "400 mg / 5 mL",
+        info: "<strong>Posologia (AAP 2013 / IDSA 2012):</strong> 90 mg/kg/dia de 12/12h (45 mg/kg/dose) por 10 dias. Máx. 2 g/dose.", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* 90 mg/kg/dia de 12/12h por 10 dias; teto 2 g/dose (25 mL). Total do tratamento em mL: 2 doses x 10 dias */
+            let v = Math.min(parseFloat(round05(p * 45 * 5 / 400)), 25), t = String(v).replace('.', ','), tot = Math.ceil(v * 2 * 10);
+            return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 400 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.` };
+        },
+        detalhes: {
+            indicacao: "Sinusite bacteriana aguda (1ª escolha).",
+            dose: "90 mg/kg/dia VO de 12/12h por 10 dias (máx. 2 g/dose). A AAP aceita 45 mg/kg/dia sem fator de risco e sugere tratar até 7 dias sem sintomas.",
+            atencao: "Perguntar sobre alergia a penicilina."
+        }
+    },
+    "clav_sinusite": {
+        cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "amoxicilina clavulanato dose alta sinusite rinossinusite bacteriana aguda creche menor de 2 anos falha dois frascos",
+        nome: "Amoxicilina + Clavulanato: Sinusite Bacteriana Aguda (dose alta)", apres: "Amoxicilina 400 mg/5 mL + Amoxicilina-clavulanato 400+57 mg/5 mL",
+        info: "<strong>Posologia (AAP 2013 / IDSA 2012):</strong> 90 mg/kg/dia de amoxicilina (+ 6,4 mg/kg/dia de clavulanato) de 12/12h por 10 dias, com <strong>dois frascos</strong>: metade da dose em cada. Máx. 2 g de amoxicilina/dose.", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* sem a ES (14:1): 22,5 mg/kg/dose de cada frasco de 400 mg/5 mL; teto 1 g por frasco por dose (2 g no total) */
+            let v = Math.min(parseFloat(round05(p * 22.5 * 5 / 400)), 12.5), t = String(v).replace('.', ','), tot = Math.ceil(v * 2 * 10);
+            return { v: v + " mL de cada", r: `${recHead}1) AMOXICILINA SUSPENSÃO 400 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.\n\n2) AMOXICILINA + CLAVULANATO 400+57 MG/5ML - ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.\nDAR OS DOIS JUNTOS, NO MESMO HORÁRIO.` };
+        },
+        detalhes: {
+            indicacao: "Sinusite bacteriana aguda com fator de risco (< 2 anos, creche, antibiótico nos últimos 30 dias, quadro moderado a grave, imunodeprimido) ou falha da amoxicilina em 72 h.",
+            dose: "90 mg/kg/dia de amoxicilina + 6,4 mg/kg/dia de clavulanato VO de 12/12h por 10 dias (máx. 2 g de amoxicilina/dose), em dois frascos com o mesmo volume.",
+            atencao: "Sem a formulação ES no serviço: usar só o 400+57 dobraria o clavulanato (mais diarreia). Por isso, dois frascos."
+        }
+    },
+    "cef_sinusite": {
+        cat: "cat-respiratorio", sub: "🏥 Uso Hospitalar / UBS (Vias Injetáveis)",
+        kw: "ceftriaxona im sinusite rinossinusite bacteriana vomitos nao aceita via oral intramuscular",
+        nome: "Ceftriaxona IM: Sinusite Bacteriana Aguda", apres: "FA 1 g + 3,5 mL Lidocaína 1%",
+        info: "<strong>Posologia (AAP 2013):</strong> 50 mg/kg IM, dose única, quando vomita ou não aceita via oral. Melhorou em 24 h: seguir com antibiótico oral. Máx. 1 g.", badge: "Máx: 1 g/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* AAP 2013: 50 mg/kg IM/EV dose única; depois VO. 1 g + 3,5 mL de lidocaína 1% (285,7 mg/mL). Teto 1 g. */
+            let mg = Math.min(p * 50, 1000), ml = mg / 285.7, t = ml.toFixed(1).replace('.', ','), q = mg >= 1000 ? "1 g = dose máxima" : `${mg.toFixed(0)} mg = 50 mg/kg`;
+            return { v: `IM: ${ml.toFixed(1)} mL`, r: `VIA INTRAMUSCULAR (SINUSITE BACTERIANA AGUDA)\n\n Reconstituir 1 FA de Ceftriaxona 1 g com 3,5 mL de lidocaína 1%.\n Aspirar ${t} mL (${q}) e aplicar IM profunda, dose única.\n\n * Reavaliar em 24 h: se melhorou, completar o tratamento com antibiótico oral.` };
+        },
+        detalhes: {
+            indicacao: "Sinusite bacteriana aguda em criança que vomita ou não aceita via oral. Alérgico à penicilina sem reação imediata.",
+            dose: "50 mg/kg IM, dose única (máx. 1 g). Melhorou em 24 h: completar com antibiótico oral (AAP 2013).",
+            atencao: "A versão com lidocaína é só IM, nunca EV. Evitar se houve anafilaxia à penicilina. Complicação orbitária ou intracraniana: internar e antibiótico EV."
+        }
     }
 });

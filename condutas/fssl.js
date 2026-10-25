@@ -128,17 +128,50 @@ registrarConduta({
                     resumo: "Toda a condução numa olhada. Os detalhes estão em cada passo abaixo.",
                     lista: "passos",
                     itens: [
-                        "<span class=\"cond-passo\">1</span> <strong>Estado geral:</strong> comprometido (ou sinal de alerta) = <strong>internar</strong>, colher culturas, LCR, RX e antibiótico empírico, em qualquer idade",
-                        "<span class=\"cond-passo\">2</span> <strong>< 30 dias:</strong> <strong>internar</strong> sempre, exames completos e antibiótico empírico",
-                        "<span class=\"cond-passo\">3</span> <strong>1 a 3 meses:</strong> PVR, hemograma e EAS + <strong>critérios de Rochester</strong> (baixo risco: reavaliar todo dia; alto risco: internar)",
-                        "<span class=\"cond-passo\">4</span> <strong>3 a 36 meses, vacinação completa:</strong> PVR, EAS e urocultura; <strong>reavaliação diária</strong>",
-                        "<span class=\"cond-passo\">5</span> <strong>3 a 36 meses, vacinação incompleta:</strong> PVR; Tax ≤ 39 °C reavaliar todo dia; Tax > 39 °C: EAS/urocultura → hemograma → hemocultura e RX",
-                        "<span class=\"cond-passo\">6</span> <strong>Risco de bacteremia oculta:</strong> <strong>ceftriaxona 50 mg/kg IM 1x/dia</strong> e reavaliação diária até o fim das culturas",
-                        "<span class=\"cond-passo\">7</span> <strong>Antitérmico</strong> só se houver desconforto, em monoterapia; orientar e reavaliar"
+                        "<span class=\"cond-passo\">1</span> <strong>Internar?</strong> Critérios clicáveis: UTI · enfermaria · reavaliação diária",
+                        "<span class=\"cond-passo\">2</span> <strong>Estado geral:</strong> comprometido (ou sinal de alerta) = <strong>internar</strong>, colher culturas, LCR, RX e antibiótico empírico, em qualquer idade",
+                        "<span class=\"cond-passo\">3</span> <strong>< 30 dias:</strong> <strong>internar</strong> sempre, exames completos e antibiótico empírico",
+                        "<span class=\"cond-passo\">4</span> <strong>1 a 3 meses:</strong> PVR, hemograma e EAS + <strong>critérios de Rochester</strong> (baixo risco: reavaliar todo dia; alto risco: internar)",
+                        "<span class=\"cond-passo\">5</span> <strong>3 a 36 meses, vacinação completa:</strong> PVR, EAS e urocultura; <strong>reavaliação diária</strong>",
+                        "<span class=\"cond-passo\">6</span> <strong>3 a 36 meses, vacinação incompleta:</strong> PVR; Tax ≤ 39 °C reavaliar todo dia; Tax > 39 °C: EAS/urocultura → hemograma → hemocultura e RX",
+                        "<span class=\"cond-passo\">7</span> <strong>Risco de bacteremia oculta:</strong> <strong>ceftriaxona 50 mg/kg IM 1x/dia</strong> e reavaliação diária até o fim das culturas",
+                        "<span class=\"cond-passo\">8</span> <strong>Antitérmico</strong> só se houver desconforto, em monoterapia; orientar e reavaliar"
                     ]
                 },
                 {
                     passo: 1,
+                    titulo: "🏥 Critérios de internação",
+                    icone: "🏥",
+                    resumo: "Primeiro decida: UTI, internar ou reavaliação diária. Resume os passos 2 a 4.",
+                    alerta: true,
+                    itens: [
+                        "Na FSSL, internam: <strong>comprometimento do estado geral</strong> em qualquer idade, <strong>menor de 30 dias</strong> e <strong>1 a 3 meses de alto risco</strong> (Rochester) (SBP)."
+                    ],
+                    escore: {
+                        id: "internacao_fssl",
+                        unidade: " ",
+                        checklist: true,
+                        instrucao: "Toque em tudo o que o paciente apresenta. Vale o critério mais grave. Sem nenhum, toque em \"Nenhum\".",
+                        itens: [
+                            { nome: "🔴 UTI", opcoes: [[3, "Choque: hipotensão, enchimento capilar > 3 s com taquicardia, extremidades frias", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Rebaixamento da consciência, convulsão ou insuficiência respiratória", "🔴"]] },
+                            { nome: "🟠 Internar (enfermaria)", opcoes: [[2, "Comprometimento do estado geral ou sinal de alerta do semáforo (bloco 🔎)", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Menor de 30 dias com febre (sempre)", "🟠"]] },
+                            { nome: "", opcoes: [[2, "1 a 3 meses que não cumpre todos os critérios de Rochester (alto risco)", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Sem condição de reavaliação diária ou risco social", "🟠"]] },
+                            { nome: "🟢 Nenhum dos acima", opcoes: [[0, "Nenhum critério", "🟢"]] }
+                        ],
+                        classificar: (v) => {
+                            let g = Math.max(...v);
+                            if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "Sepse: estabilizar (PALS), culturas e antibiótico empírico na 1ª hora; UTI pediátrica." };
+                            if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Hemocultura, urocultura, LCR, RX de tórax e antibiótico empírico (passos 2 a 4)." };
+                            return { num: "🏠", rotulo: "Reavaliação diária", cor: "#16a34a", texto: "Bom estado geral, 1 a 36 meses sem critério: seguir pela idade e vacinação, com reavaliação diária (passos 4 a 7)." };
+                        },
+                        nota: "Critérios de internação do fluxograma da SBP (DC nº 206, 2025, e Tratado de Pediatria 2017). O nível UTI reúne os sinais de sepse grave do PALS; o documento da SBP não define critérios de UTI."
+                    }
+                },
+                {
+                    passo: 2,
                     titulo: "Avaliar o estado geral e os sinais vitais",
                     aberta: true,
                     resumo: "Comprometido: internar em qualquer idade.",
@@ -146,11 +179,11 @@ registrarConduta({
                         "Anamnese detalhada e <strong>exame físico completo</strong> procurando o foco da febre.",
                         "Avaliar FC, FR, SatO₂, enchimento capilar, hidratação, atividade e resposta aos estímulos (escore 🚦 no bloco 🔎).",
                         "<strong>Comprometimento do estado geral, em qualquer idade:</strong> <strong>internar</strong>, colher <strong>hemocultura, urocultura, LCR e RX de tórax</strong> e iniciar <strong>antibiótico empírico</strong>.",
-                        "Bom estado geral: seguir pela idade (passos 2 a 5)."
+                        "Bom estado geral: seguir pela idade (passos 3 a 6)."
                     ]
                 },
                 {
-                    passo: 2,
+                    passo: 3,
                     titulo: "Menor de 30 dias",
                     aberta: true,
                     resumo: "Internar sempre, exames completos e antibiótico empírico.",
@@ -162,7 +195,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 3,
+                    passo: 4,
                     titulo: "1 a 3 meses: critérios de Rochester",
                     aberta: true,
                     resumo: "PVR, hemograma e EAS; baixo risco reavalia todo dia, alto risco interna.",
@@ -192,7 +225,7 @@ registrarConduta({
                     }
                 },
                 {
-                    passo: 4,
+                    passo: 5,
                     titulo: "3 a 36 meses com vacinação completa",
                     aberta: true,
                     resumo: "PVR, EAS e urocultura; reavaliação diária.",
@@ -203,7 +236,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 5,
+                    passo: 6,
                     titulo: "3 a 36 meses com vacinação incompleta",
                     aberta: true,
                     resumo: "Tax ≤ 39 °C reavalia; Tax > 39 °C: EAS/urocultura → hemograma → hemocultura e RX.",
@@ -214,12 +247,12 @@ registrarConduta({
                         "→ <strong>Leucocitúria alta</strong>: <strong>tratar</strong> (infecção urinária).",
                         "→ <strong>Leucocitúria baixa</strong>: colher <strong>hemograma</strong>:",
                         "→ Leucócitos ≤ 20.000/mm³ <strong>e</strong> neutrófilos ≤ 10.000/mm³: <strong>reavaliação diária</strong>.",
-                        "→ Leucócitos ≥ 20.000/mm³ <strong>ou</strong> neutrófilos ≥ 10.000/mm³: <strong>hemocultura + RX de tórax</strong>. RX alterado = <strong>pneumonia</strong> (tratar). RX normal = <strong>risco de bacteremia oculta</strong> (passo 6)."
+                        "→ Leucócitos ≥ 20.000/mm³ <strong>ou</strong> neutrófilos ≥ 10.000/mm³: <strong>hemocultura + RX de tórax</strong>. RX alterado = <strong>pneumonia</strong> (tratar). RX normal = <strong>risco de bacteremia oculta</strong> (passo 7)."
                     ],
                     nota: "Corte de leucocitúria no fluxograma da SBP: ≤ 5 x 10⁴/mL (seguir para hemograma) × > 5 x 10⁵/mL (tratar ITU)."
                 },
                 {
-                    passo: 6,
+                    passo: 7,
                     titulo: "Risco de bacteremia oculta: ceftriaxona IM",
                     aberta: true,
                     resumo: "Ceftriaxona 50 mg/kg IM 1x/dia e reavaliação diária até o fim das culturas.",
@@ -232,7 +265,7 @@ registrarConduta({
                     remedios: ["cef_fssl"]
                 },
                 {
-                    passo: 7,
+                    passo: 8,
                     titulo: "Antitérmico e orientações na alta",
                     aberta: true,
                     resumo: "Só se houver desconforto, em monoterapia. Sem métodos físicos.",

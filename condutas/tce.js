@@ -151,18 +151,58 @@ registrarConduta({
                     resumo: "ABCDE → Glasgow → leve: PECARN · moderado/grave: TC, neuroproteção e UTI.",
                     lista: "passos",
                     itens: [
-                        "<span class=\"cond-passo\">1</span> <strong>ABCDE</strong> (ATLS/PALS) com proteção da coluna cervical",
-                        "<span class=\"cond-passo\">2</span> <strong>Glasgow, pupilas e glicemia</strong>: classificar leve, moderado ou grave",
-                        "<span class=\"cond-passo\">3</span> <strong>TCE leve:</strong> PECARN → TC, observação 4–6 h ou alta",
-                        "<span class=\"cond-passo\">4</span> <strong>Moderado/grave:</strong> TC urgente, neurocirurgia, exames, UTI",
-                        "<span class=\"cond-passo\">5</span> <strong>Via aérea:</strong> intubar se ECG ≤ 8 ou sinais de HIC",
-                        "<span class=\"cond-passo\">6</span> <strong>Neuroproteção:</strong> evitar hipóxia, hipotensão, febre, hiponatremia",
-                        "<span class=\"cond-passo\">7</span> <strong>Hipertensão intracraniana:</strong> salina 3% / manitol",
-                        "<span class=\"cond-passo\">8</span> <strong>Convulsão:</strong> tratar como estado de mal"
+                        "<span class=\"cond-passo\">1</span> <strong>Destino:</strong> critérios clicáveis (UTI · internar · observar 4–6 h ou alta). <strong>Não atrasa o ABCDE</strong>",
+                        "<span class=\"cond-passo\">2</span> <strong>ABCDE</strong> (ATLS/PALS) com proteção da coluna cervical",
+                        "<span class=\"cond-passo\">3</span> <strong>Glasgow, pupilas e glicemia</strong>: classificar leve, moderado ou grave",
+                        "<span class=\"cond-passo\">4</span> <strong>TCE leve:</strong> PECARN → TC, observação 4–6 h ou alta",
+                        "<span class=\"cond-passo\">5</span> <strong>Moderado/grave:</strong> TC urgente, neurocirurgia, exames, UTI",
+                        "<span class=\"cond-passo\">6</span> <strong>Via aérea:</strong> intubar se ECG ≤ 8 ou sinais de HIC",
+                        "<span class=\"cond-passo\">7</span> <strong>Neuroproteção:</strong> evitar hipóxia, hipotensão, febre, hiponatremia",
+                        "<span class=\"cond-passo\">8</span> <strong>Hipertensão intracraniana:</strong> salina 3% / manitol",
+                        "<span class=\"cond-passo\">9</span> <strong>Convulsão:</strong> tratar como estado de mal"
                     ]
                 },
                 {
                     passo: 1,
+                    titulo: "🏥 Critérios de internação",
+                    icone: "🏥",
+                    resumo: "Para decidir o destino. Não atrasa o ABCDE (passo 2): marque depois de estabilizar e calcular o Glasgow.",
+                    alerta: true,
+                    itens: [
+                        "<strong>TCE leve com TC normal</strong> (ou sem indicação de TC pelo PECARN): em geral observação de 4 a 6 h no PS e alta (SBP).",
+                        "<strong>UTI:</strong> indicação formal no TCE grave e no moderado, sobretudo com Glasgow &lt; 11 (SBP)."
+                    ],
+                    escore: {
+                        id: "internacao_tce",
+                        unidade: " ",
+                        checklist: true,
+                        instrucao: "Toque em tudo o que o paciente apresenta. Vale o critério mais grave. Sem nenhum, toque em \"Nenhum\".",
+                        itens: [
+                            { nome: "🔴 UTI", opcoes: [[3, "Glasgow ≤ 8 (TCE grave)", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Glasgow 9 a 12 (TCE moderado)", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Sinais de herniação ou hipertensão intracraniana: anisocoria, bradicardia com hipertensão, postura anormal", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Choque ou instabilidade hemodinâmica", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Convulsão prolongada ou repetida", "🔴"]] },
+                            { nome: "🟠 Internar (enfermaria)", opcoes: [[2, "TC com lesão intracraniana ou fratura com afundamento ou de base", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Glasgow 13 a 14 que não normaliza ou piora durante a observação", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Piora na observação: vômitos persistentes, sonolência, cefaleia que aumenta", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Convulsão pós-traumática isolada", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Coagulopatia, uso de anticoagulante ou doença hematológica", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Suspeita de maus-tratos", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Sem acompanhante confiável para observar em casa", "🟠"]] },
+                            { nome: "🟢 Nenhum dos acima", opcoes: [[0, "Nenhum critério", "🟢"]] }
+                        ],
+                        classificar: (v) => {
+                            let g = Math.max(...v);
+                            if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "TC urgente, neurocirurgia desde o início e UTI pediátrica (passos 5 a 9)." };
+                            if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Internar para observação neurológica seriada e avaliação da neurocirurgia; repetir a TC se piorar." };
+                            return { num: "🏠", rotulo: "Observar 4–6 h e alta", cor: "#16a34a", texto: "Observação de no mínimo 4 h (até 6 a 8 h) no PS e alta com as orientações do bloco 🏠." };
+                        },
+                        nota: "UTI no moderado e no grave: SBP. Observação e TC pelo PECARN. Os demais critérios de internação reúnem as situações de risco descritas no Einstein e na SBP."
+                    }
+                },
+                {
+                    passo: 2,
                     titulo: "ABCDE com proteção cervical",
                     resumo: "Sistematizar pelo ATLS e PALS.",
                     itens: [
@@ -172,7 +212,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 2,
+                    passo: 3,
                     titulo: "Glasgow, pupilas e glicemia",
                     resumo: "Classificar a gravidade pelo Glasgow do bloco 🔎.",
                     itens: [
@@ -183,7 +223,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 3,
+                    passo: 4,
                     titulo: "TCE leve: PECARN e observação",
                     resumo: "TC só se o PECARN indicar; senão, observar 4 a 6 h.",
                     itens: [
@@ -195,7 +235,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 4,
+                    passo: 5,
                     titulo: "TCE moderado e grave: TC, neurocirurgia, UTI",
                     resumo: "TC o mais rápido possível e neurocirurgião desde o início.",
                     itens: [
@@ -206,7 +246,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 5,
+                    passo: 6,
                     titulo: "Via aérea: quando e como intubar",
                     alerta: true,
                     resumo: "ECG ≤ 8 ou sinais de HIC/herniação. Coluna neutra.",
@@ -219,7 +259,7 @@ registrarConduta({
                     remedios: ["rsi_ceta", "rsi_roc"]
                 },
                 {
-                    passo: 6,
+                    passo: 7,
                     titulo: "Neuroproteção: evitar a lesão secundária",
                     resumo: "Hipóxia, hipotensão, febre, hiponatremia e hipoglicemia pioram o cérebro.",
                     itens: [
@@ -233,7 +273,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 7,
+                    passo: 8,
                     titulo: "Hipertensão intracraniana",
                     resumo: "Salina 3% (1ª linha) ou manitol; sedação; hiperventilação só leve e refratária.",
                     itens: [
@@ -245,7 +285,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 8,
+                    passo: 9,
                     titulo: "Convulsão",
                     resumo: "Tratar como estado de mal; fenitoína.",
                     itens: [

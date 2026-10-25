@@ -108,6 +108,41 @@ registrarConduta({
             cor: "#dc2626",
             secoes: [
                 {
+                    titulo: "Critérios de internação",
+                    icone: "🏥",
+                    resumo: "Primeiro decida: UTI, internar ou tratar na unidade/em casa.",
+                    alerta: true,
+                    itens: [
+                        "A desidratação <strong>sem gravidade</strong> é tratada na unidade (Plano B) e em casa (Plano A). Interna quem precisa de <strong>hidratação EV</strong> ou tem complicação (SBP; ESPGHAN 2014)."
+                    ],
+                    escore: {
+                        id: "internacao_diarreia",
+                        unidade: " ",
+                        checklist: true,
+                        instrucao: "Toque em tudo o que o paciente apresenta. Vale o critério mais grave. Sem nenhum, toque em \"Nenhum\".",
+                        itens: [
+                            { nome: "🔴 UTI", opcoes: [[3, "Choque que não responde à expansão do Plano C", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Rebaixamento da consciência ou convulsão (pensar em distúrbio grave de sódio ou glicose)", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Acidose metabólica grave ou insuficiência renal", "🔴"]] },
+                            { nome: "🟠 Internar (enfermaria)", opcoes: [[2, "Desidratação grave: Plano C (hidratação EV)", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Sem melhora do Plano B em 6 h (na prática, 3 a 4 h) ou não tolera o SRO nem por sonda", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Vômitos incoercíveis ou biliosos", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Suspeita de condição cirúrgica (distensão, dor intensa, massa)", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Desnutrido grave com diarreia", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Disenteria com toxemia ou menor de 3 meses com disenteria", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Família incapaz de manter a hidratação em casa ou sem retorno", "🟠"]] },
+                            { nome: "🟢 Nenhum dos acima", opcoes: [[0, "Nenhum critério", "🟢"]] }
+                        ],
+                        classificar: (v) => {
+                            let g = Math.max(...v);
+                            if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "Estabilizar (PALS), corrigir a glicose e o sódio, gasometria; UTI pediátrica." };
+                            if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Plano C (hidratação EV) ou gastróclise, eletrólitos e reavaliação frequente." };
+                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Desidratação sem gravidade: Plano B na unidade até reidratar e depois Plano A em casa (bloco 🏠)." };
+                        },
+                        nota: "Plano C e falha do Plano B: Guia da SBP e Ministério da Saúde. Vômitos biliosos/incoercíveis, suspeita cirúrgica, alteração neurológica e cuidador incapaz: ESPGHAN 2014. O nível UTI reúne as complicações graves descritas nessas fontes."
+                    }
+                },
+                {
                     titulo: "Plano B: reidratação oral na unidade",
                     icone: "🟠",
                     aberta: true,
@@ -292,10 +327,11 @@ registrarConduta({
         }
     ],
 
-    citacoes: { "SBP": 0, "Ministério da Saúde": 1, "MS": 1 }, // sigla no texto → fonte (índice em fontes)
+    citacoes: { "SBP": 0, "Ministério da Saúde": 1, "MS": 1, "ESPGHAN 2014": 2, "ESPGHAN": 2 }, // sigla no texto → fonte (índice em fontes)
     fontes: [
         "Sociedade Brasileira de Pediatria. Departamento Científico de Gastroenterologia. Guia Prático de Atualização nº 74: Diarreia Aguda Infecciosa. 06/06/2023.",
-        "Brasil. Ministério da Saúde. Manejo do paciente com diarreia. Brasília: MS, 2023 (quadros reproduzidos no Guia da SBP)."
+        "Brasil. Ministério da Saúde. Manejo do paciente com diarreia. Brasília: MS, 2023 (quadros reproduzidos no Guia da SBP).",
+        "Guarino A, Ashkenazi S, Gendrel D, et al. European Society for Pediatric Gastroenterology, Hepatology, and Nutrition/European Society for Pediatric Infectious Diseases evidence-based guidelines for the management of acute gastroenteritis in children in Europe: update 2014. J Pediatr Gastroenterol Nutr 2014;59(1):132-52. doi:10.1097/MPG.0000000000000375"
     ],
     revisao: "10/2026"
 });

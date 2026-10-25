@@ -52,6 +52,8 @@ privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; c
 sw.js                      modo offline (rede primeiro)
 testes/verificar.js        verificação automática (só precisa de Node)
 condutas/condutas.js       área 📖 Condutas (aba ao lado de 💊 Prescrição)
+condutas/exantematicas.js  categoria "Doenças exantemáticas": guia de identificação clicável + varicela; desenhos SVG próprios
+                           (svgBonecoExantema, svgAmostraLesao). Fotos só com licença livre e crédito (Wikimedia/CDC)
 condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as medicações
                            são ids de cards (farmaciaJR), a dose nunca é repetida na conduta
 ```
@@ -64,6 +66,13 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
   risco, sinais vitais e, por último no bloco, a gravidade/escore.
 - Seções são sanfona e **todas começam fechadas** (pedido do Dr. Jonas); quem quiser usa
   "Abrir tudo". O campo `aberta: true` ainda existe nos arquivos, mas é ignorado. Cada seção tem `resumo` de uma linha.
+- **Critérios de internação = passo 1 da condução** (pedido do Dr. Jonas): logo depois da "⏱️ Linha do tempo", seção
+  "🏥 Critérios de internação" com lista clicável (`escore` com `checklist: true`): 🔴 UTI (valor 2), 🟠 enfermaria (valor 1),
+  🟢 "Nenhum critério" (valor 0); `classificar` pelo maior valor → UTI / Internar / Alta com retorno. Sinais de complicação
+  entram nesse mesmo passo. Se a diretriz não traz lista formal, dizer na `nota` de onde os critérios vieram. Modelo: condutas/otite.js.
+  Conduta sem passos numerados (asma, bronquiolite, pneumonia, diarreia): 1ª seção do bloco 🚨. Emergência (anafilaxia, TCE,
+  queimados): o resumo avisa que não atrasa o tratamento imediato. CAD: não renumerada (o "Indica UTI?" fica no bloco 🔎).
+  Gerador usado: valores 3 = UTI, 2 = enfermaria, 1 = considerar, 0 = nenhum.
 - **Condução na emergência = passo a passo cronológico** (pedido do Dr. Jonas): 1ª seção "⏱️ Linha do
   tempo (resumo)" (`lista: "passos"`), depois uma seção por passo com `passo: N` (número em destaque),
   na ordem em que se faz: chegada/exames → hidratação → medicação... Cada passo diz o que fazer,

@@ -62,6 +62,7 @@ const categorias = [
             },
             { nome: "Faringoamigdalite Estreptocócica", conduta: "faringoamigdalite", condutaNome: "Faringoamigdalite", remedios: ["amox_faringo", "benza", "azitro_faringo"] },
             { nome: "Otite Média Aguda", conduta: "otite_media", condutaNome: "Otite média aguda", remedios: ["amox_oma", "clav_oma", "cef_oma"] },
+            { nome: "Sinusite Bacteriana Aguda", conduta: "sinusite", condutaNome: "Sinusite", remedios: ["amox_sinusite", "clav_sinusite", "cef_sinusite"] },
             { nome: "Tosse (Antitussígenos e Expectorantes)", remedios: ["koid_d", "torante", "acebrofilina", "antux_xpe", "antux_gts", "percoff"] },
             { nome: "Manejo Avançado e Outros Respiratórios", remedios: ["pulmicort", "hidro_ev", "ipra"] }
         ]
@@ -70,6 +71,7 @@ const categorias = [
         id: "cat-antibioticos", titulo: "Antibióticos", dotClass: "dot-antibioticos", cor: "tarja-antibioticos", nome: "Antibióticos", icone: "🦠 ATB",
         patologias: [
             { nome: "Infecções de Vias Aéreas e Partes Moles", remedios: ["amox", "amox400", "clav"] },
+            { nome: "Doença Meningocócica (Meningococcemia e Meningite)", conduta: "meningococcemia", condutaNome: "Meningococcemia", remedios: ["cef_meningo", "rifampicina_profilaxia", "cef_profilaxia_meningo"] },
             { nome: "Febre sem Sinais Localizatórios (Bacteremia Oculta)", conduta: "fssl", condutaNome: "Febre sem sinais localizatórios", remedios: ["cef_fssl"] },
             { nome: "Outros Antibióticos Orais", remedios: ["cefadroxila", "pen_v", "smx_tmp", "metronidazol_vo", "cipro_vo"] },
             { nome: "Antibióticos Hospitalares (EV)", remedios: ["amicacina", "cefalotina", "cefepime", "ceftazidima", "cipro_ev", "clindamicina", "meropenem", "metronidazol_ev", "oxacilina", "pen_cristalina", "vancomicina"] }
@@ -118,6 +120,7 @@ const categorias = [
     { 
         id: "cat-pele", titulo: "Pele", dotClass: "dot-pele", cor: "tarja-pele", nome: "Pele", icone: "🩺 Pele",
         patologias: [
+            { nome: "Varicela (Catapora)", conduta: "varicela", condutaNome: "Varicela", remedios: ["aciclovir_varicela_vo", "aciclovir_varicela_ev"] },
             { nome: "Parasitoses, Infecções e Lesões Cutâneas", remedios: ["pele_larva", "pele_delta", "pele_perme_shampoo", "pele_perme", "pele_iver", "pele_escabiose_orient", "pele_mupi", "pele_nista", "pele_acicl", "pele_trokg","pele_trok", "trok_n", "quadriderm", "cetoconazol_cr", "nistatina_zinco", "penvir", "fluconazol"] }
         ]
     },

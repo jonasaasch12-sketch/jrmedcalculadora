@@ -45,6 +45,11 @@ const TETOS = {
     cef_disenteria: 20,   // mL (2 g; EV 100 mg/mL, IM 7 mL)
     metro_parasitas: 6.25, // mL de 40 mg/mL na giardíase (250 mg/dose)
     insulina_cad: 10,
+    rifampicina_profilaxia: 30, // mL de 20 mg/mL = 600 mg/dose
+    aciclovir_varicela_vo: 20, // mL de 200 mg/5 mL = 800 mg/dose
+    amox_sinusite: 25,    // mL de 400 mg/5 mL = 2 g/dose
+    clav_sinusite: 12.5,  // mL de cada frasco (2 g/dose no total)
+    cef_sinusite: 3.5,    // mL IM 285,7 mg/mL (1 g)
     amox_oma: 25,         // mL de 400 mg/5 mL = 2 g/dose (AAP)
     clav_oma: 12.5,       // mL de cada frasco de 400 mg/5 mL = 1 g cada (2 g/dose no total)
     cef_oma: 3.5,         // mL IM 285,7 mg/mL (1 g)

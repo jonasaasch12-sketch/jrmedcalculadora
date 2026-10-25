@@ -345,17 +345,51 @@ registrarConduta({
                     resumo: "Da confirmação da BT até a suspensão da fototerapia.",
                     lista: "passos",
                     itens: [
-                        "<span class=\"cond-passo\">1</span> <strong>Confirmar e classificar:</strong> BT sérica, IG, horas de vida, fatores de risco → calculadora",
-                        "<span class=\"cond-passo\">2</span> <strong>Investigar a causa:</strong> tipagem, Coombs direto, hemograma; G6PD se indicado",
-                        "<span class=\"cond-passo\">3</span> <strong>Fototerapia intensiva</strong> se BT no limiar ou acima; manter a amamentação",
-                        "<span class=\"cond-passo\">4</span> <strong>BT de controle</strong> em até 12 h e conforme a trajetória",
-                        "<span class=\"cond-passo\">5</span> <strong>Escalada de cuidado</strong> se BT a 2 mg/dL do limiar de exsanguineo",
-                        "<span class=\"cond-passo\">6</span> <strong>Exsanguineotransfusão</strong> se BT no limiar ou encefalopatia",
-                        "<span class=\"cond-passo\">7</span> <strong>Suspender</strong> com BT 2 mg/dL abaixo do limiar inicial; controle do rebote"
+                        "<span class=\"cond-passo\">1</span> <strong>Internar?</strong> Critérios clicáveis: UTI neonatal · fototerapia hospitalar · seguimento",
+                        "<span class=\"cond-passo\">2</span> <strong>Confirmar e classificar:</strong> BT sérica, IG, horas de vida, fatores de risco → calculadora",
+                        "<span class=\"cond-passo\">3</span> <strong>Investigar a causa:</strong> tipagem, Coombs direto, hemograma; G6PD se indicado",
+                        "<span class=\"cond-passo\">4</span> <strong>Fototerapia intensiva</strong> se BT no limiar ou acima; manter a amamentação",
+                        "<span class=\"cond-passo\">5</span> <strong>BT de controle</strong> em até 12 h e conforme a trajetória",
+                        "<span class=\"cond-passo\">6</span> <strong>Escalada de cuidado</strong> se BT a 2 mg/dL do limiar de exsanguineo",
+                        "<span class=\"cond-passo\">7</span> <strong>Exsanguineotransfusão</strong> se BT no limiar ou encefalopatia",
+                        "<span class=\"cond-passo\">8</span> <strong>Suspender</strong> com BT 2 mg/dL abaixo do limiar inicial; controle do rebote"
                     ]
                 },
                 {
                     passo: 1,
+                    titulo: "🏥 Critérios de internação",
+                    icone: "🏥",
+                    resumo: "Primeiro decida: UTI neonatal, internar para fototerapia ou seguimento ambulatorial.",
+                    alerta: true,
+                    itens: [
+                        "Decidir pela <strong>BT sérica</strong> na <strong>calculadora</strong> (bloco 🔎) e pelo estado do RN (AAP 2022)."
+                    ],
+                    escore: {
+                        id: "internacao_ictericia",
+                        unidade: " ",
+                        checklist: true,
+                        instrucao: "Toque em tudo o que o paciente apresenta. Vale o critério mais grave. Sem nenhum, toque em \"Nenhum\".",
+                        itens: [
+                            { nome: "🔴 UTI", opcoes: [[3, "BT a 2 mg/dL ou menos do limiar de exsanguineotransfusão (escalada de cuidado)", "🔴"]] },
+                            { nome: "", opcoes: [[3, "BT no limiar de exsanguineotransfusão ou acima", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Sinais de encefalopatia bilirrubínica aguda: hipertonia, opistótono, choro agudo, letargia importante, febre", "🔴"]] },
+                            { nome: "🟠 Internar (enfermaria)", opcoes: [[2, "BT no limiar de fototerapia ou acima (calculadora)", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Fototerapia domiciliar com BT subindo perto do limiar ou ≥ 1 mg/dL acima dele", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Icterícia nas primeiras 24 h de vida (provável hemólise)", "🟠"]] },
+                            { nome: "", opcoes: [[2, "RN doente: letargia, má aceitação, desidratação ou perda de peso excessiva, suspeita de sepse", "🟠"]] },
+                            { nome: "🟢 Nenhum dos acima", opcoes: [[0, "Nenhum critério", "🟢"]] }
+                        ],
+                        classificar: (v) => {
+                            let g = Math.max(...v);
+                            if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "Exames STAT, fototerapia intensiva de emergência, hidratação e neonatologista; UTI neonatal que faça exsanguineotransfusão (passos 6 e 7)." };
+                            if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Fototerapia intensiva hospitalar (passo 4), investigar a causa (passo 3) e BT em até 12 h." };
+                            return { num: "🏠", rotulo: "Seguimento ambulatorial", cor: "#16a34a", texto: "BT abaixo do limiar: seguimento conforme a distância do limiar (bloco 🏠). Fototerapia domiciliar só nos critérios do bloco 🏠." };
+                        },
+                        nota: "AAP 2022 (Kemper): limiares de fototerapia, escalada de cuidado (até 2 mg/dL do limiar de exsanguineotransfusão) e critérios de fototerapia domiciliar."
+                    }
+                },
+                {
+                    passo: 2,
                     titulo: "Confirmar a BT e classificar o RN",
                     resumo: "Sempre BT sérica para decidir; limiar pela IG, horas de vida e fatores de risco.",
                     itens: [
@@ -366,7 +400,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 2,
+                    passo: 3,
                     titulo: "Investigar a causa",
                     resumo: "Todo RN que precisa de fototerapia: hemoglobina/hematócrito ou hemograma e, conforme a mãe, Coombs direto.",
                     itens: [
@@ -378,7 +412,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 3,
+                    passo: 4,
                     titulo: "Fototerapia intensiva",
                     resumo: "LED azul de espectro estreito, ≥ 30 µW/cm²/nm, na maior superfície corporal possível.",
                     itens: [
@@ -393,7 +427,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 4,
+                    passo: 5,
                     titulo: "Monitorar durante a fototerapia",
                     resumo: "BT em até 12 h do início; depois conforme idade, fatores de risco, BT e trajetória.",
                     itens: [
@@ -404,14 +438,14 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 5,
+                    passo: 6,
                     titulo: "Escalada de cuidado",
                     alerta: true,
                     resumo: "BT a 2 mg/dL ou menos do limiar de exsanguineotransfusão: emergência.",
                     itens: [
                         "<strong>Exames STAT:</strong> BT e direta, hemograma, <strong>albumina</strong>, eletrólitos/bioquímica, <strong>tipagem e prova cruzada</strong>. Avisar o banco de sangue.",
                         "<strong>Fototerapia intensiva de emergência</strong> + <strong>hidratação VO e EV</strong>.",
-                        "<strong>BT pelo menos a cada 2 h</strong> até sair da faixa de escalada; abaixo dela, voltar ao monitoramento do passo 4.",
+                        "<strong>BT pelo menos a cada 2 h</strong> até sair da faixa de escalada; abaixo dela, voltar ao monitoramento do passo 5.",
                         "<strong>Neonatologista</strong> e transferência urgente para UTI neonatal que faça exsanguineotransfusão, se o serviço não fizer. Manter a fototerapia e a hidratação durante o transporte, se possível.",
                         "Doença hemolítica isoimune (Coombs +) com BT na escalada: <strong>imunoglobulina EV</strong> é uma opção (card abaixo). Benefício incerto e possível risco de enterocolite necrosante. Não substitui os outros passos da escalada.",
                         "Calcular a <strong>relação B/A</strong> (BT ÷ albumina) com a albumina do STAT (campo opcional da calculadora)."
@@ -419,7 +453,7 @@ registrarConduta({
                     remedios: ["ivig_neo"]
                 },
                 {
-                    passo: 6,
+                    passo: 7,
                     titulo: "Exsanguineotransfusão",
                     alerta: true,
                     resumo: "Urgente se BT no limiar ou acima, ou com sinais de encefalopatia intermediária/avançada.",
@@ -432,7 +466,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 7,
+                    passo: 8,
                     titulo: "Suspender a fototerapia e controlar o rebote",
                     resumo: "Suspensão é opção quando BT ≤ limiar do início − 2 mg/dL; BT de controle conforme o risco de rebote.",
                     itens: [
