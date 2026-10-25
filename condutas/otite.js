@@ -102,31 +102,58 @@ registrarConduta({
                 {
                     titulo: "Linha do tempo (resumo)",
                     icone: "⏱️",
-                    resumo: "Complicação? → confirmar na otoscopia → analgesia → antibiótico ou observar → amoxicilina → reavaliar em 48–72 h.",
+                    resumo: "Internar? → confirmar na otoscopia → analgesia → antibiótico ou observar → amoxicilina → reavaliar em 48–72 h.",
                     itens: [
-                        "<span class=\"cond-passo\">1</span> <strong>Complicação?</strong> Edema retroauricular, pavilhão deslocado, paralisia facial, meningismo, toxemia → <strong>internar</strong>",
+                        "<span class=\"cond-passo\">1</span> <strong>Internar?</strong> Critérios clicáveis: UTI · enfermaria · casa (mastoidite, paralisia facial, meningismo, toxemia, < 2 meses com febre)",
                         "<span class=\"cond-passo\">2</span> <strong>Confirmar na otoscopia:</strong> abaulamento ou otorreia recente. Sem efusão não é OMA",
                         "<span class=\"cond-passo\">3</span> <strong>Analgesia sempre:</strong> ibuprofeno ou paracetamol",
                         "<span class=\"cond-passo\">4</span> <strong>Antibiótico ou observar:</strong> pelo quadro de gravidade (bloco 🔎)",
                         "<span class=\"cond-passo\">5</span> <strong>1ª escolha: amoxicilina.</strong> Amoxicilina + clavulanato se amoxicilina nos últimos 30 dias, conjuntivite purulenta ou recorrência sem resposta",
                         "<span class=\"cond-passo\">6</span> <strong>Alérgico:</strong> sem anafilaxia = cefalosporina · com anafilaxia = macrolídeo",
-                        "<span class=\"cond-passo\">7</span> <strong>Sem melhora em 48–72 h:</strong> reexaminar e subir um degrau do antibiótico",
-                        "<span class=\"cond-passo\">8</span> <strong>Internar ou alta?</strong> Critérios de internação clicáveis: UTI · enfermaria · casa"
+                        "<span class=\"cond-passo\">7</span> <strong>Sem melhora em 48–72 h:</strong> reexaminar e subir um degrau do antibiótico"
                     ],
                     lista: "passos"
                 },
                 {
                     passo: 1,
-                    titulo: "Sinais de complicação: internar",
-                    resumo: "Mastoidite, paralisia facial, meningite, abscesso, labirintite ou trombose de seio: não é OMA simples.",
+                    titulo: "🏥 Critérios de internação",
+                    resumo: "Primeiro decida: UTI, internar ou tratar em casa. Marque o que o paciente tem.",
                     alerta: true,
                     itens: [
+                        "A <strong>OMA simples é tratada em casa</strong>. Internar por <strong>complicação</strong>, <strong>idade de risco</strong> ou quando o tratamento oral não é possível (AAP 2013; revisão de mastoidite 2025).",
                         "<strong>Mastoidite aguda:</strong> <strong>edema, hiperemia e dor atrás da orelha</strong>, apagamento do sulco retroauricular, <strong>pavilhão deslocado para frente e para baixo</strong>, febre. É a complicação mais comum.",
                         "<strong>Intracranianas:</strong> cefaleia intensa, vômitos, <strong>rigidez de nuca</strong>, rebaixamento, convulsão, sinais focais (meningite, abscesso, <strong>trombose do seio sigmoide</strong>).",
                         "<strong>Paralisia facial periférica</strong>, <strong>vertigem</strong> e nistagmo (labirintite), toxemia.",
                         "<strong>Conduta:</strong> internar, colher exames, <strong>antibiótico EV</strong> (cefalosporina de 3ª geração é o mais usado), <strong>avaliação do otorrino</strong> e tomografia com contraste se suspeita de abscesso subperiosteal ou complicação intracraniana (revisão de mastoidite 2025).",
                         "<strong>Menor de 2 meses com febre:</strong> não tratar como OMA simples; seguir a conduta de febre do lactente."
-                    ]
+                    ],
+                    escore: {
+                        id: "internacao_oma",
+                        unidade: " ",
+                        checklist: true,
+                        instrucao: "Toque em tudo o que o paciente apresenta. Vale o critério mais grave. Sem nenhum, toque em \"Nenhum\".",
+                        itens: [
+                            { nome: "🔴 UTI pediátrica", opcoes: [[2, "Choque ou sepse (má perfusão, hipotensão, taquicardia persistente)", "🔴"]] },
+                            { nome: "", opcoes: [[2, "Rebaixamento da consciência ou convulsão", "🔴"]] },
+                            { nome: "", opcoes: [[2, "Sinais de hipertensão intracraniana ou déficit focal (abscesso cerebral, trombose de seio)", "🔴"]] },
+                            { nome: "🟠 Internar (enfermaria)", opcoes: [[1, "Mastoidite: edema/dor atrás da orelha, pavilhão deslocado", "🟠"]] },
+                            { nome: "", opcoes: [[1, "Paralisia facial, vertigem ou suspeita de meningite", "🟠"]] },
+                            { nome: "", opcoes: [[1, "Menor de 2 meses com febre", "🟠"]] },
+                            { nome: "", opcoes: [[1, "Toxemia ou aspecto grave", "🟠"]] },
+                            { nome: "", opcoes: [[1, "Vômitos que impedem o antibiótico oral, sem como fazer ceftriaxona IM ambulatorial", "🟠"]] },
+                            { nome: "", opcoes: [[1, "Falha da ceftriaxona IM (3 doses) ou de dois esquemas", "🟠"]] },
+                            { nome: "", opcoes: [[1, "Imunodeprimido com quadro grave", "🟠"]] },
+                            { nome: "", opcoes: [[1, "Sem condição de retorno ou risco social", "🟠"]] },
+                            { nome: "🟢 Nenhum dos acima", opcoes: [[0, "Nenhum critério", "🟢"]] }
+                        ],
+                        classificar: (v) => {
+                            let g = Math.max(...v);
+                            if (g === 2) return { num: "UTI", rotulo: "UTI pediátrica", cor: "#dc2626", texto: "Estabilizar, antibiótico EV, tomografia com contraste e otorrino/neurocirurgia de urgência." };
+                            if (g === 1) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Antibiótico EV, otorrino e tomografia se suspeita de abscesso ou complicação intracraniana." };
+                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Se aceita via oral, dor controlada e a família entende os sinais de alarme. Reavaliar em 48 a 72 h." };
+                        },
+                        nota: "A AAP 2013 não traz uma lista formal de internação para a OMA. Estes critérios reúnem as complicações e situações de risco descritas na AAP 2013 e na revisão de mastoidite 2025 (todos internados com antibiótico EV)."
+                    }
                 },
                 {
                     passo: 2,
@@ -197,41 +224,6 @@ registrarConduta({
                         "<strong>Orientar retorno se:</strong> febre persistente, dor que não cede, inchaço atrás da orelha, rigidez de nuca, sonolência, vômitos repetidos ou paralisia facial."
                     ],
                     remedios: ["clav_oma", "cef_oma"]
-                },
-                {
-                    passo: 8,
-                    titulo: "🏥 Critérios de internação",
-                    resumo: "Marque o que o paciente tem: UTI, internar na enfermaria ou alta com retorno.",
-                    itens: [
-                        "A <strong>OMA simples é tratada em casa</strong>. A internação é para <strong>complicação</strong>, <strong>idade de risco</strong> ou quando o tratamento oral não é possível (AAP 2013; revisão de mastoidite 2025)."
-                    ],
-                    escore: {
-                        id: "internacao_oma",
-                        unidade: " ",
-                        checklist: true,
-                        instrucao: "Toque em tudo o que o paciente apresenta. Vale o critério mais grave. Sem nenhum, toque em \"Nenhum\".",
-                        itens: [
-                            { nome: "🔴 UTI pediátrica", opcoes: [[2, "Choque ou sepse (má perfusão, hipotensão, taquicardia persistente)", "🔴"]] },
-                            { nome: "", opcoes: [[2, "Rebaixamento da consciência ou convulsão", "🔴"]] },
-                            { nome: "", opcoes: [[2, "Sinais de hipertensão intracraniana ou déficit focal (abscesso cerebral, trombose de seio)", "🔴"]] },
-                            { nome: "🟠 Internar (enfermaria)", opcoes: [[1, "Mastoidite: edema/dor atrás da orelha, pavilhão deslocado", "🟠"]] },
-                            { nome: "", opcoes: [[1, "Paralisia facial, vertigem ou suspeita de meningite", "🟠"]] },
-                            { nome: "", opcoes: [[1, "Menor de 2 meses com febre", "🟠"]] },
-                            { nome: "", opcoes: [[1, "Toxemia ou aspecto grave", "🟠"]] },
-                            { nome: "", opcoes: [[1, "Vômitos que impedem o antibiótico oral, sem como fazer ceftriaxona IM ambulatorial", "🟠"]] },
-                            { nome: "", opcoes: [[1, "Falha da ceftriaxona IM (3 doses) ou de dois esquemas", "🟠"]] },
-                            { nome: "", opcoes: [[1, "Imunodeprimido com quadro grave", "🟠"]] },
-                            { nome: "", opcoes: [[1, "Sem condição de retorno ou risco social", "🟠"]] },
-                            { nome: "🟢 Nenhum dos acima", opcoes: [[0, "Nenhum critério", "🟢"]] }
-                        ],
-                        classificar: (v) => {
-                            let g = Math.max(...v);
-                            if (g === 2) return { num: "UTI", rotulo: "UTI pediátrica", cor: "#dc2626", texto: "Estabilizar, antibiótico EV, tomografia com contraste e otorrino/neurocirurgia de urgência." };
-                            if (g === 1) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Antibiótico EV, otorrino e tomografia se suspeita de abscesso ou complicação intracraniana (passo 1)." };
-                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Se aceita via oral, dor controlada e a família entende os sinais de alarme. Reavaliar em 48 a 72 h." };
-                        },
-                        nota: "A AAP 2013 não traz uma lista formal de internação para a OMA. Estes critérios reúnem as complicações e situações de risco descritas na AAP 2013 e na revisão de mastoidite 2025 (todos internados com antibiótico EV)."
-                    }
                 }
             ]
         },
