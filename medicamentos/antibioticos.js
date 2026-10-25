@@ -24,11 +24,11 @@ registrarMedicamentos({
     },
     "amox": {
         cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
-        kw: "amoxicilina suspensao pneumonia faringo antibiotico oral ambulatorial", nome: "Amoxicilina Suspensão (Regular)", apres: "250 mg / 5 mL",
+        kw: "amoxicilina suspensao pneumonia otite antibiotico oral ambulatorial", nome: "Amoxicilina Suspensão (Regular)", apres: "250 mg / 5 mL",
         info: "<strong>Posologia:</strong> 50 mg/kg/dia de 8/8h por 7 dias.", badge: "", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => { let v = round05((p * 50 * 5) / 750); return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 250 MG/5ML ---------- 1 FR\nDAR ${v} ML, VIA ORAL, DE 8/8 HORAS POR 7 DIAS.` }; },
         detalhes: {
-            indicacao: "Pneumonia, otite média aguda e faringoamigdalite bacteriana.",
+            indicacao: "Pneumonia e otite média aguda. Faringoamigdalite estreptocócica: usar o card \"Amoxicilina: Faringoamigdalite (10 dias)\".",
             dose: "50 mg/kg/dia VO de 8/8h por 7 dias.",
             atencao: "Perguntar sobre alergia a penicilina."
         }
@@ -39,7 +39,7 @@ registrarMedicamentos({
         info: "<strong>Posologia:</strong> 50 mg/kg/dia de 12/12h por 7 dias.", badge: "", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => { let v = round05((p * 50 * 5) / 800); return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 400 MG/5ML ---------- 1 FR\nDAR ${v} ML, VIA ORAL, DE 12/12 HORAS POR 7 DIAS.` }; },
         detalhes: {
-            indicacao: "Pneumonia, otite média aguda e faringoamigdalite bacteriana.",
+            indicacao: "Pneumonia e otite média aguda. Faringoamigdalite estreptocócica: usar o card \"Amoxicilina: Faringoamigdalite (10 dias)\".",
             dose: "50 mg/kg/dia VO de 12/12h por 7 dias.",
             atencao: "Perguntar sobre alergia a penicilina. Concentração diferente da suspensão de 250 mg/5 mL."
         }
@@ -88,15 +88,15 @@ registrarMedicamentos({
     "benza": {
         cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar / UBS (Vias Injetáveis)", 
         kw: "penicilina benzatina benzetacil faringite amigdalite antibiotico im", nome: "Penicilina Benzatina (Benzetacil)", apres: "600k e 1.2M UI",
-        info: "<strong>Conduta:</strong> 50.000 UI/kg/dose IM única. 11-27kg: 600k | >27kg: 1.2M.", badge: "", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Conduta:</strong> IM, dose única. < 27 kg: 600.000 UI | ≥ 27 kg: 1.200.000 UI.", badge: "", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => { 
-            let u = p * 50000; let f = u > 1200000 ? "1.200.000 UI" : u > 600000 ? "600.000 UI" : u.toLocaleString() + " UI";
-            let q = p > 27 ? "1 FA (1.200.000 UI)" : "1 FA (600.000 UI)";
+            /* IDSA 2012: < 27 kg 600.000 UI; >= 27 kg 1.200.000 UI */ let f = p >= 27 ? "1.200.000 UI" : "600.000 UI";
+            let q = p >= 27 ? "1 FA (1.200.000 UI)" : "1 FA (600.000 UI)";
             return { v: f, r: `VIA INTRAMUSCULAR (UBS / HOSPITAL)\n\n APLICAR ${q} DE PENICILINA BENZATINA (BENZETACIL) IM. AGUARDAR 40 MINUTOS EM OBSERVAÇÃO.` }; 
         },
         detalhes: {
             indicacao: "Faringoamigdalite estreptocócica (dose única).",
-            dose: "50.000 UI/kg IM, dose única. ≤27 kg: 600.000 UI | >27 kg: 1.200.000 UI.",
+            dose: "IM, dose única. < 27 kg: 600.000 UI | ≥ 27 kg: 1.200.000 UI (IDSA 2012).",
             atencao: "Perguntar sobre alergia a penicilina. Manter em observação por 40 minutos."
         }
     },
