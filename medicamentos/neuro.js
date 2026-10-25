@@ -43,6 +43,88 @@ registrarMedicamentos({
             fonteRevisao: "SBP - Sedação, Analgesia e Bloqueio Neuromuscular: https://www.sbp.com.br/fileadmin/user_upload/pdfs/Sedacao_Analgesia_Bloqueio_Neuromuscular.pdf - consultado em out/2026."
         }
     },
+    "neuro_midaz_nasal": {
+        cat: "cat-neuro", sub: "🏥 Uso Hospitalar (Crise Convulsiva)",
+        kw: "midazolam intranasal nasal bucal oral mucosa convulsao estado de mal sem acesso neuro",
+        nome: "Midazolam Intranasal ou Bucal (Se sem acesso)", apres: "Ampola 5 mg / mL",
+        info: "<strong>Conduta:</strong> 0,2 mg/kg (Peso x 0,04 mL) intranasal ou bucal. Máx. 10 mg (2 mL).", badge: "Teto Máx: 10 mg (2 mL)", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* AES 2016: midazolam intranasal 0,2 mg/kg (máx. 10 mg); bucal 0,2 mg/kg. Ampola 5 mg/mL. */
+            let v = Math.min(parseFloat((p * 0.04).toFixed(2)), 2);
+            let narina = (v / 2).toFixed(2);
+            return { v: v.toFixed(2) + " mL", r: `VIA INTRANASAL OU BUCAL (CRISE CONVULSIVA SEM ACESSO VENOSO)\n\nMIDAZOLAM 5 MG/ML: ${v.toFixed(2)} ML (0,2 MG/KG), DOSE ÚNICA.\n\nINTRANASAL: ${narina} ML EM CADA NARINA, DE PREFERÊNCIA COM ATOMIZADOR (MAD).\nBUCAL: APLICAR ${v.toFixed(2)} ML ENTRE A BOCHECHA E A GENGIVA.\n\nSE A CRISE CONTINUAR APÓS 5 MINUTOS: 2ª DOSE DE BENZODIAZEPÍNICO (EV SE JÁ TIVER ACESSO). NO MÁXIMO 2 DOSES DE BENZODIAZEPÍNICO NO TOTAL.` };
+        },
+        detalhes: {
+            indicacao: "Crise convulsiva com 5 minutos ou mais, sem acesso venoso (inclusive fora do hospital).",
+            dose: "0,2 mg/kg (Peso x 0,04 mL) intranasal (metade em cada narina) ou bucal.",
+            atencao: "Máximo 10 mg (2 mL). No máximo 2 doses de benzodiazepínico no total, contando as feitas antes da chegada. Risco de depressão respiratória: ter material de via aérea pronto."
+        },
+        ficha: {
+            indicacoes: "Tratamento inicial da crise convulsiva prolongada (≥ 5 min) / estado de mal epiléptico sem acesso venoso.",
+            dose: "0,2 mg/kg intranasal ou bucal, dose única; pode ser seguida de uma 2ª dose de benzodiazepínico se a crise persistir após 5 minutos",
+            doseMaxima: "10 mg por dose.",
+            apresentacoes: "Ampola 5 mg/mL (usar a solução injetável pela mucosa).",
+            via: "Intranasal (com atomizador, metade do volume em cada narina) ou bucal (entre a bochecha e a gengiva).",
+            alertasPediatricos: "Intranasal e bucal são provavelmente eficazes na criança (nível B, AES 2016), com tempo até o fim da crise menor que o diazepam EV quando se conta o tempo para conseguir o acesso. Risco de depressão respiratória, maior se mais de 2 doses de benzodiazepínico.",
+            fonteRevisao: "Glauser T et al. Evidence-Based Guideline: Treatment of Convulsive Status Epilepticus in Children and Adults (American Epilepsy Society). Epilepsy Curr 2016;16(1):48-61. doi:10.5698/1535-7597-16.1.48"
+        }
+    },
+    "neuro_levetiracetam": {
+        cat: "cat-neuro", sub: "🏥 Uso Hospitalar (Crise Convulsiva)",
+        kw: "levetiracetam keppra convulsao crise persistente estado de mal epileptico segunda linha neuro hospitalar injetavel",
+        nome: "Levetiracetam EV (Crise Persistente)", apres: "Frasco 500 mg / 5 mL (100 mg/mL)",
+        info: "<strong>Conduta:</strong> 60 mg/kg EV em 10 a 15 min. Máx. 4.500 mg.", badge: "Máx: 4.500 mg (45 mL)", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* AES 2016 e ESETT 2019: 60 mg/kg EV, máx. 4500 mg, dose única, em 10 min. Frasco 100 mg/mL. */
+            let mg = Math.min(p * 60, 4500);
+            let ml = mg / 100;
+            let fr = Math.ceil(ml / 5);
+            return { v: `${ml.toFixed(1)} mL (${mg.toFixed(0)} mg)`, r: `VIA ENDOVENOSA (CRISE CONVULSIVA PERSISTENTE - 2ª LINHA)\n\nLEVETIRACETAM 100 MG/ML (FRASCO 500 MG/5 ML) ---- ${fr} FR\nDOSE: ${mg.toFixed(0)} MG (60 MG/KG) = ${ml.toFixed(1)} ML.\n\nDILUIR EM SF 0,9% E CORRER EM 10 A 15 MINUTOS, EM DOSE ÚNICA.` };
+        },
+        detalhes: {
+            indicacao: "Crise convulsiva que persiste após 2 doses de benzodiazepínico (2ª linha, alternativa à fenitoína).",
+            dose: "60 mg/kg EV em 10 a 15 minutos, dose única.",
+            atencao: "Máximo 4.500 mg (45 mL). Não causa hipotensão nem arritmia e não precisa de monitor cardíaco para a infusão. Reduzir a manutenção na insuficiência renal."
+        },
+        ficha: {
+            indicacoes: "Estado de mal epiléptico convulsivo refratário ao benzodiazepínico (2ª linha).",
+            dose: "Ataque: 60 mg/kg EV, dose única, em 10 minutos (ESETT) a 15 minutos",
+            doseMaxima: "4.500 mg por dose.",
+            apresentacoes: "Solução injetável 100 mg/mL, frasco de 5 mL (500 mg).",
+            via: "Endovenosa.",
+            diluicao: "Diluir em SF 0,9%, Ringer lactato ou SG 5%.",
+            infusao: "10 a 15 minutos.",
+            alertasPediatricos: "No ESETT (crianças e adultos), levetiracetam, fosfenitoína e valproato tiveram eficácia semelhante (cerca de 50% das crises controladas em 60 min) e eventos adversos parecidos. Sem hipotensão nem arritmia; pode causar sonolência e irritabilidade.",
+            ajusteRenal: "Ajustar a manutenção pela função renal.",
+            fonteRevisao: "Glauser T et al. AES Guideline. Epilepsy Curr 2016;16(1):48-61. doi:10.5698/1535-7597-16.1.48 | Kapur J et al. Randomized Trial of Three Anticonvulsant Medications for Status Epilepticus (ESETT). N Engl J Med 2019;381:2103-13. doi:10.1056/NEJMoa1905795"
+        }
+    },
+    "neuro_midaz_continuo": {
+        cat: "cat-neuro", sub: "🏥 Uso Hospitalar (Crise Convulsiva)",
+        kw: "midazolam infusao continua estado de mal epileptico refratario uti coma neuro",
+        nome: "Midazolam Contínuo (Estado de Mal Refratário)", apres: "Ampola 5 mg/mL · solução 1 mg/mL",
+        info: "<strong>Conduta (UTI):</strong> ataque 0,2 mg/kg EV; infusão 0,05 a 2 mg/kg/h.", badge: "Ataque máx: 10 mg", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Neurocritical Care Society 2012: ataque 0,2 mg/kg; bolus extra de 0,2-0,4 mg/kg a cada 5 min até parar (máx. 2 mg/kg); infusão 0,05-2 mg/kg/h. Solução 1 mg/mL: mL/h = peso x mg/kg/h. */
+            let at = Math.min(p * 0.2, 10), atMl = at / 5;
+            let t = d => (p * d).toFixed(1);
+            return { v: `Ataque ${atMl.toFixed(2)} mL`, r: `VIA ENDOVENOSA (ESTADO DE MAL REFRATÁRIO - UTI)\n\nATAQUE: ${atMl.toFixed(2)} ML DE MIDAZOLAM 5 MG/ML (${at.toFixed(1)} MG = 0,2 MG/KG) EV.\n\nSOLUÇÃO: 10 ML DE MIDAZOLAM 5 MG/ML (50 MG) + 40 ML DE SF 0,9% (TOTAL 50 ML = 1 MG/ML).\nVELOCIDADES NA BIC:\n • 0,05 MG/KG/H: ${t(0.05)} ML/H\n • 0,1 MG/KG/H: ${t(0.1)} ML/H\n • 0,2 MG/KG/H: ${t(0.2)} ML/H\n • 0,5 MG/KG/H: ${t(0.5)} ML/H\n • 1 MG/KG/H: ${t(1)} ML/H\n • 2 MG/KG/H: ${t(2)} ML/H\n\nSE A CRISE CONTINUAR: BOLUS DE 0,2 A 0,4 MG/KG A CADA 5 MINUTOS E SUBIR A INFUSÃO. VIA AÉREA ASSEGURADA E EEG CONTÍNUO.` };
+        },
+        detalhes: {
+            indicacao: "Estado de mal epiléptico refratário (persiste após benzodiazepínico e um fármaco de 2ª linha), em UTI.",
+            dose: "Ataque 0,2 mg/kg EV; bolus de 0,2 a 0,4 mg/kg a cada 5 min se persistir (máx. 2 mg/kg somados); infusão 0,05 a 2 mg/kg/h.",
+            atencao: "Uso em UTI, com via aérea assegurada, monitor e, de preferência, EEG contínuo. Causa hipotensão e depressão respiratória; tolerância com o uso prolongado."
+        },
+        ficha: {
+            indicacoes: "Estado de mal epiléptico refratário.",
+            dose: "Ataque: 0,2 mg/kg EV\nBolus adicionais: 0,2-0,4 mg/kg a cada 5 minutos até cessar a crise (máximo 2 mg/kg de ataque somado)\nInfusão contínua: 0,05-2 mg/kg/h, ajustada pela clínica e pelo EEG",
+            apresentacoes: "Ampola 5 mg/mL.",
+            via: "Endovenosa (infusão contínua em BIC).",
+            diluicao: "Ex.: 50 mg (10 mL) em 40 mL de SF 0,9% = 1 mg/mL.",
+            alertasPediatricos: "Hipotensão, depressão respiratória; taquifilaxia com uso prolongado. Manter a infusão por 24 a 48 h de controle eletrográfico antes de desmamar.",
+            fonteRevisao: "Brophy GM et al. Guidelines for the evaluation and management of status epilepticus (Neurocritical Care Society). Neurocrit Care 2012;17(1):3-23. doi:10.1007/s12028-012-9695-z"
+        }
+    },
     "neuro_fenitoina": {
         cat: "cat-neuro", sub: "🏥 Uso Hospitalar (Crise Convulsiva)", 
         kw: "fenitoina hidantal convulsao crise persistente estado de mal epileptico neuro hospitalar injetavel", nome: "Fenitoína EV (Crise Persistente)", apres: "Ampola 50 mg / mL",

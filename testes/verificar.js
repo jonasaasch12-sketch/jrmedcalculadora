@@ -33,6 +33,8 @@ const TETOS = {
     ondan_ev: 4,          // mL (8 mg)
     neuro_fenitoina: 20,  // mL (1 g)
     neuro_midaz: 2,       // mL (10 mg)
+    neuro_midaz_nasal: 2, // mL (10 mg, AES)
+    neuro_levetiracetam: 45, // mL (4.500 mg, AES/ESETT)
     cef_resp_ev: 20,      // mL 24/24h (2 g)
     metil: 0.96,          // mL (60 mg)
     ipra: 40,             // gotas
