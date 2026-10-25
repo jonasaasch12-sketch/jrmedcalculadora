@@ -15,7 +15,7 @@ const FOTOS_EXANTEMA = {
         "arq": "img/exantemas/varicela_crianca.jpg",
         "autor": "Jonnymccullagh",
         "licenca": "CC BY-SA 3.0",
-        "legenda": "Varicela em menino de 5 anos: lesões em fases diferentes no tronco e na face.",
+        "legenda": "Varicela em menino de 5 anos: pápulas e vesículas em fases diferentes no abdome.",
         "link": "https://commons.wikimedia.org/wiki/File%3AChickenpox_5yearold.JPG"
     },
     "varicela_vesicula": {
