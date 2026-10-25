@@ -9,11 +9,11 @@
 // Cronômetro da crise: o tempo decide a etapa do tratamento.
 let _criseInicio = null, _criseTimer = null;
 const CRISE_FASES = [
-    [0, "0–5 min · Estabilizar", "ABC, decúbito lateral, O₂, glicemia capilar, acesso.", "#0284c7"],
-    [5, "5 min · 1º benzodiazepínico", "Diazepam EV ou retal, ou midazolam IM.", "#d97706"],
-    [10, "10 min · 2º benzodiazepínico", "Repetir 1 vez (máximo 2 doses no total).", "#d97706"],
-    [20, "20 min · 2ª linha", "Fenitoína, levetiracetam (ou fenobarbital). Chamar a UTI.", "#dc2626"],
-    [40, "40 min · Refratário", "Intubação, midazolam contínuo, EEG, UTI.", "#7f1d1d"]
+    [0, "0–5 min · Estabilizar e 1º benzodiazepínico", "O₂ 100%, glicemia, acesso EV. Diazepam ou midazolam EV; sem acesso em 3 min: IM, intranasal ou retal.", "#d97706"],
+    [5, "5–10 min · 2ª dose do benzodiazepínico", "Repetir o benzodiazepínico. Preparar a 2ª linha.", "#d97706"],
+    [10, "10–15 min · 2ª linha", "Fenitoína ou fenobarbital (ou levetiracetam). Preparar intubação. Avisar a UTI.", "#dc2626"],
+    [15, "15–30 min · Crise persiste", "A droga que ainda não foi usada. Piridoxina se isoniazida. EEG e neurologista.", "#b91c1c"],
+    [30, "> 30 min · Refratário", "Intubação, midazolam contínuo, EEG contínuo, UTI.", "#7f1d1d"]
 ];
 function ferramentaCronometroCrise() {
     return `<div class="exg crise-crono" id="crise-crono">
@@ -54,8 +54,8 @@ registrarConduta({
     categoria: "Neurologia",
     cor: "#6d28d9",
     kw: "crise convulsiva convulsao epilepsia estado de mal epileptico eme status epilepticus diazepam midazolam fenitoina levetiracetam fenobarbital refratario crise febril hipoglicemia",
-    resumo: "Crise ≥ 5 min = tratar como estado de mal: cronômetro, benzodiazepínico aos 5 min (até 2 doses), 2ª linha aos 20 min, refratário aos 40 min.",
-    legenda: "Conduta conforme a <strong>American Epilepsy Society (2016)</strong>, a definição da <strong>ILAE (2015)</strong>, o estudo <strong>ESETT (2019)</strong> e a <strong>Neurocritical Care Society (2012)</strong>.",
+    resumo: "Cronômetro da crise: benzodiazepínico já, 2ª dose aos 5–10 min, fenitoína ou fenobarbital aos 10–15 min, a outra droga e EEG aos 15–30 min, refratário na UTI.",
+    legenda: "Conduta conforme o <strong>Whitebook (Crise Convulsiva em Pediatria, 2025)</strong>, a <strong>American Epilepsy Society (2016)</strong>, a definição da <strong>ILAE (2015)</strong>, o estudo <strong>ESETT (2019)</strong> e a <strong>Neurocritical Care Society (2012)</strong>.",
 
     blocos: [
         {
@@ -122,16 +122,17 @@ registrarConduta({
                 {
                     titulo: "Linha do tempo (resumo)",
                     icone: "⏱️",
-                    resumo: "0–5 min estabilizar → 5 min benzodiazepínico (até 2 doses) → 20 min 2ª linha → 40 min refratário/UTI.",
+                    resumo: "0–5 min estabilizar e 1º benzodiazepínico → 5–10 min 2ª dose → 10–15 min fenitoína ou fenobarbital → 15–30 min a outra droga, EEG → refratário: UTI.",
                     lista: "passos",
                     itens: [
                         "<span class=\"cond-passo\">1</span> <strong>Internar / UTI?</strong> Decidir junto com o tratamento, sem atrasá-lo",
-                        "<span class=\"cond-passo\">2</span> <strong>0 a 5 min:</strong> ABC, lateralizar, O₂, monitor, <strong>glicemia capilar</strong>, acesso EV ou IO",
-                        "<span class=\"cond-passo\">3</span> <strong>5 min:</strong> <strong>benzodiazepínico</strong>; repetir 1 vez após 5 min (máx. 2 doses no total)",
-                        "<span class=\"cond-passo\">4</span> <strong>20 min:</strong> <strong>2ª linha</strong>: fenitoína ou levetiracetam (fenobarbital se não houver)",
-                        "<span class=\"cond-passo\">5</span> <strong>40 min:</strong> <strong>refratário</strong>: intubar, midazolam contínuo, EEG, UTI",
-                        "<span class=\"cond-passo\">6</span> <strong>Investigar a causa</strong>: exames, punção lombar, tomografia quando indicados",
-                        "<span class=\"cond-passo\">7</span> <strong>Depois da crise</strong>: observar o pós-ictal, tratar a causa, decidir alta"
+                        "<span class=\"cond-passo\">2</span> <strong>0 a 5 min:</strong> sinais vitais, vias aéreas, O₂ 100%, monitor, <strong>glicemia</strong>, acesso EV",
+                        "<span class=\"cond-passo\">3</span> <strong>0 a 10 min:</strong> <strong>benzodiazepínico</strong> já; sem acesso em 3 min: IM, intranasal ou retal. <strong>2ª dose aos 5–10 min</strong>",
+                        "<span class=\"cond-passo\">4</span> <strong>10 a 15 min:</strong> <strong>fenitoína ou fenobarbital</strong> (ou levetiracetam); preparar intubação",
+                        "<span class=\"cond-passo\">5</span> <strong>15 a 30 min:</strong> a droga que ainda não foi usada; piridoxina se isoniazida; EEG e neurologista",
+                        "<span class=\"cond-passo\">6</span> <strong>Refratário:</strong> intubar, midazolam contínuo, EEG contínuo, UTI",
+                        "<span class=\"cond-passo\">7</span> <strong>Investigar a causa</strong>: exames, punção lombar, tomografia quando indicados",
+                        "<span class=\"cond-passo\">8</span> <strong>Depois da crise</strong>: observar o pós-ictal, tratar a causa, decidir alta"
                     ],
                     ferramenta: "ferramentaCronometroCrise"
                 },
@@ -162,8 +163,8 @@ registrarConduta({
                         ],
                         classificar: (v) => {
                             let g = Math.max(...v);
-                            if (g === 3) return { num: "UTI", rotulo: "UTI pediátrica", cor: "#dc2626", texto: "Via aérea, infusão contínua (passo 5), EEG. Acionar a UTI e transferir estabilizado." };
-                            if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Observar nível de consciência e novas crises, tratar a causa (passo 6), manter o anticonvulsivante de 2ª linha se foi usado." };
+                            if (g === 3) return { num: "UTI", rotulo: "UTI pediátrica", cor: "#dc2626", texto: "Via aérea, infusão contínua (passo 6), EEG. Acionar a UTI e transferir estabilizado." };
+                            if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Observar nível de consciência e novas crises, tratar a causa (passo 7), manter o anticonvulsivante de 2ª linha se foi usado." };
                             if (g === 1) return { num: "?", rotulo: "Considerar internar", cor: "#ca8a04", texto: "Observar no pronto-socorro até voltar ao normal; internar se dúvida, idade baixa ou falta de condições de retorno." };
                             return { num: "🏠", rotulo: "Alta com orientação", cor: "#16a34a", texto: "Após voltar ao estado habitual. Orientar os sinais de retorno e o que fazer numa nova crise (bloco 🏠)." };
                         },
@@ -173,55 +174,68 @@ registrarConduta({
                 {
                     passo: 2,
                     titulo: "0 a 5 min: estabilizar",
-                    resumo: "Lateralizar, aspirar, O₂, monitor, glicemia capilar, acesso EV ou IO, cronometrar.",
+                    resumo: "Sinais vitais e temperatura, vias aéreas pérvias, aspirar, O₂ 100%, monitor, glicemia, acesso EV.",
                     itens: [
                         "<strong>Cronometrar</strong> desde o início da crise (perguntar quando começou).",
-                        "<strong>Decúbito lateral</strong>, aspirar secreções, <strong>O₂</strong>; não colocar nada na boca. Ventilar com bolsa-máscara se apneia.",
-                        "<strong>Monitor</strong> cardíaco, oximetria, PA.",
-                        "<strong>Glicemia capilar já.</strong> Se <strong>&lt; 60 mg/dL</strong>: glicose EV (card abaixo) (AES 2016).",
-                        "<strong>Acesso venoso</strong>; se não conseguir rápido, <strong>não esperar</strong>: midazolam IM ou diazepam retal (passo 3). Intraósseo se precisar.",
-                        "<strong>Exames:</strong> eletrólitos (sódio, cálcio, magnésio), gasometria, hemograma, nível sérico do anticonvulsivante (se usa), toxicológico conforme a história.",
-                        "<strong>Febre:</strong> antitérmico; não previne a crise, mas dá conforto."
+                        "<strong>Sinais vitais iniciais, incluindo temperatura</strong>. Manter vias aéreas pérvias, <strong>aspirar secreções</strong>, <strong>O₂ a 100%</strong> (Whitebook). Decúbito lateral; não colocar nada na boca.",
+                        "Hipóxia ou ventilação comprometida: <strong>bolsa-válvula-máscara</strong> e preparar intubação em sequência rápida (Whitebook).",
+                        "<strong>Monitorização cardiorrespiratória contínua</strong> e oximetria (Whitebook).",
+                        "<strong>Glicemia</strong> e outros exames conforme indicado; <strong>tratar hipoglicemia</strong> (card abaixo) e febre (Whitebook).",
+                        "<strong>Acesso EV.</strong> Se não for obtido em <strong>3 minutos</strong>, não esperar: benzodiazepínico IM, intranasal ou retal (passo 3) (Whitebook).",
+                        "Avaliar sinais de <strong>sepse/meningite</strong> (antibiótico se houver) e de <strong>trauma craniano</strong> (Whitebook).",
+                        "<strong>Exames:</strong> eletrólitos (sódio, cálcio, magnésio), gasometria, hemograma, nível sérico do anticonvulsivante (se usa), toxicológico conforme a história."
                     ],
                     remedios: ["glicose_pals"]
                 },
                 {
                     passo: 3,
-                    titulo: "5 min: benzodiazepínico",
-                    resumo: "Diazepam EV; sem acesso: midazolam IM ou diazepam retal. Repetir 1 vez após 5 min.",
+                    titulo: "0 a 10 min: benzodiazepínico",
+                    resumo: "Já: diazepam ou midazolam EV. Sem acesso em 3 min: midazolam IM ou intranasal, ou diazepam retal. 2ª dose aos 5–10 min.",
                     alerta: true,
                     itens: [
-                        "<strong>Com acesso EV:</strong> <strong>diazepam EV</strong> (AES 2016).",
-                        "<strong>Sem acesso:</strong> <strong>midazolam IM</strong> ou <strong>diazepam retal</strong>. Não perder tempo tentando acesso.",
-                        "<strong>Crise continua 5 min depois:</strong> repetir <strong>1 vez</strong> o benzodiazepínico.",
-                        "<strong>No máximo 2 doses de benzodiazepínico no total</strong>, contando as feitas antes da chegada (SAMU, casa). Mais doses aumentam a depressão respiratória e não aumentam o controle.",
-                        "<strong>Via aérea pronta:</strong> a depressão respiratória é mais comum na crise que não para do que pelo benzodiazepínico (AES 2016)."
+                        "<strong>Com acesso EV:</strong> <strong>diazepam EV</strong> ou <strong>midazolam EV</strong> (Whitebook).",
+                        "<strong>Sem acesso EV em 3 min:</strong> <strong>midazolam IM ou intranasal</strong>, ou <strong>diazepam retal</strong> (Whitebook).",
+                        "<strong>5 a 10 min, crise continua:</strong> <strong>2ª dose</strong> do benzodiazepínico (Whitebook).",
+                        "O Whitebook permite repetir a cada 10 min, até 3 vezes. Contar as doses feitas antes da chegada (SAMU, casa): <strong>após 2 doses sem resposta, a 2ª linha não deve esperar</strong> (AES 2016).",
+                        "<strong>Via aérea pronta:</strong> risco de depressão respiratória, maior com doses repetidas."
                     ],
-                    remedios: ["neuro_diaz", "neuro_midaz"]
+                    remedios: ["neuro_diaz", "neuro_midaz", "neuro_midaz_nasal"]
                 },
                 {
                     passo: 4,
-                    titulo: "20 min: 2ª linha",
-                    resumo: "Fenitoína ou levetiracetam (eficácia igual no ESETT). Fenobarbital se não houver os outros.",
+                    titulo: "10 a 15 min: 2ª linha",
+                    resumo: "Fenitoína ou fenobarbital (Whitebook). Levetiracetam é alternativa (ESETT). Preparar intubação.",
                     alerta: true,
                     itens: [
-                        "<strong>Crise que continua após 2 doses de benzodiazepínico</strong>: uma droga de 2ª linha, <strong>em dose única cheia</strong> (AES 2016).",
-                        "<strong>Fenitoína</strong> (ou fosfenitoína), <strong>levetiracetam</strong> ou <strong>valproato</strong> param a crise em <strong>cerca de metade</strong> dos pacientes, sem diferença entre elas (ESETT 2019).",
-                        "<strong>Levetiracetam:</strong> sem hipotensão nem arritmia, infusão rápida. <strong>Fenitoína:</strong> monitor cardíaco e PA, só em SF 0,9%.",
-                        "<strong>Valproato EV</strong> (40 mg/kg, AES 2016): evitar em menores de 2 anos, doença hepática ou mitocondrial (sem card no app).",
-                        "<strong>Fenobarbital:</strong> se não houver as outras (AES 2016); 1ª escolha no <strong>recém-nascido</strong>. Causa hipotensão e depressão respiratória.",
+                        "<strong>Crise refratária ao benzodiazepínico:</strong> <strong>fenitoína</strong> ou <strong>fenobarbital</strong> EV (Whitebook). O fenobarbital tem <strong>expectativa de depressão respiratória com apneia</strong> (Whitebook).",
+                        "<strong>Levetiracetam</strong> (não está no Whitebook): no ESETT, levetiracetam, fosfenitoína e valproato pararam a crise em <strong>cerca de metade</strong> dos pacientes, sem diferença entre eles (ESETT 2019). Sem hipotensão nem arritmia.",
+                        "<strong>Fenitoína:</strong> monitor cardíaco e PA, só em SF 0,9%. <strong>Fenobarbital:</strong> 1ª escolha no <strong>recém-nascido</strong>.",
+                        "<strong>Manter monitorização</strong>, suporte ventilatório e <strong>obter 2º acesso EV</strong>. Avaliar indicação de <strong>intubação em sequência rápida</strong> (Whitebook).",
                         "<strong>Avisar a UTI</strong> já nesta etapa."
                     ],
-                    remedios: ["neuro_fenitoina", "neuro_levetiracetam", "fenobarbital"]
+                    remedios: ["neuro_fenitoina", "fenobarbital", "neuro_levetiracetam"]
                 },
                 {
                     passo: 5,
-                    titulo: "40 min: estado de mal refratário",
-                    resumo: "Outra droga de 2ª linha ou anestésico contínuo, com intubação, EEG e UTI.",
+                    titulo: "15 a 30 min: crise persiste",
+                    resumo: "A droga que ainda não foi usada (fenitoína ou fenobarbital). Piridoxina se suspeita de isoniazida. EEG contínuo e neurologista.",
+                    alerta: true,
+                    itens: [
+                        "<strong>Fenitoína</strong> (se ainda não foi feita) <strong>ou fenobarbital</strong> (se ainda não foi feito); se o fenobarbital já foi dado, a nova dose é menor (veja o card) (Whitebook).",
+                        "<strong>Piridoxina 70 mg/kg EV (máx. 5 g)</strong> se houver suspeita de <strong>intoxicação por isoniazida</strong> (Whitebook).",
+                        "<strong>EEG contínuo</strong>, se disponível, e <strong>consultar o neurologista</strong> (Whitebook).",
+                        "Manter monitorização, suporte ventilatório e acesso vascular."
+                    ],
+                    remedios: ["neuro_fenitoina", "fenobarbital"]
+                },
+                {
+                    passo: 6,
+                    titulo: "Estado de mal refratário: UTI",
+                    resumo: "Crise que continua após benzodiazepínico e 2ª linha: intubação, anestésico em infusão contínua, EEG.",
                     alerta: true,
                     itens: [
                         "<strong>Refratário:</strong> crise que continua após benzodiazepínico e um fármaco de 2ª linha (Neurocritical Care Society 2012).",
-                        "<strong>Opções</strong> (AES 2016): repetir com <strong>outra droga de 2ª linha</strong> ou iniciar <strong>anestésico em infusão contínua</strong>: <strong>midazolam</strong> (o mais usado), tiopental, pentobarbital ou propofol (cautela em criança: síndrome da infusão do propofol).",
+                        "<strong>Anestésico em infusão contínua</strong> na UTI: <strong>midazolam</strong> (o mais usado), tiopental ou propofol (cautela em criança: síndrome da infusão do propofol) (AES 2016).",
                         "<strong>Intubação</strong> em sequência rápida (cetamina é boa opção de indutor). Bloqueador neuromuscular de curta duração: ele <strong>esconde a crise</strong>, por isso o EEG.",
                         "<strong>EEG contínuo</strong> para guiar a dose; manter 24 a 48 h de controle antes de desmamar (Neurocritical Care Society 2012).",
                         "<strong>Investigar</strong> causas autoimunes, infecciosas e metabólicas; no lactente, prova com <strong>piridoxina</strong>."
@@ -229,7 +243,7 @@ registrarConduta({
                     remedios: ["neuro_midaz_continuo", "rsi_ceta"]
                 },
                 {
-                    passo: 6,
+                    passo: 7,
                     titulo: "Investigar a causa",
                     resumo: "Exames conforme a história. Punção lombar se suspeita de infecção. Tomografia se trauma, déficit focal ou não acorda.",
                     itens: [
@@ -241,7 +255,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 7,
+                    passo: 8,
                     titulo: "Depois da crise",
                     resumo: "Observar até voltar ao normal, tratar a causa, decidir manutenção com a neurologia.",
                     itens: [
@@ -294,14 +308,15 @@ registrarConduta({
         }
     ],
 
-    citacoes: { "AES 2016": 0, "ILAE 2015": 1, "ESETT 2019": 2, "ESETT": 2, "Neurocritical Care Society 2012": 3, "AAN 2000": 4, "AAP 2011": 5 },
+    citacoes: { "Whitebook": 6, "AES 2016": 0, "ILAE 2015": 1, "ESETT 2019": 2, "ESETT": 2, "Neurocritical Care Society 2012": 3, "AAN 2000": 4, "AAP 2011": 5 },
     fontes: [
         "Glauser T, Shinnar S, Gloss D, et al. Evidence-Based Guideline: Treatment of Convulsive Status Epilepticus in Children and Adults: Report of the Guideline Committee of the American Epilepsy Society. Epilepsy Curr 2016;16(1):48-61. doi:10.5698/1535-7597-16.1.48",
         "Trinka E, Cock H, Hesdorffer D, et al. A definition and classification of status epilepticus — Report of the ILAE Task Force on Classification of Status Epilepticus. Epilepsia 2015;56(10):1515-23. doi:10.1111/epi.13121",
         "Kapur J, Elm J, Chamberlain JM, et al. Randomized Trial of Three Anticonvulsant Medications for Status Epilepticus (ESETT). N Engl J Med 2019;381(22):2103-13. doi:10.1056/NEJMoa1905795",
         "Brophy GM, Bell R, Claassen J, et al. Guidelines for the evaluation and management of status epilepticus (Neurocritical Care Society). Neurocrit Care 2012;17(1):3-23. doi:10.1007/s12028-012-9695-z",
         "Hirtz D, Ashwal S, Berg A, et al. Practice parameter: evaluating a first nonfebrile seizure in children (AAN, Child Neurology Society, AES). Neurology 2000;55(5):616-23. doi:10.1212/wnl.55.5.616",
-        "American Academy of Pediatrics, Subcommittee on Febrile Seizures. Febrile seizures: guideline for the neurodiagnostic evaluation of the child with a simple febrile seizure. Pediatrics 2011;127(2):389-94. doi:10.1542/peds.2010-3318"
+        "American Academy of Pediatrics, Subcommittee on Febrile Seizures. Febrile seizures: guideline for the neurodiagnostic evaluation of the child with a simple febrile seizure. Pediatrics 2011;127(2):389-94. doi:10.1542/peds.2010-3318",
+        "Whitebook (Afya). Guia de Prescrição / Pediatria: Crise Convulsiva em Pediatria (Prescrição Hospitalar e Resumo e recomendações). Atualizado em 29/04/2025."
     ],
     revisao: "10/2026"
 });

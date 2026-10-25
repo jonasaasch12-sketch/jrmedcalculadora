@@ -43,6 +43,32 @@ registrarMedicamentos({
             fonteRevisao: "SBP - Sedação, Analgesia e Bloqueio Neuromuscular: https://www.sbp.com.br/fileadmin/user_upload/pdfs/Sedacao_Analgesia_Bloqueio_Neuromuscular.pdf - consultado em out/2026."
         }
     },
+    "neuro_midaz_nasal": {
+        cat: "cat-neuro", sub: "🏥 Uso Hospitalar (Crise Convulsiva)",
+        kw: "midazolam intranasal nasal convulsao estado de mal sem acesso neuro",
+        nome: "Midazolam Intranasal (Se sem acesso)", apres: "Ampola 5 mg / mL",
+        info: "<strong>Conduta:</strong> 0,2 mg/kg (Peso x 0,04 mL) intranasal. Máx. 10 mg (2 mL).", badge: "Teto Máx: 10 mg (2 mL)", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Crise Convulsiva em Pediatria, 04/2025): sem acesso EV em 3 min, midazolam IM ou intranasal 0,2 mg/kg, máx. 10 mg; repetir a cada 10 min, até 3 vezes. Ampola 5 mg/mL. */
+            let v = Math.min(parseFloat((p * 0.04).toFixed(2)), 2);
+            let narina = (v / 2).toFixed(2);
+            return { v: v.toFixed(2) + " mL", r: `VIA INTRANASAL (CRISE CONVULSIVA SEM ACESSO VENOSO)\n\nMIDAZOLAM 5 MG/ML: ${v.toFixed(2)} ML (0,2 MG/KG).\nAPLICAR ${narina} ML EM CADA NARINA, DE PREFERÊNCIA COM ATOMIZADOR (MAD).\n\nSE A CRISE PERSISTIR, PODE REPETIR A CADA 10 MINUTOS, ATÉ 3 VEZES.` };
+        },
+        detalhes: {
+            indicacao: "Crise convulsiva sem acesso venoso obtido em 3 minutos.",
+            dose: "0,2 mg/kg (Peso x 0,04 mL) intranasal, metade em cada narina. Pode repetir a cada 10 min, até 3 vezes.",
+            atencao: "Máximo 10 mg (2 mL) por dose. Risco de depressão respiratória: ter material de via aérea pronto."
+        },
+        ficha: {
+            indicacoes: "Crise convulsiva / estado de mal epiléptico sem acesso venoso.",
+            dose: "0,2 mg/kg intranasal; repetir a cada 10 minutos, por até 3 vezes",
+            doseMaxima: "10 mg por dose.",
+            apresentacoes: "Ampola 5 mg/mL (usar a solução injetável pela mucosa nasal).",
+            via: "Intranasal, com atomizador, metade do volume em cada narina.",
+            alertasPediatricos: "Usar quando o acesso EV não for obtido em 3 minutos. Risco de depressão respiratória, maior com doses repetidas.",
+            fonteRevisao: "Whitebook (Afya) - Crise Convulsiva em Pediatria (Prescrição Hospitalar), atualizado em 29/04/2025."
+        }
+    },
     "neuro_levetiracetam": {
         cat: "cat-neuro", sub: "🏥 Uso Hospitalar (Crise Convulsiva)",
         kw: "levetiracetam keppra convulsao crise persistente estado de mal epileptico segunda linha neuro hospitalar injetavel",
@@ -105,10 +131,10 @@ registrarMedicamentos({
     "neuro_fenitoina": {
         cat: "cat-neuro", sub: "🏥 Uso Hospitalar (Crise Convulsiva)", 
         kw: "fenitoina hidantal convulsao crise persistente estado de mal epileptico neuro hospitalar injetavel", nome: "Fenitoína EV (Crise Persistente)", apres: "Ampola 50 mg / mL",
-        info: "<strong>Conduta:</strong> 20 mg/kg EV (máx. 1 g). Velocidade máx. 3 mg/kg/min, até 50 mg/min.", badge: "Máx: 1 g (20 mL)", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Conduta:</strong> 20 mg/kg EV (máx. 1.500 mg). Velocidade máx. 3 mg/kg/min, até 50 mg/min.", badge: "Máx: 1.500 mg (30 mL)", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
-            // 20 mg/kg, teto de 1000 mg. Velocidade: até 3 mg/kg/min, nunca acima de 50 mg/min.
-            let mg = Math.min(p * 20, 1000);
+            // 20 mg/kg (Whitebook: 15-20 mg/kg), teto de 1500 mg (Whitebook, Crise Convulsiva em Pediatria, 04/2025). Velocidade: até 3 mg/kg/min, nunca acima de 50 mg/min.
+            let mg = Math.min(p * 20, 1500);
             let mlPuro = mg / 50;                       // ampola 50 mg/mL
             let mgMin = Math.min(p * 3, 50);            // velocidade máxima permitida
             let tempoMin = Math.ceil(mg / mgMin);       // tempo mínimo de infusão
@@ -119,8 +145,8 @@ registrarMedicamentos({
         },
         detalhes: {
             indicacao: "Crise convulsiva que persiste por mais de 10 a 15 minutos mesmo após diazepam ou midazolam.",
-            dose: "20 mg/kg EV. Sem diluir ou diluída a 5 mg/mL, a no máximo 3 mg/kg/min e 50 mg/min.",
-            atencao: "Máximo 1 g (20 mL) por dose. Diluir só em SF 0,9% (precipita em soro glicosado). Monitorar ECG e PA: risco de arritmia e hipotensão se correr rápido."
+            dose: "20 mg/kg EV (Whitebook: 15 a 20 mg/kg). Sem diluir ou diluída a 5 mg/mL, a no máximo 3 mg/kg/min e 50 mg/min.",
+            atencao: "Máximo 1.500 mg (30 mL) por dose (Whitebook). Diluir só em SF 0,9% (precipita em soro glicosado). Monitorar ECG e PA: risco de arritmia e hipotensão se correr rápido."
         }
     },
     "fenobarbital": {
