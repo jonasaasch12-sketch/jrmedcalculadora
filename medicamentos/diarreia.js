@@ -600,5 +600,55 @@ registrarMedicamentos({
             dose: "2,5 mL/kg via retal.",
             atencao: "—"
         }
+    },
+    // ===== Dengue: hidratação por grupo (MS — Dengue: diagnóstico e manejo clínico, 6ª ed., 2024) =====
+    "dengue_hidratacao_oral": {
+        cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "dengue hidratacao oral grupo a grupo b sro soro caseiro holliday segar liquidos arbovirose",
+        nome: "Dengue: Hidratação oral (grupos A e B)", apres: "1/3 SRO + 2/3 líquidos caseiros",
+        info: "<strong>Conduta (MS 2024):</strong> até 10 kg 130 mL/kg/dia · 10 a 20 kg 100 mL/kg/dia · > 20 kg 80 mL/kg/dia (Holliday-Segar + 3%). 1/3 em SRO e 2/3 em líquidos caseiros.", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* MS 2024 (criança): até 10 kg 130 mL/kg/dia; 10-20 kg 100 mL/kg/dia; > 20 kg 80 mL/kg/dia. 1/3 SRO, 2/3 caseiros. Arredonda de 50 em 50 mL */
+            let f = p <= 10 ? 130 : p <= 20 ? 100 : 80, r50 = x => Math.round(x / 50) * 50;
+            let tot = r50(p * f), sro = r50(tot / 3), cas = tot - sro;
+            return { v: `${tot} mL/dia`, r: `${recHead}1) SAIS DE REIDRATAÇÃO ORAL (DILUIR 1 ENVELOPE EM 1 LITRO DE ÁGUA FILTRADA)\nOFERECER ${sro} ML DE SORO DE REIDRATAÇÃO ORAL POR DIA (DIVIDIR AO LONGO DO DIA, MAIS NO INÍCIO).\n\n2) LÍQUIDOS CASEIROS (ÁGUA, SUCOS, CHÁS, ÁGUA DE COCO, LEITE)\nOFERECER MAIS ${cas} ML POR DIA.\n\nTOTAL: ${tot} ML POR DIA (${f} ML/KG/DIA). MANTER ATÉ 24 A 48 HORAS SEM FEBRE.` };
+        },
+        detalhes: {
+            indicacao: "Dengue grupo A (casa) e grupo B (enquanto aguarda o hemograma e depois, se hematócrito normal).",
+            dose: "Até 10 kg: 130 mL/kg/dia; 10 a 20 kg: 100 mL/kg/dia; > 20 kg: 80 mL/kg/dia. 1/3 em SRO e 2/3 em líquidos caseiros (MS 2024).",
+            atencao: "Antitérmico: paracetamol ou dipirona. Não usar AAS nem anti-inflamatórios. Retorno no dia da melhora da febre ou se sinal de alarme."
+        }
+    },
+    "dengue_expansao_c": {
+        cat: "cat-diarreia", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Expansão)",
+        kw: "dengue grupo c sinais de alarme expansao soro fisiologico 10 ml/kg hidratacao venosa",
+        nome: "Dengue grupo C: Expansão (sinais de alarme)", apres: "SF 0,9%",
+        info: "<strong>Conduta (MS 2024):</strong> SF 0,9% 10 mL/kg na 1ª hora; reavaliar (clínica e hematócrito) e repetir até 3 vezes.", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* MS 2024: grupo C, SF 0,9% 10 mL/kg em 1 h, reavaliar, até 3 vezes */
+            let v = Math.round(p * 10);
+            return { v: `${v} mL em 1 h`, r: `VIA ENDOVENOSA (DENGUE GRUPO C - SINAIS DE ALARME)\n\n SORO FISIOLÓGICO 0,9% ${v} ML (10 ML/KG) EV EM 1 HORA.\n REAVALIAR AO FINAL (SINAIS VITAIS, PERFUSÃO, DIURESE E HEMATÓCRITO EM 2 H). SEM MELHORA: REPETIR ATÉ 3 VEZES.\n MELHOROU: PASSAR PARA A MANUTENÇÃO. PIOROU OU CHOQUE: CONDUTA DO GRUPO D.` };
+        },
+        detalhes: {
+            indicacao: "Dengue com sinal de alarme (grupo C), sem choque.",
+            dose: "SF 0,9% 10 mL/kg em 1 hora; reavaliar e repetir até 3 vezes (MS 2024).",
+            atencao: "Internar. Reavaliar clínica e hematócrito. Sinais de sobrecarga (crepitações, hepatomegalia, desconforto): reduzir."
+        }
+    },
+    "dengue_choque_d": {
+        cat: "cat-diarreia", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Expansão)",
+        kw: "dengue grupo d choque expansao rapida soro fisiologico 20 ml/kg 20 minutos dengue grave",
+        nome: "Dengue grupo D: Expansão rápida (choque)", apres: "SF 0,9%",
+        info: "<strong>Conduta (MS 2024):</strong> SF 0,9% 20 mL/kg em até 20 minutos; reavaliar a cada etapa e repetir até 3 vezes.", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* MS 2024: grupo D, SF 0,9% 20 mL/kg em até 20 min, até 3 vezes */
+            let v = Math.round(p * 20);
+            return { v: `${v} mL em 20 min`, r: `VIA ENDOVENOSA (DENGUE GRUPO D - CHOQUE)\n\n SORO FISIOLÓGICO 0,9% ${v} ML (20 ML/KG) EV EM ATÉ 20 MINUTOS.\n REAVALIAR APÓS CADA ETAPA. SEM MELHORA: REPETIR ATÉ 3 VEZES.\n MELHOROU: SEGUIR A EXPANSÃO DO GRUPO C. SEM MELHORA: UTI (HEMATÓCRITO SUBINDO: ALBUMINA/COLOIDE; HEMATÓCRITO CAINDO: PENSAR EM SANGRAMENTO).` };
+        },
+        detalhes: {
+            indicacao: "Dengue com choque, sangramento grave ou disfunção grave de órgão (grupo D).",
+            dose: "SF 0,9% 20 mL/kg em até 20 minutos; reavaliar e repetir até 3 vezes (MS 2024).",
+            atencao: "UTI. Hematócrito subindo apesar do volume: albumina ou coloide; hematócrito caindo com choque: hemorragia, concentrado de hemácias."
+        }
     }
 });

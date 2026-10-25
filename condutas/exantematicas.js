@@ -204,7 +204,7 @@ const DOENCAS_EXANTEMA = [
     { id: "meningococcemia", fotos: ["petequias", "meningococcemia"], nome: "Meningococcemia", tipo: "pet", conduta: "meningococcemia", alerta: "EMERGÊNCIA: febre + petéquias = antibiótico e suporte já.",
       tags: ["pet", "febre_junto", "ini_extrem", "s_toxemia", "s_vitro"],
       texto: "Febre, <strong>toxemia</strong> e <strong>petéquias ou púrpura que não somem ao apertar</strong> (vitropressão), em progressão rápida. Pode evoluir para choque em horas." },
-    { id: "dengue", fotos: ["dengue"], nome: "Dengue", tipo: "mp", conduta: null, alerta: "Procurar sinais de alarme (dor abdominal, vômitos, sangramento).",
+    { id: "dengue", fotos: ["dengue"], nome: "Dengue", tipo: "mp", conduta: "dengue", alerta: "Procurar sinais de alarme (dor abdominal, vômitos, sangramento).",
       tags: ["mp", "febre_antes", "febre_junto", "ini_tronco", "s_prurido", "s_vitro"],
       texto: "Febre alta, dor no corpo e atrás dos olhos; exantema morbiliforme pruriginoso perto da queda da febre, no tronco e membros (\"ilhas brancas\"). Pode ter petéquias; prova do laço." },
     { id: "mononucleose", fotos: ["mononucleose_amoxi"], nome: "Mononucleose / exantema com amoxicilina", tipo: "mp", conduta: null,
