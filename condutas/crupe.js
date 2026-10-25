@@ -115,20 +115,54 @@ registrarConduta({
                 {
                     titulo: "Linha do tempo (resumo)",
                     icone: "⏱️",
-                    resumo: "Acalmar → classificar → corticoide → adrenalina → observar → decidir.",
+                    resumo: "Internar? → acalmar e classificar → corticoide → adrenalina → observar e reavaliar.",
                     lista: "passos",
                     itens: [
-                        "<span class=\"cond-passo\">1</span> <strong>Chegada:</strong> criança calma no colo, oximetria, escore e sinais de alarme",
-                        "<span class=\"cond-passo\">2</span> <strong>Corticoide para todos:</strong> dexametasona 0,6 mg/kg dose única",
-                        "<span class=\"cond-passo\">3</span> <strong>Moderado ou grave:</strong> adrenalina inalatória",
-                        "<span class=\"cond-passo\">4</span> <strong>SpO₂ &lt; 92%:</strong> O₂ umidificado e UTI",
-                        "<span class=\"cond-passo\">5</span> <strong>Observar 3 a 4 h</strong> após a adrenalina (rebote em ~2 h)",
-                        "<span class=\"cond-passo\">6</span> <strong>Decidir:</strong> alta, internação ou UTI",
+                        "<span class=\"cond-passo\">1</span> <strong>Internar?</strong> Critérios clicáveis: UTI · enfermaria · casa",
+                        "<span class=\"cond-passo\">2</span> <strong>Chegada:</strong> criança calma no colo, oximetria, escore e sinais de alarme",
+                        "<span class=\"cond-passo\">3</span> <strong>Corticoide para todos:</strong> dexametasona 0,6 mg/kg dose única",
+                        "<span class=\"cond-passo\">4</span> <strong>Moderado ou grave:</strong> adrenalina inalatória",
+                        "<span class=\"cond-passo\">5</span> <strong>SpO₂ &lt; 92%:</strong> O₂ umidificado e UTI",
+                        "<span class=\"cond-passo\">6</span> <strong>Observar 3 a 4 h</strong> após a adrenalina (rebote em ~2 h)",
                         "<span class=\"cond-passo\">7</span> <strong>Grave sem resposta:</strong> UTI, adrenalina repetida, via aérea"
                     ]
                 },
                 {
                     passo: 1,
+                    titulo: "🏥 Critérios de internação",
+                    icone: "🏥",
+                    resumo: "Primeiro decida: UTI, internar ou casa. Reavalie depois da observação após a adrenalina (passo 6).",
+                    alerta: true,
+                    itens: [
+                        "A maioria vai para casa após a dexametasona. A decisão final vem <strong>depois de 3 a 4 h de observação</strong> após a adrenalina (rebote em ~2 h)."
+                    ],
+                    escore: {
+                        id: "internacao_crupe",
+                        unidade: " ",
+                        checklist: true,
+                        instrucao: "Toque em tudo o que o paciente apresenta. Vale o critério mais grave. Sem nenhum, toque em \"Nenhum\".",
+                        itens: [
+                            { nome: "🔴 UTI", opcoes: [[3, "Crupe grave (escore > 8) ou hipoxemia (SpO₂ < 92%)", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Grave sem resposta às medidas iniciais, ou que voltou ao estado anterior após a conduta inicial e/ou 2 h de observação (Einstein)", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Desconforto grave: musculatura acessória, rebaixamento da consciência (Einstein)", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Suspeita de traqueíte bacteriana", "🔴"]] },
+                            { nome: "🟠 Internar (enfermaria)", opcoes: [[2, "Toxemia, desidratação ou incapacidade de ingerir líquidos", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Estridor significativo ou retrações em repouso", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Sem resposta à adrenalina ou piora clínica 2 h após a adrenalina", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Moderado com pouca ou nenhuma resposta às medidas iniciais, ou grave com melhora só parcial após 4 h de observação (Einstein)", "🟠"]] },
+                            { nome: "🟢 Nenhum dos acima", opcoes: [[0, "Nenhum critério", "🟢"]] }
+                        ],
+                        classificar: (v) => {
+                            let g = Math.max(...v);
+                            if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "O₂, adrenalina inalatória repetida e via aérea pelo mais experiente (passo 7)." };
+                            if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Internar, manter dexametasona já feita e adrenalina se necessário; reavaliar com o escore." };
+                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Crupe leve após dexametasona, ou moderado que melhorou: sem estridor em repouso, sem desconforto e sem hipoxemia após 3 a 4 h de observação. Orientações do bloco 🏠." };
+                        },
+                        nota: "Critérios de alta, internação e UTI da SBP e do Einstein (antes no passo de decisão). Reavaliar a decisão depois da observação de 3 a 4 h após a adrenalina (passo 6)."
+                    }
+                },
+                {
+                    passo: 2,
                     titulo: "Chegada: acalmar e classificar",
                     resumo: "Colo dos pais, oximetria, escore e sinais de outra causa.",
                     itens: [
@@ -139,7 +173,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 2,
+                    passo: 3,
                     titulo: "Corticoide: dexametasona para todos",
                     resumo: "Dose única, VO, IM ou EV. Reduz gravidade, internação e UTI.",
                     itens: [
@@ -151,7 +185,7 @@ registrarConduta({
                     remedios: ["dexa_crupe"]
                 },
                 {
-                    passo: 3,
+                    passo: 4,
                     titulo: "Adrenalina inalatória (moderado ou grave)",
                     resumo: "Efeito quase imediato, dura cerca de 2 h.",
                     itens: [
@@ -164,7 +198,7 @@ registrarConduta({
                     remedios: ["adrenalina_neb"]
                 },
                 {
-                    passo: 4,
+                    passo: 5,
                     titulo: "Oxigênio se hipoxemia",
                     resumo: "O₂ umidificado se SpO₂ < 92%. Hipoxemia indica UTI.",
                     itens: [
@@ -173,44 +207,12 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 5,
+                    passo: 6,
                     titulo: "Observar após a adrenalina",
                     resumo: "3 a 4 horas na emergência antes de decidir.",
                     itens: [
                         "Observar <strong>3 a 4 horas</strong> após a última adrenalina (o efeito acaba em ~2 h).",
                         "Reavaliar o escore. Piora ou retorno do estridor em repouso → repetir adrenalina e reclassificar."
-                    ]
-                },
-                {
-                    passo: 6,
-                    titulo: "Decidir: alta, internação ou UTI",
-                    resumo: "Critérios de alta, enfermaria e UTI.",
-                    grupos: [
-                        {
-                            nome: "🟢 Alta",
-                            itens: [
-                                "Crupe leve após dexametasona.",
-                                "Moderado que melhorou: sem estridor em repouso, sem desconforto e sem hipoxemia após 3 a 4 h de observação.",
-                                "Orientações e sinais de retorno (bloco 🏠)."
-                            ]
-                        },
-                        {
-                            nome: "🟠 Internação",
-                            itens: [
-                                "Toxemia, desidratação ou incapacidade de ingerir líquidos.",
-                                "Estridor significativo ou retrações em repouso.",
-                                "Sem resposta à adrenalina ou piora clínica 2 h após a adrenalina.",
-                                "<strong>(Einstein)</strong> Moderado com pouca ou nenhuma resposta às medidas iniciais · grave com melhora só parcial após 4 h de observação."
-                            ]
-                        },
-                        {
-                            nome: "🔴 UTI",
-                            itens: [
-                                "Crupe grave (escore > 8) ou <strong>hipoxemia</strong>.",
-                                "<strong>(Einstein)</strong> Grave sem resposta às medidas iniciais · grave que voltou ao estado anterior após a conduta inicial e/ou 2 h de observação · desconforto grave: musculatura acessória, rebaixamento de consciência, hipoxemia.",
-                                "Suspeita de <strong>traqueíte bacteriana</strong>."
-                            ]
-                        }
                     ]
                 },
                 {

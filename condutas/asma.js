@@ -123,6 +123,41 @@ registrarConduta({
             cor: "#dc2626",
             secoes: [
         {
+            titulo: "Critérios de internação",
+            icone: "🏥",
+            alerta: true,
+            resumo: "Primeiro decida: UTI, internar ou casa. Reavalie em 1 h de tratamento.",
+            itens: [
+                "A decisão final é tomada <strong>após 1 h de tratamento</strong> (reavaliação abaixo), mas a ameaça à vida já indica UTI na chegada (GINA)."
+            ],
+            escore: {
+                id: "internacao_asma",
+                unidade: " ",
+                checklist: true,
+                instrucao: "Toque em tudo o que o paciente apresenta. Vale o critério mais grave. Sem nenhum, toque em \"Nenhum\".",
+                itens: [
+                    { nome: "🔴 UTI", opcoes: [[3, "Ameaça à vida: sonolento, confuso, cianótico, tórax silencioso ou PRAM 11 a 12", "🔴"]] },
+                    { nome: "", opcoes: [[3, "Parada ou parada iminente", "🔴"]] },
+                    { nome: "", opcoes: [[3, "Piora ou sem resposta apesar de salbutamol + ipratrópio + corticoide + magnésio", "🔴"]] },
+                    { nome: "🟠 Internar (enfermaria)", opcoes: [[2, "SpO₂ < 92% em ar ambiente", "🟠"]] },
+                    { nome: "", opcoes: [[2, "Sem melhora em 1 h de salbutamol de 20/20 min (3 doses), ou taquipneia persistente após 3 doses", "🟠"]] },
+                    { nome: "", opcoes: [[2, "Necessidade de salbutamol mais que a cada 1 a 2 h", "🟠"]] },
+                    { nome: "", opcoes: [[2, "Dispneia persistente 4 a 6 h após o corticoide sistêmico", "🟠"]] },
+                    { nome: "", opcoes: [[2, "Crise grave sem resolução em 1 a 2 h", "🟠"]] },
+                    { nome: "", opcoes: [[2, "Recorrência de crise grave em 48 h, sobretudo já com corticoide", "🟠"]] },
+                    { nome: "", opcoes: [[2, "Ambiente social que limita o tratamento, cuidador incapaz ou sem acompanhamento próximo", "🟠"]] },
+                    { nome: "🟢 Nenhum dos acima", opcoes: [[0, "Nenhum critério", "🟢"]] }
+                ],
+                classificar: (v) => {
+                    let g = Math.max(...v);
+                    if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "Chamar UTI pediátrica ou anestesia; O₂ 100%, broncodilatador e ipratrópio contínuos, corticoide e magnésio EV (grupo ⛔ abaixo)." };
+                    if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Internar e manter o tratamento da gravidade (abaixo); reavaliar no mínimo a cada hora." };
+                    return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Alta quando cumprir os critérios da \"Alta da emergência\": leve por 1 a 2 h após o último salbutamol, SpO₂ ≥ 92%, comendo e bebendo." };
+                },
+                nota: "GINA: critérios de transferência e de internação (\"considerar internação\") e de ameaça à vida. A lista \"Considerar internação se\" da reavaliação foi trazida para cá."
+            }
+        },
+        {
             titulo: "Conduta por gravidade",
             icone: "🩺",
             aberta: true,
@@ -174,8 +209,8 @@ registrarConduta({
             nota: "⚠️ Toxicidade do SABA: taquicardia, palpitações, ansiedade, hipocalemia, arritmias, acidose lática e hiperventilação. Pode ser confundida com piora da asma. Ipratrópio: suspender após as primeiras 1–2 h. Magnésio nebulizado não tem benefício."
         },
         {
-            resumo: "Reavaliar em 1 h; quando transferir e internar.",
-            titulo: "Reavaliação, transferência e internação",
+            resumo: "Reavaliar em 1 h; quando transferir (critérios de internação no início deste bloco).",
+            titulo: "Reavaliação em 1 h e transferência",
             icone: "🏥",
             grupos: [
                 {
@@ -196,14 +231,6 @@ registrarConduta({
                         "Ambiente social que limita o tratamento ou cuidador incapaz de manejar em casa.",
                         "Durante o transporte: manter salbutamol, O₂ (alvo ≥ 92%) e iniciar corticoide sistêmico.",
                         "Procurar atendimento precoce se história de crise grave com risco de vida ou < 2 anos (maior risco de desidratação e fadiga)."
-                    ]
-                },
-                {
-                    nome: "Considerar internação se",
-                    itens: [
-                        "Sem melhora em 1 hora · SpO₂ < 92% · necessidade de SABA mais que a cada 1–2 h.",
-                        "Dispneia persistente 4–6 h após o corticoide sistêmico.",
-                        "Fatores que dificultem a adesão ou impossibilidade de acompanhamento próximo."
                     ]
                 }
             ]

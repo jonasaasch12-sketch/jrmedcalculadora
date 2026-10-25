@@ -100,7 +100,7 @@ registrarConduta({
                     icone: "⏱️",
                     resumo: "Complicação? → confirmar a apresentação → antibiótico ou observar → amoxicilina (± clavulanato) 10 dias → reavaliar em 72 h.",
                     itens: [
-                        "<span class=\"cond-passo\">1</span> <strong>Complicação?</strong> Edema periorbitário, proptose, dor ao mexer o olho, cefaleia intensa, sinais neurológicos → <strong>internar</strong>",
+                        "<span class=\"cond-passo\">1</span> <strong>Internar?</strong> Critérios clicáveis: UTI · enfermaria · casa (celulite orbitária, proptose, dor ao mexer o olho, sinais neurológicos)",
                         "<span class=\"cond-passo\">2</span> <strong>Confirmar a apresentação:</strong> persistente, piora ou início grave. <strong>Sem raio-X</strong>",
                         "<span class=\"cond-passo\">3</span> <strong>Antibiótico ou observar:</strong> pelo quadro de gravidade (bloco 🔎)",
                         "<span class=\"cond-passo\">4</span> <strong>Amoxicilina 10 dias;</strong> amoxicilina + clavulanato se fator de risco. Vômitos: ceftriaxona IM",
@@ -112,10 +112,11 @@ registrarConduta({
                 },
                 {
                     passo: 1,
-                    titulo: "Sinais de complicação: internar",
-                    resumo: "Orbitária (celulite, abscesso) ou intracraniana (abscesso, meningite, trombose): tomografia, antibiótico EV e especialistas.",
+                    titulo: "🏥 Critérios de internação",
+                    resumo: "Primeiro decida: UTI, internar ou tratar em casa. Complicação orbitária ou intracraniana interna.",
                     alerta: true,
                     itens: [
+                        "A <strong>sinusite não complicada é tratada em casa</strong>. Internar por <strong>complicação orbitária ou intracraniana</strong>, toxemia ou quando o tratamento oral não é possível (AAP 2013).",
                         "<strong>Orbitária</strong> (a mais comum; etmoidite em criança pequena): <strong>edema e hiperemia palpebral</strong>, <strong>proptose</strong>, <strong>dor ou limitação da movimentação ocular</strong>, diplopia, <strong>queda da acuidade visual</strong>.",
                         "<strong>Intracraniana</strong> (adolescente; sinusite frontal): <strong>cefaleia intensa</strong>, vômitos, febre alta, <strong>rigidez de nuca</strong>, alteração de consciência, convulsão, déficit focal. <strong>Tumor de Pott</strong>: edema mole na testa.",
                         "<strong>Conduta:</strong> internar, <strong>tomografia de seios da face e órbitas (e crânio, se sinal neurológico) com contraste</strong>, <strong>antibiótico EV</strong>, <strong>otorrino e oftalmologia</strong> (cirurgia se abscesso, piora visual ou falha) (AAP 2013; revisões 2023).",
@@ -130,6 +131,32 @@ registrarConduta({
                             ["IV", "Abscesso orbitário", "Proptose grave, oftalmoplegia, perda visual"],
                             ["V", "Trombose do seio cavernoso", "Bilateral, toxemia, paralisia de nervos cranianos"]
                         ]
+                    },
+                    escore: {
+                        id: "internacao_sinusite",
+                        unidade: " ",
+                        checklist: true,
+                        instrucao: "Toque em tudo o que o paciente apresenta. Vale o critério mais grave. Sem nenhum, toque em \"Nenhum\".",
+                        itens: [
+                            { nome: "🔴 UTI", opcoes: [[3, "Choque ou sepse (má perfusão, hipotensão)", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Rebaixamento da consciência ou convulsão", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Déficit focal, sinais de hipertensão intracraniana ou de trombose do seio cavernoso (bilateral, paralisia de nervos cranianos)", "🔴"]] },
+                            { nome: "🟠 Internar (enfermaria)", opcoes: [[2, "Celulite orbitária: proptose, dor ou limitação ao mexer o olho, diplopia ou queda da visão (Chandler II a IV)", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Suspeita de complicação intracraniana: cefaleia intensa, vômitos, rigidez de nuca, edema na testa (tumor de Pott)", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Celulite pré-septal com toxemia, em lactente ou sem melhora em 24 a 48 h de antibiótico oral", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Vômitos que impedem o antibiótico oral, sem como fazer ceftriaxona IM", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Falha de dois esquemas de antibiótico", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Imunodeprimido com quadro grave", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Sem condição de retorno ou risco social", "🟠"]] },
+                            { nome: "🟢 Nenhum dos acima", opcoes: [[0, "Nenhum critério", "🟢"]] }
+                        ],
+                        classificar: (v) => {
+                            let g = Math.max(...v);
+                            if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "Estabilizar, antibiótico EV, tomografia com contraste (seios, órbitas e crânio) e otorrino, oftalmo e neurocirurgia de urgência." };
+                            if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Antibiótico EV, tomografia com contraste se suspeita orbitária ou intracraniana, otorrino e oftalmologia." };
+                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Tratamento oral em casa (passos 2 a 7). Reavaliar em 72 h ou antes se piorar." };
+                        },
+                        nota: "A AAP 2013 e a IDSA 2012 não trazem uma lista formal de internação. Estes critérios reúnem as complicações e as situações de risco descritas nelas e nas revisões 2023 de complicações orbitárias."
                     }
                 },
                 {

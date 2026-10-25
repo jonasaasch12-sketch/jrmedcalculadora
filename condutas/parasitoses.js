@@ -106,15 +106,51 @@ registrarConduta({
                     resumo: "Reconhecer a complicação e seguir o passo correspondente.",
                     lista: "passos",
                     itens: [
-                        "<span class=\"cond-passo\">1</span> <strong>Avaliar:</strong> hidratação, abdome, sinais de obstrução, sepse e imunossupressão",
-                        "<span class=\"cond-passo\">2</span> <strong>Suboclusão por áscaris:</strong> jejum, hidratação EV, SNG, óleo mineral; <strong>sem ascaricida</strong> na fase aguda",
-                        "<span class=\"cond-passo\">3</span> <strong>Áscaris biliar/pancreático:</strong> jejum, hidratação, antibiótico, analgesia; colangite = drenagem urgente",
-                        "<span class=\"cond-passo\">4</span> <strong>Hiperinfecção por Strongyloides:</strong> reduzir imunossupressão + ivermectina diária",
-                        "<span class=\"cond-passo\">5</span> <strong>Amebíase invasiva:</strong> metronidazol 10 dias e, depois, amebicida intraluminal"
+                        "<span class=\"cond-passo\">1</span> <strong>Internar?</strong> Critérios clicáveis: UTI · enfermaria · tratamento em casa",
+                        "<span class=\"cond-passo\">2</span> <strong>Avaliar:</strong> hidratação, abdome, sinais de obstrução, sepse e imunossupressão",
+                        "<span class=\"cond-passo\">3</span> <strong>Suboclusão por áscaris:</strong> jejum, hidratação EV, SNG, óleo mineral; <strong>sem ascaricida</strong> na fase aguda",
+                        "<span class=\"cond-passo\">4</span> <strong>Áscaris biliar/pancreático:</strong> jejum, hidratação, antibiótico, analgesia; colangite = drenagem urgente",
+                        "<span class=\"cond-passo\">5</span> <strong>Hiperinfecção por Strongyloides:</strong> reduzir imunossupressão + ivermectina diária",
+                        "<span class=\"cond-passo\">6</span> <strong>Amebíase invasiva:</strong> metronidazol 10 dias e, depois, amebicida intraluminal"
                     ]
                 },
                 {
                     passo: 1,
+                    titulo: "🏥 Critérios de internação",
+                    icone: "🏥",
+                    resumo: "Primeiro decida: UTI, internar ou tratar em casa. O tratamento comum do parasita é ambulatorial (bloco 🏠).",
+                    alerta: true,
+                    itens: [
+                        "A maioria das parasitoses é tratada em casa. Internar pelas <strong>complicações</strong> (bloco 🔎, sinais de gravidade) (SBP)."
+                    ],
+                    escore: {
+                        id: "internacao_parasitoses",
+                        unidade: " ",
+                        checklist: true,
+                        instrucao: "Toque em tudo o que o paciente apresenta. Vale o critério mais grave. Sem nenhum, toque em \"Nenhum\".",
+                        itens: [
+                            { nome: "🔴 UTI", opcoes: [[3, "Sepse ou choque (hiperinfecção por Strongyloides com sepse por enterobactérias)", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Peritonite, perfuração ou obstrução intestinal completa", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Colangite (áscaris na via biliar com febre e icterícia)", "🔴"]] },
+                            { nome: "🟠 Internar (enfermaria)", opcoes: [[2, "Suboclusão por áscaris: cólica, distensão, vômitos, massa palpável", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Áscaris na via biliar ou no pâncreas (dor, icterícia, pancreatite)", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Imunossuprimido ou em corticoide com suspeita de hiperinfecção por Strongyloides", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Amebíase invasiva: disenteria grave, toxemia ou abscesso hepático", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Desidratação que não corrige por via oral", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Anemia grave ou desnutrição grave", "🟠"]] },
+                            { nome: "🟢 Nenhum dos acima", opcoes: [[0, "Nenhum critério", "🟢"]] }
+                        ],
+                        classificar: (v) => {
+                            let g = Math.max(...v);
+                            if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "Estabilizar, antibiótico EV, cirurgia pediátrica de urgência se abdome agudo; UTI pediátrica." };
+                            if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Jejum e hidratação EV conforme o caso, exames de imagem e cirurgia pediátrica se suspeita de obstrução ou migração (passos 3 a 6)." };
+                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Tratamento do parasita em casa (bloco 🏠) e controle de cura quando indicado." };
+                        },
+                        nota: "Critérios reunidos a partir dos sinais de gravidade e das complicações descritas na SBP (bloco 🔎 e passos 3 a 6)."
+                    }
+                },
+                {
+                    passo: 2,
                     titulo: "Avaliar a gravidade",
                     aberta: true,
                     resumo: "Hidratação, abdome, sepse e uso de imunossupressores.",
@@ -126,7 +162,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 2,
+                    passo: 3,
                     titulo: "Suboclusão ou obstrução intestinal por áscaris",
                     aberta: true,
                     resumo: "Conservador 48 a 72h: hidratação EV, SNG e óleo mineral. Cirurgia se não resolver.",
@@ -141,7 +177,7 @@ registrarConduta({
                     remedios: ["oleo_mineral"]
                 },
                 {
-                    passo: 3,
+                    passo: 4,
                     titulo: "Áscaris nas vias biliares ou no pâncreas",
                     resumo: "Clínico primeiro; anti-helmíntico após a remissão.",
                     itens: [
@@ -151,7 +187,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 4,
+                    passo: 5,
                     titulo: "Hiperinfecção / estrongiloidíase disseminada",
                     alerta: true,
                     resumo: "Reduzir a imunossupressão e ivermectina diária até exames negativos.",
@@ -166,7 +202,7 @@ registrarConduta({
                     nota: "O card de ivermectina do app é o de escabiose (dose por faixa de peso). Segurança não estabelecida em < 15 kg; tomar em jejum, com água."
                 },
                 {
-                    passo: 5,
+                    passo: 6,
                     titulo: "Amebíase invasiva (disenteria, colite, abscesso hepático)",
                     resumo: "Metronidazol por 10 dias, sempre seguido de amebicida intraluminal.",
                     itens: [
