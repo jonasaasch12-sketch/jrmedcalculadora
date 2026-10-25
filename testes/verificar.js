@@ -44,7 +44,9 @@ const TETOS = {
     linezolida_ev: 300,   // mL (600 mg)
     cef_disenteria: 20,   // mL (2 g; EV 100 mg/mL, IM 7 mL)
     metro_parasitas: 6.25, // mL de 40 mg/mL na giardíase (250 mg/dose)
-    insulina_cad: 10,     // mL/h de 1 U/mL (10 U/h, IMIP)
+    insulina_cad: 10,
+    amox_faringo: 10,     // mL de 250 mg/5 mL = 500 mg/dose (IDSA)
+    azitro_faringo: 12.5, // mL de 200 mg/5 mL = 500 mg/dia (IDSA)     // mL/h de 1 U/mL (10 U/h, IMIP)
     kcl_ev: 530,          // mL/h na periférica (40 mEq em 2h)
     kcl_xarope: 50,       // mL por dose (40 mEq)
     omeprazol: 20,        // mg/dia (faixa ≥ 20 kg, Whitebook)

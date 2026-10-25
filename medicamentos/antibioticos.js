@@ -55,6 +55,36 @@ registrarMedicamentos({
             atencao: "Perguntar sobre alergia a penicilina. Pode causar diarreia."
         }
     },
+    "amox_faringo": {
+        cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "amoxicilina faringite amigdalite faringoamigdalite estreptococica estreptococo garganta 10 dias", nome: "Amoxicilina: Faringoamigdalite (10 dias)", apres: "250 mg / 5 mL",
+        info: "<strong>Posologia:</strong> 50 mg/kg/dia de 12/12h (25 mg/kg/dose) por 10 dias. Máx. 500 mg/dose (1 g/dia).", badge: "Máx: 500 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            let v = Math.min(parseFloat(round05(p * 25 / 50)), 10), t = String(v).replace('.', ',');
+            /* frasco de 150 mL: 10 dias x 2 doses */
+            let fr = Math.max(1, Math.ceil(v * 20 / 150));
+            return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 250 MG/5ML ---------- ${fr} FR\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.\nNÃO PARAR ANTES DOS 10 DIAS, MESMO SE MELHORAR.` };
+        },
+        detalhes: {
+            indicacao: "Faringoamigdalite estreptocócica (estreptococo beta-hemolítico do grupo A).",
+            dose: "50 mg/kg/dia VO de 12/12h por 10 dias (máx. 500 mg/dose). IDSA: alternativa 50 mg/kg 1 vez ao dia (máx. 1 g).",
+            atencao: "10 dias completos (prevenção de febre reumática). Mononucleose: exantema com amoxicilina. Perguntar sobre alergia a penicilina."
+        }
+    },
+    "azitro_faringo": {
+        cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "azitromicina faringite amigdalite estreptococica alergia penicilina anafilaxia macrolideo 5 dias", nome: "Azitromicina: Faringoamigdalite (alérgico à penicilina)", apres: "200 mg / 5 mL",
+        info: "<strong>Posologia:</strong> 12 mg/kg 1 vez ao dia por 5 dias. Máx. 500 mg/dia. Só para alergia grave à penicilina.", badge: "Máx: 500 mg/dia", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            let v = Math.min(parseFloat(round05(p * 12 / 40)), 12.5), t = String(v).replace('.', ','), tot = String(+(v * 5).toFixed(1)).replace('.', ',');
+            return { v: v + " mL", r: `${recHead}1) AZITROMICINA SUSPENSÃO 200 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, 1 VEZ AO DIA POR 5 DIAS.` };
+        },
+        detalhes: {
+            indicacao: "Faringoamigdalite estreptocócica em alérgico à penicilina (reação imediata/anafilaxia).",
+            dose: "12 mg/kg 1 vez ao dia VO por 5 dias (máx. 500 mg/dia) (IDSA 2012).",
+            atencao: "Resistência do estreptococo aos macrolídeos em aumento, inclusive no Brasil; menor erradicação que a penicilina. Não usar como 1ª escolha."
+        }
+    },
     "benza": {
         cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar / UBS (Vias Injetáveis)", 
         kw: "penicilina benzatina benzetacil faringite amigdalite antibiotico im", nome: "Penicilina Benzatina (Benzetacil)", apres: "600k e 1.2M UI",
