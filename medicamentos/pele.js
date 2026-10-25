@@ -225,5 +225,39 @@ registrarMedicamentos({
             dose: "3 mg/kg VO dose única; cápsula diluída em 10 mL (15 mg/mL).",
             atencao: "Máximo 150 mg (cápsula inteira)."
         }
+    },
+    // ===== Varicela: cards próprios da doença (Ministério da Saúde, Guia de Vigilância 2023) =====
+    "aciclovir_varicela_vo": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "aciclovir oral suspensao varicela catapora antiviral zovirax 5 vezes ao dia",
+        nome: "Aciclovir VO: Varicela", apres: "Suspensão 200 mg / 5 mL",
+        info: "<strong>Posologia (MS):</strong> 20 mg/kg/dose VO 5 vezes ao dia por 5 dias, iniciado em até 24 h do exantema. Máx. 800 mg/dose.", badge: "Máx: 800 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* MS: 20 mg/kg/dose 5x/dia por 5 dias. Suspensão 200 mg/5 mL (40 mg/mL). Teto 800 mg por dose (20 mL). Total do tratamento: 5 doses x 5 dias */
+            let v = Math.min(parseFloat(round05(p * 20 / 40)), 20), t = String(v).replace('.', ','), tot = Math.ceil(v * 5 * 5);
+            return { v: v + " mL", r: `${recHead}1) ACICLOVIR SUSPENSÃO 200 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, 5 VEZES AO DIA (DE 4/4 HORAS, EXCETO DE MADRUGADA), POR 5 DIAS.` };
+        },
+        detalhes: {
+            indicacao: "Varicela sem imunodepressão nos grupos de risco: > 12 anos, doença crônica de pele ou pulmão, uso de corticoide ou salicilato, caso secundário no domicílio. Iniciar em até 24 h do exantema.",
+            dose: "20 mg/kg/dose VO 5 vezes ao dia por 5 dias (MS). Máximo 800 mg por dose.",
+            atencao: "Criança saudável com varicela não complicada: não é de rotina. Imunodeprimido ou forma grave: aciclovir EV. Hidratar bem."
+        }
+    },
+    "aciclovir_varicela_ev": {
+        cat: "cat-pele", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+        kw: "aciclovir endovenoso ev varicela grave imunodeprimido pneumonia encefalite recem nascido antiviral",
+        nome: "Aciclovir EV: Varicela grave / imunodeprimido", apres: "FA 250 mg (pó)",
+        info: "<strong>Posologia (MS):</strong> 10 mg/kg/dose EV de 8/8h, infundir em 1 hora, por 7 a 14 dias.", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* MS: 10 mg/kg/dose EV 8/8h em 1 h, 7 a 14 dias. FA 250 mg + 10 mL de AD = 25 mg/mL; diluir em SF 0,9% até 5 mg/mL (concentração final até 7 mg/mL) */
+            let mg = p * 10, ml = mg / 25, sf = Math.ceil(mg / 5), fa = Math.ceil(mg / 250);
+            let t = ml.toFixed(1).replace('.', ',');
+            return { v: `${mg.toFixed(0)} mg (${ml.toFixed(1)} mL)`, r: `VIA ENDOVENOSA (VARICELA GRAVE / IMUNODEPRIMIDO)\n\n Reconstituir ${fa} FA de Aciclovir 250 mg com 10 mL de água destilada cada (25 mg/mL).\n Aspirar ${t} mL (${mg.toFixed(0)} mg = 10 mg/kg) e diluir em SF 0,9% até completar ${sf} mL (5 mg/mL).\n Infundir em 1 hora, de 8/8 horas, por 7 a 14 dias.\n\n * Manter boa hidratação (risco de lesão renal). Ajustar se insuficiência renal.` };
+        },
+        detalhes: {
+            indicacao: "Varicela em imunodeprimido, recém-nascido e formas graves ou complicadas (pneumonia, encefalite, varicela hemorrágica).",
+            dose: "10 mg/kg/dose EV de 8/8h, infundido em 1 hora, por 7 a 14 dias (MS).",
+            atencao: "Concentração final de até 7 mg/mL (aqui 5 mg/mL). Infusão rápida e desidratação aumentam o risco de lesão renal. Ajustar na insuficiência renal."
+        }
     }
 });

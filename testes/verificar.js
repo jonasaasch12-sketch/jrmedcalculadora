@@ -45,6 +45,7 @@ const TETOS = {
     cef_disenteria: 20,   // mL (2 g; EV 100 mg/mL, IM 7 mL)
     metro_parasitas: 6.25, // mL de 40 mg/mL na giardíase (250 mg/dose)
     insulina_cad: 10,
+    aciclovir_varicela_vo: 20, // mL de 200 mg/5 mL = 800 mg/dose
     amox_sinusite: 25,    // mL de 400 mg/5 mL = 2 g/dose
     clav_sinusite: 12.5,  // mL de cada frasco (2 g/dose no total)
     cef_sinusite: 3.5,    // mL IM 285,7 mg/mL (1 g)
