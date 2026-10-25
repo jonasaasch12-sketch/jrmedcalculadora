@@ -212,7 +212,8 @@ registrarConduta({
                         "Depois: <strong>AAS em dose baixa, 3 a 5 mg/kg/dia, 1 vez ao dia</strong>, até o eco de <strong>4 a 6 semanas</strong> normal; mais tempo se houver aneurisma (AHA 2017).",
                         "<strong>Evitar ibuprofeno</strong> junto com o AAS (bloqueia o efeito antiagregante).",
                         "<strong>Síndrome de Reye:</strong> se a criança pegar <strong>influenza ou varicela</strong> em uso de AAS, suspender e trocar o antiagregante com o especialista. Vacina da <strong>influenza inativada</strong> é recomendada."
-                    ]
+                    ],
+                    remedios: ["aas_kawasaki_aguda", "aas_kawasaki_baixa"]
                 },
                 {
                     passo: 5,
@@ -242,7 +243,8 @@ registrarConduta({
                         "<strong>Alta</strong> com a criança sem febre, com AAS em dose baixa e <strong>eco marcado em 1 a 2 semanas e em 4 a 6 semanas</strong> (AHA 2017).",
                         "<strong>Aneurisma:</strong> antiagregação dupla ou anticoagulação conforme o tamanho, com o cardiologista (AHA 2017; AHA 2024).",
                         "<strong>Orientar retorno</strong> se a febre voltar, dor no peito, palidez, choro inconsolável ou falta de ar."
-                    ]
+                    ],
+                    remedios: ["aas_kawasaki_baixa"]
                 }
             ]
         },
