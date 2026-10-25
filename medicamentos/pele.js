@@ -259,5 +259,25 @@ registrarMedicamentos({
             dose: "10 mg/kg/dose EV de 8/8h, infundido em 1 hora, por 7 a 14 dias (MS).",
             atencao: "Concentração final de até 7 mg/mL (aqui 5 mg/mL). Infusão rápida e desidratação aumentam o risco de lesão renal. Ajustar na insuficiência renal."
         }
+    },
+    // ===== Sarampo: card próprio (Nota Técnica Conjunta MS nº 02/2025) =====
+    "vit_a_sarampo": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "vitamina a retinol sarampo caso suspeito megadose duas doses",
+        nome: "Vitamina A: Sarampo (2 doses)", apres: "Cápsulas 100.000 UI e 200.000 UI",
+        info: "<strong>Conduta (MS 2025):</strong> criança até 59 meses com suspeita de sarampo, 2 doses VO (dia da suspeita e dia seguinte): < 6 m 50.000 UI · 6 a 11 m 100.000 UI · 12 a 59 m 200.000 UI.", badge: "Por idade", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: (p, i) => {
+            /* MS (NT Conjunta 02/2025): até 59 meses com suspeita de sarampo, independentemente da vacinação: < 6 m 50.000; 6-11 m 100.000; 12-59 m 200.000 UI; 2 doses em dias seguidos */
+            if (i === "") return { v: "—", r: "Insira a idade acima." };
+            let id = parseFloat(String(i).replace(',', '.'));
+            if (id >= 5) return { v: "Avaliar", r: "VITAMINA A NO SARAMPO: INDICAÇÃO DO MINISTÉRIO DA SAÚDE ATÉ 59 MESES. ACIMA DISSO, AVALIAR CONFORME O ESTADO NUTRICIONAL." };
+            let ui = id < 0.5 ? "50.000" : id < 1 ? "100.000" : "200.000";
+            return { v: `${ui} UI x 2`, r: `${recHead}1) VITAMINA A ${ui} UI\nADMINISTRAR ${ui} UI, VIA ORAL, NO DIA DO DIAGNÓSTICO E REPETIR A MESMA DOSE NO DIA SEGUINTE (2 DOSES).` };
+        },
+        detalhes: {
+            indicacao: "Criança até 59 meses com suspeita de sarampo, independentemente de doses prévias de vitamina A ou da vacinação.",
+            dose: "< 6 meses: 50.000 UI; 6 a 11 meses: 100.000 UI; 12 a 59 meses: 200.000 UI. VO, 1 dose no dia da suspeita e 1 no dia seguinte (MS 2025).",
+            atencao: "Reduz complicações e mortalidade. Sinais de deficiência de vitamina A (lesões oculares): esquema ampliado com o especialista."
+        }
     }
 });
