@@ -165,7 +165,7 @@ function linkarCitacoes(area, c) {
     if (!chaves.length) return;
     let esc = t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     let re = new RegExp('(?<![\\wÀ-ú])(' + chaves.map(esc).join('|') + ')(?![\\wÀ-ú])', 'g');
-    let pular = 'a, button, input, select, textarea, label, script, .cond-fonte, .cond-med, .cond-indice, .cond-voltar, .cond-acoes, .cadh, .cadg, .sy, .tr, .qm, [data-texto], [data-dose]';
+    let pular = 'a, button, input, select, textarea, label, script, .cond-fonte, .cond-med, .cond-indice, .cond-voltar, .cond-acoes, .cadh, .cadg, .sy, .tr, .qm, .exg, [data-texto], [data-dose]';
     let walker = document.createTreeWalker(area, NodeFilter.SHOW_TEXT, {
         acceptNode: n => (!n.nodeValue.trim() || n.parentElement.closest(pular)) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
     });
