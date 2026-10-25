@@ -122,6 +122,11 @@ funcionar na raiz e em `/teste/`. `js/modo-teste.js` detecta `/teste/` (constant
   Fichas da equipe (Firestore `fichas_medicamentos`) têm prioridade sobre `ficha`.
 - Injetáveis ganham a seringa 💉 automaticamente (pelo texto da receita).
   Seções hospitalares ganham 🏥 pelo nome ("hospitalar") ou pela lista `SECOES_HOSPITALARES` (js/app.js).
+- **Menu organizado por doença dentro do sistema** (pedido do Dr. Jonas, 10/2026): ex.: 🫁 Respiratório → Bronquiolite,
+  Crupe, Asma, Pneumonia, Faringoamigdalite, Otite média aguda... Doença com dose ou tempo de tratamento próprio ganha
+  **card próprio** com o nome da doença (`amox_faringo`, `amox_oma`...), no arquivo do sistema; assim um card nunca muda
+  por causa de outra doença. Sintomáticos (antitérmicos, antieméticos) ficam só em Sintomáticos (a conduta já os mostra).
+  🦠 Antibióticos é a prateleira geral (amoxicilina comum, outros orais, hospitalares EV).
 - **Sem repetição no menu para a mesma finalidade** (pedido do Dr. Jonas): cada card aparece numa seção só.
   Repetir em outra seção só quando lá ele serve para outra coisa (ex.: ivermectina em Pele = sarna; em Parasitoses = verme).
 - Novo remédio: criar o bloco no arquivo da categoria **e** colocar o id em `medicamentos/menu.js`.
