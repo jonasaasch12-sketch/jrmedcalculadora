@@ -10,7 +10,7 @@
 let _criseInicio = null, _criseTimer = null;
 const CRISE_FASES = [
     [0, "0–5 min · Estabilizar", "ABC, decúbito lateral, O₂, glicemia capilar, acesso.", "#0284c7"],
-    [5, "5 min · 1º benzodiazepínico", "Diazepam EV ou midazolam IM / intranasal / bucal.", "#d97706"],
+    [5, "5 min · 1º benzodiazepínico", "Diazepam EV ou retal, ou midazolam IM.", "#d97706"],
     [10, "10 min · 2º benzodiazepínico", "Repetir 1 vez (máximo 2 doses no total).", "#d97706"],
     [20, "20 min · 2ª linha", "Fenitoína, levetiracetam (ou fenobarbital). Chamar a UTI.", "#dc2626"],
     [40, "40 min · Refratário", "Intubação, midazolam contínuo, EEG, UTI.", "#7f1d1d"]
@@ -179,7 +179,7 @@ registrarConduta({
                         "<strong>Decúbito lateral</strong>, aspirar secreções, <strong>O₂</strong>; não colocar nada na boca. Ventilar com bolsa-máscara se apneia.",
                         "<strong>Monitor</strong> cardíaco, oximetria, PA.",
                         "<strong>Glicemia capilar já.</strong> Se <strong>&lt; 60 mg/dL</strong>: glicose EV (card abaixo) (AES 2016).",
-                        "<strong>Acesso venoso</strong>; se não conseguir rápido, <strong>não esperar</strong>: benzodiazepínico IM, intranasal ou bucal (passo 3). Intraósseo se precisar.",
+                        "<strong>Acesso venoso</strong>; se não conseguir rápido, <strong>não esperar</strong>: midazolam IM ou diazepam retal (passo 3). Intraósseo se precisar.",
                         "<strong>Exames:</strong> eletrólitos (sódio, cálcio, magnésio), gasometria, hemograma, nível sérico do anticonvulsivante (se usa), toxicológico conforme a história.",
                         "<strong>Febre:</strong> antitérmico; não previne a crise, mas dá conforto."
                     ],
@@ -188,16 +188,16 @@ registrarConduta({
                 {
                     passo: 3,
                     titulo: "5 min: benzodiazepínico",
-                    resumo: "Diazepam EV; sem acesso: midazolam IM, intranasal ou bucal, ou diazepam retal. Repetir 1 vez após 5 min.",
+                    resumo: "Diazepam EV; sem acesso: midazolam IM ou diazepam retal. Repetir 1 vez após 5 min.",
                     alerta: true,
                     itens: [
                         "<strong>Com acesso EV:</strong> <strong>diazepam EV</strong> (AES 2016).",
-                        "<strong>Sem acesso:</strong> <strong>midazolam IM</strong>, <strong>intranasal ou bucal</strong>, ou <strong>diazepam retal</strong>. Não perder tempo tentando acesso.",
+                        "<strong>Sem acesso:</strong> <strong>midazolam IM</strong> ou <strong>diazepam retal</strong>. Não perder tempo tentando acesso.",
                         "<strong>Crise continua 5 min depois:</strong> repetir <strong>1 vez</strong> o benzodiazepínico.",
                         "<strong>No máximo 2 doses de benzodiazepínico no total</strong>, contando as feitas antes da chegada (SAMU, casa). Mais doses aumentam a depressão respiratória e não aumentam o controle.",
                         "<strong>Via aérea pronta:</strong> a depressão respiratória é mais comum na crise que não para do que pelo benzodiazepínico (AES 2016)."
                     ],
-                    remedios: ["neuro_diaz", "neuro_midaz", "neuro_midaz_nasal"]
+                    remedios: ["neuro_diaz", "neuro_midaz"]
                 },
                 {
                     passo: 4,
@@ -266,7 +266,7 @@ registrarConduta({
                         "Manter a calma, <strong>deitar de lado</strong>, afastar objetos, afrouxar roupas. <strong>Não colocar nada na boca</strong>, não dar água nem remédio pela boca.",
                         "<strong>Cronometrar</strong> e, se possível, <strong>filmar</strong> a crise (ajuda muito no diagnóstico).",
                         "<strong>Crise com mais de 5 minutos</strong>, crises seguidas, dificuldade para respirar ou não acorda: <strong>ligar 192 (SAMU)</strong>.",
-                        "Criança com epilepsia e crises prolongadas: a neurologia pode prescrever <strong>medicação de resgate em casa</strong> (midazolam intranasal/bucal ou diazepam retal), com orientação de uso."
+                        "Criança com epilepsia e crises prolongadas: a neurologia pode prescrever <strong>medicação de resgate em casa</strong> (ex.: diazepam retal), com orientação de uso."
                     ]
                 },
                 {
