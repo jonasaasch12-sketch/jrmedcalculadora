@@ -187,7 +187,7 @@ const DOENCAS_EXANTEMA = [
     { id: "kawasaki", fotos: ["kawasaki_labios", "kawasaki_maos"], nome: "Doença de Kawasaki", tipo: "mp", conduta: null, alerta: "Febre ≥ 5 dias: pensar e tratar cedo (aneurisma coronariano).",
       tags: ["mp", "febre_antes", "febre_junto", "ini_tronco", "s_febre5", "s_lingua", "s_maos_pes"],
       texto: "<strong>Febre ≥ 5 dias</strong> + conjuntivite sem secreção, <strong>lábios rachados e língua em framboesa</strong>, exantema polimorfo (não vesicular), <strong>edema e eritema de mãos e pés</strong>, adenomegalia cervical ≥ 1,5 cm. Menor de 5 anos." },
-    { id: "meningococcemia", fotos: ["petequias", "meningococcemia"], nome: "Meningococcemia", tipo: "pet", conduta: null, alerta: "EMERGÊNCIA: febre + petéquias = antibiótico e suporte já.",
+    { id: "meningococcemia", fotos: ["petequias", "meningococcemia"], nome: "Meningococcemia", tipo: "pet", conduta: "meningococcemia", alerta: "EMERGÊNCIA: febre + petéquias = antibiótico e suporte já.",
       tags: ["pet", "febre_junto", "ini_extrem", "s_toxemia", "s_vitro"],
       texto: "Febre, <strong>toxemia</strong> e <strong>petéquias ou púrpura que não somem ao apertar</strong> (vitropressão), em progressão rápida. Pode evoluir para choque em horas." },
     { id: "dengue", fotos: ["dengue"], nome: "Dengue", tipo: "mp", conduta: null, alerta: "Procurar sinais de alarme (dor abdominal, vômitos, sangramento).",
