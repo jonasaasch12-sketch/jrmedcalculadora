@@ -2,154 +2,199 @@
 // DOENÇAS EXANTEMÁTICAS — categoria da área 📖 Condutas
 // 1) Guia de identificação do exantema (ferramenta clicável que afunila as hipóteses)
 // 2) Varicela (primeira conduta da categoria)
-// Desenhos próprios em SVG (sem direitos de terceiros): boneco com a distribuição
-// e o aspecto de cada tipo de lesão. Fotos de licença livre podem ser acrescentadas
-// depois em DOENCAS_EXANTEMA[].foto (com o crédito).
+// Fotos reais de domínio público ou Creative Commons (Wikimedia Commons), com crédito,
+// licença e link em cada foto (FOTOS_EXANTEMA). Arquivos em img/exantemas/.
 // Base: MS — Guia de Vigilância em Saúde (2023); Manual dos CRIE (MS);
 // AHA 2017 (Kawasaki); IDSA 2012 (escarlatina); revisões de exantemas (PubMed).
 // =====================================================
 
-// ---------- Desenhos ----------
-// Cada tipo de lesão: como desenhar um ponto.
-const EXANTEMA_LESAO = {
-    mp: { nome: "Máculo-papular", cor: "#e2525c" },
-    ves: { nome: "Vesicular", cor: "#e2525c" },
-    pet: { nome: "Petequial / purpúrico", cor: "#7e1f5a" },
-    lixa: { nome: "Micropapular áspero (\"lixa\")", cor: "#ef6f6f" }
-};
-
-// Pontos pseudoaleatórios fixos (sempre o mesmo desenho)
-function exPontos(n, semente) {
-    let s = semente, r = () => { s = (s * 9301 + 49297) % 233280; return s / 233280; }, out = [];
-    for (let i = 0; i < n; i++) out.push([r(), r(), r()]);
-    return out;
-}
-
-function exPonto(tipo, x, y, k, i) {
-    let c = EXANTEMA_LESAO[tipo].cor;
-    if (tipo === 'ves') {
-        // fases diferentes ao mesmo tempo (varicela): mácula, pápula, vesícula, crosta
-        let f = i % 4;
-        if (f === 0) return `<circle cx="${x}" cy="${y}" r="2.6" fill="${c}" opacity=".55"/>`;
-        if (f === 1) return `<circle cx="${x}" cy="${y}" r="2.6" fill="${c}"/>`;
-        if (f === 2) return `<circle cx="${x}" cy="${y}" r="3.2" fill="${c}" opacity=".45"/><circle cx="${x}" cy="${y}" r="2" fill="#fff" stroke="${c}" stroke-width=".6"/>`;
-        return `<circle cx="${x}" cy="${y}" r="2.4" fill="#8a5a2b"/>`;
+// ---------- Fotos reais (Wikimedia Commons; domínio público ou Creative Commons) ----------
+// Redimensionadas para o app. Crédito e licença sempre embaixo da foto, com link para a página original.
+const FOTOS_EXANTEMA = {
+    "varicela_crianca": {
+        "arq": "img/exantemas/varicela_crianca.jpg",
+        "autor": "Jonnymccullagh",
+        "licenca": "CC BY-SA 3.0",
+        "legenda": "Varicela em menino de 5 anos: lesões em fases diferentes no tronco e na face.",
+        "link": "https://commons.wikimedia.org/wiki/File%3AChickenpox_5yearold.JPG"
+    },
+    "varicela_vesicula": {
+        "arq": "img/exantemas/varicela_vesicula.jpg",
+        "autor": "Zeimusu",
+        "licenca": "CC BY-SA 3.0",
+        "legenda": "Vesícula da varicela de perto (\"gota de orvalho\" sobre base vermelha).",
+        "link": "https://commons.wikimedia.org/wiki/File%3AChickenpox_blister-%28closeup%29.jpg"
+    },
+    "varicela_grave": {
+        "arq": "img/exantemas/varicela_grave.jpg",
+        "autor": "Gzzz",
+        "licenca": "CC BY-SA 4.0",
+        "legenda": "Varicela extensa em criança (manchas brancas = pasta d'água).",
+        "link": "https://commons.wikimedia.org/wiki/File%3ASevere_chickenpox.jpg"
+    },
+    "sarampo": {
+        "arq": "img/exantemas/sarampo.jpg",
+        "autor": "CDC",
+        "licenca": "domínio público",
+        "legenda": "Sarampo: exantema maculopapular confluente na face e no tronco.",
+        "link": "https://commons.wikimedia.org/wiki/File%3ABoy_with_measles.jpg"
+    },
+    "sarampo_koplik": {
+        "arq": "img/exantemas/sarampo_koplik.jpg",
+        "autor": "CDC",
+        "licenca": "domínio público",
+        "legenda": "Manchas de Koplik na mucosa jugal (fase pré-eruptiva).",
+        "link": "https://commons.wikimedia.org/wiki/File%3AKoplik_spots%2C_measles_6111_lores.jpg"
+    },
+    "rubeola": {
+        "arq": "img/exantemas/rubeola.jpg",
+        "autor": "CDC",
+        "licenca": "domínio público",
+        "legenda": "Rubéola: exantema rosado e fino nas costas de uma criança.",
+        "link": "https://commons.wikimedia.org/wiki/File%3ARash_of_rubella_on_skin_of_child%27s_back.JPG"
+    },
+    "roseola": {
+        "arq": "img/exantemas/roseola.jpg",
+        "autor": "M Davis",
+        "licenca": "domínio público",
+        "legenda": "Exantema súbito em menina de 21 meses, após a febre.",
+        "link": "https://commons.wikimedia.org/wiki/File%3ARoseola_on_a_21-month-old_girl.jpg"
+    },
+    "eritema_infeccioso": {
+        "arq": "img/exantemas/eritema_infeccioso.jpg",
+        "autor": "Andrew Kerr",
+        "licenca": "domínio público",
+        "legenda": "Eritema infeccioso: \"bochecha esbofeteada\" e exantema rendilhado no tronco.",
+        "link": "https://commons.wikimedia.org/wiki/File%3AFifth_disease.jpg"
+    },
+    "mao_pe_boca": {
+        "arq": "img/exantemas/mao_pe_boca.jpg",
+        "autor": "James Heilman, MD",
+        "licenca": "CC BY-SA 3.0",
+        "legenda": "Mão-pé-boca: vesículas ovais nas mãos.",
+        "link": "https://commons.wikimedia.org/wiki/File%3ACharacteristic_rash_of_hand%2C_foot%2C_and_mouth_disease%2C_on_human_hands.jpg"
+    },
+    "mao_pe_boca_boca": {
+        "arq": "img/exantemas/mao_pe_boca_boca.jpg",
+        "autor": "shawn c",
+        "licenca": "domínio público",
+        "legenda": "Mão-pé-boca: úlceras no palato mole e na orofaringe.",
+        "link": "https://commons.wikimedia.org/wiki/File%3AHFMD_soft_palete_oropharynx.jpg"
+    },
+    "escarlatina": {
+        "arq": "img/exantemas/escarlatina.jpg",
+        "autor": "Whispyhistory",
+        "licenca": "CC BY-SA 4.0",
+        "legenda": "Escarlatina: exantema áspero (\"lixa\") no pescoço e no tronco.",
+        "link": "https://commons.wikimedia.org/wiki/File%3AScarlet_fever_rash.jpg"
+    },
+    "escarlatina_lingua": {
+        "arq": "img/exantemas/escarlatina_lingua.jpg",
+        "autor": "Dr Graham Beards, com Tamii Render",
+        "licenca": "CC BY-SA 4.0",
+        "legenda": "Escarlatina: língua em framboesa.",
+        "link": "https://commons.wikimedia.org/wiki/File%3AChild_with_scarlet_fever.jpg"
+    },
+    "kawasaki_labios": {
+        "arq": "img/exantemas/kawasaki_labios.jpg",
+        "autor": "Dong Soo Kim (recorte: Natr)",
+        "licenca": "CC BY 2.0",
+        "legenda": "Kawasaki: lábios vermelhos e fissurados, língua em framboesa.",
+        "link": "https://commons.wikimedia.org/wiki/File%3AKawasaki_symptoms_B.jpg"
+    },
+    "kawasaki_maos": {
+        "arq": "img/exantemas/kawasaki_maos.jpg",
+        "autor": "Dong Soo Kim (recorte: Natr)",
+        "licenca": "CC BY 2.0",
+        "legenda": "Kawasaki: eritema das palmas com edema.",
+        "link": "https://commons.wikimedia.org/wiki/File%3AKawasaki_symptoms_D.jpg"
+    },
+    "meningococcemia": {
+        "arq": "img/exantemas/meningococcemia.jpg",
+        "autor": "Pam Cleverley e Perry Bisman",
+        "licenca": "CC BY-SA 3.0",
+        "legenda": "Doença meningocócica: púrpura fulminante em lactente.",
+        "link": "https://commons.wikimedia.org/wiki/File%3ACharlotte_Cleverley-Bisman_Meningicoccal_Disease.jpg"
+    },
+    "petequias": {
+        "arq": "img/exantemas/petequias.jpg",
+        "autor": "DrFO.Jr.Tn",
+        "licenca": "CC BY-SA 3.0",
+        "legenda": "Exantema petequial: pontos que não somem à vitropressão.",
+        "link": "https://commons.wikimedia.org/wiki/File%3APetechial_rash.JPG"
+    },
+    "dengue": {
+        "arq": "img/exantemas/dengue.jpg",
+        "autor": "Emy Abi Thomas, Mary John e Bimal Kanish",
+        "licenca": "CC BY 3.0",
+        "legenda": "Dengue: eritema confluente com petéquias (\"ilhas brancas\").",
+        "link": "https://commons.wikimedia.org/wiki/File%3AErythema_with_petechiae_on_patient_with_dengue_fever.jpg"
+    },
+    "mononucleose_amoxi": {
+        "arq": "img/exantemas/mononucleose_amoxi.jpg",
+        "autor": "RainbowKatie",
+        "licenca": "CC BY-SA 3.0",
+        "legenda": "Exantema por amoxicilina na mononucleose.",
+        "link": "https://commons.wikimedia.org/wiki/File%3AAmoxycillin_rash_in_infectious_mononucleosis.jpg"
     }
-    if (tipo === 'pet') return `<circle cx="${x}" cy="${y}" r="${1 + k * 1.6}" fill="${c}"/>`;
-    if (tipo === 'lixa') return `<circle cx="${x}" cy="${y}" r=".9" fill="${c}"/>`;
-    return `<ellipse cx="${x}" cy="${y}" rx="${2 + k * 2.4}" ry="${1.6 + k * 1.8}" fill="${c}" opacity=".8"/>`;
-}
-
-// Regiões do boneco (frente): retângulos/elipses onde caem os pontos
-const EX_REGIOES = {
-    face: { cx: 60, cy: 24, rx: 13, ry: 14, el: true },
-    boca: { cx: 60, cy: 31, rx: 5, ry: 2.5, el: true },
-    pescoco: { x: 53, y: 38, w: 14, h: 8 },
-    tronco: { x: 40, y: 46, w: 40, h: 52 },
-    dobras: { x: 40, y: 46, w: 40, h: 8 },
-    bracos: { x: 22, y: 48, w: 14, h: 50, par: 84 },
-    maos: { cx: 28, cy: 106, rx: 6, ry: 6, el: true, par: 92 },
-    pernas: { x: 42, y: 100, w: 15, h: 62, par: 21 },
-    pes: { cx: 49, cy: 170, rx: 8, ry: 4, el: true, par: 22 },
-    perineo: { cx: 60, cy: 100, rx: 8, ry: 4, el: true }
 };
 
-function exPontosNaRegiao(reg, tipo, dens, semente) {
-    let g = EX_REGIOES[reg], out = '', n = Math.round(dens);
-    if (!g || !n) return '';
-    exPontos(n, semente).forEach(([a, b, k], i) => {
-        let x, y;
-        if (g.el) { let t = a * 2 * Math.PI, rr = Math.sqrt(b); x = g.cx + Math.cos(t) * rr * g.rx; y = g.cy + Math.sin(t) * rr * g.ry; }
-        else { x = g.x + a * g.w; y = g.y + b * g.h; }
-        out += exPonto(tipo, x.toFixed(1), y.toFixed(1), k, i);
-        if (g.par !== undefined) {
-            let x2 = g.el ? (120 - x) : (120 - x);
-            out += exPonto(tipo, x2.toFixed(1), y.toFixed(1), k, i + 1);
-        }
-    });
-    return out;
+function htmlFotoExantema(k, pequena) {
+    let f = FOTOS_EXANTEMA[k];
+    if (!f) return '';
+    return `<figure class="ex-foto${pequena ? ' pequena' : ''}">
+        <img src="${f.arq}" alt="${f.legenda}" loading="lazy" onclick="abrirFotoExantema('${k}')" onerror="this.closest('figure').style.display='none'">
+        ${pequena ? '' : `<figcaption>${f.legenda}</figcaption>`}
+        <div class="ex-credito">Foto: ${f.autor} · ${f.licenca} · <a href="${f.link}" target="_blank" rel="noopener">Wikimedia Commons</a>${f.licenca.startsWith('CC') ? ' · redimensionada' : ''}</div>
+    </figure>`;
 }
 
-// Boneco com o exantema. dist = { regiao: densidade }. setas = texto curto da progressão.
-function svgBonecoExantema(tipo, dist, legenda, semente = 7) {
-    let corpo = `
-        <circle cx="60" cy="24" r="15" class="ex-pele"/>
-        <rect x="53" y="37" width="14" height="10" rx="3" class="ex-pele"/>
-        <rect x="38" y="45" width="44" height="56" rx="10" class="ex-pele"/>
-        <rect x="20" y="47" width="16" height="54" rx="7" class="ex-pele"/><rect x="84" y="47" width="16" height="54" rx="7" class="ex-pele"/>
-        <circle cx="28" cy="106" r="7" class="ex-pele"/><circle cx="92" cy="106" r="7" class="ex-pele"/>
-        <rect x="41" y="98" width="17" height="66" rx="7" class="ex-pele"/><rect x="62" y="98" width="17" height="66" rx="7" class="ex-pele"/>
-        <ellipse cx="49" cy="170" rx="10" ry="5" class="ex-pele"/><ellipse cx="71" cy="170" rx="10" ry="5" class="ex-pele"/>`;
-    let pontos = '', s = semente;
-    Object.keys(dist).forEach(r => { pontos += exPontosNaRegiao(r, tipo, dist[r], s); s += 13; });
-    return `<figure class="ex-fig"><svg viewBox="0 0 120 180" role="img" aria-label="${legenda || 'distribuição do exantema'}">${corpo}${pontos}</svg>${legenda ? `<figcaption>${legenda}</figcaption>` : ''}</figure>`;
-}
-
-// Amostra do aspecto da lesão (quadradinho de pele ampliado)
-function svgAmostraLesao(tipo) {
-    let pts = exPontos(tipo === 'lixa' ? 70 : tipo === 'pet' ? 14 : 9, 3).map(([a, b, k], i) => exPonto(tipo, (6 + a * 48).toFixed(1), (6 + b * 28).toFixed(1), tipo === 'mp' ? k : k * .8, i)).join('');
-    let escala = tipo === 'lixa' ? '' : ' transform="scale(1)"';
-    return `<svg class="ex-amostra" viewBox="0 0 60 40" aria-label="${EXANTEMA_LESAO[tipo].nome}"><rect width="60" height="40" rx="6" class="ex-pele"/><g${escala}>${pts}</g></svg>`;
-}
-
-// Evolução da lesão da varicela: mácula → pápula → vesícula → pústula → crosta
-function svgEvolucaoVaricela() {
-    let fases = [
-        ['Mácula', `<circle cx="20" cy="20" r="7" fill="#e2525c" opacity=".5"/>`],
-        ['Pápula', `<circle cx="20" cy="20" r="7" fill="#e2525c"/><circle cx="18" cy="18" r="2" fill="#fff" opacity=".35"/>`],
-        ['Vesícula', `<circle cx="20" cy="20" r="10" fill="#e2525c" opacity=".45"/><circle cx="20" cy="20" r="6.5" fill="#fff" stroke="#e2525c" stroke-width="1"/><circle cx="18" cy="18" r="1.8" fill="#dbeafe"/>`],
-        ['Pústula', `<circle cx="20" cy="20" r="10" fill="#e2525c" opacity=".4"/><circle cx="20" cy="20" r="6.5" fill="#fde68a" stroke="#d97706" stroke-width="1"/>`],
-        ['Crosta', `<circle cx="20" cy="20" r="7" fill="#8a5a2b"/><circle cx="18" cy="18" r="2" fill="#a16207" opacity=".6"/>`]
-    ];
-    return `<div class="ex-evolucao">${fases.map(([n, d], i) => `<div class="ex-fase"><svg viewBox="0 0 40 40" class="ex-fase-svg"><rect width="40" height="40" rx="8" class="ex-pele"/>${d}</svg><span>${n}</span></div>${i < fases.length - 1 ? '<span class="ex-seta">→</span>' : ''}`).join('')}</div>`;
+// Foto em tela cheia ao tocar
+function abrirFotoExantema(k) {
+    let f = FOTOS_EXANTEMA[k];
+    if (!f) return;
+    let v = document.createElement('div');
+    v.className = 'ex-zoom';
+    v.onclick = () => v.remove();
+    v.innerHTML = `<figure><img src="${f.arq}" alt="${f.legenda}"><figcaption>${f.legenda}<br><span>Foto: ${f.autor} · ${f.licenca} · Wikimedia Commons</span></figcaption></figure><button type="button" class="ex-zoom-fechar" aria-label="Fechar">✕</button>`;
+    document.body.appendChild(v);
 }
 
 // ---------- Guia de identificação ----------
 // tags: lesão (mp/ves/pet/lixa) · febre (febre_antes / febre_junto / febre_pouca) · início (ini_face/ini_tronco/ini_extrem/ini_boca) · sinais
 const DOENCAS_EXANTEMA = [
-    { id: "sarampo", nome: "Sarampo", tipo: "mp", conduta: null, alerta: "Notificação imediata (até 24 h). Isolamento respiratório.",
+    { id: "sarampo", fotos: ["sarampo", "sarampo_koplik"], nome: "Sarampo", tipo: "mp", conduta: null, alerta: "Notificação imediata (até 24 h). Isolamento respiratório.",
       tags: ["mp", "febre_junto", "ini_face", "s_tosse", "s_koplik"],
-      dist: { face: 18, pescoco: 6, tronco: 26, bracos: 10, pernas: 10 },
       texto: "Febre alta + <strong>tosse, coriza e conjuntivite</strong>; exantema no 3º a 5º dia, ainda com febre, que começa <strong>atrás das orelhas e na face</strong> e desce (craniocaudal), confluente. <strong>Manchas de Koplik</strong> na mucosa jugal." },
-    { id: "rubeola", nome: "Rubéola", tipo: "mp", conduta: null, alerta: "Notificação imediata (até 24 h).",
+    { id: "rubeola", fotos: ["rubeola"], nome: "Rubéola", tipo: "mp", conduta: null, alerta: "Notificação imediata (até 24 h).",
       tags: ["mp", "febre_pouca", "ini_face", "s_adeno_post"],
-      dist: { face: 10, pescoco: 5, tronco: 16, bracos: 6, pernas: 6 },
       texto: "Febre baixa; exantema rosado, <strong>não confluente</strong>, da face para o corpo em 24 h, some em ~3 dias. <strong>Adenomegalia retroauricular e occipital.</strong>" },
-    { id: "exantema_subito", nome: "Exantema súbito (roséola)", tipo: "mp", conduta: null,
+    { id: "exantema_subito", fotos: ["roseola"], nome: "Exantema súbito (roséola)", tipo: "mp", conduta: null,
       tags: ["mp", "febre_antes", "ini_tronco"],
-      dist: { tronco: 22, pescoco: 6, face: 4, bracos: 4 },
       texto: "Lactente de 6 meses a 2 anos com <strong>febre alta por 3 a 5 dias</strong> e bom estado; <strong>a febre some e aí aparece</strong> o exantema rosado no tronco (herpesvírus 6)." },
-    { id: "eritema_infeccioso", nome: "Eritema infeccioso (parvovírus B19)", tipo: "mp", conduta: null,
+    { id: "eritema_infeccioso", fotos: ["eritema_infeccioso"], nome: "Eritema infeccioso (parvovírus B19)", tipo: "mp", conduta: null,
       tags: ["mp", "febre_pouca", "ini_face", "s_bochecha"],
-      dist: { face: 24, bracos: 12, pernas: 12, tronco: 6 },
       texto: "Escolar pouco febril; <strong>\"bochecha esbofeteada\"</strong>, depois exantema <strong>rendilhado</strong> nos membros, que volta com calor e sol. Risco de crise aplástica em anemia hemolítica." },
-    { id: "varicela", nome: "Varicela (catapora)", tipo: "ves", conduta: "varicela",
+    { id: "varicela", fotos: ["varicela_crianca", "varicela_vesicula"], nome: "Varicela (catapora)", tipo: "ves", conduta: "varicela",
       tags: ["ves", "febre_junto", "ini_tronco", "ini_face", "s_prurido", "s_fases"],
-      dist: { face: 10, tronco: 34, bracos: 7, pernas: 7, maos: 1 },
       texto: "Vesículas pruriginosas em <strong>fases diferentes ao mesmo tempo</strong> (mácula, pápula, vesícula, crosta), começando no <strong>tronco, face e couro cabeludo</strong> (centrípeta); mucosas." },
-    { id: "mao_pe_boca", nome: "Mão-pé-boca (Coxsackie)", tipo: "ves", conduta: null,
+    { id: "mao_pe_boca", fotos: ["mao_pe_boca", "mao_pe_boca_boca"], nome: "Mão-pé-boca (Coxsackie)", tipo: "ves", conduta: null,
       tags: ["ves", "febre_junto", "febre_pouca", "ini_boca", "ini_extrem"],
-      dist: { boca: 5, maos: 8, pes: 8, perineo: 6 },
       texto: "Menor de 5 anos; <strong>úlceras na boca</strong> e vesículas em <strong>mãos, pés e nádegas</strong>. Atenção à desidratação por dor para engolir." },
-    { id: "escarlatina", nome: "Escarlatina", tipo: "lixa", conduta: "faringoamigdalite", condutaNome: "Faringoamigdalite",
+    { id: "escarlatina", fotos: ["escarlatina", "escarlatina_lingua"], nome: "Escarlatina", tipo: "lixa", conduta: "faringoamigdalite", condutaNome: "Faringoamigdalite",
       tags: ["lixa", "febre_junto", "ini_tronco", "s_garganta", "s_lingua"],
-      dist: { pescoco: 26, tronco: 70, dobras: 30, bracos: 26, pernas: 20 },
       texto: "Faringite + exantema <strong>áspero (\"lixa\")</strong> que começa no pescoço e tronco, mais forte nas dobras (<strong>Pastia</strong>), palidez ao redor da boca (<strong>Filatov</strong>), <strong>língua em framboesa</strong>. 5 a 15 anos." },
-    { id: "kawasaki", nome: "Doença de Kawasaki", tipo: "mp", conduta: null, alerta: "Febre ≥ 5 dias: pensar e tratar cedo (aneurisma coronariano).",
+    { id: "kawasaki", fotos: ["kawasaki_labios", "kawasaki_maos"], nome: "Doença de Kawasaki", tipo: "mp", conduta: null, alerta: "Febre ≥ 5 dias: pensar e tratar cedo (aneurisma coronariano).",
       tags: ["mp", "febre_antes", "febre_junto", "ini_tronco", "s_febre5", "s_lingua", "s_maos_pes"],
-      dist: { tronco: 22, perineo: 8, bracos: 6, pernas: 6, maos: 3, pes: 3 },
       texto: "<strong>Febre ≥ 5 dias</strong> + conjuntivite sem secreção, <strong>lábios rachados e língua em framboesa</strong>, exantema polimorfo (não vesicular), <strong>edema e eritema de mãos e pés</strong>, adenomegalia cervical ≥ 1,5 cm. Menor de 5 anos." },
-    { id: "meningococcemia", nome: "Meningococcemia", tipo: "pet", conduta: null, alerta: "EMERGÊNCIA: febre + petéquias = antibiótico e suporte já.",
+    { id: "meningococcemia", fotos: ["petequias", "meningococcemia"], nome: "Meningococcemia", tipo: "pet", conduta: null, alerta: "EMERGÊNCIA: febre + petéquias = antibiótico e suporte já.",
       tags: ["pet", "febre_junto", "ini_extrem", "s_toxemia", "s_vitro"],
-      dist: { bracos: 9, pernas: 11, tronco: 8, maos: 2, pes: 2 },
       texto: "Febre, <strong>toxemia</strong> e <strong>petéquias ou púrpura que não somem ao apertar</strong> (vitropressão), em progressão rápida. Pode evoluir para choque em horas." },
-    { id: "dengue", nome: "Dengue", tipo: "mp", conduta: null, alerta: "Procurar sinais de alarme (dor abdominal, vômitos, sangramento).",
+    { id: "dengue", fotos: ["dengue"], nome: "Dengue", tipo: "mp", conduta: null, alerta: "Procurar sinais de alarme (dor abdominal, vômitos, sangramento).",
       tags: ["mp", "febre_antes", "febre_junto", "ini_tronco", "s_prurido", "s_vitro"],
-      dist: { tronco: 26, bracos: 12, pernas: 14, maos: 2, pes: 2 },
       texto: "Febre alta, dor no corpo e atrás dos olhos; exantema morbiliforme pruriginoso perto da queda da febre, no tronco e membros (\"ilhas brancas\"). Pode ter petéquias; prova do laço." },
-    { id: "mononucleose", nome: "Mononucleose / exantema com amoxicilina", tipo: "mp", conduta: null,
+    { id: "mononucleose", fotos: ["mononucleose_amoxi"], nome: "Mononucleose / exantema com amoxicilina", tipo: "mp", conduta: null,
       tags: ["mp", "febre_junto", "ini_tronco", "s_garganta", "s_adeno_post", "s_amoxi"],
-      dist: { tronco: 26, bracos: 10, pernas: 10, face: 3 },
       texto: "Faringite exsudativa, <strong>adenomegalia cervical posterior</strong>, hepatoesplenomegalia; exantema maculopapular, muitas vezes <strong>depois de amoxicilina</strong> (não é alergia verdadeira)." }
 ];
 
@@ -199,7 +244,7 @@ function atualizarExantemaGuia() {
                 ? `<button type="button" class="ex-link" onclick="abrirConduta('${d.conduta}')">📖 Conduta${d.condutaNome ? ': ' + d.condutaNome : ''} ›</button>`
                 : `<span class="ex-embreve">Conduta em preparação</span>`;
             return `<div class="ex-card${forte ? ' forte' : ''}">
-                <div class="ex-card-fig">${svgBonecoExantema(d.tipo, d.dist, '')}${svgAmostraLesao(d.tipo)}</div>
+                <div class="ex-card-fig">${(d.fotos || []).map(k => htmlFotoExantema(k, true)).join('')}</div>
                 <div class="ex-card-txt">
                     <div class="ex-card-nome">${d.nome}${sel.length ? ` <span class="ex-pts">${pts}/${sel.length}</span>` : ''}</div>
                     ${d.alerta ? `<div class="ex-alerta">⚠️ ${d.alerta}</div>` : ''}
@@ -215,8 +260,8 @@ registrarConduta({
     categoria: "Doenças exantemáticas",
     cor: "#be185d",
     kw: "exantema exantematica manchas pele rash erupção identificar diferencial sarampo rubeola varicela catapora roseola exantema subito eritema infeccioso parvovirus mao pe boca escarlatina kawasaki meningococcemia petequias dengue mononucleose",
-    resumo: "Toque no tipo de lesão, na febre e em onde começou: as hipóteses sobem com o desenho de cada doença. Sinais de alarme e notificação.",
-    legenda: "Guia de apoio ao diagnóstico diferencial dos exantemas na criança, com desenhos de distribuição e do tipo de lesão. Vigilância: <strong>Ministério da Saúde (Guia de Vigilância em Saúde, 2023)</strong>.",
+    resumo: "Toque no tipo de lesão, na febre e em onde começou: as hipóteses sobem com fotos reais de cada doença. Sinais de alarme e notificação.",
+    legenda: "Guia de apoio ao diagnóstico diferencial dos exantemas na criança, com fotos reais (Wikimedia Commons, domínio público ou Creative Commons). Vigilância: <strong>Ministério da Saúde (Guia de Vigilância em Saúde, 2023)</strong>.",
 
     blocos: [
         {
@@ -227,7 +272,7 @@ registrarConduta({
                 {
                     titulo: "Identificar o exantema (clicável)",
                     icone: "🔍",
-                    resumo: "Lesão, febre, onde começou e o sinal que chama atenção. Desenho de cada doença.",
+                    resumo: "Lesão, febre, onde começou e o sinal que chama atenção. Foto de cada doença.",
                     ferramenta: "ferramentaExantemaGuia"
                 },
                 {
@@ -240,8 +285,7 @@ registrarConduta({
                         "<strong>Febre × exantema:</strong> febre que some quando aparece o exantema (exantema súbito); febre alta junto (sarampo); febre ≥ 5 dias (Kawasaki).",
                         "<strong>Sinais associados:</strong> enantema (Koplik, úlceras, língua em framboesa), conjuntivite, adenomegalia, prurido, estado geral.",
                         "<strong>Contexto:</strong> idade, vacinação (tríplice viral, varicela), contato com caso, medicamento recente (amoxicilina, anticonvulsivante)."
-                    ],
-                    ferramenta: "ferramentaAmostrasLesao"
+                    ]
                 }
             ]
         },
@@ -324,24 +368,11 @@ registrarConduta({
     revisao: "10/2026"
 });
 
-function ferramentaAmostrasLesao() {
-    return `<div class="exg ex-amostras">${Object.keys(EXANTEMA_LESAO).map(t => `<div class="ex-amostra-item">${svgAmostraLesao(t)}<span>${EXANTEMA_LESAO[t].nome}</span></div>`).join('')}</div>`;
-}
-
-// ---------- Varicela: desenhos ----------
+// ---------- Varicela: fotos ----------
 function ferramentaVaricelaImagens() {
-    return `<div class="exg ex-var">
-        <div class="ex-var-linha">
-            ${svgBonecoExantema('ves', { face: 12, tronco: 40, bracos: 8, pernas: 8, maos: 1 }, 'Centrípeta: mais no tronco, face e couro cabeludo; menos nos membros', 11)}
-            <div class="ex-var-txt">
-                <div class="escore-item-nome">Lesões em fases diferentes ao mesmo tempo</div>
-                ${svgEvolucaoVaricela()}
-                <div class="ex-card-desc">Cada lesão passa por <strong>mácula → pápula → vesícula (\"gota de orvalho\" sobre base vermelha) → pústula → crosta</strong> em 24 a 48 h, em surtos. Ver as fases misturadas na mesma região é o que diferencia da varíola/mpox (lesões na mesma fase).</div>
-            </div>
-        </div>
-    </div>`;
+    return `<div class="exg ex-galeria">${["varicela_crianca", "varicela_vesicula", "varicela_grave"].map(k => htmlFotoExantema(k)).join('')}</div>
+        <div class="ex-card-desc">Cada lesão passa por <strong>mácula → pápula → vesícula ("gota de orvalho" sobre base vermelha) → pústula → crosta</strong> em 24 a 48 h, em surtos. <strong>Fases misturadas na mesma região</strong> diferenciam da varíola/mpox (lesões na mesma fase). Toque na foto para ampliar.</div>`;
 }
-
 
 registrarConduta({
     id: "varicela",
@@ -349,7 +380,7 @@ registrarConduta({
     categoria: "Doenças exantemáticas",
     cor: "#be185d",
     kw: "varicela catapora vesicula exantema vesicular coceira prurido aciclovir imunoglobulina vacina bloqueio contato fasciite infeccao secundaria pneumonia ataxia cerebelar encefalite reye",
-    resumo: "Diagnóstico clínico com desenhos, critérios de internação clicáveis, isolamento e notificação, sintomáticos, quando usar aciclovir e profilaxia dos contatos.",
+    resumo: "Diagnóstico clínico com fotos reais, critérios de internação clicáveis, isolamento e notificação, sintomáticos, quando usar aciclovir e profilaxia dos contatos.",
     legenda: "Conduta conforme o <strong>Guia de Vigilância em Saúde do Ministério da Saúde (2023)</strong> e o <strong>Manual dos CRIE</strong> (imunoglobulina e vacina pós-exposição).",
 
     blocos: [
