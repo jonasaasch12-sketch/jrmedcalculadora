@@ -96,7 +96,7 @@ registrarConduta({
                     icone: "⏱️",
                     resumo: "Alarme → escore → teste → antibiótico de 10 dias → sintomáticos e orientações.",
                     itens: [
-                        "<span class=\"cond-passo\">1</span> <strong>Sinais de alarme:</strong> estridor, sialorreia, trismo, voz abafada, torcicolo, toxemia → <strong>abscesso ou epiglotite</strong>",
+                        "<span class=\"cond-passo\">1</span> <strong>Internar?</strong> Critérios clicáveis: UTI · enfermaria · casa (estridor, sialorreia, trismo, torcicolo, desidratação, toxemia)",
                         "<span class=\"cond-passo\">2</span> <strong>Escore de McIsaac:</strong> 0–1 não testar · ≥ 2 <strong>teste rápido ou cultura</strong>",
                         "<span class=\"cond-passo\">3</span> <strong>Positivo:</strong> <strong>amoxicilina 10 dias</strong> ou <strong>penicilina benzatina IM dose única</strong>",
                         "<span class=\"cond-passo\">4</span> <strong>Alérgico à penicilina:</strong> sem anafilaxia = cefadroxila 10 dias · com anafilaxia = azitromicina 5 dias",
@@ -106,15 +106,39 @@ registrarConduta({
                 },
                 {
                     passo: 1,
-                    titulo: "Sinais de alarme: abscesso, epiglotite, via aérea",
-                    resumo: "Estridor, sialorreia, trismo, voz abafada, torcicolo ou toxemia: não é faringite simples.",
+                    titulo: "🏥 Critérios de internação",
+                    resumo: "Primeiro decida: UTI, internar ou tratar em casa. Abscesso, via aérea e desidratação internam.",
                     alerta: true,
                     itens: [
+                        "A <strong>faringoamigdalite é tratada em casa</strong>. Internar por <strong>via aérea ameaçada</strong>, <strong>abscesso</strong>, <strong>desidratação</strong> ou toxemia.",
                         "<strong>Abscesso periamigdaliano:</strong> dor intensa e unilateral, <strong>trismo</strong>, <strong>voz de \"batata quente\"</strong>, abaulamento do palato e <strong>desvio da úvula</strong>. Adolescentes. Avaliação do otorrino para drenagem.",
                         "<strong>Abscesso retrofaríngeo:</strong> menores de 5 anos, febre, <strong>torcicolo</strong> ou recusa a mexer o pescoço, sialorreia, abaulamento da parede posterior da faringe. Tomografia cervical com contraste.",
                         "<strong>Epiglotite / obstrução de via aérea:</strong> estridor, sialorreia, posição em tripé, toxemia. <strong>Não examinar a orofaringe com espátula</strong>; manter a criança calma no colo e acionar a via aérea difícil (ver conduta de crupe).",
                         "<strong>Desidratação</strong> por não aceitar líquidos: hidratação e analgesia antes de decidir a alta."
-                    ]
+                    ],
+                    escore: {
+                        id: "internacao_faringo",
+                        unidade: " ",
+                        checklist: true,
+                        instrucao: "Toque em tudo o que o paciente apresenta. Vale o critério mais grave. Sem nenhum, toque em \"Nenhum\".",
+                        itens: [
+                            { nome: "🔴 UTI", opcoes: [[3, "Estridor, sialorreia, posição em tripé ou obstrução da via aérea (epiglotite, abscesso grande)", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Choque ou toxemia grave (síndrome do choque tóxico estreptocócico)", "🔴"]] },
+                            { nome: "🟠 Internar (enfermaria)", opcoes: [[2, "Abscesso periamigdaliano com trismo, que não drena ou não aceita líquidos", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Suspeita de abscesso retrofaríngeo ou parafaríngeo (torcicolo, febre, abaulamento da parede posterior)", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Desidratação ou não aceita líquidos mesmo após analgesia", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Dor cervical lateral com febre persistente e toxemia em adolescente (síndrome de Lemierre)", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Sem condição de retorno ou risco social", "🟠"]] },
+                            { nome: "🟢 Nenhum dos acima", opcoes: [[0, "Nenhum critério", "🟢"]] }
+                        ],
+                        classificar: (v) => {
+                            let g = Math.max(...v);
+                            if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "Não examinar a orofaringe com espátula; manter a criança calma no colo. Via aérea pelo mais experiente (ver conduta de crupe), antibiótico EV e otorrino." };
+                            if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Hidratação EV, analgesia, antibiótico EV se abscesso; otorrino para drenagem. Tomografia cervical com contraste se suspeita de abscesso profundo." };
+                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Tratamento em casa (passos 2 a 5). Retornar se dificuldade para engolir saliva, trismo, voz abafada, torcicolo ou falta de ar." };
+                        },
+                        nota: "A IDSA 2012 não traz uma lista formal de internação. Estes critérios reúnem os sinais de alarme deste passo (abscessos, epiglotite, desidratação) e as complicações supurativas descritas no bloco 🏠."
+                    }
                 },
                 {
                     passo: 2,

@@ -68,6 +68,9 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
   "🏥 Critérios de internação" com lista clicável (`escore` com `checklist: true`): 🔴 UTI (valor 2), 🟠 enfermaria (valor 1),
   🟢 "Nenhum critério" (valor 0); `classificar` pelo maior valor → UTI / Internar / Alta com retorno. Sinais de complicação
   entram nesse mesmo passo. Se a diretriz não traz lista formal, dizer na `nota` de onde os critérios vieram. Modelo: condutas/otite.js.
+  Conduta sem passos numerados (asma, bronquiolite, pneumonia, diarreia): 1ª seção do bloco 🚨. Emergência (anafilaxia, TCE,
+  queimados): o resumo avisa que não atrasa o tratamento imediato. CAD: não renumerada (o "Indica UTI?" fica no bloco 🔎).
+  Gerador usado: valores 3 = UTI, 2 = enfermaria, 1 = considerar, 0 = nenhum.
 - **Condução na emergência = passo a passo cronológico** (pedido do Dr. Jonas): 1ª seção "⏱️ Linha do
   tempo (resumo)" (`lista: "passos"`), depois uma seção por passo com `passo: N` (número em destaque),
   na ordem em que se faz: chegada/exames → hidratação → medicação... Cada passo diz o que fazer,

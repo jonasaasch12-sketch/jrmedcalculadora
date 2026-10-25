@@ -158,32 +158,6 @@ registrarConduta({
                         "<strong>Ultrassonografia de tórax:</strong> o método <strong>mais sensível para o espaço pleural</strong> e o recomendado para estimar o volume do derrame (decisivo para a conduta). Superior à TC para ver loculações e fibrina. Sem radiação, portátil e sem sedação. Com Doppler, áreas hipoecoicas ou hipoperfundidas predizem necrose e diferenciam abscesso de empiema (operador-dependente).",
                         "<strong>TC de tórax com contraste:</strong> padrão para diagnosticar <strong>pneumonia necrosante</strong> (consolidação com baixa atenuação e sem realce; múltiplas cavidades de paredes finas sem borda de realce). <strong>Abscesso:</strong> cavidade com parede de realce bem definida. Útil para indicar intervenção. Fístula broncopleural só é definida se a comunicação for vista."
                     ]
-                },
-                {
-                    titulo: "Gravidade e critérios de internação",
-                    icone: "🏥",
-                    aberta: true,
-                    resumo: "Marque o que o paciente apresenta: qualquer \"Sim\" indica internação.",
-                    escore: {
-                        id: "internacao_pac",
-                        unidade: "critérios",
-                        instrucao: "Toque Sim ou Não em cada critério.",
-                        itens: [
-                            { nome: "Hipoxemia: SatO₂ < 92% em ar ambiente?", opcoes: [[0, "Não"], [1, "Sim"]] },
-                            { nome: "Desidratação ou incapaz de manter hidratação/alimentação VO?", opcoes: [[0, "Não"], [1, "Sim"]] },
-                            { nome: "Desconforto moderado a grave: FR > 70 (< 12 meses) ou > 50 (maiores)?", opcoes: [[0, "Não"], [1, "Sim"]] },
-                            { nome: "Dificuldade respiratória: gemência, batimento de asas nasais, retrações (tiragem subcostal) ou apneia?", opcoes: [[0, "Não"], [1, "Sim"]] },
-                            { nome: "< 2 meses com FR ≥ 60 (pneumonia grave pela OMS)?", opcoes: [[0, "Não"], [1, "Sim"]] },
-                            { nome: "Aparência tóxica, sonolência, rebaixamento da consciência ou recusa alimentar?", opcoes: [[0, "Não"], [1, "Sim"]] },
-                            { nome: "Doença de base (cardiopulmonar, síndrome genética, neurológica) ou desnutrição grave?", opcoes: [[0, "Não"], [1, "Sim"]] },
-                            { nome: "Complicação: derrame/empiema, pneumonia necrosante, abscesso (ou murmúrio abolido)?", opcoes: [[0, "Não"], [1, "Sim"]] }
-                        ],
-                        faixas: [
-                            { min: 0, max: 0, rotulo: "Sem critério de internação", cor: "#16a34a", texto: "Tratamento ambulatorial, se boas condições clínicas e família capaz de reavaliar em 48–72 h." },
-                            { min: 1, max: 8, rotulo: "Internação indicada", cor: "#dc2626", texto: "Ver o bloco Condução hospitalar." }
-                        ],
-                        nota: "A decisão de internar é individualizada (idade, doença de base e fatores de gravidade). Fatores de risco para evolução desfavorável: desnutrição, comorbidades, baixa idade, condições socioeconômicas e sanitárias precárias, baixa cobertura vacinal, desmame precoce e poluentes intradomiciliares."
-                    }
                 }
             ]
         },
@@ -192,6 +166,37 @@ registrarConduta({
             icone: "🚨",
             cor: "#dc2626",
             secoes: [
+                {
+                    titulo: "Critérios de internação",
+                    alerta: true,
+                    icone: "🏥",
+                    aberta: true,
+                    resumo: "Primeiro decida: qualquer \"Sim\" indica internação.",
+                    escore: {
+                        id: "internacao_pac",
+                        unidade: " ",
+                        checklist: true,
+                        instrucao: "Toque em tudo o que o paciente apresenta. Vale o critério mais grave. Sem nenhum, toque em \"Nenhum\".",
+                        itens: [
+                            { nome: "🟠 Internar (enfermaria)", opcoes: [[2, "Hipoxemia: SatO₂ < 92% em ar ambiente", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Desidratação ou incapaz de manter hidratação/alimentação VO", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Desconforto moderado a grave: FR > 70 (< 12 meses) ou > 50 (maiores)", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Dificuldade respiratória: gemência, batimento de asas nasais, retrações (tiragem subcostal) ou apneia", "🟠"]] },
+                            { nome: "", opcoes: [[2, "< 2 meses com FR ≥ 60 (pneumonia grave pela OMS)", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Aparência tóxica, sonolência, rebaixamento da consciência ou recusa alimentar", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Doença de base (cardiopulmonar, síndrome genética, neurológica) ou desnutrição grave", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Complicação: derrame/empiema, pneumonia necrosante, abscesso (ou murmúrio abolido)", "🟠"]] },
+                            { nome: "🟢 Nenhum dos acima", opcoes: [[0, "Nenhum critério", "🟢"]] }
+                        ],
+                        classificar: (v) => {
+                            let g = Math.max(...v);
+                            if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "" };
+                            if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Internação indicada: ver os antibióticos da internação logo abaixo." };
+                            return { num: "🏠", rotulo: "Tratamento ambulatorial", cor: "#16a34a", texto: "Tratamento ambulatorial, se boas condições clínicas e família capaz de reavaliar em 48–72 h." };
+                        },
+                        nota: "A decisão de internar é individualizada (idade, doença de base e fatores de gravidade). Fatores de risco para evolução desfavorável: desnutrição, comorbidades, baixa idade, condições socioeconômicas e sanitárias precárias, baixa cobertura vacinal, desmame precoce e poluentes intradomiciliares."
+                    }
+                },
                 {
                     titulo: "Antibiótico na internação (PAC não complicada)",
                     icone: "💊",

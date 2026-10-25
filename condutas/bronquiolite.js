@@ -142,6 +142,47 @@ registrarConduta({
             cor: "#dc2626",
             secoes: [
         {
+            titulo: "Critérios de internação",
+            icone: "🏥",
+            alerta: true,
+            resumo: "Primeiro decida: UTI, internar, considerar ou casa. Absolutos, relativos e de UTI.",
+            escore: {
+                id: "internacao_bva",
+                unidade: " ",
+                checklist: true,
+                instrucao: "Toque em tudo o que o paciente apresenta. Vale o critério mais grave. Sem nenhum, toque em \"Nenhum\".",
+                itens: [
+                    { nome: "🔴 UTI", opcoes: [[3, "Alteração do nível de consciência e/ou hipotonia", "🔴"]] },
+                    { nome: "", opcoes: [[3, "Apneia", "🔴"]] },
+                    { nome: "", opcoes: [[3, "Dispneia grave", "🔴"]] },
+                    { nome: "", opcoes: [[3, "SatO₂ < 92% mesmo em oxigenoterapia", "🔴"]] },
+                    { nome: "", opcoes: [[3, "pH < 7,3 e pCO₂ > 60", "🔴"]] },
+                    { nome: "", opcoes: [[3, "Desidratação grave", "🔴"]] },
+                    { nome: "", opcoes: [[3, "Instabilidade hemodinâmica", "🔴"]] },
+                    { nome: "🟠 Internar (enfermaria)", opcoes: [[2, "Episódios de apneia (ainda sem critério de UTI)", "🟠"]] },
+                    { nome: "", opcoes: [[2, "Comprometimento do estado geral: hipoatividade, prostração, sonolência", "🟠"]] },
+                    { nome: "", opcoes: [[2, "Sinais de comprometimento sistêmico", "🟠"]] },
+                    { nome: "", opcoes: [[2, "Desconforto respiratório: gemência, retração torácica, taquipneia, cianose e/ou SatO₂ < 92% persistente, balanço da cabeça ou tóraco-abdominal", "🟠"]] },
+                    { nome: "", opcoes: [[2, "Sinais de desidratação (ex.: redução da diurese)", "🟠"]] },
+                    { nome: "", opcoes: [[2, "Recusa alimentar ou ingestão reduzida", "🟠"]] },
+                    { nome: "", opcoes: [[2, "Idade inferior a 2 meses", "🟠"]] },
+                    { nome: "🟡 Considerar internar", opcoes: [[1, "Fatores de risco para BVA grave", "🟡"]] },
+                    { nome: "", opcoes: [[1, "Condição social precária ou vulnerabilidade social", "🟡"]] },
+                    { nome: "", opcoes: [[1, "Dificuldade de acesso ao serviço de saúde se houver piora", "🟡"]] },
+                    { nome: "", opcoes: [[1, "Pais ou cuidadores incapazes de identificar os sinais de alerta", "🟡"]] },
+                    { nome: "🟢 Nenhum dos acima", opcoes: [[0, "Nenhum critério", "🟢"]] }
+                ],
+                classificar: (v) => {
+                    let g = Math.max(...v);
+                    if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "Terapia intensiva (ver Grave: terapia intensiva e Suporte ventilatório). Pelo Guia do MS, toda BVA grave deve ficar em leito de UTI." };
+                    if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Leito de internação (ver Moderada: leito de internação): monitorização, O₂ se SatO₂ ≤ 92%, alimentação e hidratação." };
+                    if (g === 1) return { num: "🟡", rotulo: "Considerar internar", cor: "#ca8a04", texto: "Critério relativo: pesar com a família e o acesso ao serviço; na dúvida, observar mais tempo ou internar." };
+                    return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Leve: acompanhamento ambulatorial e sinais de alerta para a família (bloco 🏠)." };
+                },
+                nota: "Absolutos e relativos: Guia do Ministério da Saúde. Admissão em UTI: IMIP. Antes era a lista \"Critérios de internação\"; o conteúdo é o mesmo."
+            }
+        },
+        {
             titulo: "Moderada: leito de internação",
             icone: "🏥",
             aberta: true,
@@ -250,43 +291,6 @@ registrarConduta({
                         "Índice de oxigenação (MAP × FiO₂ / PaO₂): 4–8 leve · 8–<16 moderada · ≥ 16 grave.",
                         "Sem gasometria, usar o índice de saturação (MAP × FiO₂ / SpO₂): 5–<7,5 leve · 7,5–<12,3 moderada · ≥ 12,3 grave."
                     ]
-                }
-            ]
-        },
-        {
-            resumo: "Absolutos, relativos e de UTI.",
-            titulo: "Critérios de internação",
-            icone: "🏥",
-            grupos: [
-                {
-                    nome: "Absolutos (um ou mais)",
-                    itens: [
-                        "Episódios de apneia.",
-                        "Comprometimento do estado geral: hipoatividade, prostração, sonolência.",
-                        "Sinais de comprometimento sistêmico.",
-                        "Desconforto respiratório: gemência, retração torácica, taquipneia, cianose e/ou <strong>SatO₂ < 92% persistente</strong>, balanço da cabeça, balanço tóraco-abdominal.",
-                        "Sinais de desidratação (ex.: redução da diurese).",
-                        "Recusa alimentar ou ingestão reduzida.",
-                        "<strong>Idade inferior a 2 meses.</strong>"
-                    ]
-                },
-                {
-                    nome: "Relativos",
-                    itens: [
-                        "Fatores de risco para BVA grave.",
-                        "Condição social precária ou vulnerabilidade social.",
-                        "Dificuldade de acesso ao serviço de saúde se houver piora.",
-                        "Pais ou cuidadores incapazes de identificar os sinais de alerta."
-                    ]
-                },
-                {
-                    nome: `Admissão em UTI ${IMIP}`,
-                    itens: [
-                        "Alteração do nível de consciência e/ou hipotonia · apneia · dispneia grave.",
-                        "SatO₂ < 92% mesmo em oxigenoterapia.",
-                        "pH < 7,3 e pCO₂ > 60 · desidratação grave · instabilidade hemodinâmica."
-                    ],
-                    nota: "Pelo Guia do MS: toda BVA grave deve ser acompanhada em leito de terapia intensiva."
                 }
             ]
         },

@@ -42,7 +42,7 @@ registrarConduta({
                         ],
                         classificar: (v) => {
                             let sim = v.filter(x => x === 1).length;
-                            if (sim > 0) return { num: "✓", rotulo: "Anafilaxia altamente provável", cor: "#dc2626", texto: "Adrenalina IM AGORA (bloco 🚨, passo 2)." };
+                            if (sim > 0) return { num: "✓", rotulo: "Anafilaxia altamente provável", cor: "#dc2626", texto: "Adrenalina IM AGORA (bloco 🚨, passo 3)." };
                             if (v.filter(x => x === 0).length === 2) return { num: "—", rotulo: "Critérios não preenchidos", cor: "#16a34a", texto: "Reavaliar: a reação pode progredir. Na dúvida com sinais graves, tratar como anafilaxia." };
                             return { num: "?", rotulo: "Responda os critérios", cor: "#64748b", texto: "" };
                         },
@@ -116,18 +116,53 @@ registrarConduta({
                     resumo: "Posição → adrenalina IM → O₂ e acesso → volume → broncoespasmo/laringe → 2ª linha → observar.",
                     lista: "passos",
                     itens: [
-                        "<span class=\"cond-passo\">1</span> <strong>Retirar o desencadeante</strong>, chamar ajuda, ABC, deitar com pernas elevadas",
-                        "<span class=\"cond-passo\">2</span> <strong>Adrenalina IM</strong> na coxa, já. Repetir a cada 5–15 min",
-                        "<span class=\"cond-passo\">3</span> <strong>O₂</strong> se SpO₂ ≤ 95%, monitor, acesso venoso",
-                        "<span class=\"cond-passo\">4</span> <strong>Hipotensão:</strong> expansão rápida",
-                        "<span class=\"cond-passo\">5</span> <strong>Broncoespasmo:</strong> salbutamol · <strong>estridor:</strong> adrenalina inalatória",
-                        "<span class=\"cond-passo\">6</span> <strong>2ª linha:</strong> anti-H1 e corticoide (não substituem a adrenalina)",
-                        "<span class=\"cond-passo\">7</span> <strong>Refratário:</strong> adrenalina EV, glucagon, vasopressor, UTI",
-                        "<span class=\"cond-passo\">8</span> <strong>Observar</strong> (bifásica) e decidir o destino"
+                        "<span class=\"cond-passo\">1</span> <strong>Destino:</strong> critérios clicáveis (UTI · internar 24 h · observar 6–8 h). <strong>Não atrasa a adrenalina</strong>",
+                        "<span class=\"cond-passo\">2</span> <strong>Retirar o desencadeante</strong>, chamar ajuda, ABC, deitar com pernas elevadas",
+                        "<span class=\"cond-passo\">3</span> <strong>Adrenalina IM</strong> na coxa, já. Repetir a cada 5–15 min",
+                        "<span class=\"cond-passo\">4</span> <strong>O₂</strong> se SpO₂ ≤ 95%, monitor, acesso venoso",
+                        "<span class=\"cond-passo\">5</span> <strong>Hipotensão:</strong> expansão rápida",
+                        "<span class=\"cond-passo\">6</span> <strong>Broncoespasmo:</strong> salbutamol · <strong>estridor:</strong> adrenalina inalatória",
+                        "<span class=\"cond-passo\">7</span> <strong>2ª linha:</strong> anti-H1 e corticoide (não substituem a adrenalina)",
+                        "<span class=\"cond-passo\">8</span> <strong>Refratário:</strong> adrenalina EV, glucagon, vasopressor, UTI",
+                        "<span class=\"cond-passo\">9</span> <strong>Observar</strong> (bifásica) e decidir o destino"
                     ]
                 },
                 {
                     passo: 1,
+                    titulo: "🏥 Critérios de internação",
+                    icone: "🏥",
+                    resumo: "Para decidir o destino. Não atrasa a adrenalina IM (passo 3): marque depois de aplicá-la.",
+                    alerta: true,
+                    itens: [
+                        "<strong>Toda anafilaxia fica em observação.</strong> O tempo e o local dependem da gravidade (SBP; Einstein): leve no mínimo 6 a 8 h no PS; moderada no mínimo 24 h; grave em UTI.",
+                        "<strong>Reação bifásica</strong> em até 10%, 8 a 12 h depois: pesa para observar mais tempo."
+                    ],
+                    escore: {
+                        id: "internacao_anafilaxia",
+                        unidade: " ",
+                        checklist: true,
+                        instrucao: "Toque em tudo o que o paciente apresenta. Vale o critério mais grave. Sem nenhum, toque em \"Nenhum\".",
+                        itens: [
+                            { nome: "🔴 UTI", opcoes: [[3, "Hipotensão ou choque", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Edema de laringe com estridor e/ou hipóxia", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Broncoespasmo com hipóxia", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Precisou de mais de 2 doses de adrenalina ou de adrenalina em infusão (refratária)", "🔴"]] },
+                            { nome: "🟠 Internar (enfermaria)", opcoes: [[2, "Reação moderada: urticária ou eritema difusos, edema de face, aperto na garganta ou rouquidão sem dispneia, sibilos leves sem hipóxia, sintomas digestivos persistentes", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Risco de reação bifásica: reação inicial grave, demora no tratamento ou na melhora, alérgeno ainda sendo absorvido, asma mal controlada, bifásica prévia", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Mora longe, sem acesso a adrenalina em casa ou família que não consegue reconhecer os sinais", "🟠"]] },
+                            { nome: "🟢 Nenhum dos acima", opcoes: [[0, "Nenhum critério", "🟢"]] }
+                        ],
+                        classificar: (v) => {
+                            let g = Math.max(...v);
+                            if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "UTI ou semi-intensiva (Einstein). Monitorização contínua." };
+                            if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Observação de no mínimo 24 h, em semi-intensiva ou enfermaria monitorizada (Einstein; SBP 24 a 48 h)." };
+                            return { num: "🏠", rotulo: "Observar 6–8 h e alta", cor: "#16a34a", texto: "Reação leve: observar no mínimo 6 a 8 h no PS. Alta com a prescrição e as orientações do bloco 🏠. Coletar triptase se possível." };
+                        },
+                        nota: "Tempos de observação: SBP (leve 6 a 8 h; grave 24 a 48 h) e Einstein (leve PS ≥ 8 h; moderada ≥ 24 h semi-intensiva/UTI; grave UTI). Mais de 2 doses de adrenalina = anafilaxia refratária (passo 8)."
+                    }
+                },
+                {
+                    passo: 2,
                     titulo: "Reconhecer, retirar o desencadeante e posicionar",
                     resumo: "Parar a infusão suspeita, ABCM, decúbito dorsal com pernas elevadas.",
                     itens: [
@@ -137,7 +172,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 2,
+                    passo: 3,
                     titulo: "Adrenalina IM imediata",
                     alerta: true,
                     resumo: "Droga de 1ª linha. 0,01 mg/kg IM na coxa, sem diluir. Não atrasar.",
@@ -150,7 +185,7 @@ registrarConduta({
                     remedios: ["adrenalina_im"]
                 },
                 {
-                    passo: 3,
+                    passo: 4,
                     titulo: "Oxigênio, monitor e acesso venoso",
                     resumo: "O₂ se SpO₂ ≤ 95%. Dois acessos calibrosos se houver sintoma circulatório.",
                     itens: [
@@ -161,7 +196,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 4,
+                    passo: 5,
                     titulo: "Hipotensão: expansão volêmica",
                     resumo: "5 a 10 mL/kg em 5 min, até 30 mL/kg na 1ª hora.",
                     itens: [
@@ -171,7 +206,7 @@ registrarConduta({
                     remedios: ["anaf_expansao"]
                 },
                 {
-                    passo: 5,
+                    passo: 6,
                     titulo: "Broncoespasmo e edema de laringe",
                     resumo: "Salbutamol para sibilos; adrenalina inalatória pura para estridor.",
                     itens: [
@@ -182,7 +217,7 @@ registrarConduta({
                     remedios: ["salb_spray", "adrenalina_neb"]
                 },
                 {
-                    passo: 6,
+                    passo: 7,
                     titulo: "Segunda linha: anti-histamínico e corticoide",
                     resumo: "Para sintomas cutâneos e prevenção. Não tratam o choque.",
                     itens: [
@@ -192,7 +227,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 7,
+                    passo: 8,
                     titulo: "Anafilaxia refratária",
                     resumo: "Adrenalina EV só em PCR ou choque refratário. Betabloqueador: glucagon.",
                     itens: [
@@ -203,7 +238,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 8,
+                    passo: 9,
                     titulo: "Observar e decidir o destino",
                     resumo: "Leve 6–8 h; grave 24–48 h. Reação bifásica em até 10%.",
                     itens: [

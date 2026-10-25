@@ -281,19 +281,57 @@ registrarConduta({
                     resumo: "Parar a queimadura → via aérea → O₂ → acesso e volume → SCQ e fórmula → analgesia → ferida → transferir.",
                     lista: "passos",
                     itens: [
-                        "<span class=\"cond-passo\">1</span> <strong>Parar o processo:</strong> retirar roupas e adornos, resfriar com água corrente, evitar hipotermia",
-                        "<span class=\"cond-passo\">2</span> <strong>A — via aérea:</strong> sinais de inalação → IOT precoce",
-                        "<span class=\"cond-passo\">3</span> <strong>B — respiração:</strong> O₂ 100%, CO, escarotomia de tórax se restringir",
-                        "<span class=\"cond-passo\">4</span> <strong>C — circulação:</strong> 2 acessos, taxa inicial por idade, sem bolus (exceto choque)",
-                        "<span class=\"cond-passo\">5</span> <strong>SCQ e fórmula do ATLS</strong> pelo boneco; sonda vesical e diurese-alvo",
-                        "<span class=\"cond-passo\">6</span> <strong>D e E:</strong> trauma associado, glicemia, aquecer",
-                        "<span class=\"cond-passo\">7</span> <strong>Analgesia</strong> EV titulada",
-                        "<span class=\"cond-passo\">8</span> <strong>Ferida:</strong> cobrir, tétano, escarotomia se circunferencial",
-                        "<span class=\"cond-passo\">9</span> <strong>Transferir</strong> se critério (bloco 🔎)"
+                        "<span class=\"cond-passo\">1</span> <strong>Destino:</strong> critérios clicáveis (UTI/centro de queimados · internar · casa). <strong>Não atrasa interromper a queimadura e o ABC</strong>",
+                        "<span class=\"cond-passo\">2</span> <strong>Parar o processo:</strong> retirar roupas e adornos, resfriar com água corrente, evitar hipotermia",
+                        "<span class=\"cond-passo\">3</span> <strong>A — via aérea:</strong> sinais de inalação → IOT precoce",
+                        "<span class=\"cond-passo\">4</span> <strong>B — respiração:</strong> O₂ 100%, CO, escarotomia de tórax se restringir",
+                        "<span class=\"cond-passo\">5</span> <strong>C — circulação:</strong> 2 acessos, taxa inicial por idade, sem bolus (exceto choque)",
+                        "<span class=\"cond-passo\">6</span> <strong>SCQ e fórmula do ATLS</strong> pelo boneco; sonda vesical e diurese-alvo",
+                        "<span class=\"cond-passo\">7</span> <strong>D e E:</strong> trauma associado, glicemia, aquecer",
+                        "<span class=\"cond-passo\">8</span> <strong>Analgesia</strong> EV titulada",
+                        "<span class=\"cond-passo\">9</span> <strong>Ferida:</strong> cobrir, tétano, escarotomia se circunferencial",
+                        "<span class=\"cond-passo\">10</span> <strong>Transferir</strong> se critério (bloco 🔎)"
                     ]
                 },
                 {
                     passo: 1,
+                    titulo: "🏥 Critérios de internação",
+                    icone: "🏥",
+                    resumo: "Para decidir o destino. Não atrasa interromper a queimadura e o ABC (passos 2 a 5).",
+                    alerta: true,
+                    itens: [
+                        "Os critérios de <strong>transferência para centro de queimados</strong> (American Burn Association) estão no bloco 🔎; aqui eles viram a decisão clicável."
+                    ],
+                    escore: {
+                        id: "internacao_queimados",
+                        unidade: " ",
+                        checklist: true,
+                        instrucao: "Toque em tudo o que o paciente apresenta. Vale o critério mais grave. Sem nenhum, toque em \"Nenhum\".",
+                        itens: [
+                            { nome: "🔴 UTI", opcoes: [[3, "Lesão inalatória ou via aérea ameaçada (fuligem, rouquidão, estridor, queimadura de face e pescoço)", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Choque ou instabilidade hemodinâmica", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Rebaixamento da consciência (pensar em CO ou cianeto)", "🔴"]] },
+                            { nome: "", opcoes: [[3, "Trauma grave associado", "🔴"]] },
+                            { nome: "🟠 Internar (enfermaria)", opcoes: [[2, "2º grau (espessura parcial) > 10% da SCQ", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Qualquer 3º grau", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Face, mãos, pés, genitália, períneo ou grandes articulações", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Queimadura elétrica (inclusive raio) ou química", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Queimadura circunferencial de membro ou tórax", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Doença prévia que complique o tratamento", "🟠"]] },
+                            { nome: "", opcoes: [[2, "Suspeita de maus-tratos ou falta de suporte social", "🟠"]] },
+                            { nome: "🟢 Nenhum dos acima", opcoes: [[0, "Nenhum critério", "🟢"]] }
+                        ],
+                        classificar: (v) => {
+                            let g = Math.max(...v);
+                            if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "Via aérea segura, 2 acessos, fórmula do ATLS, sonda vesical; UTI e transferência para centro de queimados (passo 10)." };
+                            if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Internar e contatar o centro de queimados de referência (critérios da American Burn Association)." };
+                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Pequeno queimado sem critério: tratamento em casa (bloco 🏠)." };
+                        },
+                        nota: "Critérios de transferência da American Burn Association (bloco 🔎). Revisão de 2020 da ABA: consultar também em 2º grau profundo ≥ 10% e 3º grau ≥ 5%."
+                    }
+                },
+                {
+                    passo: 2,
                     titulo: "Interromper a queimadura",
                     resumo: "Retirar roupas e adornos; resfriar com água corrente; não usar gelo.",
                     itens: [
@@ -304,7 +342,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 2,
+                    passo: 3,
                     titulo: "A — via aérea",
                     alerta: true,
                     resumo: "Lesão inalatória: intubar cedo, antes do edema.",
@@ -316,7 +354,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 3,
+                    passo: 4,
                     titulo: "B — respiração",
                     resumo: "O₂ a 100% em todos com suspeita de inalação ou CO.",
                     itens: [
@@ -326,7 +364,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 4,
+                    passo: 5,
                     titulo: "C — circulação e acesso",
                     resumo: "Dois acessos calibrosos; taxa inicial por idade até calcular a SCQ.",
                     itens: [
@@ -337,7 +375,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 5,
+                    passo: 6,
                     titulo: "SCQ, fórmula do ATLS e diurese",
                     resumo: "O boneco do bloco 🔎 calcula o volume e a velocidade.",
                     itens: [
@@ -350,7 +388,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 6,
+                    passo: 7,
                     titulo: "D e E — neurológico, trauma associado e temperatura",
                     resumo: "Rebaixamento: pensar em CO, hipóxia, TCE, hipoglicemia.",
                     itens: [
@@ -361,7 +399,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 7,
+                    passo: 8,
                     titulo: "Analgesia",
                     resumo: "Dor intensa: opioide EV em doses pequenas e tituladas.",
                     itens: [
@@ -372,7 +410,7 @@ registrarConduta({
                     remedios: ["dip_inj", "dip_gts", "pct_gts"]
                 },
                 {
-                    passo: 8,
+                    passo: 9,
                     titulo: "Ferida, tétano e escarotomia",
                     resumo: "Cobrir com material limpo e seco; vacina antitetânica; vigiar circulação.",
                     itens: [
@@ -384,7 +422,7 @@ registrarConduta({
                     ]
                 },
                 {
-                    passo: 9,
+                    passo: 10,
                     titulo: "Transferência",
                     resumo: "Contato médico a médico; enviar a SCQ, o volume e a diurese.",
                     itens: [
