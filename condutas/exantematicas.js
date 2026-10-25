@@ -510,7 +510,8 @@ registrarConduta({
                         "<strong>Aciclovir VO</strong> (sem imunodepressão), iniciado em até 24 h: <strong>maiores de 12 anos</strong>, <strong>doença crônica de pele ou pulmão</strong>, uso de <strong>corticoide</strong> ou de <strong>salicilato</strong>, <strong>caso secundário no domicílio</strong> (MS).",
                         "<strong>Aciclovir EV</strong>: <strong>imunodeprimidos</strong>, <strong>RN</strong>, formas graves ou complicadas (<strong>pneumonia</strong>, <strong>encefalite</strong>, varicela hemorrágica), por 7 a 14 dias (MS).",
                         "<strong>Aciclovir tópico não tem papel na varicela.</strong>"
-                    ]
+                    ],
+                    remedios: ["aciclovir_varicela_vo", "aciclovir_varicela_ev"]
                 },
                 {
                     passo: 6,
