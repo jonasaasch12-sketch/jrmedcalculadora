@@ -10,7 +10,7 @@ registrarMedicamentos({
         cat: "cat-urinario", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
         kw: "amoxicilina clavulanato itu urinaria pielonefrite antibiotico oral ambulatorial", nome: "Amoxi-Clavulanato Suspensão (ITU)", apres: "250 mg + 62,5 mg / 5 mL",
         info: "<strong>Posologia:</strong> Peso / 3 mL de 8/8h por 10 dias.", badge: "", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => { let v = round05(p / 3); return { v: v + " mL", r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML -- 1 FR\nDAR ${v} ML, VIA ORAL, DE 8/8 HORAS POR 10 DIAS.` }; },
+        calc: (p) => { let v = round05(p / 3), tot = Math.ceil(parseFloat(v) * 3 * 10); /* total do tratamento em mL: 3 doses x 10 dias */ return { v: v + " mL", r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML -- ${tot} ML\nDAR ${v} ML, VIA ORAL, DE 8/8 HORAS POR 10 DIAS.` }; },
         detalhes: {
             indicacao: "Infecção do trato urinário (ITU).",
             dose: "Peso ÷ 3 mL VO de 8/8h por 10 dias.",
