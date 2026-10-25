@@ -136,6 +136,20 @@ const FOTOS_EXANTEMA = {
         "licenca": "CC BY-SA 3.0",
         "legenda": "Exantema por amoxicilina na mononucleose.",
         "link": "https://commons.wikimedia.org/wiki/File%3AAmoxycillin_rash_in_infectious_mononucleosis.jpg"
+    },
+    "kawasaki_olhos": {
+        "arq": "img/exantemas/kawasaki_olhos.jpg",
+        "autor": "Dong Soo Kim (recorte: Natr)",
+        "licenca": "CC BY 2.0",
+        "legenda": "Kawasaki: conjuntivite bilateral sem secreção, poupando o limbo.",
+        "link": "https://commons.wikimedia.org/wiki/File%3AKawasaki_symptoms_A.jpg"
+    },
+    "kawasaki_perineo": {
+        "arq": "img/exantemas/kawasaki_perineo.jpg",
+        "autor": "Dong Soo Kim (recorte: Natr)",
+        "licenca": "CC BY 2.0",
+        "legenda": "Kawasaki: exantema com acentuação no períneo.",
+        "link": "https://commons.wikimedia.org/wiki/File%3AKawasaki_symptoms_C.jpg"
     }
 };
 
@@ -184,7 +198,7 @@ const DOENCAS_EXANTEMA = [
     { id: "escarlatina", fotos: ["escarlatina", "escarlatina_lingua"], nome: "Escarlatina", tipo: "lixa", conduta: "faringoamigdalite", condutaNome: "Faringoamigdalite",
       tags: ["lixa", "febre_junto", "ini_tronco", "s_garganta", "s_lingua"],
       texto: "Faringite + exantema <strong>áspero (\"lixa\")</strong> que começa no pescoço e tronco, mais forte nas dobras (<strong>Pastia</strong>), palidez ao redor da boca (<strong>Filatov</strong>), <strong>língua em framboesa</strong>. 5 a 15 anos." },
-    { id: "kawasaki", fotos: ["kawasaki_labios", "kawasaki_maos"], nome: "Doença de Kawasaki", tipo: "mp", conduta: null, alerta: "Febre ≥ 5 dias: pensar e tratar cedo (aneurisma coronariano).",
+    { id: "kawasaki", fotos: ["kawasaki_labios", "kawasaki_maos"], nome: "Doença de Kawasaki", tipo: "mp", conduta: "kawasaki", alerta: "Febre ≥ 5 dias: pensar e tratar cedo (aneurisma coronariano).",
       tags: ["mp", "febre_antes", "febre_junto", "ini_tronco", "s_febre5", "s_lingua", "s_maos_pes"],
       texto: "<strong>Febre ≥ 5 dias</strong> + conjuntivite sem secreção, <strong>lábios rachados e língua em framboesa</strong>, exantema polimorfo (não vesicular), <strong>edema e eritema de mãos e pés</strong>, adenomegalia cervical ≥ 1,5 cm. Menor de 5 anos." },
     { id: "meningococcemia", fotos: ["petequias", "meningococcemia"], nome: "Meningococcemia", tipo: "pet", conduta: "meningococcemia", alerta: "EMERGÊNCIA: febre + petéquias = antibiótico e suporte já.",
