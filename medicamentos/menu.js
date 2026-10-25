@@ -38,7 +38,8 @@ const categorias = [
     { 
         id: "cat-respiratorio", titulo: "Respiratório", dotClass: "dot-respiratorio", cor: "tarja-respiratorio", nome: "Respiratório", icone: "🫁 Resp",
         patologias: [
-            { nome: "Lavagem Nasal", conduta: "bronquiolite", condutaNome: "Bronquiolite", remedios: ["soro_nasal", "rinosoro_inf", "rinosoro_3", "neb_sf"] },
+            { nome: "Bronquiolite e Lavagem Nasal", conduta: "bronquiolite", condutaNome: "Bronquiolite", remedios: ["soro_nasal", "rinosoro_inf", "rinosoro_3", "neb_sf"] },
+            { nome: "Laringite Viral Aguda (Crupe)", conduta: "crupe", condutaNome: "Crupe", remedios: ["dexa_crupe", "adrenalina_neb"] },
             { 
                 nome: "Asma", conduta: "asma",
                 remedios: [
@@ -59,8 +60,9 @@ const categorias = [
                     "ampicilina", "pen_cristalina_pac", "cef_resp_ev", "cef_resp_im", "cefotax_pac", "amoxclav_ev", "ampisulb_ev", "azi_ev", "levoflox_ev", "genta", "linezolida_ev"
                 ] 
             },
+            { nome: "Faringoamigdalite Estreptocócica", conduta: "faringoamigdalite", condutaNome: "Faringoamigdalite", remedios: ["amox_faringo", "benza", "azitro_faringo"] },
+            { nome: "Otite Média Aguda", conduta: "otite_media", condutaNome: "Otite média aguda", remedios: ["amox_oma", "clav_oma", "cef_oma"] },
             { nome: "Tosse (Antitussígenos e Expectorantes)", remedios: ["koid_d", "torante", "acebrofilina", "antux_xpe", "antux_gts", "percoff"] },
-            { nome: "Laringite Viral Aguda (Crupe)", conduta: "crupe", condutaNome: "Crupe", remedios: ["dexa_crupe", "adrenalina_neb"] },
             { nome: "Manejo Avançado e Outros Respiratórios", remedios: ["pulmicort", "hidro_ev", "ipra"] }
         ]
     },
@@ -68,7 +70,6 @@ const categorias = [
         id: "cat-antibioticos", titulo: "Antibióticos", dotClass: "dot-antibioticos", cor: "tarja-antibioticos", nome: "Antibióticos", icone: "🦠 ATB",
         patologias: [
             { nome: "Infecções de Vias Aéreas e Partes Moles", remedios: ["amox", "amox400", "clav"] },
-            { nome: "Faringoamigdalite Estreptocócica", conduta: "faringoamigdalite", condutaNome: "Faringoamigdalite", remedios: ["amox_faringo", "benza", "azitro_faringo"] },
             { nome: "Febre sem Sinais Localizatórios (Bacteremia Oculta)", conduta: "fssl", condutaNome: "Febre sem sinais localizatórios", remedios: ["cef_fssl"] },
             { nome: "Outros Antibióticos Orais", remedios: ["cefadroxila", "pen_v", "smx_tmp", "metronidazol_vo", "cipro_vo"] },
             { nome: "Antibióticos Hospitalares (EV)", remedios: ["amicacina", "cefalotina", "cefepime", "ceftazidima", "cipro_ev", "clindamicina", "meropenem", "metronidazol_ev", "oxacilina", "pen_cristalina", "vancomicina"] }
