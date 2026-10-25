@@ -132,7 +132,7 @@ const categorias = [
         id: "cat-especialidades", titulo: "Especialidades", dotClass: "dot-especialidades", cor: "tarja-especialidades", nome: "Especialidades", icone: "👁️‍🗨️ Espec.",
         patologias: [
             { nome: "Oftalmologia (Olhos)", remedios: ["espec_tobra", "espec_tobra_dexa", "espec_lacribell", "lacrifilm", "tobracort", "compressa_morna"] },
-            { nome: "Otorrino: Ouvido", remedios: ["espec_otociriax", "otosporin", "espec_cerumin"] },
+            { nome: "Otorrino: Ouvido", conduta: "otite_media", condutaNome: "Otite média aguda", remedios: ["espec_otociriax", "otosporin", "espec_cerumin"] },
             { nome: "Otorrino: Orofaringe (Dor de Garganta)", remedios: ["hexomedine", "bismujet"] },
             { nome: "Genital (Sinéquia, Fimose, Vulvovaginite)", remedios: ["premarin", "postec", "flogo_rosa"] },
             { nome: "Toxicologia (Intoxicações)", remedios: ["carvao"] },
