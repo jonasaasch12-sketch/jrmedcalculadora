@@ -132,7 +132,8 @@ registrarConduta({
                         "<span class=\"cond-passo\">5</span> <strong>15 a 30 min:</strong> a droga que ainda não foi usada; piridoxina se isoniazida; EEG e neurologista",
                         "<span class=\"cond-passo\">6</span> <strong>Refratário:</strong> intubar, midazolam contínuo, EEG contínuo, UTI",
                         "<span class=\"cond-passo\">7</span> <strong>Investigar a causa</strong>: exames, punção lombar, tomografia quando indicados",
-                        "<span class=\"cond-passo\">8</span> <strong>Depois da crise</strong>: observar o pós-ictal, tratar a causa, decidir alta"
+                        "<span class=\"cond-passo\">8</span> <strong>Depois da crise</strong>: observar o pós-ictal, tratar a causa, decidir alta",
+                        "<span class=\"cond-passo\">9</span> <strong>Prescrição de internação</strong>: dieta zero, soro de manutenção, cuidados e sintomáticos"
                     ],
                     ferramenta: "ferramentaCronometroCrise"
                 },
@@ -264,6 +265,19 @@ registrarConduta({
                         "<strong>Após estado de mal com 2ª linha</strong>: em geral a droga é mantida em dose de manutenção, conforme a neurologia.",
                         "<strong>1ª crise afebril</strong> que voltou ao normal: em geral <strong>não</strong> se inicia anticonvulsivante no pronto-socorro; encaminhar à neurologia com EEG (AAN 2000)."
                     ]
+                },
+                {
+                    passo: 9,
+                    titulo: "📝 Prescrição de internação",
+                    resumo: "Dieta zero, hidratação venosa de manutenção, cuidados (monitor, sinais vitais 3/3 h, glicemia 6/6 h, O₂, cabeceira 30°) e sintomáticos.",
+                    itens: [
+                        "<strong>Dieta zero</strong> (Whitebook), até acordar bem e deglutir com segurança.",
+                        "<strong>Hidratação venosa de manutenção</strong> em 24 h (Whitebook): SG 5% pela regra de Holliday-Segar (0–10 kg: 100 mL/kg/dia; 10–20 kg: 1.000 mL + 50 mL/kg acima de 10 kg; > 20 kg: 1.500 mL + 20 mL/kg acima de 20 kg), com <strong>NaCl 20%</strong> para osmolaridade inicial de ~300 (ajustar pelo sódio) e <strong>KCl 10% 1,5 mL/kg/dia</strong> (2 mEq/kg/dia) só com diurese, ajustando pelo potássio. O card do app usa 70–80% do volume: conferir com o serviço.",
+                        "<strong>Cuidados</strong> (Whitebook): monitorização eletrocardiográfica e oximetria; <strong>sinais vitais de 3/3 h</strong>; <strong>glicemia capilar de 6/6 h</strong>; oxigenioterapia; <strong>cabeceira elevada a 30°</strong>.",
+                        "<strong>Sintomáticos</strong> (Whitebook): <strong>analgésico/antitérmico</strong> se dor ou febre ≥ 37,8 °C (dipirona EV ou paracetamol); <strong>antiemético</strong> se náuseas ou vômitos (ondansetrona ou bromoprida).",
+                        "<strong>Manutenção do anticonvulsivante:</strong> depende do tipo de crise e geralmente é orientada pelo especialista (Whitebook)."
+                    ],
+                    remedios: ["tgi_manutencao", "dip_inj", "ondan_ev", "broma_ev"]
                 }
             ]
         },
