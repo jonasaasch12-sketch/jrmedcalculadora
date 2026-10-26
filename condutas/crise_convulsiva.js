@@ -272,7 +272,7 @@ registrarConduta({
                     resumo: "Dieta zero, hidratação venosa de manutenção, cuidados (monitor, sinais vitais 3/3 h, glicemia 6/6 h, O₂, cabeceira 30°) e sintomáticos.",
                     itens: [
                         "<strong>Dieta zero</strong> (Whitebook), até acordar bem e deglutir com segurança.",
-                        "<strong>Hidratação venosa de manutenção</strong> em 24 h (Whitebook): SG 5% pela regra de Holliday-Segar (0–10 kg: 100 mL/kg/dia; 10–20 kg: 1.000 mL + 50 mL/kg acima de 10 kg; > 20 kg: 1.500 mL + 20 mL/kg acima de 20 kg), com <strong>NaCl 20%</strong> para osmolaridade inicial de ~300 (ajustar pelo sódio) e <strong>KCl 10% 1,5 mL/kg/dia</strong> (2 mEq/kg/dia) só com diurese, ajustando pelo potássio. O card do app usa 70–80% do volume: conferir com o serviço.",
+                        "<strong>Hidratação venosa de manutenção</strong> em 24 h (Whitebook): usar o card de manutenção (Holliday-Segar) abaixo; potássio só com diurese.",
                         "<strong>Cuidados</strong> (Whitebook): monitorização eletrocardiográfica e oximetria; <strong>sinais vitais de 3/3 h</strong>; <strong>glicemia capilar de 6/6 h</strong>; oxigenioterapia; <strong>cabeceira elevada a 30°</strong>.",
                         "<strong>Sintomáticos</strong> (Whitebook): <strong>analgésico/antitérmico</strong> se dor ou febre ≥ 37,8 °C (dipirona EV ou paracetamol); <strong>antiemético</strong> se náuseas ou vômitos (ondansetrona ou bromoprida).",
                         "<strong>Manutenção do anticonvulsivante:</strong> depende do tipo de crise e geralmente é orientada pelo especialista (Whitebook)."

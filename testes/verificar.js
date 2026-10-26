@@ -32,6 +32,7 @@ const TETOS = {
     azi_ev: 5,            // mL (500 mg)
     ondan_ev: 4,          // mL (8 mg)
     neuro_fenitoina: 30,  // mL (1.500 mg, Whitebook)
+    fenobarbital: 10,     // mL de 100 mg/mL (1 g, Whitebook)
     neuro_midaz: 2,       // mL (10 mg)
     neuro_midaz_nasal: 2, // mL (10 mg, Whitebook)
     neuro_levetiracetam: 45, // mL (4.500 mg, AES/ESETT)
