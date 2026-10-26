@@ -152,29 +152,29 @@ registrarMedicamentos({
     "fenobarbital": {
         cat: "cat-neuro", sub: "🏥 Uso Hospitalar (Crise Convulsiva)",
         kw: "fenobarbital gardenal anticonvulsivante barbiturico convulsao crise neonatal ataque sedacao hospitalar injetavel", nome: "Fenobarbital EV", apres: "Ampola 100 mg / mL",
-        info: "<strong>Conduta:</strong> Ataque 10-20 mg/kg EV dose única (neonatal 20 mg/kg). Máx. 320 mg/dose. Infundir até 60 mg/min.", badge: "Máx: 320 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Conduta:</strong> Ataque 10-20 mg/kg EV dose única (neonatal 20 mg/kg). Máx. 1 g/dose. Infundir até 60 mg/min.", badge: "Máx: 1 g/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p, i) => {
             // Whitebook - ampola 100 mg/mL, diluir com SF e infundir no máximo a 60 mg/min.
             // Neonatal: ataque 20 mg/kg (repetir 10-20 mg/kg se necessário); manutenção 5 mg/kg/dia EV de 24/24h.
-            // Lactentes, crianças e adolescentes: ataque 10-20 mg/kg (repetir 5-10 mg/kg); manutenção 3-6 mg/kg/dia de 12/12 ou 24/24h. Máximo 320 mg/dose.
+            // Lactentes, crianças e adolescentes: ataque 10-20 mg/kg (repetir 5-10 mg/kg); manutenção 3-6 mg/kg/dia de 12/12 ou 24/24h. Máximo 1 g/dose (Whitebook, Crise Convulsiva em Pediatria, 04/2025; escolha do Dr. Jonas).
             let f = n => n.toFixed(2), neo = i !== "" && parseFloat(i) < 0.08;
-            let cap = mg => Math.min(mg, 320), t = mg => Math.ceil(mg / 60);
+            let cap = mg => Math.min(mg, 1000), t = mg => Math.ceil(mg / 60);
             if (neo) {
                 let a = cap(p * 20), r1 = cap(p * 10), r2 = cap(p * 20);
                 return { v: f(a / 100) + " mL", r: `VIA ENDOVENOSA (PERÍODO NEONATAL) - FENOBARBITAL 100 MG/ML\n\nATAQUE (20 MG/KG): ${f(a / 100)} mL (${a.toFixed(0)} mg), diluído em SF 0,9%, EV em dose única (no mínimo ${t(a)} min, até 60 mg/min).\nSE NECESSÁRIO, REPETIR: ${f(r1 / 100)} a ${f(r2 / 100)} mL (10 a 20 mg/kg).\n\nMANUTENÇÃO: ${f(p * 5 / 100)} mL (${(p * 5).toFixed(1)} mg = 5 mg/kg/dia) EV de 24/24 horas.` };
             }
             let a1 = cap(p * 10), a2 = cap(p * 20), r1 = cap(p * 5), r2 = cap(p * 10);
-            return { v: `${f(a1 / 100)}-${f(a2 / 100)} mL`, r: `VIA ENDOVENOSA - FENOBARBITAL 100 MG/ML\n\nATAQUE (10 A 20 MG/KG): ${f(a1 / 100)} a ${f(a2 / 100)} mL (${a1.toFixed(0)} a ${a2.toFixed(0)} mg), diluído em SF 0,9%, EV em dose única (até 60 mg/min; ${a2.toFixed(0)} mg em no mínimo ${t(a2)} min).\nPODE SER REPETIDO: ${f(r1 / 100)} a ${f(r2 / 100)} mL (5 a 10 mg/kg).\n\nMANUTENÇÃO: ${(p * 3).toFixed(0)} a ${(p * 6).toFixed(0)} mg/dia (3 a 6 mg/kg/dia) EV de 12/12 ou 24/24 horas.\n\nDOSE MÁXIMA: 320 mg (3,2 mL) por dose.` };
+            return { v: `${f(a1 / 100)}-${f(a2 / 100)} mL`, r: `VIA ENDOVENOSA - FENOBARBITAL 100 MG/ML\n\nATAQUE (10 A 20 MG/KG): ${f(a1 / 100)} a ${f(a2 / 100)} mL (${a1.toFixed(0)} a ${a2.toFixed(0)} mg), diluído em SF 0,9%, EV em dose única (até 60 mg/min; ${a2.toFixed(0)} mg em no mínimo ${t(a2)} min).\nPODE SER REPETIDO: ${f(r1 / 100)} a ${f(r2 / 100)} mL (5 a 10 mg/kg).\n\nMANUTENÇÃO: ${(p * 3).toFixed(0)} a ${(p * 6).toFixed(0)} mg/dia (3 a 6 mg/kg/dia) EV de 12/12 ou 24/24 horas.\n\nDOSE MÁXIMA: 1 g (10 mL) por dose.` };
         },
         detalhes: {
             indicacao: "Anticonvulsivante; sedação; efeitos hipnóticos.",
             dose: "Neonatal: ataque 20 mg/kg EV (repetir 10-20 mg/kg se necessário); manutenção 5 mg/kg/dia de 24/24h. Lactentes, crianças e adolescentes: ataque 10-20 mg/kg EV (repetir 5-10 mg/kg); manutenção 3-6 mg/kg/dia de 12/12 ou 24/24h.",
-            atencao: "Dose máxima 320 mg (3,2 mL) por dose. Diluir com SF e infundir no máximo a 60 mg/min. Pode causar hipotensão, depressão respiratória e rebaixamento do nível de consciência, podendo ser necessário manejo de via aérea avançada em doses repetidas."
+            atencao: "Dose máxima 1 g (10 mL) por dose. Diluir com SF e infundir no máximo a 60 mg/min. Pode causar hipotensão, depressão respiratória e rebaixamento do nível de consciência, podendo ser necessário manejo de via aérea avançada em doses repetidas."
         },
         ficha: {
             indicacoes: "Anticonvulsivante; sedação; efeitos hipnóticos.",
             dose: "Período neonatal - ataque: 20 mg/kg EV dose única; repetir 10-20 mg/kg se necessário\nPeríodo neonatal - manutenção: 5 mg/kg/dia EV de 24/24 horas\nLactentes, crianças e adolescentes - ataque: 10-20 mg/kg EV dose única; repetir 5-10 mg/kg se necessário\nLactentes, crianças e adolescentes - manutenção: 3-6 mg/kg/dia EV de 12/12 ou 24/24 horas",
-            doseMaxima: "3,2 mL/dose (320 mg).",
+            doseMaxima: "10 mL/dose (1 g) (Whitebook - Crise Convulsiva em Pediatria, 04/2025).",
             apresentacoes: "Ampola 100 mg/mL e 200 mg/mL; comprimido 50 mg e 100 mg; gotas 40 mg/mL (1 gota = 1 mg).",
             via: "Endovenosa.",
             diluicao: "Diluir com soro fisiológico.",
