@@ -84,6 +84,32 @@ registrarMedicamentos({
             atencao: "Máximo IV/IO 1 mg por dose. Conferir a diluição antes de aplicar."
         }
     },
+    "sepse_expansao": {
+        cat: "cat-pals", sub: "🏥 Uso Hospitalar (Choque Séptico)",
+        kw: "sepse choque septico expansao volemica bolus cristaloide ringer lactato soro fisiologico ressuscitacao volume",
+        nome: "Expansão na Sepse / Choque Séptico (Cristaloide)", apres: "Ringer lactato (preferir) ou SF 0,9%",
+        info: "<strong>Conduta (SSC 2020):</strong> bolus de 10 a 20 mL/kg com reavaliação após cada um; até 40 a 60 mL/kg na 1ª hora onde há UTI.", badge: "Máx: 1.000 mL por bolus", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Surviving Sepsis Campaign pediátrica 2020: 10-20 mL/kg por bolus, até 40-60 mL/kg na 1ª hora (com UTI), parando se sobrecarga. Sem UTI: só se hipotensão, até 40 mL/kg na 1ª hora. Cristaloide balanceado preferido. Teto do app: 1.000 mL por bolus (adulto). */
+            let b10 = Math.min(p * 10, 1000), b20 = Math.min(p * 20, 1000);
+            let h40 = p * 40, h60 = p * 60;
+            return { v: `${b10.toFixed(0)}–${b20.toFixed(0)} mL por bolus`, r: `VIA ENDOVENOSA (SEPSE / CHOQUE SÉPTICO - EXPANSÃO)\n\nRINGER LACTATO (OU SF 0,9%) ${b10.toFixed(0)} A ${b20.toFixed(0)} ML (10 A 20 ML/KG) EV EM BOLUS, EM 5 A 20 MINUTOS.\nREAVALIAR APÓS CADA BOLUS (PERFUSÃO, FC, PA, FÍGADO, CREPITAÇÕES, SpO2).\nREPETIR SE MÁ PERFUSÃO E SEM SINAIS DE SOBRECARGA, ATÉ ${h40.toFixed(0)} A ${h60.toFixed(0)} ML (40 A 60 ML/KG) NA 1ª HORA (ONDE HÁ UTI).\n\nPARAR SE: CREPITAÇÕES, HEPATOMEGALIA, PIORA DA SpO2 OU DO DESCONFORTO RESPIRATÓRIO.\nSEM UTI DISPONÍVEL: SÓ FAZER BOLUS SE HIPOTENSÃO (ATÉ ${h40.toFixed(0)} ML NA 1ª HORA); SEM HIPOTENSÃO, MANTER SÓ A HIDRATAÇÃO DE MANUTENÇÃO.` };
+        },
+        detalhes: {
+            indicacao: "Sepse com má perfusão ou choque séptico.",
+            dose: "10 a 20 mL/kg EV por bolus, reavaliando após cada um; até 40 a 60 mL/kg na 1ª hora onde há UTI.",
+            atencao: "Preferir cristaloide balanceado (Ringer lactato). Parar se sobrecarga (crepitações, hepatomegalia). Sem UTI e sem hipotensão: não fazer bolus (SSC 2020). Teto do app: 1.000 mL por bolus."
+        },
+        ficha: {
+            indicacoes: "Ressuscitação volêmica na sepse com má perfusão e no choque séptico.",
+            dose: "Com UTI disponível: 10-20 mL/kg por bolus, até 40-60 mL/kg na 1ª hora, guiado pela perfusão e parando se sobrecarga\nSem UTI e sem hipotensão: não fazer bolus; manter hidratação de manutenção\nSem UTI e com hipotensão: até 40 mL/kg na 1ª hora (10-20 mL/kg por bolus)",
+            doseMaxima: "Teto do app: 1.000 mL por bolus.",
+            apresentacoes: "Ringer lactato (cristaloide balanceado, preferido) ou SF 0,9%.",
+            via: "Endovenosa ou intraóssea.",
+            alertasPediatricos: "Não usar albumina na ressuscitação inicial, nem amidos ou gelatinas (SSC 2020). Reavaliar após cada bolus: a hipotensão é sinal tardio na criança.",
+            fonteRevisao: "Weiss SL et al. Surviving Sepsis Campaign International Guidelines for the Management of Septic Shock and Sepsis-Associated Organ Dysfunction in Children. Pediatr Crit Care Med 2020;21(2):e52-e106. doi:10.1097/PCC.0000000000002198"
+        }
+    },
     "glicose_pals": {
         cat: "cat-pals", sub: "🚨 Parada / Arritmias (PALS)",
         kw: "glicose hipoglicemia d10w d25w d50w bolus pals", nome: "Glicose (Bolus Hipoglicemia)", apres: "Ampolas a 10%, 25% ou 50%",
