@@ -31,8 +31,11 @@ const TETOS = {
     azi_oral: 12.5,       // mL (500 mg)
     azi_ev: 5,            // mL (500 mg)
     ondan_ev: 4,          // mL (8 mg)
-    neuro_fenitoina: 20,  // mL (1 g)
+    neuro_fenitoina: 30,  // mL (1.500 mg, Whitebook)
+    fenobarbital: 10,     // mL de 100 mg/mL (1 g, Whitebook)
     neuro_midaz: 2,       // mL (10 mg)
+    neuro_midaz_nasal: 2, // mL (10 mg, Whitebook)
+    neuro_levetiracetam: 45, // mL (4.500 mg, AES/ESETT)
     cef_resp_ev: 20,      // mL 24/24h (2 g)
     metil: 0.96,          // mL (60 mg)
     ipra: 40,             // gotas

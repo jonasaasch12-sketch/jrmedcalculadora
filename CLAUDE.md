@@ -52,8 +52,9 @@ privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; c
 sw.js                      modo offline (rede primeiro)
 testes/verificar.js        verificação automática (só precisa de Node)
 condutas/condutas.js       área 📖 Condutas (aba ao lado de 💊 Prescrição)
-condutas/exantematicas.js  categoria "Doenças exantemáticas": guia de identificação clicável + varicela; desenhos SVG próprios
-                           (svgBonecoExantema, svgAmostraLesao). Fotos só com licença livre e crédito (Wikimedia/CDC)
+condutas/exantematicas.js  categoria "Doenças exantemáticas": guia de identificação clicável + varicela; fotos reais em FOTOS_EXANTEMA
+                           (img/exantemas/). Só foto com licença livre e crédito: DermNet (CC BY-NC-ND 4.0, `fonte: "dermnet"`:
+                           arquivo original, sem corte, com marca d'água, crédito "Image sourced from DermNet" + link) ou Wikimedia/CDC
 condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as medicações
                            são ids de cards (farmaciaJR), a dose nunca é repetida na conduta
 ```

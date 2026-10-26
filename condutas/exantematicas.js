@@ -8,85 +8,96 @@
 // AHA 2017 (Kawasaki); IDSA 2012 (escarlatina); revisões de exantemas (PubMed).
 // =====================================================
 
-// ---------- Fotos reais (Wikimedia Commons; domínio público ou Creative Commons) ----------
-// Redimensionadas para o app. Crédito e licença sempre embaixo da foto, com link para a página original.
+// ---------- Fotos reais (DermNet CC BY-NC-ND 4.0, sem alteração; ou Wikimedia Commons, domínio público/CC) ----------
+// Wikimedia: redimensionadas para o app. DermNet: arquivo original, com marca d'água. Crédito e licença sempre embaixo da foto, com link para a página original.
 const FOTOS_EXANTEMA = {
     "varicela_crianca": {
         "arq": "img/exantemas/varicela_crianca.jpg",
-        "autor": "Jonnymccullagh",
-        "licenca": "CC BY-SA 3.0",
-        "legenda": "Varicela em menino de 5 anos: lesões em fases diferentes no tronco e na face.",
-        "link": "https://commons.wikimedia.org/wiki/File%3AChickenpox_5yearold.JPG"
+        "autor": "DermNet",
+        "licenca": "CC BY-NC-ND 4.0",
+        "fonte": "dermnet",
+        "legenda": "Varicela em criança: pápulas, vesículas e crostas em fases diferentes no tronco.",
+        "link": "https://dermnetnz.org/topics/varicella-images"
     },
     "varicela_vesicula": {
         "arq": "img/exantemas/varicela_vesicula.jpg",
-        "autor": "Zeimusu",
-        "licenca": "CC BY-SA 3.0",
-        "legenda": "Vesícula da varicela de perto (\"gota de orvalho\" sobre base vermelha).",
-        "link": "https://commons.wikimedia.org/wiki/File%3AChickenpox_blister-%28closeup%29.jpg"
+        "autor": "DermNet",
+        "licenca": "CC BY-NC-ND 4.0",
+        "fonte": "dermnet",
+        "legenda": "Varicela na face: vesículas sobre base vermelha (\"gota de orvalho\") e crostas.",
+        "link": "https://dermnetnz.org/topics/varicella-images"
     },
     "varicela_grave": {
         "arq": "img/exantemas/varicela_grave.jpg",
-        "autor": "Gzzz",
-        "licenca": "CC BY-SA 4.0",
-        "legenda": "Varicela extensa em criança (manchas brancas = pasta d'água).",
-        "link": "https://commons.wikimedia.org/wiki/File%3ASevere_chickenpox.jpg"
+        "autor": "DermNet",
+        "licenca": "CC BY-NC-ND 4.0",
+        "fonte": "dermnet",
+        "legenda": "Varicela extensa em lactente.",
+        "link": "https://dermnetnz.org/topics/varicella-images"
     },
     "sarampo": {
         "arq": "img/exantemas/sarampo.jpg",
-        "autor": "CDC",
-        "licenca": "domínio público",
-        "legenda": "Sarampo: exantema maculopapular confluente na face e no tronco.",
-        "link": "https://commons.wikimedia.org/wiki/File%3ABoy_with_measles.jpg"
+        "autor": "DermNet",
+        "licenca": "CC BY-NC-ND 4.0",
+        "fonte": "dermnet",
+        "legenda": "Sarampo: exantema maculopapular confluente na face de uma criança.",
+        "link": "https://dermnetnz.org/topics/measles-images"
     },
     "sarampo_koplik": {
         "arq": "img/exantemas/sarampo_koplik.jpg",
-        "autor": "CDC",
-        "licenca": "domínio público",
+        "autor": "DermNet",
+        "licenca": "CC BY-NC-ND 4.0",
+        "fonte": "dermnet",
         "legenda": "Manchas de Koplik na mucosa jugal (fase pré-eruptiva).",
-        "link": "https://commons.wikimedia.org/wiki/File%3AKoplik_spots%2C_measles_6111_lores.jpg"
+        "link": "https://dermnetnz.org/topics/measles-images"
     },
     "rubeola": {
         "arq": "img/exantemas/rubeola.jpg",
-        "autor": "CDC",
-        "licenca": "domínio público",
-        "legenda": "Rubéola: exantema rosado e fino nas costas de uma criança.",
-        "link": "https://commons.wikimedia.org/wiki/File%3ARash_of_rubella_on_skin_of_child%27s_back.JPG"
+        "autor": "DermNet",
+        "licenca": "CC BY-NC-ND 4.0",
+        "fonte": "dermnet",
+        "legenda": "Rubéola: exantema rosado, fino e pouco confluente.",
+        "link": "https://dermnetnz.org/topics/rubella"
     },
     "roseola": {
         "arq": "img/exantemas/roseola.jpg",
-        "autor": "M Davis",
-        "licenca": "domínio público",
-        "legenda": "Exantema súbito em menina de 21 meses, após a febre.",
-        "link": "https://commons.wikimedia.org/wiki/File%3ARoseola_on_a_21-month-old_girl.jpg"
+        "autor": "DermNet",
+        "licenca": "CC BY-NC-ND 4.0",
+        "fonte": "dermnet",
+        "legenda": "Exantema súbito em lactente: exantema rosado no tronco, após a febre.",
+        "link": "https://dermnetnz.org/topics/roseola-images"
     },
     "eritema_infeccioso": {
         "arq": "img/exantemas/eritema_infeccioso.jpg",
-        "autor": "Andrew Kerr",
-        "licenca": "domínio público",
-        "legenda": "Eritema infeccioso: \"bochecha esbofeteada\" e exantema rendilhado no tronco.",
-        "link": "https://commons.wikimedia.org/wiki/File%3AFifth_disease.jpg"
+        "autor": "DermNet",
+        "licenca": "CC BY-NC-ND 4.0",
+        "fonte": "dermnet",
+        "legenda": "Eritema infeccioso: \"bochecha esbofeteada\".",
+        "link": "https://dermnetnz.org/topics/erythema-infectiosum-fifth-disease-images"
     },
     "mao_pe_boca": {
         "arq": "img/exantemas/mao_pe_boca.jpg",
-        "autor": "James Heilman, MD",
-        "licenca": "CC BY-SA 3.0",
-        "legenda": "Mão-pé-boca: vesículas ovais nas mãos.",
-        "link": "https://commons.wikimedia.org/wiki/File%3ACharacteristic_rash_of_hand%2C_foot%2C_and_mouth_disease%2C_on_human_hands.jpg"
+        "autor": "DermNet",
+        "licenca": "CC BY-NC-ND 4.0",
+        "fonte": "dermnet",
+        "legenda": "Mão-pé-boca: vesículas ovais na palma da mão.",
+        "link": "https://dermnetnz.org/topics/hand-foot-and-mouth-disease"
     },
     "mao_pe_boca_boca": {
         "arq": "img/exantemas/mao_pe_boca_boca.jpg",
-        "autor": "shawn c",
-        "licenca": "domínio público",
-        "legenda": "Mão-pé-boca: úlceras no palato mole e na orofaringe.",
-        "link": "https://commons.wikimedia.org/wiki/File%3AHFMD_soft_palete_oropharynx.jpg"
+        "autor": "DermNet",
+        "licenca": "CC BY-NC-ND 4.0",
+        "fonte": "dermnet",
+        "legenda": "Mão-pé-boca: vesículas e úlceras no palato.",
+        "link": "https://dermnetnz.org/topics/hand-foot-and-mouth-disease"
     },
     "escarlatina": {
         "arq": "img/exantemas/escarlatina.jpg",
-        "autor": "Whispyhistory",
-        "licenca": "CC BY-SA 4.0",
-        "legenda": "Escarlatina: exantema áspero (\"lixa\") no pescoço e no tronco.",
-        "link": "https://commons.wikimedia.org/wiki/File%3AScarlet_fever_rash.jpg"
+        "autor": "DermNet",
+        "licenca": "CC BY-NC-ND 4.0",
+        "fonte": "dermnet",
+        "legenda": "Escarlatina: exantema puntiforme e áspero (\"lixa\") no tronco.",
+        "link": "https://dermnetnz.org/topics/scarlet-fever"
     },
     "escarlatina_lingua": {
         "arq": "img/exantemas/escarlatina_lingua.jpg",
@@ -125,17 +136,19 @@ const FOTOS_EXANTEMA = {
     },
     "dengue": {
         "arq": "img/exantemas/dengue.jpg",
-        "autor": "Emy Abi Thomas, Mary John e Bimal Kanish",
-        "licenca": "CC BY 3.0",
-        "legenda": "Dengue: eritema confluente com petéquias (\"ilhas brancas\").",
-        "link": "https://commons.wikimedia.org/wiki/File%3AErythema_with_petechiae_on_patient_with_dengue_fever.jpg"
+        "autor": "DermNet",
+        "licenca": "CC BY-NC-ND 4.0",
+        "fonte": "dermnet",
+        "legenda": "Dengue: exantema confluente com \"ilhas brancas\" de pele poupada.",
+        "link": "https://dermnetnz.org/topics/dengue"
     },
     "mononucleose_amoxi": {
         "arq": "img/exantemas/mononucleose_amoxi.jpg",
-        "autor": "RainbowKatie",
-        "licenca": "CC BY-SA 3.0",
+        "autor": "DermNet",
+        "licenca": "CC BY-NC-ND 4.0",
+        "fonte": "dermnet",
         "legenda": "Exantema por amoxicilina na mononucleose.",
-        "link": "https://commons.wikimedia.org/wiki/File%3AAmoxycillin_rash_in_infectious_mononucleosis.jpg"
+        "link": "https://dermnetnz.org/topics/infectious-mononucleosis"
     },
     "kawasaki_olhos": {
         "arq": "img/exantemas/kawasaki_olhos.jpg",
@@ -150,16 +163,32 @@ const FOTOS_EXANTEMA = {
         "licenca": "CC BY 2.0",
         "legenda": "Kawasaki: exantema com acentuação no períneo.",
         "link": "https://commons.wikimedia.org/wiki/File%3AKawasaki_symptoms_C.jpg"
+    },
+    "sarampo_corpo": {
+        "arq": "img/exantemas/sarampo_corpo.jpg",
+        "autor": "DermNet",
+        "licenca": "CC BY-NC-ND 4.0",
+        "fonte": "dermnet",
+        "legenda": "Sarampo: exantema maculopapular confluente no tronco e nos membros.",
+        "link": "https://dermnetnz.org/topics/measles-images"
     }
 };
+
+// Crédito exigido pela licença. DermNet (CC BY-NC-ND 4.0): "Image sourced from DermNet" com link
+// para a página de origem; foto original, sem corte, com a marca d'água.
+function creditoFotoExantema(f, comLink) {
+    let ond = comLink ? `<a href="${f.link}" target="_blank" rel="noopener">${f.fonte === 'dermnet' ? 'DermNet' : 'Wikimedia Commons'}</a>` : (f.fonte === 'dermnet' ? 'DermNet' : 'Wikimedia Commons');
+    if (f.fonte === 'dermnet') return `Image sourced from ${ond} · ${f.licenca}`;
+    return `Foto: ${f.autor} · ${f.licenca} · ${ond}${f.licenca.startsWith('CC') ? ' · redimensionada' : ''}`;
+}
 
 function htmlFotoExantema(k, pequena) {
     let f = FOTOS_EXANTEMA[k];
     if (!f) return '';
     return `<figure class="ex-foto${pequena ? ' pequena' : ''}">
-        <img src="${f.arq}" alt="${f.legenda}" loading="lazy" onclick="abrirFotoExantema('${k}')" onerror="this.closest('figure').style.display='none'">
+        <img src="${f.arq}" alt="${f.legenda}"${f.fonte === 'dermnet' ? ' class="ex-inteira"' : ''} loading="lazy" onclick="abrirFotoExantema('${k}')" onerror="this.closest('figure').style.display='none'">
         ${pequena ? '' : `<figcaption>${f.legenda}</figcaption>`}
-        <div class="ex-credito">Foto: ${f.autor} · ${f.licenca} · <a href="${f.link}" target="_blank" rel="noopener">Wikimedia Commons</a>${f.licenca.startsWith('CC') ? ' · redimensionada' : ''}</div>
+        <div class="ex-credito">${creditoFotoExantema(f, true)}</div>
     </figure>`;
 }
 
@@ -170,29 +199,29 @@ function abrirFotoExantema(k) {
     let v = document.createElement('div');
     v.className = 'ex-zoom';
     v.onclick = () => v.remove();
-    v.innerHTML = `<figure><img src="${f.arq}" alt="${f.legenda}"><figcaption>${f.legenda}<br><span>Foto: ${f.autor} · ${f.licenca} · Wikimedia Commons</span></figcaption></figure><button type="button" class="ex-zoom-fechar" aria-label="Fechar">✕</button>`;
+    v.innerHTML = `<figure><img src="${f.arq}" alt="${f.legenda}"><figcaption>${f.legenda}<br><span>${creditoFotoExantema(f, false)}</span></figcaption></figure><button type="button" class="ex-zoom-fechar" aria-label="Fechar">✕</button>`;
     document.body.appendChild(v);
 }
 
 // ---------- Guia de identificação ----------
 // tags: lesão (mp/ves/pet/lixa) · febre (febre_antes / febre_junto / febre_pouca) · início (ini_face/ini_tronco/ini_extrem/ini_boca) · sinais
 const DOENCAS_EXANTEMA = [
-    { id: "sarampo", fotos: ["sarampo", "sarampo_koplik"], nome: "Sarampo", tipo: "mp", conduta: "sarampo", alerta: "Notificação imediata (até 24 h). Isolamento respiratório.",
+    { id: "sarampo", fotos: ["sarampo", "sarampo_corpo", "sarampo_koplik"], nome: "Sarampo", tipo: "mp", conduta: "sarampo", alerta: "Notificação imediata (até 24 h). Isolamento respiratório.",
       tags: ["mp", "febre_junto", "ini_face", "s_tosse", "s_koplik"],
       texto: "Febre alta + <strong>tosse, coriza e conjuntivite</strong>; exantema no 3º a 5º dia, ainda com febre, que começa <strong>atrás das orelhas e na face</strong> e desce (craniocaudal), confluente. <strong>Manchas de Koplik</strong> na mucosa jugal." },
-    { id: "rubeola", fotos: ["rubeola"], nome: "Rubéola", tipo: "mp", conduta: null, alerta: "Notificação imediata (até 24 h).",
+    { id: "rubeola", fotos: ["rubeola"], nome: "Rubéola", tipo: "mp", conduta: "rubeola", alerta: "Notificação imediata (até 24 h).",
       tags: ["mp", "febre_pouca", "ini_face", "s_adeno_post"],
       texto: "Febre baixa; exantema rosado, <strong>não confluente</strong>, da face para o corpo em 24 h, some em ~3 dias. <strong>Adenomegalia retroauricular e occipital.</strong>" },
-    { id: "exantema_subito", fotos: ["roseola"], nome: "Exantema súbito (roséola)", tipo: "mp", conduta: null,
+    { id: "exantema_subito", fotos: ["roseola"], nome: "Exantema súbito (roséola)", tipo: "mp", conduta: "exantema_subito",
       tags: ["mp", "febre_antes", "ini_tronco"],
       texto: "Lactente de 6 meses a 2 anos com <strong>febre alta por 3 a 5 dias</strong> e bom estado; <strong>a febre some e aí aparece</strong> o exantema rosado no tronco (herpesvírus 6)." },
-    { id: "eritema_infeccioso", fotos: ["eritema_infeccioso"], nome: "Eritema infeccioso (parvovírus B19)", tipo: "mp", conduta: null,
+    { id: "eritema_infeccioso", fotos: ["eritema_infeccioso"], nome: "Eritema infeccioso (parvovírus B19)", tipo: "mp", conduta: "eritema_infeccioso",
       tags: ["mp", "febre_pouca", "ini_face", "s_bochecha"],
       texto: "Escolar pouco febril; <strong>\"bochecha esbofeteada\"</strong>, depois exantema <strong>rendilhado</strong> nos membros, que volta com calor e sol. Risco de crise aplástica em anemia hemolítica." },
     { id: "varicela", fotos: ["varicela_crianca", "varicela_vesicula"], nome: "Varicela (catapora)", tipo: "ves", conduta: "varicela",
       tags: ["ves", "febre_junto", "ini_tronco", "ini_face", "s_prurido", "s_fases"],
       texto: "Vesículas pruriginosas em <strong>fases diferentes ao mesmo tempo</strong> (mácula, pápula, vesícula, crosta), começando no <strong>tronco, face e couro cabeludo</strong> (centrípeta); mucosas." },
-    { id: "mao_pe_boca", fotos: ["mao_pe_boca", "mao_pe_boca_boca"], nome: "Mão-pé-boca (Coxsackie)", tipo: "ves", conduta: null,
+    { id: "mao_pe_boca", fotos: ["mao_pe_boca", "mao_pe_boca_boca"], nome: "Mão-pé-boca (Coxsackie)", tipo: "ves", conduta: "mao_pe_boca",
       tags: ["ves", "febre_junto", "febre_pouca", "ini_boca", "ini_extrem"],
       texto: "Menor de 5 anos; <strong>úlceras na boca</strong> e vesículas em <strong>mãos, pés e nádegas</strong>. Atenção à desidratação por dor para engolir." },
     { id: "escarlatina", fotos: ["escarlatina", "escarlatina_lingua"], nome: "Escarlatina", tipo: "lixa", conduta: "faringoamigdalite", condutaNome: "Faringoamigdalite",
