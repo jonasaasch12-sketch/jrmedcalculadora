@@ -94,7 +94,7 @@ const categorias = [
     { 
         id: "cat-neuro", titulo: "Neuro", dotClass: "dot-neuro", cor: "tarja-neuro", nome: "Neuro", icone: "🧠 Neuro",
         patologias: [
-            { nome: "Crise Convulsiva Aguda", conduta: "crise_convulsiva", condutaNome: "Crise convulsiva", remedios: ["neuro_diaz", "neuro_midaz", "neuro_fenitoina", "neuro_levetiracetam", "fenobarbital", "neuro_midaz_continuo"] },
+            { nome: "Crise Convulsiva Aguda", conduta: "crise_convulsiva", condutaNome: "Crise convulsiva", remedios: ["neuro_diaz", "neuro_midaz", "neuro_midaz_nasal", "neuro_fenitoina", "neuro_levetiracetam", "fenobarbital", "neuro_midaz_continuo"] },
             { nome: "Anticonvulsivantes de Manutenção", remedios: ["fenobarbital_gts"] },
             { nome: "Sedação para Exames", remedios: ["hidrato_cloral"] }
         ]
