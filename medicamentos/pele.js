@@ -102,6 +102,104 @@ registrarMedicamentos({
         badgeSt: "static-blue", badge: "Orientações", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
         calc: () => ({ v: "Orientações", r: "ORIENTAÇÕES - ESCABIOSE (SARNA): TRATAMENTO DE TODA A FAMÍLIA\n\n1) TRATAR TODOS DA CASA AO MESMO TEMPO:\n- Todas as pessoas que moram na casa e os contatos próximos devem ser tratados no mesmo dia, mesmo quem não tem coceira.\n- Procurar a UBS para que seja prescrito o tratamento de todos os contactantes.\n- Repetir o tratamento conforme a receita: permetrina após 7 dias, ivermectina após 14 dias.\n\n2) ROUPAS E OBJETOS:\n- Lavar e ferver todas as roupas de cama, de banho e de uso pessoal por 3 dias consecutivos.\n- Secar ao sol e passar ferro quente em todas as roupas.\n- Passar ferro quente no colchão, no sofá e em outros estofados.\n- O que não puder ser lavado (bichos de pelúcia, almofadas, sapatos) deve ficar fechado em saco plástico por 7 dias.\n- Não compartilhar roupas, toalhas e roupas de cama.\n\n3) CUIDADOS:\n- Manter as unhas curtas e limpas e evitar coçar, para não infeccionar as lesões.\n- A coceira pode continuar por até 2 a 4 semanas depois do tratamento. Isso não quer dizer que o tratamento falhou.\n\nRETORNAR SE:\n- Lesões com pus, vermelhidão que aumenta ou febre;\n- Coceira ou lesões novas depois de 4 semanas do tratamento." })
     },
+    "fusidico_impetigo": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "acido fusidico verutex fucidin impetigo creme pomada antibiotico topico",
+        nome: "Ácido Fusídico 2% (Impetigo)", apres: "Creme ou pomada",
+        info: "<strong>Conduta (Whitebook):</strong> aplicar 2–3 vezes ao dia por 5–7 dias. Pode ser usado em < 3 meses.", badgeSt: "static-blue", badge: "Uso Tópico", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: () => ({ v: "Uso Tópico", r: `USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS.` }),
+        detalhes: {
+            indicacao: "Impetigo localizado, não complicado, com poucas lesões (opção tópica, inclusive em menores de 3 meses).",
+            dose: "Aplicar na lesão 2–3 vezes ao dia por 5–7 dias.",
+            atencao: "Lesões extensas, bolhosas, febre ou mais de 5 lesões: antibiótico oral (ver cards de impetigo)."
+        },
+        ficha: { indicacoes: "Impetigo localizado.", dose: "Aplicar na lesão 2-3 vezes ao dia por 5-7 dias", apresentacoes: "Creme ou pomada 2%.", via: "Tópica.", alertasPediatricos: "Pode ser utilizado em lactentes menores de 3 meses.", fonteRevisao: "Whitebook (Afya) - Impetigo (Prescrição Ambulatorial: tratamento tópico e sistêmico), vídeo enviado pelo Dr. Jonas em 27/10/2026." }
+    },
+    "cefalexina_impetigo": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "cefalexina keflex impetigo bolhoso piodermite pele celulite antibiotico oral suspensao",
+        nome: "Cefalexina Suspensão (Impetigo / Pele)", apres: "250 mg / 5 mL",
+        info: "<strong>Posologia (Whitebook):</strong> 25–50 mg/kg/dia (0,125–0,25 mL/kg/dose) VO de 6/6h por 7–10 dias.", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Impetigo, esquema A): cefalexina 250 mg/5 mL 25-50 mg/kg/dia (0,125-0,25 mL/kg/dose) VO de 6/6h por 7-10 dias. Teto do app 10 mL/dose (500 mg), dose máxima do Whitebook na ITU. */
+            let a = Math.min(parseFloat(round05(p * 0.125)), 10), b = Math.min(parseFloat(round05(p * 0.25)), 10), t = x => String(x).replace('.', ',');
+            return { v: `${a}–${b} mL`, r: `${recHead}1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR ${t(a)} A ${t(b)} ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.` };
+        },
+        detalhes: {
+            indicacao: "Impetigo com indicação de tratamento sistêmico (1ª escolha, junto com o tópico); celulite leve.",
+            dose: "25–50 mg/kg/dia (0,125–0,25 mL/kg/dose) VO de 6/6h por 7 a 10 dias.",
+            atencao: "Teto do app: 10 mL (500 mg) por dose. Associar o tratamento tópico."
+        },
+        ficha: { indicacoes: "Impetigo com indicação de tratamento sistêmico (esquema A, monoterapia empírica).", dose: "25-50 mg/kg/dia (0,125-0,25 mL/kg/dose) VO de 6/6 horas por 7-10 dias", doseMaxima: "Teto do app: 500 mg/dose (10 mL).", apresentacoes: "Suspensão 250 mg/5 mL.", via: "Oral.", fonteRevisao: "Whitebook (Afya) - Impetigo (Prescrição Ambulatorial: tratamento tópico e sistêmico), vídeo enviado pelo Dr. Jonas em 27/10/2026." }
+    },
+    "eritro_impetigo": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "eritromicina impetigo alergia penicilina pele antibiotico oral suspensao macrolideo",
+        nome: "Eritromicina Suspensão (Impetigo, alérgico)", apres: "50 mg / mL",
+        info: "<strong>Posologia (Whitebook):</strong> 40 mg/kg/dia (0,2 mL/kg/dose) VO de 6/6h por 7 dias.", badge: "Teto: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Impetigo, esquema B - alérgicos à penicilina): eritromicina 50 mg/mL 40 mg/kg/dia (0,2 mL/kg/dose) VO de 6/6h por 7 dias. Teto do app 10 mL/dose (500 mg, dose do adulto). */
+            let v = Math.min(parseFloat(round05(p * 0.2)), 10);
+            return { v: v + " mL", r: `${recHead}1) ERITROMICINA 50 MG/ML ---------------------- 1 FR\nDAR ${String(v).replace('.', ',')} ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.` };
+        },
+        detalhes: { indicacao: "Impetigo com tratamento sistêmico em alérgico à penicilina.", dose: "40 mg/kg/dia (0,2 mL/kg/dose) VO de 6/6h por 7 dias.", atencao: "Teto do app: 10 mL (500 mg) por dose. Intolerância gastrointestinal frequente." },
+        ficha: { indicacoes: "Impetigo em alérgicos às penicilinas (esquema B).", dose: "40 mg/kg/dia (0,2 mL/kg/dose) VO de 6/6 horas por 7 dias", doseMaxima: "Teto do app: 500 mg/dose (10 mL).", apresentacoes: "Suspensão 50 mg/mL.", via: "Oral.", fonteRevisao: "Whitebook (Afya) - Impetigo (Prescrição Ambulatorial: tratamento tópico e sistêmico), vídeo enviado pelo Dr. Jonas em 27/10/2026." }
+    },
+    "claritro_impetigo": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "claritromicina klaricid impetigo alergia penicilina pele antibiotico oral suspensao macrolideo",
+        nome: "Claritromicina Suspensão (Impetigo, alérgico)", apres: "50 mg / mL",
+        info: "<strong>Posologia (Whitebook):</strong> 15 mg/kg/dia (0,15 mL/kg/dose) VO de 12/12h por 7–10 dias. Máx. 500 mg/dose.", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Impetigo, esquema B): claritromicina 50 mg/mL 15 mg/kg/dia (0,15 mL/kg/dose) VO de 12/12h por 7-10 dias, máx. 500 mg/dose (10 mL). */
+            let v = Math.min(parseFloat(round05(p * 0.15)), 10);
+            return { v: v + " mL", r: `${recHead}1) CLARITROMICINA 50 MG/ML -------------------- 1 FR\nDAR ${String(v).replace('.', ',')} ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.` };
+        },
+        detalhes: { indicacao: "Impetigo com tratamento sistêmico em alérgico à penicilina.", dose: "15 mg/kg/dia (0,15 mL/kg/dose) VO de 12/12h por 7 a 10 dias.", atencao: "Máximo 500 mg (10 mL) por dose." },
+        ficha: { indicacoes: "Impetigo em alérgicos às penicilinas (esquema B).", dose: "15 mg/kg/dia (0,15 mL/kg/dose) VO de 12/12 horas por 7-10 dias", doseMaxima: "500 mg/dose (10 mL).", apresentacoes: "Suspensão 50 mg/mL.", via: "Oral.", fonteRevisao: "Whitebook (Afya) - Impetigo (Prescrição Ambulatorial: tratamento tópico e sistêmico), vídeo enviado pelo Dr. Jonas em 27/10/2026." }
+    },
+    "smx_impetigo": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "sulfametoxazol trimetoprima bactrim impetigo mrsa furunculo alergia penicilina pele",
+        nome: "Sulfametoxazol + Trimetoprima (Impetigo / MRSA)", apres: "200 + 40 mg / 5 mL (8 mg TMP/mL)",
+        info: "<strong>Posologia (Whitebook):</strong> 8 mg TMP/kg/dia (0,5 mL/kg/dose) VO de 12/12h por 7–10 dias. Máx. 20 mL/dose.", badge: "Máx: 20 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            /* Whitebook (Impetigo, esquemas B e C): SMX-TMP 40+8 mg/mL, 8 mg/kg/dia de TMP (0,5 mL/kg/dose) VO de 12/12h por 7-10 dias, máx. 160 mg TMP/dose (20 mL). A partir de 2 meses. */
+            if (i !== "" && parseFloat(i) < 0.17) return { v: "Contraind.", r: "ATENÇÃO: Sulfametoxazol + Trimetoprima a partir de 2 meses de idade." };
+            let v = Math.min(parseFloat(round05(p * 0.5)), 20);
+            return { v: v + " mL", r: `${recHead}1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR ${String(v).replace('.', ',')} ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.` };
+        },
+        detalhes: { indicacao: "Impetigo em alérgico à penicilina ou com suspeita/confirmação de MRSA; furúnculo com halo > 2 cm.", dose: "8 mg/kg/dia de trimetoprima (0,5 mL/kg/dose) VO de 12/12h por 7 a 10 dias.", atencao: "Máximo 20 mL (160 mg de TMP) por dose. A partir de 2 meses. Perguntar sobre alergia a sulfa." },
+        ficha: { indicacoes: "Impetigo (esquemas B e C: alérgicos à penicilina e MRSA).", dose: "8 mg/kg/dia de TMP (0,5 mL/kg/dose) VO de 12/12 horas por 7-10 dias", doseMaxima: "160 mg de TMP/dose (20 mL).", apresentacoes: "Suspensão 200 mg + 40 mg/5 mL.", via: "Oral.", alertasPediatricos: "Uso a partir de 2 meses de idade.", fonteRevisao: "Whitebook (Afya) - Impetigo (Prescrição Ambulatorial: tratamento tópico e sistêmico), vídeo enviado pelo Dr. Jonas em 27/10/2026." }
+    },
+    "clinda_vo_impetigo": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "clindamicina dalacin oral capsula impetigo mrsa alergia penicilina furunculo pele",
+        nome: "Clindamicina Oral (Impetigo / MRSA)", apres: "Cápsula 300 mg",
+        info: "<strong>Posologia (Whitebook):</strong> 20–40 mg/kg/dia VO de 6/6h por 7–10 dias. Máx. 400 mg/dose.", badge: "Máx: 400 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Impetigo, esquemas B e C): clindamicina (300 mg) 20-40 mg/kg/dia VO de 6/6h por 7-10 dias, máx. 400 mg/dose. */
+            let a = Math.min(p * 5, 400), b = Math.min(p * 10, 400);
+            return { v: `${a.toFixed(0)}–${b.toFixed(0)} mg 6/6h`, r: `${recHead}1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR ${a.toFixed(0)} A ${b.toFixed(0)} MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.` };
+        },
+        detalhes: { indicacao: "Impetigo em alérgico à penicilina ou com suspeita/confirmação de MRSA.", dose: "20–40 mg/kg/dia VO de 6/6h por 7 a 10 dias.", atencao: "Máximo 400 mg por dose. Disponível em cápsula de 300 mg: ajustar a dose à apresentação. Risco de diarreia por C. difficile." },
+        ficha: { indicacoes: "Impetigo (esquemas B e C).", dose: "20-40 mg/kg/dia VO de 6/6 horas por 7-10 dias", doseMaxima: "400 mg/dose.", apresentacoes: "Cápsula 300 mg.", via: "Oral.", fonteRevisao: "Whitebook (Afya) - Impetigo (Prescrição Ambulatorial: tratamento tópico e sistêmico), vídeo enviado pelo Dr. Jonas em 27/10/2026." }
+    },
+    "doxi_impetigo": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "doxiciclina vibramicina impetigo mrsa maior de 8 anos pele",
+        nome: "Doxiciclina (Impetigo MRSA, ≥ 8 anos)", apres: "Comprimido 100 mg",
+        info: "<strong>Posologia (Whitebook):</strong> ≥ 8 anos e ≤ 45 kg: 2–4 mg/kg/dose 12/12h (máx. 100 mg/dose); > 45 kg: 100 mg 12/12h, por 5–10 dias.", badge: "≥ 8 anos", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            /* Whitebook (Impetigo, esquema C - MRSA): doxiciclina 100 mg; >= 8 anos e <= 45 kg: 2-4 mg/kg/dose de 12/12h por 5-10 dias, máx. 100 mg/dose; >= 8 anos e > 45 kg: 100 mg/dose de 12/12h por 5-10 dias. Liberada por bula para maiores de 8 anos. */
+            if (i !== "" && parseFloat(i) < 8) return { v: "≥ 8 anos", r: "ATENÇÃO: doxiciclina liberada por bula para crianças maiores de 8 anos." };
+            if (p > 45) return { v: "100 mg 12/12h", r: `${recHead}1) DOXICICLINA 100 MG ---------------------- 20 COMPRIMIDOS\nTOMAR 1 COMPRIMIDO, VIA ORAL, DE 12/12 HORAS POR 5 A 10 DIAS.` };
+            let a = Math.min(p * 2, 100), b = Math.min(p * 4, 100);
+            return { v: `${a.toFixed(0)}–${b.toFixed(0)} mg 12/12h`, r: `${recHead}1) DOXICICLINA 100 MG\nDAR ${a.toFixed(0)} A ${b.toFixed(0)} MG (2 A 4 MG/KG/DOSE), VIA ORAL, DE 12/12 HORAS POR 5 A 10 DIAS (MÁXIMO 100 MG POR DOSE).` };
+        },
+        detalhes: { indicacao: "Impetigo com suspeita ou confirmação de MRSA, em maiores de 8 anos.", dose: "≥ 8 anos e ≤ 45 kg: 2–4 mg/kg/dose 12/12h; > 45 kg: 100 mg 12/12h; por 5 a 10 dias.", atencao: "Máximo 100 mg/dose. Só a partir de 8 anos. Tomar com água, sentado, longe de leite; fotossensibilidade." },
+        ficha: { indicacoes: "Impetigo por S. aureus MRSA (esquema C).", dose: "Crianças ≥ 8 anos e ≤ 45 kg: 2-4 mg/kg/dose de 12/12 horas por 5-10 dias\nCrianças ≥ 8 anos e > 45 kg: 100 mg/dose de 12/12 horas por 5-10 dias", doseMaxima: "100 mg/dose.", apresentacoes: "Comprimido 100 mg.", via: "Oral.", alertasPediatricos: "Liberada por bula para crianças maiores de 8 anos.", fonteRevisao: "Whitebook (Afya) - Impetigo (Prescrição Ambulatorial: tratamento tópico e sistêmico), vídeo enviado pelo Dr. Jonas em 27/10/2026." }
+    },
     "pele_mupi": {
         cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)", 
         kw: "mupirocina pomada impetigo bacteriana pele ambulatorial tópica", nome: "Mupirocina 2% Creme (Impetigo)", apres: "Creme Tópico",

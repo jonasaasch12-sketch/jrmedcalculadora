@@ -40,7 +40,7 @@ registrarConduta({
     cor: "#be185d",
     kw: "impetigo bolhoso crostoso foliculite furunculo carbunculo abscesso ectima erisipela celulite fasciite necrosante sindrome da pele escaldada estafilococica paroniquia dactilite bolhosa piodermite staphylococcus aureus estreptococo mrsa",
     resumo: "Impetigo, foliculite, furúnculo/abscesso, ectima, paroníquia, erisipela, celulite, pele escaldada e fasciíte necrosante: como reconhecer (com fotos), quando internar, drenar e qual antibiótico.",
-    legenda: "Conduta conforme a <strong>SBP – Departamentos de Dermatologia e Infectologia (2022)</strong> e a <strong>IDSA (2014)</strong>. Fotos reais do DermNet, com crédito.",
+    legenda: "Conduta conforme a <strong>SBP – Departamentos de Dermatologia e Infectologia (2022)</strong>, o <strong>Whitebook</strong> (impetigo) e a <strong>IDSA (2014)</strong>. Fotos reais do DermNet, com crédito.",
 
     blocos: [
         {
@@ -261,15 +261,18 @@ registrarConduta({
                 {
                     titulo: "Impetigo: tópico ou sistêmico?",
                     icone: "🧴",
-                    resumo: "Poucas lesões: mupirocina ou ácido fusídico 2 a 3x/dia por 5 a 10 dias. Extenso, < 2 anos, bolhoso ou MRSA: oral (cefalexina).",
+                    resumo: "Poucas lesões: mupirocina (> 3 meses) ou ácido fusídico 2 a 3x/dia por 5 a 7 dias. Sistêmico se > 5 lesões, bolhoso, febre, profundo, couro cabeludo: cefalexina.",
                     itens: [
-                        "<strong>Tópico</strong> (lesão única ou pouco extensa, crostoso): <strong>mupirocina 2%</strong> (acima de 2 meses) ou <strong>ácido fusídico 2%</strong>, 2 a 3 vezes ao dia, por 5 a 10 dias, até sumir; retapamulina 1% acima de 9 meses. <strong>Bacitracina não é mais recomendada</strong> (SBP 2022).",
-                        "<strong>Sistêmico</strong> se: <strong>mais de 2% da superfície corporal</strong> ou 2 ou mais regiões, <strong>menor de 2 anos</strong>, <strong>impetigo bolhoso</strong> ou MRSA suspeito/confirmado (SBP 2022).",
-                        "<strong>Oral de escolha: cefalexina</strong>; alternativas: outras cefalosporinas, amoxicilina-clavulanato. <strong>MRSA:</strong> clindamicina, sulfametoxazol-trimetoprima, doxiciclina (acima de 8 anos). <strong>Alergia:</strong> eritromicina ou clindamicina (SBP 2022).",
-                        "<strong>Cuidados:</strong> limpar e remover as crostas; lavar as mãos; unhas curtas. Antissépticos não tratam o impetigo (SBP 2022).",
+                        "<strong>Tópico</strong> (quadro localizado, não complicado, poucas lesões): <strong>mupirocina 2%</strong> (maiores de 3 meses) ou <strong>ácido fusídico 2%</strong> (pode em menores de 3 meses), <strong>2 a 3 vezes ao dia por 5 a 7 dias</strong> (Whitebook). Retapamulina 1% acima de 9 meses; <strong>bacitracina não é mais recomendada</strong> (SBP 2022).",
+                        "<strong>Sistêmico</strong> (Whitebook) se: acometimento <strong>profundo</strong> (subcutâneo, fáscia), <strong>mais de 5 lesões</strong>, <strong>impetigo bolhoso</strong>, <strong>febre</strong>, <strong>linfadenomegalia</strong>, faringite associada a lesões perto da boca, <strong>couro cabeludo</strong> (difícil usar creme), <strong>surto de glomerulonefrite pós-estreptocócica</strong>. A SBP acrescenta: mais de 2% da superfície corporal e menores de 2 anos (SBP 2022).",
+                        "<strong>Sempre associar o tópico ao sistêmico</strong> (Whitebook).",
+                        "↳ <strong>Esquema A (empírico): cefalexina</strong> por 7 a 10 dias (Whitebook; 1ª escolha também na SBP 2022).",
+                        "↳ <strong>Esquema B (alérgico à penicilina):</strong> eritromicina, claritromicina, sulfametoxazol-trimetoprima ou clindamicina (Whitebook).",
+                        "↳ <strong>Esquema C (suspeita ou confirmação de MRSA):</strong> sulfametoxazol-trimetoprima, clindamicina ou <strong>doxiciclina</strong> (a partir de 8 anos) (Whitebook).",
+                        "<strong>Higiene:</strong> lavar as lesões com água morna e sabonete neutro para remover as crostas; unhas curtas e limpas; não compartilhar toalhas e roupas de cama. <strong>Clorexidina degermante</strong> só nos casos recorrentes ou com suspeita de MRSA (Whitebook).",
                         "<strong>Recorrente:</strong> cultura e descolonização do paciente e da família (SBP 2022)."
                     ],
-                    remedios: ["pele_mupi", "cefadroxila", "smx_tmp"]
+                    remedios: ["pele_mupi", "fusidico_impetigo", "cefalexina_impetigo", "eritro_impetigo", "claritro_impetigo", "smx_impetigo", "clinda_vo_impetigo", "doxi_impetigo"]
                 },
                 {
                     titulo: "Foliculite, furúnculo e paroníquia",
@@ -294,7 +297,7 @@ registrarConduta({
                         "<strong>Erisipela recorrente:</strong> profilaxia com penicilina oral ou eritromicina 2x/dia por 4 a 5 semanas, ou penicilina benzatina IM a cada 2 a 4 semanas; tratar o fator predisponente (SBP 2022).",
                         "<strong>Retorno em 48 a 72 h:</strong> se a borda passar da marcação, febre persistir ou a dor aumentar muito, voltar antes."
                     ],
-                    remedios: ["benza", "cefadroxila"]
+                    remedios: ["cefalexina_impetigo", "benza"]
                 },
                 {
                     titulo: "Prevenção e escola",
@@ -310,11 +313,12 @@ registrarConduta({
         }
     ],
 
-    citacoes: { "SBP 2022": 0, "IDSA 2014": 1 },
+    citacoes: { "Whitebook": 3, "SBP 2022": 0, "IDSA 2014": 1 },
     fontes: [
         "Sociedade Brasileira de Pediatria. Departamentos Científicos de Dermatologia e Infectologia (2019-2021). Infecções Bacterianas Superficiais Cutâneas. Documento Científico, 08 de dezembro de 2022.",
         "Stevens DL, Bisno AL, Chambers HF, et al. Practice guidelines for the diagnosis and management of skin and soft tissue infections: 2014 update by the Infectious Diseases Society of America. Clin Infect Dis 2014;59(2):e10-52. doi:10.1093/cid/ciu444",
-        "Fotos: DermNet (dermnetnz.org), CC BY-NC-ND 4.0 — \"Image sourced from DermNet\", com link para a página de origem em cada foto."
+        "Fotos: DermNet (dermnetnz.org), CC BY-NC-ND 4.0 — \"Image sourced from DermNet\", com link para a página de origem em cada foto.",
+        "Whitebook (Afya). Guia de Prescrição / Pediatria: Impetigo (Prescrição Ambulatorial: tratamento tópico e sistêmico)."
     ],
     revisao: "10/2026"
 });
