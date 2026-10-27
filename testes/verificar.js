@@ -141,12 +141,17 @@ categorias.forEach(c => (c.patologias || []).forEach(pat => (pat.remedios || [])
 })));
 ids.filter(id => !noMenu.has(id)).forEach(id => aviso(`"${id}" não aparece em nenhuma seção do menu`));
 const GRUPOS = vm.runInContext('typeof GRUPOS_CARDS === "undefined" ? {} : GRUPOS_CARDS', ctx);
-Object.keys(GRUPOS).forEach(g => GRUPOS[g].opcoes.forEach(o => {
-    if (!farmaciaJR[o.id]) falha(`card agrupado "${g}" cita "${o.id}", que não existe`);
-    if (o.via && typeof o.dose !== 'function') falha(`card agrupado "${g}" > "${o.rotulo}": injetável sem a linha DOSE`);
-    if (o.via && farmaciaJR[o.id]) for (const p of PESOS) for (const i of IDADES) {
-        const t = o.dose(p, i, farmaciaJR[o.id].calc(p, i));
-        if (!/^DOSE: /.test(t) || ruim.test(t)) { falha(`card agrupado "${g}" > "${o.rotulo}" (${p} kg): linha DOSE inválida → ${t}`); break; }
+const itensGrupo = vm.runInContext('typeof itensDoGrupo === "undefined" ? null : itensDoGrupo', ctx);
+Object.keys(GRUPOS).forEach(g => itensGrupo(g).forEach(({ opcao, variante, id }) => {
+    const nomeOp = opcao.rotulo + (variante ? ' / ' + variante.rotulo : '');
+    if (!farmaciaJR[id]) { falha(`card agrupado "${g}" > "${nomeOp}" cita "${id}", que não existe`); return; }
+    const dose = variante ? variante.dose : opcao.dose;
+    const injetavel = /ENDOVENOS|INTRAMUSCULAR/.test(farmaciaJR[id].calc(20, '5').r);
+    if (injetavel && typeof dose !== 'function') falha(`card agrupado "${g}" > "${nomeOp}": injetável sem a linha DOSE`);
+    if (!injetavel && dose) falha(`card agrupado "${g}" > "${nomeOp}": via oral não leva a linha DOSE`);
+    if (typeof dose === 'function') for (const p of PESOS) for (const i of IDADES) {
+        const t = dose(p, i, farmaciaJR[id].calc(p, i));
+        if (!/^DOSE: /.test(t) || ruim.test(t)) { falha(`card agrupado "${g}" > "${nomeOp}" (${p} kg): linha DOSE inválida → ${t}`); break; }
     }
 }));
 

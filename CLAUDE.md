@@ -40,8 +40,8 @@ js/modo-teste.js           versão de teste: faixa, selo e bloqueio de quem não
 medicamentos/registro.js   registrarMedicamentos(): cria farmaciaJR, detalhesMedicacoes, fichasPadrao
 medicamentos/<categoria>.js um arquivo por categoria (cat: "cat-<categoria>")
 medicamentos/menu.js       árvore do menu: categoria → seções → ids dos remédios (ordem de exibição)
-medicamentos/grupos.js     cards agrupados (GRUPOS_CARDS): na Prescrição, um card só por remédio (ceftriaxona, cefalexina) com
-                           botões de via e doenças (começa em branco; até 5 doenças = botões, mais = lista, em ordem alfabética); a receita é a do
+medicamentos/grupos.js     cards agrupados (GRUPOS_CARDS): na Prescrição, um card só por remédio (ceftriaxona, cefalexina, amoxicilina, amoxi+clav) com
+                           botões de via e doenças (começa em branco; até 5 doenças = botões, mais = lista, em ordem alfabética; `variantes` = 2ª fila "Frasco / via"); a receita é a do
                            card da doença escolhida + linha "DOSE: X MG/KG/DOSE". Os cards por doença seguem em farmaciaJR (condutas usam)
 js/app.js                  renderização, busca, cálculo, alergias, carrinho/receita, tema, fonte
 js/formularios.js          modais (cadastro da equipe, categorias, ficha) + inicialização (no final)
