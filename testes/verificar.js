@@ -77,6 +77,7 @@ const TETOS = {
     clav_oma: 12.5,       // mL de cada frasco de 400 mg/5 mL = 1 g cada (2 g/dose no total)
     cef_oma: 3.5,         // mL IM 285,7 mg/mL (1 g)
     amox_faringo: 10,     // mL de 250 mg/5 mL = 500 mg/dose (IDSA)
+    amox_faringo400: 6.25, // mL de 400 mg/5 mL = 500 mg/dose (IDSA)
     azitro_faringo: 12.5, // mL de 200 mg/5 mL = 500 mg/dia (IDSA)     // mL/h de 1 U/mL (10 U/h, IMIP)
     kcl_ev: 530,          // mL/h na periférica (40 mEq em 2h)
     kcl_xarope: 50,       // mL por dose (40 mEq)

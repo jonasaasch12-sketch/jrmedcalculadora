@@ -60,7 +60,7 @@ const categorias = [
                     "ampicilina", "pen_cristalina_pac", "cef_resp_ev", "cef_resp_im", "cefotax_pac", "amoxclav_ev", "ampisulb_ev", "azi_ev", "levoflox_ev", "genta", "linezolida_ev"
                 ] 
             },
-            { nome: "Faringoamigdalite Estreptocócica", conduta: "faringoamigdalite", condutaNome: "Faringoamigdalite", remedios: ["amox_faringo", "benza", "azitro_faringo"] },
+            { nome: "Faringoamigdalite Estreptocócica", conduta: "faringoamigdalite", condutaNome: "Faringoamigdalite", remedios: ["amox_faringo", "amox_faringo400", "benza", "azitro_faringo"] },
             { nome: "Otite Média Aguda", conduta: "otite_media", condutaNome: "Otite média aguda", remedios: ["amox_oma", "clav_oma", "cef_oma"] },
             { nome: "Sinusite Bacteriana Aguda", conduta: "sinusite", condutaNome: "Sinusite", remedios: ["amox_sinusite", "clav_sinusite", "cef_sinusite"] },
             { nome: "Tosse (Antitussígenos e Expectorantes)", remedios: ["koid_d", "torante", "acebrofilina", "antux_xpe", "antux_gts", "percoff"] },

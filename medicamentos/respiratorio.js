@@ -644,6 +644,22 @@ registrarMedicamentos({
             atencao: "10 dias completos (prevenção de febre reumática). Mononucleose: exantema com amoxicilina. Perguntar sobre alergia a penicilina."
         }
     },
+    "amox_faringo400": {
+        cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "amoxicilina 400 faringite amigdalite faringoamigdalite estreptococica estreptococo garganta 10 dias", nome: "Amoxicilina 400 mg: Faringoamigdalite (10 dias)", apres: "400 mg / 5 mL",
+        info: "<strong>Posologia:</strong> 50 mg/kg/dia de 12/12h (25 mg/kg/dose) por 10 dias. Máx. 500 mg/dose (1 g/dia).", badge: "Máx: 500 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Mesma dose do amox_faringo (IDSA 2012: 25 mg/kg/dose 12/12h, máx. 500 mg/dose), no frasco de 400 mg/5 mL (80 mg/mL): máx. 6,25 mL. */
+            let v = Math.min(parseFloat(round05(p * 25 * 5 / 400)), 6.25), t = String(v).replace('.', ',');
+            let tot = Math.ceil(v * 2 * 10);
+            return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 400 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.\nNÃO PARAR ANTES DOS 10 DIAS, MESMO SE MELHORAR.` };
+        },
+        detalhes: {
+            indicacao: "Faringoamigdalite estreptocócica (estreptococo beta-hemolítico do grupo A).",
+            dose: "50 mg/kg/dia VO de 12/12h por 10 dias (máx. 500 mg/dose = 6,25 mL do frasco de 400 mg/5 mL). IDSA: alternativa 50 mg/kg 1 vez ao dia (máx. 1 g).",
+            atencao: "10 dias completos (prevenção de febre reumática). Mononucleose: exantema com amoxicilina. Perguntar sobre alergia a penicilina."
+        }
+    },
     "amox_oma": {
         cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais)",
         kw: "amoxicilina dose alta otite media aguda oma ouvido 90 mg 12/12h", nome: "Amoxicilina: Otite Média Aguda (dose alta)", apres: "400 mg / 5 mL",
