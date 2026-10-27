@@ -126,7 +126,7 @@ const categorias = [
         patologias: [
             { nome: "Sarampo", conduta: "sarampo", condutaNome: "Sarampo", remedios: ["vit_a_sarampo"] },
             { nome: "Varicela (Catapora)", conduta: "varicela", condutaNome: "Varicela", remedios: ["aciclovir_varicela_vo", "aciclovir_varicela_ev"] },
-            { nome: "Parasitoses, Infecções e Lesões Cutâneas", remedios: ["pele_larva", "pele_delta", "pele_perme_shampoo", "pele_perme", "pele_iver", "pele_escabiose_orient", "pele_mupi", "pele_nista", "pele_acicl", "pele_trokg","pele_trok", "trok_n", "quadriderm", "cetoconazol_cr", "nistatina_zinco", "penvir", "fluconazol"] }
+            { nome: "Parasitoses, Infecções e Lesões Cutâneas", conduta: "pele_bacteriana", condutaNome: "Infecções bacterianas de pele", remedios: ["pele_larva", "pele_delta", "pele_perme_shampoo", "pele_perme", "pele_iver", "pele_escabiose_orient", "pele_mupi", "pele_nista", "pele_acicl", "pele_trokg","pele_trok", "trok_n", "quadriderm", "cetoconazol_cr", "nistatina_zinco", "penvir", "fluconazol"] }
         ]
     },
     { 

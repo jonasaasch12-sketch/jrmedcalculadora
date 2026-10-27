@@ -55,6 +55,7 @@ condutas/condutas.js       área 📖 Condutas (aba ao lado de 💊 Prescrição
 condutas/exantematicas.js  categoria "Doenças exantemáticas": guia de identificação clicável + varicela; fotos reais em FOTOS_EXANTEMA
                            (img/exantemas/). Só foto com licença livre e crédito: DermNet (CC BY-NC-ND 4.0, `fonte: "dermnet"`:
                            arquivo original, sem corte, com marca d'água, crédito "Image sourced from DermNet" + link) ou Wikimedia/CDC
+condutas/pele_bacteriana.js infecções de pele (SBP 2022): acrescenta fotos DermNet de img/pele/ no mesmo FOTOS_EXANTEMA (chaves pele_*)
 condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as medicações
                            são ids de cards (farmaciaJR), a dose nunca é repetida na conduta
 ```
