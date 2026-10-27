@@ -61,7 +61,10 @@ GRUPOS_CARDS.amoxicilina = {
     apres: "250 mg/5 mL ou 400 mg/5 mL",
     opcoes: [
         { rotulo: "Erisipela", id: "amox_erisipela" },
-        { rotulo: "Faringoamigdalite", id: "amox_faringo" },
+        { rotulo: "Faringoamigdalite", variantes: [
+            { rotulo: "250 mg/5 mL (12/12h)", id: "amox_faringo" },
+            { rotulo: "400 mg/5 mL (12/12h)", id: "amox_faringo400" }
+        ] },
         { rotulo: "Otite média aguda", id: "amox_oma" },
         { rotulo: "Pneumonia", variantes: [
             { rotulo: "250 mg/5 mL (8/8h)", id: "amox" },

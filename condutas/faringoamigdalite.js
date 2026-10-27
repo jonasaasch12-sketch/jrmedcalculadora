@@ -163,7 +163,7 @@ registrarConduta({
                         "<strong>Penicilina V oral</strong> (acima de 5 anos) é alternativa (card na aba Prescrição).",
                         "Sem antibiótico de amplo espectro (cefalosporinas de 3ª geração, amoxicilina-clavulanato) na faringite não complicada."
                     ],
-                    remedios: ["amox_faringo", "benza"]
+                    remedios: ["amox_faringo", "amox_faringo400", "benza"]
                 },
                 {
                     passo: 4,
