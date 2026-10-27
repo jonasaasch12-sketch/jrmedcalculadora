@@ -68,7 +68,7 @@ const FONTES_CARDS = {
     neuro_fenitoina: REF.crise_wb + " Fenitoína 15–20 mg/kg.",
     dexclor: REF.bula + " Polaramine solução oral 2 mg/5 mL: 2–6 anos 1,25 mL; 6–12 anos 2,5 mL; > 12 anos 5 mL, 3x ao dia.",
     salb_spray: "Esquema escolhido pelo Dr. Jonas para o app. A dose da crise (1 jato/2 kg = 50 mcg/kg, máx. 10 jatos) é a do Guia Prático de Atualização nº 6 — Anafilaxia: atualização 2021 (SBP). Esquema da alta: fonte ainda não registrada.",
-    magnesio_ev: "Protocolo do serviço (dose escolhida pelo Dr. Jonas para o app).",
+    magnesio_ev: "Protocolo do IMIP (Instituto de Medicina Integral Prof. Fernando Figueira) — crise de asma: sulfato de magnésio 50 mg/kg/h em infusão contínua por 5 horas (máx. 2 g/h).",
     cef_resp_im: REF.pac + " Ceftriaxona 50–100 mg/kg/dia (PAC complicada).",
     cad_hidratacao: "UTI Pediátrica — IMIP. Protocolo de Cetoacidose Diabética (2018): solução padrão em Y (soluções A e B).",
 
