@@ -2,12 +2,22 @@
 // CARDS AGRUPADOS (pedido do Dr. Jonas, 10/2026)
 // =====================================================
 // Na Prescrição, os cards de um mesmo remédio usados em doenças diferentes viram UM card só,
-// com o nome do remédio, e a doença é escolhida numa lista (começa em branco).
+// com o nome do remédio, e a doença é escolhida numa lista (começa em branco, só o nome das doenças).
 // Os cards de cada doença continuam existindo em farmaciaJR (cada um com a sua dose):
 // as condutas e a receita usam o card da doença escolhida.
 //
-// opcoes: { via (só para os botões IM/EV), regime (título do grupo na lista: o esquema de dose),
-//           rotulo (doença), id (card em farmaciaJR), dose (linha "DOSE: ..." que entra na receita) }
+// opcoes: { via (só para os botões IM/EV), rotulo (doença), id (card em farmaciaJR),
+//           dose (só injetáveis): (p, i, calc) => texto da linha "DOSE: ..." que vai no FINAL da receita }
+
+// "DOSE: 50 MG/KG/DOSE" ou, quando o teto corta a dose, "DOSE: 1 G (DOSE MÁXIMA)".
+// Mesma conta dos cards: Math.min(peso × mg/kg, teto).
+function textoDoseMgKg(p, mgkg, teto, intervalo) {
+    let ate = intervalo ? ` ${intervalo}` : "";
+    if (p * mgkg > teto) return `${String(teto / 1000).replace('.', ',')} G/DOSE${ate} (DOSE MÁXIMA)`;
+    return `${String(mgkg).replace('.', ',')} MG/KG/DOSE${ate}`;
+}
+const doseCef = (mgkg, teto) => (p) => `DOSE: ${textoDoseMgKg(p, mgkg, teto)}.`;
+const doseCef2 = (a, b) => (p) => `DOSE: ${textoDoseMgKg(p, a[0], a[1], a[2])} OU ${textoDoseMgKg(p, b[0], b[1], b[2])}.`;
 
 const GRUPOS_CARDS = {
     ceftriaxona: {
@@ -15,45 +25,31 @@ const GRUPOS_CARDS = {
         apres: "FA 500 mg / 1 g",
         vias: [{ via: "IM", rotulo: "💉 IM" }, { via: "EV", rotulo: "🩸 EV" }],
         opcoes: [
-            { via: "IM", regime: "50 mg/kg/dose, 1x ao dia", rotulo: "Otite média aguda (1 a 3 dias)", id: "cef_oma",
-              dose: "DOSE: 50 MG/KG/DOSE IM, 1 VEZ AO DIA (MÁX. 1 G/DOSE)." },
-            { via: "IM", regime: "50 mg/kg/dose, 1x ao dia", rotulo: "Sinusite bacteriana aguda (dose única)", id: "cef_sinusite",
-              dose: "DOSE: 50 MG/KG/DOSE IM, DOSE ÚNICA (MÁX. 1 G)." },
-            { via: "IM", regime: "50 mg/kg/dose, 1x ao dia", rotulo: "Febre sem sinais localizatórios", id: "cef_fssl",
-              dose: "DOSE: 50 MG/KG/DOSE IM, 1 VEZ AO DIA (MÁX. 2 G/DIA)." },
-            { via: "IM", regime: "50 a 100 mg/kg/dose, 1x ao dia", rotulo: "Disenteria (EV se < 3 meses ou grave)", id: "cef_disenteria",
-              dose: "DOSE: 50 A 100 MG/KG/DOSE, 1 VEZ AO DIA, POR 3 A 5 DIAS (MÁX. 2 G/DIA)." },
-            { via: "IM", regime: "100 mg/kg/dia (24/24h ou 12/12h)", rotulo: "Pneumonia (7 dias)", id: "cef_resp_im",
-              dose: "DOSE: 100 MG/KG/DOSE DE 24/24H OU 50 MG/KG/DOSE DE 12/12H (MÁX. 2 G/DIA)." },
-            { via: "IM", regime: "Dose fixa (sem peso)", rotulo: "Quimioprofilaxia meningocócica (contatos)", id: "cef_profilaxia_meningo",
-              dose: "DOSE: 125 MG (< 12 ANOS) OU 250 MG (≥ 12 ANOS) IM, DOSE ÚNICA." },
+            { via: "IM", rotulo: "Otite média aguda", id: "cef_oma", dose: doseCef(50, 1000) },
+            { via: "IM", rotulo: "Sinusite bacteriana aguda", id: "cef_sinusite", dose: doseCef(50, 1000) },
+            { via: "IM", rotulo: "Febre sem sinais localizatórios", id: "cef_fssl", dose: doseCef(50, 2000) },
+            { via: "IM", rotulo: "Disenteria", id: "cef_disenteria", dose: doseCef(75, 2000) },
+            { via: "IM", rotulo: "Pneumonia", id: "cef_resp_im", dose: doseCef2([100, 2000, "24/24H"], [50, 1000, "12/12H"]) },
+            { via: "IM", rotulo: "Quimioprofilaxia meningocócica", id: "cef_profilaxia_meningo",
+              dose: (p, i, calc) => `DOSE: ${String(calc.v).toUpperCase()} (DOSE FIXA).` },
 
-            { via: "EV", regime: "50 mg/kg/dose de 12/12h (100 mg/kg/dia)", rotulo: "Meningite / doença meningocócica (7 dias)", id: "cef_meningo",
-              dose: "DOSE: 50 MG/KG/DOSE EV DE 12/12H = 100 MG/KG/DIA (MÁX. 2 G/DOSE)." },
-            { via: "EV", regime: "50 mg/kg/dose de 12/12h (100 mg/kg/dia)", rotulo: "Celulite orbitária (2 a 3 semanas)", id: "cef_orbitaria",
-              dose: "DOSE: 50 MG/KG/DOSE EV DE 12/12H = 100 MG/KG/DIA (MÁX. 2 G/DOSE)." },
-            { via: "EV", regime: "100 mg/kg/dia (12/12h ou 24/24h)", rotulo: "Sepse / choque séptico", id: "cef_sepse",
-              dose: "DOSE: 50 MG/KG/DOSE DE 12/12H OU 100 MG/KG/DOSE DE 24/24H (MÁX. 4 G/DIA)." },
-            { via: "EV", regime: "100 mg/kg/dia (12/12h ou 24/24h)", rotulo: "Pielonefrite / ITU febril", id: "urina_ceft",
-              dose: "DOSE: 50 MG/KG/DOSE DE 12/12H OU 100 MG/KG/DOSE DE 24/24H (MÁX. 2 G/DIA)." },
-            { via: "EV", regime: "100 mg/kg/dia (12/12h ou 24/24h)", rotulo: "Pneumonia (7 dias)", id: "cef_resp_ev",
-              dose: "DOSE: 100 MG/KG/DOSE DE 24/24H OU 50 MG/KG/DOSE DE 12/12H (MÁX. 2 G/DIA)." },
-            { via: "EV", regime: "50 a 75 mg/kg/dia", rotulo: "Erisipela (formas moderadas a graves)", id: "cef_erisipela",
-              dose: "DOSE: 50 A 75 MG/KG/DOSE DE 24/24H (OU METADE DE 12/12H) (MÁX. 2 G/DOSE)." }
+            { via: "EV", rotulo: "Meningite / doença meningocócica", id: "cef_meningo", dose: doseCef(50, 2000) },
+            { via: "EV", rotulo: "Celulite orbitária", id: "cef_orbitaria", dose: doseCef(50, 2000) },
+            { via: "EV", rotulo: "Sepse / choque séptico", id: "cef_sepse", dose: doseCef2([50, 2000, "12/12H"], [100, 4000, "24/24H"]) },
+            { via: "EV", rotulo: "Pielonefrite / ITU febril", id: "urina_ceft", dose: doseCef2([50, 1000, "12/12H"], [100, 2000, "24/24H"]) },
+            { via: "EV", rotulo: "Pneumonia", id: "cef_resp_ev", dose: doseCef2([100, 2000, "24/24H"], [50, 1000, "12/12H"]) },
+            { via: "EV", rotulo: "Erisipela", id: "cef_erisipela", dose: doseCef(62.5, 2000) }
         ]
     },
     cefalexina: {
         nome: "Cefalexina Suspensão",
         apres: "250 mg / 5 mL",
+        // Via oral: sem linha de dose na receita (pedido do Dr. Jonas).
         opcoes: [
-            { regime: "25 a 50 mg/kg/dia, de 6/6h", rotulo: "Impetigo / infecção de pele (7 a 10 dias)", id: "cefalexina_impetigo",
-              dose: "DOSE: 6,25 A 12,5 MG/KG/DOSE DE 6/6H = 25 A 50 MG/KG/DIA (MÁX. 500 MG/DOSE)." },
-            { regime: "50 a 100 mg/kg/dia, de 6/6h", rotulo: "Cistite / ITU baixa (7 dias)", id: "urina_cefa",
-              dose: "DOSE: 12,5 A 25 MG/KG/DOSE DE 6/6H = 50 A 100 MG/KG/DIA (MÁX. 500 MG/DOSE)." },
-            { regime: "50 a 100 mg/kg/dia, de 6/6h", rotulo: "Erisipela (5 dias)", id: "cefalexina_erisipela",
-              dose: "DOSE: 12,5 A 25 MG/KG/DOSE DE 6/6H = 50 A 100 MG/KG/DIA (MÁX. 500 MG/DOSE)." },
-            { regime: "25 a 100 mg/kg/dia, de 6/6h", rotulo: "Celulite (7 a 14 dias)", id: "cefalexina_celulite",
-              dose: "DOSE: 6,25 A 25 MG/KG/DOSE DE 6/6H = 25 A 100 MG/KG/DIA (MÁX. 500 MG/DOSE)." }
+            { rotulo: "Impetigo", id: "cefalexina_impetigo" },
+            { rotulo: "Cistite / ITU", id: "urina_cefa" },
+            { rotulo: "Erisipela", id: "cefalexina_erisipela" },
+            { rotulo: "Celulite", id: "cefalexina_celulite" }
         ]
     }
 };
