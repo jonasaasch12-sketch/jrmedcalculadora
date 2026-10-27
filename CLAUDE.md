@@ -79,11 +79,11 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
   tempo (resumo)" (`lista: "passos"`), depois uma seção por passo com `passo: N` (número em destaque),
   na ordem em que se faz: chegada/exames → hidratação → medicação... Cada passo diz o que fazer,
   em frases curtas e imperativas, com o card daquela etapa. Complicações "a qualquer momento" no fim.
-- **Conduta com várias doenças = um capítulo (bloco) por doença** (pedido do Dr. Jonas, 10/2026, como o Whitebook; modelo: condutas/pele_bacteriana.js):
-  1º bloco "Visão geral" (quais doenças, critérios de internação clicáveis, avaliação na chegada); depois um bloco por doença com as seções, nesta ordem:
-  Definição e critérios diagnósticos → Agentes etiológicos → Apresentação clínica: sinais e sintomas (com foto) → Diagnóstico diferencial →
-  Complicações → Quando internar (se houver) → Tratamento ambulatorial → Tratamento hospitalar. O índice do topo vira a lista de doenças.
-  **Repetir o mesmo card** em várias doenças quando a dose é a mesma; dose diferente = card próprio da doença.
+- **Conduta com várias doenças = um bloco por doença, tudo da doença dentro dele** (pedido do Dr. Jonas, 10/2026, como o Whitebook;
+  modelo: condutas/pele_bacteriana.js). Seções, nesta ordem: Apresentação clínica e sinais e sintomas (com foto) → Critérios diagnósticos
+  (agentes e diferencial dentro) → Tratamento ambulatorial (só as medicações de casa) → Tratamento hospitalar (1º grupo "🏥 Critérios de
+  internação" clicáveis da doença — `internacaoPele()` —, depois grupo "💉 Tratamento" com os cards EV) → Complicações. Sem bloco geral
+  separado. O índice do topo vira a lista de doenças. **Repetir o mesmo card** em várias doenças quando a dose é a mesma; dose diferente = card próprio.
 - Escores clínicos (WDF, PRAM...) sempre **clicáveis** (`escore: {...}`), com soma automática.
 - Ferramenta própria numa seção: `ferramenta: "<nomeDaFunção>"` (função global que devolve o HTML), ex.: boneco
   clicável de Lund-Browder em `condutas/queimados.js`.
