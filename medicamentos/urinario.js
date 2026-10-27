@@ -9,23 +9,32 @@ registrarMedicamentos({
     "urina_clav": {
         cat: "cat-urinario", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
         kw: "amoxicilina clavulanato itu urinaria pielonefrite antibiotico oral ambulatorial", nome: "Amoxi-Clavulanato Suspensão (ITU)", apres: "250 mg + 62,5 mg / 5 mL",
-        info: "<strong>Posologia:</strong> Peso / 3 mL de 8/8h por 10 dias.", badge: "", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => { let v = round05(p / 3), tot = Math.ceil(parseFloat(v) * 3 * 10); /* total do tratamento em mL: 3 doses x 10 dias */ return { v: v + " mL", r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML -- ${tot} ML\nDAR ${v} ML, VIA ORAL, DE 8/8 HORAS POR 10 DIAS.` }; },
+        info: "<strong>Posologia (SBP):</strong> 20–40 mg/kg/dia de amoxicilina VO de 8/8h por 10 dias. Última opção na ITU.", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* SBP (DC Nefrologia nº 101, 2023): amoxicilina-clavulanato 20-40 mg/kg/dia de 8/8h, última opção (altera mais a flora intestinal). 250 mg/5 mL: 20 mg/kg/dia = p x 0,133 mL/dose; 40 mg/kg/dia = p x 0,267 mL/dose. Teto do app 10 mL/dose (500 mg). Total em mL: 3 doses x 10 dias. */
+            let a = Math.min(parseFloat(round05(p * 20 / 3 / 50)), 10), b = Math.min(parseFloat(round05(p * 40 / 3 / 50)), 10);
+            let tot = Math.ceil(b * 3 * 10), t = x => String(x).replace('.', ',');
+            return { v: `${a}–${b} mL`, r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML -- ${tot} ML\nDAR ${t(a)} A ${t(b)} ML, VIA ORAL, DE 8/8 HORAS POR 10 DIAS.` };
+        },
         detalhes: {
-            indicacao: "Infecção do trato urinário (ITU).",
-            dose: "Peso ÷ 3 mL VO de 8/8h por 10 dias.",
-            atencao: "Perguntar sobre alergia a penicilina. Ajustar pela urocultura."
+            indicacao: "Infecção do trato urinário (última opção, quando as outras não servem).",
+            dose: "20–40 mg/kg/dia de amoxicilina VO de 8/8h por 10 dias (SBP 2023).",
+            atencao: "Máximo 10 mL (500 mg) por dose. Perguntar sobre alergia a penicilina. Ajustar pela urocultura. A SBP coloca como última opção, por alterar mais a flora intestinal."
         }
     },
     "urina_cefa": {
         cat: "cat-urinario", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
         kw: "cefalexina cistite itu urinaria antibiotico oral ambulatorial", nome: "Cefalexina Suspensão (Cistite)", apres: "250 mg / 5 mL",
-        info: "<strong>Posologia:</strong> Peso / 4 mL de 6/6h por 7 dias.", badge: "", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => { let v = round05(p / 4); return { v: v + " mL", r: `${recHead}1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR ${v} ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.` }; },
+        info: "<strong>Posologia (Whitebook):</strong> 12,5–25 mg/kg/dose (Peso ÷ 4 a Peso ÷ 2 mL) de 6/6h por 7 dias. Máx. 10 mL/dose.", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (ITU em Pediatria, ITU afebril): cefalexina 250 mg/5 mL, 12,5-25 mg/kg/dose (0,25-0,5 mL/kg/dose) VO de 6/6h por 7-14 dias, máx. 10 mL/dose (500 mg). */
+            let a = Math.min(parseFloat(round05(p / 4)), 10), b = Math.min(parseFloat(round05(p / 2)), 10), t = x => String(x).replace('.', ',');
+            return { v: `${a}–${b} mL`, r: `${recHead}1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR ${t(a)} A ${t(b)} ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.` };
+        },
         detalhes: {
-            indicacao: "Cistite (ITU baixa).",
-            dose: "Peso ÷ 4 mL VO de 6/6h por 7 dias.",
-            atencao: "Ajustar pela urocultura."
+            indicacao: "Cistite (ITU baixa, sem febre).",
+            dose: "12,5–25 mg/kg/dose (Peso ÷ 4 a Peso ÷ 2 mL) VO de 6/6h por 7 dias (Whitebook: 7 a 14 dias).",
+            atencao: "Máximo 10 mL (500 mg) por dose. Ajustar pela urocultura."
         }
     },
     "urina_ceft": {
