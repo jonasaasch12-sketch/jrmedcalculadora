@@ -453,6 +453,49 @@ registrarMedicamentos({
             atencao: "Não atrasar por exames ou punção lombar. Quem tratou com ceftriaxona não precisa de quimioprofilaxia na alta."
         }
     },
+    "dexa_meningite": {
+        cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar / UBS (Vias Injetáveis)",
+        kw: "dexametasona decadron meningite bacteriana corticoide adjuvante surdez pneumococo haemophilus hib",
+        nome: "Dexametasona EV: Meningite bacteriana", apres: "Ampola 4 mg/mL",
+        info: "<strong>Posologia (IDSA/ESCMID):</strong> 0,15 mg/kg/dose EV de 6/6h por 2 a 4 dias, antes ou junto da 1ª dose do antibiótico. Máx. 10 mg/dose.", badge: "Máx: 10 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* IDSA 2004 e ESCMID 2016: 0,15 mg/kg/dose de 6/6h por 2-4 dias (ESCMID: 4 dias), 10-20 min antes ou junto da 1ª dose do antibiótico. Teto do app 10 mg/dose (dose do adulto, ESCMID). Ampola 4 mg/mL. */
+            let mg = Math.min(p * 0.15, 10), ml = mg / 4;
+            return { v: `${ml.toFixed(2)} mL (${mg.toFixed(1)} mg)`, r: `VIA ENDOVENOSA (MENINGITE BACTERIANA - ADJUVANTE)\n\nDEXAMETASONA 4 MG/ML: FAZER ${ml.toFixed(2)} ML (${mg.toFixed(1)} MG = 0,15 MG/KG) EV DE 6/6 HORAS POR 2 A 4 DIAS.\n1ª DOSE 10 A 20 MINUTOS ANTES OU JUNTO DA 1ª DOSE DO ANTIBIÓTICO.` };
+        },
+        detalhes: {
+            indicacao: "Meningite bacteriana suspeita em lactentes e crianças (benefício na meningite por Hib e por pneumococo), começando antes ou junto do antibiótico.",
+            dose: "0,15 mg/kg/dose EV de 6/6h por 2 a 4 dias (IDSA 2004; ESCMID 2016: 4 dias).",
+            atencao: "Máximo 10 mg/dose. Não iniciar se o antibiótico já foi feito há mais de 4 h (benefício incerto). Não usar no recém-nascido nem na meningococcemia sem meningite."
+        },
+        ficha: {
+            indicacoes: "Adjuvante na meningite bacteriana aguda em crianças (reduz surdez e sequelas neurológicas).",
+            dose: "0,15 mg/kg/dose EV de 6/6 horas por 2 a 4 dias, iniciando 10-20 minutos antes ou junto da 1ª dose do antibiótico",
+            doseMaxima: "10 mg/dose (teto do app, dose do adulto na ESCMID 2016).",
+            apresentacoes: "Ampola 4 mg/mL.",
+            via: "Endovenosa.",
+            alertasPediatricos: "Na Cochrane 2015, o corticoide reduziu surdez e sequelas neurológicas (sem reduzir a mortalidade geral), com benefício na meningite por Hib e por pneumococo e em países de alta renda. Pode aumentar a febre recorrente.",
+            fonteRevisao: "Tunkel AR et al. IDSA 2004, doi:10.1086/425368 | van de Beek D et al. ESCMID 2016, doi:10.1016/j.cmi.2016.01.007 | Brouwer MC et al. Cochrane 2015, doi:10.1002/14651858.CD004405.pub5"
+        }
+    },
+    "rifampicina_hib": {
+        cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "rifampicina quimioprofilaxia haemophilus influenzae tipo b hib meningite contatos comunicantes",
+        nome: "Rifampicina: Quimioprofilaxia de Hib (contatos)", apres: "Suspensão 20 mg / mL",
+        info: "<strong>Posologia (MS):</strong> < 1 mês: 10 mg/kg/dose · ≥ 1 mês: 20 mg/kg/dose (máx. 600 mg), 1x/dia por 4 dias.", badge: "Máx: 600 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            /* MS (Guia de Vigilância, meningite por Hib): < 1 mês 10 mg/kg/dose; >= 1 mês 20 mg/kg/dose (máx. 600 mg) de 24/24h por 4 dias. Suspensão 20 mg/mL. */
+            let id = parseFloat(String(i).replace(',', '.')), rn = !isNaN(id) && id < 1 / 12;
+            let mg = Math.min(p * (rn ? 10 : 20), 600), v = Math.min(parseFloat(round05(mg / 20)), 30), t = String(v).replace('.', ','), tot = Math.ceil(v * 4);
+            let aviso = isNaN(id) ? "\n(MENOR DE 1 MÊS: 10 MG/KG/DOSE.)" : "";
+            return { v: v + " mL", r: `${recHead}1) RIFAMPICINA SUSPENSÃO 20 MG/ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, 1 VEZ AO DIA POR 4 DIAS.${aviso}\nAS SECREÇÕES (URINA, LÁGRIMA, SUOR) FICAM ALARANJADAS.` };
+        },
+        detalhes: {
+            indicacao: "Quimioprofilaxia dos contatos de meningite por Haemophilus influenzae tipo b, conforme a vigilância (domicílio com criança < 4 anos não vacinada ou imunodeprimida, creche).",
+            dose: "< 1 mês: 10 mg/kg/dose; ≥ 1 mês: 20 mg/kg/dose (máx. 600 mg), 1x/dia por 4 dias (MS).",
+            atencao: "A indicação é definida pela vigilância epidemiológica. Gestante não recebe rifampicina. Interage com anticoncepcional oral."
+        }
+    },
     "rifampicina_profilaxia": {
         cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
         kw: "rifampicina quimioprofilaxia contatos doenca meningococica meningococcemia meningite comunicantes",
