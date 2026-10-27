@@ -43,6 +43,8 @@ medicamentos/menu.js       árvore do menu: categoria → seções → ids dos r
 medicamentos/grupos.js     cards agrupados (GRUPOS_CARDS): na Prescrição, um card só por remédio (ceftriaxona, cefalexina, amoxicilina, amoxi+clav) com
                            botões de via e doenças (começa em branco; até 5 doenças = botões, mais = lista, em ordem alfabética; `variantes` = 2ª fila "Frasco / via"); a receita é a do
                            card da doença escolhida + linha "DOSE: X MG/KG/DOSE". Os cards por doença seguem em farmaciaJR (condutas usam)
+medicamentos/fontes.js     FONTES_CARDS: fonte da dose de cada card (quadro "📚 Dose preconizada" abaixo do nome; não entra na receita).
+                           Ordem: FONTES_CARDS → ficha.fonteRevisao → sigla do info. Sem fonte: "⚠️ Fonte ainda não registrada". Não inventar fonte
 js/app.js                  renderização, busca, cálculo, alergias, carrinho/receita, tema, fonte
 js/formularios.js          modais (cadastro da equipe, categorias, ficha) + inicialização (no final)
 js/cadastro.js             cadastro profissional (nome, atividade, CRM/COREN/CRF+UF ou faculdade+formatura, aceite);

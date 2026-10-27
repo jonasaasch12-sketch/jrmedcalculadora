@@ -156,6 +156,9 @@ Object.keys(GRUPOS).forEach(g => itensGrupo(g).forEach(({ opcao, variante, id })
     }
 }));
 
+const FONTES = vm.runInContext('typeof FONTES_CARDS === "undefined" ? {} : FONTES_CARDS', ctx);
+Object.keys(FONTES).forEach(id => { if (!farmaciaJR[id]) falha(`FONTES_CARDS (medicamentos/fontes.js) cita "${id}", que não existe`); });
+
 // ---------- 4: arquivos e modo offline ----------
 console.log('4. Arquivos e modo offline (sw.js)');
 const sw = fs.readFileSync(path.join(RAIZ, 'sw.js'), 'utf8');

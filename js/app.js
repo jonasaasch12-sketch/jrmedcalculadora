@@ -124,15 +124,41 @@ window.atualizarFichasMedicamentos = function(lista) {
 // remédio está em "detalhesMedicacoes"; senão, mantém o texto antigo do "info".
 function renderizarInfoMed(idRemedio, med) {
     let d = !med.custom && detalhesMedicacoes[idRemedio];
-    if (!d) return `<div class="med-info-row">${med.info}</div>`;
-    // Se o remédio já tem ficha completa com dose (da equipe ou padrão), a dose fica só lá, para não poluir o card.
-    let ficha = fichasMedicamentos[idRemedio] || fichasPadrao[idRemedio];
-    let dose = (ficha && ficha.dose) ? "Ver 📋 Ficha completa, abaixo." : escaparHtml(d.dose);
+    let quadro = htmlDoseFonte(idRemedio, med);
+    if (!d) return quadro || `<div class="med-info-row">${med.info}</div>`;
+    // A dose fica no quadro "📚 Dose preconizada" (com a fonte); aqui só Indicação e Atenção.
     return `<dl class="med-detalhes">
                 <dt>Indicação</dt><dd>${escaparHtml(d.indicacao)}</dd>
-                <dt>Dose</dt><dd>${dose}</dd>
+                ${quadro ? '' : `<dt>Dose</dt><dd>${escaparHtml(d.dose)}</dd>`}
                 <dt class="det-atencao">⚠️ Atenção</dt><dd class="det-atencao">${escaparHtml(d.atencao)}</dd>
-            </dl>`;
+            </dl>${quadro}`;
+}
+
+// Quadro "📚 Dose preconizada + Fonte" (pedido do Dr. Jonas): para quem prescreve conferir a dose.
+// Não entra na receita. Fonte: FONTES_CARDS (medicamentos/fontes.js) → ficha.fonteRevisao → sigla do info.
+function fonteDoCard(idRemedio, med) {
+    if (typeof FONTES_CARDS !== 'undefined' && FONTES_CARDS[idRemedio]) return FONTES_CARDS[idRemedio];
+    let ficha = fichasMedicamentos[idRemedio] || fichasPadrao[idRemedio];
+    if (ficha && ficha.fonteRevisao) return String(ficha.fonteRevisao).replace(/^Dose:\s*/i, '').replace(/:?\s*https?:\/\/\S+/g, '').trim();
+    let sigla = String(med.info || '').match(/<strong>[^<(]*\(([^)]+)\)/);
+    if (sigla) return (typeof SIGLAS_FONTE !== 'undefined' && SIGLAS_FONTE[sigla[1]]) || sigla[1];
+    return null;
+}
+
+function htmlDoseFonte(idRemedio, med) {
+    if (!med || med.custom || med.cat === 'cat-exame-fisico') return '';
+    let r = ''; try { r = String(med.calc(20, '5').r || ''); } catch (e) {}
+    if (/^\s*ORIENTA/i.test(r)) return '';
+    let d = detalhesMedicacoes[idRemedio], ficha = fichasMedicamentos[idRemedio] || fichasPadrao[idRemedio];
+    let info = String(med.info || '');
+    let media = (info.match(/App: dose média de ([^<]+?)\.?\s*<\/em>/) || [])[1];
+    let dose = (d && d.dose) ? escaparHtml(d.dose)
+        : (ficha && ficha.dose) ? escaparHtml(String(ficha.dose).split('\n').map(l => l.trim()).filter(Boolean).join(' · '))
+        : info.replace(/<em>App: dose média[^<]*<\/em>/, '').replace(/^\s*<strong>[^<]*<\/strong>\s*/, '').trim();
+    if (!dose) return '';
+    let fonte = fonteDoCard(idRemedio, med);
+    return `<div class="dose-fonte">📚 <b>Dose preconizada:</b> ${dose}${media ? `<br><span class="dose-media">O app usa a média: ${escaparHtml(media)}</span>` : ''}
+                <div class="dose-fonte-ref">${fonte ? `<b>Fonte:</b> ${escaparHtml(fonte)}` : `<span class="sem-fonte">⚠️ Fonte ainda não registrada no app.</span>`}</div></div>`;
 }
 
 function renderizarBlocoFicha(idRemedio, instanceId) {
@@ -535,6 +561,7 @@ function htmlCardGrupo(grupo, instanceId) {
                             </div>
                             ${botoesVia}
                             <div id="opc-${instanceId}">${htmlEscolhaGrupo({ grupo, via: null, opcao: null, escolha: null, instanceId })}</div>
+                            <div id="dosefonte-${instanceId}"></div>
                             <div id="badge-${instanceId}"></div>
                             <div id="alerta-alergia-${instanceId}" style="display:none;" class="tarja-alergia">⚠️ Paciente referiu alergia compatível — confira antes de prescrever</div>
                             <div class="prescription-header-row">
@@ -581,6 +608,8 @@ function atualizarCardGrupo(inst) {
     let caixa = document.getElementById('opc-' + instanceId);
     if (caixa) caixa.innerHTML = htmlEscolhaGrupo(inst);
     let med = inst.escolha && buscarMed(inst.escolha);
+    let quadro = document.getElementById('dosefonte-' + instanceId);
+    if (quadro) quadro.innerHTML = med ? htmlDoseFonte(inst.escolha, med) : '';
     let badge = document.getElementById('badge-' + instanceId);
     if (badge) badge.innerHTML = med && med.badge ? `<div class="badge-teto">${med.badge}</div>` : '';
     let ficha = document.getElementById('ficha-' + instanceId);
