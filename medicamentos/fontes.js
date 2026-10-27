@@ -17,7 +17,18 @@ const REF = {
     diarreia: "Ministério da Saúde. Manejo do paciente com diarreia, 2023 (reproduzido no Guia Prático de Atualização nº 74 — Diarreia Aguda Infecciosa, SBP, 2023).",
     pac: "SBP — Departamentos Científicos de Pneumologia e Infectologia. Documento Científico nº 151: Pneumonias Adquiridas na Comunidade Complicadas, atualização 2024 (e DC nº 8, PAC não complicada, 2022).",
     fssl: "SBP — Tratado de Pediatria, 4ª ed., 2017: Febre sem sinais localizatórios (protocolo HU-USP); Documento Científico nº 206 — Febre Aguda em Pediatria (2025).",
-    itu_sbp: "SBP — Departamento Científico de Nefrologia. Documento Científico nº 101: Infecção do Trato Urinário (2023)."
+    itu_sbp: "SBP — Departamento Científico de Nefrologia. Documento Científico nº 101: Infecção do Trato Urinário (2023).",
+    febre: "SBP — Departamentos Científicos de Pediatria Ambulatorial e de Infectologia. Documento Científico: Manejo da Febre Aguda (out/2021): paracetamol 10–15 mg/kg/dose; ibuprofeno 5–10 mg/kg/dose (antitérmico/analgésico); dipirona 10–12 mg/kg/dose.",
+    sedacao: "SBP — Bresolin NL, Fernandes VR. Sedação, Analgesia e Bloqueio Neuromuscular (Departamento de Terapia Intensiva).",
+    pals: "AHA — Kleinman ME et al. Part 14: Pediatric Advanced Life Support. 2010 AHA Guidelines for CPR and ECC. Circulation 2010;122(18 Suppl 3):S876-908 (tabela de medicações da ressuscitação pediátrica).",
+    diarreia_sbp: "SBP — Departamento Científico de Gastroenterologia. Guia Prático de Atualização nº 74: Diarreia Aguda Infecciosa (06/06/2023), com o Manejo do paciente com diarreia (Ministério da Saúde, 2023).",
+    parasitoses: "SBP — Departamentos Científicos de Gastroenterologia e de Infectologia. Guia Prático de Atualização nº 7: Parasitoses intestinais — diagnóstico e tratamento (nov/2020).",
+    gina: "GINA — Global Initiative for Asthma. Global Strategy for Asthma Management and Prevention, 2026.",
+    ispad: "ISPAD Clinical Practice Consensus Guidelines 2022 — Glaser N et al. Diabetic ketoacidosis and hyperglycemic hyperosmolar state. Pediatr Diabetes 2022;23(7):835-856 (edema cerebral: manitol 0,5–1 g/kg ou NaCl 3% 2,5–5 mL/kg em 10–15 min).",
+    imip_cad: "UTI Pediátrica — IMIP. Protocolo de Cetoacidose Diabética (2018): fórmula do bicarbonato.",
+    cad_sc: "Instituto Fernandes Figueira (IFF/Fiocruz) — Cetoacidose diabética na infância: fase de transição; HC-UFTM / Ebserh — PRT.HC-UFTM-UCA.004 (2026); ISPAD 2022, seção 6.6.",
+    crise_wb: "Whitebook (Afya) — Crise Convulsiva em Pediatria (Prescrição Hospitalar), atualizado em 29/04/2025.",
+    bula: "Bula do medicamento (texto aprovado pela ANVISA)."
 };
 
 const FONTES_CARDS = {
@@ -30,7 +41,36 @@ const FONTES_CARDS = {
     pen_cristalina_pac: REF.pac, claritro_pac: REF.pac, eritro_pac: REF.pac, cefotax_pac: REF.pac, amoxclav_ev: REF.pac,
     ampisulb_ev: REF.pac, linezolida_ev: REF.pac, levoflox_ev: REF.pac, cef_resp_ev: REF.pac,
     cef_fssl: REF.fssl,
-    urina_clav: REF.itu_sbp
+    urina_clav: REF.itu_sbp,
+
+    // Conferidos em 10/2026 (a dose do card bate com a fonte)
+    pct_gts: REF.febre, pct_bebe: REF.febre, pct_cp: REF.febre, ibu_gts: REF.febre, ibu_50: REF.febre, dip_cp: REF.febre,
+    rsi_midaz: REF.sedacao + " Midazolam: 0,1–0,3 mg/kg EV (máx. 5 mg/dose).",
+    rsi_ceta: REF.sedacao + " Cetamina: 1–4 mg/kg EV.",
+    rsi_cont_cetamina: REF.sedacao + " Cetamina contínua: 10–15 até 60 mcg/kg/min; broncodilatadora 20–40 mcg/kg/min.",
+    rsi_succi: REF.sedacao + " Succinilcolina: 1–2 mg/kg EV.",
+    rsi_cont_precedex: REF.sedacao + " Dexmedetomidina: 0,2–1,2 mcg/kg/h.",
+    adenosina_pals: REF.pals, amiodarona_pals: REF.pals, epinefrina_pals: REF.pals, glicose_pals: REF.pals,
+    lidocaina_pals: REF.pals, naloxona_pals: REF.pals, procainamida_pals: REF.pals, bicarbonato_pals: REF.pals,
+    amox: REF.pac + " Amoxicilina 50 mg/kg/dia de 8/8h ou 12/12h por 7 dias.",
+    amox400: REF.pac + " Amoxicilina 50 mg/kg/dia de 8/8h ou 12/12h por 7 dias.",
+    ampicilina: REF.pac + " Ampicilina 50 mg/kg/dose de 6/6h.",
+    azi_ev: REF.pac + " Azitromicina 10 mg/kg/dia, 1x ao dia, por 5 dias.",
+    pen_cristalina: REF.pac + " Penicilina cristalina 200.000–250.000 UI/kg/dia de 6/6h ou 4/4h.",
+    genta: REF.pac + " Só o esquema da pneumonia < 2 meses (7,5 mg/kg/dia de 12/12h); o de 24/24h para outras infecções ainda sem fonte registrada.",
+    tgi_azitro: REF.diarreia, tgi_flora: REF.diarreia_sbp + " Saccharomyces boulardii CNCM I-745: 250–750 mg/dia por 5 a 7 dias.",
+    tgi_alben: REF.parasitoses + " Enterobíase: albendazol 400 mg VO dose única.",
+    tgi_meben: REF.parasitoses + " Enterobíase: mebendazol 100 mg VO dose única.",
+    nitazoxanida: REF.parasitoses + " Nitazoxanida 7,5 mg/kg/dose (máx. 500 mg) de 12/12h por 3 dias.",
+    pred_sol: REF.gina + " Prednisolona 1–2 mg/kg/dia por 3 a 5 dias.",
+    pulmicort: REF.gina + " Budesonida nebulizada: dose baixa diária de 500 mcg (≥ 1 ano).",
+    cad_manitol: REF.ispad, cad_nacl3: REF.ispad, cad_bicarbonato: REF.imip_cad, cad_insulina_sc: REF.cad_sc,
+    neuro_fenitoina: REF.crise_wb + " Fenitoína 15–20 mg/kg.",
+    dexclor: REF.bula + " Polaramine solução oral 2 mg/5 mL: 2–6 anos 1,25 mL; 6–12 anos 2,5 mL; > 12 anos 5 mL, 3x ao dia.",
+    salb_spray: "Esquema escolhido pelo Dr. Jonas para o app. A dose da crise (1 jato/2 kg = 50 mcg/kg, máx. 10 jatos) é a do Guia Prático de Atualização nº 6 — Anafilaxia: atualização 2021 (SBP). Esquema da alta: fonte ainda não registrada.",
+    magnesio_ev: "Protocolo do serviço (dose escolhida pelo Dr. Jonas para o app).",
+    cef_resp_im: REF.pac + " Ceftriaxona 50–100 mg/kg/dia (PAC complicada).",
+    cad_hidratacao: "UTI Pediátrica — IMIP. Protocolo de Cetoacidose Diabética (2018): solução padrão em Y (soluções A e B)."
 };
 
 // Siglas do "info" escritas por extenso
