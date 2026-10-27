@@ -190,11 +190,11 @@ registrarConduta({
                         "↳ <strong>Maior de 3 meses com alteração do SNC, coma ou encefalite:</strong> vancomicina + ceftriaxona + aciclovir.",
                         "<strong>Neutropenia, imunodepressão ou infecção hospitalar:</strong> ampliar (cefepime ou meropenem ± vancomicina) conforme a CCIH.",
                         "<strong>Duração:</strong> em geral 7 a 10 dias; com aciclovir, 21 dias (Whitebook).",
-                        "<strong>Doses do Whitebook</strong> para o recém-nascido (ampicilina, gentamicina e cefotaxima variam com a idade gestacional e os dias de vida): os cards do app de ampicilina, gentamicina e cefotaxima são os da pneumonia; no recém-nascido, conferir a dose neonatal.",
+                        "<strong>Recém-nascido:</strong> usar os cards da <strong>sepse neonatal</strong> (ampicilina, gentamicina, cefotaxima e aciclovir), com dose pela idade gestacional e pelos dias de vida (Whitebook).",
                         "<strong>Sem acesso EV:</strong> ceftriaxona IM para não atrasar a 1ª dose.",
                         "<strong>Doença meningocócica</strong> suspeita (febre + petéquias): veja a conduta própria."
                     ],
-                    remedios: ["cef_sepse", "oxacilina", "vancomicina", "ampicilina", "genta", "cefepime", "meropenem"]
+                    remedios: ["cef_sepse", "oxacilina", "vancomicina", "amp_neo_sepse", "genta_neo_sepse", "cefotax_neo_sepse", "aciclovir_sepse", "cefepime", "meropenem"]
                 },
                 {
                     passo: 4,

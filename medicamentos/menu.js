@@ -89,7 +89,8 @@ const categorias = [
         id: "cat-pals", titulo: "Urgência PALS", dotClass: "dot-sintomaticos", cor: "tarja-sintomaticos", nome: "PALS", icone: "🚨 PALS",
         patologias: [
             { nome: "Parada e Arritmias", remedios: ["atropina", "adenosina_pals", "amiodarona_pals", "epinefrina_pals", "glicose_pals", "lidocaina_pals", "magnesio_pals", "milrinone_pals", "naloxona_pals", "procainamida_pals", "bicarbonato_pals"] },
-            { nome: "Sepse e Choque Séptico", conduta: "sepse", condutaNome: "Sepse e choque séptico", remedios: ["sepse_expansao", "cef_sepse", "adrenalina_sepse", "nora_sepse", "hidrocortisona_sepse"] }
+            { nome: "Sepse e Choque Séptico", conduta: "sepse", condutaNome: "Sepse e choque séptico", remedios: ["sepse_expansao", "cef_sepse", "adrenalina_sepse", "nora_sepse", "hidrocortisona_sepse"] },
+            { nome: "Sepse Neonatal: Antibióticos", conduta: "sepse", condutaNome: "Sepse e choque séptico", remedios: ["amp_neo_sepse", "genta_neo_sepse", "cefotax_neo_sepse", "aciclovir_sepse"] }
         ]
     },
     { 
