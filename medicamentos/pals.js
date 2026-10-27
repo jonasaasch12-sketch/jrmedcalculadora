@@ -84,6 +84,233 @@ registrarMedicamentos({
             atencao: "Máximo IV/IO 1 mg por dose. Conferir a diluição antes de aplicar."
         }
     },
+    "sepse_expansao": {
+        cat: "cat-pals", sub: "🏥 Uso Hospitalar (Choque Séptico)",
+        kw: "sepse choque septico expansao volemica bolus cristaloide ringer lactato soro fisiologico ressuscitacao volume",
+        nome: "Expansão na Sepse / Choque Séptico (Cristaloide)", apres: "Ringer lactato (preferir) ou SF 0,9%",
+        info: "<strong>Conduta (SSC 2020):</strong> bolus de 10 a 20 mL/kg com reavaliação após cada um; até 40 a 60 mL/kg na 1ª hora onde há UTI.", badge: "Máx: 1.000 mL por bolus", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Surviving Sepsis Campaign pediátrica 2020: 10-20 mL/kg por bolus, até 40-60 mL/kg na 1ª hora (com UTI), parando se sobrecarga. Sem UTI: só se hipotensão, até 40 mL/kg na 1ª hora. Cristaloide balanceado preferido. Teto do app: 1.000 mL por bolus (adulto). */
+            let b10 = Math.min(p * 10, 1000), b20 = Math.min(p * 20, 1000);
+            let h40 = p * 40, h60 = p * 60;
+            return { v: `${b10.toFixed(0)}–${b20.toFixed(0)} mL por bolus`, r: `VIA ENDOVENOSA (SEPSE / CHOQUE SÉPTICO - EXPANSÃO)\n\nRINGER LACTATO (OU SF 0,9%) ${b10.toFixed(0)} A ${b20.toFixed(0)} ML (10 A 20 ML/KG) EV EM BOLUS, EM 5 A 20 MINUTOS.\nREAVALIAR APÓS CADA BOLUS (PERFUSÃO, FC, PA, FÍGADO, CREPITAÇÕES, SpO2).\nREPETIR SE MÁ PERFUSÃO E SEM SINAIS DE SOBRECARGA, ATÉ ${h40.toFixed(0)} A ${h60.toFixed(0)} ML (40 A 60 ML/KG) NA 1ª HORA (ONDE HÁ UTI).\n\nPARAR SE: CREPITAÇÕES, HEPATOMEGALIA, PIORA DA SpO2 OU DO DESCONFORTO RESPIRATÓRIO.\nSEM UTI DISPONÍVEL: SÓ FAZER BOLUS SE HIPOTENSÃO (ATÉ ${h40.toFixed(0)} ML NA 1ª HORA); SEM HIPOTENSÃO, MANTER SÓ A HIDRATAÇÃO DE MANUTENÇÃO.` };
+        },
+        detalhes: {
+            indicacao: "Sepse com má perfusão ou choque séptico.",
+            dose: "10 a 20 mL/kg EV por bolus, reavaliando após cada um; até 40 a 60 mL/kg na 1ª hora onde há UTI.",
+            atencao: "Preferir cristaloide balanceado (Ringer lactato). Parar se sobrecarga (crepitações, hepatomegalia). Sem UTI e sem hipotensão: não fazer bolus (SSC 2020). Teto do app: 1.000 mL por bolus."
+        },
+        ficha: {
+            indicacoes: "Ressuscitação volêmica na sepse com má perfusão e no choque séptico.",
+            dose: "Com UTI disponível: 10-20 mL/kg por bolus, até 40-60 mL/kg na 1ª hora, guiado pela perfusão e parando se sobrecarga\nSem UTI e sem hipotensão: não fazer bolus; manter hidratação de manutenção\nSem UTI e com hipotensão: até 40 mL/kg na 1ª hora (10-20 mL/kg por bolus)",
+            doseMaxima: "Teto do app: 1.000 mL por bolus.",
+            apresentacoes: "Ringer lactato (cristaloide balanceado, preferido) ou SF 0,9%.",
+            via: "Endovenosa ou intraóssea.",
+            alertasPediatricos: "Não usar albumina na ressuscitação inicial, nem amidos ou gelatinas (SSC 2020). Reavaliar após cada bolus: a hipotensão é sinal tardio na criança.",
+            fonteRevisao: "Weiss SL et al. Surviving Sepsis Campaign International Guidelines for the Management of Septic Shock and Sepsis-Associated Organ Dysfunction in Children. Pediatr Crit Care Med 2020;21(2):e52-e106. doi:10.1097/PCC.0000000000002198"
+        }
+    },
+    "cef_sepse": {
+        cat: "cat-pals", sub: "🏥 Uso Hospitalar (Choque Séptico)",
+        kw: "ceftriaxona rocefin sepse choque septico antibiotico empirico endovenoso",
+        nome: "Ceftriaxona EV (Sepse)", apres: "FA 1 g (+ 10 mL AD = 100 mg/mL)",
+        info: "<strong>Conduta (Whitebook):</strong> 100 mg/kg/dia EV de 12/12 ou 24/24h. Máx. 4 g/dia.", badge: "Máx: 4 g/dia", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Sepse em Pediatria, 02/2026): 100 mg/kg/dia EV de 12/12 ou 24/24 h, máx. 4.000 mg/dia. FA 1 g em 10 mL de AD = 100 mg/mL. */
+            let d12 = Math.min(p * 50, 2000), d24 = Math.min(p * 100, 4000);
+            return { v: `${(d12 / 100).toFixed(1)} mL 12/12h`, r: `VIA ENDOVENOSA (SEPSE - ANTIBIÓTICO)\n\nCEFTRIAXONA 1 G (RECONSTITUIR EM 10 ML DE AD = 100 MG/ML)\nFAZER ${(d12 / 100).toFixed(1)} ML (${d12.toFixed(0)} MG) EV DE 12/12 HORAS\nOU ${(d24 / 100).toFixed(1)} ML (${d24.toFixed(0)} MG) EV DE 24/24 HORAS.\nDILUIR EM SF 0,9% OU SG 5% E CORRER EM 30 MINUTOS.\n\nDOSE MÁXIMA: 4 G POR DIA.` };
+        },
+        detalhes: {
+            indicacao: "Sepse e choque séptico: antibiótico empírico (associado conforme idade e foco).",
+            dose: "100 mg/kg/dia EV de 12/12 ou 24/24 horas.",
+            atencao: "Máximo 4 g/dia. No choque séptico, fazer na 1ª hora. Não misturar com soluções com cálcio (Ringer) no mesmo acesso."
+        },
+        ficha: {
+            indicacoes: "Antibioticoterapia empírica da sepse (crianças > 1 mês), em associação conforme o esquema.",
+            dose: "100 mg/kg/dia EV de 12/12 ou 24/24 horas",
+            doseMaxima: "4.000 mg/dia.",
+            apresentacoes: "Frasco-ampola 1 g.",
+            via: "Endovenosa.",
+            reconstituicao: "1 g em 10 mL de água destilada (100 mg/mL).",
+            alertasPediatricos: "Tempo de tratamento costuma variar de 7 a 10 dias, conforme o foco e a evolução.",
+            fonteRevisao: "Whitebook (Afya) - Sepse em Pediatria (Prescrição Hospitalar), atualizado em 12/02/2026."
+        }
+    },
+    "adrenalina_sepse": {
+        cat: "cat-pals", sub: "🏥 Uso Hospitalar (Choque Séptico)",
+        kw: "adrenalina epinefrina infusao continua droga vasoativa amina choque septico sepse vasopressor",
+        nome: "Adrenalina Contínua (Choque Séptico)", apres: "Ampola 1 mg/mL · solução 10 mcg/mL",
+        info: "<strong>Conduta (Whitebook):</strong> 0,05 a 0,3 mcg/kg/min (0,3 a 1,8 mL/kg/h). Máx. 1 mcg/kg/min (6 mL/kg/h).", badge: "Máx: 1 mcg/kg/min", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Sepse em Pediatria, 02/2026): 1 mL de adrenalina 1 mg/mL + 99 mL SG 5% = 10 mcg/mL; 0,05-0,3 mcg/kg/min = 0,3-1,8 mL/kg/h; máx. 1 mcg/kg/min = 6 mL/kg/h. mL/h = mcg/kg/min x peso x 6. */
+            let t = d => (d * p * 6).toFixed(1);
+            return { v: `${t(0.05)}–${t(0.3)} mL/h`, r: `VIA ENDOVENOSA (CHOQUE SÉPTICO - INFUSÃO CONTÍNUA)\n\nSOLUÇÃO: ADRENALINA 1 MG/ML 1 ML + SG 5% 99 ML (TOTAL 100 ML = 10 MCG/ML).\nVELOCIDADES NA BIC:\n • 0,05 MCG/KG/MIN: ${t(0.05)} ML/H\n • 0,1 MCG/KG/MIN: ${t(0.1)} ML/H\n • 0,2 MCG/KG/MIN: ${t(0.2)} ML/H\n • 0,3 MCG/KG/MIN: ${t(0.3)} ML/H\n • 0,5 MCG/KG/MIN: ${t(0.5)} ML/H\n • 1 MCG/KG/MIN (MÁXIMO): ${t(1)} ML/H\n\nTITULAR PELA PERFUSÃO E PELA PA. PODE SER INICIADA EM ACESSO PERIFÉRICO.` };
+        },
+        detalhes: {
+            indicacao: "Choque séptico que persiste após a expansão volêmica (preferida no choque frio / baixo débito).",
+            dose: "0,05 a 0,3 mcg/kg/min (0,3 a 1,8 mL/kg/h da solução de 10 mcg/mL).",
+            atencao: "Máximo 1 mcg/kg/min (6 mL/kg/h). Pode começar em acesso periférico ou intraósseo. Monitorar ECG, PA, glicemia e lactato."
+        },
+        ficha: {
+            indicacoes: "Choque séptico (amina vasoativa), isolada ou associada à noradrenalina.",
+            dose: "0,05-0,3 micrograma/kg/minuto EV em infusão contínua",
+            doseMaxima: "1 micrograma/kg/minuto (6 mL/kg/hora na diluição padrão).",
+            apresentacoes: "Ampola 1 mg/mL.",
+            via: "Endovenosa (periférica ou central) ou intraóssea, em BIC.",
+            diluicao: "1 mL de adrenalina + 99 mL de SG 5% (10 microgramas/mL).",
+            infusao: "Contínua: 0,3-1,8 mL/kg/hora.",
+            fonteRevisao: "Whitebook (Afya) - Sepse em Pediatria (Prescrição Hospitalar), atualizado em 12/02/2026."
+        }
+    },
+    "nora_sepse": {
+        cat: "cat-pals", sub: "🏥 Uso Hospitalar (Choque Séptico)",
+        kw: "noradrenalina norepinefrina infusao continua droga vasoativa amina choque septico quente sepse vasopressor",
+        nome: "Noradrenalina Contínua (Choque Séptico)", apres: "Ampola 2 mg/mL (= 1 mg/mL base) · solução 8 mcg/mL",
+        info: "<strong>Conduta (Whitebook):</strong> 0,05 a 0,1 mcg/kg/min (0,375 a 0,75 mL/kg/h); Whitebook cita dose usual de até 2 mcg/kg/min.", badge: "Ver faixa", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Sepse em Pediatria, 02/2026): 2 mL de noradrenalina (2 mg/mL = 1 mg/mL base) + 248 mL SG 5% = 8 mcg/mL; 0,05-0,1 mcg/kg/min = 0,375-0,75 mL/kg/h; "dose usual" 2 mcg/kg/min = 15 mL/kg/h. mL/h = mcg/kg/min x peso x 60 / 8. */
+            let t = d => (d * p * 7.5).toFixed(1);
+            return { v: `${t(0.05)}–${t(0.1)} mL/h`, r: `VIA ENDOVENOSA (CHOQUE SÉPTICO - INFUSÃO CONTÍNUA)\n\nSOLUÇÃO: NORADRENALINA 2 MG/ML (1 MG/ML BASE) 2 ML + SG 5% 248 ML (TOTAL 250 ML = 8 MCG/ML).\nVELOCIDADES NA BIC:\n • 0,05 MCG/KG/MIN: ${t(0.05)} ML/H\n • 0,1 MCG/KG/MIN: ${t(0.1)} ML/H\n • 0,2 MCG/KG/MIN: ${t(0.2)} ML/H\n • 0,5 MCG/KG/MIN: ${t(0.5)} ML/H\n • 1 MCG/KG/MIN: ${t(1)} ML/H\n • 2 MCG/KG/MIN: ${t(2)} ML/H\n\nTITULAR PELA PA E PELA PERFUSÃO. PODE SER INICIADA EM ACESSO PERIFÉRICO.` };
+        },
+        detalhes: {
+            indicacao: "Choque séptico que persiste após a expansão volêmica (preferida no choque quente / vasodilatado).",
+            dose: "0,05 a 0,1 mcg/kg/min (0,375 a 0,75 mL/kg/h da solução de 8 mcg/mL), titulando; Whitebook cita dose usual de até 2 mcg/kg/min (15 mL/kg/h).",
+            atencao: "Pode começar em acesso periférico ou intraósseo. Monitorar PA, perfusão e extravasamento."
+        },
+        ficha: {
+            indicacoes: "Choque séptico (amina vasoativa), isolada ou associada à adrenalina.",
+            dose: "0,05-0,1 micrograma/kg/minuto EV em infusão contínua\nDose usual (Whitebook): 2 microgramas/kg/minuto (15 mL/kg/hora na diluição padrão)",
+            apresentacoes: "Ampola 2 mg/mL de hemitartarato (= 1 mg/mL de noradrenalina base).",
+            via: "Endovenosa (periférica ou central) ou intraóssea, em BIC.",
+            diluicao: "2 mL de noradrenalina + 248 mL de SG 5% (8 microgramas/mL).",
+            infusao: "Contínua: 0,375-0,75 mL/kg/hora.",
+            fonteRevisao: "Whitebook (Afya) - Sepse em Pediatria (Prescrição Hospitalar), atualizado em 12/02/2026."
+        }
+    },
+    "hidrocortisona_sepse": {
+        cat: "cat-pals", sub: "🏥 Uso Hospitalar (Choque Séptico)",
+        kw: "hidrocortisona solucortef corticoide choque septico refratario insuficiencia adrenal sepse",
+        nome: "Hidrocortisona EV (Choque Séptico)", apres: "FA 100 mg (+ 2 mL AD = 50 mg/mL)",
+        info: "<strong>Conduta (Whitebook):</strong> 100 mg/m²/dia EV de 6/6h.", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Sepse em Pediatria, 02/2026): 100 mg/m2/dia EV de 6/6 h. Superfície corporal estimada pelo peso: (4 x peso + 7) / (peso + 90). FA 100 mg em 2 mL de AD = 50 mg/mL. */
+            let sc = (4 * p + 7) / (p + 90), dia = 100 * sc, dose = dia / 4;
+            return { v: `${dose.toFixed(1)} mg 6/6h`, r: `VIA ENDOVENOSA (CHOQUE SÉPTICO)\n\nHIDROCORTISONA 100 MG (RECONSTITUIR EM 2 ML DE AD = 50 MG/ML)\nFAZER ${(dose / 50).toFixed(2)} ML (${dose.toFixed(1)} MG) EV DE 6/6 HORAS.\n\n(100 MG/M²/DIA; SUPERFÍCIE CORPORAL ESTIMADA ${sc.toFixed(2)} M² = ${dia.toFixed(0)} MG/DIA)` };
+        },
+        detalhes: {
+            indicacao: "Choque séptico refratário a volume e vasoativo; uso crônico de corticoide ou suspeita de insuficiência adrenal.",
+            dose: "100 mg/m²/dia EV de 6/6 horas (superfície corporal estimada pelo peso).",
+            atencao: "A SSC 2020 não recomenda se o choque respondeu a volume e vasoativo. Se tiver a altura, conferir a superfície corporal (Mosteller)."
+        },
+        ficha: {
+            indicacoes: "Choque séptico refratário a catecolaminas; insuficiência adrenal.",
+            dose: "100 mg/m²/dia EV de 6/6 horas",
+            apresentacoes: "Frasco-ampola 100 mg.",
+            via: "Endovenosa.",
+            reconstituicao: "100 mg em 2 mL de água destilada (50 mg/mL).",
+            alertasPediatricos: "O app estima a superfície corporal pelo peso: (4 x peso + 7) / (peso + 90).",
+            fonteRevisao: "Whitebook (Afya) - Sepse em Pediatria (Prescrição Hospitalar), atualizado em 12/02/2026."
+        }
+    },
+    "amp_neo_sepse": {
+        cat: "cat-pals", sub: "🏥 Uso Hospitalar (Sepse Neonatal)",
+        kw: "ampicilina recem nascido neonato neonatal sepse neonatal meningite idade gestacional dias de vida",
+        nome: "Ampicilina EV (Sepse Neonatal)", apres: "FA 1 g (+ 10 mL AD = 100 mg/mL)",
+        info: "<strong>Conduta (Whitebook):</strong> dose pela idade gestacional, dias de vida e doença do SNC (ver receita).", badge: "Neonatal", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Sepse em Pediatria, 02/2026). Sem doença do SNC: IG <= 34 sem: <= 7 d 50 mg/kg/dose 12/12h; 8-28 d 75 mg/kg/dose 12/12h; IG > 34 sem: 50 mg/kg/dose 8/8h. Com doença do SNC: <= 7 d 200-300 mg/kg/dia 8/8h; > 7 d 300 mg/kg/dia 6/6h. FA 1 g em 10 mL = 100 mg/mL. */
+            let d = mg => `${mg.toFixed(0)} MG = ${(mg / 100).toFixed(2)} ML`;
+            return { v: `${(p * 50 / 100).toFixed(2)} mL (50 mg/kg)`, r: `VIA ENDOVENOSA (SEPSE NEONATAL)\n\nAMPICILINA 1 G (RECONSTITUIR EM 10 ML DE AD = 100 MG/ML)\n\nSEM DOENÇA DO SNC:\n • IG ≤ 34 SEMANAS E ≤ 7 DIAS DE VIDA: ${d(p * 50)} (50 MG/KG/DOSE) EV DE 12/12 HORAS\n • IG ≤ 34 SEMANAS E 8 A 28 DIAS: ${d(p * 75)} (75 MG/KG/DOSE) EV DE 12/12 HORAS\n • IG > 34 SEMANAS: ${d(p * 50)} (50 MG/KG/DOSE) EV DE 8/8 HORAS\n\nCOM DOENÇA DO SNC (MENINGITE):\n • ≤ 7 DIAS DE VIDA: ${d(p * 200 / 3)} A ${d(p * 100)} (200 A 300 MG/KG/DIA) EV DE 8/8 HORAS\n • > 7 DIAS DE VIDA: ${d(p * 75)} (300 MG/KG/DIA) EV DE 6/6 HORAS` };
+        },
+        detalhes: {
+            indicacao: "Sepse neonatal (com gentamicina ± cefotaxima, conforme o esquema).",
+            dose: "Sem doença do SNC: IG ≤ 34 sem: ≤ 7 dias 50 mg/kg/dose 12/12h; 8–28 dias 75 mg/kg/dose 12/12h. IG > 34 sem: 50 mg/kg/dose 8/8h. Com doença do SNC: ≤ 7 dias 200–300 mg/kg/dia 8/8h; > 7 dias 300 mg/kg/dia 6/6h.",
+            atencao: "Escolher a linha da receita pela idade gestacional, pelos dias de vida e pela presença de meningite."
+        },
+        ficha: {
+            indicacoes: "Sepse neonatal (esquemas A, B e C do Whitebook).",
+            dose: "Neonatos sem doença do SNC, ≤ 34 semanas de IG: ≤ 7 dias de vida 50 mg/kg/dose EV de 12/12 horas; 8-28 dias 75 mg/kg/dose EV de 12/12 horas\nNeonatos sem doença do SNC, > 34 semanas de IG: 50 mg/kg/dose EV de 8/8 horas\nNeonatos com doença do SNC: ≤ 7 dias de vida 200-300 mg/kg/dia EV de 8/8 horas; > 7 dias 300 mg/kg/dia EV de 6/6 horas",
+            apresentacoes: "Frasco-ampola 1 g.",
+            via: "Endovenosa.",
+            reconstituicao: "1 g em 10 mL de água destilada (100 mg/mL).",
+            fonteRevisao: "Whitebook (Afya) - Sepse em Pediatria (Prescrição Hospitalar, Posologia dos Antibióticos), atualizado em 12/02/2026."
+        }
+    },
+    "genta_neo_sepse": {
+        cat: "cat-pals", sub: "🏥 Uso Hospitalar (Sepse Neonatal)",
+        kw: "gentamicina recem nascido neonato neonatal sepse neonatal idade gestacional dias de vida aminoglicosideo",
+        nome: "Gentamicina EV (Sepse Neonatal e Lactente)", apres: "Ampola 40 mg/mL",
+        info: "<strong>Conduta (Whitebook):</strong> 4 a 5 mg/kg/dose com intervalo pela idade gestacional e dias de vida; > 28 dias: 2–2,5 mg/kg/dose 8/8h.", badge: "Neonatal", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Sepse em Pediatria, 02/2026). Ampola 40 mg/mL. IG < 30 sem: <= 14 d 5 mg/kg 48/48h; > 14 d 5 mg/kg 36/36h. IG 30-34: <= 14 d 5 mg/kg 36/36h; > 14 d 5 mg/kg 24/24-36/36h. IG >= 35: <= 7 d 4 mg/kg 24/24h; > 7 d 5 mg/kg 24/24h. > 28 dias: 2-2,5 mg/kg/dose 8/8h ou 4,5-7,5 mg/kg/dia 24/24h. */
+            let d = mg => `${(mg / 40).toFixed(2)} ML (${mg.toFixed(1)} MG)`;
+            return { v: `${(p * 5 / 40).toFixed(2)} mL (5 mg/kg)`, r: `VIA ENDOVENOSA (SEPSE NEONATAL / LACTENTE)\n\nGENTAMICINA 40 MG/ML\n\nIG < 30 SEMANAS:\n • ≤ 14 DIAS DE VIDA: ${d(p * 5)} (5 MG/KG/DOSE) EV DE 48/48 HORAS\n • > 14 DIAS: ${d(p * 5)} (5 MG/KG/DOSE) EV DE 36/36 HORAS\n\nIG 30 A 34 SEMANAS:\n • ≤ 14 DIAS DE VIDA: ${d(p * 5)} (5 MG/KG/DOSE) EV DE 36/36 HORAS\n • > 14 DIAS: ${d(p * 5)} (5 MG/KG/DOSE) EV DE 24/24 A 36/36 HORAS\n\nIG ≥ 35 SEMANAS:\n • ≤ 7 DIAS DE VIDA: ${d(p * 4)} (4 MG/KG/DOSE) EV DE 24/24 HORAS\n • > 7 DIAS: ${d(p * 5)} (5 MG/KG/DOSE) EV DE 24/24 HORAS\n\n> 28 DIAS DE VIDA:\n • ${d(p * 2)} A ${d(p * 2.5)} (2 A 2,5 MG/KG/DOSE) EV DE 8/8 HORAS\n • OU ${d(p * 4.5)} A ${d(p * 7.5)} (4,5 A 7,5 MG/KG/DIA) EV DE 24/24 HORAS` };
+        },
+        detalhes: {
+            indicacao: "Sepse neonatal (com ampicilina) e sepse de foco abdominal ou urinário em 1 a 3 meses (com ceftriaxona).",
+            dose: "IG < 30 sem: 5 mg/kg/dose 48/48h (≤ 14 dias) ou 36/36h (> 14 dias). IG 30–34 sem: 5 mg/kg/dose 36/36h (≤ 14 dias) ou 24/24–36/36h. IG ≥ 35 sem: 4 mg/kg/dose 24/24h (≤ 7 dias) ou 5 mg/kg/dose 24/24h. > 28 dias: 2–2,5 mg/kg/dose 8/8h ou 4,5–7,5 mg/kg/dia 24/24h.",
+            atencao: "Escolher a linha pela idade gestacional e pelos dias de vida. Nefro e ototóxica: vigiar diurese e função renal."
+        },
+        ficha: {
+            indicacoes: "Sepse neonatal e do lactente (esquemas A, B, C e F do Whitebook).",
+            dose: "IG < 30 semanas: ≤ 14 dias de vida 0,125 mL/kg/dose (5 mg/kg/dose) EV de 48/48 horas; > 14 dias 0,125 mL/kg/dose EV de 36/36 horas\nIG 30-34 semanas: ≤ 14 dias 0,125 mL/kg/dose EV de 36/36 horas; > 14 dias 0,125 mL/kg/dose EV de 24/24-36/36 horas\nIG ≥ 35 semanas: ≤ 7 dias 0,1 mL/kg/dose (4 mg/kg/dose) EV de 24/24 horas; > 7 dias 0,125 mL/kg/dose (5 mg/kg/dose) EV de 24/24 horas\n> 28 dias de vida: 0,05-0,06 mL/kg/dose (2-2,5 mg/kg/dose) EV de 8/8 horas ou 0,11-0,19 mL/kg/dia (4,5-7,5 mg/kg/dia) EV de 24/24 horas",
+            apresentacoes: "Ampola 40 mg/mL.",
+            via: "Endovenosa.",
+            fonteRevisao: "Whitebook (Afya) - Sepse em Pediatria (Prescrição Hospitalar, Posologia dos Antibióticos), atualizado em 12/02/2026."
+        }
+    },
+    "cefotax_neo_sepse": {
+        cat: "cat-pals", sub: "🏥 Uso Hospitalar (Sepse Neonatal)",
+        kw: "cefotaxima claforan recem nascido neonato neonatal sepse neonatal meningite",
+        nome: "Cefotaxima EV (Sepse Neonatal)", apres: "FA 500 mg (+ 5 mL AD = 100 mg/mL)",
+        info: "<strong>Conduta (Whitebook):</strong> < 1 semana: 50–100 mg/kg/dia 12/12h; 1–4 semanas: 75–150 mg/kg/dia 8/8h.", badge: "Neonatal", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Sepse em Pediatria, 02/2026): neonatos < 1 semana 50-100 mg/kg/dia EV de 12/12h; 1-4 semanas 75-150 mg/kg/dia EV de 8/8h. FA 500 mg em 5 mL de AD = 100 mg/mL. */
+            let d = mg => `${mg.toFixed(0)} MG = ${(mg / 100).toFixed(2)} ML`;
+            return { v: `${(p * 25 / 100).toFixed(2)}–${(p * 50 / 100).toFixed(2)} mL 12/12h`, r: `VIA ENDOVENOSA (SEPSE NEONATAL)\n\nCEFOTAXIMA 500 MG (RECONSTITUIR EM 5 ML DE AD = 100 MG/ML)\n\n • < 1 SEMANA DE VIDA: ${d(p * 25)} A ${d(p * 50)} (50 A 100 MG/KG/DIA) EV DE 12/12 HORAS\n • 1 A 4 SEMANAS DE VIDA: ${d(p * 25)} A ${d(p * 50)} (75 A 150 MG/KG/DIA) EV DE 8/8 HORAS` };
+        },
+        detalhes: {
+            indicacao: "Sepse neonatal com ampicilina + gentamicina (esquemas B e C), principalmente se suspeita de meningite.",
+            dose: "< 1 semana de vida: 50–100 mg/kg/dia EV de 12/12h. 1–4 semanas: 75–150 mg/kg/dia EV de 8/8h.",
+            atencao: "Escolher a linha pelos dias de vida. Na meningite, usar o topo da faixa."
+        },
+        ficha: {
+            indicacoes: "Sepse neonatal (esquemas B e C do Whitebook).",
+            dose: "Neonatos < 1 semana de vida: 50-100 mg/kg/dia EV de 12/12 horas\nNeonatos com 1-4 semanas de vida: 75-150 mg/kg/dia EV de 8/8 horas",
+            apresentacoes: "Frasco-ampola 500 mg.",
+            via: "Endovenosa.",
+            reconstituicao: "500 mg em 5 mL de água destilada (100 mg/mL).",
+            fonteRevisao: "Whitebook (Afya) - Sepse em Pediatria (Prescrição Hospitalar, Posologia dos Antibióticos), atualizado em 12/02/2026."
+        }
+    },
+    "aciclovir_sepse": {
+        cat: "cat-pals", sub: "🏥 Uso Hospitalar (Sepse Neonatal)",
+        kw: "aciclovir encefalite herpetica herpes recem nascido neonato sepse alteracao do snc antiviral",
+        nome: "Aciclovir EV (Sepse com Encefalite)", apres: "FA 250 mg (+ 10 mL AD = 25 mg/mL)",
+        info: "<strong>Conduta (Whitebook):</strong> neonatos 20 mg/kg/dose 8/8h; > 28 dias 10–15 mg/kg/dose 8/8h, por 21 dias.", badge: "21 dias", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            /* Whitebook (Sepse em Pediatria, 02/2026): neonatos 20 mg/kg/dose EV de 8/8h por 21 dias; > 28 dias 10-15 mg/kg/dose EV de 8/8h por 21 dias. FA 250 mg + 10 mL de AD = 25 mg/mL; diluir em SF 0,9% a 5 mg/mL e infundir em 1 hora. */
+            let d = mg => `${(mg / 25).toFixed(1)} ML (${mg.toFixed(0)} MG), DILUIR EM SF 0,9% ATÉ ${Math.ceil(mg / 5)} ML`;
+            let neo = i !== "" && parseFloat(i) < 0.08;
+            let v = neo ? `${(p * 20 / 25).toFixed(1)} mL (20 mg/kg)` : `${(p * 10 / 25).toFixed(1)}–${(p * 15 / 25).toFixed(1)} mL`;
+            return { v: v, r: `VIA ENDOVENOSA (SEPSE COM ALTERAÇÃO DO SNC / ENCEFALITE)\n\nACICLOVIR 250 MG (RECONSTITUIR CADA FA EM 10 ML DE AD = 25 MG/ML)\n\n • NEONATOS (ATÉ 28 DIAS): ${d(p * 20)} (20 MG/KG/DOSE) EV DE 8/8 HORAS\n • > 28 DIAS DE VIDA: ${d(p * 10)} A ${d(p * 15)} (10 A 15 MG/KG/DOSE) EV DE 8/8 HORAS\n\nINFUNDIR EM 1 HORA. TRATAR POR 21 DIAS. MANTER BOA HIDRATAÇÃO.` };
+        },
+        detalhes: {
+            indicacao: "Sepse com alteração do SNC, coma ou sinais de encefalite (esquemas C, G e J do Whitebook).",
+            dose: "Neonatos: 20 mg/kg/dose EV de 8/8h. > 28 dias de vida: 10–15 mg/kg/dose EV de 8/8h. Por 21 dias.",
+            atencao: "Infundir em 1 hora, diluído a 5 mg/mL. Manter boa hidratação (risco de lesão renal)."
+        },
+        ficha: {
+            indicacoes: "Sepse com alteração do SNC, coma ou sinais de encefalite (cobertura de herpes).",
+            dose: "Neonatos: 20 mg/kg/dose EV de 8/8 horas por 21 dias\n> 28 dias de vida: 10-15 mg/kg/dose EV de 8/8 horas por 21 dias",
+            apresentacoes: "Frasco-ampola 250 mg.",
+            via: "Endovenosa.",
+            reconstituicao: "250 mg em 10 mL de água destilada (25 mg/mL).",
+            diluicao: "SF 0,9% até 5 mg/mL.",
+            infusao: "1 hora.",
+            fonteRevisao: "Whitebook (Afya) - Sepse em Pediatria (Prescrição Hospitalar, Posologia dos Antibióticos), atualizado em 12/02/2026."
+        }
+    },
     "glicose_pals": {
         cat: "cat-pals", sub: "🚨 Parada / Arritmias (PALS)",
         kw: "glicose hipoglicemia d10w d25w d50w bolus pals", nome: "Glicose (Bolus Hipoglicemia)", apres: "Ampolas a 10%, 25% ou 50%",

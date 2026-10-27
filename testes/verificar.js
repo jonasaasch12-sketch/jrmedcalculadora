@@ -25,6 +25,8 @@ const atualizar = process.argv.includes('--atualizar');
 const TETOS = {
     dexa_crupe: 5,        // mL (20 mg)
     anaf_expansao: 1000,  // mL por bolus
+    sepse_expansao: 1000, // mL por bolus
+    cef_sepse: 20,        // mL 12/12h (2 g; 4 g/dia, Whitebook)
     dip_gts: 40,          // gotas (1 g)
     dip_xpe: 20,          // mL (1 g)
     dip_inj: 2,           // mL (1 g)
