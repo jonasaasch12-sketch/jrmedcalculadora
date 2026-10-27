@@ -120,8 +120,12 @@ registrarConduta({
                         "<strong>Orbitária</strong> (a mais comum; etmoidite em criança pequena): <strong>edema e hiperemia palpebral</strong>, <strong>proptose</strong>, <strong>dor ou limitação da movimentação ocular</strong>, diplopia, <strong>queda da acuidade visual</strong>.",
                         "<strong>Intracraniana</strong> (adolescente; sinusite frontal): <strong>cefaleia intensa</strong>, vômitos, febre alta, <strong>rigidez de nuca</strong>, alteração de consciência, convulsão, déficit focal. <strong>Tumor de Pott</strong>: edema mole na testa.",
                         "<strong>Conduta:</strong> internar, <strong>tomografia de seios da face e órbitas (e crânio, se sinal neurológico) com contraste</strong>, <strong>antibiótico EV</strong>, <strong>otorrino e oftalmologia</strong> (cirurgia se abscesso, piora visual ou falha) (AAP 2013; revisões 2023).",
-                        "<strong>Celulite pré-septal</strong> leve (sem proptose, movimento ocular normal, visão normal), criança bem: pode ser tratada por via oral com reavaliação em 24 a 48 h."
+                        "<strong>Celulite pré-septal</strong> leve (sem proptose, movimento ocular normal, visão normal), criança bem: pode ser tratada por via oral com reavaliação em 24 a 48 h.",
+                        "<strong>Celulite orbitária: antibiótico EV</strong> (Whitebook) por 2 a 3 semanas ou até a resolução. <strong>Esquema A</strong> (preferencial): <strong>vancomicina + ceftriaxona</strong>. <strong>Esquema B</strong>: vancomicina + cefotaxima. <strong>Esquema C</strong> (sinais de infecção do SNC, sinusite crônica ou foco odontológico): A ou B <strong>+ metronidazol</strong>.",
+                        "<strong>Cuidados</strong> (Whitebook): sinais vitais de 6/6 h; <strong>oftalmologia</strong>; acuidade visual e reflexos pupilares todos os dias; <strong>sem melhora em 24 a 48 h</strong> de antibiótico adequado: <strong>nova imagem</strong> (abscesso) e avaliar cirurgia. Pode precisar de jejum para cirurgia, com hidratação basal.",
+                        "<strong>Sinais de alarme</strong> (Whitebook): febre, proptose, dor ao movimentar o olho, queda da acuidade visual, alteração da visão de cores e dos reflexos pupilares. <strong>Complicações:</strong> abscesso subperiosteal ou orbitário, cegueira, tromboflebite do seio cavernoso, abscesso cerebral."
                     ],
+                    remedios: ["cef_orbitaria", "vanco_orbitaria", "cefotax_orbitaria", "metro_orbitaria"],
                     tabela: {
                         colunas: ["Chandler", "Quadro", "Sinais"],
                         linhas: [
@@ -269,12 +273,13 @@ registrarConduta({
         }
     ],
 
-    citacoes: { "AAP 2013": 0, "AAP": 0, "IDSA 2012": 1, "IDSA": 1, "revisões 2023": [2, 3] }, // sigla no texto → fonte (índice em fontes)
+    citacoes: { "Whitebook": 4, "AAP 2013": 0, "AAP": 0, "IDSA 2012": 1, "IDSA": 1, "revisões 2023": [2, 3] }, // sigla no texto → fonte (índice em fontes)
     fontes: [
         "Wald ER, Applegate KE, Bordley C, et al. Clinical practice guideline for the diagnosis and management of acute bacterial sinusitis in children aged 1 to 18 years. Pediatrics 2013;132(1):e262-80 (AAP). doi:10.1542/peds.2013-1071",
         "Chow AW, Benninger MS, Brook I, et al. IDSA clinical practice guideline for acute bacterial rhinosinusitis in children and adults. Clin Infect Dis 2012;54(8):e72-e112. doi:10.1093/cid/cir1043",
         "Trbojević T, Penezić A, Sitaš I, et al. Interdisciplinary care in orbital complications of acute rhinosinusitis in children. Indian J Ophthalmol 2023;71(1):242-248. doi:10.4103/ijo.IJO_798_22",
-        "Yang XJ, Tang LX, Wang PP, et al. Diagnosis and management of orbital and cranial complications of pediatric acute rhinosinusitis. Zhonghua Er Bi Yan Hou Tou Jing Wai Ke Za Zhi 2023;58(2):133-138. doi:10.3760/cma.j.cn115330-20220315-00114"
+        "Yang XJ, Tang LX, Wang PP, et al. Diagnosis and management of orbital and cranial complications of pediatric acute rhinosinusitis. Zhonghua Er Bi Yan Hou Tou Jing Wai Ke Za Zhi 2023;58(2):133-138. doi:10.3760/cma.j.cn115330-20220315-00114",
+        "Whitebook (Afya). Guia de Prescrição / Pediatria: Celulite Orbitária em Pediatria (Prescrição Hospitalar). Atualizado em 23/04/2026."
     ],
     revisao: "10/2026"
 });
