@@ -161,11 +161,11 @@ registrarMedicamentos({
         cat: "cat-rsi", sub: "🏥 Uso Hospitalar (Infusão Contínua)", 
         kw: "rocuronio bloqueador neuromuscular infusao continua manutenção sedacao rsi tabela contínuo rocuronio contínuo",
         nome: "Rocurônio (Infusão Contínua)", apres: "Ampola 5 mL (10 mg/mL)",
-        info: "Doses: 7 a 12 mcg/kg/min.", badge: "Fatores: 7mcg=0.5 | 10mcg=0.72 | 12mcg=0.86", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => ({ v: 'Dose (7 mcg/min): ' + (p * 0.5).toFixed(1) + ' ml/h', r: 'VIA ENDOVENOSA (INFUSÃO CONTÍNUA)\n\n SOLUÇÃO: 5 mL Rocurônio + 55 mL SF 0,9% (Total 60 mL).\n VELOCIDADES NA BIC:\n • 7 mcg/kg/min: ' + (p * 0.5).toFixed(1) + ' mL/h\n • 10 mcg/kg/min: ' + (p * 0.72).toFixed(1) + ' mL/h\n • 12 mcg/kg/min: ' + (p * 0.86).toFixed(1) + ' mL/h' }),
+        info: "Doses (SBP): 0,3 a 0,6 mg/kg/h (5 a 10 mcg/kg/min).", badge: "Fatores: 0,3mg=0.36 | 0,45mg=0.54 | 0,6mg=0.72", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => ({ v: 'Dose (0,3 mg/kg/h): ' + (p * 0.36).toFixed(1) + ' ml/h', r: 'VIA ENDOVENOSA (INFUSÃO CONTÍNUA)\n\n SOLUÇÃO: 5 mL Rocurônio + 55 mL SF 0,9% (Total 60 mL = 0,83 mg/mL).\n VELOCIDADES NA BIC:\n • 0,3 mg/kg/h (5 mcg/kg/min): ' + (p * 0.36).toFixed(1) + ' mL/h\n • 0,45 mg/kg/h (7,5 mcg/kg/min): ' + (p * 0.54).toFixed(1) + ' mL/h\n • 0,6 mg/kg/h (10 mcg/kg/min): ' + (p * 0.72).toFixed(1) + ' mL/h' }),
         detalhes: {
             indicacao: "Bloqueio neuromuscular contínuo após a intubação.",
-            dose: "7 a 12 mcg/kg/min.",
+            dose: "0,3 a 0,6 mg/kg/h (5 a 10 mcg/kg/min), em infusão contínua ou doses de hora em hora (SBP).",
             atencao: "Só com sedação e analgesia adequadas."
         }
     },
@@ -173,11 +173,11 @@ registrarMedicamentos({
         cat: "cat-rsi", sub: "🏥 Uso Hospitalar (Infusão Contínua)", 
         kw: "pancuronio bloqueador neuromuscular infusao continua manutenção sedacao rsi tabela contínuo pancuronio contínuo",
         nome: "Pancurônio (Infusão Contínua)", apres: "Ampola 2 mL (2 mg/mL)",
-        info: "Doses: 0,4 a 1 mcg/kg/min.", badge: "Fatores: 0.4mcg=0.36 | 0.8mcg=0.72 | 1mcg=0.9", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => ({ v: 'Dose (0,4 mcg/min): ' + (p * 0.36).toFixed(1) + ' ml/h', r: 'VIA ENDOVENOSA (INFUSÃO CONTÍNUA)\n\n SOLUÇÃO: 2 mL Pancurônio + 58 mL SG 5% (Total 60 mL).\n VELOCIDADES NA BIC:\n • 0,4 mcg/kg/min: ' + (p * 0.36).toFixed(1) + ' mL/h\n • 0,8 mcg/kg/min: ' + (p * 0.72).toFixed(1) + ' mL/h\n • 1 mcg/kg/min: ' + (p * 0.9).toFixed(1) + ' mL/h' }),
+        info: "Doses (SBP): 0,05 a 0,1 mg/kg/h.", badge: "Fatores: 0,05mg=0.75 | 0,075mg=1.125 | 0,1mg=1.5", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => ({ v: 'Dose (0,05 mg/kg/h): ' + (p * 0.75).toFixed(1) + ' ml/h', r: 'VIA ENDOVENOSA (INFUSÃO CONTÍNUA)\n\n SOLUÇÃO: 2 mL Pancurônio + 58 mL SG 5% (Total 60 mL = 0,067 mg/mL).\n VELOCIDADES NA BIC:\n • 0,05 mg/kg/h: ' + (p * 0.75).toFixed(1) + ' mL/h\n • 0,075 mg/kg/h: ' + (p * 1.125).toFixed(1) + ' mL/h\n • 0,1 mg/kg/h: ' + (p * 1.5).toFixed(1) + ' mL/h' }),
         detalhes: {
             indicacao: "Bloqueio neuromuscular contínuo após a intubação.",
-            dose: "0,4 a 1 mcg/kg/min.",
+            dose: "0,05 a 0,1 mg/kg/h, em infusão contínua ou doses de hora em hora (SBP).",
             atencao: "Só com sedação e analgesia adequadas. Pode causar taquicardia."
         }
     },
@@ -197,12 +197,12 @@ registrarMedicamentos({
         cat: "cat-rsi", sub: "🏥 Uso Hospitalar (Infusão Contínua)", 
         kw: "propofol 1% inducao sedacao infusao continua manutenção sedacao rsi tabela contínuo propofol contínuo puro",
         nome: "Propofol 1% (Infusão Contínua)", apres: "Solução Pura (10 mg/mL)",
-        info: "Doses: 25 a 300 mcg/kg/min.", badge: "Fatores: 25mcg=0.15 | 100mcg=0.6 | 300mcg=1.8", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => ({ v: 'Dose (25 mcg): ' + (p * 0.15).toFixed(1) + ' ml/h', r: 'VIA ENDOVENOSA (INFUSÃO CONTÍNUA - SOLUÇÃO PURA)\n\n VELOCIDADES NA BIC:\n • 25 mcg/kg/min: ' + (p * 0.15).toFixed(1) + ' mL/h\n • 100 mcg/kg/min: ' + (p * 0.6).toFixed(1) + ' mL/h\n • 300 mcg/kg/min: ' + (p * 1.8).toFixed(1) + ' mL/h' }),
+        info: "Doses (SBP): 25 a 250 mcg/kg/min.", badge: "Fatores: 25mcg=0.15 | 100mcg=0.6 | 250mcg=1.5", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => ({ v: 'Dose (25 mcg): ' + (p * 0.15).toFixed(1) + ' ml/h', r: 'VIA ENDOVENOSA (INFUSÃO CONTÍNUA - SOLUÇÃO PURA)\n\n VELOCIDADES NA BIC:\n • 25 mcg/kg/min: ' + (p * 0.15).toFixed(1) + ' mL/h\n • 100 mcg/kg/min: ' + (p * 0.6).toFixed(1) + ' mL/h\n • 250 mcg/kg/min: ' + (p * 1.5).toFixed(1) + ' mL/h' }),
         detalhes: {
             indicacao: "Sedação contínua após a intubação.",
-            dose: "25 a 300 mcg/kg/min.",
-            atencao: "Causa hipotensão. Uso prolongado em dose alta: risco de síndrome da infusão do propofol."
+            dose: "25 a 250 mcg/kg/min (SBP).",
+            atencao: "Causa hipotensão. SBP: doses até 75 mcg/kg/min reduzem o risco de síndrome da infusão do propofol; não recomendado para sedação contínua prolongada na criança."
         }
     }
 });
