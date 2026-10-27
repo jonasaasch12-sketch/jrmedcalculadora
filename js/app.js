@@ -495,15 +495,21 @@ function inicializarApp() {
 // =====================================================
 // CARD AGRUPADO (um remédio, várias doenças: medicamentos/grupos.js)
 // =====================================================
-// Começa sem nada escolhido. Botões de via (IM/EV) filtram a lista; a lista separa as doenças
-// pelo esquema de dose. A receita é a do card da doença escolhida, com a linha "DOSE: ... MG/KG/DOSE".
-function opcoesDoGrupo(grupo, via) {
+// Começa sem nada escolhido. Botões de via (IM/EV) filtram as doenças. Até 5 doenças: botões para tocar;
+// mais que isso: lista que abre (pedido do Dr. Jonas). A receita é a do card da doença escolhida,
+// com a linha "DOSE: ... MG/KG/DOSE" no final (só injetáveis).
+const MAX_BOTOES_GRUPO = 5;
+function htmlEscolhaGrupo(grupo, via, escolha, instanceId) {
     // Só o nome das doenças, em ordem alfabética. Sem via escolhida, doença repetida (IM e EV) leva a via no nome.
     let todas = GRUPOS_CARDS[grupo].opcoes;
     let opcoes = todas.filter(o => !via || o.via === via).slice().sort((a, b) => a.rotulo.localeCompare(b.rotulo, 'pt'));
-    let repetida = (o) => !via && todas.filter(x => x.rotulo === o.rotulo).length > 1;
-    return `<option value="">Escolher doença / patologia</option>` +
-        opcoes.map(o => `<option value="${o.id}">${escaparHtml(o.rotulo)}${repetida(o) ? ` (${o.via})` : ''}</option>`).join('');
+    let nome = (o) => escaparHtml(o.rotulo) + (!via && todas.filter(x => x.rotulo === o.rotulo).length > 1 ? ` (${o.via})` : '');
+    if (opcoes.length <= MAX_BOTOES_GRUPO) {
+        return `<div class="grupo-chips" role="group" aria-label="Doença / patologia">${opcoes.map(o =>
+            `<button type="button" class="grupo-chip${o.id === escolha ? ' on' : ''}" onclick="marcarDoencaGrupo('${instanceId}', '${o.id}')">${nome(o)}</button>`).join('')}</div>`;
+    }
+    return `<select class="grupo-select${escolha ? '' : ' vazio'}" aria-label="Doença / patologia" onchange="marcarDoencaGrupo('${instanceId}', this.value)">
+        <option value="">Escolher doença / patologia</option>${opcoes.map(o => `<option value="${o.id}"${o.id === escolha ? ' selected' : ''}>${nome(o)}</option>`).join('')}</select>`;
 }
 
 function htmlCardGrupo(grupo, instanceId) {
@@ -521,7 +527,7 @@ function htmlCardGrupo(grupo, instanceId) {
                                 <div id="res-${instanceId}" class="result-box">—</div>
                             </div>
                             ${botoesVia}
-                            <select id="sel-${instanceId}" class="grupo-select vazio" aria-label="Doença / patologia" onchange="escolherDoencaGrupo('${instanceId}')">${opcoesDoGrupo(grupo, null)}</select>
+                            <div id="opc-${instanceId}">${htmlEscolhaGrupo(grupo, null, null, instanceId)}</div>
                             <div id="badge-${instanceId}"></div>
                             <div id="alerta-alergia-${instanceId}" style="display:none;" class="tarja-alergia">⚠️ Paciente referiu alergia compatível — confira antes de prescrever</div>
                             <div class="prescription-header-row">
@@ -538,28 +544,25 @@ function htmlCardGrupo(grupo, instanceId) {
 
 function escolherViaGrupo(instanceId, via) {
     let inst = instanciasRenderizadas.find(i => i.instanceId === instanceId);
-    let sel = document.getElementById('sel-' + instanceId);
-    if (!inst || !sel) return;
-    inst.via = inst.via === via ? null : via; // clicar de novo tira o filtro
+    if (!inst) return;
+    inst.via = inst.via === via ? null : via; // tocar de novo tira o filtro
     document.querySelectorAll(`#card-${instanceId} .grupo-via`).forEach(b => b.classList.toggle('on', b.dataset.via === inst.via));
-    let atual = inst.escolha;
-    sel.innerHTML = opcoesDoGrupo(inst.grupo, inst.via);
-    let aindaExiste = atual && GRUPOS_CARDS[inst.grupo].opcoes.some(o => o.id === atual && (!inst.via || o.via === inst.via));
-    sel.value = aindaExiste ? atual : "";
-    escolherDoencaGrupo(instanceId);
+    let aindaExiste = inst.escolha && GRUPOS_CARDS[inst.grupo].opcoes.some(o => o.id === inst.escolha && (!inst.via || o.via === inst.via));
+    marcarDoencaGrupo(instanceId, aindaExiste ? inst.escolha : "", true);
 }
 
-function escolherDoencaGrupo(instanceId) {
+// forcar: mantém a escolha (usado ao trocar a via). Tocar de novo no mesmo botão desmarca.
+function marcarDoencaGrupo(instanceId, idDoenca, forcar) {
     let inst = instanciasRenderizadas.find(i => i.instanceId === instanceId);
-    let sel = document.getElementById('sel-' + instanceId);
-    if (!inst || !sel) return;
-    inst.escolha = sel.value || null;
+    if (!inst) return;
+    inst.escolha = (!forcar && idDoenca === inst.escolha) ? null : (idDoenca || null);
+    let caixa = document.getElementById('opc-' + instanceId);
+    if (caixa) caixa.innerHTML = htmlEscolhaGrupo(inst.grupo, inst.via, inst.escolha, instanceId);
     let med = inst.escolha && buscarMed(inst.escolha);
     let badge = document.getElementById('badge-' + instanceId);
     if (badge) badge.innerHTML = med && med.badge ? `<div class="badge-teto">${med.badge}</div>` : '';
     let ficha = document.getElementById('ficha-' + instanceId);
     if (ficha) ficha.innerHTML = med ? renderizarBlocoFicha(inst.escolha, instanceId) : '';
-    sel.classList.toggle('vazio', !inst.escolha);
     calcularTudo();
 }
 
@@ -750,7 +753,7 @@ let carrinhoPrescricao = []; // { nome, apres, texto }
     let inst = instanciasRenderizadas.find(i => i.instanceId === instanceId);
     let med = buscarMed(inst && (inst.grupo ? inst.escolha : inst.medKey));
     let recBox = document.getElementById('rec-' + instanceId);
-    if (inst && inst.grupo && !inst.escolha) { alert("Escolha a doença/patologia na lista do card."); return; }
+    if (inst && inst.grupo && !inst.escolha) { alert("Escolha a doença/patologia no card."); return; }
     if (!med || !recBox) return;
 
     // Extrai o texto gerado
