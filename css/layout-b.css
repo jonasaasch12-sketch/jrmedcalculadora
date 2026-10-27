@@ -247,3 +247,16 @@ html[data-theme="dark"] #app-container .btn-add-carrinho { color: #04201d; }
     body.receita-vazia #modalCarrinho { display: none !important; }
     body.receita-vazia #aplicativo-principal .app-layout { padding-right: 24px; }
 }
+
+/* Card agrupado (medicamentos/grupos.js): botões de via + lista de doenças */
+.med-card-grupo .grupo-vias { display: flex; gap: 8px; margin: 8px 0 6px; }
+.med-card-grupo .grupo-via {
+    flex: 1; padding: 8px 10px; border: 1.5px solid var(--border-strong); border-radius: 10px;
+    background: var(--surface); color: var(--text-soft); font: 700 14px var(--fonte); cursor: pointer;
+}
+.med-card-grupo .grupo-via.on { background: var(--primary); border-color: var(--primary); color: #fff; }
+.med-card-grupo .grupo-select {
+    width: 100%; margin: 6px 0 8px; padding: 10px 12px; border: 1.5px solid var(--primary); border-radius: 10px;
+    background: var(--surface); color: var(--text-main); font: 600 14px var(--fonte); cursor: pointer;
+}
+.med-card-grupo .grupo-select.vazio, .med-card-grupo .grupo-select:invalid { color: var(--text-muted); }

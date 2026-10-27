@@ -140,6 +140,11 @@ categorias.forEach(c => (c.patologias || []).forEach(pat => (pat.remedios || [])
     if (!farmaciaJR[id]) falha(`menu "${c.titulo || c.id} > ${pat.nome}" cita "${id}", que não existe`);
 })));
 ids.filter(id => !noMenu.has(id)).forEach(id => aviso(`"${id}" não aparece em nenhuma seção do menu`));
+const GRUPOS = vm.runInContext('typeof GRUPOS_CARDS === "undefined" ? {} : GRUPOS_CARDS', ctx);
+Object.keys(GRUPOS).forEach(g => GRUPOS[g].opcoes.forEach(o => {
+    if (!farmaciaJR[o.id]) falha(`card agrupado "${g}" cita "${o.id}", que não existe`);
+    if (!o.dose || !/MG\/KG|DOSE: \d+ MG/.test(o.dose)) falha(`card agrupado "${g}" > "${o.rotulo}": falta a linha DOSE em mg/kg`);
+}));
 
 // ---------- 4: arquivos e modo offline ----------
 console.log('4. Arquivos e modo offline (sw.js)');

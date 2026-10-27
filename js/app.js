@@ -307,6 +307,7 @@ function cardCorrespondeABusca(keywordsNormalizadas, queryNormalizada) {
 
 function filtrarMedicas() {
     let q = normalizar(document.getElementById('searchInput').value.trim());
+    let gruposMostrados = {}; // na busca, o card agrupado aparece uma vez só
     document.querySelectorAll('.category-group').forEach(cat => {
         let catHasVisible = false;
         cat.querySelectorAll('.subtype-group').forEach(sub => {
@@ -314,6 +315,8 @@ function filtrarMedicas() {
             sub.querySelectorAll('.med-card').forEach(card => {
                 let kwNorm = normalizar(card.getAttribute('data-keywords') || "");
                 let isMatch = cardCorrespondeABusca(kwNorm, q);
+                let g = card.getAttribute('data-grupo');
+                if (isMatch && g && q !== "") { if (gruposMostrados[g]) isMatch = false; else gruposMostrados[g] = true; }
                 card.style.display = isMatch ? "flex" : "none";
                 if (isMatch) { subHasVisible = true; catHasVisible = true; }
             });
@@ -415,7 +418,20 @@ function inicializarApp() {
                 ? `<div class="subtype-group" id="${cat.id}-s${pi}"><div class="sub-type-title sub-type-hosp${comLink}" style="--cor-cat:${escaparHtml(corCat)}"><span>${tituloPat}</span>${linkPat}</div>`
                 : `<div class="subtype-group" id="${cat.id}-s${pi}"><div class="sub-type-title${comLink}"><span>${tituloPat}</span>${linkPat}</div>`;
 
+            let gruposNaSecao = {};
             pat.remedios.forEach(idRemedio => {
+                // Card agrupado (medicamentos/grupos.js): um card só por remédio na seção; a doença é escolhida na lista.
+                let grupo = GRUPO_DO_CARD[idRemedio];
+                if (grupo && !gruposNaSecao[grupo]) {
+                    gruposNaSecao[grupo] = true;
+                    contadorPorRemedio['grupo:' + grupo] = (contadorPorRemedio['grupo:' + grupo] || 0) + 1;
+                    let oc = contadorPorRemedio['grupo:' + grupo];
+                    let instanceId = 'g-' + grupo + (oc === 1 ? '' : '--' + oc);
+                    instanciasRenderizadas.push({ instanceId, medKey: null, grupo, escolha: null, via: null });
+                    htmlFinal += htmlCardGrupo(grupo, instanceId);
+                    return;
+                }
+                if (grupo) return;
                 let med = buscarMed(idRemedio);
                 if (!med) {
                     console.warn(`[JR MED] Aviso: "${idRemedio}" está referenciado numa categoria mas não existe em farmaciaJR nem nos medicamentos da equipe. O card não será exibido.`);
@@ -474,6 +490,109 @@ function inicializarApp() {
     bottomMenu.innerHTML = htmlMenuBottom;
     calcularTudo();
     filtrarMedicas();
+}
+
+// =====================================================
+// CARD AGRUPADO (um remédio, várias doenças: medicamentos/grupos.js)
+// =====================================================
+// Começa sem nada escolhido. Botões de via (IM/EV) filtram a lista; a lista separa as doenças
+// pelo esquema de dose. A receita é a do card da doença escolhida, com a linha "DOSE: ... MG/KG/DOSE".
+function opcoesDoGrupo(grupo, via) {
+    let opcoes = GRUPOS_CARDS[grupo].opcoes.filter(o => !via || o.via === via);
+    let porRegime = [];
+    opcoes.forEach(o => {
+        let titulo = (GRUPOS_CARDS[grupo].vias && !via ? o.via + ' · ' : '') + o.regime;
+        let r = porRegime.find(x => x.titulo === titulo);
+        if (!r) porRegime.push(r = { titulo, itens: [] });
+        r.itens.push(o);
+    });
+    return `<option value="">Escolher doença / patologia</option>` + porRegime.map(r =>
+        `<optgroup label="${escaparHtml(r.titulo)}">${r.itens.map(o => `<option value="${o.id}">${escaparHtml(o.rotulo)}</option>`).join('')}</optgroup>`).join('');
+}
+
+function htmlCardGrupo(grupo, instanceId) {
+    let g = GRUPOS_CARDS[grupo];
+    let membros = g.opcoes.map(o => buscarMed(o.id)).filter(Boolean);
+    let kw = [g.nome].concat(membros.map(m => `${m.nome} ${m.kw || ''}`), g.opcoes.map(o => o.rotulo)).join(' ');
+    let injetavel = membros.some(m => ehInjetavel(m));
+    let botoesVia = g.vias ? `<div class="grupo-vias">${g.vias.map(v =>
+        `<button type="button" class="grupo-via" data-via="${v.via}" onclick="escolherViaGrupo('${instanceId}', '${v.via}')">${escaparHtml(v.rotulo)}</button>`).join('')}</div>` : '';
+    let btnCopiarId = "btn-copy-" + instanceId, btnCarrinhoId = "btn-cart-" + instanceId;
+    return `
+                        <div id="card-${instanceId}" class="med-card med-card-grupo" data-grupo="${grupo}" data-keywords="${escaparHtml(kw)}" data-nome="${escaparHtml(normalizar(g.nome))}">
+                            <div class="med-header">
+                                <div><span class="med-name">${injetavel ? ICONE_SERINGA : ""}${escaparHtml(g.nome)}</span><span class="med-presentation">${escaparHtml(g.apres)}</span></div>
+                                <div id="res-${instanceId}" class="result-box">—</div>
+                            </div>
+                            ${botoesVia}
+                            <select id="sel-${instanceId}" class="grupo-select vazio" aria-label="Doença / patologia" onchange="escolherDoencaGrupo('${instanceId}')">${opcoesDoGrupo(grupo, null)}</select>
+                            <div id="badge-${instanceId}"></div>
+                            <div id="alerta-alergia-${instanceId}" style="display:none;" class="tarja-alergia">⚠️ Paciente referiu alergia compatível — confira antes de prescrever</div>
+                            <div class="prescription-header-row">
+                                <div class="prescription-label">Texto para selecionar e copiar:</div>
+                                <div class="card-actions-row">
+                                    <button id="${btnCarrinhoId}" class="btn-add-carrinho" onclick="adicionarAoCarrinho('${instanceId}', '${btnCarrinhoId}')">➕ Receita</button>
+                                    <button id="${btnCopiarId}" class="btn-copiar" onclick="copiarTexto('${btnCopiarId}', '${instanceId}')">📋 Copiar</button>
+                                </div>
+                            </div>
+                            <div id="rec-${instanceId}" class="prescription-text-box">Escolha a doença / patologia acima.</div>
+                            <div id="ficha-${instanceId}"></div>
+                        </div>`;
+}
+
+function escolherViaGrupo(instanceId, via) {
+    let inst = instanciasRenderizadas.find(i => i.instanceId === instanceId);
+    let sel = document.getElementById('sel-' + instanceId);
+    if (!inst || !sel) return;
+    inst.via = inst.via === via ? null : via; // clicar de novo tira o filtro
+    document.querySelectorAll(`#card-${instanceId} .grupo-via`).forEach(b => b.classList.toggle('on', b.dataset.via === inst.via));
+    let atual = inst.escolha;
+    sel.innerHTML = opcoesDoGrupo(inst.grupo, inst.via);
+    let aindaExiste = atual && GRUPOS_CARDS[inst.grupo].opcoes.some(o => o.id === atual && (!inst.via || o.via === inst.via));
+    sel.value = aindaExiste ? atual : "";
+    escolherDoencaGrupo(instanceId);
+}
+
+function escolherDoencaGrupo(instanceId) {
+    let inst = instanciasRenderizadas.find(i => i.instanceId === instanceId);
+    let sel = document.getElementById('sel-' + instanceId);
+    if (!inst || !sel) return;
+    inst.escolha = sel.value || null;
+    let med = inst.escolha && buscarMed(inst.escolha);
+    let badge = document.getElementById('badge-' + instanceId);
+    if (badge) badge.innerHTML = med && med.badge ? `<div class="badge-teto">${med.badge}</div>` : '';
+    let ficha = document.getElementById('ficha-' + instanceId);
+    if (ficha) ficha.innerHTML = med ? renderizarBlocoFicha(inst.escolha, instanceId) : '';
+    sel.classList.toggle('vazio', !inst.escolha);
+    calcularTudo();
+}
+
+function calcularCardGrupo(inst, p, iRaw, invalido, termosAlergia) {
+    let id = inst.instanceId;
+    let resBox = document.getElementById('res-' + id), recBox = document.getElementById('rec-' + id);
+    let cardBox = document.getElementById('card-' + id), alertaBox = document.getElementById('alerta-alergia-' + id);
+    if (!resBox || !recBox) return;
+    let g = GRUPOS_CARDS[inst.grupo];
+    if (alertaBox && cardBox) {
+        let conflita = medPodeConflitarComAlergia({ nome: g.nome, kw: cardBox.getAttribute('data-keywords') }, termosAlergia);
+        alertaBox.style.display = conflita ? "inline-block" : "none";
+        cardBox.classList.toggle('alerta-alergia', conflita);
+    }
+    let med = inst.escolha && buscarMed(inst.escolha);
+    if (!med) { resBox.innerText = "—"; recBox.innerText = "Escolha a doença / patologia acima."; return; }
+    if (invalido && !med.ignoraPeso) { resBox.innerText = "—"; recBox.innerText = "Insira o peso ou digite a idade acima."; return; }
+    try {
+        let calc = med.calc(p, iRaw);
+        let opcao = g.opcoes.find(o => o.id === inst.escolha);
+        let linhas = String(calc.r).split('\n');
+        // A linha da dose (mg/kg/dose) entra logo depois da 1ª linha (a via), para aparecer na receita copiada.
+        if (opcao && opcao.dose) linhas.splice(1, 0, '', opcao.dose);
+        resBox.innerText = med.badgeSt ? (med.badge || calc.v) : calc.v;
+        recBox.innerText = linhas.join('\n');
+    } catch (e) {
+        resBox.innerText = "Erro";
+        recBox.innerText = "Erro de cálculo.";
+    }
 }
 
 // Mede a altura real do cabeçalho e do painel fixo (que muda com A-/A+, com o aviso de peso
@@ -579,7 +698,9 @@ function calcularTudo() {
     let termosAlergia = normalizar(document.getElementById('alergiaInput').value)
         .split(",").map(t => t.trim()).filter(t => t.length > 0);
 
-    instanciasRenderizadas.forEach(({ instanceId, medKey }) => {
+    instanciasRenderizadas.forEach((inst) => {
+        let { instanceId, medKey } = inst;
+        if (inst.grupo) { calcularCardGrupo(inst, p, iRaw, invalido, termosAlergia); return; }
         let med = buscarMed(medKey);
         let resBox = document.getElementById('res-' + instanceId);
         let recBox = document.getElementById('rec-' + instanceId);
@@ -630,8 +751,10 @@ function novoPaciente() {
 let carrinhoPrescricao = []; // { nome, apres, texto }
 
         function adicionarAoCarrinho(instanceId, btnId) {
-    let med = buscarMed(instanciasRenderizadas.find(i => i.instanceId === instanceId)?.medKey);
+    let inst = instanciasRenderizadas.find(i => i.instanceId === instanceId);
+    let med = buscarMed(inst && (inst.grupo ? inst.escolha : inst.medKey));
     let recBox = document.getElementById('rec-' + instanceId);
+    if (inst && inst.grupo && !inst.escolha) { alert("Escolha a doença/patologia na lista do card."); return; }
     if (!med || !recBox) return;
 
     // Extrai o texto gerado
@@ -655,7 +778,9 @@ let carrinhoPrescricao = []; // { nome, apres, texto }
         cabecalhoVia = `USO ${med._regra.via.toUpperCase()}`;
     }
 
-    carrinhoPrescricao.push({ nome: med.nome, apres: med.apres, texto: textoCompleto, via: cabecalhoVia });
+    let nomeItem = med.nome;
+    if (inst && inst.grupo) { let op = GRUPOS_CARDS[inst.grupo].opcoes.find(o => o.id === inst.escolha); nomeItem = `${GRUPOS_CARDS[inst.grupo].nome} (${op ? op.rotulo : ''})`; }
+    carrinhoPrescricao.push({ nome: nomeItem, apres: med.apres, texto: textoCompleto, via: cabecalhoVia });
 
     let botao = document.getElementById(btnId);
     let original = botao.innerHTML;
