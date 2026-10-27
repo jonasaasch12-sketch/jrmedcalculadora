@@ -112,27 +112,27 @@ registrarMedicamentos({
     "smx_tmp": {
         cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
         kw: "sulfametoxazol trimetoprima bactrim smx tmp antibiotico suspensao itu infeccao urinaria", nome: "Sulfametoxazol + Trimetoprima (Bactrim)", apres: "200 + 40 mg / 5 mL (8 mg TMP/mL)",
-        info: "<strong>Posologia (ITU):</strong> 8-12 mg TMP/kg/dia de 12/12h por 7-14 dias. Máx. 20 mL/dose.", badge: "Máx: 20 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia (ITU):</strong> 6-12 mg TMP/kg/dia de 12/12h por 7-14 dias. Máx. 20 mL/dose.", badge: "Máx: 20 mL/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p, i) => {
-            // Whitebook (ITU): 8-12 mg de TMP/kg/dia VO de 12/12h, por 7-14 dias. Máximo 20 mL (160 mg TMP) por dose. A partir de 2 meses.
+            // Whitebook (ITU em Pediatria, ITU afebril): 6-12 mg de TMP/kg/dia (0,75-1,5 mL/kg/dia) VO de 12/12h, por 7-14 dias. Máximo 20 mL (160 mg TMP) por dose. A partir de 2 meses.
             if (i !== "" && parseFloat(i) < 0.17) return { v: "Contraind.", r: "ATENÇÃO: Sulfametoxazol + Trimetoprima a partir de 2 meses de idade." };
-            let min = Math.min(parseFloat(round05(p * 4 / 8)), 20).toFixed(1), max = Math.min(parseFloat(round05(p * 6 / 8)), 20).toFixed(1);
+            let min = Math.min(parseFloat(round05(p * 3 / 8)), 20).toFixed(1), max = Math.min(parseFloat(round05(p * 6 / 8)), 20).toFixed(1);
             return { v: `${min}-${max} mL`, r: `${recHead}1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR ${min} A ${max} ML, VIA ORAL, DE 12/12 HORAS, POR 7 A 14 DIAS.` };
         },
         detalhes: {
             indicacao: "Infecção do trato urinário.",
-            dose: "8-12 mg de TMP/kg/dia VO de 12/12h, por 7 a 14 dias.",
+            dose: "6-12 mg de TMP/kg/dia VO de 12/12h, por 7 a 14 dias.",
             atencao: "Máximo 20 mL (160 mg de TMP) por dose. A partir de 2 meses. Perguntar sobre alergia a sulfa."
         },
         ficha: {
             indicacoes: "Infecção do trato urinário.",
-            dose: "Infecção do trato urinário (> 2 meses): 8-12 mg TMP/kg/dia VO de 12/12 horas, por 7-14 dias",
+            dose: "Infecção do trato urinário (> 2 meses): 6-12 mg TMP/kg/dia VO de 12/12 horas, por 7-14 dias",
             doseMaxima: "20 mL/dose (160 mg de TMP/dose).",
             apresentacoes: "Suspensão oral 200 mg + 40 mg/5 mL.",
             via: "Oral.",
             intervalo: "12/12 horas.",
             alertasPediatricos: "Uso a partir de 2 meses de idade.",
-            fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Sulfametoxazol + Trimetoprima, atualizado em 14/08/2025."
+            fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Sulfametoxazol + Trimetoprima, atualizado em 14/08/2025; dose da ITU (6-12 mg TMP/kg/dia) do Whitebook - Infecção do Trato Urinário em Pediatria (out/2026)."
         }
     },
     "metronidazol_vo": {
