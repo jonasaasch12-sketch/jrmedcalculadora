@@ -440,16 +440,17 @@ registrarMedicamentos({
         cat: "cat-diarreia", sub: "🏥 Uso Hospitalar (Vias Injetáveis / Expansão)",
         kw: "ceftriaxona disenteria diarreia com sangue shigella colera antibiotico im ev injetavel",
         nome: "Ceftriaxona IM / EV (Disenteria)", apres: "FA 1 g",
-        info: "<strong>Conduta (MS):</strong> 50 a 100 mg/kg IM 1x ao dia por 3 a 5 dias. < 3 meses, imunodeficiência ou casos graves: EV.", badge: "Teto: 2 g/dia", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Conduta (MS):</strong> 50 a 100 mg/kg IM 1x ao dia por 3 a 5 dias. < 3 meses, imunodeficiência ou casos graves: EV. <em>App: dose média de 75 mg/kg.</em>", badge: "Teto: 2 g/dia", recLabel: "Texto para selecionar e copiar:",
         calc: (p, i) => {
             /* MS 2023: 50-100 mg/kg/dia, 1x/dia, 3 a 5 dias. IM; EV se < 3 meses, imunodeficiência ou grave. Teto do app: 2 g/dia. IM: 1 g + 3,5 mL de lidocaína 1% (285,7 mg/mL). EV: 1 g em 10 mL de AD (100 mg/mL). */
             let opc = (k) => { let mg = Math.min(p * k, 2000); return { mg, im: mg / 285.7, ev: mg / 100, fa: mg > 1000 ? 2 : 1 }; };
-            let a = opc(50), b = opc(100);
+            /* Dose média da faixa: 75 mg/kg. */
+            let a = opc(75);
             let ev = i !== "" && parseFloat(i) < 0.25;
             let lin = (o, k) => ev
                 ? `${k} MG/KG: reconstituir ${o.fa} FA de 1 g em 10 mL de AD cada; aspirar ${o.ev.toFixed(1)} mL (${o.mg.toFixed(0)} mg), diluir em SF 0,9% e infundir EV em 30 min, 1 vez ao dia.`
                 : `${k} MG/KG: reconstituir ${o.fa} FA de 1 g com 3,5 mL de lidocaína 1% cada; aspirar ${o.im.toFixed(1)} mL (${o.mg.toFixed(0)} mg) e aplicar IM profunda, 1 vez ao dia.`;
-            return { v: ev ? `EV: ${a.ev.toFixed(1)}–${b.ev.toFixed(1)} mL` : `IM: ${a.im.toFixed(1)}–${b.im.toFixed(1)} mL`, r: `${ev ? "VIA ENDOVENOSA" : "VIA INTRAMUSCULAR"} (DISENTERIA - 3 A 5 DIAS)\n\n ${lin(a, 50)}\n ${lin(b, 100)}${ev ? "\n (Menor de 3 meses: via EV.)" : "\n Se < 3 meses, imunodeficiência ou caso grave: fazer EV."}` };
+            return { v: ev ? `EV: ${a.ev.toFixed(1)} mL` : `IM: ${a.im.toFixed(1)} mL`, r: `${ev ? "VIA ENDOVENOSA" : "VIA INTRAMUSCULAR"} (DISENTERIA - 3 A 5 DIAS)\n\n ${lin(a, 75)}${ev ? "\n (Menor de 3 meses: via EV.)" : "\n Se < 3 meses, imunodeficiência ou caso grave: fazer EV."}` };
         },
         detalhes: {
             indicacao: "Diarreia com sangue (disenteria) com comprometimento do estado geral, ou cólera grave.",

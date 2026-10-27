@@ -51,6 +51,17 @@ const TETOS = {
     metro_parasitas: 6.25, // mL de 40 mg/mL na giardíase (250 mg/dose)
     insulina_cad: 10,
     rifampicina_profilaxia: 30, // mL de 20 mg/mL = 600 mg/dose
+    metro_orbitaria: 100, // mL de 5 mg/mL (500 mg/dose, Whitebook)
+    amox_erisipela: 10,   // mL (500 mg)
+    clav_erisipela: 10,   // mL (500 mg)
+    cefalexina_erisipela: 10, // mL (500 mg)
+    cefalexina_celulite: 10, // mL (500 mg/dose, Whitebook)
+    cefadroxila_celulite: 20, // mL (1 g/dose = 2 g/dia, Whitebook)
+    smx_celulite: 20,     // mL (160 mg TMP, Whitebook)
+    cefalexina_impetigo: 10, // mL (500 mg)
+    eritro_impetigo: 10,  // mL (500 mg)
+    claritro_impetigo: 10, // mL (500 mg, Whitebook)
+    smx_impetigo: 20,     // mL (160 mg TMP, Whitebook)
     urina_cefa: 10,       // mL de 250 mg/5 mL = 500 mg/dose (Whitebook)
     urina_clav: 10,       // mL de 250 mg/5 mL = 500 mg/dose
     cefuroxima_vo_itu: 10, // mL de 250 mg/5 mL = 500 mg/dose (Whitebook)
@@ -129,6 +140,15 @@ categorias.forEach(c => (c.patologias || []).forEach(pat => (pat.remedios || [])
     if (!farmaciaJR[id]) falha(`menu "${c.titulo || c.id} > ${pat.nome}" cita "${id}", que não existe`);
 })));
 ids.filter(id => !noMenu.has(id)).forEach(id => aviso(`"${id}" não aparece em nenhuma seção do menu`));
+const GRUPOS = vm.runInContext('typeof GRUPOS_CARDS === "undefined" ? {} : GRUPOS_CARDS', ctx);
+Object.keys(GRUPOS).forEach(g => GRUPOS[g].opcoes.forEach(o => {
+    if (!farmaciaJR[o.id]) falha(`card agrupado "${g}" cita "${o.id}", que não existe`);
+    if (o.via && typeof o.dose !== 'function') falha(`card agrupado "${g}" > "${o.rotulo}": injetável sem a linha DOSE`);
+    if (o.via && farmaciaJR[o.id]) for (const p of PESOS) for (const i of IDADES) {
+        const t = o.dose(p, i, farmaciaJR[o.id].calc(p, i));
+        if (!/^DOSE: /.test(t) || ruim.test(t)) { falha(`card agrupado "${g}" > "${o.rotulo}" (${p} kg): linha DOSE inválida → ${t}`); break; }
+    }
+}));
 
 // ---------- 4: arquivos e modo offline ----------
 console.log('4. Arquivos e modo offline (sw.js)');

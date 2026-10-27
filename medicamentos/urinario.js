@@ -9,12 +9,13 @@ registrarMedicamentos({
     "urina_clav": {
         cat: "cat-urinario", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
         kw: "amoxicilina clavulanato itu urinaria pielonefrite antibiotico oral ambulatorial", nome: "Amoxi-Clavulanato Suspensão (ITU)", apres: "250 mg + 62,5 mg / 5 mL",
-        info: "<strong>Posologia (SBP):</strong> 20–40 mg/kg/dia de amoxicilina VO de 8/8h por 10 dias. Última opção na ITU.", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia (SBP):</strong> 20–40 mg/kg/dia de amoxicilina VO de 8/8h por 10 dias. Última opção na ITU. <em>App: dose média de 30 mg/kg/dia.</em>", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             /* SBP (DC Nefrologia nº 101, 2023): amoxicilina-clavulanato 20-40 mg/kg/dia de 8/8h, última opção (altera mais a flora intestinal). 250 mg/5 mL: 20 mg/kg/dia = p x 0,133 mL/dose; 40 mg/kg/dia = p x 0,267 mL/dose. Teto do app 10 mL/dose (500 mg). Total em mL: 3 doses x 10 dias. */
-            let a = Math.min(parseFloat(round05(p * 20 / 3 / 50)), 10), b = Math.min(parseFloat(round05(p * 40 / 3 / 50)), 10);
-            let tot = Math.ceil(b * 3 * 10), t = x => String(x).replace('.', ',');
-            return { v: `${a}–${b} mL`, r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML -- ${tot} ML\nDAR ${t(a)} A ${t(b)} ML, VIA ORAL, DE 8/8 HORAS POR 10 DIAS.` };
+            /* Dose média da faixa: 30 mg/kg/dia. */
+            let a = Math.min(parseFloat(round05(p * 10 / 50)), 10);
+            let tot = Math.ceil(a * 3 * 10), t = x => String(x).replace('.', ',');
+            return { v: `${a} mL`, r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML -- ${tot} ML\nDAR ${t(a)} ML, VIA ORAL, DE 8/8 HORAS POR 10 DIAS.` };
         },
         detalhes: {
             indicacao: "Infecção do trato urinário (última opção, quando as outras não servem).",
@@ -25,11 +26,12 @@ registrarMedicamentos({
     "urina_cefa": {
         cat: "cat-urinario", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
         kw: "cefalexina cistite itu urinaria antibiotico oral ambulatorial", nome: "Cefalexina Suspensão (Cistite)", apres: "250 mg / 5 mL",
-        info: "<strong>Posologia (Whitebook):</strong> 12,5–25 mg/kg/dose (Peso ÷ 4 a Peso ÷ 2 mL) de 6/6h por 7 dias. Máx. 10 mL/dose.", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia (Whitebook):</strong> 12,5–25 mg/kg/dose (Peso ÷ 4 a Peso ÷ 2 mL) de 6/6h por 7 dias. Máx. 10 mL/dose. <em>App: dose média de 18,75 mg/kg/dose.</em>", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             /* Whitebook (ITU em Pediatria, ITU afebril): cefalexina 250 mg/5 mL, 12,5-25 mg/kg/dose (0,25-0,5 mL/kg/dose) VO de 6/6h por 7-14 dias, máx. 10 mL/dose (500 mg). */
-            let a = Math.min(parseFloat(round05(p / 4)), 10), b = Math.min(parseFloat(round05(p / 2)), 10), t = x => String(x).replace('.', ',');
-            return { v: `${a}–${b} mL`, r: `${recHead}1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR ${t(a)} A ${t(b)} ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.` };
+            /* Dose média da faixa: 18,75 mg/kg/dose. */
+            let a = Math.min(parseFloat(round05(p * 0.375)), 10), t = x => String(x).replace('.', ',');
+            return { v: `${a} mL`, r: `${recHead}1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR ${t(a)} ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.` };
         },
         detalhes: {
             indicacao: "Cistite (ITU baixa, sem febre).",
@@ -52,11 +54,12 @@ registrarMedicamentos({
         cat: "cat-urinario", sub: "🏠 Uso Ambulatorial (Vias Orais)",
         kw: "nitrofurantoina macrodantina cistite itu afebril infeccao urinaria baixa antibiotico oral",
         nome: "Nitrofurantoína (Cistite / ITU afebril)", apres: "Cápsula / comprimido 100 mg",
-        info: "<strong>Posologia (Whitebook):</strong> 5–7 mg/kg/dia VO de 6/6h por 7 dias. Máx. 100 mg/dose. Não usar na ITU febril.", badge: "Máx: 100 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia (Whitebook):</strong> 5–7 mg/kg/dia VO de 6/6h por 7 dias. Máx. 100 mg/dose. Não usar na ITU febril. <em>App: dose média de 6 mg/kg/dia.</em>", badge: "Máx: 100 mg/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             /* Whitebook (ITU em Pediatria): ITU afebril 5-7 mg/kg/dia VO de 6/6h por 7 dias, máx. 100 mg/dose. Solução não é mais produzida: abrir a cápsula em água filtrada para fracionar. */
-            let a = Math.min(p * 5 / 4, 100), b = Math.min(p * 7 / 4, 100);
-            return { v: `${a.toFixed(0)}–${b.toFixed(0)} mg 6/6h`, r: `${recHead}1) NITROFURANTOÍNA 100 MG ---------------------- 28 CÁPSULAS\nDAR ${a.toFixed(0)} A ${b.toFixed(0)} MG (5 A 7 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 DIAS.\n(SE A CRIANÇA NÃO ENGOLE CÁPSULA: DILUIR O CONTEÚDO DA CÁPSULA EM ÁGUA FILTRADA PARA FRACIONAR A DOSE.)` };
+            /* Dose média da faixa: 6 mg/kg/dia. */
+            let a = Math.min(p * 6 / 4, 100);
+            return { v: `${a.toFixed(0)} mg 6/6h`, r: `${recHead}1) NITROFURANTOÍNA 100 MG ---------------------- 28 CÁPSULAS\nDAR ${a.toFixed(0)} MG (6 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 DIAS.\n(SE A CRIANÇA NÃO ENGOLE CÁPSULA: DILUIR O CONTEÚDO DA CÁPSULA EM ÁGUA FILTRADA PARA FRACIONAR A DOSE.)` };
         },
         detalhes: {
             indicacao: "ITU afebril (cistite).",
@@ -77,11 +80,12 @@ registrarMedicamentos({
         cat: "cat-urinario", sub: "🏠 Uso Ambulatorial (Vias Orais)",
         kw: "cefuroxima zinnat axetil itu febril pielonefrite infeccao urinaria antibiotico oral suspensao",
         nome: "Cefuroxima Suspensão (ITU febril)", apres: "250 mg / 5 mL",
-        info: "<strong>Posologia (Whitebook):</strong> 10–15 mg/kg/dose VO de 12/12h por 7–14 dias. Máx. 500 mg/dose.", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia (Whitebook):</strong> 10–15 mg/kg/dose VO de 12/12h por 7–14 dias. Máx. 500 mg/dose. <em>App: dose média de 12,5 mg/kg/dose.</em>", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             /* Whitebook (ITU febril ambulatorial): cefuroxima 250 mg/5 mL, 10-15 mg/kg/dose (0,2-0,3 mL/kg/dose) VO de 12/12h por 7-14 dias, máx. 500 mg/dose (10 mL). */
-            let a = Math.min(parseFloat(round05(p * 0.2)), 10), b = Math.min(parseFloat(round05(p * 0.3)), 10), tot = Math.ceil(b * 2 * 10);
-            return { v: `${a}–${b} mL`, r: `${recHead}1) CEFUROXIMA 250 MG/5 ML ---------------------- ${tot} ML\nDAR ${String(a).replace('.', ',')} A ${String(b).replace('.', ',')} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.` };
+            /* Dose média da faixa: 12,5 mg/kg/dose. */
+            let a = Math.min(parseFloat(round05(p * 0.25)), 10), tot = Math.ceil(a * 2 * 10);
+            return { v: `${a} mL`, r: `${recHead}1) CEFUROXIMA 250 MG/5 ML ---------------------- ${tot} ML\nDAR ${String(a).replace('.', ',')} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.` };
         },
         detalhes: {
             indicacao: "ITU febril / pielonefrite tratada em casa (maiores de 3 meses, bom estado).",
@@ -101,11 +105,12 @@ registrarMedicamentos({
         cat: "cat-urinario", sub: "🏠 Uso Ambulatorial (Vias Orais)",
         kw: "cefaclor ceclor itu febril pielonefrite infeccao urinaria antibiotico oral suspensao",
         nome: "Cefaclor Suspensão (ITU febril)", apres: "250 mg / 5 mL",
-        info: "<strong>Posologia (Whitebook):</strong> 6,6–13,3 mg/kg/dose VO de 8/8h por 7–14 dias. Máx. 1 g/dia.", badge: "Máx: 1 g/dia", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia (Whitebook):</strong> 6,6–13,3 mg/kg/dose VO de 8/8h por 7–14 dias. Máx. 1 g/dia. <em>App: dose média de 10 mg/kg/dose.</em>", badge: "Máx: 1 g/dia", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             /* Whitebook (ITU febril ambulatorial): cefaclor 250 mg/5 mL, 6,6-13,3 mg/kg/dose (0,132-0,266 mL/kg/dose) VO de 8/8h por 7-14 dias, máx. 1 g/dia (333 mg/dose = 6,6 mL). */
-            let a = Math.min(parseFloat(round05(p * 0.132)), 6.5), b = Math.min(parseFloat(round05(p * 0.266)), 6.5), tot = Math.ceil(b * 3 * 10);
-            return { v: `${a}–${b} mL`, r: `${recHead}1) CEFACLOR 250 MG/5 ML ------------------------ ${tot} ML\nDAR ${String(a).replace('.', ',')} A ${String(b).replace('.', ',')} ML, VIA ORAL, DE 8/8 HORAS POR 10 DIAS.` };
+            /* Dose média da faixa: 10 mg/kg/dose. */
+            let a = Math.min(parseFloat(round05(p * 0.2)), 6.5), tot = Math.ceil(a * 3 * 10);
+            return { v: `${a} mL`, r: `${recHead}1) CEFACLOR 250 MG/5 ML ------------------------ ${tot} ML\nDAR ${String(a).replace('.', ',')} ML, VIA ORAL, DE 8/8 HORAS POR 10 DIAS.` };
         },
         detalhes: {
             indicacao: "ITU febril / pielonefrite tratada em casa (alternativa à cefuroxima).",

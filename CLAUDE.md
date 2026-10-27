@@ -40,6 +40,9 @@ js/modo-teste.js           versão de teste: faixa, selo e bloqueio de quem não
 medicamentos/registro.js   registrarMedicamentos(): cria farmaciaJR, detalhesMedicacoes, fichasPadrao
 medicamentos/<categoria>.js um arquivo por categoria (cat: "cat-<categoria>")
 medicamentos/menu.js       árvore do menu: categoria → seções → ids dos remédios (ordem de exibição)
+medicamentos/grupos.js     cards agrupados (GRUPOS_CARDS): na Prescrição, um card só por remédio (ceftriaxona, cefalexina) com
+                           botões de via e lista de doenças (começa em branco, agrupada pelo esquema de dose); a receita é a do
+                           card da doença escolhida + linha "DOSE: X MG/KG/DOSE". Os cards por doença seguem em farmaciaJR (condutas usam)
 js/app.js                  renderização, busca, cálculo, alergias, carrinho/receita, tema, fonte
 js/formularios.js          modais (cadastro da equipe, categorias, ficha) + inicialização (no final)
 js/cadastro.js             cadastro profissional (nome, atividade, CRM/COREN/CRF+UF ou faculdade+formatura, aceite);
@@ -55,6 +58,7 @@ condutas/condutas.js       área 📖 Condutas (aba ao lado de 💊 Prescrição
 condutas/exantematicas.js  categoria "Doenças exantemáticas": guia de identificação clicável + varicela; fotos reais em FOTOS_EXANTEMA
                            (img/exantemas/). Só foto com licença livre e crédito: DermNet (CC BY-NC-ND 4.0, `fonte: "dermnet"`:
                            arquivo original, sem corte, com marca d'água, crédito "Image sourced from DermNet" + link) ou Wikimedia/CDC
+condutas/pele_bacteriana.js infecções de pele (SBP 2022): acrescenta fotos DermNet de img/pele/ no mesmo FOTOS_EXANTEMA (chaves pele_*)
 condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as medicações
                            são ids de cards (farmaciaJR), a dose nunca é repetida na conduta
 ```
@@ -78,6 +82,11 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
   tempo (resumo)" (`lista: "passos"`), depois uma seção por passo com `passo: N` (número em destaque),
   na ordem em que se faz: chegada/exames → hidratação → medicação... Cada passo diz o que fazer,
   em frases curtas e imperativas, com o card daquela etapa. Complicações "a qualquer momento" no fim.
+- **Conduta com várias doenças = um bloco por doença, tudo da doença dentro dele** (pedido do Dr. Jonas, 10/2026, como o Whitebook;
+  modelo: condutas/pele_bacteriana.js). Seções, nesta ordem: Apresentação clínica e sinais e sintomas (com foto) → Critérios diagnósticos
+  (agentes e diferencial dentro) → Tratamento ambulatorial (só as medicações de casa) → Tratamento hospitalar (1º grupo "🏥 Critérios de
+  internação" clicáveis da doença — `internacaoPele()` —, depois grupo "💉 Tratamento" com os cards EV) → Complicações. Sem bloco geral
+  separado. O índice do topo vira a lista de doenças. **Repetir o mesmo card** em várias doenças quando a dose é a mesma; dose diferente = card próprio.
 - Escores clínicos (WDF, PRAM...) sempre **clicáveis** (`escore: {...}`), com soma automática.
 - Ferramenta própria numa seção: `ferramenta: "<nomeDaFunção>"` (função global que devolve o HTML), ex.: boneco
   clicável de Lund-Browder em `condutas/queimados.js`.
