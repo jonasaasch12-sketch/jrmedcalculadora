@@ -79,6 +79,9 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
   tempo (resumo)" (`lista: "passos"`), depois uma seção por passo com `passo: N` (número em destaque),
   na ordem em que se faz: chegada/exames → hidratação → medicação... Cada passo diz o que fazer,
   em frases curtas e imperativas, com o card daquela etapa. Complicações "a qualquer momento" no fim.
+- **Conduta com várias doenças = tratamento individualizado por doença** (pedido do Dr. Jonas, 10/2026; modelo: condutas/pele_bacteriana.js):
+  cada doença tem a sua seção de diagnóstico e a sua seção de tratamento ("Tratamento: celulite", "Tratamento: erisipela"...), com os cards dela.
+  **Repetir o mesmo card** em várias doenças quando a dose é a mesma; dose diferente = card próprio da doença.
 - Escores clínicos (WDF, PRAM...) sempre **clicáveis** (`escore: {...}`), com soma automática.
 - Ferramenta própria numa seção: `ferramenta: "<nomeDaFunção>"` (função global que devolve o HTML), ex.: boneco
   clicável de Lund-Browder em `condutas/queimados.js`.
