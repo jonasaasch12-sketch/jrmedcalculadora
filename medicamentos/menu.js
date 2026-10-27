@@ -105,7 +105,7 @@ const categorias = [
     { 
         id: "cat-urinario", titulo: "Urinário", dotClass: "dot-urinario", cor: "tarja-urinario", nome: "Urinário", icone: "🧬 Urina",
         patologias: [
-            { nome: "Infecção do Trato Urinário (ITU) e Cistite", remedios: ["urina_clav", "urina_cefa", "urina_ceft", "monuril"] },
+            { nome: "Infecção do Trato Urinário (ITU) e Cistite", conduta: "itu", condutaNome: "ITU", remedios: ["urina_clav", "urina_cefa", "urina_ceft", "monuril"] },
             { nome: "Síndrome Nefrítica / Edema (GNPE)", remedios: ["urina_furo"] }
         ]
     },
