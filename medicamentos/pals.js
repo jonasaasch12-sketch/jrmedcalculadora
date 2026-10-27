@@ -110,6 +110,108 @@ registrarMedicamentos({
             fonteRevisao: "Weiss SL et al. Surviving Sepsis Campaign International Guidelines for the Management of Septic Shock and Sepsis-Associated Organ Dysfunction in Children. Pediatr Crit Care Med 2020;21(2):e52-e106. doi:10.1097/PCC.0000000000002198"
         }
     },
+    "cef_sepse": {
+        cat: "cat-pals", sub: "🏥 Uso Hospitalar (Choque Séptico)",
+        kw: "ceftriaxona rocefin sepse choque septico antibiotico empirico endovenoso",
+        nome: "Ceftriaxona EV (Sepse)", apres: "FA 1 g (+ 10 mL AD = 100 mg/mL)",
+        info: "<strong>Conduta (Whitebook):</strong> 100 mg/kg/dia EV de 12/12 ou 24/24h. Máx. 4 g/dia.", badge: "Máx: 4 g/dia", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Sepse em Pediatria, 02/2026): 100 mg/kg/dia EV de 12/12 ou 24/24 h, máx. 4.000 mg/dia. FA 1 g em 10 mL de AD = 100 mg/mL. */
+            let d12 = Math.min(p * 50, 2000), d24 = Math.min(p * 100, 4000);
+            return { v: `${(d12 / 100).toFixed(1)} mL 12/12h`, r: `VIA ENDOVENOSA (SEPSE - ANTIBIÓTICO)\n\nCEFTRIAXONA 1 G (RECONSTITUIR EM 10 ML DE AD = 100 MG/ML)\nFAZER ${(d12 / 100).toFixed(1)} ML (${d12.toFixed(0)} MG) EV DE 12/12 HORAS\nOU ${(d24 / 100).toFixed(1)} ML (${d24.toFixed(0)} MG) EV DE 24/24 HORAS.\nDILUIR EM SF 0,9% OU SG 5% E CORRER EM 30 MINUTOS.\n\nDOSE MÁXIMA: 4 G POR DIA.` };
+        },
+        detalhes: {
+            indicacao: "Sepse e choque séptico: antibiótico empírico (associado conforme idade e foco).",
+            dose: "100 mg/kg/dia EV de 12/12 ou 24/24 horas.",
+            atencao: "Máximo 4 g/dia. No choque séptico, fazer na 1ª hora. Não misturar com soluções com cálcio (Ringer) no mesmo acesso."
+        },
+        ficha: {
+            indicacoes: "Antibioticoterapia empírica da sepse (crianças > 1 mês), em associação conforme o esquema.",
+            dose: "100 mg/kg/dia EV de 12/12 ou 24/24 horas",
+            doseMaxima: "4.000 mg/dia.",
+            apresentacoes: "Frasco-ampola 1 g.",
+            via: "Endovenosa.",
+            reconstituicao: "1 g em 10 mL de água destilada (100 mg/mL).",
+            alertasPediatricos: "Tempo de tratamento costuma variar de 7 a 10 dias, conforme o foco e a evolução.",
+            fonteRevisao: "Whitebook (Afya) - Sepse em Pediatria (Prescrição Hospitalar), atualizado em 12/02/2026."
+        }
+    },
+    "adrenalina_sepse": {
+        cat: "cat-pals", sub: "🏥 Uso Hospitalar (Choque Séptico)",
+        kw: "adrenalina epinefrina infusao continua droga vasoativa amina choque septico sepse vasopressor",
+        nome: "Adrenalina Contínua (Choque Séptico)", apres: "Ampola 1 mg/mL · solução 10 mcg/mL",
+        info: "<strong>Conduta (Whitebook):</strong> 0,05 a 0,3 mcg/kg/min (0,3 a 1,8 mL/kg/h). Máx. 1 mcg/kg/min (6 mL/kg/h).", badge: "Máx: 1 mcg/kg/min", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Sepse em Pediatria, 02/2026): 1 mL de adrenalina 1 mg/mL + 99 mL SG 5% = 10 mcg/mL; 0,05-0,3 mcg/kg/min = 0,3-1,8 mL/kg/h; máx. 1 mcg/kg/min = 6 mL/kg/h. mL/h = mcg/kg/min x peso x 6. */
+            let t = d => (d * p * 6).toFixed(1);
+            return { v: `${t(0.05)}–${t(0.3)} mL/h`, r: `VIA ENDOVENOSA (CHOQUE SÉPTICO - INFUSÃO CONTÍNUA)\n\nSOLUÇÃO: ADRENALINA 1 MG/ML 1 ML + SG 5% 99 ML (TOTAL 100 ML = 10 MCG/ML).\nVELOCIDADES NA BIC:\n • 0,05 MCG/KG/MIN: ${t(0.05)} ML/H\n • 0,1 MCG/KG/MIN: ${t(0.1)} ML/H\n • 0,2 MCG/KG/MIN: ${t(0.2)} ML/H\n • 0,3 MCG/KG/MIN: ${t(0.3)} ML/H\n • 0,5 MCG/KG/MIN: ${t(0.5)} ML/H\n • 1 MCG/KG/MIN (MÁXIMO): ${t(1)} ML/H\n\nTITULAR PELA PERFUSÃO E PELA PA. PODE SER INICIADA EM ACESSO PERIFÉRICO.` };
+        },
+        detalhes: {
+            indicacao: "Choque séptico que persiste após a expansão volêmica (preferida no choque frio / baixo débito).",
+            dose: "0,05 a 0,3 mcg/kg/min (0,3 a 1,8 mL/kg/h da solução de 10 mcg/mL).",
+            atencao: "Máximo 1 mcg/kg/min (6 mL/kg/h). Pode começar em acesso periférico ou intraósseo. Monitorar ECG, PA, glicemia e lactato."
+        },
+        ficha: {
+            indicacoes: "Choque séptico (amina vasoativa), isolada ou associada à noradrenalina.",
+            dose: "0,05-0,3 micrograma/kg/minuto EV em infusão contínua",
+            doseMaxima: "1 micrograma/kg/minuto (6 mL/kg/hora na diluição padrão).",
+            apresentacoes: "Ampola 1 mg/mL.",
+            via: "Endovenosa (periférica ou central) ou intraóssea, em BIC.",
+            diluicao: "1 mL de adrenalina + 99 mL de SG 5% (10 microgramas/mL).",
+            infusao: "Contínua: 0,3-1,8 mL/kg/hora.",
+            fonteRevisao: "Whitebook (Afya) - Sepse em Pediatria (Prescrição Hospitalar), atualizado em 12/02/2026."
+        }
+    },
+    "nora_sepse": {
+        cat: "cat-pals", sub: "🏥 Uso Hospitalar (Choque Séptico)",
+        kw: "noradrenalina norepinefrina infusao continua droga vasoativa amina choque septico quente sepse vasopressor",
+        nome: "Noradrenalina Contínua (Choque Séptico)", apres: "Ampola 2 mg/mL (= 1 mg/mL base) · solução 8 mcg/mL",
+        info: "<strong>Conduta (Whitebook):</strong> 0,05 a 0,1 mcg/kg/min (0,375 a 0,75 mL/kg/h); Whitebook cita dose usual de até 2 mcg/kg/min.", badge: "Ver faixa", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Sepse em Pediatria, 02/2026): 2 mL de noradrenalina (2 mg/mL = 1 mg/mL base) + 248 mL SG 5% = 8 mcg/mL; 0,05-0,1 mcg/kg/min = 0,375-0,75 mL/kg/h; "dose usual" 2 mcg/kg/min = 15 mL/kg/h. mL/h = mcg/kg/min x peso x 60 / 8. */
+            let t = d => (d * p * 7.5).toFixed(1);
+            return { v: `${t(0.05)}–${t(0.1)} mL/h`, r: `VIA ENDOVENOSA (CHOQUE SÉPTICO - INFUSÃO CONTÍNUA)\n\nSOLUÇÃO: NORADRENALINA 2 MG/ML (1 MG/ML BASE) 2 ML + SG 5% 248 ML (TOTAL 250 ML = 8 MCG/ML).\nVELOCIDADES NA BIC:\n • 0,05 MCG/KG/MIN: ${t(0.05)} ML/H\n • 0,1 MCG/KG/MIN: ${t(0.1)} ML/H\n • 0,2 MCG/KG/MIN: ${t(0.2)} ML/H\n • 0,5 MCG/KG/MIN: ${t(0.5)} ML/H\n • 1 MCG/KG/MIN: ${t(1)} ML/H\n • 2 MCG/KG/MIN: ${t(2)} ML/H\n\nTITULAR PELA PA E PELA PERFUSÃO. PODE SER INICIADA EM ACESSO PERIFÉRICO.` };
+        },
+        detalhes: {
+            indicacao: "Choque séptico que persiste após a expansão volêmica (preferida no choque quente / vasodilatado).",
+            dose: "0,05 a 0,1 mcg/kg/min (0,375 a 0,75 mL/kg/h da solução de 8 mcg/mL), titulando; Whitebook cita dose usual de até 2 mcg/kg/min (15 mL/kg/h).",
+            atencao: "Pode começar em acesso periférico ou intraósseo. Monitorar PA, perfusão e extravasamento."
+        },
+        ficha: {
+            indicacoes: "Choque séptico (amina vasoativa), isolada ou associada à adrenalina.",
+            dose: "0,05-0,1 micrograma/kg/minuto EV em infusão contínua\nDose usual (Whitebook): 2 microgramas/kg/minuto (15 mL/kg/hora na diluição padrão)",
+            apresentacoes: "Ampola 2 mg/mL de hemitartarato (= 1 mg/mL de noradrenalina base).",
+            via: "Endovenosa (periférica ou central) ou intraóssea, em BIC.",
+            diluicao: "2 mL de noradrenalina + 248 mL de SG 5% (8 microgramas/mL).",
+            infusao: "Contínua: 0,375-0,75 mL/kg/hora.",
+            fonteRevisao: "Whitebook (Afya) - Sepse em Pediatria (Prescrição Hospitalar), atualizado em 12/02/2026."
+        }
+    },
+    "hidrocortisona_sepse": {
+        cat: "cat-pals", sub: "🏥 Uso Hospitalar (Choque Séptico)",
+        kw: "hidrocortisona solucortef corticoide choque septico refratario insuficiencia adrenal sepse",
+        nome: "Hidrocortisona EV (Choque Séptico)", apres: "FA 100 mg (+ 2 mL AD = 50 mg/mL)",
+        info: "<strong>Conduta (Whitebook):</strong> 100 mg/m²/dia EV de 6/6h.", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Sepse em Pediatria, 02/2026): 100 mg/m2/dia EV de 6/6 h. Superfície corporal estimada pelo peso: (4 x peso + 7) / (peso + 90). FA 100 mg em 2 mL de AD = 50 mg/mL. */
+            let sc = (4 * p + 7) / (p + 90), dia = 100 * sc, dose = dia / 4;
+            return { v: `${dose.toFixed(1)} mg 6/6h`, r: `VIA ENDOVENOSA (CHOQUE SÉPTICO)\n\nHIDROCORTISONA 100 MG (RECONSTITUIR EM 2 ML DE AD = 50 MG/ML)\nFAZER ${(dose / 50).toFixed(2)} ML (${dose.toFixed(1)} MG) EV DE 6/6 HORAS.\n\n(100 MG/M²/DIA; SUPERFÍCIE CORPORAL ESTIMADA ${sc.toFixed(2)} M² = ${dia.toFixed(0)} MG/DIA)` };
+        },
+        detalhes: {
+            indicacao: "Choque séptico refratário a volume e vasoativo; uso crônico de corticoide ou suspeita de insuficiência adrenal.",
+            dose: "100 mg/m²/dia EV de 6/6 horas (superfície corporal estimada pelo peso).",
+            atencao: "A SSC 2020 não recomenda se o choque respondeu a volume e vasoativo. Se tiver a altura, conferir a superfície corporal (Mosteller)."
+        },
+        ficha: {
+            indicacoes: "Choque séptico refratário a catecolaminas; insuficiência adrenal.",
+            dose: "100 mg/m²/dia EV de 6/6 horas",
+            apresentacoes: "Frasco-ampola 100 mg.",
+            via: "Endovenosa.",
+            reconstituicao: "100 mg em 2 mL de água destilada (50 mg/mL).",
+            alertasPediatricos: "O app estima a superfície corporal pelo peso: (4 x peso + 7) / (peso + 90).",
+            fonteRevisao: "Whitebook (Afya) - Sepse em Pediatria (Prescrição Hospitalar), atualizado em 12/02/2026."
+        }
+    },
     "glicose_pals": {
         cat: "cat-pals", sub: "🚨 Parada / Arritmias (PALS)",
         kw: "glicose hipoglicemia d10w d25w d50w bolus pals", nome: "Glicose (Bolus Hipoglicemia)", apres: "Ampolas a 10%, 25% ou 50%",
