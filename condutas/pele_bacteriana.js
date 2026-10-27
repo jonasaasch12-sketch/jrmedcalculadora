@@ -40,7 +40,7 @@ registrarConduta({
     cor: "#be185d",
     kw: "impetigo bolhoso crostoso foliculite furunculo carbunculo abscesso ectima erisipela celulite fasciite necrosante sindrome da pele escaldada estafilococica paroniquia dactilite bolhosa piodermite staphylococcus aureus estreptococo mrsa",
     resumo: "Impetigo, foliculite, furúnculo/abscesso, ectima, paroníquia, erisipela, celulite, pele escaldada e fasciíte necrosante: como reconhecer (com fotos), quando internar, drenar e qual antibiótico.",
-    legenda: "Conduta conforme a <strong>SBP – Departamentos de Dermatologia e Infectologia (2022)</strong>, o <strong>Whitebook</strong> (impetigo e celulite) e a <strong>IDSA (2014)</strong>. Fotos reais do DermNet, com crédito.",
+    legenda: "Conduta conforme a <strong>SBP – Departamentos de Dermatologia e Infectologia (2022)</strong>, o <strong>Whitebook</strong> (impetigo, celulite e erisipela) e a <strong>IDSA (2014)</strong>. Fotos reais do DermNet, com crédito.",
 
     blocos: [
         {
@@ -208,11 +208,11 @@ registrarConduta({
                         "<strong>Esquema A</strong> (Whitebook) — celulite com <strong>exsudato purulento</strong>, <strong>refratária</strong>, com <strong>sinais de doença sistêmica</strong>, infecções recorrentes com condição predisponente ou <strong>MRSA prévio</strong>: <strong>clindamicina EV</strong> (20–40 mg/kg/dia de 6/6 ou 8/8h, máx. 2.700 mg/dia), <strong>sulfametoxazol-trimetoprima EV</strong> (8–12 mg TMP/kg/dia de 12/12h, máx. 160 mg/dose), <strong>linezolida</strong> (máx. 600 mg/dose) ou <strong>vancomicina</strong> (40–60 mg/kg/dia de 6/6h, ajustada pelo nível sérico, máx. 4 g/dia), por 7 a 14 dias.",
                         "<strong>Esquema B</strong> (Whitebook) — <strong>celulite no recém-nascido</strong>: <strong>cefotaxima</strong> (até 1 semana de vida: 50–100 mg/kg/dia de 12/12h; 1 a 4 semanas: 75–100 mg/kg/dia de 8/8h) <strong>ou gentamicina</strong> 4 mg/kg/dose de 24/24h <strong>+ vancomicina</strong>, por 7 a 14 dias.",
                         "<strong>Celulite grave sem pus e sem risco de MRSA:</strong> <strong>oxacilina</strong> (1ª escolha EV da SBP); cefazolina, cefuroxima ou ceftriaxona são opções (SBP 2022). Alergia à penicilina: clindamicina ou vancomicina (SBP 2022).",
-                        "<strong>Erisipela internada:</strong> penicilina é a 1ª linha (SBP 2022).",
+                        "<strong>Erisipela moderada a grave</strong> (Whitebook) — erisipela grave, falha do tratamento oral, imunossupressão, sinais sistêmicos ou impossibilidade de via oral: <strong>ceftriaxona</strong> 50–75 mg/kg/dia, <strong>cefazolina</strong> 50–100 mg/kg/dia ou <strong>oxacilina</strong> 100–150 mg/kg/dia; trocar para via oral quando houver melhora e tolerância.",
                         "<strong>Ectima extenso:</strong> EV, com cobertura de <em>Pseudomonas</em> se ectima gangrenoso (SBP 2022).",
                         "<strong>Prescrição de internação</strong> (Whitebook): dieta oral própria para a idade; dipirona ou paracetamol se dor ou febre; ondansetrona se náuseas ou vômitos."
                     ],
-                    remedios: ["clindamicina", "linezolida_ev", "vancomicina", "oxacilina", "cefotax_neo_sepse", "genta_neo_sepse"]
+                    remedios: ["clindamicina", "linezolida_ev", "vancomicina", "oxacilina", "cefotax_neo_sepse", "genta_neo_sepse", "cef_erisipela", "cefazolina_erisipela", "oxa_erisipela"]
                 },
                 {
                     passo: 5,
@@ -292,13 +292,13 @@ registrarConduta({
                     resumo: "Celulite não complicada: cefalexina, cefadroxila ou SMX-TMP por 7 a 14 dias. Erisipela: penicilina. Elevar o membro.",
                     itens: [
                         "<strong>Celulite não complicada</strong> (Whitebook): <strong>cefalexina</strong> 25–100 mg/kg/dia de 6/6h, <strong>cefadroxila</strong> 30 mg/kg/dia de 12/12h ou <strong>sulfametoxazol-trimetoprima</strong> 8–12 mg TMP/kg/dia de 12/12h, por <strong>7 a 14 dias</strong>. A SBP também aceita amoxicilina-clavulanato (SBP 2022).",
-                        "<strong>Erisipela:</strong> <strong>penicilina</strong> é a 1ª linha (SBP 2022).",
+                        "<strong>Erisipela leve</strong> (Whitebook): <strong>amoxicilina</strong> 50 mg/kg/dia, amoxicilina-clavulanato 30–50 mg/kg/dia, <strong>penicilina benzatina</strong> IM dose única (< 27 kg: 600.000 UI; ≥ 27 kg: 1.200.000 UI) ou cefalexina 50–100 mg/kg/dia, <strong>por 5 dias</strong>. Penicilina é a 1ª linha também na SBP 2022. Repouso relativo, membro elevado, tratar fissuras e descamação.",
                         "<strong>Alergia imediata à penicilina:</strong> clindamicina ou macrolídeo (claritromicina, azitromicina) (SBP 2022).",
                         "<strong>Suporte:</strong> hidratação, compressas frias, antitérmico, <strong>elevar a área</strong> (SBP 2022).",
                         "<strong>Erisipela recorrente:</strong> profilaxia com penicilina oral ou eritromicina 2x/dia por 4 a 5 semanas, ou penicilina benzatina IM a cada 2 a 4 semanas; tratar o fator predisponente (SBP 2022).",
                         "<strong>Retorno em 48 a 72 h:</strong> se a borda passar da marcação, febre persistir ou a dor aumentar muito, voltar antes."
                     ],
-                    remedios: ["cefalexina_celulite", "cefadroxila_celulite", "smx_celulite", "benza"]
+                    remedios: ["cefalexina_celulite", "cefadroxila_celulite", "smx_celulite", "amox_erisipela", "clav_erisipela", "benza", "cefalexina_erisipela"]
                 },
                 {
                     titulo: "Prevenção e escola",
@@ -319,7 +319,7 @@ registrarConduta({
         "Sociedade Brasileira de Pediatria. Departamentos Científicos de Dermatologia e Infectologia (2019-2021). Infecções Bacterianas Superficiais Cutâneas. Documento Científico, 08 de dezembro de 2022.",
         "Stevens DL, Bisno AL, Chambers HF, et al. Practice guidelines for the diagnosis and management of skin and soft tissue infections: 2014 update by the Infectious Diseases Society of America. Clin Infect Dis 2014;59(2):e10-52. doi:10.1093/cid/ciu444",
         "Fotos: DermNet (dermnetnz.org), CC BY-NC-ND 4.0 — \"Image sourced from DermNet\", com link para a página de origem em cada foto.",
-        "Whitebook (Afya). Guia de Prescrição / Pediatria: Impetigo (Prescrição Ambulatorial) e Celulite (Prescrição Ambulatorial e Hospitalar, atualizado em 03/04/2025)."
+        "Whitebook (Afya). Guia de Prescrição / Pediatria: Impetigo (Prescrição Ambulatorial) Celulite (atualizado em 03/04/2025) e Erisipela em Pediatria (atualizado em 12/03/2026), Prescrição Ambulatorial e Hospitalar."
     ],
     revisao: "10/2026"
 });

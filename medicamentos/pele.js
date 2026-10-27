@@ -292,6 +292,84 @@ registrarMedicamentos({
         detalhes: { indicacao: "Celulite orbitária com sinais de infecção do SNC, sinusite crônica ou foco odontológico (associar ao esquema A ou B).", dose: "30 mg/kg/dia EV de 8/8h por 2 a 3 semanas.", atencao: "Máximo 500 mg (100 mL) por dose." },
         ficha: { indicacoes: "Celulite orbitária com cobertura para anaeróbios (esquema C).", dose: "30 mg/kg/dia EV de 8/8 horas por 2-3 semanas ou até resolução da celulite", doseMaxima: "500 mg/dose.", apresentacoes: "Solução injetável 5 mg/mL.", via: "Endovenosa.", fonteRevisao: "Whitebook (Afya) - Celulite Orbitária em Pediatria (Prescrição Hospitalar), atualizado em 23/04/2026." }
     },
+    "amox_erisipela": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "amoxicilina erisipela estreptococo pele antibiotico oral suspensao",
+        nome: "Amoxicilina Suspensão (Erisipela)", apres: "250 mg / 5 mL",
+        info: "<strong>Posologia (Whitebook):</strong> 50 mg/kg/dia VO de 8/8h por 5 dias.", badge: "Teto: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Erisipela, formas leves): amoxicilina 50 mg/kg/dia VO de 8/8 a 12/12h por 5 dias. 250 mg/5 mL de 8/8h: p/3 mL por dose. Teto do app 10 mL (500 mg). Total do tratamento em mL: 3 doses x 5 dias. */
+            let v = Math.min(parseFloat(round05(p / 3)), 10), tot = Math.ceil(v * 3 * 5);
+            return { v: v + " mL", r: `${recHead}1) AMOXICILINA 250 MG/5 ML ---------------------- ${tot} ML\nDAR ${String(v).replace('.', ',')} ML, VIA ORAL, DE 8/8 HORAS POR 5 DIAS.` };
+        },
+        detalhes: { indicacao: "Erisipela leve (tratamento em casa).", dose: "50 mg/kg/dia VO de 8/8h (ou 12/12h) por 5 dias.", atencao: "Teto do app 10 mL (500 mg) por dose. Repouso relativo e membro elevado." },
+        ficha: { indicacoes: "Erisipela, formas leves.", dose: "50 mg/kg/dia VO, dividido de 8/8 a 12/12 horas, durante 5 dias", doseMaxima: "Teto do app: 500 mg/dose.", apresentacoes: "Suspensão 250 mg/5 mL.", via: "Oral.", fonteRevisao: "Whitebook (Afya) - Erisipela em Pediatria (Prescrição Ambulatorial: formas leves; Prescrição Hospitalar: formas moderadas a graves), atualizado em 12/03/2026." }
+    },
+    "clav_erisipela": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "amoxicilina clavulanato erisipela pele antibiotico oral suspensao",
+        nome: "Amoxi-Clavulanato Suspensão (Erisipela)", apres: "250 mg + 62,5 mg / 5 mL",
+        info: "<strong>Posologia (Whitebook):</strong> 30–50 mg/kg/dia VO de 8/8h por 5 dias.", badge: "Teto: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Erisipela, formas leves): amoxicilina + clavulanato 30-50 mg/kg/dia VO de 8/8 a 12/12h por 5 dias. 250 mg/5 mL de 8/8h: 30 mg/kg/dia = p x 0,2 mL; 50 mg/kg/dia = p/3 mL. Teto do app 10 mL. Total em mL: 3 doses x 5 dias. */
+            let a = Math.min(parseFloat(round05(p * 0.2)), 10), b = Math.min(parseFloat(round05(p / 3)), 10), tot = Math.ceil(b * 3 * 5), t = x => String(x).replace('.', ',');
+            return { v: `${a}–${b} mL`, r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML -- ${tot} ML\nDAR ${t(a)} A ${t(b)} ML, VIA ORAL, DE 8/8 HORAS POR 5 DIAS.` };
+        },
+        detalhes: { indicacao: "Erisipela leve (tratamento em casa).", dose: "30–50 mg/kg/dia VO de 8/8h (ou 12/12h) por 5 dias.", atencao: "Teto do app 10 mL (500 mg) por dose." },
+        ficha: { indicacoes: "Erisipela, formas leves.", dose: "30-50 mg/kg/dia VO, dividido de 8/8 a 12/12 horas, durante 5 dias", doseMaxima: "Teto do app: 500 mg/dose.", apresentacoes: "Suspensão 250 mg + 62,5 mg/5 mL.", via: "Oral.", fonteRevisao: "Whitebook (Afya) - Erisipela em Pediatria (Prescrição Ambulatorial: formas leves; Prescrição Hospitalar: formas moderadas a graves), atualizado em 12/03/2026." }
+    },
+    "cefalexina_erisipela": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "cefalexina erisipela pele antibiotico oral suspensao",
+        nome: "Cefalexina Suspensão (Erisipela)", apres: "250 mg / 5 mL",
+        info: "<strong>Posologia (Whitebook):</strong> 50–100 mg/kg/dia VO de 6/6h por 5 dias.", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Erisipela, formas leves): cefalexina 50-100 mg/kg/dia VO de 6/6h por 5 dias. 250 mg/5 mL: 50 mg/kg/dia = p x 0,25 mL; 100 = p x 0,5 mL. Teto 10 mL (500 mg/dose, Whitebook celulite). */
+            let a = Math.min(parseFloat(round05(p * 0.25)), 10), b = Math.min(parseFloat(round05(p * 0.5)), 10), t = x => String(x).replace('.', ',');
+            return { v: `${a}–${b} mL`, r: `${recHead}1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR ${t(a)} A ${t(b)} ML, VIA ORAL, DE 6/6 HORAS POR 5 DIAS.` };
+        },
+        detalhes: { indicacao: "Erisipela leve (tratamento em casa).", dose: "50–100 mg/kg/dia VO de 6/6h por 5 dias.", atencao: "Máximo 10 mL (500 mg) por dose." },
+        ficha: { indicacoes: "Erisipela, formas leves.", dose: "50-100 mg/kg/dia VO de 6/6 horas por 5 dias", doseMaxima: "500 mg/dose (teto do app).", apresentacoes: "Suspensão 250 mg/5 mL.", via: "Oral.", fonteRevisao: "Whitebook (Afya) - Erisipela em Pediatria (Prescrição Ambulatorial: formas leves; Prescrição Hospitalar: formas moderadas a graves), atualizado em 12/03/2026." }
+    },
+    "cef_erisipela": {
+        cat: "cat-pele", sub: "🏥 Uso Hospitalar (Erisipela)",
+        kw: "ceftriaxona erisipela grave internacao pele endovenosa",
+        nome: "Ceftriaxona EV (Erisipela)", apres: "FA 1 g (+ 10 mL AD = 100 mg/mL)",
+        info: "<strong>Conduta (Whitebook):</strong> 50–75 mg/kg/dia EV de 12/12 ou 24/24h. Máx. 2 g/dose.", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Erisipela moderada a grave): ceftriaxona 50-75 mg/kg/dia EV de 12/12 ou 24/24h, máx. 2 g/dose. */
+            let a = Math.min(p * 50, 2000), b = Math.min(p * 75, 2000);
+            return { v: `${(a / 100).toFixed(1)}–${(b / 100).toFixed(1)} mL 24/24h`, r: `VIA ENDOVENOSA (ERISIPELA)\n\nCEFTRIAXONA 1 G (RECONSTITUIR EM 10 ML DE AD = 100 MG/ML)\nFAZER ${(a / 100).toFixed(1)} A ${(b / 100).toFixed(1)} ML (${a.toFixed(0)} A ${b.toFixed(0)} MG = 50 A 75 MG/KG/DIA) EV DE 24/24 HORAS\n(OU METADE DA DOSE DE 12/12 HORAS), DILUÍDO EM SF 0,9%, EM 30 MINUTOS.\n\nDOSE MÁXIMA: 2 G POR DOSE.` };
+        },
+        detalhes: { indicacao: "Erisipela moderada a grave (internação).", dose: "50–75 mg/kg/dia EV de 12/12 ou 24/24h.", atencao: "Máximo 2 g/dose. Trocar para via oral quando houver melhora e tolerar." },
+        ficha: { indicacoes: "Erisipela, formas moderadas a graves.", dose: "50-75 mg/kg/dia EV de 12/12 ou 24/24 horas", doseMaxima: "2 g/dose.", apresentacoes: "Frasco-ampola 1 g.", via: "Endovenosa.", fonteRevisao: "Whitebook (Afya) - Erisipela em Pediatria (Prescrição Ambulatorial: formas leves; Prescrição Hospitalar: formas moderadas a graves), atualizado em 12/03/2026." }
+    },
+    "cefazolina_erisipela": {
+        cat: "cat-pele", sub: "🏥 Uso Hospitalar (Erisipela)",
+        kw: "cefazolina kefazol erisipela celulite grave internacao pele endovenosa cefalosporina primeira geracao",
+        nome: "Cefazolina EV (Erisipela)", apres: "FA 1 g (+ 10 mL AD = 100 mg/mL)",
+        info: "<strong>Conduta (Whitebook):</strong> 50–100 mg/kg/dia EV de 8/8h. Máx. 2 g/dose.", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Erisipela moderada a grave): cefazolina 50-100 mg/kg/dia EV de 8/8h, máx. 2 g/dose. FA 1 g em 10 mL de AD = 100 mg/mL. */
+            let a = Math.min(p * 50 / 3, 2000), b = Math.min(p * 100 / 3, 2000);
+            return { v: `${(a / 100).toFixed(1)}–${(b / 100).toFixed(1)} mL 8/8h`, r: `VIA ENDOVENOSA (ERISIPELA)\n\nCEFAZOLINA 1 G (RECONSTITUIR EM 10 ML DE AD = 100 MG/ML)\nFAZER ${(a / 100).toFixed(1)} A ${(b / 100).toFixed(1)} ML (${a.toFixed(0)} A ${b.toFixed(0)} MG = 50 A 100 MG/KG/DIA) EV DE 8/8 HORAS.\n\nDOSE MÁXIMA: 2 G POR DOSE.` };
+        },
+        detalhes: { indicacao: "Erisipela moderada a grave (internação).", dose: "50–100 mg/kg/dia EV de 8/8h.", atencao: "Máximo 2 g/dose." },
+        ficha: { indicacoes: "Erisipela, formas moderadas a graves.", dose: "50-100 mg/kg/dia EV de 8/8 horas", doseMaxima: "2 g/dose.", apresentacoes: "Frasco-ampola 1 g.", via: "Endovenosa.", fonteRevisao: "Whitebook (Afya) - Erisipela em Pediatria (Prescrição Ambulatorial: formas leves; Prescrição Hospitalar: formas moderadas a graves), atualizado em 12/03/2026." }
+    },
+    "oxa_erisipela": {
+        cat: "cat-pele", sub: "🏥 Uso Hospitalar (Erisipela)",
+        kw: "oxacilina erisipela grave internacao pele endovenosa",
+        nome: "Oxacilina EV (Erisipela)", apres: "FA 500 mg (100 mg/mL)",
+        info: "<strong>Conduta (Whitebook):</strong> 100–150 mg/kg/dia EV de 6/6h. Máx. 12 g/dia.", badge: "Máx: 3 g/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Erisipela moderada a grave): oxacilina 100-150 mg/kg/dia EV de 6/6h, máx. 12 g/dia (3 g/dose). Reconstituir a 100 mg/mL e rediluir em SF 0,9% a 10 mg/mL. */
+            let a = Math.min(p * 25, 3000), b = Math.min(p * 37.5, 3000);
+            return { v: `${(a / 100).toFixed(1)}–${(b / 100).toFixed(1)} mL 6/6h`, r: `VIA ENDOVENOSA (ERISIPELA)\n\nOXACILINA (RECONSTITUIR 500 MG EM 5 ML DE AD = 100 MG/ML)\nASPIRAR ${(a / 100).toFixed(1)} A ${(b / 100).toFixed(1)} ML (${a.toFixed(0)} A ${b.toFixed(0)} MG = 100 A 150 MG/KG/DIA) E REDILUIR EM SF 0,9% A 10 MG/ML.\nADMINISTRAR DE 6/6 HORAS.\n\nDOSE MÁXIMA: 12 G POR DIA.` };
+        },
+        detalhes: { indicacao: "Erisipela moderada a grave (internação).", dose: "100–150 mg/kg/dia EV de 6/6h.", atencao: "Máximo 12 g/dia (3 g/dose). Flebite: rediluir a 10 mg/mL." },
+        ficha: { indicacoes: "Erisipela, formas moderadas a graves.", dose: "100-150 mg/kg/dia EV de 6/6 horas", doseMaxima: "12 g/dia.", apresentacoes: "Frasco-ampola 500 mg.", via: "Endovenosa.", fonteRevisao: "Whitebook (Afya) - Erisipela em Pediatria (Prescrição Ambulatorial: formas leves; Prescrição Hospitalar: formas moderadas a graves), atualizado em 12/03/2026." }
+    },
     "pele_mupi": {
         cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)", 
         kw: "mupirocina pomada impetigo bacteriana pele ambulatorial tópica", nome: "Mupirocina 2% Creme (Impetigo)", apres: "Creme Tópico",

@@ -52,6 +52,9 @@ const TETOS = {
     insulina_cad: 10,
     rifampicina_profilaxia: 30, // mL de 20 mg/mL = 600 mg/dose
     metro_orbitaria: 100, // mL de 5 mg/mL (500 mg/dose, Whitebook)
+    amox_erisipela: 10,   // mL (500 mg)
+    clav_erisipela: 10,   // mL (500 mg)
+    cefalexina_erisipela: 10, // mL (500 mg)
     cefalexina_celulite: 10, // mL (500 mg/dose, Whitebook)
     cefadroxila_celulite: 20, // mL (1 g/dose = 2 g/dia, Whitebook)
     smx_celulite: 20,     // mL (160 mg TMP, Whitebook)
