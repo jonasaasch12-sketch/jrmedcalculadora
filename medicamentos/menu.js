@@ -127,6 +127,8 @@ const categorias = [
             { nome: "Sarampo", conduta: "sarampo", condutaNome: "Sarampo", remedios: ["vit_a_sarampo"] },
             { nome: "Varicela (Catapora)", conduta: "varicela", condutaNome: "Varicela", remedios: ["aciclovir_varicela_vo", "aciclovir_varicela_ev"] },
             { nome: "Impetigo e Infecções Bacterianas de Pele", conduta: "pele_bacteriana", condutaNome: "Infecções bacterianas de pele", remedios: ["pele_mupi", "fusidico_impetigo", "cefalexina_impetigo", "eritro_impetigo", "claritro_impetigo", "smx_impetigo", "clinda_vo_impetigo", "doxi_impetigo"] },
+            { nome: "Celulite", conduta: "pele_bacteriana", condutaNome: "Infecções bacterianas de pele", remedios: ["cefalexina_celulite", "cefadroxila_celulite", "smx_celulite"] },
+            { nome: "Celulite Orbitária (Hospitalar)", conduta: "sinusite", condutaNome: "Sinusite (complicações orbitárias)", remedios: ["cef_orbitaria", "vanco_orbitaria", "cefotax_orbitaria", "metro_orbitaria"] },
             { nome: "Parasitoses, Infecções e Lesões Cutâneas", remedios: ["pele_larva", "pele_delta", "pele_perme_shampoo", "pele_perme", "pele_iver", "pele_escabiose_orient", "pele_nista", "pele_acicl", "pele_trokg","pele_trok", "trok_n", "quadriderm", "cetoconazol_cr", "nistatina_zinco", "penvir", "fluconazol"] }
         ]
     },

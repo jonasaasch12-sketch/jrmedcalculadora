@@ -200,6 +200,98 @@ registrarMedicamentos({
         detalhes: { indicacao: "Impetigo com suspeita ou confirmação de MRSA, em maiores de 8 anos.", dose: "≥ 8 anos e ≤ 45 kg: 2–4 mg/kg/dose 12/12h; > 45 kg: 100 mg 12/12h; por 5 a 10 dias.", atencao: "Máximo 100 mg/dose. Só a partir de 8 anos. Tomar com água, sentado, longe de leite; fotossensibilidade." },
         ficha: { indicacoes: "Impetigo por S. aureus MRSA (esquema C).", dose: "Crianças ≥ 8 anos e ≤ 45 kg: 2-4 mg/kg/dose de 12/12 horas por 5-10 dias\nCrianças ≥ 8 anos e > 45 kg: 100 mg/dose de 12/12 horas por 5-10 dias", doseMaxima: "100 mg/dose.", apresentacoes: "Comprimido 100 mg.", via: "Oral.", alertasPediatricos: "Liberada por bula para crianças maiores de 8 anos.", fonteRevisao: "Whitebook (Afya) - Impetigo (Prescrição Ambulatorial: tratamento tópico e sistêmico), vídeo enviado pelo Dr. Jonas em 27/10/2026." }
     },
+    "cefalexina_celulite": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "cefalexina keflex celulite nao complicada pele partes moles antibiotico oral suspensao",
+        nome: "Cefalexina Suspensão (Celulite)", apres: "250 mg / 5 mL",
+        info: "<strong>Posologia (Whitebook):</strong> 25–100 mg/kg/dia VO de 6/6h por 7–14 dias. Máx. 500 mg/dose (2 g/dia).", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Celulite não complicada): cefalexina 25-100 mg/kg/dia VO de 6/6h por 7-14 dias, máx. 2.000 mg/dia ou 500 mg/dose. 250 mg/5 mL: 25 mg/kg/dia = p x 0,125 mL/dose; 100 mg/kg/dia = p x 0,5 mL/dose. */
+            let a = Math.min(parseFloat(round05(p * 0.125)), 10), b = Math.min(parseFloat(round05(p * 0.5)), 10), t = x => String(x).replace('.', ',');
+            return { v: `${a}–${b} mL`, r: `${recHead}1) CEFALEXINA 250 MG / 5 ML ------------------ 2 FR\nDAR ${t(a)} A ${t(b)} ML, VIA ORAL, DE 6/6 HORAS POR 7 A 14 DIAS.` };
+        },
+        detalhes: { indicacao: "Celulite não complicada (tratamento em casa).", dose: "25–100 mg/kg/dia VO de 6/6h por 7 a 14 dias.", atencao: "Máximo 500 mg (10 mL) por dose e 2 g por dia. Marcar a borda e reavaliar em 48–72 h." },
+        ficha: { indicacoes: "Celulite não complicada.", dose: "25-100 mg/kg/dia VO de 6/6 horas por 7-14 dias", doseMaxima: "2.000 mg/dia ou 500 mg/dose.", apresentacoes: "Suspensão 250 mg/5 mL.", via: "Oral.", fonteRevisao: "Whitebook (Afya) - Celulite (Prescrição Ambulatorial: celulite não complicada; Prescrição Hospitalar: celulite com indicação de internação), atualizado em 03/04/2025." }
+    },
+    "cefadroxila_celulite": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "cefadroxila cefamox celulite nao complicada pele partes moles antibiotico oral suspensao",
+        nome: "Cefadroxila Suspensão (Celulite)", apres: "250 mg / 5 mL",
+        info: "<strong>Posologia (Whitebook):</strong> 30 mg/kg/dia VO de 12/12h por 7–14 dias. Máx. 2 g/dia.", badge: "Máx: 20 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Celulite não complicada): cefadroxila 30 mg/kg/dia VO de 12/12h por 7-14 dias, máx. 2.000 mg/dia (1 g/dose = 20 mL). 250 mg/5 mL: 15 mg/kg/dose = p x 0,3 mL. */
+            let v = Math.min(parseFloat(round05(p * 0.3)), 20);
+            return { v: v + " mL", r: `${recHead}1) CEFADROXILA SUSPENSÃO 250 MG/5 ML ------ 1 FR\nDAR ${String(v).replace('.', ',')} ML, VIA ORAL, DE 12/12 HORAS POR 7 A 14 DIAS.` };
+        },
+        detalhes: { indicacao: "Celulite não complicada (tratamento em casa).", dose: "30 mg/kg/dia VO de 12/12h por 7 a 14 dias.", atencao: "Máximo 2 g por dia (20 mL por dose)." },
+        ficha: { indicacoes: "Celulite não complicada.", dose: "30 mg/kg/dia VO de 12/12 horas por 7-14 dias", doseMaxima: "2.000 mg/dia.", apresentacoes: "Suspensão 250 mg/5 mL.", via: "Oral.", fonteRevisao: "Whitebook (Afya) - Celulite (Prescrição Ambulatorial: celulite não complicada; Prescrição Hospitalar: celulite com indicação de internação), atualizado em 03/04/2025." }
+    },
+    "smx_celulite": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "sulfametoxazol trimetoprima bactrim celulite mrsa pele partes moles antibiotico oral",
+        nome: "Sulfametoxazol + Trimetoprima (Celulite)", apres: "200 + 40 mg / 5 mL (8 mg TMP/mL)",
+        info: "<strong>Posologia (Whitebook):</strong> 8–12 mg TMP/kg/dia VO de 12/12h por 7–14 dias. Máx. 160 mg TMP/dose.", badge: "Máx: 20 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            /* Whitebook (Celulite não complicada): SMX-TMP 8-12 mg/kg/dia de TMP VO de 12/12h por 7-14 dias, máx. 160 mg de TMP/dose (20 mL). A partir de 2 meses. */
+            if (i !== "" && parseFloat(i) < 0.17) return { v: "Contraind.", r: "ATENÇÃO: Sulfametoxazol + Trimetoprima a partir de 2 meses de idade." };
+            let a = Math.min(parseFloat(round05(p * 4 / 8)), 20), b = Math.min(parseFloat(round05(p * 6 / 8)), 20), t = x => String(x).replace('.', ',');
+            return { v: `${a}–${b} mL`, r: `${recHead}1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR ${t(a)} A ${t(b)} ML, VIA ORAL, DE 12/12 HORAS POR 7 A 14 DIAS.` };
+        },
+        detalhes: { indicacao: "Celulite não complicada; cobre MRSA comunitário.", dose: "8–12 mg/kg/dia de trimetoprima VO de 12/12h por 7 a 14 dias.", atencao: "Máximo 20 mL (160 mg de TMP) por dose. A partir de 2 meses. Não cobre bem o estreptococo: na celulite sem pus, preferir cefalosporina." },
+        ficha: { indicacoes: "Celulite não complicada.", dose: "8-12 mg/kg/dia de trimetoprima VO de 12/12 horas por 7-14 dias", doseMaxima: "160 mg/dose de trimetoprima (20 mL).", apresentacoes: "Suspensão 200 mg + 40 mg/5 mL.", via: "Oral.", alertasPediatricos: "Uso a partir de 2 meses de idade.", fonteRevisao: "Whitebook (Afya) - Celulite (Prescrição Ambulatorial: celulite não complicada; Prescrição Hospitalar: celulite com indicação de internação), atualizado em 03/04/2025." }
+    },
+    "vanco_orbitaria": {
+        cat: "cat-pele", sub: "🏥 Uso Hospitalar (Celulite Orbitária)",
+        kw: "vancomicina celulite orbitaria periorbitaria pos septal abscesso subperiosteal orbita sinusite complicada",
+        nome: "Vancomicina EV (Celulite Orbitária)", apres: "FA 500 mg ou 1 g",
+        info: "<strong>Conduta (Whitebook):</strong> 60 mg/kg/dia EV de 6/6h, diluída a 5 mg/mL, em 60 min, por 2–3 semanas.", badge: "Máx: 1 g/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Celulite Orbitária, esquemas A e B): vancomicina 60 mg/kg/dia EV de 6/6h + SF 0,9% (concentração final mínima 5 mg/mL), correr em 60 min, 2-3 semanas. Teto do app 1 g/dose (4 g/dia, dose máxima do Whitebook na celulite). FA reconstituído a 100 mg/mL. */
+            let mg = Math.min(p * 15, 1000), ml = mg / 100, sf = Math.ceil(mg / 5);
+            return { v: `${mg.toFixed(0)} mg 6/6h`, r: `VIA ENDOVENOSA (CELULITE ORBITÁRIA)\n\nVANCOMICINA (RECONSTITUIR A 100 MG/ML)\nASPIRAR ${ml.toFixed(1)} ML (${mg.toFixed(0)} MG = 15 MG/KG/DOSE) E DILUIR EM SF 0,9% ATÉ ${sf} ML (5 MG/ML).\nCORRER EM 60 MINUTOS, DE 6/6 HORAS, POR 2 A 3 SEMANAS OU ATÉ A RESOLUÇÃO.\n\nAJUSTAR PELO NÍVEL SÉRICO E PELA FUNÇÃO RENAL.` };
+        },
+        detalhes: { indicacao: "Celulite orbitária (sempre associada a ceftriaxona ou cefotaxima).", dose: "60 mg/kg/dia EV de 6/6h, diluída a 5 mg/mL, em 60 minutos, por 2 a 3 semanas.", atencao: "Teto do app 1 g/dose (4 g/dia). Ajustar pelo nível sérico. Infundir devagar (síndrome do homem vermelho)." },
+        ficha: { indicacoes: "Celulite orbitária (esquemas A e B).", dose: "60 mg/kg/dia EV de 6/6 horas por 2-3 semanas ou até resolução da celulite", doseMaxima: "Teto do app: 1 g/dose (4.000 mg/dia, máximo do Whitebook na celulite).", apresentacoes: "Frasco-ampola 500 mg ou 1 g.", via: "Endovenosa.", diluicao: "SF 0,9%, concentração final máxima de 5 mg/mL.", infusao: "60 minutos.", fonteRevisao: "Whitebook (Afya) - Celulite Orbitária em Pediatria (Prescrição Hospitalar), atualizado em 23/04/2026." }
+    },
+    "cef_orbitaria": {
+        cat: "cat-pele", sub: "🏥 Uso Hospitalar (Celulite Orbitária)",
+        kw: "ceftriaxona celulite orbitaria periorbitaria pos septal abscesso orbita sinusite complicada",
+        nome: "Ceftriaxona EV (Celulite Orbitária)", apres: "FA 500 mg ou 1 g",
+        info: "<strong>Conduta (Whitebook):</strong> 100 mg/kg/dia EV de 12/12h, diluída a 40 mg/mL, em 30 min, por 2–3 semanas.", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Celulite Orbitária, esquema A - associação preferencial): ceftriaxona 100 mg/kg/dia EV de 12/12h + SF 0,9% (concentração final 40 mg/mL), 30 min, 2-3 semanas. Teto do app 2 g/dose (4 g/dia, máximo do Whitebook na sepse). FA 1 g em 10 mL = 100 mg/mL. */
+            let mg = Math.min(p * 50, 2000), ml = mg / 100, sf = Math.ceil(mg / 40);
+            return { v: `${ml.toFixed(1)} mL 12/12h`, r: `VIA ENDOVENOSA (CELULITE ORBITÁRIA)\n\nCEFTRIAXONA 1 G (RECONSTITUIR EM 10 ML DE AD = 100 MG/ML)\nASPIRAR ${ml.toFixed(1)} ML (${mg.toFixed(0)} MG = 50 MG/KG/DOSE) E DILUIR EM SF 0,9% ATÉ ${sf} ML (40 MG/ML).\nCORRER EM 30 MINUTOS, DE 12/12 HORAS, POR 2 A 3 SEMANAS OU ATÉ A RESOLUÇÃO.` };
+        },
+        detalhes: { indicacao: "Celulite orbitária: esquema preferencial, com vancomicina.", dose: "100 mg/kg/dia EV de 12/12h, diluída a 40 mg/mL, em 30 minutos, por 2 a 3 semanas.", atencao: "Teto do app 2 g/dose (4 g/dia)." },
+        ficha: { indicacoes: "Celulite orbitária (esquema A, associação preferencial com vancomicina).", dose: "100 mg/kg/dia EV de 12/12 horas por 2-3 semanas ou até resolução da celulite", doseMaxima: "Teto do app: 2 g/dose (4 g/dia).", apresentacoes: "Frasco-ampola 500 mg ou 1 g.", via: "Endovenosa.", diluicao: "SF 0,9%, concentração final de 40 mg/mL.", infusao: "30 minutos.", fonteRevisao: "Whitebook (Afya) - Celulite Orbitária em Pediatria (Prescrição Hospitalar), atualizado em 23/04/2026." }
+    },
+    "cefotax_orbitaria": {
+        cat: "cat-pele", sub: "🏥 Uso Hospitalar (Celulite Orbitária)",
+        kw: "cefotaxima claforan celulite orbitaria abscesso orbita sinusite complicada alternativa ceftriaxona",
+        nome: "Cefotaxima EV (Celulite Orbitária)", apres: "FA 500 mg ou 1 g",
+        info: "<strong>Conduta (Whitebook):</strong> 150–200 mg/kg/dia EV de 8/8h, diluída a 40 mg/mL. Máx. 12 g/dia.", badge: "Máx: 4 g/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Celulite Orbitária, esquema B - alternativa à ceftriaxona): cefotaxima 150-200 mg/kg (o texto diz "/dose", mas a dose máxima de 12 g/dia indica mg/kg/dia) EV de 8/8h + SF 0,9% (concentração final 40 mg/mL). Máx. 12 g/dia = 4 g/dose. FA 1 g em 10 mL = 100 mg/mL. */
+            let a = Math.min(p * 50, 4000), b = Math.min(p * 200 / 3, 4000);
+            return { v: `${a.toFixed(0)}–${b.toFixed(0)} mg 8/8h`, r: `VIA ENDOVENOSA (CELULITE ORBITÁRIA)\n\nCEFOTAXIMA 1 G (RECONSTITUIR EM 10 ML DE AD = 100 MG/ML)\nFAZER ${a.toFixed(0)} A ${b.toFixed(0)} MG (${(a / 100).toFixed(1)} A ${(b / 100).toFixed(1)} ML = 150 A 200 MG/KG/DIA) EV DE 8/8 HORAS, DILUÍDO EM SF 0,9% A 40 MG/ML.\nPOR 2 A 3 SEMANAS OU ATÉ A RESOLUÇÃO.\n\nDOSE MÁXIMA: 12 G POR DIA.` };
+        },
+        detalhes: { indicacao: "Celulite orbitária: alternativa à ceftriaxona, com vancomicina.", dose: "150–200 mg/kg/dia EV de 8/8h, diluída a 40 mg/mL, por 2 a 3 semanas.", atencao: "Máximo 12 g/dia (4 g/dose). O Whitebook escreve \"mg/kg/dose\", mas a dose máxima diária indica mg/kg/dia." },
+        ficha: { indicacoes: "Celulite orbitária (esquema B).", dose: "150-200 mg/kg/dia EV de 8/8 horas por 2-3 semanas ou até resolução da celulite", doseMaxima: "12 g/dia.", apresentacoes: "Frasco-ampola 500 mg ou 1 g.", via: "Endovenosa.", diluicao: "SF 0,9%, concentração final de 40 mg/mL.", fonteRevisao: "Whitebook (Afya) - Celulite Orbitária em Pediatria (Prescrição Hospitalar), atualizado em 23/04/2026." }
+    },
+    "metro_orbitaria": {
+        cat: "cat-pele", sub: "🏥 Uso Hospitalar (Celulite Orbitária)",
+        kw: "metronidazol flagyl celulite orbitaria anaerobios foco odontologico sinusite cronica",
+        nome: "Metronidazol EV (Celulite Orbitária, anaeróbios)", apres: "Solução 5 mg/mL",
+        info: "<strong>Conduta (Whitebook):</strong> 30 mg/kg/dia EV de 8/8h por 2–3 semanas. Máx. 500 mg/dose.", badge: "Máx: 500 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => {
+            /* Whitebook (Celulite Orbitária, esquema C - anaeróbios): metronidazol 5 mg/mL 30 mg/kg/dia EV de 8/8h por 2-3 semanas, máx. 500 mg/dose (100 mL). */
+            let mg = Math.min(p * 10, 500), ml = mg / 5;
+            return { v: `${ml.toFixed(0)} mL 8/8h`, r: `VIA ENDOVENOSA (CELULITE ORBITÁRIA - ANAERÓBIOS)\n\nMETRONIDAZOL 5 MG/ML: FAZER ${ml.toFixed(0)} ML (${mg.toFixed(0)} MG = 10 MG/KG/DOSE) EV DE 8/8 HORAS, EM 30 A 60 MINUTOS.\nPOR 2 A 3 SEMANAS OU ATÉ A RESOLUÇÃO.` };
+        },
+        detalhes: { indicacao: "Celulite orbitária com sinais de infecção do SNC, sinusite crônica ou foco odontológico (associar ao esquema A ou B).", dose: "30 mg/kg/dia EV de 8/8h por 2 a 3 semanas.", atencao: "Máximo 500 mg (100 mL) por dose." },
+        ficha: { indicacoes: "Celulite orbitária com cobertura para anaeróbios (esquema C).", dose: "30 mg/kg/dia EV de 8/8 horas por 2-3 semanas ou até resolução da celulite", doseMaxima: "500 mg/dose.", apresentacoes: "Solução injetável 5 mg/mL.", via: "Endovenosa.", fonteRevisao: "Whitebook (Afya) - Celulite Orbitária em Pediatria (Prescrição Hospitalar), atualizado em 23/04/2026." }
+    },
     "pele_mupi": {
         cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)", 
         kw: "mupirocina pomada impetigo bacteriana pele ambulatorial tópica", nome: "Mupirocina 2% Creme (Impetigo)", apres: "Creme Tópico",

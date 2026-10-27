@@ -51,6 +51,10 @@ const TETOS = {
     metro_parasitas: 6.25, // mL de 40 mg/mL na giardíase (250 mg/dose)
     insulina_cad: 10,
     rifampicina_profilaxia: 30, // mL de 20 mg/mL = 600 mg/dose
+    metro_orbitaria: 100, // mL de 5 mg/mL (500 mg/dose, Whitebook)
+    cefalexina_celulite: 10, // mL (500 mg/dose, Whitebook)
+    cefadroxila_celulite: 20, // mL (1 g/dose = 2 g/dia, Whitebook)
+    smx_celulite: 20,     // mL (160 mg TMP, Whitebook)
     cefalexina_impetigo: 10, // mL (500 mg)
     eritro_impetigo: 10,  // mL (500 mg)
     claritro_impetigo: 10, // mL (500 mg, Whitebook)
