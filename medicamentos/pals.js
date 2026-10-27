@@ -9,7 +9,7 @@ registrarMedicamentos({
     "atropina": {
         cat: "cat-pals", sub: "🚨 Parada / Arritmias (PALS)", 
         kw: "atropina bradicardia intubacao rsi pals", nome: "Atropina", apres: "Ampola 0,25 mg/mL",
-        info: "<strong>Conduta:</strong> 0,02 mg/kg (Dose Máx: 0,5 mg). Tubo ET: 0,03 mg/kg.", badge: "Máx: 0,5 mg", recLabel: "Texto para copiar:",
+        info: "<strong>Conduta (PALS):</strong> 0,02 mg/kg (Dose Máx: 0,5 mg). Tubo ET: 0,04 a 0,06 mg/kg.", badge: "Máx: 0,5 mg", recLabel: "Texto para copiar:",
         calc: (p) => { 
             // Trava de segurança: calcula 0.02 * peso, mas se passar de 0.5, ele trava em 0.5 mg
             let mgIV = Math.min((p * 0.02), 0.5); 
@@ -17,16 +17,16 @@ registrarMedicamentos({
             // Converte a dose em mg para ml (usando a ampola de 0,25 mg/mL)
             let volIV = (mgIV / 0.25).toFixed(2); 
 
-            // Dose para Tubo Endotraqueal (0.03 mg/kg)
-            let mgET = (p * 0.03).toFixed(2);
+            /* Tubo endotraqueal (PALS): 0,04 a 0,06 mg/kg */
+            let etA = (p * 0.04).toFixed(2), etB = (p * 0.06).toFixed(2);
             
             return { 
                 v: volIV + " mL (IV/IO)", 
-                r: `🚨 USO HOSPITALAR (BRADICARDIA)\n\nVIA IV / IO:\nAspirar ${volIV} mL de Atropina (0,25 mg/mL) -- equivalente a ${mgIV.toFixed(2)} mg.\nAdministrar em bolus.\n* Repetir uma vez, se necessário.\n* Dose única máxima estrita de 0,5 mg.\n\nVIA TUBO ENDOTRAQUEAL (ET):\nAdministrar dose de ${mgET} mg (0,03 mg/kg).` }; 
+                r: `🚨 USO HOSPITALAR (BRADICARDIA)\n\nVIA IV / IO:\nAspirar ${volIV} mL de Atropina (0,25 mg/mL) -- equivalente a ${mgIV.toFixed(2)} mg.\nAdministrar em bolus.\n* Repetir uma vez, se necessário.\n* Dose única máxima estrita de 0,5 mg.\n\nVIA TUBO ENDOTRAQUEAL (ET):\nAdministrar ${etA} a ${etB} mg (0,04 a 0,06 mg/kg).` }; 
         },
         detalhes: {
             indicacao: "Bradicardia sintomática, incluindo a bradicardia vagal durante a intubação.",
-            dose: "0,02 mg/kg IV/IO. Tubo endotraqueal: 0,03 mg/kg.",
+            dose: "0,02 mg/kg IV/IO. Tubo endotraqueal: 0,04 a 0,06 mg/kg (PALS).",
             atencao: "Máximo 0,5 mg por dose."
         }
     },
@@ -347,7 +347,7 @@ registrarMedicamentos({
     "magnesio_pals": {
         cat: "cat-pals", sub: "🚨 Parada / Arritmias (PALS)",
         kw: "sulfato de magnesio torsades de pointes arritmia pals ev injetavel", nome: "Sulfato de Magnésio (Torsades)", apres: "Ampola a 10% (100 mg/mL)",
-        info: "<strong>Conduta:</strong> 20 a 50 mg/kg em 10 a 20 minutos. (Dose Máxima: 2 g).", badge: "Máx: 2 g", recLabel: "Texto para copiar:",
+        info: "<strong>Conduta (PALS):</strong> 25 a 50 mg/kg em 10 a 20 minutos. (Dose Máxima: 2 g).", badge: "Máx: 2 g", recLabel: "Texto para copiar:",
         calc: (p) => {
             let mg = Math.min((p * 50), 2000); // Usando 50mg/kg como padrão para calcular o volume, travando em 2g
             return {
@@ -357,7 +357,7 @@ registrarMedicamentos({
         },
         detalhes: {
             indicacao: "Torsades de pointes e hipomagnesemia.",
-            dose: "20 a 50 mg/kg IV/IO em 10 a 20 minutos.",
+            dose: "25 a 50 mg/kg IV/IO em 10 a 20 minutos (PALS). O app calcula 50 mg/kg.",
             atencao: "Máximo 2 g. Pode correr mais rápido em torsades. Monitorar hipotensão."
         }
     },
