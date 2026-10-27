@@ -124,15 +124,42 @@ window.atualizarFichasMedicamentos = function(lista) {
 // remédio está em "detalhesMedicacoes"; senão, mantém o texto antigo do "info".
 function renderizarInfoMed(idRemedio, med) {
     let d = !med.custom && detalhesMedicacoes[idRemedio];
-    if (!d) return `<div class="med-info-row">${med.info}</div>`;
-    // Se o remédio já tem ficha completa com dose (da equipe ou padrão), a dose fica só lá, para não poluir o card.
-    let ficha = fichasMedicamentos[idRemedio] || fichasPadrao[idRemedio];
-    let dose = (ficha && ficha.dose) ? "Ver 📋 Ficha completa, abaixo." : escaparHtml(d.dose);
+    let quadro = htmlDoseFonte(idRemedio, med);
+    if (!d) return quadro || `<div class="med-info-row">${med.info}</div>`;
+    // A dose fica no quadro "📚 Dose preconizada" (com a fonte); aqui só Indicação e Atenção.
     return `<dl class="med-detalhes">
                 <dt>Indicação</dt><dd>${escaparHtml(d.indicacao)}</dd>
-                <dt>Dose</dt><dd>${dose}</dd>
+                ${quadro ? '' : `<dt>Dose</dt><dd>${escaparHtml(d.dose)}</dd>`}
                 <dt class="det-atencao">⚠️ Atenção</dt><dd class="det-atencao">${escaparHtml(d.atencao)}</dd>
-            </dl>`;
+            </dl>${quadro}`;
+}
+
+// Quadro "📚 Dose preconizada + Fonte" (pedido do Dr. Jonas): para quem prescreve conferir a dose.
+// Não entra na receita. Fonte: FONTES_CARDS (medicamentos/fontes.js) → ficha.fonteRevisao → sigla do info.
+function fonteDoCard(idRemedio, med) {
+    if (typeof FONTES_CARDS !== 'undefined' && FONTES_CARDS[idRemedio]) return FONTES_CARDS[idRemedio];
+    let ficha = fichasMedicamentos[idRemedio] || fichasPadrao[idRemedio];
+    if (ficha && ficha.fonteRevisao) return String(ficha.fonteRevisao).replace(/^Dose:\s*/i, '').replace(/:?\s*https?:\/\/\S+/g, '').trim();
+    let sigla = String(med.info || '').match(/<strong>[^<(]*\(([^)]+)\)/);
+    if (sigla) return (typeof SIGLAS_FONTE !== 'undefined' && SIGLAS_FONTE[sigla[1]]) || sigla[1];
+    return null;
+}
+
+function htmlDoseFonte(idRemedio, med) {
+    if (!med || med.custom || med.cat === 'cat-exame-fisico') return '';
+    let r = ''; try { r = String(med.calc(20, '5').r || ''); } catch (e) {}
+    if (/^\s*ORIENTA/i.test(r)) return '';
+    let d = detalhesMedicacoes[idRemedio], ficha = fichasMedicamentos[idRemedio] || fichasPadrao[idRemedio];
+    let info = String(med.info || '');
+    let media = (info.match(/App: dose média de ([^<]+?)\.?\s*<\/em>/) || [])[1];
+    let dose = (d && d.dose) ? escaparHtml(d.dose)
+        : (ficha && ficha.dose) ? escaparHtml(String(ficha.dose).split('\n').map(l => l.trim()).filter(Boolean).join(' · '))
+        : info.replace(/<em>App: dose média[^<]*<\/em>/, '').replace(/^\s*<strong>[^<]*<\/strong>\s*/, '').trim();
+    if (!dose) return '';
+    let fonte = fonteDoCard(idRemedio, med);
+    return `<div class="dose-fonte">📚 <b>Dose preconizada:</b> ${dose}${media ? `<br><span class="dose-media">O app usa a média: ${escaparHtml(media)}</span>` : ''}
+                ${fonte ? `<div class="dose-fonte-ref"><b>Fonte:</b> ${escaparHtml(fonte)}</div>`
+                    : (typeof MODO_TESTE !== 'undefined' && MODO_TESTE) ? `<div class="dose-fonte-ref"><span class="sem-fonte">⚠️ Fonte ainda não registrada no app.</span></div>` : ''}</div>`;
 }
 
 function renderizarBlocoFicha(idRemedio, instanceId) {
@@ -427,7 +454,7 @@ function inicializarApp() {
                     contadorPorRemedio['grupo:' + grupo] = (contadorPorRemedio['grupo:' + grupo] || 0) + 1;
                     let oc = contadorPorRemedio['grupo:' + grupo];
                     let instanceId = 'g-' + grupo + (oc === 1 ? '' : '--' + oc);
-                    instanciasRenderizadas.push({ instanceId, medKey: null, grupo, escolha: null, via: null });
+                    instanciasRenderizadas.push({ instanceId, medKey: null, grupo, opcao: null, escolha: null, via: null });
                     htmlFinal += htmlCardGrupo(grupo, instanceId);
                     return;
                 }
@@ -499,22 +526,29 @@ function inicializarApp() {
 // mais que isso: lista que abre (pedido do Dr. Jonas). A receita é a do card da doença escolhida,
 // com a linha "DOSE: ... MG/KG/DOSE" no final (só injetáveis).
 const MAX_BOTOES_GRUPO = 5;
-function htmlEscolhaGrupo(grupo, via, escolha, instanceId) {
+function htmlEscolhaGrupo(inst) {
+    let grupo = inst.grupo, via = inst.via, instanceId = inst.instanceId;
     // Só o nome das doenças, em ordem alfabética. Sem via escolhida, doença repetida (IM e EV) leva a via no nome.
     let todas = GRUPOS_CARDS[grupo].opcoes;
     let opcoes = todas.filter(o => !via || o.via === via).slice().sort((a, b) => a.rotulo.localeCompare(b.rotulo, 'pt'));
     let nome = (o) => escaparHtml(o.rotulo) + (!via && todas.filter(x => x.rotulo === o.rotulo).length > 1 ? ` (${o.via})` : '');
-    if (opcoes.length <= MAX_BOTOES_GRUPO) {
-        return `<div class="grupo-chips" role="group" aria-label="Doença / patologia">${opcoes.map(o =>
-            `<button type="button" class="grupo-chip${o.id === escolha ? ' on' : ''}" onclick="marcarDoencaGrupo('${instanceId}', '${o.id}')">${nome(o)}</button>`).join('')}</div>`;
+    let html = opcoes.length <= MAX_BOTOES_GRUPO
+        ? `<div class="grupo-chips" role="group" aria-label="Doença / patologia">${opcoes.map(o =>
+            `<button type="button" class="grupo-chip${o.chave === inst.opcao ? ' on' : ''}" onclick="marcarDoencaGrupo('${instanceId}', '${o.chave}')">${nome(o)}</button>`).join('')}</div>`
+        : `<select class="grupo-select${inst.opcao ? '' : ' vazio'}" aria-label="Doença / patologia" onchange="marcarDoencaGrupo('${instanceId}', this.value)">
+        <option value="">Escolher doença / patologia</option>${opcoes.map(o => `<option value="${o.chave}"${o.chave === inst.opcao ? ' selected' : ''}>${nome(o)}</option>`).join('')}</select>`;
+    // Doença com mais de um frasco/via: 2ª fila de botões.
+    let escolhida = todas.find(o => o.chave === inst.opcao);
+    if (escolhida && escolhida.variantes) {
+        html += `<div class="grupo-sub">Frasco / via</div><div class="grupo-chips" role="group" aria-label="Frasco / via">${escolhida.variantes.map(v =>
+            `<button type="button" class="grupo-chip${v.id === inst.escolha ? ' on' : ''}" onclick="marcarVarianteGrupo('${instanceId}', '${v.id}')">${escaparHtml(v.rotulo)}</button>`).join('')}</div>`;
     }
-    return `<select class="grupo-select${escolha ? '' : ' vazio'}" aria-label="Doença / patologia" onchange="marcarDoencaGrupo('${instanceId}', this.value)">
-        <option value="">Escolher doença / patologia</option>${opcoes.map(o => `<option value="${o.id}"${o.id === escolha ? ' selected' : ''}>${nome(o)}</option>`).join('')}</select>`;
+    return html;
 }
 
 function htmlCardGrupo(grupo, instanceId) {
     let g = GRUPOS_CARDS[grupo];
-    let membros = g.opcoes.map(o => buscarMed(o.id)).filter(Boolean);
+    let membros = itensDoGrupo(grupo).map(x => buscarMed(x.id)).filter(Boolean);
     let kw = [g.nome].concat(membros.map(m => `${m.nome} ${m.kw || ''}`), g.opcoes.map(o => o.rotulo)).join(' ');
     let injetavel = membros.some(m => ehInjetavel(m));
     let botoesVia = g.vias ? `<div class="grupo-vias">${g.vias.map(v =>
@@ -527,7 +561,8 @@ function htmlCardGrupo(grupo, instanceId) {
                                 <div id="res-${instanceId}" class="result-box">—</div>
                             </div>
                             ${botoesVia}
-                            <div id="opc-${instanceId}">${htmlEscolhaGrupo(grupo, null, null, instanceId)}</div>
+                            <div id="opc-${instanceId}">${htmlEscolhaGrupo({ grupo, via: null, opcao: null, escolha: null, instanceId })}</div>
+                            <div id="dosefonte-${instanceId}"></div>
                             <div id="badge-${instanceId}"></div>
                             <div id="alerta-alergia-${instanceId}" style="display:none;" class="tarja-alergia">⚠️ Paciente referiu alergia compatível — confira antes de prescrever</div>
                             <div class="prescription-header-row">
@@ -547,18 +582,35 @@ function escolherViaGrupo(instanceId, via) {
     if (!inst) return;
     inst.via = inst.via === via ? null : via; // tocar de novo tira o filtro
     document.querySelectorAll(`#card-${instanceId} .grupo-via`).forEach(b => b.classList.toggle('on', b.dataset.via === inst.via));
-    let aindaExiste = inst.escolha && GRUPOS_CARDS[inst.grupo].opcoes.some(o => o.id === inst.escolha && (!inst.via || o.via === inst.via));
-    marcarDoencaGrupo(instanceId, aindaExiste ? inst.escolha : "", true);
+    let aindaExiste = inst.opcao && GRUPOS_CARDS[inst.grupo].opcoes.some(o => o.chave === inst.opcao && (!inst.via || o.via === inst.via));
+    if (!aindaExiste) { inst.opcao = null; inst.escolha = null; }
+    atualizarCardGrupo(inst);
 }
 
-// forcar: mantém a escolha (usado ao trocar a via). Tocar de novo no mesmo botão desmarca.
-function marcarDoencaGrupo(instanceId, idDoenca, forcar) {
+// Toca na doença (tocar de novo desmarca). Doença com variantes espera a escolha do frasco/via.
+function marcarDoencaGrupo(instanceId, chave) {
     let inst = instanciasRenderizadas.find(i => i.instanceId === instanceId);
     if (!inst) return;
-    inst.escolha = (!forcar && idDoenca === inst.escolha) ? null : (idDoenca || null);
+    inst.opcao = (chave && chave !== inst.opcao) ? chave : null;
+    let o = inst.opcao && GRUPOS_CARDS[inst.grupo].opcoes.find(x => x.chave === inst.opcao);
+    inst.escolha = o && o.id ? o.id : null;
+    atualizarCardGrupo(inst);
+}
+
+function marcarVarianteGrupo(instanceId, id) {
+    let inst = instanciasRenderizadas.find(i => i.instanceId === instanceId);
+    if (!inst) return;
+    inst.escolha = inst.escolha === id ? null : id;
+    atualizarCardGrupo(inst);
+}
+
+function atualizarCardGrupo(inst) {
+    let instanceId = inst.instanceId;
     let caixa = document.getElementById('opc-' + instanceId);
-    if (caixa) caixa.innerHTML = htmlEscolhaGrupo(inst.grupo, inst.via, inst.escolha, instanceId);
+    if (caixa) caixa.innerHTML = htmlEscolhaGrupo(inst);
     let med = inst.escolha && buscarMed(inst.escolha);
+    let quadro = document.getElementById('dosefonte-' + instanceId);
+    if (quadro) quadro.innerHTML = med ? htmlDoseFonte(inst.escolha, med) : '';
     let badge = document.getElementById('badge-' + instanceId);
     if (badge) badge.innerHTML = med && med.badge ? `<div class="badge-teto">${med.badge}</div>` : '';
     let ficha = document.getElementById('ficha-' + instanceId);
@@ -578,14 +630,15 @@ function calcularCardGrupo(inst, p, iRaw, invalido, termosAlergia) {
         cardBox.classList.toggle('alerta-alergia', conflita);
     }
     let med = inst.escolha && buscarMed(inst.escolha);
-    if (!med) { resBox.innerText = "—"; recBox.innerText = "Escolha a doença / patologia acima."; return; }
+    if (!med) { resBox.innerText = "—"; recBox.innerText = inst.opcao ? "Escolha o frasco / via acima." : "Escolha a doença / patologia acima."; return; }
     if (invalido && !med.ignoraPeso) { resBox.innerText = "—"; recBox.innerText = "Insira o peso ou digite a idade acima."; return; }
     try {
         let calc = med.calc(p, iRaw);
-        let opcao = g.opcoes.find(o => o.id === inst.escolha);
+        let achado = acharNoGrupo(inst.grupo, inst.escolha);
+        let dose = achado && (achado.variante ? achado.variante.dose : achado.opcao.dose);
         // Injetáveis: a linha "DOSE: X MG/KG/DOSE" vai no final da receita copiada. Via oral: sem essa linha.
         let texto = String(calc.r).replace(/\s+$/, '');
-        if (opcao && typeof opcao.dose === 'function') texto += '\n\n' + opcao.dose(p, iRaw, calc);
+        if (typeof dose === 'function') texto += '\n\n' + dose(p, iRaw, calc);
         resBox.innerText = med.badgeSt ? (med.badge || calc.v) : calc.v;
         recBox.innerText = texto;
     } catch (e) {
@@ -753,7 +806,7 @@ let carrinhoPrescricao = []; // { nome, apres, texto }
     let inst = instanciasRenderizadas.find(i => i.instanceId === instanceId);
     let med = buscarMed(inst && (inst.grupo ? inst.escolha : inst.medKey));
     let recBox = document.getElementById('rec-' + instanceId);
-    if (inst && inst.grupo && !inst.escolha) { alert("Escolha a doença/patologia no card."); return; }
+    if (inst && inst.grupo && !inst.escolha) { alert("Escolha a doença/patologia (e o frasco, se pedir) no card."); return; }
     if (!med || !recBox) return;
 
     // Extrai o texto gerado
@@ -778,7 +831,10 @@ let carrinhoPrescricao = []; // { nome, apres, texto }
     }
 
     let nomeItem = med.nome;
-    if (inst && inst.grupo) { let op = GRUPOS_CARDS[inst.grupo].opcoes.find(o => o.id === inst.escolha); nomeItem = `${GRUPOS_CARDS[inst.grupo].nome} (${op ? op.rotulo : ''})`; }
+    if (inst && inst.grupo) {
+        let a = acharNoGrupo(inst.grupo, inst.escolha);
+        nomeItem = `${GRUPOS_CARDS[inst.grupo].nome} (${a ? a.opcao.rotulo + (a.variante ? ' · ' + a.variante.rotulo : '') : ''})`;
+    }
     carrinhoPrescricao.push({ nome: nomeItem, apres: med.apres, texto: textoCompleto, via: cabecalhoVia });
 
     let botao = document.getElementById(btnId);

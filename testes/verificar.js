@@ -77,6 +77,7 @@ const TETOS = {
     clav_oma: 12.5,       // mL de cada frasco de 400 mg/5 mL = 1 g cada (2 g/dose no total)
     cef_oma: 3.5,         // mL IM 285,7 mg/mL (1 g)
     amox_faringo: 10,     // mL de 250 mg/5 mL = 500 mg/dose (IDSA)
+    amox_faringo400: 6.25, // mL de 400 mg/5 mL = 500 mg/dose (IDSA)
     azitro_faringo: 12.5, // mL de 200 mg/5 mL = 500 mg/dia (IDSA)     // mL/h de 1 U/mL (10 U/h, IMIP)
     kcl_ev: 530,          // mL/h na periférica (40 mEq em 2h)
     kcl_xarope: 50,       // mL por dose (40 mEq)
@@ -141,14 +142,22 @@ categorias.forEach(c => (c.patologias || []).forEach(pat => (pat.remedios || [])
 })));
 ids.filter(id => !noMenu.has(id)).forEach(id => aviso(`"${id}" não aparece em nenhuma seção do menu`));
 const GRUPOS = vm.runInContext('typeof GRUPOS_CARDS === "undefined" ? {} : GRUPOS_CARDS', ctx);
-Object.keys(GRUPOS).forEach(g => GRUPOS[g].opcoes.forEach(o => {
-    if (!farmaciaJR[o.id]) falha(`card agrupado "${g}" cita "${o.id}", que não existe`);
-    if (o.via && typeof o.dose !== 'function') falha(`card agrupado "${g}" > "${o.rotulo}": injetável sem a linha DOSE`);
-    if (o.via && farmaciaJR[o.id]) for (const p of PESOS) for (const i of IDADES) {
-        const t = o.dose(p, i, farmaciaJR[o.id].calc(p, i));
-        if (!/^DOSE: /.test(t) || ruim.test(t)) { falha(`card agrupado "${g}" > "${o.rotulo}" (${p} kg): linha DOSE inválida → ${t}`); break; }
+const itensGrupo = vm.runInContext('typeof itensDoGrupo === "undefined" ? null : itensDoGrupo', ctx);
+Object.keys(GRUPOS).forEach(g => itensGrupo(g).forEach(({ opcao, variante, id }) => {
+    const nomeOp = opcao.rotulo + (variante ? ' / ' + variante.rotulo : '');
+    if (!farmaciaJR[id]) { falha(`card agrupado "${g}" > "${nomeOp}" cita "${id}", que não existe`); return; }
+    const dose = variante ? variante.dose : opcao.dose;
+    const injetavel = /ENDOVENOS|INTRAMUSCULAR/.test(farmaciaJR[id].calc(20, '5').r);
+    if (injetavel && typeof dose !== 'function') falha(`card agrupado "${g}" > "${nomeOp}": injetável sem a linha DOSE`);
+    if (!injetavel && dose) falha(`card agrupado "${g}" > "${nomeOp}": via oral não leva a linha DOSE`);
+    if (typeof dose === 'function') for (const p of PESOS) for (const i of IDADES) {
+        const t = dose(p, i, farmaciaJR[id].calc(p, i));
+        if (!/^DOSE: /.test(t) || ruim.test(t)) { falha(`card agrupado "${g}" > "${nomeOp}" (${p} kg): linha DOSE inválida → ${t}`); break; }
     }
 }));
+
+const FONTES = vm.runInContext('typeof FONTES_CARDS === "undefined" ? {} : FONTES_CARDS', ctx);
+Object.keys(FONTES).forEach(id => { if (!farmaciaJR[id]) falha(`FONTES_CARDS (medicamentos/fontes.js) cita "${id}", que não existe`); });
 
 // ---------- 4: arquivos e modo offline ----------
 console.log('4. Arquivos e modo offline (sw.js)');
