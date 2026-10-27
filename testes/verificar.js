@@ -143,7 +143,11 @@ ids.filter(id => !noMenu.has(id)).forEach(id => aviso(`"${id}" não aparece em n
 const GRUPOS = vm.runInContext('typeof GRUPOS_CARDS === "undefined" ? {} : GRUPOS_CARDS', ctx);
 Object.keys(GRUPOS).forEach(g => GRUPOS[g].opcoes.forEach(o => {
     if (!farmaciaJR[o.id]) falha(`card agrupado "${g}" cita "${o.id}", que não existe`);
-    if (!o.dose || !/MG\/KG|DOSE: \d+ MG/.test(o.dose)) falha(`card agrupado "${g}" > "${o.rotulo}": falta a linha DOSE em mg/kg`);
+    if (o.via && typeof o.dose !== 'function') falha(`card agrupado "${g}" > "${o.rotulo}": injetável sem a linha DOSE`);
+    if (o.via && farmaciaJR[o.id]) for (const p of PESOS) for (const i of IDADES) {
+        const t = o.dose(p, i, farmaciaJR[o.id].calc(p, i));
+        if (!/^DOSE: /.test(t) || ruim.test(t)) { falha(`card agrupado "${g}" > "${o.rotulo}" (${p} kg): linha DOSE inválida → ${t}`); break; }
+    }
 }));
 
 // ---------- 4: arquivos e modo offline ----------

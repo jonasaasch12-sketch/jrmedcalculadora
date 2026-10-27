@@ -119,11 +119,12 @@ registrarMedicamentos({
         cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
         kw: "cefalexina keflex impetigo bolhoso piodermite pele celulite antibiotico oral suspensao",
         nome: "Cefalexina Suspensão (Impetigo / Pele)", apres: "250 mg / 5 mL",
-        info: "<strong>Posologia (Whitebook):</strong> 25–50 mg/kg/dia (0,125–0,25 mL/kg/dose) VO de 6/6h por 7–10 dias.", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia (Whitebook):</strong> 25–50 mg/kg/dia (0,125–0,25 mL/kg/dose) VO de 6/6h por 7–10 dias. <em>App: dose média de 37,5 mg/kg/dia.</em>", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             /* Whitebook (Impetigo, esquema A): cefalexina 250 mg/5 mL 25-50 mg/kg/dia (0,125-0,25 mL/kg/dose) VO de 6/6h por 7-10 dias. Teto do app 10 mL/dose (500 mg), dose máxima do Whitebook na ITU. */
-            let a = Math.min(parseFloat(round05(p * 0.125)), 10), b = Math.min(parseFloat(round05(p * 0.25)), 10), t = x => String(x).replace('.', ',');
-            return { v: `${a}–${b} mL`, r: `${recHead}1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR ${t(a)} A ${t(b)} ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.` };
+            /* Dose média da faixa: 37,5 mg/kg/dia (0,1875 mL/kg/dose). */
+            let a = Math.min(parseFloat(round05(p * 0.1875)), 10), t = x => String(x).replace('.', ',');
+            return { v: `${a} mL`, r: `${recHead}1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR ${t(a)} ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.` };
         },
         detalhes: {
             indicacao: "Impetigo com indicação de tratamento sistêmico (1ª escolha, junto com o tópico); celulite leve.",
@@ -176,11 +177,12 @@ registrarMedicamentos({
         cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
         kw: "clindamicina dalacin oral capsula impetigo mrsa alergia penicilina furunculo pele",
         nome: "Clindamicina Oral (Impetigo / Furúnculo / MRSA)", apres: "Cápsula 300 mg",
-        info: "<strong>Posologia (Whitebook):</strong> 20–40 mg/kg/dia VO de 6/6h por 7–10 dias. Máx. 400 mg/dose.", badge: "Máx: 400 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia (Whitebook):</strong> 20–40 mg/kg/dia VO de 6/6h por 7–10 dias. Máx. 400 mg/dose. <em>App: dose média de 30 mg/kg/dia.</em>", badge: "Máx: 400 mg/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             /* Whitebook (Impetigo, esquemas B e C): clindamicina (300 mg) 20-40 mg/kg/dia VO de 6/6h por 7-10 dias, máx. 400 mg/dose. */
-            let a = Math.min(p * 5, 400), b = Math.min(p * 10, 400);
-            return { v: `${a.toFixed(0)}–${b.toFixed(0)} mg 6/6h`, r: `${recHead}1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR ${a.toFixed(0)} A ${b.toFixed(0)} MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.` };
+            /* Dose média da faixa: 30 mg/kg/dia. */
+            let a = Math.min(p * 7.5, 400);
+            return { v: `${a.toFixed(0)} mg 6/6h`, r: `${recHead}1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR ${a.toFixed(0)} MG (30 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.` };
         },
         detalhes: { indicacao: "Impetigo em alérgico à penicilina ou com suspeita/confirmação de MRSA.", dose: "20–40 mg/kg/dia VO de 6/6h por 7 a 10 dias.", atencao: "Máximo 400 mg por dose. Disponível em cápsula de 300 mg: ajustar a dose à apresentação. Risco de diarreia por C. difficile." },
         ficha: { indicacoes: "Impetigo (esquemas B e C).", dose: "20-40 mg/kg/dia VO de 6/6 horas por 7-10 dias", doseMaxima: "400 mg/dose.", apresentacoes: "Cápsula 300 mg.", via: "Oral.", fonteRevisao: "Whitebook (Afya) - Impetigo (Prescrição Ambulatorial: tratamento tópico e sistêmico), vídeo enviado pelo Dr. Jonas em 27/10/2026." }
@@ -204,11 +206,12 @@ registrarMedicamentos({
         cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
         kw: "cefalexina keflex celulite nao complicada pele partes moles antibiotico oral suspensao",
         nome: "Cefalexina Suspensão (Celulite)", apres: "250 mg / 5 mL",
-        info: "<strong>Posologia (Whitebook):</strong> 25–100 mg/kg/dia VO de 6/6h por 7–14 dias. Máx. 500 mg/dose (2 g/dia).", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia (Whitebook):</strong> 25–100 mg/kg/dia VO de 6/6h por 7–14 dias. Máx. 500 mg/dose (2 g/dia). <em>App: dose média de 62,5 mg/kg/dia.</em>", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             /* Whitebook (Celulite não complicada): cefalexina 25-100 mg/kg/dia VO de 6/6h por 7-14 dias, máx. 2.000 mg/dia ou 500 mg/dose. 250 mg/5 mL: 25 mg/kg/dia = p x 0,125 mL/dose; 100 mg/kg/dia = p x 0,5 mL/dose. */
-            let a = Math.min(parseFloat(round05(p * 0.125)), 10), b = Math.min(parseFloat(round05(p * 0.5)), 10), t = x => String(x).replace('.', ',');
-            return { v: `${a}–${b} mL`, r: `${recHead}1) CEFALEXINA 250 MG / 5 ML ------------------ 2 FR\nDAR ${t(a)} A ${t(b)} ML, VIA ORAL, DE 6/6 HORAS POR 7 A 14 DIAS.` };
+            /* Dose média da faixa: 62,5 mg/kg/dia (0,3125 mL/kg/dose). */
+            let a = Math.min(parseFloat(round05(p * 0.3125)), 10), t = x => String(x).replace('.', ',');
+            return { v: `${a} mL`, r: `${recHead}1) CEFALEXINA 250 MG / 5 ML ------------------ 2 FR\nDAR ${t(a)} ML, VIA ORAL, DE 6/6 HORAS POR 7 A 14 DIAS.` };
         },
         detalhes: { indicacao: "Celulite não complicada (tratamento em casa).", dose: "25–100 mg/kg/dia VO de 6/6h por 7 a 14 dias.", atencao: "Máximo 500 mg (10 mL) por dose e 2 g por dia. Marcar a borda e reavaliar em 48–72 h." },
         ficha: { indicacoes: "Celulite não complicada.", dose: "25-100 mg/kg/dia VO de 6/6 horas por 7-14 dias", doseMaxima: "2.000 mg/dia ou 500 mg/dose.", apresentacoes: "Suspensão 250 mg/5 mL.", via: "Oral.", fonteRevisao: "Whitebook (Afya) - Celulite (Prescrição Ambulatorial: celulite não complicada; Prescrição Hospitalar: celulite com indicação de internação), atualizado em 03/04/2025." }
@@ -230,12 +233,13 @@ registrarMedicamentos({
         cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
         kw: "sulfametoxazol trimetoprima bactrim celulite mrsa pele partes moles antibiotico oral",
         nome: "Sulfametoxazol + Trimetoprima (Celulite)", apres: "200 + 40 mg / 5 mL (8 mg TMP/mL)",
-        info: "<strong>Posologia (Whitebook):</strong> 8–12 mg TMP/kg/dia VO de 12/12h por 7–14 dias. Máx. 160 mg TMP/dose.", badge: "Máx: 20 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia (Whitebook):</strong> 8–12 mg TMP/kg/dia VO de 12/12h por 7–14 dias. Máx. 160 mg TMP/dose. <em>App: dose média de 10 mg TMP/kg/dia.</em>", badge: "Máx: 20 mL/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p, i) => {
             /* Whitebook (Celulite não complicada): SMX-TMP 8-12 mg/kg/dia de TMP VO de 12/12h por 7-14 dias, máx. 160 mg de TMP/dose (20 mL). A partir de 2 meses. */
             if (i !== "" && parseFloat(i) < 0.17) return { v: "Contraind.", r: "ATENÇÃO: Sulfametoxazol + Trimetoprima a partir de 2 meses de idade." };
-            let a = Math.min(parseFloat(round05(p * 4 / 8)), 20), b = Math.min(parseFloat(round05(p * 6 / 8)), 20), t = x => String(x).replace('.', ',');
-            return { v: `${a}–${b} mL`, r: `${recHead}1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR ${t(a)} A ${t(b)} ML, VIA ORAL, DE 12/12 HORAS POR 7 A 14 DIAS.` };
+            /* Dose média da faixa: 10 mg TMP/kg/dia = 5 mg TMP/kg/dose. */
+            let a = Math.min(parseFloat(round05(p * 5 / 8)), 20), t = x => String(x).replace('.', ',');
+            return { v: `${a} mL`, r: `${recHead}1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR ${t(a)} ML, VIA ORAL, DE 12/12 HORAS POR 7 A 14 DIAS.` };
         },
         detalhes: { indicacao: "Celulite não complicada; cobre MRSA comunitário.", dose: "8–12 mg/kg/dia de trimetoprima VO de 12/12h por 7 a 14 dias.", atencao: "Máximo 20 mL (160 mg de TMP) por dose. A partir de 2 meses. Não cobre bem o estreptococo: na celulite sem pus, preferir cefalosporina." },
         ficha: { indicacoes: "Celulite não complicada.", dose: "8-12 mg/kg/dia de trimetoprima VO de 12/12 horas por 7-14 dias", doseMaxima: "160 mg/dose de trimetoprima (20 mL).", apresentacoes: "Suspensão 200 mg + 40 mg/5 mL.", via: "Oral.", alertasPediatricos: "Uso a partir de 2 meses de idade.", fonteRevisao: "Whitebook (Afya) - Celulite (Prescrição Ambulatorial: celulite não complicada; Prescrição Hospitalar: celulite com indicação de internação), atualizado em 03/04/2025." }
@@ -270,11 +274,12 @@ registrarMedicamentos({
         cat: "cat-pele", sub: "🏥 Uso Hospitalar (Celulite Orbitária)",
         kw: "cefotaxima claforan celulite orbitaria abscesso orbita sinusite complicada alternativa ceftriaxona",
         nome: "Cefotaxima EV (Celulite Orbitária)", apres: "FA 500 mg ou 1 g",
-        info: "<strong>Conduta (Whitebook):</strong> 150–200 mg/kg/dia EV de 8/8h, diluída a 40 mg/mL. Máx. 12 g/dia.", badge: "Máx: 4 g/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Conduta (Whitebook):</strong> 150–200 mg/kg/dia EV de 8/8h, diluída a 40 mg/mL. Máx. 12 g/dia. <em>App: dose média de 175 mg/kg/dia.</em>", badge: "Máx: 4 g/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             /* Whitebook (Celulite Orbitária, esquema B - alternativa à ceftriaxona): cefotaxima 150-200 mg/kg (o texto diz "/dose", mas a dose máxima de 12 g/dia indica mg/kg/dia) EV de 8/8h + SF 0,9% (concentração final 40 mg/mL). Máx. 12 g/dia = 4 g/dose. FA 1 g em 10 mL = 100 mg/mL. */
-            let a = Math.min(p * 50, 4000), b = Math.min(p * 200 / 3, 4000);
-            return { v: `${a.toFixed(0)}–${b.toFixed(0)} mg 8/8h`, r: `VIA ENDOVENOSA (CELULITE ORBITÁRIA)\n\nCEFOTAXIMA 1 G (RECONSTITUIR EM 10 ML DE AD = 100 MG/ML)\nFAZER ${a.toFixed(0)} A ${b.toFixed(0)} MG (${(a / 100).toFixed(1)} A ${(b / 100).toFixed(1)} ML = 150 A 200 MG/KG/DIA) EV DE 8/8 HORAS, DILUÍDO EM SF 0,9% A 40 MG/ML.\nPOR 2 A 3 SEMANAS OU ATÉ A RESOLUÇÃO.\n\nDOSE MÁXIMA: 12 G POR DIA.` };
+            /* Dose média da faixa: 175 mg/kg/dia (58,3 mg/kg/dose de 8/8h). */
+            let a = Math.min(p * 175 / 3, 4000);
+            return { v: `${a.toFixed(0)} mg 8/8h`, r: `VIA ENDOVENOSA (CELULITE ORBITÁRIA)\n\nCEFOTAXIMA 1 G (RECONSTITUIR EM 10 ML DE AD = 100 MG/ML)\nFAZER ${a.toFixed(0)} MG (${(a / 100).toFixed(1)} ML = 175 MG/KG/DIA) EV DE 8/8 HORAS, DILUÍDO EM SF 0,9% A 40 MG/ML.\nPOR 2 A 3 SEMANAS OU ATÉ A RESOLUÇÃO.\n\nDOSE MÁXIMA: 12 G POR DIA.` };
         },
         detalhes: { indicacao: "Celulite orbitária: alternativa à ceftriaxona, com vancomicina.", dose: "150–200 mg/kg/dia EV de 8/8h, diluída a 40 mg/mL, por 2 a 3 semanas.", atencao: "Máximo 12 g/dia (4 g/dose). O Whitebook escreve \"mg/kg/dose\", mas a dose máxima diária indica mg/kg/dia." },
         ficha: { indicacoes: "Celulite orbitária (esquema B).", dose: "150-200 mg/kg/dia EV de 8/8 horas por 2-3 semanas ou até resolução da celulite", doseMaxima: "12 g/dia.", apresentacoes: "Frasco-ampola 500 mg ou 1 g.", via: "Endovenosa.", diluicao: "SF 0,9%, concentração final de 40 mg/mL.", fonteRevisao: "Whitebook (Afya) - Celulite Orbitária em Pediatria (Prescrição Hospitalar), atualizado em 23/04/2026." }
@@ -309,11 +314,12 @@ registrarMedicamentos({
         cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
         kw: "amoxicilina clavulanato erisipela pele antibiotico oral suspensao",
         nome: "Amoxi-Clavulanato Suspensão (Erisipela)", apres: "250 mg + 62,5 mg / 5 mL",
-        info: "<strong>Posologia (Whitebook):</strong> 30–50 mg/kg/dia VO de 8/8h por 5 dias.", badge: "Teto: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia (Whitebook):</strong> 30–50 mg/kg/dia VO de 8/8h por 5 dias. <em>App: dose média de 40 mg/kg/dia.</em>", badge: "Teto: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             /* Whitebook (Erisipela, formas leves): amoxicilina + clavulanato 30-50 mg/kg/dia VO de 8/8 a 12/12h por 5 dias. 250 mg/5 mL de 8/8h: 30 mg/kg/dia = p x 0,2 mL; 50 mg/kg/dia = p/3 mL. Teto do app 10 mL. Total em mL: 3 doses x 5 dias. */
-            let a = Math.min(parseFloat(round05(p * 0.2)), 10), b = Math.min(parseFloat(round05(p / 3)), 10), tot = Math.ceil(b * 3 * 5), t = x => String(x).replace('.', ',');
-            return { v: `${a}–${b} mL`, r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML -- ${tot} ML\nDAR ${t(a)} A ${t(b)} ML, VIA ORAL, DE 8/8 HORAS POR 5 DIAS.` };
+            /* Dose média da faixa: 40 mg/kg/dia. */
+            let a = Math.min(parseFloat(round05(p * 40 / 3 / 50)), 10), tot = Math.ceil(a * 3 * 5), t = x => String(x).replace('.', ',');
+            return { v: `${a} mL`, r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML -- ${tot} ML\nDAR ${t(a)} ML, VIA ORAL, DE 8/8 HORAS POR 5 DIAS.` };
         },
         detalhes: { indicacao: "Erisipela leve (tratamento em casa).", dose: "30–50 mg/kg/dia VO de 8/8h (ou 12/12h) por 5 dias.", atencao: "Teto do app 10 mL (500 mg) por dose." },
         ficha: { indicacoes: "Erisipela, formas leves.", dose: "30-50 mg/kg/dia VO, dividido de 8/8 a 12/12 horas, durante 5 dias", doseMaxima: "Teto do app: 500 mg/dose.", apresentacoes: "Suspensão 250 mg + 62,5 mg/5 mL.", via: "Oral.", fonteRevisao: "Whitebook (Afya) - Erisipela em Pediatria (Prescrição Ambulatorial: formas leves; Prescrição Hospitalar: formas moderadas a graves), atualizado em 12/03/2026." }
@@ -322,11 +328,12 @@ registrarMedicamentos({
         cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
         kw: "cefalexina erisipela pele antibiotico oral suspensao",
         nome: "Cefalexina Suspensão (Erisipela)", apres: "250 mg / 5 mL",
-        info: "<strong>Posologia (Whitebook):</strong> 50–100 mg/kg/dia VO de 6/6h por 5 dias.", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia (Whitebook):</strong> 50–100 mg/kg/dia VO de 6/6h por 5 dias. <em>App: dose média de 75 mg/kg/dia.</em>", badge: "Máx: 10 mL/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             /* Whitebook (Erisipela, formas leves): cefalexina 50-100 mg/kg/dia VO de 6/6h por 5 dias. 250 mg/5 mL: 50 mg/kg/dia = p x 0,25 mL; 100 = p x 0,5 mL. Teto 10 mL (500 mg/dose, Whitebook celulite). */
-            let a = Math.min(parseFloat(round05(p * 0.25)), 10), b = Math.min(parseFloat(round05(p * 0.5)), 10), t = x => String(x).replace('.', ',');
-            return { v: `${a}–${b} mL`, r: `${recHead}1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR ${t(a)} A ${t(b)} ML, VIA ORAL, DE 6/6 HORAS POR 5 DIAS.` };
+            /* Dose média da faixa: 75 mg/kg/dia (0,375 mL/kg/dose). */
+            let a = Math.min(parseFloat(round05(p * 0.375)), 10), t = x => String(x).replace('.', ',');
+            return { v: `${a} mL`, r: `${recHead}1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR ${t(a)} ML, VIA ORAL, DE 6/6 HORAS POR 5 DIAS.` };
         },
         detalhes: { indicacao: "Erisipela leve (tratamento em casa).", dose: "50–100 mg/kg/dia VO de 6/6h por 5 dias.", atencao: "Máximo 10 mL (500 mg) por dose." },
         ficha: { indicacoes: "Erisipela, formas leves.", dose: "50-100 mg/kg/dia VO de 6/6 horas por 5 dias", doseMaxima: "500 mg/dose (teto do app).", apresentacoes: "Suspensão 250 mg/5 mL.", via: "Oral.", fonteRevisao: "Whitebook (Afya) - Erisipela em Pediatria (Prescrição Ambulatorial: formas leves; Prescrição Hospitalar: formas moderadas a graves), atualizado em 12/03/2026." }
@@ -335,11 +342,12 @@ registrarMedicamentos({
         cat: "cat-pele", sub: "🏥 Uso Hospitalar (Erisipela)",
         kw: "ceftriaxona erisipela grave internacao pele endovenosa",
         nome: "Ceftriaxona EV (Erisipela)", apres: "FA 1 g (+ 10 mL AD = 100 mg/mL)",
-        info: "<strong>Conduta (Whitebook):</strong> 50–75 mg/kg/dia EV de 12/12 ou 24/24h. Máx. 2 g/dose.", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Conduta (Whitebook):</strong> 50–75 mg/kg/dia EV de 12/12 ou 24/24h. Máx. 2 g/dose. <em>App: dose média de 62,5 mg/kg/dia.</em>", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             /* Whitebook (Erisipela moderada a grave): ceftriaxona 50-75 mg/kg/dia EV de 12/12 ou 24/24h, máx. 2 g/dose. */
-            let a = Math.min(p * 50, 2000), b = Math.min(p * 75, 2000);
-            return { v: `${(a / 100).toFixed(1)}–${(b / 100).toFixed(1)} mL 24/24h`, r: `VIA ENDOVENOSA (ERISIPELA)\n\nCEFTRIAXONA 1 G (RECONSTITUIR EM 10 ML DE AD = 100 MG/ML)\nFAZER ${(a / 100).toFixed(1)} A ${(b / 100).toFixed(1)} ML (${a.toFixed(0)} A ${b.toFixed(0)} MG = 50 A 75 MG/KG/DIA) EV DE 24/24 HORAS\n(OU METADE DA DOSE DE 12/12 HORAS), DILUÍDO EM SF 0,9%, EM 30 MINUTOS.\n\nDOSE MÁXIMA: 2 G POR DOSE.` };
+            /* Dose média da faixa: 62,5 mg/kg/dia. */
+            let a = Math.min(p * 62.5, 2000);
+            return { v: `${(a / 100).toFixed(1)} mL 24/24h`, r: `VIA ENDOVENOSA (ERISIPELA)\n\nCEFTRIAXONA 1 G (RECONSTITUIR EM 10 ML DE AD = 100 MG/ML)\nFAZER ${(a / 100).toFixed(1)} ML (${a.toFixed(0)} MG = 62,5 MG/KG/DIA) EV DE 24/24 HORAS\n(OU METADE DA DOSE DE 12/12 HORAS), DILUÍDO EM SF 0,9%, EM 30 MINUTOS.\n\nDOSE MÁXIMA: 2 G POR DOSE.` };
         },
         detalhes: { indicacao: "Erisipela moderada a grave (internação).", dose: "50–75 mg/kg/dia EV de 12/12 ou 24/24h.", atencao: "Máximo 2 g/dose. Trocar para via oral quando houver melhora e tolerar." },
         ficha: { indicacoes: "Erisipela, formas moderadas a graves.", dose: "50-75 mg/kg/dia EV de 12/12 ou 24/24 horas", doseMaxima: "2 g/dose.", apresentacoes: "Frasco-ampola 1 g.", via: "Endovenosa.", fonteRevisao: "Whitebook (Afya) - Erisipela em Pediatria (Prescrição Ambulatorial: formas leves; Prescrição Hospitalar: formas moderadas a graves), atualizado em 12/03/2026." }
@@ -348,11 +356,12 @@ registrarMedicamentos({
         cat: "cat-pele", sub: "🏥 Uso Hospitalar (Erisipela)",
         kw: "cefazolina kefazol erisipela celulite grave internacao pele endovenosa cefalosporina primeira geracao",
         nome: "Cefazolina EV (Erisipela)", apres: "FA 1 g (+ 10 mL AD = 100 mg/mL)",
-        info: "<strong>Conduta (Whitebook):</strong> 50–100 mg/kg/dia EV de 8/8h. Máx. 2 g/dose.", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Conduta (Whitebook):</strong> 50–100 mg/kg/dia EV de 8/8h. Máx. 2 g/dose. <em>App: dose média de 75 mg/kg/dia.</em>", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             /* Whitebook (Erisipela moderada a grave): cefazolina 50-100 mg/kg/dia EV de 8/8h, máx. 2 g/dose. FA 1 g em 10 mL de AD = 100 mg/mL. */
-            let a = Math.min(p * 50 / 3, 2000), b = Math.min(p * 100 / 3, 2000);
-            return { v: `${(a / 100).toFixed(1)}–${(b / 100).toFixed(1)} mL 8/8h`, r: `VIA ENDOVENOSA (ERISIPELA)\n\nCEFAZOLINA 1 G (RECONSTITUIR EM 10 ML DE AD = 100 MG/ML)\nFAZER ${(a / 100).toFixed(1)} A ${(b / 100).toFixed(1)} ML (${a.toFixed(0)} A ${b.toFixed(0)} MG = 50 A 100 MG/KG/DIA) EV DE 8/8 HORAS.\n\nDOSE MÁXIMA: 2 G POR DOSE.` };
+            /* Dose média da faixa: 75 mg/kg/dia (25 mg/kg/dose de 8/8h). */
+            let a = Math.min(p * 25, 2000);
+            return { v: `${(a / 100).toFixed(1)} mL 8/8h`, r: `VIA ENDOVENOSA (ERISIPELA)\n\nCEFAZOLINA 1 G (RECONSTITUIR EM 10 ML DE AD = 100 MG/ML)\nFAZER ${(a / 100).toFixed(1)} ML (${a.toFixed(0)} MG = 25 MG/KG/DOSE) EV DE 8/8 HORAS.\n\nDOSE MÁXIMA: 2 G POR DOSE.` };
         },
         detalhes: { indicacao: "Erisipela moderada a grave (internação).", dose: "50–100 mg/kg/dia EV de 8/8h.", atencao: "Máximo 2 g/dose." },
         ficha: { indicacoes: "Erisipela, formas moderadas a graves.", dose: "50-100 mg/kg/dia EV de 8/8 horas", doseMaxima: "2 g/dose.", apresentacoes: "Frasco-ampola 1 g.", via: "Endovenosa.", fonteRevisao: "Whitebook (Afya) - Erisipela em Pediatria (Prescrição Ambulatorial: formas leves; Prescrição Hospitalar: formas moderadas a graves), atualizado em 12/03/2026." }
@@ -361,11 +370,12 @@ registrarMedicamentos({
         cat: "cat-pele", sub: "🏥 Uso Hospitalar (Erisipela)",
         kw: "oxacilina erisipela grave internacao pele endovenosa",
         nome: "Oxacilina EV (Erisipela)", apres: "FA 500 mg (100 mg/mL)",
-        info: "<strong>Conduta (Whitebook):</strong> 100–150 mg/kg/dia EV de 6/6h. Máx. 12 g/dia.", badge: "Máx: 3 g/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Conduta (Whitebook):</strong> 100–150 mg/kg/dia EV de 6/6h. Máx. 12 g/dia. <em>App: dose média de 125 mg/kg/dia.</em>", badge: "Máx: 3 g/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             /* Whitebook (Erisipela moderada a grave): oxacilina 100-150 mg/kg/dia EV de 6/6h, máx. 12 g/dia (3 g/dose). Reconstituir a 100 mg/mL e rediluir em SF 0,9% a 10 mg/mL. */
-            let a = Math.min(p * 25, 3000), b = Math.min(p * 37.5, 3000);
-            return { v: `${(a / 100).toFixed(1)}–${(b / 100).toFixed(1)} mL 6/6h`, r: `VIA ENDOVENOSA (ERISIPELA)\n\nOXACILINA (RECONSTITUIR 500 MG EM 5 ML DE AD = 100 MG/ML)\nASPIRAR ${(a / 100).toFixed(1)} A ${(b / 100).toFixed(1)} ML (${a.toFixed(0)} A ${b.toFixed(0)} MG = 100 A 150 MG/KG/DIA) E REDILUIR EM SF 0,9% A 10 MG/ML.\nADMINISTRAR DE 6/6 HORAS.\n\nDOSE MÁXIMA: 12 G POR DIA.` };
+            /* Dose média da faixa: 125 mg/kg/dia (31,25 mg/kg/dose de 6/6h). */
+            let a = Math.min(p * 31.25, 3000);
+            return { v: `${(a / 100).toFixed(1)} mL 6/6h`, r: `VIA ENDOVENOSA (ERISIPELA)\n\nOXACILINA (RECONSTITUIR 500 MG EM 5 ML DE AD = 100 MG/ML)\nASPIRAR ${(a / 100).toFixed(1)} ML (${a.toFixed(0)} MG = 125 MG/KG/DIA) E REDILUIR EM SF 0,9% A 10 MG/ML.\nADMINISTRAR DE 6/6 HORAS.\n\nDOSE MÁXIMA: 12 G POR DIA.` };
         },
         detalhes: { indicacao: "Erisipela moderada a grave (internação).", dose: "100–150 mg/kg/dia EV de 6/6h.", atencao: "Máximo 12 g/dia (3 g/dose). Flebite: rediluir a 10 mg/mL." },
         ficha: { indicacoes: "Erisipela, formas moderadas a graves.", dose: "100-150 mg/kg/dia EV de 6/6 horas", doseMaxima: "12 g/dia.", apresentacoes: "Frasco-ampola 500 mg.", via: "Endovenosa.", fonteRevisao: "Whitebook (Afya) - Erisipela em Pediatria (Prescrição Ambulatorial: formas leves; Prescrição Hospitalar: formas moderadas a graves), atualizado em 12/03/2026." }

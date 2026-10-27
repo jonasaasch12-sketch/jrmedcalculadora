@@ -498,16 +498,12 @@ function inicializarApp() {
 // Começa sem nada escolhido. Botões de via (IM/EV) filtram a lista; a lista separa as doenças
 // pelo esquema de dose. A receita é a do card da doença escolhida, com a linha "DOSE: ... MG/KG/DOSE".
 function opcoesDoGrupo(grupo, via) {
-    let opcoes = GRUPOS_CARDS[grupo].opcoes.filter(o => !via || o.via === via);
-    let porRegime = [];
-    opcoes.forEach(o => {
-        let titulo = (GRUPOS_CARDS[grupo].vias && !via ? o.via + ' · ' : '') + o.regime;
-        let r = porRegime.find(x => x.titulo === titulo);
-        if (!r) porRegime.push(r = { titulo, itens: [] });
-        r.itens.push(o);
-    });
-    return `<option value="">Escolher doença / patologia</option>` + porRegime.map(r =>
-        `<optgroup label="${escaparHtml(r.titulo)}">${r.itens.map(o => `<option value="${o.id}">${escaparHtml(o.rotulo)}</option>`).join('')}</optgroup>`).join('');
+    // Só o nome das doenças, em ordem alfabética. Sem via escolhida, doença repetida (IM e EV) leva a via no nome.
+    let todas = GRUPOS_CARDS[grupo].opcoes;
+    let opcoes = todas.filter(o => !via || o.via === via).slice().sort((a, b) => a.rotulo.localeCompare(b.rotulo, 'pt'));
+    let repetida = (o) => !via && todas.filter(x => x.rotulo === o.rotulo).length > 1;
+    return `<option value="">Escolher doença / patologia</option>` +
+        opcoes.map(o => `<option value="${o.id}">${escaparHtml(o.rotulo)}${repetida(o) ? ` (${o.via})` : ''}</option>`).join('');
 }
 
 function htmlCardGrupo(grupo, instanceId) {
@@ -584,11 +580,11 @@ function calcularCardGrupo(inst, p, iRaw, invalido, termosAlergia) {
     try {
         let calc = med.calc(p, iRaw);
         let opcao = g.opcoes.find(o => o.id === inst.escolha);
-        let linhas = String(calc.r).split('\n');
-        // A linha da dose (mg/kg/dose) entra logo depois da 1ª linha (a via), para aparecer na receita copiada.
-        if (opcao && opcao.dose) linhas.splice(1, 0, '', opcao.dose);
+        // Injetáveis: a linha "DOSE: X MG/KG/DOSE" vai no final da receita copiada. Via oral: sem essa linha.
+        let texto = String(calc.r).replace(/\s+$/, '');
+        if (opcao && typeof opcao.dose === 'function') texto += '\n\n' + opcao.dose(p, iRaw, calc);
         resBox.innerText = med.badgeSt ? (med.badge || calc.v) : calc.v;
-        recBox.innerText = linhas.join('\n');
+        recBox.innerText = texto;
     } catch (e) {
         resBox.innerText = "Erro";
         recBox.innerText = "Erro de cálculo.";

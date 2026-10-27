@@ -58,12 +58,13 @@ registrarMedicamentos({
     "cefadroxila": {
         cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
         kw: "cefadroxila cefamox antibiotico suspensao capsula oral pele faringite amigdalite", nome: "Cefadroxila", apres: "Suspensão 250 mg/5 mL | Cápsula 500 mg",
-        info: "<strong>Posologia:</strong> <12a: 12,5-25 mg/kg 12/12h | ≥12a: 1-2 g/dia em 2 tomadas.", badge: "Máx: 1 g/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia:</strong> <12a: 12,5-25 mg/kg 12/12h | ≥12a: 1-2 g/dia em 2 tomadas. <em>App: dose média de 18,75 mg/kg/dose.</em>", badge: "Máx: 1 g/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p, i) => {
             // Whitebook: <12 anos 12,5-25 mg/kg/dose VO de 12/12h (suspensão 250 mg/5 mL = 50 mg/mL); ≥12 anos 1-2 g/dia em 2 tomadas.
             if (i !== "" && parseFloat(i) >= 12) return { v: "500 mg-1 g", r: `${recHead}1) CEFADROXILA 500 MG CÁPSULA ------------- 1 CX\nTOMAR 1 A 2 CÁPSULAS (500 MG A 1 G), VIA ORAL, DE 12/12 HORAS, POR 10 DIAS.` };
-            let min = Math.min(parseFloat(round05(p * 12.5 / 50)), 20).toFixed(1), max = Math.min(parseFloat(round05(p * 25 / 50)), 20).toFixed(1);
-            return { v: `${min}-${max} mL`, r: `${recHead}1) CEFADROXILA SUSPENSÃO 250 MG/5 ML ------ 1 FR\nDAR ${min} A ${max} ML (12,5 A 25 MG/KG), VIA ORAL, DE 12/12 HORAS, POR 10 DIAS.` };
+            /* Dose média da faixa (pedido do Dr. Jonas): 18,75 mg/kg/dose. */
+            let ml = Math.min(parseFloat(round05(p * 18.75 / 50)), 20).toFixed(1);
+            return { v: `${ml} mL`, r: `${recHead}1) CEFADROXILA SUSPENSÃO 250 MG/5 ML ------ 1 FR\nDAR ${ml} ML, VIA ORAL, DE 12/12 HORAS, POR 10 DIAS.` };
         },
         detalhes: {
             indicacao: "Faringite ou amigdalite estreptocócica beta-hemolítica.",
@@ -112,12 +113,13 @@ registrarMedicamentos({
     "smx_tmp": {
         cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
         kw: "sulfametoxazol trimetoprima bactrim smx tmp antibiotico suspensao itu infeccao urinaria", nome: "Sulfametoxazol + Trimetoprima (Bactrim)", apres: "200 + 40 mg / 5 mL (8 mg TMP/mL)",
-        info: "<strong>Posologia (ITU):</strong> 6-12 mg TMP/kg/dia de 12/12h por 7-14 dias. Máx. 20 mL/dose.", badge: "Máx: 20 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia (ITU):</strong> 6-12 mg TMP/kg/dia de 12/12h por 7-14 dias. Máx. 20 mL/dose. <em>App: dose média de 9 mg TMP/kg/dia.</em>", badge: "Máx: 20 mL/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p, i) => {
             // Whitebook (ITU em Pediatria, ITU afebril): 6-12 mg de TMP/kg/dia (0,75-1,5 mL/kg/dia) VO de 12/12h, por 7-14 dias. Máximo 20 mL (160 mg TMP) por dose. A partir de 2 meses.
             if (i !== "" && parseFloat(i) < 0.17) return { v: "Contraind.", r: "ATENÇÃO: Sulfametoxazol + Trimetoprima a partir de 2 meses de idade." };
-            let min = Math.min(parseFloat(round05(p * 3 / 8)), 20).toFixed(1), max = Math.min(parseFloat(round05(p * 6 / 8)), 20).toFixed(1);
-            return { v: `${min}-${max} mL`, r: `${recHead}1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR ${min} A ${max} ML, VIA ORAL, DE 12/12 HORAS, POR 7 A 14 DIAS.` };
+            /* Dose média da faixa: 9 mg TMP/kg/dia = 4,5 mg TMP/kg/dose. */
+            let ml = Math.min(parseFloat(round05(p * 4.5 / 8)), 20).toFixed(1);
+            return { v: `${ml} mL`, r: `${recHead}1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR ${ml} ML, VIA ORAL, DE 12/12 HORAS, POR 7 A 14 DIAS.` };
         },
         detalhes: {
             indicacao: "Infecção do trato urinário.",
@@ -162,11 +164,12 @@ registrarMedicamentos({
     "cipro_vo": {
         cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
         kw: "ciprofloxacino cipro quinolona antibiotico comprimido oral itu infeccao urinaria", nome: "Ciprofloxacino VO", apres: "Comprimido 500 mg",
-        info: "<strong>Posologia (ITU):</strong> 10-20 mg/kg/dose de 12/12h. Máx. 750 mg/dose.", badge: "Máx: 750 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia (ITU):</strong> 10-20 mg/kg/dose de 12/12h. Máx. 750 mg/dose. <em>App: dose média de 15 mg/kg/dose.</em>", badge: "Máx: 750 mg/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             // Whitebook (ITU): 10-20 mg/kg/dose VO de 12/12h, por 3-7 dias (cistite) ou 7-14 dias (pielonefrite). Máximo 750 mg/dose.
-            let min = Math.min(p * 10, 750), max = Math.min(p * 20, 750);
-            return { v: `${min.toFixed(0)}-${max.toFixed(0)} mg`, r: `${recHead}1) CIPROFLOXACINO 500 MG ------------------- 1 CX\nDAR ${min.toFixed(0)} A ${max.toFixed(0)} MG, VIA ORAL, DE 12/12 HORAS, POR 3 A 7 DIAS (CISTITE) OU 7 A 14 DIAS (PIELONEFRITE).` };
+            /* Dose média da faixa: 15 mg/kg/dose. */
+            let mg = Math.min(p * 15, 750);
+            return { v: `${mg.toFixed(0)} mg`, r: `${recHead}1) CIPROFLOXACINO 500 MG ------------------- 1 CX\nDAR ${mg.toFixed(0)} MG, VIA ORAL, DE 12/12 HORAS, POR 3 A 7 DIAS (CISTITE) OU 7 A 14 DIAS (PIELONEFRITE).` };
         },
         detalhes: {
             indicacao: "Infecção do trato urinário; profilaxia de doença meningocócica; doença por complexo Mycobacterium avium.",
@@ -202,15 +205,16 @@ registrarMedicamentos({
     "cefalotina": {
         cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
         kw: "cefalotina keflin cefalotil cefalosporina primeira geracao antibiotico endovenoso intramuscular hospitalar injetavel", nome: "Cefalotina Sódica EV / IM", apres: "Pó para solução injetável 1 g",
-        info: "<strong>Conduta:</strong> 20-40 mg/kg IM/EV de 6/6h OU 12-25 mg/kg IM/EV de 4/4h.", badge: "", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Conduta:</strong> 20-40 mg/kg IM/EV de 6/6h OU 12-25 mg/kg IM/EV de 4/4h. <em>App: dose média de 30 mg/kg (6/6h) ou 18,5 mg/kg (4/4h).</em>", badge: "", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             // Whitebook (Pediatria): 20-40 mg/kg IM/EV de 6/6h OU 12-25 mg/kg IM/EV de 4/4h.
             // Reconstituição: EV 1 g em 10 mL AD (100 mg/mL); IM 1 g em 5 mL AD (200 mg/mL). Infusão: diluir em 100 mL de SF 0,9% ou SG 5%, em 30 min.
             let f = n => n.toFixed(1);
-            let a1 = p * 20, a2 = p * 40, b1 = p * 12, b2 = p * 25;
-            let nFA = Math.max(a2, b2) > 1000 ? "2 FA (1 g cada)" : "1 FA de 1 g";
-            return { v: `6/6h: ${f(a1 / 100)}-${f(a2 / 100)} mL\n4/4h: ${f(b1 / 100)}-${f(b2 / 100)} mL`,
-                r: `VIA ENDOVENOSA OU INTRAMUSCULAR (USO HOSPITALAR)\n\nOPÇÃO 6/6H (20 A 40 MG/KG/DOSE): ${a1.toFixed(0)} a ${a2.toFixed(0)} mg por dose.\nOPÇÃO 4/4H (12 A 25 MG/KG/DOSE): ${b1.toFixed(0)} a ${b2.toFixed(0)} mg por dose.\n\nEV: Reconstituir ${nFA} em 10 mL de água para injetáveis (100 mg/mL).\n 6/6h: aspirar ${f(a1 / 100)} a ${f(a2 / 100)} mL | 4/4h: aspirar ${f(b1 / 100)} a ${f(b2 / 100)} mL.\n Fazer EV direta em 3 a 5 minutos OU diluir em 100 mL de SF 0,9% ou SG 5% e infundir em 30 minutos.\n\nIM: Reconstituir em 5 mL de água para injetáveis (200 mg/mL).\n 6/6h: aspirar ${f(a1 / 200)} a ${f(a2 / 200)} mL | 4/4h: aspirar ${f(b1 / 200)} a ${f(b2 / 200)} mL.\n Injetar em grande massa muscular (face lateral da coxa).` };
+            /* Dose média da faixa: 30 mg/kg/dose de 6/6h ou 18,5 mg/kg/dose de 4/4h. */
+            let a = p * 30, b = p * 18.5;
+            let nFA = Math.max(a, b) > 1000 ? "2 FA (1 g cada)" : "1 FA de 1 g";
+            return { v: `6/6h: ${f(a / 100)} mL\n4/4h: ${f(b / 100)} mL`,
+                r: `VIA ENDOVENOSA OU INTRAMUSCULAR (USO HOSPITALAR)\n\nOPÇÃO 6/6H (30 MG/KG/DOSE): ${a.toFixed(0)} mg por dose.\nOPÇÃO 4/4H (18,5 MG/KG/DOSE): ${b.toFixed(0)} mg por dose.\n\nEV: Reconstituir ${nFA} em 10 mL de água para injetáveis (100 mg/mL).\n 6/6h: aspirar ${f(a / 100)} mL | 4/4h: aspirar ${f(b / 100)} mL.\n Fazer EV direta em 3 a 5 minutos OU diluir em 100 mL de SF 0,9% ou SG 5% e infundir em 30 minutos.\n\nIM: Reconstituir em 5 mL de água para injetáveis (200 mg/mL).\n 6/6h: aspirar ${f(a / 200)} mL | 4/4h: aspirar ${f(b / 200)} mL.\n Injetar em grande massa muscular (face lateral da coxa).` };
         },
         detalhes: {
             indicacao: "Infecções do trato respiratório; infecções do trato geniturinário; infecções gastrointestinais; infecções da pele e dos tecidos moles; infecções ósseas e articulares; meningite; septicemia; profilaxia em cirurgias.",
@@ -288,17 +292,18 @@ registrarMedicamentos({
     "clindamicina": {
         cat: "cat-antibioticos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
         kw: "clindamicina dalacin lincosamida antibiotico endovenoso intramuscular hospitalar injetavel osteoarticular osteomielite artrite septica pneumonia celulite erisipela pneumocistose", nome: "Clindamicina EV / IM", apres: "Solução injetável 150 mg / mL",
-        info: "<strong>Conduta:</strong> 20-40 mg/kg/dia EV/IM de 6/6 ou 8/8h. Máx. 2.700 mg/dia.", badge: "Máx: 2.700 mg/dia", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Conduta:</strong> 20-40 mg/kg/dia EV/IM de 6/6 ou 8/8h. Máx. 2.700 mg/dia. <em>App: dose média de 30 mg/kg/dia.</em>", badge: "Máx: 2.700 mg/dia", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             // Whitebook (lactentes, crianças e adolescentes): dose usual 20-40 mg/kg/dia EV ou IM de 6/6 ou 8/8h. Máximo 18 mL/dia (2.700 mg/dia).
             // EV: diluir em SF ou SG 5% até 18 mg/mL e infundir em 10-60 min (máx. 30 mg/min). IM: sem diluir, máximo 600 mg/dose.
             let f = n => n.toFixed(2);
-            let o6 = [Math.min(p * 5, 675), Math.min(p * 10, 675)], o8 = [Math.min(p * 20 / 3, 900), Math.min(p * 40 / 3, 900)];
+            /* Dose média da faixa: 30 mg/kg/dia (7,5 mg/kg/dose de 6/6h ou 10 mg/kg/dose de 8/8h). */
+            let o6 = Math.min(p * 7.5, 675), o8 = Math.min(p * 10, 900);
             let ml = mg => mg / 150, tot = mg => mg / 18;
-            let ev = (o, h) => `${h}/${h}H: aspirar ${f(ml(o[0]))} a ${f(ml(o[1]))} mL (${o[0].toFixed(0)} a ${o[1].toFixed(0)} mg) e completar com SF 0,9% até ${Math.ceil(tot(o[0]))} a ${Math.ceil(tot(o[1]))} mL (18 mg/mL).`;
-            let im = (o, h) => `${h}/${h}H: ${f(ml(Math.min(o[0], 600)))} a ${f(ml(Math.min(o[1], 600)))} mL IM, sem diluir.`;
-            return { v: `6/6h: ${f(ml(o6[0]))}-${f(ml(o6[1]))} mL\n8/8h: ${f(ml(o8[0]))}-${f(ml(o8[1]))} mL`,
-                r: `CLINDAMICINA 150 MG/ML - DOSE USUAL 20 A 40 MG/KG/DIA (MÁXIMO 2.700 MG/DIA)\n\nVIA ENDOVENOSA:\n ${ev(o6, 6)}\n ${ev(o8, 8)}\n Infundir em 10 a 60 minutos (máximo 30 mg/minuto).\n\nVIA INTRAMUSCULAR (máximo 600 mg/dose):\n ${im(o6, 6)}\n ${im(o8, 8)}` };
+            let ev = (o, h) => `${h}/${h}H: aspirar ${f(ml(o))} mL (${o.toFixed(0)} mg) e completar com SF 0,9% até ${Math.ceil(tot(o))} mL (18 mg/mL).`;
+            let im = (o, h) => `${h}/${h}H: ${f(ml(Math.min(o, 600)))} mL IM, sem diluir.`;
+            return { v: `6/6h: ${f(ml(o6))} mL\n8/8h: ${f(ml(o8))} mL`,
+                r: `CLINDAMICINA 150 MG/ML - DOSE 30 MG/KG/DIA (MÁXIMO 2.700 MG/DIA)\n\nVIA ENDOVENOSA:\n ${ev(o6, 6)}\n ${ev(o8, 8)}\n Infundir em 10 a 60 minutos (máximo 30 mg/minuto).\n\nVIA INTRAMUSCULAR (máximo 600 mg/dose):\n ${im(o6, 6)}\n ${im(o8, 8)}` };
         },
         detalhes: {
             indicacao: "Infecções osteoarticulares; pneumocistose; pneumonia adquirida na comunidade (sem ser por MRSA); infecções cutâneas (celulites, erisipelas).",
