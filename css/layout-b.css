@@ -260,3 +260,9 @@ html[data-theme="dark"] #app-container .btn-add-carrinho { color: #04201d; }
     background: var(--surface); color: var(--text-main); font: 600 14px var(--fonte); cursor: pointer;
 }
 .med-card-grupo .grupo-select.vazio, .med-card-grupo .grupo-select:invalid { color: var(--text-muted); }
+.med-card-grupo .grupo-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 8px; }
+.med-card-grupo .grupo-chip {
+    padding: 7px 12px; border: 1.5px solid var(--border-strong); border-radius: 999px;
+    background: var(--surface); color: var(--text-soft); font: 600 13.5px var(--fonte); cursor: pointer;
+}
+.med-card-grupo .grupo-chip.on { background: var(--primary); border-color: var(--primary); color: #fff; }
