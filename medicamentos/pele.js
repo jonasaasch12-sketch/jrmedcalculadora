@@ -105,7 +105,7 @@ registrarMedicamentos({
     "fusidico_impetigo": {
         cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
         kw: "acido fusidico verutex fucidin impetigo creme pomada antibiotico topico",
-        nome: "Ácido Fusídico 2% (Impetigo)", apres: "Creme ou pomada",
+        nome: "Ácido Fusídico 2% (Impetigo / Foliculite)", apres: "Creme ou pomada",
         info: "<strong>Conduta (Whitebook):</strong> aplicar 2–3 vezes ao dia por 5–7 dias. Pode ser usado em < 3 meses.", badgeSt: "static-blue", badge: "Uso Tópico", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
         calc: () => ({ v: "Uso Tópico", r: `USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS.` }),
         detalhes: {
@@ -161,7 +161,7 @@ registrarMedicamentos({
     "smx_impetigo": {
         cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
         kw: "sulfametoxazol trimetoprima bactrim impetigo mrsa furunculo alergia penicilina pele",
-        nome: "Sulfametoxazol + Trimetoprima (Impetigo / MRSA)", apres: "200 + 40 mg / 5 mL (8 mg TMP/mL)",
+        nome: "Sulfametoxazol + Trimetoprima (Impetigo / Furúnculo / MRSA)", apres: "200 + 40 mg / 5 mL (8 mg TMP/mL)",
         info: "<strong>Posologia (Whitebook):</strong> 8 mg TMP/kg/dia (0,5 mL/kg/dose) VO de 12/12h por 7–10 dias. Máx. 20 mL/dose.", badge: "Máx: 20 mL/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p, i) => {
             /* Whitebook (Impetigo, esquemas B e C): SMX-TMP 40+8 mg/mL, 8 mg/kg/dia de TMP (0,5 mL/kg/dose) VO de 12/12h por 7-10 dias, máx. 160 mg TMP/dose (20 mL). A partir de 2 meses. */
@@ -175,7 +175,7 @@ registrarMedicamentos({
     "clinda_vo_impetigo": {
         cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
         kw: "clindamicina dalacin oral capsula impetigo mrsa alergia penicilina furunculo pele",
-        nome: "Clindamicina Oral (Impetigo / MRSA)", apres: "Cápsula 300 mg",
+        nome: "Clindamicina Oral (Impetigo / Furúnculo / MRSA)", apres: "Cápsula 300 mg",
         info: "<strong>Posologia (Whitebook):</strong> 20–40 mg/kg/dia VO de 6/6h por 7–10 dias. Máx. 400 mg/dose.", badge: "Máx: 400 mg/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
             /* Whitebook (Impetigo, esquemas B e C): clindamicina (300 mg) 20-40 mg/kg/dia VO de 6/6h por 7-10 dias, máx. 400 mg/dose. */
@@ -372,7 +372,7 @@ registrarMedicamentos({
     },
     "pele_mupi": {
         cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)", 
-        kw: "mupirocina pomada impetigo bacteriana pele ambulatorial tópica", nome: "Mupirocina 2% Creme (Impetigo)", apres: "Creme Tópico",
+        kw: "mupirocina pomada impetigo bacteriana pele ambulatorial tópica", nome: "Mupirocina 2% Creme (Impetigo / Foliculite)", apres: "Creme Tópico",
         info: "<strong>Conduta:</strong> Aplicar de 8/8h por 7 dias.", badgeSt: "static-blue", badge: "Uso Tópico", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
         calc: () => ({ v: "Uso Tópico", r: `USO TÓPICO\n\n1) MUPIROCINA 2% CREME ----------------------------------- 1 BISNAGA\nLAVAR COM ÁGUA E SABÃO E APLICAR DE 8/8 HORAS POR 7 DIAS.` }),
         detalhes: {

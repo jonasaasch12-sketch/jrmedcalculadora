@@ -126,7 +126,8 @@ const categorias = [
         patologias: [
             { nome: "Sarampo", conduta: "sarampo", condutaNome: "Sarampo", remedios: ["vit_a_sarampo"] },
             { nome: "Varicela (Catapora)", conduta: "varicela", condutaNome: "Varicela", remedios: ["aciclovir_varicela_vo", "aciclovir_varicela_ev"] },
-            { nome: "Impetigo e Infecções Bacterianas de Pele", conduta: "pele_bacteriana", condutaNome: "Infecções bacterianas de pele", remedios: ["pele_mupi", "fusidico_impetigo", "cefalexina_impetigo", "eritro_impetigo", "claritro_impetigo", "smx_impetigo", "clinda_vo_impetigo", "doxi_impetigo"] },
+            { nome: "Impetigo", conduta: "pele_bacteriana", condutaNome: "Infecções bacterianas de pele", remedios: ["pele_mupi", "fusidico_impetigo", "cefalexina_impetigo", "eritro_impetigo", "claritro_impetigo", "smx_impetigo", "clinda_vo_impetigo", "doxi_impetigo"] },
+            { nome: "Foliculite, Furúnculo e Abscesso", conduta: "pele_bacteriana", condutaNome: "Infecções bacterianas de pele", remedios: ["pele_mupi", "fusidico_impetigo", "smx_impetigo", "clinda_vo_impetigo"] },
             { nome: "Celulite", conduta: "pele_bacteriana", condutaNome: "Infecções bacterianas de pele", remedios: ["cefalexina_celulite", "cefadroxila_celulite", "smx_celulite"] },
             { nome: "Erisipela", conduta: "pele_bacteriana", condutaNome: "Infecções bacterianas de pele", remedios: ["amox_erisipela", "clav_erisipela", "benza", "cefalexina_erisipela", "cef_erisipela", "cefazolina_erisipela", "oxa_erisipela"] },
             { nome: "Celulite Orbitária (Hospitalar)", conduta: "sinusite", condutaNome: "Sinusite (complicações orbitárias)", remedios: ["cef_orbitaria", "vanco_orbitaria", "cefotax_orbitaria", "metro_orbitaria"] },
