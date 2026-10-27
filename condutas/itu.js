@@ -13,7 +13,7 @@ registrarConduta({
     cor: "#a16207",
     kw: "itu infeccao do trato urinario infeccao urinaria pielonefrite cistite urocultura sondagem puncao suprapubica saco coletor febre sem foco refluxo vesicoureteral ultrassom uretrocistografia profilaxia",
     resumo: "Lactente com febre sem foco: pensar em ITU. Coleta invasiva para cultura, antibiótico de menor espectro (oral se > 3 meses e bem), 10 dias na ITU febril, ultrassom após a 1ª pielonefrite em < 2 anos.",
-    legenda: "Conduta conforme a <strong>SBP – Departamento de Nefrologia (2023 e 2021)</strong>; a diretriz da <strong>AAP (2011)</strong>, depois aposentada, entra só como apoio.",
+    legenda: "Conduta conforme a <strong>SBP – Departamento de Nefrologia (2023 e 2021)</strong> e o <strong>Whitebook</strong>; a diretriz da <strong>AAP (2011)</strong>, depois aposentada, entra só como apoio.",
 
     blocos: [
         {
@@ -109,7 +109,8 @@ registrarConduta({
                             { nome: "", opcoes: [[2, "Risco de não adesão ao tratamento", "🟠"]] },
                             { nome: "", opcoes: [[2, "Vômitos ou recusa que impedem o antibiótico oral, desidratação", "🟠"]] },
                             { nome: "", opcoes: [[2, "Sem melhora após 48 a 72 h de antibiótico oral adequado", "🟠"]] },
-                            { nome: "", opcoes: [[1, "Malformação urinária conhecida, rim único ou imunossupressão", "🟡"]] },
+                            { nome: "", opcoes: [[2, "Imunocomprometimento", "🟠"]] },
+                            { nome: "", opcoes: [[1, "Malformação urinária conhecida ou rim único", "🟡"]] },
                             { nome: "🟢 Tratar em casa", opcoes: [[0, "Maior de 3 meses, bom estado, aceita via oral, família confiável", "🟢"]] }
                         ],
                         classificar: (v) => {
@@ -119,7 +120,7 @@ registrarConduta({
                             if (g === 1) return { num: "?", rotulo: "Considerar internar", cor: "#ca8a04", texto: "Avaliar caso a caso; se tratar em casa, reavaliar em 24 a 48 h." };
                             return { num: "🏠", rotulo: "Tratamento oral em casa", cor: "#16a34a", texto: "Antibiótico oral, retorno em 48 a 72 h com a urocultura (ou antes se piorar)." };
                         },
-                        nota: "Indicações de hospitalização da SBP (2021 e 2023): menor de 2 meses, criticamente doente ou com risco de não adesão. Os demais critérios foram reunidos dos sinais de gravidade e da falha do tratamento oral (AAP 2011)."
+                        nota: "Indicações de internação do Whitebook: menor de 2 meses, febre com toxemia, desidratação, vômitos persistentes, intolerância à medicação oral, imunocomprometimento, falha no tratamento ambulatorial ou impossibilidade de garantir o tratamento. A SBP (2021 e 2023) traz: menor de 2 meses, criticamente doente ou risco de não adesão."
                     }
                 },
                 {
@@ -142,11 +143,12 @@ registrarConduta({
                         "<strong>Escolher o de menor espectro possível</strong>, pelo Gram se houver; senão, cobrir <strong><em>E. coli</em></strong> conforme a sensibilidade local (resistência &lt; 20%) (SBP 2023).",
                         "<strong>Maiores de 3 meses: via oral</strong> preferencial (SBP 2023).",
                         "<strong>ITU febril / pielonefrite:</strong> o antibiótico precisa atingir o parênquima renal: <strong>não usar nitrofurantoína nem ácido nalidíxico</strong> (SBP 2023).",
-                        "<strong>Parenteral (internado):</strong> ceftriaxona, cefuroxima, cefotaxima, <strong>gentamicina</strong> ou amicacina 1x ao dia (SBP 2023).",
-                        "<strong>Oral na pielonefrite:</strong> cefuroxima, cefaclor, ciprofloxacina; <strong>amoxicilina-clavulanato só como última opção</strong>, por alterar mais a flora intestinal (SBP 2023).",
-                        "<strong>Cistite (sem febre):</strong> cefalexina, nitrofurantoína ou sulfametoxazol-trimetoprima (SBP 2023). <strong>Monuril</strong> (fosfomicina) dose única só em maiores de 12 anos."
+                        "<strong>Menor de 2 meses (internado):</strong> <strong>ampicilina + gentamicina</strong>, com dose pela idade gestacional e dias de vida (Whitebook). Suspeita de <strong>Candida</strong> (mais comum no RN): anfotericina B ou fluconazol (Whitebook).",
+                        "<strong>Maior de 2 meses internado:</strong> <strong>cefuroxima EV</strong>, <strong>gentamicina</strong> ou amicacina 1x ao dia, cefotaxima ou piperacilina-tazobactam, por 7 a 14 dias; trocar para via oral quando melhorar (Whitebook; SBP 2023).",
+                        "<strong>ITU febril em casa:</strong> <strong>cefuroxima</strong> ou <strong>cefaclor</strong> (Whitebook; SBP 2023); ciprofloxacina é opção da SBP; <strong>amoxicilina-clavulanato só como última opção</strong>, por alterar mais a flora intestinal (SBP 2023).",
+                        "<strong>ITU afebril (cistite):</strong> cefalexina, <strong>nitrofurantoína</strong> ou sulfametoxazol-trimetoprima por 7 dias; <strong>fosfomicina</strong> (Monuril) dose única só a partir de 12 anos (Whitebook; SBP 2023)."
                     ],
-                    remedios: ["urina_ceft", "genta", "urina_cefa", "smx_tmp", "urina_clav", "monuril"]
+                    remedios: ["urina_cefa", "nitrofurantoina_itu", "smx_tmp", "monuril", "cefuroxima_vo_itu", "cefaclor_itu", "urina_clav", "amp_itu", "genta_itu_neo", "cefuroxima_ev_itu", "genta", "amicacina", "urina_ceft"]
                 },
                 {
                     passo: 4,
@@ -177,8 +179,10 @@ registrarConduta({
                         "<strong>Uretrocistografia miccional</strong>: se o ultrassom mostrar acometimento do parênquima ou se houver <strong>ITU recorrente</strong> (SBP 2023); não fazer de rotina após a 1ª ITU febril (AAP 2011).",
                         "<strong>Profilaxia</strong> até o fim da investigação se: ultrassom alterado (pré-natal ou atual), ITU febril com PCR positiva, refluxo grau 4 ou 5, uropatia obstrutiva, <strong>ITU recorrente</strong> (2 ou mais pielonefrites; 1 cistite + 1 pielonefrite; 3 ou mais cistites). <strong>Não</strong> em reinfecção (novo episódio em menos de 2 semanas) (SBP 2023).",
                         "<strong>Drogas de profilaxia</strong> (1/3 a 1/2 da dose de tratamento, 1x ao dia, de preferência à noite): <strong>nitrofurantoína</strong>, <strong>sulfametoxazol-trimetoprima</strong> (maiores de 6 semanas) e <strong>cefalexina</strong> (menores de 6 semanas) (SBP 2023).",
-                        "Cranberry e probióticos: evidência insuficiente (SBP 2023)."
-                    ]
+                        "Cranberry e probióticos: evidência insuficiente (SBP 2023).",
+                        "<strong>Doses de profilaxia do Whitebook</strong> no card abaixo (1x ao dia, antes de dormir). O Whitebook sugere evitar o sulfametoxazol-trimetoprima pelo risco de resistência."
+                    ],
+                    remedios: ["profilaxia_itu"]
                 }
             ]
         },
@@ -223,11 +227,12 @@ registrarConduta({
         }
     ],
 
-    citacoes: { "SBP 2023": 0, "SBP": [0, 1], "AAP 2011": 2, "AAP": 2 },
+    citacoes: { "Whitebook": 3, "SBP 2023": 0, "SBP": [0, 1], "AAP 2011": 2, "AAP": 2 },
     fontes: [
         "Sociedade Brasileira de Pediatria. Departamento Científico de Nefrologia. Infecção urinária: diagnóstico, investigação e prevenção. Documento Científico nº 101, 13 de setembro de 2023.",
         "Sociedade Brasileira de Pediatria. Departamento Científico de Nefrologia. Infecção do Trato Urinário em Pediatria – Existe consenso entre os consensos? Atualização 2021.",
-        "Subcommittee on Urinary Tract Infection, American Academy of Pediatrics. Urinary tract infection: clinical practice guideline for the diagnosis and management of the initial UTI in febrile infants and children 2 to 24 months. Pediatrics 2011;128(3):595-610. doi:10.1542/peds.2011-1330 (reafirmada em 2016: doi:10.1542/peds.2016-3026; depois aposentada pela AAP por usar raça no algoritmo de coleta — ver Wright JL, Kowalsky RH. Pediatrics 2026, doi:10.1542/peds.2026-078945)"
+        "Subcommittee on Urinary Tract Infection, American Academy of Pediatrics. Urinary tract infection: clinical practice guideline for the diagnosis and management of the initial UTI in febrile infants and children 2 to 24 months. Pediatrics 2011;128(3):595-610. doi:10.1542/peds.2011-1330 (reafirmada em 2016: doi:10.1542/peds.2016-3026; depois aposentada pela AAP por usar raça no algoritmo de coleta — ver Wright JL, Kowalsky RH. Pediatrics 2026, doi:10.1542/peds.2026-078945)",
+        "Whitebook (Afya). Guia de Prescrição / Pediatria: Infecção do Trato Urinário (Profilaxia, ITU afebril, ITU febril ambulatorial e hospitalar < 2 meses e > 2 meses)."
     ],
     revisao: "10/2026"
 });
