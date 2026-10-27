@@ -158,7 +158,8 @@ function htmlDoseFonte(idRemedio, med) {
     if (!dose) return '';
     let fonte = fonteDoCard(idRemedio, med);
     return `<div class="dose-fonte">📚 <b>Dose preconizada:</b> ${dose}${media ? `<br><span class="dose-media">O app usa a média: ${escaparHtml(media)}</span>` : ''}
-                <div class="dose-fonte-ref">${fonte ? `<b>Fonte:</b> ${escaparHtml(fonte)}` : `<span class="sem-fonte">⚠️ Fonte ainda não registrada no app.</span>`}</div></div>`;
+                ${fonte ? `<div class="dose-fonte-ref"><b>Fonte:</b> ${escaparHtml(fonte)}</div>`
+                    : (typeof MODO_TESTE !== 'undefined' && MODO_TESTE) ? `<div class="dose-fonte-ref"><span class="sem-fonte">⚠️ Fonte ainda não registrada no app.</span></div>` : ''}</div>`;
 }
 
 function renderizarBlocoFicha(idRemedio, instanceId) {
