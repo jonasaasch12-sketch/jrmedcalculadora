@@ -989,6 +989,24 @@
   "70 kg | idade 4": "[17.5-20.0 mL] USO ORAL\n\n1) CEFADROXILA SUSPENSÃO 250 MG/5 ML ------ 1 FR\nDAR 17.5 A 20.0 ML (12,5 A 25 MG/KG), VIA ORAL, DE 12/12 HORAS, POR 10 DIAS.",
   "70 kg | idade 13": "[500 mg-1 g] USO ORAL\n\n1) CEFADROXILA 500 MG CÁPSULA ------------- 1 CX\nTOMAR 1 A 2 CÁPSULAS (500 MG A 1 G), VIA ORAL, DE 12/12 HORAS, POR 10 DIAS."
  },
+ "cefalexina_impetigo": {
+  "3 kg | idade -": "[0.5–1 mL] USO ORAL\n\n1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR 0,5 A 1 ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "3 kg | idade 0.5": "[0.5–1 mL] USO ORAL\n\n1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR 0,5 A 1 ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "3 kg | idade 4": "[0.5–1 mL] USO ORAL\n\n1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR 0,5 A 1 ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "3 kg | idade 13": "[0.5–1 mL] USO ORAL\n\n1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR 0,5 A 1 ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "10 kg | idade -": "[1.5–2.5 mL] USO ORAL\n\n1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR 1,5 A 2,5 ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "10 kg | idade 0.5": "[1.5–2.5 mL] USO ORAL\n\n1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR 1,5 A 2,5 ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "10 kg | idade 4": "[1.5–2.5 mL] USO ORAL\n\n1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR 1,5 A 2,5 ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "10 kg | idade 13": "[1.5–2.5 mL] USO ORAL\n\n1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR 1,5 A 2,5 ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "25 kg | idade -": "[3–6.5 mL] USO ORAL\n\n1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR 3 A 6,5 ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "25 kg | idade 0.5": "[3–6.5 mL] USO ORAL\n\n1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR 3 A 6,5 ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "25 kg | idade 4": "[3–6.5 mL] USO ORAL\n\n1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR 3 A 6,5 ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "25 kg | idade 13": "[3–6.5 mL] USO ORAL\n\n1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR 3 A 6,5 ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "70 kg | idade -": "[9–10 mL] USO ORAL\n\n1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR 9 A 10 ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "70 kg | idade 0.5": "[9–10 mL] USO ORAL\n\n1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR 9 A 10 ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "70 kg | idade 4": "[9–10 mL] USO ORAL\n\n1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR 9 A 10 ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "70 kg | idade 13": "[9–10 mL] USO ORAL\n\n1) CEFALEXINA 250 MG / 5 ML ------------------ 1 FR\nDAR 9 A 10 ML, VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS."
+ },
  "cefalotina": {
   "3 kg | idade -": "[6/6h: 0.6-1.2 mL\n4/4h: 0.4-0.8 mL] VIA ENDOVENOSA OU INTRAMUSCULAR (USO HOSPITALAR)\n\nOPÇÃO 6/6H (20 A 40 MG/KG/DOSE): 60 a 120 mg por dose.\nOPÇÃO 4/4H (12 A 25 MG/KG/DOSE): 36 a 75 mg por dose.\n\nEV: Reconstituir 1 FA de 1 g em 10 mL de água para injetáveis (100 mg/mL).\n 6/6h: aspirar 0.6 a 1.2 mL | 4/4h: aspirar 0.4 a 0.8 mL.\n Fazer EV direta em 3 a 5 minutos OU diluir em 100 mL de SF 0,9% ou SG 5% e infundir em 30 minutos.\n\nIM: Reconstituir em 5 mL de água para injetáveis (200 mg/mL).\n 6/6h: aspirar 0.3 a 0.6 mL | 4/4h: aspirar 0.2 a 0.4 mL.\n Injetar em grande massa muscular (face lateral da coxa).",
   "3 kg | idade 0.5": "[6/6h: 0.6-1.2 mL\n4/4h: 0.4-0.8 mL] VIA ENDOVENOSA OU INTRAMUSCULAR (USO HOSPITALAR)\n\nOPÇÃO 6/6H (20 A 40 MG/KG/DOSE): 60 a 120 mg por dose.\nOPÇÃO 4/4H (12 A 25 MG/KG/DOSE): 36 a 75 mg por dose.\n\nEV: Reconstituir 1 FA de 1 g em 10 mL de água para injetáveis (100 mg/mL).\n 6/6h: aspirar 0.6 a 1.2 mL | 4/4h: aspirar 0.4 a 0.8 mL.\n Fazer EV direta em 3 a 5 minutos OU diluir em 100 mL de SF 0,9% ou SG 5% e infundir em 30 minutos.\n\nIM: Reconstituir em 5 mL de água para injetáveis (200 mg/mL).\n 6/6h: aspirar 0.3 a 0.6 mL | 4/4h: aspirar 0.2 a 0.4 mL.\n Injetar em grande massa muscular (face lateral da coxa).",
@@ -1205,6 +1223,24 @@
   "70 kg | idade 4": "[700-750 mg] USO ORAL\n\n1) CIPROFLOXACINO 500 MG ------------------- 1 CX\nDAR 700 A 750 MG, VIA ORAL, DE 12/12 HORAS, POR 3 A 7 DIAS (CISTITE) OU 7 A 14 DIAS (PIELONEFRITE).",
   "70 kg | idade 13": "[700-750 mg] USO ORAL\n\n1) CIPROFLOXACINO 500 MG ------------------- 1 CX\nDAR 700 A 750 MG, VIA ORAL, DE 12/12 HORAS, POR 3 A 7 DIAS (CISTITE) OU 7 A 14 DIAS (PIELONEFRITE)."
  },
+ "claritro_impetigo": {
+  "3 kg | idade -": "[0.5 mL] USO ORAL\n\n1) CLARITROMICINA 50 MG/ML -------------------- 1 FR\nDAR 0,5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "3 kg | idade 0.5": "[0.5 mL] USO ORAL\n\n1) CLARITROMICINA 50 MG/ML -------------------- 1 FR\nDAR 0,5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "3 kg | idade 4": "[0.5 mL] USO ORAL\n\n1) CLARITROMICINA 50 MG/ML -------------------- 1 FR\nDAR 0,5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "3 kg | idade 13": "[0.5 mL] USO ORAL\n\n1) CLARITROMICINA 50 MG/ML -------------------- 1 FR\nDAR 0,5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "10 kg | idade -": "[1.5 mL] USO ORAL\n\n1) CLARITROMICINA 50 MG/ML -------------------- 1 FR\nDAR 1,5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "10 kg | idade 0.5": "[1.5 mL] USO ORAL\n\n1) CLARITROMICINA 50 MG/ML -------------------- 1 FR\nDAR 1,5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "10 kg | idade 4": "[1.5 mL] USO ORAL\n\n1) CLARITROMICINA 50 MG/ML -------------------- 1 FR\nDAR 1,5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "10 kg | idade 13": "[1.5 mL] USO ORAL\n\n1) CLARITROMICINA 50 MG/ML -------------------- 1 FR\nDAR 1,5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "25 kg | idade -": "[4 mL] USO ORAL\n\n1) CLARITROMICINA 50 MG/ML -------------------- 1 FR\nDAR 4 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "25 kg | idade 0.5": "[4 mL] USO ORAL\n\n1) CLARITROMICINA 50 MG/ML -------------------- 1 FR\nDAR 4 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "25 kg | idade 4": "[4 mL] USO ORAL\n\n1) CLARITROMICINA 50 MG/ML -------------------- 1 FR\nDAR 4 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "25 kg | idade 13": "[4 mL] USO ORAL\n\n1) CLARITROMICINA 50 MG/ML -------------------- 1 FR\nDAR 4 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "70 kg | idade -": "[10 mL] USO ORAL\n\n1) CLARITROMICINA 50 MG/ML -------------------- 1 FR\nDAR 10 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "70 kg | idade 0.5": "[10 mL] USO ORAL\n\n1) CLARITROMICINA 50 MG/ML -------------------- 1 FR\nDAR 10 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "70 kg | idade 4": "[10 mL] USO ORAL\n\n1) CLARITROMICINA 50 MG/ML -------------------- 1 FR\nDAR 10 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "70 kg | idade 13": "[10 mL] USO ORAL\n\n1) CLARITROMICINA 50 MG/ML -------------------- 1 FR\nDAR 10 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS."
+ },
  "claritro_pac": {
   "3 kg | idade -": "[0.5 mL (250/5)] USO ORAL\n\n1) CLARITROMICINA SUSPENSÃO 250 MG/5ML --------- 1 FR\nDAR 0.5 ML, VIA ORAL, DE 12/12 HORAS, POR 7 A 10 DIAS.\n\n(OU, SE CLARITROMICINA 125 MG/5ML: DAR 1.0 ML DE 12/12 HORAS.)",
   "3 kg | idade 0.5": "[0.5 mL (250/5)] USO ORAL\n\n1) CLARITROMICINA SUSPENSÃO 250 MG/5ML --------- 1 FR\nDAR 0.5 ML, VIA ORAL, DE 12/12 HORAS, POR 7 A 10 DIAS.\n\n(OU, SE CLARITROMICINA 125 MG/5ML: DAR 1.0 ML DE 12/12 HORAS.)",
@@ -1294,6 +1330,24 @@
   "70 kg | idade 0.5": "[1 jato 12/12h] USO INALATÓRIO (MANUTENÇÃO - GINA)\n\n1) CLENIL HFA 50 MCG/DOSE ----------------------------- 1 FRASCO\nAPLICAR 1 JATO, 2 VEZES AO DIA (DE 12 EM 12 HORAS).\nDISPOSITIVO: pMDI acoplado a espaçador valvulado com MÁSCARA FACIAL.\n(Lavar o rosto após o uso e fazer higiene oral).",
   "70 kg | idade 4": "[1 jato 12/12h] USO INALATÓRIO (MANUTENÇÃO - GINA)\n\n1) CLENIL HFA 50 MCG/DOSE ----------------------------- 1 FRASCO\nAPLICAR 1 JATO, 2 VEZES AO DIA (DE 12 EM 12 HORAS).\nDISPOSITIVO: pMDI acoplado a espaçador valvulado com BOCAL.\n(Lavar o rosto após o uso e fazer higiene oral).",
   "70 kg | idade 13": "[1-2 jatos 12/12h] USO INALATÓRIO (MANUTENÇÃO PÓS-CRISE)\n\n1) CLENIL HFA 50 MCG/DOSE ----------------------------- 1 FRASCO\nAPLICAR 2 JATOS, 2 VEZES AO DIA (DE 12 EM 12 HORAS).\nDISPOSITIVO: pMDI acoplado a espaçador valvulado com BOCAL.\n(Lavar o rosto após o uso e fazer higiene oral)."
+ },
+ "clinda_vo_impetigo": {
+  "3 kg | idade -": "[15–30 mg 6/6h] USO ORAL\n\n1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR 15 A 30 MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "3 kg | idade 0.5": "[15–30 mg 6/6h] USO ORAL\n\n1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR 15 A 30 MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "3 kg | idade 4": "[15–30 mg 6/6h] USO ORAL\n\n1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR 15 A 30 MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "3 kg | idade 13": "[15–30 mg 6/6h] USO ORAL\n\n1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR 15 A 30 MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "10 kg | idade -": "[50–100 mg 6/6h] USO ORAL\n\n1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR 50 A 100 MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "10 kg | idade 0.5": "[50–100 mg 6/6h] USO ORAL\n\n1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR 50 A 100 MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "10 kg | idade 4": "[50–100 mg 6/6h] USO ORAL\n\n1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR 50 A 100 MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "10 kg | idade 13": "[50–100 mg 6/6h] USO ORAL\n\n1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR 50 A 100 MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "25 kg | idade -": "[125–250 mg 6/6h] USO ORAL\n\n1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR 125 A 250 MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "25 kg | idade 0.5": "[125–250 mg 6/6h] USO ORAL\n\n1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR 125 A 250 MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "25 kg | idade 4": "[125–250 mg 6/6h] USO ORAL\n\n1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR 125 A 250 MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "25 kg | idade 13": "[125–250 mg 6/6h] USO ORAL\n\n1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR 125 A 250 MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "70 kg | idade -": "[350–400 mg 6/6h] USO ORAL\n\n1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR 350 A 400 MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "70 kg | idade 0.5": "[350–400 mg 6/6h] USO ORAL\n\n1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR 350 A 400 MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "70 kg | idade 4": "[350–400 mg 6/6h] USO ORAL\n\n1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR 350 A 400 MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS.",
+  "70 kg | idade 13": "[350–400 mg 6/6h] USO ORAL\n\n1) CLINDAMICINA 300 MG ------------------------ 1 CX\nDAR 350 A 400 MG (20 A 40 MG/KG/DIA), VIA ORAL, DE 6/6 HORAS POR 7 A 10 DIAS."
  },
  "clindamicina": {
   "3 kg | idade -": "[6/6h: 0.10-0.20 mL\n8/8h: 0.13-0.27 mL] CLINDAMICINA 150 MG/ML - DOSE USUAL 20 A 40 MG/KG/DIA (MÁXIMO 2.700 MG/DIA)\n\nVIA ENDOVENOSA:\n 6/6H: aspirar 0.10 a 0.20 mL (15 a 30 mg) e completar com SF 0,9% até 1 a 2 mL (18 mg/mL).\n 8/8H: aspirar 0.13 a 0.27 mL (20 a 40 mg) e completar com SF 0,9% até 2 a 3 mL (18 mg/mL).\n Infundir em 10 a 60 minutos (máximo 30 mg/minuto).\n\nVIA INTRAMUSCULAR (máximo 600 mg/dose):\n 6/6H: 0.10 a 0.20 mL IM, sem diluir.\n 8/8H: 0.13 a 0.27 mL IM, sem diluir.",
@@ -1583,6 +1637,24 @@
   "70 kg | idade 4": "[11.7-11.7 mL] ATENÇÃO: Evitar o uso em menores de 12 anos e/ou 35 kg de peso corpóreo.\n\nUSO ORAL\n\n1) DOMPERIDONA SUSPENSÃO 1 MG/ML ---------- 1 FR\nDAR 11.7 A 11.7 ML, VIA ORAL, DE 8/8 HORAS, 15 A 30 MINUTOS ANTES DAS REFEIÇÕES E AO DORMIR, SE NECESSÁRIO. NÃO ULTRAPASSAR 35.0 ML POR DIA.",
   "70 kg | idade 13": "[11.7-11.7 mL] USO ORAL\n\n1) DOMPERIDONA SUSPENSÃO 1 MG/ML ---------- 1 FR\nDAR 11.7 A 11.7 ML, VIA ORAL, DE 8/8 HORAS, 15 A 30 MINUTOS ANTES DAS REFEIÇÕES E AO DORMIR, SE NECESSÁRIO. NÃO ULTRAPASSAR 35.0 ML POR DIA."
  },
+ "doxi_impetigo": {
+  "3 kg | idade -": "[6–12 mg 12/12h] USO ORAL\n\n1) DOXICICLINA 100 MG\nDAR 6 A 12 MG (2 A 4 MG/KG/DOSE), VIA ORAL, DE 12/12 HORAS POR 5 A 10 DIAS (MÁXIMO 100 MG POR DOSE).",
+  "3 kg | idade 0.5": "[≥ 8 anos] ATENÇÃO: doxiciclina liberada por bula para crianças maiores de 8 anos.",
+  "3 kg | idade 4": "[≥ 8 anos] ATENÇÃO: doxiciclina liberada por bula para crianças maiores de 8 anos.",
+  "3 kg | idade 13": "[6–12 mg 12/12h] USO ORAL\n\n1) DOXICICLINA 100 MG\nDAR 6 A 12 MG (2 A 4 MG/KG/DOSE), VIA ORAL, DE 12/12 HORAS POR 5 A 10 DIAS (MÁXIMO 100 MG POR DOSE).",
+  "10 kg | idade -": "[20–40 mg 12/12h] USO ORAL\n\n1) DOXICICLINA 100 MG\nDAR 20 A 40 MG (2 A 4 MG/KG/DOSE), VIA ORAL, DE 12/12 HORAS POR 5 A 10 DIAS (MÁXIMO 100 MG POR DOSE).",
+  "10 kg | idade 0.5": "[≥ 8 anos] ATENÇÃO: doxiciclina liberada por bula para crianças maiores de 8 anos.",
+  "10 kg | idade 4": "[≥ 8 anos] ATENÇÃO: doxiciclina liberada por bula para crianças maiores de 8 anos.",
+  "10 kg | idade 13": "[20–40 mg 12/12h] USO ORAL\n\n1) DOXICICLINA 100 MG\nDAR 20 A 40 MG (2 A 4 MG/KG/DOSE), VIA ORAL, DE 12/12 HORAS POR 5 A 10 DIAS (MÁXIMO 100 MG POR DOSE).",
+  "25 kg | idade -": "[50–100 mg 12/12h] USO ORAL\n\n1) DOXICICLINA 100 MG\nDAR 50 A 100 MG (2 A 4 MG/KG/DOSE), VIA ORAL, DE 12/12 HORAS POR 5 A 10 DIAS (MÁXIMO 100 MG POR DOSE).",
+  "25 kg | idade 0.5": "[≥ 8 anos] ATENÇÃO: doxiciclina liberada por bula para crianças maiores de 8 anos.",
+  "25 kg | idade 4": "[≥ 8 anos] ATENÇÃO: doxiciclina liberada por bula para crianças maiores de 8 anos.",
+  "25 kg | idade 13": "[50–100 mg 12/12h] USO ORAL\n\n1) DOXICICLINA 100 MG\nDAR 50 A 100 MG (2 A 4 MG/KG/DOSE), VIA ORAL, DE 12/12 HORAS POR 5 A 10 DIAS (MÁXIMO 100 MG POR DOSE).",
+  "70 kg | idade -": "[100 mg 12/12h] USO ORAL\n\n1) DOXICICLINA 100 MG ---------------------- 20 COMPRIMIDOS\nTOMAR 1 COMPRIMIDO, VIA ORAL, DE 12/12 HORAS POR 5 A 10 DIAS.",
+  "70 kg | idade 0.5": "[≥ 8 anos] ATENÇÃO: doxiciclina liberada por bula para crianças maiores de 8 anos.",
+  "70 kg | idade 4": "[≥ 8 anos] ATENÇÃO: doxiciclina liberada por bula para crianças maiores de 8 anos.",
+  "70 kg | idade 13": "[100 mg 12/12h] USO ORAL\n\n1) DOXICICLINA 100 MG ---------------------- 20 COMPRIMIDOS\nTOMAR 1 COMPRIMIDO, VIA ORAL, DE 12/12 HORAS POR 5 A 10 DIAS."
+ },
  "dramin_im": {
   "3 kg | idade -": "[0.06-0.09 mL] VIA INTRAMUSCULAR\n\n1) DIMENIDRINATO 50 MG/ML: aplicar 0.06 a 0.09 mL (3 a 5 mg) IM, de 8/8 horas, se náuseas ou vômitos.",
   "3 kg | idade 0.5": "[0.06-0.09 mL] VIA INTRAMUSCULAR\n\n1) DIMENIDRINATO 50 MG/ML: aplicar 0.06 a 0.09 mL (3 a 5 mg) IM, de 8/8 horas, se náuseas ou vômitos.",
@@ -1654,6 +1726,24 @@
   "70 kg | idade 0.5": "[7.0 mL (Diluída)] 🚨 USO HOSPITALAR (PARADA CARDÍACA / CHOQUE)\n\nVIA IV/IO (DILUIÇÃO 1:10.000):\nDiluir 1 ampola (1 mL) em 9 mL de Água Destilada (Concentração final: 0,1 mg/mL).\nFazer 7.0 mL dessa solução. Repetir a cada 3 a 5 minutos, se necessário.\n\nVIA TUBO ENDOTRAQUEAL (PURA 1:1.000):\nAspirar 2.5 mL puros e administrar via ET.",
   "70 kg | idade 4": "[7.0 mL (Diluída)] 🚨 USO HOSPITALAR (PARADA CARDÍACA / CHOQUE)\n\nVIA IV/IO (DILUIÇÃO 1:10.000):\nDiluir 1 ampola (1 mL) em 9 mL de Água Destilada (Concentração final: 0,1 mg/mL).\nFazer 7.0 mL dessa solução. Repetir a cada 3 a 5 minutos, se necessário.\n\nVIA TUBO ENDOTRAQUEAL (PURA 1:1.000):\nAspirar 2.5 mL puros e administrar via ET.",
   "70 kg | idade 13": "[7.0 mL (Diluída)] 🚨 USO HOSPITALAR (PARADA CARDÍACA / CHOQUE)\n\nVIA IV/IO (DILUIÇÃO 1:10.000):\nDiluir 1 ampola (1 mL) em 9 mL de Água Destilada (Concentração final: 0,1 mg/mL).\nFazer 7.0 mL dessa solução. Repetir a cada 3 a 5 minutos, se necessário.\n\nVIA TUBO ENDOTRAQUEAL (PURA 1:1.000):\nAspirar 2.5 mL puros e administrar via ET."
+ },
+ "eritro_impetigo": {
+  "3 kg | idade -": "[0.5 mL] USO ORAL\n\n1) ERITROMICINA 50 MG/ML ---------------------- 1 FR\nDAR 0,5 ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.",
+  "3 kg | idade 0.5": "[0.5 mL] USO ORAL\n\n1) ERITROMICINA 50 MG/ML ---------------------- 1 FR\nDAR 0,5 ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.",
+  "3 kg | idade 4": "[0.5 mL] USO ORAL\n\n1) ERITROMICINA 50 MG/ML ---------------------- 1 FR\nDAR 0,5 ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.",
+  "3 kg | idade 13": "[0.5 mL] USO ORAL\n\n1) ERITROMICINA 50 MG/ML ---------------------- 1 FR\nDAR 0,5 ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.",
+  "10 kg | idade -": "[2 mL] USO ORAL\n\n1) ERITROMICINA 50 MG/ML ---------------------- 1 FR\nDAR 2 ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.",
+  "10 kg | idade 0.5": "[2 mL] USO ORAL\n\n1) ERITROMICINA 50 MG/ML ---------------------- 1 FR\nDAR 2 ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.",
+  "10 kg | idade 4": "[2 mL] USO ORAL\n\n1) ERITROMICINA 50 MG/ML ---------------------- 1 FR\nDAR 2 ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.",
+  "10 kg | idade 13": "[2 mL] USO ORAL\n\n1) ERITROMICINA 50 MG/ML ---------------------- 1 FR\nDAR 2 ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.",
+  "25 kg | idade -": "[5 mL] USO ORAL\n\n1) ERITROMICINA 50 MG/ML ---------------------- 1 FR\nDAR 5 ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.",
+  "25 kg | idade 0.5": "[5 mL] USO ORAL\n\n1) ERITROMICINA 50 MG/ML ---------------------- 1 FR\nDAR 5 ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.",
+  "25 kg | idade 4": "[5 mL] USO ORAL\n\n1) ERITROMICINA 50 MG/ML ---------------------- 1 FR\nDAR 5 ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.",
+  "25 kg | idade 13": "[5 mL] USO ORAL\n\n1) ERITROMICINA 50 MG/ML ---------------------- 1 FR\nDAR 5 ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.",
+  "70 kg | idade -": "[10 mL] USO ORAL\n\n1) ERITROMICINA 50 MG/ML ---------------------- 1 FR\nDAR 10 ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.",
+  "70 kg | idade 0.5": "[10 mL] USO ORAL\n\n1) ERITROMICINA 50 MG/ML ---------------------- 1 FR\nDAR 10 ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.",
+  "70 kg | idade 4": "[10 mL] USO ORAL\n\n1) ERITROMICINA 50 MG/ML ---------------------- 1 FR\nDAR 10 ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS.",
+  "70 kg | idade 13": "[10 mL] USO ORAL\n\n1) ERITROMICINA 50 MG/ML ---------------------- 1 FR\nDAR 10 ML, VIA ORAL, DE 6/6 HORAS POR 7 DIAS."
  },
  "eritro_pac": {
   "3 kg | idade -": "[0.5 mL (250/5)] USO ORAL\n\n1) ERITROMICINA SUSPENSÃO 250 MG/5ML ---------- 1 FR\nDAR 0.5 ML, VIA ORAL, DE 6/6 HORAS, POR 7 A 10 DIAS.\n\n(OU, SE ERITROMICINA 125 MG/5ML: DAR 1.0 ML DE 6/6 HORAS.)",
@@ -1960,6 +2050,24 @@
   "70 kg | idade 0.5": "[10.0 mL] USO ORAL\n\n1) FLUCONAZOL 150 MG ---------------------------------- 1 CP\nABRIR/DILUIR 1 CÁPSULA EM 10 ML DE ÁGUA (CADA ML = 15 MG) E DAR 10.0 ML (150 MG), VIA ORAL, DOSE ÚNICA.",
   "70 kg | idade 4": "[10.0 mL] USO ORAL\n\n1) FLUCONAZOL 150 MG ---------------------------------- 1 CP\nABRIR/DILUIR 1 CÁPSULA EM 10 ML DE ÁGUA (CADA ML = 15 MG) E DAR 10.0 ML (150 MG), VIA ORAL, DOSE ÚNICA.",
   "70 kg | idade 13": "[10.0 mL] USO ORAL\n\n1) FLUCONAZOL 150 MG ---------------------------------- 1 CP\nABRIR/DILUIR 1 CÁPSULA EM 10 ML DE ÁGUA (CADA ML = 15 MG) E DAR 10.0 ML (150 MG), VIA ORAL, DOSE ÚNICA."
+ },
+ "fusidico_impetigo": {
+  "3 kg | idade -": "[Uso Tópico] USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS.",
+  "3 kg | idade 0.5": "[Uso Tópico] USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS.",
+  "3 kg | idade 4": "[Uso Tópico] USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS.",
+  "3 kg | idade 13": "[Uso Tópico] USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS.",
+  "10 kg | idade -": "[Uso Tópico] USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS.",
+  "10 kg | idade 0.5": "[Uso Tópico] USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS.",
+  "10 kg | idade 4": "[Uso Tópico] USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS.",
+  "10 kg | idade 13": "[Uso Tópico] USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS.",
+  "25 kg | idade -": "[Uso Tópico] USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS.",
+  "25 kg | idade 0.5": "[Uso Tópico] USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS.",
+  "25 kg | idade 4": "[Uso Tópico] USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS.",
+  "25 kg | idade 13": "[Uso Tópico] USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS.",
+  "70 kg | idade -": "[Uso Tópico] USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS.",
+  "70 kg | idade 0.5": "[Uso Tópico] USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS.",
+  "70 kg | idade 4": "[Uso Tópico] USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS.",
+  "70 kg | idade 13": "[Uso Tópico] USO TÓPICO\n\n1) ÁCIDO FUSÍDICO 2% CREME --------------------------- 1 BISNAGA\nLAVAR AS LESÕES COM ÁGUA MORNA E SABONETE NEUTRO, REMOVER AS CROSTAS E APLICAR 2 A 3 VEZES AO DIA POR 5 A 7 DIAS."
  },
  "genta": {
   "3 kg | idade -": "[0.28 mL 12/12h] VIA ENDOVENOSA OU INTRAMUSCULAR\n\nOPÇÃO PNEUMONIA < 2 MESES (SBP: 7,5 MG/KG/DIA DE 12/12H):\n Aspirar 0.28 mL (11 mg) de Gentamicina, diluir em 10 mL de SF 0,9% e infundir por 30-120 minutos, de 12/12h. Associar ampicilina ou penicilina cristalina.\n\nOPÇÃO DOSE ÚNICA DIÁRIA (5 MG/KG/DIA DE 24/24H):\n Aspirar 0.38 mL (15 mg) de Gentamicina, diluir em 10 mL de SF 0,9% e infundir por 30-120 minutos, de 24/24h.",
@@ -4048,6 +4156,24 @@
   "70 kg | idade 0.5": "[16 gts] USO ORAL\n\n1) SIMETICONA GOTAS 75 MG/ML ----------------- 1 FR\nDAR 16 gts VIA ORAL, DE 8/8 HORAS SE DISTENSÃO OU GASES.",
   "70 kg | idade 4": "[16 gts] USO ORAL\n\n1) SIMETICONA GOTAS 75 MG/ML ----------------- 1 FR\nDAR 16 gts VIA ORAL, DE 8/8 HORAS SE DISTENSÃO OU GASES.",
   "70 kg | idade 13": "[16 gts] USO ORAL\n\n1) SIMETICONA GOTAS 75 MG/ML ----------------- 1 FR\nDAR 16 gts VIA ORAL, DE 8/8 HORAS SE DISTENSÃO OU GASES."
+ },
+ "smx_impetigo": {
+  "3 kg | idade -": "[1.5 mL] USO ORAL\n\n1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR 1,5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "3 kg | idade 0.5": "[1.5 mL] USO ORAL\n\n1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR 1,5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "3 kg | idade 4": "[1.5 mL] USO ORAL\n\n1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR 1,5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "3 kg | idade 13": "[1.5 mL] USO ORAL\n\n1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR 1,5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "10 kg | idade -": "[5 mL] USO ORAL\n\n1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR 5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "10 kg | idade 0.5": "[5 mL] USO ORAL\n\n1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR 5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "10 kg | idade 4": "[5 mL] USO ORAL\n\n1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR 5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "10 kg | idade 13": "[5 mL] USO ORAL\n\n1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR 5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "25 kg | idade -": "[12.5 mL] USO ORAL\n\n1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR 12,5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "25 kg | idade 0.5": "[12.5 mL] USO ORAL\n\n1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR 12,5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "25 kg | idade 4": "[12.5 mL] USO ORAL\n\n1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR 12,5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "25 kg | idade 13": "[12.5 mL] USO ORAL\n\n1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR 12,5 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "70 kg | idade -": "[20 mL] USO ORAL\n\n1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR 20 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "70 kg | idade 0.5": "[20 mL] USO ORAL\n\n1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR 20 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "70 kg | idade 4": "[20 mL] USO ORAL\n\n1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR 20 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS.",
+  "70 kg | idade 13": "[20 mL] USO ORAL\n\n1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR 20 ML, VIA ORAL, DE 12/12 HORAS POR 7 A 10 DIAS."
  },
  "smx_tmp": {
   "3 kg | idade -": "[1.0-2.5 mL] USO ORAL\n\n1) SULFAMETOXAZOL + TRIMETOPRIMA 200+40 MG/5 ML -- 1 FR\nDAR 1.0 A 2.5 ML, VIA ORAL, DE 12/12 HORAS, POR 7 A 14 DIAS.",

@@ -51,6 +51,10 @@ const TETOS = {
     metro_parasitas: 6.25, // mL de 40 mg/mL na giardíase (250 mg/dose)
     insulina_cad: 10,
     rifampicina_profilaxia: 30, // mL de 20 mg/mL = 600 mg/dose
+    cefalexina_impetigo: 10, // mL (500 mg)
+    eritro_impetigo: 10,  // mL (500 mg)
+    claritro_impetigo: 10, // mL (500 mg, Whitebook)
+    smx_impetigo: 20,     // mL (160 mg TMP, Whitebook)
     urina_cefa: 10,       // mL de 250 mg/5 mL = 500 mg/dose (Whitebook)
     urina_clav: 10,       // mL de 250 mg/5 mL = 500 mg/dose
     cefuroxima_vo_itu: 10, // mL de 250 mg/5 mL = 500 mg/dose (Whitebook)
