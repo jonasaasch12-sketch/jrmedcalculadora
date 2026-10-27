@@ -7,7 +7,9 @@
 // as condutas e a receita usam o card da doença escolhida.
 //
 // opcoes: { via (só para os botões IM/EV), rotulo (doença), id (card em farmaciaJR),
-//           dose (só injetáveis): (p, i, calc) => texto da linha "DOSE: ..." que vai no FINAL da receita }
+//           dose (só injetáveis): (p, i, calc) => texto da linha "DOSE: ..." que vai no FINAL da receita,
+//           variantes (no lugar de id, quando a doença tem mais de um frasco/via): [{ rotulo, id, dose }]
+//           → ao tocar na doença aparece a fila "Frasco / via" }
 
 // "DOSE: 50 MG/KG/DOSE" ou, quando o teto corta a dose, "DOSE: 1 G (DOSE MÁXIMA)".
 // Mesma conta dos cards: Math.min(peso × mg/kg, teto).
@@ -54,6 +56,49 @@ const GRUPOS_CARDS = {
     }
 };
 
+GRUPOS_CARDS.amoxicilina = {
+    nome: "Amoxicilina Suspensão",
+    apres: "250 mg/5 mL ou 400 mg/5 mL",
+    opcoes: [
+        { rotulo: "Erisipela", id: "amox_erisipela" },
+        { rotulo: "Faringoamigdalite", id: "amox_faringo" },
+        { rotulo: "Otite média aguda", id: "amox_oma" },
+        { rotulo: "Pneumonia", variantes: [
+            { rotulo: "250 mg/5 mL (8/8h)", id: "amox" },
+            { rotulo: "400 mg/5 mL (12/12h)", id: "amox400" }
+        ] },
+        { rotulo: "Sinusite", id: "amox_sinusite" }
+    ]
+};
+GRUPOS_CARDS.amoxiclav = {
+    nome: "Amoxicilina + Clavulanato",
+    apres: "400+57 · 250+62,5 · EV 1 g",
+    opcoes: [
+        { rotulo: "Erisipela", id: "clav_erisipela" },
+        { rotulo: "ITU", id: "urina_clav" },
+        { rotulo: "Otite média aguda", id: "clav_oma" },
+        { rotulo: "Pneumonia", variantes: [
+            { rotulo: "VO 400+57 (12/12h)", id: "clav" },
+            { rotulo: "🩸 EV (hospital)", id: "amoxclav_ev", dose: doseCef(25, 1000) }
+        ] },
+        { rotulo: "Sinusite", id: "clav_sinusite" }
+    ]
+};
+
+// Cada doença ganha uma chave (o id do card, ou "v<n>" quando tem variantes).
+Object.keys(GRUPOS_CARDS).forEach(g => GRUPOS_CARDS[g].opcoes.forEach((o, n) => { o.chave = o.id || ('v' + n); }));
+
+// Todos os cards de um grupo: [{ opcao, variante, id }]
+function itensDoGrupo(grupo) {
+    let lista = [];
+    GRUPOS_CARDS[grupo].opcoes.forEach(o => {
+        if (o.variantes) o.variantes.forEach(v => lista.push({ opcao: o, variante: v, id: v.id }));
+        else lista.push({ opcao: o, variante: null, id: o.id });
+    });
+    return lista;
+}
+function acharNoGrupo(grupo, id) { return itensDoGrupo(grupo).find(x => x.id === id) || null; }
+
 // id do card da doença → nome do grupo
 const GRUPO_DO_CARD = {};
-Object.keys(GRUPOS_CARDS).forEach(g => GRUPOS_CARDS[g].opcoes.forEach(o => { GRUPO_DO_CARD[o.id] = g; }));
+Object.keys(GRUPOS_CARDS).forEach(g => itensDoGrupo(g).forEach(x => { GRUPO_DO_CARD[x.id] = g; }));
