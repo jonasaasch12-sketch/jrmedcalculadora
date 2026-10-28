@@ -9,57 +9,44 @@ registrarMedicamentos({
     "ondif_cp": {
         cat: "cat-vomitos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
         kw: "ondif ondansetrona filme orodispersivel vomito nausea antiemetico oral ambulatorial", nome: "Ondif Filme (Ondansetrona 4mg)", apres: "4 mg",
-        info: "<strong>Posologia:</strong> <2 anos: Contraindicado | 2-11 anos: 4mg (1 filme) | >11 anos: 8mg (2 filmes).", badge: "", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        info: "<strong>Posologia (SBP/MS):</strong> 6 meses a 2 anos: 2 mg (usar a solução oral) | > 2 a 10 anos (até 30 kg): 4 mg (1 filme) | > 10 anos ou > 30 kg: 8 mg (2 filmes).", badge: "", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
         calc: (p, i) => {
+            /* SBP (Diarreia Aguda Infecciosa 2023, Quadro 5) / MS 2023: 6 m-2 anos 2 mg; > 2-10 anos (até 30 kg) 4 mg; > 10 anos (> 30 kg) 8 mg. */
             let id = i !== "" ? parseFloat(i) : null;
-            
-            // Fallback de segurança: se o médico colocar só o peso e esquecer a idade (2 anos ≈ 12kg, 11 anos ≈ 35kg)
-            if (id === null && p) {
-                if (p < 12) id = 1;
-                else if (p <= 35) id = 5;
-                else id = 12;
-            }
-
-            if (id === null) return { v: "—", r: "Insira a idade acima para calcular a dose." };
-
-            if (id < 2) return { v: "Contraind.", r: "ATENÇÃO: Uso de Ondif contraindicado para menores de 2 anos segundo protocolo selecionado." };
-
-            let doseMg = id > 11 ? "8 mg" : "4 mg";
-            let qtdFilme = id > 11 ? "2 FILMES" : "1 FILME";
-
+            if (id === null && !(p > 30)) return { v: "—", r: "Insira a idade acima para calcular a dose." };
+            if (id !== null && id < 0.5) return { v: "Contraind.", r: "ATENÇÃO: Ondansetrona não recomendada em menores de 6 meses." };
+            if (id !== null && id <= 2) return { v: "2 mg", r: "6 MESES A 2 ANOS: DOSE DE 2 MG. O FILME TEM 4 MG: USAR A ONDANSETRONA SOLUÇÃO ORAL 4 MG/5 ML (2,5 ML)." };
+            let oito = (id !== null && id > 10) || p > 30;
             return {
-                v: doseMg,
-                r: `${recHead}1) ONDIF 4 MG (FILME ORODISPERSÍVEL) ------- 1 CX\nCOLOCAR ${qtdFilme} NA LÍNGUA, DE 8/8H, SE NÁUSEAS OU VÔMITOS.`
+                v: oito ? "8 mg" : "4 mg",
+                r: `${recHead}1) ONDIF 4 MG (FILME ORODISPERSÍVEL) ------- 1 CX\nCOLOCAR ${oito ? "2 FILMES" : "1 FILME"} NA LÍNGUA, DE 8/8H, SE NÁUSEAS OU VÔMITOS.`
             };
         },
         detalhes: {
             indicacao: "Náuseas e vômitos (ex.: gastroenterite).",
-            dose: "2-11 anos: 4 mg (1 filme) | >11 anos: 8 mg (2 filmes). De 8/8h, se náuseas ou vômitos.",
-            atencao: "Contraindicado em menores de 2 anos (protocolo do app). Cautela em QT longo."
+            dose: "6 meses a 2 anos: 2 mg (solução oral) | > 2 a 10 anos (até 30 kg): 4 mg (1 filme) | > 10 anos ou > 30 kg: 8 mg (2 filmes). De 8/8h, se náuseas ou vômitos (SBP/MS 2023).",
+            atencao: "Não recomendada em menores de 6 meses. Cautela em QT longo."
         }
     },
     "ondan_vo": {
         cat: "cat-vomitos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
         kw: "ondansetrona solucao xarope vomito nausea antiemetico oral ambulatorial", nome: "Ondansetrona Solução Oral", apres: "4 mg / 5 mL",
-        info: "<strong>Posologia:</strong> 10-11kg: 2ml | 12-14kg: 2.5ml | 15-18kg: 3.5ml | 19-23kg: 4.3ml | 24-29kg: 5ml (8/8h).", badge: "Solução 4mg/5mL", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia (SBP/MS):</strong> 6 meses a 2 anos: 2 mg (2,5 mL) | > 2 a 10 anos (até 30 kg): 4 mg (5 mL) | > 10 anos ou > 30 kg: 8 mg (10 mL). De 8/8h.", badge: "Solução 4mg/5mL", recLabel: "Texto para selecionar e copiar:",
         calc: (p, i) => {
-            if (i !== "" && parseFloat(i) < 0.5) return { v: "Contraind.", r: "ATENÇÃO: Uso não recomendado para menores de 6 meses." };
-            let pNum = parseFloat(p);
-            let mlVal = "2.0 mL";
-            if (pNum >= 24) mlVal = "5.0 mL";
-            else if (pNum >= 19) mlVal = "4.3 mL";
-            else if (pNum >= 15) mlVal = "3.5 mL";
-            else if (pNum >= 12) mlVal = "2.5 mL";
-            else mlVal = "2.0 mL";
-
-            return { v: mlVal, r: `${recHead}1) ONDANSETRONA SOLUÇÃO ORAL 4 MG/5ML ------ 1 FR\nOFERECER ${mlVal}, VIA ORAL, DE 8/8 HORAS SE NÁUSEAS E VÔMITOS.` };
+            /* SBP (Diarreia Aguda Infecciosa 2023, Quadro 5) / MS 2023: 6 m-2 anos 2 mg; > 2-10 anos (até 30 kg) 4 mg; > 10 anos (> 30 kg) 8 mg. 4 mg/5 mL. */
+            let id = i !== "" ? parseFloat(i) : null;
+            if (id !== null && id < 0.5) return { v: "Contraind.", r: "ATENÇÃO: Uso não recomendado para menores de 6 meses." };
+            if (id === null && !(p > 30)) return { v: "—", r: "Insira a idade acima para calcular a dose (6 meses a 2 anos: 2 mg; > 2 a 10 anos: 4 mg)." };
+            let mlVal = (id !== null && id > 10) || p > 30 ? "10 mL" : (id <= 2 ? "2,5 mL" : "5 mL");
+            return { v: mlVal, r: `${recHead}1) ONDANSETRONA SOLUÇÃO ORAL 4 MG/5ML ------ 1 FR\nOFERECER ${mlVal.toUpperCase()}, VIA ORAL, DE 8/8 HORAS SE NÁUSEAS E VÔMITOS.` };
         },
         detalhes: {
             indicacao: "Náuseas e vômitos (ex.: gastroenterite).",
-            dose: "10-11kg: 2 mL | 12-14kg: 2,5 mL | 15-18kg: 3,5 mL | 19-23kg: 4,3 mL | ≥24kg: 5 mL. De 8/8h.",
+            dose: "6 meses a 2 anos: 2 mg (2,5 mL) | > 2 a 10 anos (até 30 kg): 4 mg (5 mL) | > 10 anos ou > 30 kg: 8 mg (10 mL). De 8/8h (SBP/MS 2023).",
             atencao: "Não recomendada em menores de 6 meses. Cautela em QT longo."
         }
     },
+
     "broma_vo": {
         cat: "cat-vomitos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
         kw: "bromoprida gotas vomito nausea antiemetico oral ambulatorial", nome: "Bromoprida Gotas", apres: "4 mg / mL",

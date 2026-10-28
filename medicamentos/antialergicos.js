@@ -9,12 +9,17 @@ registrarMedicamentos({
     "hixizine": {
         cat: "cat-antialergicos", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
         kw: "hixizine hidroxizina coceira alergia antialergico oral ambulatorial", nome: "Hixizine Xarope (Hidroxizina)", apres: "2 mg / mL",
-        info: "<strong>Posologia:</strong> A partir de 2 anos. Peso / 4 mL por tomada de 8/8h.", badge: "", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => { let v = round05(p / 4); return { v: v + " mL", r: `${recHead}1) HIXIZINE XAROPE 2 MG/ML ---------------- 1 FR\nDAR ${v} ML, VIA ORAL, DE 8/8 HORAS POR 5 DIAS.` }; },
+        info: "<strong>Posologia (bula):</strong> acima de 6 meses: 0,7 mg/kg (0,35 mL/kg) de 8/8h. Acima de 40 kg: máx. 100 mg/dia.", badge: "Máx: 16,5 mL/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            /* Bula: crianças 0,7 mg/kg 3x ao dia (2 mg/mL = 0,35 mL/kg). > 40 kg: máx. 100 mg/dia (33 mg = 16,5 mL por dose). A partir de 6 meses. */
+            if (i !== "" && parseFloat(i) < 0.5) return { v: "Contraind.", r: "ATENÇÃO: Hixizine só acima de 6 meses (bula)." };
+            let v = Math.min(parseFloat(round05(p * 0.35)), 16.5), t = String(v).replace('.', ',');
+            return { v: v + " mL", r: `${recHead}1) HIXIZINE XAROPE 2 MG/ML ---------------- 1 FR\nDAR ${t} ML, VIA ORAL, DE 8/8 HORAS POR 5 DIAS.` };
+        },
         detalhes: {
             indicacao: "Prurido, urticária e dermatites alérgicas.",
-            dose: "0,5 mg/kg/dose (Peso ÷ 4 mL) VO de 8/8h por 5 dias.",
-            atencao: "Liberado a partir de 2 anos. Causa sonolência."
+            dose: "0,7 mg/kg/dose (0,35 mL/kg) VO de 8/8h por 5 dias (bula).",
+            atencao: "Acima de 6 meses. Bula: até 40 kg, não passar de 2 mg/kg/dia; acima de 40 kg, máx. 100 mg/dia. Causa sonolência."
         }
     },
     "dexclor": {
@@ -107,32 +112,34 @@ registrarMedicamentos({
     "prometa": {
         cat: "cat-antialergicos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)", 
         kw: "prometazina fenergan alergia prurido injetavel im hospitalar", nome: "Prometazina IM", apres: "Ampola 25 mg / mL",
-        info: "<strong>Conduta:</strong> 0,02 mL/kg/dose via IM de 6/6h. Contraindicado em menores de 2 anos.", badge: "Dose Máx: 1 mL", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Conduta (SBP):</strong> 1 mg/kg/dose (0,04 mL/kg), máx. 50 mg (2 mL), de 6/6h. Contraindicado em menores de 2 anos.", badge: "Dose Máx: 2 mL (50 mg)", recLabel: "Texto para selecionar e copiar:",
         calc: (p, i) => {
-            let v = Math.min((p * 0.02), 1.0);
+            /* SBP (Anafilaxia 2021): prometazina crianças 1 mg/kg até máx. 50 mg. Ampola 25 mg/mL: 0,04 mL/kg, máx. 2 mL. */
+            let v = Math.min((p * 0.04), 2.0);
             if (i !== "" && parseFloat(i) < 2) return { v: "Contraind.", r: "ATENÇÃO: Prometazina é CONTRAINDICADA para menores de 2 anos." };
             return { v: v.toFixed(2) + " mL", r: `VIA INTRAMUSCULAR (USO HOSPITALAR)\n\n Fazer ${v.toFixed(2)} mL de Prometazina (25 mg/mL) por via INTRAMUSCULAR profunda, de 6/6 horas.` };
         },
         detalhes: {
             indicacao: "Reação alérgica e urticária em ambiente hospitalar.",
-            dose: "0,02 mL/kg/dose (0,5 mg/kg) IM de 6/6h.",
-            atencao: "Contraindicado em menores de 2 anos (risco de depressão respiratória). Máximo 1 mL por dose."
+            dose: "1 mg/kg/dose (0,04 mL/kg) IM de 6/6h. Máx. 50 mg (2 mL) por dose (SBP).",
+            atencao: "Contraindicado em menores de 2 anos (risco de depressão respiratória). Máximo 2 mL (50 mg) por dose."
         }
     },
     "loratadina": {
         cat: "cat-antialergicos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
         kw: "loratadina claritin antialergico rinite urticaria xarope oral", nome: "Loratadina Xarope (Claritin)", apres: "1 mg / mL",
-        info: "<strong>Posologia:</strong> 2-5a: 5 mL | ≥6a ou >30 kg: 10 mL. 1x ao dia.", badge: "", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia (bula):</strong> 2 a 12 anos: até 30 kg 5 mL; acima de 30 kg 10 mL. Acima de 12 anos: 10 mL. 1x ao dia.", badge: "", recLabel: "Texto para selecionar e copiar:",
         calc: (p, i) => {
+            /* Bula: 2-12 anos com peso <= 30 kg: 5 mL (5 mg); > 30 kg: 10 mL; > 12 anos: 10 mL, 1x ao dia. */
             if (i === "") return { v: "—", r: "Insira a idade acima." };
             let id = parseFloat(i);
             if (id < 2) return { v: "Evitar", r: "ATENÇÃO: Evitar loratadina em menores de 2 anos." };
-            let ml = (id >= 6 || p > 30) ? "10 ML" : "5 ML";
+            let ml = (id > 12 || p > 30) ? "10 ML" : "5 ML";
             return { v: ml.toLowerCase().replace("ml", "mL"), r: `${recHead}1) LORATADINA XAROPE 1 MG/ML ------------- 1 FR\nDAR ${ml}, VIA ORAL, 1 VEZ AO DIA.` };
         },
         detalhes: {
             indicacao: "Rinite alérgica e urticária.",
-            dose: "2-5 anos: 5 mL | ≥6 anos ou >30 kg: 10 mL. VO 1x ao dia.",
+            dose: "2 a 12 anos: até 30 kg 5 mL (5 mg); acima de 30 kg 10 mL (10 mg). Acima de 12 anos: 10 mL. VO 1x ao dia (bula).",
             atencao: "Evitar em menores de 2 anos. Precisa da idade para calcular."
         }
     },

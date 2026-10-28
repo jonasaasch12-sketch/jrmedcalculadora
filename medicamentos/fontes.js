@@ -68,9 +68,20 @@ const FONTES_CARDS = {
     neuro_fenitoina: REF.crise_wb + " Fenitoína 15–20 mg/kg.",
     dexclor: REF.bula + " Polaramine solução oral 2 mg/5 mL: 2–6 anos 1,25 mL; 6–12 anos 2,5 mL; > 12 anos 5 mL, 3x ao dia.",
     salb_spray: "Esquema escolhido pelo Dr. Jonas para o app. A dose da crise (1 jato/2 kg = 50 mcg/kg, máx. 10 jatos) é a do Guia Prático de Atualização nº 6 — Anafilaxia: atualização 2021 (SBP). Esquema da alta: fonte ainda não registrada.",
-    magnesio_ev: "Protocolo do serviço (dose escolhida pelo Dr. Jonas para o app).",
+    magnesio_ev: "Protocolo do IMIP (Instituto de Medicina Integral Prof. Fernando Figueira) — crise de asma: sulfato de magnésio 50 mg/kg/h em infusão contínua por 5 horas (máx. 2 g/h).",
     cef_resp_im: REF.pac + " Ceftriaxona 50–100 mg/kg/dia (PAC complicada).",
-    cad_hidratacao: "UTI Pediátrica — IMIP. Protocolo de Cetoacidose Diabética (2018): solução padrão em Y (soluções A e B)."
+    cad_hidratacao: "UTI Pediátrica — IMIP. Protocolo de Cetoacidose Diabética (2018): solução padrão em Y (soluções A e B).",
+
+    // Ajustados às fontes escolhidas pelo Dr. Jonas (10/2026)
+    loratadina: REF.bula + " Loratadina xarope 1 mg/mL: 2 a 12 anos até 30 kg 5 mL; acima de 30 kg ou de 12 anos 10 mL, 1x ao dia.",
+    hixizine: REF.bula + " Hixizine xarope 2 mg/mL: 0,7 mg/kg 3x ao dia (acima de 6 meses); até 40 kg máx. 2 mg/kg/dia; acima de 40 kg máx. 100 mg/dia.",
+    ondif_cp: REF.diarreia_sbp + " Ondansetrona (Quadro 5): 6 meses a 2 anos 2 mg; > 2 a 10 anos (até 30 kg) 4 mg; > 10 anos (> 30 kg) 8 mg.",
+    ondan_vo: REF.diarreia_sbp + " Ondansetrona (Quadro 5): 6 meses a 2 anos 2 mg; > 2 a 10 anos (até 30 kg) 4 mg; > 10 anos (> 30 kg) 8 mg.",
+    atropina: REF.pals, magnesio_pals: REF.pals,
+    prometa: "SBP — Departamento Científico de Alergia. Guia Prático de Atualização nº 6: Anafilaxia, atualização 2021: prometazina crianças 1 mg/kg (máx. 50 mg).",
+    rsi_cont_propofol: REF.sedacao + " Propofol: 25 a 250 mcg/kg/min (até 75 reduz o risco de síndrome da infusão).",
+    rsi_cont_rocuronio: REF.sedacao + " Rocurônio: 0,3 a 0,6 mg/kg/h.",
+    rsi_cont_pancuronio: REF.sedacao + " Pancurônio: 0,05 a 0,1 mg/kg/h."
 };
 
 // Siglas do "info" escritas por extenso
