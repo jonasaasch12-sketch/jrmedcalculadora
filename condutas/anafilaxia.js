@@ -272,7 +272,7 @@ registrarConduta({
                     icone: "🛡️",
                     resumo: "Plano de ação, identificação, escola, autoinjetor e alergista.",
                     itens: [
-                        "<strong>Encaminhar todos ao alergista</strong>: investigação da causa, riscos, prevenção e comorbidades.",
+                        "<strong>Encaminhar todos ao alergista:</strong> investigação da causa, riscos, prevenção e comorbidades.",
                         "Ensinar a reconhecer os sinais precoces. Entregar plano de ação escrito (o que fazer, nome e dose dos remédios).",
                         "Portar identificação com diagnóstico, telefone de contato e plano de ação. Avisar a escola do risco, do que evitar e do que fazer.",
                         "<strong>Autoinjetor de adrenalina</strong> (doses fixas): 0,1 mg lactentes · 0,15 mg crianças até 30 kg · 0,3 mg crianças maiores e adultos. Aplicar na face anterolateral da coxa, por cima da roupa; segunda dose 5 a 10 min depois se não melhorar. Conferir a validade.",

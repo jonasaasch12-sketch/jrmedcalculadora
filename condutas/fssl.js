@@ -13,7 +13,8 @@ registrarConduta({
     cor: "#ea580c",
     kw: "febre sem sinais localizatorios fssl febre sem foco lactente bacteremia oculta itu rochester baraff antitermico febre aguda arbovirose dengue",
     resumo: "Criança de 0 a 36 meses com febre sem foco: estado geral, idade, vacinação e temperatura definem exames, internação e antibiótico.",
-    legenda: "Conduta conforme o <strong>Documento Científico nº 206 da SBP (2025)</strong>, com o fluxograma do <strong>Tratado de Pediatria da SBP (2017, protocolo HU-USP)</strong>.",
+    legenda: "Conduta conforme o Documento Científico nº 206 da SBP (2025), com o fluxograma do Tratado de Pediatria da SBP (2017, protocolo HU-USP).",
+    padraoTexto: true, // padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
         {
@@ -26,10 +27,10 @@ registrarConduta({
                     icone: "🔎",
                     resumo: "Febre axilar ≥ 37,5 °C; FSSL = febre < 7 dias sem causa na história e no exame.",
                     itens: [
-                        "<strong>Febre:</strong> temperatura axilar <strong>≥ 37,5 °C</strong> (equivale a 38 °C oral ou retal). A retal é o padrão-ouro da temperatura central.",
-                        "<strong>FSSL:</strong> febre com <strong>menos de 7 dias</strong> de duração em criança cuja história clínica e exame físico <strong>não revelaram a causa</strong>.",
+                        "<strong>Febre:</strong> temperatura axilar ≥ 37,5 °C (equivale a 38 °C oral ou retal). A retal é o padrão-ouro da temperatura central.",
+                        "<strong>FSSL:</strong> febre com menos de 7 dias de duração em criança cuja história clínica e exame físico não revelaram a causa.",
                         "A maioria tem doença infecciosa aguda autolimitada ou está no pródromo de doença benigna; poucos têm infecção bacteriana grave.",
-                        "<strong>A intensidade da febre não indica gravidade nem etiologia</strong> (viral × bacteriana), exceto em < 3 meses com leucocitose ou PCR aumentada.",
+                        "A intensidade da febre não indica gravidade nem etiologia (viral × bacteriana), exceto em < 3 meses com leucocitose ou PCR aumentada.",
                         "<strong>Febre × hipertermia:</strong> na febre há extremidades frias, sem sudorese, sensação de frio, tremores, taquicardia e taquipneia. Na hipertermia (roupa demais, ambiente quente, exercício) há vasodilatação, extremidades quentes, sudorese e ausência de tremores.",
                         "<strong>Medida:</strong> termômetro digital axilar em < 4 semanas (todos os ambientes) e em < 1 ano; infravermelho só em > 1 ano e por profissional treinado."
                     ]
@@ -39,9 +40,9 @@ registrarConduta({
                     icone: "🔀",
                     resumo: "Bacteremia oculta, ITU, pneumonia oculta, arboviroses e febre de origem indeterminada.",
                     itens: [
-                        "Infecções bacterianas graves ocultas: <strong>infecção urinária</strong>, <strong>bacteremia oculta</strong>, <strong>pneumonia</strong> sem sinais respiratórios.",
+                        "Infecções bacterianas graves ocultas: infecção urinária, bacteremia oculta, pneumonia sem sinais respiratórios.",
                         "<strong>Arboviroses</strong> (dengue, chikungunya, zika, febre amarela): avaliar história epidemiológica, exantema, artralgia, sangramentos, vômitos (bloco 🏠).",
-                        "<strong>Febre de origem indeterminada (criança):</strong> febre ≥ 38,3 °C diária por <strong>≥ 14 dias</strong>, sem causa após avaliação clínica e laboratorial básica. Causas: infecciosas (30 a 40%: CMV, EBV, HIV, tuberculose, endocardite, abscessos, Bartonella, salmonelose, osteomielite, ITU, malária, toxoplasmose), neoplásicas (20 a 30%), reumatológicas/inflamatórias (15 a 20%) e outras (10 a 20%)."
+                        "<strong>Febre de origem indeterminada (criança):</strong> febre ≥ 38,3 °C diária por ≥ 14 dias, sem causa após avaliação clínica e laboratorial básica. Causas: infecciosas (30 a 40%: CMV, EBV, HIV, tuberculose, endocardite, abscessos, Bartonella, salmonelose, osteomielite, ITU, malária, toxoplasmose), neoplásicas (20 a 30%), reumatológicas/inflamatórias (15 a 20%) e outras (10 a 20%)."
                     ]
                 },
                 {
@@ -49,11 +50,11 @@ registrarConduta({
                     icone: "⚠️",
                     resumo: "Menores de 3 meses, vacinação incompleta, prematuro e desnutrido.",
                     itens: [
-                        "<strong>Menores de 30 dias</strong>: sempre internar e investigar.",
-                        "<strong>1 a 3 meses</strong>: decidir pelos critérios de Rochester (baixo × alto risco).",
-                        "<strong>3 a 36 meses com vacinação incompleta</strong>: maior risco de bacteremia oculta.",
-                        "<strong>Recém-nascido, principalmente prematuro</strong>: pode não ter febre mesmo infectado, ou ter <strong>hipotermia</strong>.",
-                        "<strong>Desnutrido grave</strong>: pode não ter febre quando infectado."
+                        "<strong>Menores de 30 dias:</strong> sempre internar e investigar.",
+                        "<strong>1 a 3 meses:</strong> decidir pelos critérios de Rochester (baixo × alto risco).",
+                        "<strong>3 a 36 meses com vacinação incompleta:</strong> maior risco de bacteremia oculta.",
+                        "<strong>Recém-nascido, principalmente prematuro:</strong> pode não ter febre mesmo infectado, ou ter hipotermia.",
+                        "<strong>Desnutrido grave:</strong> pode não ter febre quando infectado."
                     ]
                 },
                 {
@@ -129,13 +130,13 @@ registrarConduta({
                     lista: "passos",
                     itens: [
                         "<span class=\"cond-passo\">1</span> <strong>Internar?</strong> Critérios clicáveis: UTI · enfermaria · reavaliação diária",
-                        "<span class=\"cond-passo\">2</span> <strong>Estado geral:</strong> comprometido (ou sinal de alerta) = <strong>internar</strong>, colher culturas, LCR, RX e antibiótico empírico, em qualquer idade",
-                        "<span class=\"cond-passo\">3</span> <strong>< 30 dias:</strong> <strong>internar</strong> sempre, exames completos e antibiótico empírico",
-                        "<span class=\"cond-passo\">4</span> <strong>1 a 3 meses:</strong> PVR, hemograma e EAS + <strong>critérios de Rochester</strong> (baixo risco: reavaliar todo dia; alto risco: internar)",
-                        "<span class=\"cond-passo\">5</span> <strong>3 a 36 meses, vacinação completa:</strong> PVR, EAS e urocultura; <strong>reavaliação diária</strong>",
+                        "<span class=\"cond-passo\">2</span> <strong>Estado geral:</strong> comprometido (ou sinal de alerta) = internar, colher culturas, LCR, RX e antibiótico empírico, em qualquer idade",
+                        "<span class=\"cond-passo\">3</span> <strong>< 30 dias:</strong> internar sempre, exames completos e antibiótico empírico",
+                        "<span class=\"cond-passo\">4</span> <strong>1 a 3 meses:</strong> PVR, hemograma e EAS + critérios de Rochester (baixo risco: reavaliar todo dia; alto risco: internar)",
+                        "<span class=\"cond-passo\">5</span> <strong>3 a 36 meses, vacinação completa:</strong> PVR, EAS e urocultura; reavaliação diária",
                         "<span class=\"cond-passo\">6</span> <strong>3 a 36 meses, vacinação incompleta:</strong> PVR; Tax ≤ 39 °C reavaliar todo dia; Tax > 39 °C: EAS/urocultura → hemograma → hemocultura e RX",
-                        "<span class=\"cond-passo\">7</span> <strong>Risco de bacteremia oculta:</strong> <strong>ceftriaxona 50 mg/kg IM 1x/dia</strong> e reavaliação diária até o fim das culturas",
-                        "<span class=\"cond-passo\">8</span> <strong>Antitérmico</strong> só se houver desconforto, em monoterapia; orientar e reavaliar"
+                        "<span class=\"cond-passo\">7</span> <strong>Risco de bacteremia oculta:</strong> ceftriaxona 50 mg/kg IM 1x/dia e reavaliação diária até o fim das culturas",
+                        "<span class=\"cond-passo\">8</span> <strong>Antitérmico:</strong> só se houver desconforto, em monoterapia; orientar e reavaliar"
                     ]
                 },
                 {
@@ -145,7 +146,7 @@ registrarConduta({
                     resumo: "Primeiro decida: UTI, internar ou reavaliação diária. Resume os passos 2 a 4.",
                     alerta: true,
                     itens: [
-                        "Na FSSL, internam: <strong>comprometimento do estado geral</strong> em qualquer idade, <strong>menor de 30 dias</strong> e <strong>1 a 3 meses de alto risco</strong> (Rochester) (SBP)."
+                        "Na FSSL, internam: comprometimento do estado geral em qualquer idade, menor de 30 dias e 1 a 3 meses de alto risco (Rochester) (SBP)."
                     ],
                     escore: {
                         id: "internacao_fssl",
@@ -176,9 +177,9 @@ registrarConduta({
                     aberta: true,
                     resumo: "Comprometido: internar em qualquer idade.",
                     itens: [
-                        "Anamnese detalhada e <strong>exame físico completo</strong> procurando o foco da febre.",
+                        "Anamnese detalhada e exame físico completo procurando o foco da febre.",
                         "Avaliar FC, FR, SatO₂, enchimento capilar, hidratação, atividade e resposta aos estímulos (escore 🚦 no bloco 🔎).",
-                        "<strong>Comprometimento do estado geral, em qualquer idade:</strong> <strong>internar</strong>, colher <strong>hemocultura, urocultura, LCR e RX de tórax</strong> e iniciar <strong>antibiótico empírico</strong>.",
+                        "<strong>Comprometimento do estado geral, em qualquer idade:</strong> internar, colher hemocultura, urocultura, LCR e RX de tórax e iniciar antibiótico empírico.",
                         "Bom estado geral: seguir pela idade (passos 3 a 6)."
                     ]
                 },
@@ -188,10 +189,10 @@ registrarConduta({
                     aberta: true,
                     resumo: "Internar sempre, exames completos e antibiótico empírico.",
                     itens: [
-                        "<strong>Internar</strong>, mesmo em bom estado geral.",
+                        "Internar, mesmo em bom estado geral.",
                         "<strong>Exames:</strong> PVR, hemograma, hemocultura, EAS, urocultura, LCR e RX de tórax.",
-                        "<strong>Antibiótico empírico</strong> (esquema conforme o protocolo do serviço; o documento não define o antibiótico).",
-                        "Antitérmico, se necessário: <strong>só paracetamol</strong> em menores de 1 mês."
+                        "Antibiótico empírico (esquema conforme o protocolo do serviço; o documento não define o antibiótico).",
+                        "Antitérmico, se necessário: só paracetamol em menores de 1 mês."
                     ]
                 },
                 {
@@ -201,9 +202,9 @@ registrarConduta({
                     resumo: "PVR, hemograma e EAS; baixo risco reavalia todo dia, alto risco interna.",
                     itens: [
                         "<strong>Exames:</strong> PVR, hemograma e EAS.",
-                        "Aplicar os <strong>critérios de Rochester</strong> (toque abaixo).",
-                        "<strong>Baixo risco:</strong> <strong>reavaliação diária obrigatória</strong>.",
-                        "<strong>Alto risco:</strong> <strong>internar</strong>, hemocultura, urocultura, LCR, RX de tórax e <strong>antibiótico empírico</strong>."
+                        "Aplicar os critérios de Rochester (toque abaixo).",
+                        "<strong>Baixo risco:</strong> reavaliação diária obrigatória.",
+                        "<strong>Alto risco:</strong> internar, hemocultura, urocultura, LCR, RX de tórax e antibiótico empírico."
                     ],
                     escore: {
                         id: "rochester_fssl",
@@ -231,7 +232,7 @@ registrarConduta({
                     resumo: "PVR, EAS e urocultura; reavaliação diária.",
                     itens: [
                         "<strong>Exames:</strong> PVR, EAS e urocultura.",
-                        "<strong>Reavaliação diária.</strong>",
+                        "Reavaliação diária.",
                         "EAS alterado: tratar como infecção urinária (conduta de ITU)."
                     ]
                 },
@@ -241,13 +242,13 @@ registrarConduta({
                     aberta: true,
                     resumo: "Tax ≤ 39 °C reavalia; Tax > 39 °C: EAS/urocultura → hemograma → hemocultura e RX.",
                     itens: [
-                        "<strong>PVR</strong> para todos.",
+                        "PVR para todos.",
                         "<strong>Tax ≤ 39 °C:</strong> reavaliação diária; considerar EAS e urocultura.",
-                        "<strong>Tax > 39 °C:</strong> colher <strong>EAS e urocultura</strong>:",
-                        "→ <strong>Leucocitúria alta</strong>: <strong>tratar</strong> (infecção urinária).",
-                        "→ <strong>Leucocitúria baixa</strong>: colher <strong>hemograma</strong>:",
-                        "→ Leucócitos ≤ 20.000/mm³ <strong>e</strong> neutrófilos ≤ 10.000/mm³: <strong>reavaliação diária</strong>.",
-                        "→ Leucócitos ≥ 20.000/mm³ <strong>ou</strong> neutrófilos ≥ 10.000/mm³: <strong>hemocultura + RX de tórax</strong>. RX alterado = <strong>pneumonia</strong> (tratar). RX normal = <strong>risco de bacteremia oculta</strong> (passo 7)."
+                        "<strong>Tax > 39 °C:</strong> colher EAS e urocultura:",
+                        "→ Leucocitúria alta: tratar (infecção urinária).",
+                        "→ Leucocitúria baixa: colher hemograma:",
+                        "→ Leucócitos ≤ 20.000/mm³ e neutrófilos ≤ 10.000/mm³: reavaliação diária.",
+                        "→ Leucócitos ≥ 20.000/mm³ ou neutrófilos ≥ 10.000/mm³: hemocultura + RX de tórax. RX alterado = pneumonia (tratar). RX normal = risco de bacteremia oculta (passo 7)."
                     ],
                     nota: "Corte de leucocitúria no fluxograma da SBP: ≤ 5 x 10⁴/mL (seguir para hemograma) × > 5 x 10⁵/mL (tratar ITU)."
                 },
@@ -257,10 +258,10 @@ registrarConduta({
                     aberta: true,
                     resumo: "Ceftriaxona 50 mg/kg IM 1x/dia e reavaliação diária até o fim das culturas.",
                     itens: [
-                        "Indicação: 3 a 36 meses, vacinação incompleta, Tax > 39 °C, leucocitose (≥ 20.000) ou neutrofilia (≥ 10.000) e <strong>RX de tórax normal</strong>.",
-                        "<strong>Colher hemocultura antes</strong> da 1ª dose.",
-                        "<strong>Ceftriaxona 50 mg/kg IM, 1 vez ao dia</strong>.",
-                        "<strong>Reavaliação diária até o resultado final das culturas.</strong>"
+                        "Indicação: 3 a 36 meses, vacinação incompleta, Tax > 39 °C, leucocitose (≥ 20.000) ou neutrofilia (≥ 10.000) e RX de tórax normal.",
+                        "Colher hemocultura antes da 1ª dose.",
+                        "Ceftriaxona 50 mg/kg IM, 1 vez ao dia.",
+                        "Reavaliação diária até o resultado final das culturas."
                     ],
                     remedios: ["cef_fssl"]
                 },
@@ -270,10 +271,10 @@ registrarConduta({
                     aberta: true,
                     resumo: "Só se houver desconforto, em monoterapia. Sem métodos físicos.",
                     itens: [
-                        "Antitérmico quando a febre causa <strong>desconforto</strong> (choro intenso, irritabilidade, redução da atividade, do apetite ou do sono), <strong>não por um número</strong> de temperatura.",
-                        "<strong>Monoterapia.</strong> Não alternar nem associar antitérmicos.",
+                        "Antitérmico quando a febre causa desconforto (choro intenso, irritabilidade, redução da atividade, do apetite ou do sono), não por um número de temperatura.",
+                        "Monoterapia. Não alternar nem associar antitérmicos.",
                         "Doses e cards: bloco 🏠 (Antitérmicos).",
-                        "Orientar sinais de alerta e garantir a <strong>reavaliação diária</strong> nos casos indicados."
+                        "Orientar sinais de alerta e garantir a reavaliação diária nos casos indicados."
                     ]
                 }
             ]
@@ -289,11 +290,11 @@ registrarConduta({
                     aberta: true,
                     resumo: "Paracetamol, dipirona ou ibuprofeno, em monoterapia, se houver desconforto.",
                     itens: [
-                        "Indicar quando a febre está associada a <strong>desconforto evidente</strong>, e não a partir de um valor fixo de temperatura.",
-                        "No Brasil estão recomendados <strong>paracetamol, dipirona e ibuprofeno</strong>. <strong>Ácido acetilsalicílico: não</strong> (síndrome de Reye).",
-                        "<strong>Não alternar nem associar</strong>: confunde os cuidadores, aumenta o risco de superdosagem e não traz benefício.",
+                        "Indicar quando a febre está associada a desconforto evidente, e não a partir de um valor fixo de temperatura.",
+                        "No Brasil estão recomendados paracetamol, dipirona e ibuprofeno. Ácido acetilsalicílico: não (síndrome de Reye).",
+                        "<strong>Não alternar nem associar:</strong> confunde os cuidadores, aumenta o risco de superdosagem e não traz benefício.",
                         "<strong>Menores de 1 mês:</strong> só paracetamol, com dose ajustada à idade gestacional.",
-                        "<strong>Não usar antitérmico para prevenir convulsão febril</strong> nem de rotina antes de vacinas (pode reduzir a resposta de algumas vacinas).",
+                        "<strong>Não usar antitérmico:</strong> para prevenir convulsão febril nem de rotina antes de vacinas (pode reduzir a resposta de algumas vacinas).",
                         "<strong>Métodos físicos</strong> (banho, compressas): não recomendados, salvo hipertermia (≥ 40 °C central com alteração neurológica).",
                         "Doença hepática crônica: preferir paracetamol em dose ajustada. Insuficiência renal: evitar ibuprofeno. Asma: cautela com ibuprofeno."
                     ],
@@ -314,9 +315,9 @@ registrarConduta({
                     icone: "🚨",
                     resumo: "Reavaliar diariamente nos casos indicados e retornar se houver sinal de gravidade.",
                     itens: [
-                        "<strong>Reavaliação diária</strong> nos casos indicados pelo fluxograma, até o resultado das culturas quando colhidas.",
+                        "Reavaliação diária nos casos indicados pelo fluxograma, até o resultado das culturas quando colhidas.",
                         "Retornar antes se: piora do estado geral, sonolência ou irritabilidade excessiva, recusa alimentar, vômitos, sinais de desidratação, respiração rápida ou difícil, manchas na pele.",
-                        "Febre que persiste por <strong>7 dias ou mais</strong>: deixa de ser FSSL; reavaliar e investigar (≥ 14 dias: febre de origem indeterminada)."
+                        "Febre que persiste por 7 dias ou mais: deixa de ser FSSL; reavaliar e investigar (≥ 14 dias: febre de origem indeterminada)."
                     ]
                 },
                 {
@@ -324,11 +325,11 @@ registrarConduta({
                     icone: "🦟",
                     resumo: "Dengue: a queda da febre pode iniciar a fase crítica. Evitar AINEs.",
                     itens: [
-                        "<strong>Dengue:</strong> febre alta e súbita (39 a 41 °C) por 2 a 7 dias. A <strong>queda da febre (3º ao 7º dia)</strong> pode marcar o início da <strong>fase crítica</strong> (extravasamento plasmático), que dura 24 a 48 h: vigilância mesmo sem febre.",
-                        "<strong>Chikungunya:</strong> febre súbita 39 a 40 °C por 3 a 5 dias, mialgia e artralgia intensas. <strong>Zika:</strong> febre baixa ou ausente, exantema precoce e prurido. <strong>Febre amarela:</strong> > 39 °C, bifásica.",
+                        "<strong>Dengue:</strong> febre alta e súbita (39 a 41 °C) por 2 a 7 dias. A queda da febre (3º ao 7º dia) pode marcar o início da fase crítica (extravasamento plasmático), que dura 24 a 48 h: vigilância mesmo sem febre.",
+                        "<strong>Chikungunya:</strong> febre súbita 39 a 40 °C por 3 a 5 dias, mialgia e artralgia intensas. Zika: febre baixa ou ausente, exantema precoce e prurido. Febre amarela: > 39 °C, bifásica.",
                         "<strong>Antitérmicos:</strong> paracetamol 10 a 15 mg/kg a cada 4 a 6 h (máx. 60 mg/kg/dia) ou dipirona 10 mg/kg de 6/6 h.",
-                        "<strong>Evitar AINEs (ibuprofeno, AAS)</strong>: contraindicados na dengue (sangramento e insuficiência renal).",
-                        "<strong>Hidratação oral precoce e abundante</strong> (água, SRO, sucos); casos moderados a graves: hidratação venosa.",
+                        "<strong>Evitar AINEs (ibuprofeno, AAS):</strong> contraindicados na dengue (sangramento e insuficiência renal).",
+                        "Hidratação oral precoce e abundante (água, SRO, sucos); casos moderados a graves: hidratação venosa.",
                         "<strong>Sinais de alarme:</strong> dor abdominal intensa e contínua, vômitos persistentes, sangramento de mucosas, alteração da consciência, acúmulo de líquidos (derrames, ascite, edema), aumento progressivo do hematócrito, hipotensão postural/lipotimia, hepatomegalia > 2 cm."
                     ],
                     remedios: ["pct_gts", "dip_gts"]
@@ -338,8 +339,8 @@ registrarConduta({
                     icone: "👨‍👩‍👧",
                     resumo: "Febre é um sinal, não uma doença.",
                     itens: [
-                        "A febre é uma resposta de defesa; o mais importante é o <strong>estado geral da criança</strong>, não o número do termômetro.",
-                        "Medir com <strong>termômetro digital axilar</strong>; a temperatura varia ao longo do dia (maior no fim da tarde) e com o ambiente.",
+                        "A febre é uma resposta de defesa; o mais importante é o estado geral da criança, não o número do termômetro.",
+                        "Medir com termômetro digital axilar; a temperatura varia ao longo do dia (maior no fim da tarde) e com o ambiente.",
                         "Usar o dosador do próprio medicamento: gotejadores diferentes liberam doses diferentes; subdose é o erro mais comum.",
                         "Não alternar antitérmicos e não dar antitérmico \"preventivo\"."
                     ]
