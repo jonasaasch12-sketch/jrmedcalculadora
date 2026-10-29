@@ -55,7 +55,8 @@ registrarConduta({
     cor: "#6d28d9",
     kw: "crise convulsiva convulsao epilepsia estado de mal epileptico eme status epilepticus diazepam midazolam fenitoina levetiracetam fenobarbital refratario crise febril hipoglicemia",
     resumo: "Cronômetro da crise: benzodiazepínico já, 2ª dose aos 5–10 min, fenitoína ou fenobarbital aos 10–15 min, a outra droga e EEG aos 15–30 min, refratário na UTI.",
-    legenda: "Conduta conforme o <strong>Whitebook (Crise Convulsiva em Pediatria, 2025)</strong>, a <strong>American Epilepsy Society (2016)</strong>, a definição da <strong>ILAE (2015)</strong>, o estudo <strong>ESETT (2019)</strong> e a <strong>Neurocritical Care Society (2012)</strong>.",
+    legenda: "Conduta conforme o Whitebook (Crise Convulsiva em Pediatria, 2025), a American Epilepsy Society (2016), a definição da ILAE (2015), o estudo ESETT (2019) e a Neurocritical Care Society (2012).",
+    padraoTexto: true, // padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
         {
@@ -68,11 +69,11 @@ registrarConduta({
                     icone: "🔎",
                     resumo: "Crise tônico-clônica com 5 min ou mais, ou crises seguidas sem recuperar a consciência = estado de mal.",
                     itens: [
-                        "<strong>Estado de mal epiléptico convulsivo</strong> (ILAE 2015): crise tônico-clônica que dura <strong>5 minutos ou mais</strong> (t1), ou <strong>crises repetidas sem recuperar a consciência</strong> entre elas.",
-                        "<strong>Aos 5 minutos a crise dificilmente para sozinha</strong>: começar o tratamento. Após <strong>30 minutos</strong> (t2) há risco de lesão neuronal definitiva (ILAE 2015).",
+                        "<strong>Estado de mal epiléptico convulsivo</strong> (ILAE 2015): crise tônico-clônica que dura 5 minutos ou mais (t1), ou crises repetidas sem recuperar a consciência entre elas.",
+                        "<strong>Aos 5 minutos a crise dificilmente para sozinha:</strong> começar o tratamento. Após 30 minutos (t2) há risco de lesão neuronal definitiva (ILAE 2015).",
                         "<strong>Pela história:</strong> início (focal ou generalizado), duração cronometrada, febre, trauma, ingestão de remédios ou tóxicos, epilepsia conhecida e remédios em uso (adesão, troca recente), desenvolvimento, vacinas.",
                         "<strong>Exame:</strong> sinais vitais, glicemia capilar, sinais meníngeos, fontanela, sinais de trauma (pensar em maus-tratos no lactente), pele (manchas café com leite, hipocrômicas), sinais focais, pupilas.",
-                        "<strong>Crise sutil:</strong> após crise longa ou benzodiazepínico, a criança pode continuar em crise com pouco movimento (desvio do olhar, nistagmo, piscar, taquicardia). Se não acorda em 20 a 30 min, pensar em <strong>estado de mal não convulsivo</strong> e pedir EEG."
+                        "<strong>Crise sutil:</strong> após crise longa ou benzodiazepínico, a criança pode continuar em crise com pouco movimento (desvio do olhar, nistagmo, piscar, taquicardia). Se não acorda em 20 a 30 min, pensar em estado de mal não convulsivo e pedir EEG."
                     ]
                 },
                 {
@@ -80,7 +81,7 @@ registrarConduta({
                     icone: "🧭",
                     resumo: "Síncope, perda de fôlego, distonia por remédio, tremores e calafrios, crise não epiléptica psicogênica.",
                     itens: [
-                        "<strong>Síncope</strong> (com abalos breves), <strong>perda de fôlego</strong> (choro → apneia → cianose ou palidez → abalos), <strong>calafrios e tremores</strong> da febre.",
+                        "Síncope (com abalos breves), perda de fôlego (choro → apneia → cianose ou palidez → abalos), calafrios e tremores da febre.",
                         "<strong>Distonia aguda por remédio</strong> (metoclopramida, bromoprida, antipsicóticos): consciente, torcicolo, crise oculógira. Tratamento: biperideno ou difenidramina, não anticonvulsivante.",
                         "<strong>Lactente:</strong> mioclonia benigna do sono, Sandifer (refluxo), tremores (jitteriness: param ao segurar o membro).",
                         "<strong>Crise não epiléptica psicogênica</strong> (adolescente): olhos fechados com resistência à abertura, movimentos assíncronos, longa duração sem hipóxia. 10% dos pacientes do ESETT tinham crise psicogênica."
@@ -91,9 +92,9 @@ registrarConduta({
                     icone: "🧩",
                     resumo: "Febre, infecção do SNC, hipoglicemia, sódio/cálcio/magnésio, trauma, intoxicação, epilepsia, hipóxia.",
                     itens: [
-                        "<strong>Febre:</strong> convulsão febril (6 meses a 5 anos), mas <strong>sempre pensar em meningite/encefalite</strong>.",
-                        "<strong>Metabólicas:</strong> <strong>hipoglicemia</strong>, hiponatremia (diarreia, soro hipotônico), hipocalcemia (lactente, raquitismo), hipomagnesemia.",
-                        "<strong>Trauma</strong> (acidental ou maus-tratos), AVC, hemorragia, tumor, hidrocefalia com válvula.",
+                        "<strong>Febre:</strong> convulsão febril (6 meses a 5 anos), mas sempre pensar em meningite/encefalite.",
+                        "<strong>Metabólicas:</strong> hipoglicemia, hiponatremia (diarreia, soro hipotônico), hipocalcemia (lactente, raquitismo), hipomagnesemia.",
+                        "Trauma (acidental ou maus-tratos), AVC, hemorragia, tumor, hidrocefalia com válvula.",
                         "<strong>Intoxicação:</strong> antidepressivos tricíclicos, isoniazida (antídoto: piridoxina), anti-histamínicos, cocaína, organofosforado, abstinência.",
                         "<strong>Epilepsia conhecida:</strong> baixa adesão ou nível baixo do anticonvulsivante, privação de sono, infecção.",
                         "<strong>Recém-nascido:</strong> encefalopatia hipóxico-isquêmica, hemorragia, infecção, hipoglicemia, hipocalcemia, erros inatos, dependência de piridoxina."
@@ -104,11 +105,11 @@ registrarConduta({
                     icone: "⚠️",
                     resumo: "Crise > 5 min, hipóxia, rebaixamento que não melhora, déficit focal, sinais de hipertensão intracraniana, febre com toxemia.",
                     itens: [
-                        "<strong>Crise que não para</strong> após 2 doses de benzodiazepínico (estado de mal estabelecido).",
-                        "<strong>Hipóxia, apneia</strong> ou via aérea que não se mantém.",
-                        "<strong>Não recupera a consciência</strong> em 30 a 60 min, <strong>déficit focal novo</strong>, assimetria de pupilas, bradicardia com hipertensão (hipertensão intracraniana).",
-                        "<strong>Febre com toxemia</strong>, petéquias, rigidez de nuca ou fontanela abaulada (infecção do SNC).",
-                        "<strong>Instabilidade hemodinâmica</strong> ou arritmia (intoxicação por tricíclico, distúrbio eletrolítico)."
+                        "Crise que não para após 2 doses de benzodiazepínico (estado de mal estabelecido).",
+                        "Hipóxia, apneia ou via aérea que não se mantém.",
+                        "Não recupera a consciência em 30 a 60 min, déficit focal novo, assimetria de pupilas, bradicardia com hipertensão (hipertensão intracraniana).",
+                        "Febre com toxemia, petéquias, rigidez de nuca ou fontanela abaulada (infecção do SNC).",
+                        "Instabilidade hemodinâmica ou arritmia (intoxicação por tricíclico, distúrbio eletrolítico)."
                     ]
                 }
             ]
@@ -126,14 +127,14 @@ registrarConduta({
                     lista: "passos",
                     itens: [
                         "<span class=\"cond-passo\">1</span> <strong>Internar / UTI?</strong> Decidir junto com o tratamento, sem atrasá-lo",
-                        "<span class=\"cond-passo\">2</span> <strong>0 a 5 min:</strong> sinais vitais, vias aéreas, O₂ 100%, monitor, <strong>glicemia</strong>, acesso EV",
-                        "<span class=\"cond-passo\">3</span> <strong>0 a 10 min:</strong> <strong>benzodiazepínico</strong> já; sem acesso em 3 min: IM, intranasal ou retal. <strong>2ª dose aos 5–10 min</strong>",
-                        "<span class=\"cond-passo\">4</span> <strong>10 a 15 min:</strong> <strong>fenitoína ou fenobarbital</strong> (ou levetiracetam); preparar intubação",
+                        "<span class=\"cond-passo\">2</span> <strong>0 a 5 min:</strong> sinais vitais, vias aéreas, O₂ 100%, monitor, glicemia, acesso EV",
+                        "<span class=\"cond-passo\">3</span> <strong>0 a 10 min:</strong> benzodiazepínico já; sem acesso em 3 min: IM, intranasal ou retal. 2ª dose aos 5–10 min",
+                        "<span class=\"cond-passo\">4</span> <strong>10 a 15 min:</strong> fenitoína ou fenobarbital (ou levetiracetam); preparar intubação",
                         "<span class=\"cond-passo\">5</span> <strong>15 a 30 min:</strong> a droga que ainda não foi usada; piridoxina se isoniazida; EEG e neurologista",
                         "<span class=\"cond-passo\">6</span> <strong>Refratário:</strong> intubar, midazolam contínuo, EEG contínuo, UTI",
-                        "<span class=\"cond-passo\">7</span> <strong>Investigar a causa</strong>: exames, punção lombar, tomografia quando indicados",
-                        "<span class=\"cond-passo\">8</span> <strong>Depois da crise</strong>: observar o pós-ictal, tratar a causa, decidir alta",
-                        "<span class=\"cond-passo\">9</span> <strong>Prescrição de internação</strong>: dieta zero, soro de manutenção, cuidados e sintomáticos"
+                        "<span class=\"cond-passo\">7</span> <strong>Investigar a causa:</strong> exames, punção lombar, tomografia quando indicados",
+                        "<span class=\"cond-passo\">8</span> <strong>Depois da crise:</strong> observar o pós-ictal, tratar a causa, decidir alta",
+                        "<span class=\"cond-passo\">9</span> <strong>Prescrição de internação:</strong> dieta zero, soro de manutenção, cuidados e sintomáticos"
                     ],
                     ferramenta: "ferramentaCronometroCrise"
                 },
@@ -143,7 +144,7 @@ registrarConduta({
                     resumo: "Marque o que a criança tem. Não atrasa o benzodiazepínico: se ainda está em crise, trate primeiro.",
                     alerta: true,
                     itens: [
-                        "<strong>Se a criança ainda está em crise, tratar primeiro</strong> (passos 2 e 3) e decidir o destino depois."
+                        "Se a criança ainda está em crise, tratar primeiro (passos 2 e 3) e decidir o destino depois."
                     ],
                     escore: {
                         id: "internacao_crise",
@@ -177,13 +178,13 @@ registrarConduta({
                     titulo: "0 a 5 min: estabilizar",
                     resumo: "Sinais vitais e temperatura, vias aéreas pérvias, aspirar, O₂ 100%, monitor, glicemia, acesso EV.",
                     itens: [
-                        "<strong>Cronometrar</strong> desde o início da crise (perguntar quando começou).",
-                        "<strong>Sinais vitais iniciais, incluindo temperatura</strong>. Manter vias aéreas pérvias, <strong>aspirar secreções</strong>, <strong>O₂ a 100%</strong> (Whitebook). Decúbito lateral; não colocar nada na boca.",
-                        "Hipóxia ou ventilação comprometida: <strong>bolsa-válvula-máscara</strong> e preparar intubação em sequência rápida (Whitebook).",
-                        "<strong>Monitorização cardiorrespiratória contínua</strong> e oximetria (Whitebook).",
-                        "<strong>Glicemia</strong> e outros exames conforme indicado; <strong>tratar hipoglicemia</strong> (card abaixo) e febre (Whitebook).",
-                        "<strong>Acesso EV.</strong> Se não for obtido em <strong>3 minutos</strong>, não esperar: benzodiazepínico IM, intranasal ou retal (passo 3) (Whitebook).",
-                        "Avaliar sinais de <strong>sepse/meningite</strong> (antibiótico se houver) e de <strong>trauma craniano</strong> (Whitebook).",
+                        "Cronometrar desde o início da crise (perguntar quando começou).",
+                        "Sinais vitais iniciais, incluindo temperatura. Manter vias aéreas pérvias, aspirar secreções, O₂ a 100% (Whitebook). Decúbito lateral; não colocar nada na boca.",
+                        "Hipóxia ou ventilação comprometida: bolsa-válvula-máscara e preparar intubação em sequência rápida (Whitebook).",
+                        "Monitorização cardiorrespiratória contínua e oximetria (Whitebook).",
+                        "Glicemia e outros exames conforme indicado; tratar hipoglicemia (card abaixo) e febre (Whitebook).",
+                        "Acesso EV. Se não for obtido em 3 minutos, não esperar: benzodiazepínico IM, intranasal ou retal (passo 3) (Whitebook).",
+                        "Avaliar sinais de sepse/meningite (antibiótico se houver) e de trauma craniano (Whitebook).",
                         "<strong>Exames:</strong> eletrólitos (sódio, cálcio, magnésio), gasometria, hemograma, nível sérico do anticonvulsivante (se usa), toxicológico conforme a história."
                     ],
                     remedios: ["glicose_pals"]
@@ -194,10 +195,11 @@ registrarConduta({
                     resumo: "Já: diazepam ou midazolam EV. Sem acesso em 3 min: midazolam IM ou intranasal, ou diazepam retal. 2ª dose aos 5–10 min.",
                     alerta: true,
                     itens: [
-                        "<strong>Com acesso EV:</strong> <strong>diazepam EV</strong> ou <strong>midazolam EV</strong> (Whitebook).",
-                        "<strong>Sem acesso EV em 3 min:</strong> <strong>midazolam IM ou intranasal</strong>, ou <strong>diazepam retal</strong> (Whitebook).",
-                        "<strong>5 a 10 min, crise continua:</strong> <strong>2ª dose</strong> do benzodiazepínico (Whitebook).",
-                        "O Whitebook permite repetir a cada 10 min, até 3 vezes. Contar as doses feitas antes da chegada (SAMU, casa): <strong>após 2 doses sem resposta, a 2ª linha não deve esperar</strong> (AES 2016).",
+                        "<strong>Com acesso EV:</strong> diazepam EV ou midazolam EV (Whitebook).",
+                        "<strong>Sem acesso EV em 3 min:</strong> midazolam IM ou intranasal, ou diazepam retal (Whitebook).",
+                        "<strong>5 a 10 min, crise continua:</strong> 2ª dose do benzodiazepínico (Whitebook).",
+                        "<strong>Repetir:</strong> o Whitebook permite repetir a cada 10 min, até 3 vezes. Contar as doses feitas antes da chegada (SAMU, casa).",
+                        { alerta: "após 2 doses de benzodiazepínico sem resposta, a 2ª linha não deve esperar (AES 2016)." },
                         "<strong>Via aérea pronta:</strong> risco de depressão respiratória, maior com doses repetidas."
                     ],
                     remedios: ["neuro_diaz", "neuro_midaz", "neuro_midaz_nasal"]
@@ -208,11 +210,11 @@ registrarConduta({
                     resumo: "Fenitoína ou fenobarbital (Whitebook). Levetiracetam é alternativa (ESETT). Preparar intubação.",
                     alerta: true,
                     itens: [
-                        "<strong>Crise refratária ao benzodiazepínico:</strong> <strong>fenitoína</strong> ou <strong>fenobarbital</strong> EV (Whitebook). O fenobarbital tem <strong>expectativa de depressão respiratória com apneia</strong> (Whitebook).",
-                        "<strong>Levetiracetam</strong> (não está no Whitebook): no ESETT, levetiracetam, fosfenitoína e valproato pararam a crise em <strong>cerca de metade</strong> dos pacientes, sem diferença entre eles (ESETT 2019). Sem hipotensão nem arritmia.",
-                        "<strong>Fenitoína:</strong> monitor cardíaco e PA, só em SF 0,9%. <strong>Fenobarbital:</strong> 1ª escolha no <strong>recém-nascido</strong>.",
-                        "<strong>Manter monitorização</strong>, suporte ventilatório e <strong>obter 2º acesso EV</strong>. Avaliar indicação de <strong>intubação em sequência rápida</strong> (Whitebook).",
-                        "<strong>Avisar a UTI</strong> já nesta etapa."
+                        "<strong>Crise refratária ao benzodiazepínico:</strong> fenitoína ou fenobarbital EV (Whitebook). O fenobarbital tem expectativa de depressão respiratória com apneia (Whitebook).",
+                        "<strong>Levetiracetam</strong> (não está no Whitebook): no ESETT, levetiracetam, fosfenitoína e valproato pararam a crise em cerca de metade dos pacientes, sem diferença entre eles (ESETT 2019). Sem hipotensão nem arritmia.",
+                        "<strong>Fenitoína:</strong> monitor cardíaco e PA, só em SF 0,9%. Fenobarbital: 1ª escolha no recém-nascido.",
+                        "Manter monitorização, suporte ventilatório e obter 2º acesso EV. Avaliar indicação de intubação em sequência rápida (Whitebook).",
+                        "Avisar a UTI já nesta etapa."
                     ],
                     remedios: ["neuro_fenitoina", "fenobarbital", "neuro_levetiracetam"]
                 },
@@ -222,9 +224,9 @@ registrarConduta({
                     resumo: "A droga que ainda não foi usada (fenitoína ou fenobarbital). Piridoxina se suspeita de isoniazida. EEG contínuo e neurologista.",
                     alerta: true,
                     itens: [
-                        "<strong>Fenitoína</strong> (se ainda não foi feita) <strong>ou fenobarbital</strong> (se ainda não foi feito); se o fenobarbital já foi dado, a nova dose é menor (veja o card) (Whitebook).",
-                        "<strong>Piridoxina 70 mg/kg EV (máx. 5 g)</strong> se houver suspeita de <strong>intoxicação por isoniazida</strong> (Whitebook).",
-                        "<strong>EEG contínuo</strong>, se disponível, e <strong>consultar o neurologista</strong> (Whitebook).",
+                        "Fenitoína (se ainda não foi feita) ou fenobarbital (se ainda não foi feito); se o fenobarbital já foi dado, a nova dose é menor (veja o card) (Whitebook).",
+                        "Piridoxina 70 mg/kg EV (máx. 5 g) se houver suspeita de intoxicação por isoniazida (Whitebook).",
+                        "EEG contínuo, se disponível, e consultar o neurologista (Whitebook).",
                         "Manter monitorização, suporte ventilatório e acesso vascular."
                     ],
                     remedios: ["neuro_fenitoina", "fenobarbital"]
@@ -236,10 +238,10 @@ registrarConduta({
                     alerta: true,
                     itens: [
                         "<strong>Refratário:</strong> crise que continua após benzodiazepínico e um fármaco de 2ª linha (Neurocritical Care Society 2012).",
-                        "<strong>Anestésico em infusão contínua</strong> na UTI: <strong>midazolam</strong> (o mais usado), tiopental ou propofol (cautela em criança: síndrome da infusão do propofol) (AES 2016).",
-                        "<strong>Intubação</strong> em sequência rápida (cetamina é boa opção de indutor). Bloqueador neuromuscular de curta duração: ele <strong>esconde a crise</strong>, por isso o EEG.",
-                        "<strong>EEG contínuo</strong> para guiar a dose; manter 24 a 48 h de controle antes de desmamar (Neurocritical Care Society 2012).",
-                        "<strong>Investigar</strong> causas autoimunes, infecciosas e metabólicas; no lactente, prova com <strong>piridoxina</strong>."
+                        "Anestésico em infusão contínua na UTI: midazolam (o mais usado), tiopental ou propofol (cautela em criança: síndrome da infusão do propofol) (AES 2016).",
+                        "Intubação em sequência rápida (cetamina é boa opção de indutor). Bloqueador neuromuscular de curta duração: ele esconde a crise, por isso o EEG.",
+                        "EEG contínuo para guiar a dose; manter 24 a 48 h de controle antes de desmamar (Neurocritical Care Society 2012).",
+                        "Investigar causas autoimunes, infecciosas e metabólicas; no lactente, prova com piridoxina."
                     ],
                     remedios: ["neuro_midaz_continuo", "rsi_ceta"]
                 },
@@ -248,11 +250,11 @@ registrarConduta({
                     titulo: "Investigar a causa",
                     resumo: "Exames conforme a história. Punção lombar se suspeita de infecção. Tomografia se trauma, déficit focal ou não acorda.",
                     itens: [
-                        "<strong>Eletrólitos e glicemia</strong>: sempre no estado de mal; na 1ª crise afebril com criança bem, só conforme a clínica (vômitos, diarreia, desidratação, não acorda) (AAN 2000).",
-                        "<strong>Punção lombar</strong>: suspeita de meningite/encefalite (febre com toxemia, rigidez, rebaixamento). Na crise febril de <strong>6 a 12 meses</strong>, é opção se vacinas Hib/pneumococo incompletas ou se já usou antibiótico (AAP 2011). Não atrasar o antibiótico; adiar a punção se instável ou com hipertensão intracraniana.",
-                        "<strong>Tomografia de urgência</strong>: trauma, déficit focal novo, não volta ao normal, sinais de hipertensão intracraniana, válvula (DVP), coagulopatia. Fora disso, ressonância eletiva (AAN 2000).",
-                        "<strong>Toxicológico</strong> se a história sugerir ou causa não esclarecida.",
-                        "<strong>EEG</strong>: urgente se não acorda (estado de mal não convulsivo); eletivo na 1ª crise afebril (AAN 2000). Não é necessário na convulsão febril simples (AAP 2011)."
+                        "<strong>Eletrólitos e glicemia:</strong> sempre no estado de mal; na 1ª crise afebril com criança bem, só conforme a clínica (vômitos, diarreia, desidratação, não acorda) (AAN 2000).",
+                        "<strong>Punção lombar:</strong> suspeita de meningite/encefalite (febre com toxemia, rigidez, rebaixamento). Na crise febril de 6 a 12 meses, é opção se vacinas Hib/pneumococo incompletas ou se já usou antibiótico (AAP 2011). Não atrasar o antibiótico; adiar a punção se instável ou com hipertensão intracraniana.",
+                        "<strong>Tomografia de urgência:</strong> trauma, déficit focal novo, não volta ao normal, sinais de hipertensão intracraniana, válvula (DVP), coagulopatia. Fora disso, ressonância eletiva (AAN 2000).",
+                        "Toxicológico se a história sugerir ou causa não esclarecida.",
+                        "<strong>EEG:</strong> urgente se não acorda (estado de mal não convulsivo); eletivo na 1ª crise afebril (AAN 2000). Não é necessário na convulsão febril simples (AAP 2011)."
                     ]
                 },
                 {
@@ -260,10 +262,10 @@ registrarConduta({
                     titulo: "Depois da crise",
                     resumo: "Observar até voltar ao normal, tratar a causa, decidir manutenção com a neurologia.",
                     itens: [
-                        "<strong>Pós-ictal</strong>: sonolência é esperada; vigiar respiração e novas crises. <strong>Paresia de Todd</strong> pode durar horas, mas déficit que não melhora exige imagem.",
-                        "<strong>Epiléptico conhecido</strong>: rever adesão e dose com a neurologia; dosar nível sérico se disponível.",
-                        "<strong>Após estado de mal com 2ª linha</strong>: em geral a droga é mantida em dose de manutenção, conforme a neurologia.",
-                        "<strong>1ª crise afebril</strong> que voltou ao normal: em geral <strong>não</strong> se inicia anticonvulsivante no pronto-socorro; encaminhar à neurologia com EEG (AAN 2000)."
+                        "<strong>Pós-ictal:</strong> sonolência é esperada; vigiar respiração e novas crises. Paresia de Todd pode durar horas, mas déficit que não melhora exige imagem.",
+                        "<strong>Epiléptico conhecido:</strong> rever adesão e dose com a neurologia; dosar nível sérico se disponível.",
+                        "<strong>Após estado de mal com 2ª linha:</strong> em geral a droga é mantida em dose de manutenção, conforme a neurologia.",
+                        "1ª crise afebril que voltou ao normal: em geral não se inicia anticonvulsivante no pronto-socorro; encaminhar à neurologia com EEG (AAN 2000)."
                     ]
                 },
                 {
@@ -271,10 +273,10 @@ registrarConduta({
                     titulo: "📝 Prescrição de internação",
                     resumo: "Dieta zero, hidratação venosa de manutenção, cuidados (monitor, sinais vitais 3/3 h, glicemia 6/6 h, O₂, cabeceira 30°) e sintomáticos.",
                     itens: [
-                        "<strong>Dieta zero</strong> (Whitebook), até acordar bem e deglutir com segurança.",
-                        "<strong>Hidratação venosa de manutenção</strong> em 24 h (Whitebook): usar o card de manutenção (Holliday-Segar) abaixo; potássio só com diurese.",
-                        "<strong>Cuidados</strong> (Whitebook): monitorização eletrocardiográfica e oximetria; <strong>sinais vitais de 3/3 h</strong>; <strong>glicemia capilar de 6/6 h</strong>; oxigenioterapia; <strong>cabeceira elevada a 30°</strong>.",
-                        "<strong>Sintomáticos</strong> (Whitebook): <strong>analgésico/antitérmico</strong> se dor ou febre ≥ 37,8 °C (dipirona EV ou paracetamol); <strong>antiemético</strong> se náuseas ou vômitos (ondansetrona ou bromoprida).",
+                        "Dieta zero (Whitebook), até acordar bem e deglutir com segurança.",
+                        "Hidratação venosa de manutenção em 24 h (Whitebook): usar o card de manutenção (Holliday-Segar) abaixo; potássio só com diurese.",
+                        "<strong>Cuidados</strong> (Whitebook): monitorização eletrocardiográfica e oximetria; sinais vitais de 3/3 h; glicemia capilar de 6/6 h; oxigenioterapia; cabeceira elevada a 30°.",
+                        "<strong>Sintomáticos</strong> (Whitebook): analgésico/antitérmico se dor ou febre ≥ 37,8 °C (dipirona EV ou paracetamol); antiemético se náuseas ou vômitos (ondansetrona ou bromoprida).",
                         "<strong>Manutenção do anticonvulsivante:</strong> depende do tipo de crise e geralmente é orientada pelo especialista (Whitebook)."
                     ],
                     remedios: ["tgi_manutencao", "dip_inj", "ondan_ev", "broma_ev"]
@@ -291,10 +293,10 @@ registrarConduta({
                     icone: "👪",
                     resumo: "Deitar de lado, não colocar nada na boca, cronometrar; mais de 5 min = medicação de resgate e SAMU.",
                     itens: [
-                        "Manter a calma, <strong>deitar de lado</strong>, afastar objetos, afrouxar roupas. <strong>Não colocar nada na boca</strong>, não dar água nem remédio pela boca.",
-                        "<strong>Cronometrar</strong> e, se possível, <strong>filmar</strong> a crise (ajuda muito no diagnóstico).",
-                        "<strong>Crise com mais de 5 minutos</strong>, crises seguidas, dificuldade para respirar ou não acorda: <strong>ligar 192 (SAMU)</strong>.",
-                        "Criança com epilepsia e crises prolongadas: a neurologia pode prescrever <strong>medicação de resgate em casa</strong> (ex.: diazepam retal), com orientação de uso."
+                        "<strong>Na crise:</strong> manter a calma, deitar de lado, afastar objetos, afrouxar roupas. Não colocar nada na boca, não dar água nem remédio pela boca.",
+                        "Cronometrar e, se possível, filmar a crise (ajuda muito no diagnóstico).",
+                        "Crise com mais de 5 minutos, crises seguidas, dificuldade para respirar ou não acorda: ligar 192 (SAMU).",
+                        "Criança com epilepsia e crises prolongadas: a neurologia pode prescrever medicação de resgate em casa (ex.: diazepam retal), com orientação de uso."
                     ]
                 },
                 {
@@ -303,7 +305,7 @@ registrarConduta({
                     resumo: "Nova crise, sonolência que não passa, vômitos, febre com prostração, fraqueza de um lado.",
                     itens: [
                         "Nova crise (principalmente se mais de 5 min).",
-                        "<strong>Sonolência que não melhora</strong>, confusão, dor de cabeça forte, vômitos repetidos.",
+                        "Sonolência que não melhora, confusão, dor de cabeça forte, vômitos repetidos.",
                         "Febre com prostração, manchas na pele, rigidez de nuca.",
                         "Fraqueza ou dormência de um lado do corpo, alteração da fala ou da visão."
                     ]
@@ -313,8 +315,8 @@ registrarConduta({
                     icone: "📋",
                     resumo: "1ª crise afebril: neurologia + EEG. Convulsão febril simples: não precisa de exames nem de remédio contínuo.",
                     itens: [
-                        "<strong>1ª crise afebril:</strong> encaminhar à <strong>neurologia pediátrica</strong> com <strong>EEG</strong>; ressonância se crise focal, exame neurológico alterado, atraso do desenvolvimento ou menor de 1 ano (AAN 2000).",
-                        "<strong>Convulsão febril simples</strong> (6 meses a 5 anos, generalizada, menos de 15 min, uma em 24 h): procurar a causa da febre; <strong>não precisa</strong> de EEG, exames de sangue ou imagem (AAP 2011). Antitérmico não previne nova crise.",
+                        "<strong>1ª crise afebril:</strong> encaminhar à neurologia pediátrica com EEG; ressonância se crise focal, exame neurológico alterado, atraso do desenvolvimento ou menor de 1 ano (AAN 2000).",
+                        "<strong>Convulsão febril simples</strong> (6 meses a 5 anos, generalizada, menos de 15 min, uma em 24 h): procurar a causa da febre; não precisa de EEG, exames de sangue ou imagem (AAP 2011). Antitérmico não previne nova crise.",
                         "<strong>Epilepsia:</strong> manter o remédio sem interromper, não trocar marca sem orientação, dormir bem; atividades na água sempre com supervisão."
                     ]
                 }
