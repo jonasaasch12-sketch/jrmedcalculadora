@@ -18,7 +18,8 @@ registrarConduta({
     cor: "#b45309",
     kw: "kawasaki doenca de kawasaki febre 5 dias conjuntivite labios fissurados lingua em framboesa exantema polimorfo edema maos pes descamacao adenomegalia cervical aneurisma coronariano imunoglobulina igiv aas incompleto",
     resumo: "Critérios clássicos e algoritmo do incompleto clicáveis, internação, imunoglobulina em até 10 dias, AAS, resistência, ecocardiograma e seguimento.",
-    legenda: "Conduta conforme as <strong>declarações científicas da AHA (2017 e atualização 2024)</strong> e o <strong>Departamento de Reumatologia da SBP</strong>. Fotos reais da Wikimedia Commons, com crédito.",
+    legenda: "Conduta conforme as declarações científicas da AHA (2017 e atualização 2024) e o Departamento de Reumatologia da SBP. Fotos reais da Wikimedia Commons, com crédito.",
+    padraoTexto: true, // padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
         {
@@ -31,13 +32,14 @@ registrarConduta({
                     icone: "🔎",
                     resumo: "Febre ≥ 5 dias + 4 dos 5 critérios. Toque no que a criança tem.",
                     itens: [
-                        "<strong>Kawasaki completo</strong> (AHA 2017): <strong>febre ≥ 5 dias</strong> + <strong>≥ 4 dos 5 critérios</strong> (não precisam estar presentes ao mesmo tempo):",
-                        "1. <strong>Conjuntivite bilateral sem secreção</strong>, poupando o limbo.",
-                        "2. <strong>Alterações da boca:</strong> lábios vermelhos e rachados, <strong>língua em framboesa</strong>, hiperemia difusa da orofaringe.",
-                        "3. <strong>Exantema polimorfo</strong> (maculopapular, eritema difuso, tipo eritema multiforme), <strong>não vesicular</strong>; acentuação no períneo.",
-                        "4. <strong>Extremidades:</strong> eritema e edema endurado de mãos e pés na fase aguda; <strong>descamação periungueal</strong> na 2ª a 3ª semana.",
-                        "5. <strong>Adenomegalia cervical ≥ 1,5 cm</strong>, geralmente unilateral (o critério menos frequente).",
-                        "Achados que ajudam: <strong>irritabilidade intensa</strong>, eritema ou endurecimento na cicatriz da BCG, uretrite, artrite, hidropsia de vesícula, uveíte anterior."
+                        { texto: "<strong>Kawasaki completo</strong> (AHA 2017): febre ≥ 5 dias + ≥ 4 dos 5 critérios abaixo (não precisam estar presentes ao mesmo tempo).", sub: [
+                            "<strong>Olhos:</strong> conjuntivite bilateral sem secreção, poupando o limbo.",
+                            "<strong>Boca:</strong> lábios vermelhos e rachados, língua em framboesa, hiperemia difusa da orofaringe.",
+                            "<strong>Pele:</strong> exantema polimorfo (maculopapular, eritema difuso, tipo eritema multiforme), não vesicular; acentuação no períneo.",
+                            "<strong>Extremidades:</strong> eritema e edema endurado de mãos e pés na fase aguda; descamação periungueal na 2ª a 3ª semana.",
+                            "<strong>Linfonodo:</strong> adenomegalia cervical ≥ 1,5 cm, geralmente unilateral (o critério menos frequente)."
+                        ] },
+                        "<strong>Achados que ajudam:</strong> irritabilidade intensa, eritema ou endurecimento na cicatriz da BCG, uretrite, artrite, hidropsia de vesícula, uveíte anterior."
                     ],
                     escore: {
                         id: "kawasaki_criterios",
@@ -70,8 +72,8 @@ registrarConduta({
                     resumo: "PCR ≥ 3 mg/dL ou VHS ≥ 40 + ≥ 3 achados de laboratório ou eco alterado = tratar.",
                     itens: [
                         "<strong>Quando usar:</strong> febre ≥ 5 dias com 2 ou 3 critérios, ou lactente com febre ≥ 7 dias sem outra causa (AHA 2017).",
-                        "<strong>PCR &lt; 3 mg/dL e VHS &lt; 40 mm/h:</strong> seguimento diário; se a febre continuar, repetir os exames; se surgir <strong>descamação típica</strong>, fazer ecocardiograma.",
-                        "<strong>Lactentes &lt; 6 meses</strong> com febre prolongada sem causa: maior risco de aneurisma e quadro incompleto; pensar sempre."
+                        "<strong>PCR &lt; 3 mg/dL e VHS &lt; 40 mm/h:</strong> seguimento diário; se a febre continuar, repetir os exames; se surgir descamação típica, fazer ecocardiograma.",
+                        "Lactentes &lt; 6 meses com febre prolongada sem causa: maior risco de aneurisma e quadro incompleto; pensar sempre."
                     ],
                     escore: {
                         id: "kawasaki_incompleto",
@@ -102,10 +104,10 @@ registrarConduta({
                     icone: "🧭",
                     resumo: "MIS-C, viroses (adenovírus, sarampo), escarlatina, choque tóxico, reação a droga, artrite idiopática juvenil.",
                     itens: [
-                        "<strong>Síndrome inflamatória multissistêmica (MIS-C)</strong> pós-COVID: idade maior, sintomas gastrointestinais, choque, disfunção miocárdica.",
+                        "Síndrome inflamatória multissistêmica (MIS-C) pós-COVID: idade maior, sintomas gastrointestinais, choque, disfunção miocárdica.",
                         "<strong>Adenovírus, sarampo, EBV, enterovírus:</strong> conjuntivite com secreção, exsudato, quadro viral claro.",
-                        "<strong>Escarlatina</strong> (responde ao antibiótico em 24 a 48 h), <strong>síndrome do choque tóxico</strong>, <strong>Stevens-Johnson</strong> e reação a droga (DRESS), <strong>AIJ sistêmica</strong>, leptospirose, febre maculosa.",
-                        "Use o <strong>Guia de identificação do exantema</strong> desta categoria para comparar."
+                        "Escarlatina (responde ao antibiótico em 24 a 48 h), síndrome do choque tóxico, Stevens-Johnson e reação a droga (DRESS), AIJ sistêmica, leptospirose, febre maculosa.",
+                        "Use o Guia de identificação do exantema desta categoria para comparar."
                     ]
                 },
                 {
@@ -139,12 +141,12 @@ registrarConduta({
                     lista: "passos",
                     itens: [
                         "<span class=\"cond-passo\">1</span> <strong>Internar / UTI?</strong> Todo caso para imunoglobulina interna; choque e disfunção miocárdica = UTI",
-                        "<span class=\"cond-passo\">2</span> <strong>Confirmar:</strong> critérios, exames, ECG e <strong>ecocardiograma</strong>; descartar diferenciais",
-                        "<span class=\"cond-passo\">3</span> <strong>Imunoglobulina EV 2 g/kg</strong> em 10 a 12 h, até o 10º dia de febre (ou depois, se ainda inflamado)",
-                        "<span class=\"cond-passo\">4</span> <strong>AAS</strong> em dose anti-inflamatória até 48 a 72 h sem febre, depois dose baixa",
+                        "<span class=\"cond-passo\">2</span> <strong>Confirmar:</strong> critérios, exames, ECG e ecocardiograma; descartar diferenciais",
+                        "<span class=\"cond-passo\">3</span> <strong>Imunoglobulina EV:</strong> 2 g/kg em 10 a 12 h, até o 10º dia de febre (ou depois, se ainda inflamado)",
+                        "<span class=\"cond-passo\">4</span> <strong>AAS:</strong> dose anti-inflamatória até 48 a 72 h sem febre, depois dose baixa",
                         "<span class=\"cond-passo\">5</span> <strong>Alto risco de aneurisma:</strong> considerar corticoide junto",
                         "<span class=\"cond-passo\">6</span> <strong>Febre ≥ 36 h após a imunoglobulina:</strong> resistente → 2ª dose ou alternativas",
-                        "<span class=\"cond-passo\">7</span> <strong>Eco de controle e alta</strong> com AAS em dose baixa; adiar vacinas de vírus vivo"
+                        "<span class=\"cond-passo\">7</span> <strong>Alta:</strong> eco de controle, AAS em dose baixa; adiar vacinas de vírus vivo"
                     ]
                 },
                 {
@@ -153,7 +155,7 @@ registrarConduta({
                     resumo: "Todo Kawasaki com indicação de tratamento interna. Decida se é UTI.",
                     alerta: true,
                     itens: [
-                        "A <strong>imunoglobulina é feita internado</strong>, com monitorização da infusão, eco e controle da febre (AHA 2017)."
+                        "A imunoglobulina é feita internado, com monitorização da infusão, eco e controle da febre (AHA 2017)."
                     ],
                     escore: {
                         id: "internacao_kawasaki",
@@ -184,10 +186,10 @@ registrarConduta({
                     titulo: "Confirmar o diagnóstico e ecocardiograma",
                     resumo: "Hemograma, PCR, VHS, albumina, TGP, urina, ECG e eco ao diagnóstico.",
                     itens: [
-                        "<strong>Exames:</strong> hemograma, plaquetas, <strong>PCR e VHS</strong>, albumina, TGP, sódio, urina (leucocitúria estéril), ECG.",
-                        "<strong>Ecocardiograma ao diagnóstico</strong>, sem atrasar o tratamento (AHA 2017).",
-                        "<strong>Descartar</strong> os diferenciais (bloco 🔎): sorologias e testes virais conforme o quadro, teste para estreptococo, hemoculturas se toxemia.",
-                        "<strong>Não esperar</strong> todos os critérios aparecerem se o algoritmo do incompleto indicar tratamento."
+                        "<strong>Exames:</strong> hemograma, plaquetas, PCR e VHS, albumina, TGP, sódio, urina (leucocitúria estéril), ECG.",
+                        "Ecocardiograma ao diagnóstico, sem atrasar o tratamento (AHA 2017).",
+                        "Descartar os diferenciais (bloco 🔎): sorologias e testes virais conforme o quadro, teste para estreptococo, hemoculturas se toxemia.",
+                        "Não esperar todos os critérios aparecerem se o algoritmo do incompleto indicar tratamento."
                     ]
                 },
                 {
@@ -196,10 +198,10 @@ registrarConduta({
                     resumo: "2 g/kg em dose única, infusão em 10 a 12 h, até o 10º dia de febre.",
                     alerta: true,
                     itens: [
-                        "<strong>Imunoglobulina humana EV 2 g/kg em dose única</strong>, infundida em <strong>10 a 12 horas</strong> (AHA 2017).",
-                        "<strong>Quando:</strong> nos <strong>primeiros 10 dias</strong> de febre, de preferência <strong>até o 7º dia</strong>. Depois do 10º dia: tratar se ainda houver <strong>febre</strong> ou <strong>PCR/VHS elevadas</strong>, ou se houver <strong>aneurisma</strong> (AHA 2017).",
+                        "Imunoglobulina humana EV 2 g/kg em dose única, infundida em 10 a 12 horas (AHA 2017).",
+                        "<strong>Quando:</strong> nos primeiros 10 dias de febre, de preferência até o 7º dia. Depois do 10º dia: tratar se ainda houver febre ou PCR/VHS elevadas, ou se houver aneurisma (AHA 2017).",
                         "<strong>Na infusão:</strong> sinais vitais, reações (febre, calafrios, hipotensão); reduzir a velocidade se houver reação. Hemólise é possível, sobretudo em grupo sanguíneo não O.",
-                        "<strong>Vacinas de vírus vivo</strong> (tríplice/tetra viral, varicela): adiar <strong>11 meses</strong> após a imunoglobulina (AHA 2017)."
+                        "<strong>Vacinas de vírus vivo</strong> (tríplice/tetra viral, varicela): adiar 11 meses após a imunoglobulina (AHA 2017)."
                     ],
                     remedios: ["ivig_kawasaki"]
                 },
@@ -208,10 +210,10 @@ registrarConduta({
                     titulo: "AAS",
                     resumo: "Dose anti-inflamatória até 48 a 72 h sem febre; depois dose baixa (antiagregante) por 4 a 6 semanas.",
                     itens: [
-                        "<strong>AAS em dose moderada (30 a 50 mg/kg/dia) ou alta (80 a 100 mg/kg/dia)</strong>, dividida em 4 tomadas, até <strong>48 a 72 h sem febre</strong> (AHA 2017).",
-                        "Depois: <strong>AAS em dose baixa, 3 a 5 mg/kg/dia, 1 vez ao dia</strong>, até o eco de <strong>4 a 6 semanas</strong> normal; mais tempo se houver aneurisma (AHA 2017).",
-                        "<strong>Evitar ibuprofeno</strong> junto com o AAS (bloqueia o efeito antiagregante).",
-                        "<strong>Síndrome de Reye:</strong> se a criança pegar <strong>influenza ou varicela</strong> em uso de AAS, suspender e trocar o antiagregante com o especialista. Vacina da <strong>influenza inativada</strong> é recomendada."
+                        "AAS em dose moderada (30 a 50 mg/kg/dia) ou alta (80 a 100 mg/kg/dia), dividida em 4 tomadas, até 48 a 72 h sem febre (AHA 2017).",
+                        "Depois: AAS em dose baixa, 3 a 5 mg/kg/dia, 1 vez ao dia, até o eco de 4 a 6 semanas normal; mais tempo se houver aneurisma (AHA 2017).",
+                        { alerta: "evitar ibuprofeno junto com o AAS (bloqueia o efeito antiagregante)." },
+                        "<strong>Síndrome de Reye:</strong> se a criança pegar influenza ou varicela em uso de AAS, suspender e trocar o antiagregante com o especialista. Vacina da influenza inativada é recomendada."
                     ],
                     remedios: ["aas_kawasaki_aguda", "aas_kawasaki_baixa"]
                 },
@@ -220,8 +222,8 @@ registrarConduta({
                     titulo: "Alto risco de aneurisma: terapia adjunta",
                     resumo: "z-escore ≥ 2,5 no 1º eco, lactente < 6 meses, síndrome de choque: considerar corticoide junto com a imunoglobulina.",
                     itens: [
-                        "<strong>Alto risco</strong> de aneurisma: <strong>z-escore ≥ 2,5 já no 1º eco</strong>, <strong>lactente &lt; 6 meses</strong>, <strong>síndrome de choque</strong>, ativação macrofágica, PCR muito alta (AHA 2017; AHA 2024).",
-                        "Nesses casos, <strong>considerar corticoide</strong> junto com a imunoglobulina e o AAS, com reumatologia/cardiologia (AHA 2017; AHA 2024)."
+                        "Alto risco de aneurisma: z-escore ≥ 2,5 já no 1º eco, lactente &lt; 6 meses, síndrome de choque, ativação macrofágica, PCR muito alta (AHA 2017; AHA 2024).",
+                        "Nesses casos, considerar corticoide junto com a imunoglobulina e o AAS, com reumatologia/cardiologia (AHA 2017; AHA 2024)."
                     ]
                 },
                 {
@@ -229,9 +231,9 @@ registrarConduta({
                     titulo: "Resistência à imunoglobulina",
                     resumo: "Febre ≥ 36 h após o fim da infusão: 2ª dose de imunoglobulina ou alternativas com o especialista.",
                     itens: [
-                        "<strong>Resistente:</strong> febre persistente ou que volta <strong>≥ 36 h após o fim</strong> da imunoglobulina (10 a 20% dos casos) (AHA 2017).",
-                        "<strong>Opções:</strong> <strong>2ª dose de imunoglobulina 2 g/kg</strong>; <strong>pulso de metilprednisolona</strong> ou <strong>prednisolona com desmame</strong>; <strong>infliximabe</strong>; ciclosporina nos refratários (AHA 2017; AHA 2024).",
-                        "Discutir com <strong>reumatologia e cardiologia pediátrica</strong>; repetir o eco."
+                        "<strong>Resistente:</strong> febre persistente ou que volta ≥ 36 h após o fim da imunoglobulina (10 a 20% dos casos) (AHA 2017).",
+                        "<strong>Opções:</strong> 2ª dose de imunoglobulina 2 g/kg; pulso de metilprednisolona ou prednisolona com desmame; infliximabe; ciclosporina nos refratários (AHA 2017; AHA 2024).",
+                        "Discutir com reumatologia e cardiologia pediátrica; repetir o eco."
                     ],
                     remedios: ["ivig_kawasaki"]
                 },
@@ -240,9 +242,9 @@ registrarConduta({
                     titulo: "Eco de controle e alta",
                     resumo: "Alta sem febre há 24 a 48 h, com AAS em dose baixa e eco marcado.",
                     itens: [
-                        "<strong>Alta</strong> com a criança sem febre, com AAS em dose baixa e <strong>eco marcado em 1 a 2 semanas e em 4 a 6 semanas</strong> (AHA 2017).",
+                        "Alta com a criança sem febre, com AAS em dose baixa e eco marcado em 1 a 2 semanas e em 4 a 6 semanas (AHA 2017).",
                         "<strong>Aneurisma:</strong> antiagregação dupla ou anticoagulação conforme o tamanho, com o cardiologista (AHA 2017; AHA 2024).",
-                        "<strong>Orientar retorno</strong> se a febre voltar, dor no peito, palidez, choro inconsolável ou falta de ar."
+                        "Orientar retorno se a febre voltar, dor no peito, palidez, choro inconsolável ou falta de ar."
                     ],
                     remedios: ["aas_kawasaki_baixa"]
                 }
@@ -259,7 +261,7 @@ registrarConduta({
                     resumo: "Pelo maior z-escore: sem aneurisma, alta do cardiologista em até 12 meses; com aneurisma, seguimento por toda a vida.",
                     itens: [
                         "<strong>Sem acometimento ou só dilatação:</strong> AAS até 4 a 6 semanas; reavaliação cardiológica e alta em até 12 meses (AHA 2017).",
-                        "<strong>Aneurisma:</strong> seguimento <strong>por toda a vida</strong>, com testes de isquemia e imagem conforme o tamanho (AHA 2017; AHA 2024).",
+                        "<strong>Aneurisma:</strong> seguimento por toda a vida, com testes de isquemia e imagem conforme o tamanho (AHA 2017; AHA 2024).",
                         "Recorrência em 1 a 3% dos casos."
                     ]
                 },
@@ -268,8 +270,8 @@ registrarConduta({
                     icone: "💉",
                     resumo: "Vírus vivo só 11 meses após a imunoglobulina; influenza inativada em uso de AAS.",
                     itens: [
-                        "<strong>Tríplice/tetra viral e varicela:</strong> adiar <strong>11 meses</strong> após a imunoglobulina; se aplicada antes, repetir depois (AHA 2017).",
-                        "<strong>Influenza inativada</strong> anual enquanto usar AAS. As demais vacinas inativadas seguem o calendário."
+                        "<strong>Tríplice/tetra viral e varicela:</strong> adiar 11 meses após a imunoglobulina; se aplicada antes, repetir depois (AHA 2017).",
+                        "Influenza inativada anual enquanto usar AAS. As demais vacinas inativadas seguem o calendário."
                     ]
                 }
             ]
