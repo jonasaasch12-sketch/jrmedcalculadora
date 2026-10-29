@@ -13,7 +13,8 @@ registrarConduta({
     cor: "#0284c7",
     kw: "crupe laringite laringotraqueite laringotraqueobronquite estridor tosse ladrante rouquidao traqueite bacteriana epiglotite supraglotite",
     resumo: "Diagnóstico clínico, escore de gravidade clicável, dexametasona para todos, adrenalina inalatória e critérios de internação e UTI.",
-    legenda: "Conduta conforme o <strong>Guia Prático de Conduta nº 1 do Departamento de Emergências da SBP (2017)</strong>. Itens marcados <strong>(Einstein)</strong> são do Guia do Episódio de Cuidado do Hospital Israelita Albert Einstein (2022).",
+    legenda: "Conduta conforme o Guia Prático de Conduta nº 1 do Departamento de Emergências da SBP (2017). Itens marcados (Einstein) são do Guia do Episódio de Cuidado do Hospital Israelita Albert Einstein (2022).",
+    padraoTexto: true, // padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
         {
@@ -26,9 +27,9 @@ registrarConduta({
                     icone: "🔎",
                     resumo: "Clínico: rouquidão, tosse ladrante e estridor inspiratório.",
                     itens: [
-                        "<strong>Síndrome do crupe:</strong> rouquidão, <strong>tosse ladrante</strong>, <strong>estridor predominantemente inspiratório</strong> e graus variados de desconforto respiratório. Quando a causa é viral: crupe viral.",
-                        "<strong>Diagnóstico clínico.</strong> Não são recomendados exames laboratoriais ou radiológicos de rotina.",
-                        "<strong>Quadro:</strong> começa com rinorreia clara, faringite, tosse leve e febre baixa. Após <strong>12 a 48 h</strong> surgem os sintomas de obstrução alta. Resolve em <strong>3 a 7 dias</strong> (até 14 dias nos graves).",
+                        "<strong>Síndrome do crupe:</strong> rouquidão, tosse ladrante, estridor predominantemente inspiratório e graus variados de desconforto respiratório. Quando a causa é viral: crupe viral.",
+                        "Diagnóstico clínico. Não são recomendados exames laboratoriais ou radiológicos de rotina.",
+                        "<strong>Quadro:</strong> começa com rinorreia clara, faringite, tosse leve e febre baixa. Após 12 a 48 h surgem os sintomas de obstrução alta. Resolve em 3 a 7 dias (até 14 dias nos graves).",
                         "<strong>Extensão:</strong> só laringe = laringite (rouquidão e tosse ladrante) · laringe + traqueia = laringotraqueíte (crupe) · + bronquíolos = laringotraqueobronquite (tempo expiratório prolongado e sibilos).",
                         "<strong>Idade:</strong> 1 a 6 anos, pico aos 18 meses; mais em meninos. Mais no outono e inverno, mas ocorre o ano todo.",
                         "<strong>Agentes:</strong> parainfluenza 1, 2 e 3 (principais), influenza A e B, VSR. Acima de 5 anos: <em>Mycoplasma pneumoniae</em>.",
@@ -42,7 +43,7 @@ registrarConduta({
                     resumo: "Supraglotite, traqueíte bacteriana, corpo estranho, abscessos.",
                     itens: [
                         "<strong>Diferenciais:</strong> edema angioneurótico, aspiração de corpo estranho, traqueíte bacteriana, abscesso retrofaríngeo ou periamigdaliano, mononucleose e supraglotite (epiglotite).",
-                        "<strong>Supraglotite:</strong> estridor e desconforto <strong>sem rouquidão e sem tosse ladrante</strong>, voz abafada (\"batata quente\"), salivação, aspecto tóxico e alteração de perfusão. Ficou rara após a vacina Hib.",
+                        "<strong>Supraglotite:</strong> estridor e desconforto sem rouquidão e sem tosse ladrante, voz abafada (\"batata quente\"), salivação, aspecto tóxico e alteração de perfusão. Ficou rara após a vacina Hib.",
                         "<strong>Onde está a obstrução:</strong> supraglótica = estridor inspiratório, voz abafada, salivação · glótica/subglótica (crupe) = rouquidão, estridor inspiratório ou bifásico · intratorácica = estridor mais expiratório."
                     ],
                     tabela: {
@@ -66,10 +67,10 @@ registrarConduta({
                     icone: "⚠️",
                     resumo: "< 6 meses, estridor em repouso, alteração de consciência, hipoxemia.",
                     itens: [
-                        "Idade <strong>&lt; 6 meses</strong>, <strong>estridor em repouso</strong>, <strong>alteração do nível de consciência</strong> e hipercapnia.",
+                        "Idade &lt; 6 meses, estridor em repouso, alteração do nível de consciência e hipercapnia.",
                         "Manipulação prévia da via aérea (cirurgia, intubação prévia) ou doença prévia da via aérea: abordagem mais cuidadosa.",
-                        "<strong>Oximetria em toda criança com estridor.</strong> Saturação normal <strong>não</strong> afasta gravidade: a via aérea se estreita muito antes da hipóxia.",
-                        "<strong>Hipoxemia = doença avançada</strong>, falência respiratória iminente → <strong>UTI</strong>. Crupe moderado com hipoxemia sugere acometimento de via aérea inferior associado."
+                        "Oximetria em toda criança com estridor. Saturação normal não afasta gravidade: a via aérea se estreita muito antes da hipóxia.",
+                        "Hipoxemia = doença avançada, falência respiratória iminente → UTI. Crupe moderado com hipoxemia sugere acometimento de via aérea inferior associado."
                     ]
                 },
                 {
@@ -123,7 +124,7 @@ registrarConduta({
                         "<span class=\"cond-passo\">3</span> <strong>Corticoide para todos:</strong> dexametasona 0,6 mg/kg dose única",
                         "<span class=\"cond-passo\">4</span> <strong>Moderado ou grave:</strong> adrenalina inalatória",
                         "<span class=\"cond-passo\">5</span> <strong>SpO₂ &lt; 92%:</strong> O₂ umidificado e UTI",
-                        "<span class=\"cond-passo\">6</span> <strong>Observar 3 a 4 h</strong> após a adrenalina (rebote em ~2 h)",
+                        "<span class=\"cond-passo\">6</span> <strong>Observar:</strong> 3 a 4 h após a adrenalina (rebote em ~2 h)",
                         "<span class=\"cond-passo\">7</span> <strong>Grave sem resposta:</strong> UTI, adrenalina repetida, via aérea"
                     ]
                 },
@@ -134,7 +135,7 @@ registrarConduta({
                     resumo: "Primeiro decida: UTI, internar ou casa. Reavalie depois da observação após a adrenalina (passo 6).",
                     alerta: true,
                     itens: [
-                        "A maioria vai para casa após a dexametasona. A decisão final vem <strong>depois de 3 a 4 h de observação</strong> após a adrenalina (rebote em ~2 h)."
+                        "A maioria vai para casa após a dexametasona. A decisão final vem depois de 3 a 4 h de observação após a adrenalina (rebote em ~2 h)."
                     ],
                     escore: {
                         id: "internacao_crupe",
@@ -166,10 +167,10 @@ registrarConduta({
                     titulo: "Chegada: acalmar e classificar",
                     resumo: "Colo dos pais, oximetria, escore e sinais de outra causa.",
                     itens: [
-                        "Manter a criança <strong>o mais calma possível, no colo dos pais</strong>. Evitar manipulação e exames desnecessários: o choro piora o colapso da via aérea e a resistência ao fluxo.",
-                        "<strong>Oximetria</strong> em todos. Classificar a gravidade pelo <strong>escore</strong> (bloco 🔎).",
-                        "Procurar sinais de <strong>outra causa</strong>: toxemia, febre alta, salivação, voz abafada, ausência de tosse ladrante (supraglotite, traqueíte bacteriana, abscesso) ou início súbito (corpo estranho).",
-                        "<strong>Não</strong> pedir RX de rotina. Nebulização com SF ou ar umidificado <strong>não tem eficácia comprovada</strong>: não insistir se a criança ficar mais agitada."
+                        "Manter a criança o mais calma possível, no colo dos pais. Evitar manipulação e exames desnecessários: o choro piora o colapso da via aérea e a resistência ao fluxo.",
+                        "Oximetria em todos. Classificar a gravidade pelo escore (bloco 🔎).",
+                        "Procurar sinais de outra causa: toxemia, febre alta, salivação, voz abafada, ausência de tosse ladrante (supraglotite, traqueíte bacteriana, abscesso) ou início súbito (corpo estranho).",
+                        "<strong>Não fazer:</strong> RX de rotina. Nebulização com SF ou ar umidificado não tem eficácia comprovada: não insistir se a criança ficar mais agitada."
                     ]
                 },
                 {
@@ -177,10 +178,10 @@ registrarConduta({
                     titulo: "Corticoide: dexametasona para todos",
                     resumo: "Dose única, VO, IM ou EV. Reduz gravidade, internação e UTI.",
                     itens: [
-                        "<strong>Dexametasona 0,6 mg/kg, dose única</strong> (padrão do serviço), VO ou parenteral. Ação longa (> 48 h).",
-                        "Vomitando: <strong>IM</strong>. Já com acesso venoso: <strong>EV</strong>.",
+                        "Dexametasona 0,6 mg/kg, dose única (padrão do serviço), VO ou parenteral. Ação longa (> 48 h).",
+                        "Vomitando: IM. Já com acesso venoso: EV.",
                         "Referência SBP: leve 0,15 a 0,3 mg/kg · moderado 0,3 a 0,6 mg/kg · grave 0,6 mg/kg IM.",
-                        "<strong>Alternativas:</strong> budesonida inalatória <strong>2 mg</strong> (8 mL da 0,25 mg/mL), dose única, no leve/moderado ou se vomita e recusa a dexametasona oral · <strong>(Einstein)</strong> prednisolona 1 a 2 mg/kg/dia por 3 dias, se não houver dexametasona."
+                        "<strong>Alternativas:</strong> budesonida inalatória 2 mg (8 mL da 0,25 mg/mL), dose única, no leve/moderado ou se vomita e recusa a dexametasona oral · (Einstein) prednisolona 1 a 2 mg/kg/dia por 3 dias, se não houver dexametasona."
                     ],
                     remedios: ["dexa_crupe"]
                 },
@@ -189,11 +190,11 @@ registrarConduta({
                     titulo: "Adrenalina inalatória (moderado ou grave)",
                     resumo: "Efeito quase imediato, dura cerca de 2 h.",
                     itens: [
-                        "<strong>Indicação:</strong> crupe <strong>moderado ou grave</strong>, e criança com procedimento ou manipulação prévia da via aérea.",
-                        "<strong>Dose:</strong> adrenalina 1:1000, <strong>0,5 mL/kg, máximo 5 mL</strong> por dose, <strong>pura, sem diluir</strong>, nebulizada.",
-                        "<strong>Não</strong> indicada no crupe leve (só dexametasona e alta).",
-                        "Efeito em minutos, mas <strong>dura cerca de 2 h</strong>: o desconforto pode voltar. Sempre junto com o corticoide.",
-                        "Uma dose é segura. Nos casos de falência respiratória, a experiência clínica sugere que pode ser <strong>repetida a cada 2 horas</strong>; há relato de taquicardia ventricular e infarto em criança saudável com crupe grave. Monitorar."
+                        "<strong>Indicação:</strong> crupe moderado ou grave, e criança com procedimento ou manipulação prévia da via aérea.",
+                        "<strong>Dose:</strong> adrenalina 1:1000, 0,5 mL/kg, máximo 5 mL por dose, pura, sem diluir, nebulizada.",
+                        "Não indicada no crupe leve (só dexametasona e alta).",
+                        "Efeito em minutos, mas dura cerca de 2 h: o desconforto pode voltar. Sempre junto com o corticoide.",
+                        "Uma dose é segura. Nos casos de falência respiratória, a experiência clínica sugere que pode ser repetida a cada 2 horas; há relato de taquicardia ventricular e infarto em criança saudável com crupe grave. Monitorar."
                     ],
                     remedios: ["adrenalina_neb"]
                 },
@@ -202,8 +203,8 @@ registrarConduta({
                     titulo: "Oxigênio se hipoxemia",
                     resumo: "O₂ umidificado se SpO₂ < 92%. Hipoxemia indica UTI.",
                     itens: [
-                        "<strong>O₂ umidificado</strong> se SpO₂ <strong>&lt; 92%</strong> (pode ser pela própria nebulização).",
-                        "Hipoxemia no crupe = doença avançada, risco de parada respiratória → <strong>solicitar UTI</strong>."
+                        "O₂ umidificado se SpO₂ &lt; 92% (pode ser pela própria nebulização).",
+                        "Hipoxemia no crupe = doença avançada, risco de parada respiratória → solicitar UTI."
                     ]
                 },
                 {
@@ -211,7 +212,7 @@ registrarConduta({
                     titulo: "Observar após a adrenalina",
                     resumo: "3 a 4 horas na emergência antes de decidir.",
                     itens: [
-                        "Observar <strong>3 a 4 horas</strong> após a última adrenalina (o efeito acaba em ~2 h).",
+                        "Observar 3 a 4 horas após a última adrenalina (o efeito acaba em ~2 h).",
                         "Reavaliar o escore. Piora ou retorno do estridor em repouso → repetir adrenalina e reclassificar."
                     ]
                 },
@@ -220,9 +221,9 @@ registrarConduta({
                     titulo: "Grave sem resposta: UTI e via aérea",
                     resumo: "Adrenalina repetida, O₂, heliox, VNI; IOT pelo mais experiente.",
                     itens: [
-                        "Na UTI: adrenalina inalatória repetida <strong>a cada 2 horas</strong> se falência respiratória (SBP), O₂ se SpO₂ &lt; 92%. <strong>(Einstein)</strong> <strong>heliox</strong> (30% O₂ + 70% hélio) se risco de falência e pouca resposta, <strong>VNI</strong>, IOT se necessário.",
-                        "<strong>Intubação:</strong> em ambiente controlado, pelo profissional <strong>mais experiente</strong>. Cânula com <strong>0,5 mm a menos</strong> de diâmetro interno que a calculada para a idade.",
-                        "A maioria das crianças <strong>não</strong> precisa de intubação após adrenalina + dexametasona."
+                        "Na UTI: adrenalina inalatória repetida a cada 2 horas se falência respiratória (SBP), O₂ se SpO₂ &lt; 92%. (Einstein) heliox (30% O₂ + 70% hélio) se risco de falência e pouca resposta, VNI, IOT se necessário.",
+                        "<strong>Intubação:</strong> em ambiente controlado, pelo profissional mais experiente. Cânula com 0,5 mm a menos de diâmetro interno que a calculada para a idade.",
+                        "A maioria das crianças não precisa de intubação após adrenalina + dexametasona."
                     ]
                 },
                 {
@@ -231,10 +232,10 @@ registrarConduta({
                     alerta: true,
                     resumo: "Crupe grave + febre alta + toxemia, sem resposta a adrenalina e corticoide.",
                     itens: [
-                        "<strong>Suspeitar:</strong> crupe grave com febre > 38,5 °C e <strong>toxemia</strong>, <strong>sem resposta</strong> a adrenalina e corticoide. Mais em > 3 anos. Agente principal: <em>S. aureus</em> (também estreptococos, <em>Moraxella</em>, <em>Haemophilus</em>). Mortalidade de 18% a 40%.",
-                        "<strong>UTI.</strong> Intubação de preferência <strong>no centro cirúrgico, com endoscopia</strong> (diagnóstico, retirada das membranas e coleta de secreção). Intubação por 3 a 7 dias; cuidado com obstrução da cânula pelas membranas.",
-                        "<strong>Antibiótico EV:</strong> cefalosporina de 2ª (<strong>cefuroxima</strong>) ou 3ª geração (<strong>ceftriaxona</strong>), como droga única.",
-                        "<strong>Não</strong> há lugar para corticoide ou adrenalina inalatória.",
+                        "<strong>Suspeitar:</strong> crupe grave com febre > 38,5 °C e toxemia, sem resposta a adrenalina e corticoide. Mais em > 3 anos. Agente principal: <em>S. aureus</em> (também estreptococos, <em>Moraxella</em>, <em>Haemophilus</em>). Mortalidade de 18% a 40%.",
+                        "UTI. Intubação de preferência no centro cirúrgico, com endoscopia (diagnóstico, retirada das membranas e coleta de secreção). Intubação por 3 a 7 dias; cuidado com obstrução da cânula pelas membranas.",
+                        "<strong>Antibiótico EV:</strong> cefalosporina de 2ª (cefuroxima) ou 3ª geração (ceftriaxona), como droga única.",
+                        "Não há lugar para corticoide ou adrenalina inalatória.",
                         "Complicações: falência respiratória, obstrução da via aérea, pneumotórax, síndrome do choque tóxico, SDRA."
                     ]
                 },
@@ -244,7 +245,7 @@ registrarConduta({
                     resumo: "Pode surgir logo após aliviar a obstrução (intubação).",
                     itens: [
                         "Na obstrução alta, a pressão pleural muito negativa acumula líquido no interstício pulmonar.",
-                        "Ao <strong>aliviar a obstrução</strong> (intubação), a pressão intersticial sobe de repente e o líquido entra nos alvéolos: <strong>edema pulmonar</strong>, mesmo sem doença cardíaca ou pulmonar prévia. Estar preparado."
+                        "Ao aliviar a obstrução (intubação), a pressão intersticial sobe de repente e o líquido entra nos alvéolos: edema pulmonar, mesmo sem doença cardíaca ou pulmonar prévia. Estar preparado."
                     ]
                 }
             ]
@@ -260,7 +261,7 @@ registrarConduta({
                     resumo: "Critério de alta e sinais para voltar.",
                     itens: [
                         "<strong>Critério de alta (Einstein):</strong> sem desconforto respiratório e sem hipoxemia.",
-                        "Dexametasona em <strong>dose única</strong> já feita na emergência: em geral não precisa de corticoide para casa (exceto se usada prednisolona: 3 dias).",
+                        "Dexametasona em dose única já feita na emergência: em geral não precisa de corticoide para casa (exceto se usada prednisolona: 3 dias).",
                         "Explicar que a tosse rouca pode durar alguns dias (3 a 7) e costuma piorar à noite.",
                         "Manter a criança calma; oferecer líquidos; antitérmico se febre."
                     ],

@@ -28,12 +28,12 @@ registrarConduta({
             titulo: "Definição e diagnóstico",
             icone: "🔎",
             itens: [
-                "<strong>Definição:</strong> síndrome clínica manifestada por dificuldade respiratória em crianças <strong>menores de 2 anos</strong>, provocada por infecção viral aguda do trato respiratório, com inflamação das vias aéreas inferiores.",
+                "<strong>Definição:</strong> síndrome clínica manifestada por dificuldade respiratória em crianças menores de 2 anos, provocada por infecção viral aguda do trato respiratório, com inflamação das vias aéreas inferiores.",
                 "<strong>Agentes:</strong> VSR (até 80% dos casos), seguido do rinovírus. Outros: parainfluenza, metapneumovírus, influenza, adenovírus, coronavírus (incluindo SARS-CoV-2) e bocavírus. Cerca de 1/3 dos hospitalizados tem 2 ou mais vírus.",
                 "<strong>Quadro:</strong> rinorreia, obstrução nasal e tosse, seguidos (2º–3º dia) de taquipneia, sibilos, crepitações difusas e/ou uso de musculatura acessória. Febre baixa ou ausente. Contactantes com sintomas gripais corroboram.",
-                "<strong>Evolução:</strong> pico de gravidade entre o <strong>3º e o 5º dia</strong>. Duração de cerca de 10 dias. Tosse resolve em até 3 semanas em 90%, podendo persistir até 4 semanas.",
+                "<strong>Evolução:</strong> pico de gravidade entre o 3º e o 5º dia. Duração de cerca de 10 dias. Tosse resolve em até 3 semanas em 90%, podendo persistir até 4 semanas.",
                 "Avaliar FR, FC e esforço fora do choro, da febre e da agitação. A saturação pode cair no sono.",
-                "<strong>Diagnóstico essencialmente clínico.</strong>",
+                "Diagnóstico essencialmente clínico.",
                 "<strong>Radiografia de tórax:</strong> não indicada de rotina. Reservar para casos graves, evolução desfavorável, suspeita de complicação/coinfecção bacteriana ou diagnóstico diferencial (especialmente cardiopatas). Tomografia não indicada de rotina. USG pulmonar à beira-leito pode ser considerada em casos graves/UTI.",
                 "<strong>Exames laboratoriais:</strong> não rotineiros. Hemograma e proteínas de fase aguda nos casos graves ou com dúvida diagnóstica. Eletrólitos e função renal se desidratação. Gasometria arterial nos casos graves com indicação de VNI/VMI.",
                 "<strong>Pesquisa viral (RT-PCR de nasofaringe):</strong> recomendada nos hospitalizados com doença grave / SRAG, na admissão, conforme fluxo local.",
@@ -108,7 +108,7 @@ registrarConduta({
                     ["Apneia", "Não", "Não", "Episódios frequentes ou apneia prolongada"],
                     ["Ingesta alimentar", "Normal", "Normal ou com dificuldade", "Recusa alimentar"]
                 ],
-                nota: "<strong>Qualquer critério de moderada ou grave classifica o caso no nível mais elevado.</strong> *Caso crítico: desidratação grave ou falência respiratória iminente. Reavaliar periodicamente, sobretudo em lactentes mais jovens. Fonte: adaptado de Manti et al. (2023)."
+                nota: "Qualquer critério de moderada ou grave classifica o caso no nível mais elevado. *Caso crítico: desidratação grave ou falência respiratória iminente. Reavaliar periodicamente, sobretudo em lactentes mais jovens. Fonte: adaptado de Manti et al. (2023)."
             },
             grupos: [
                 {
@@ -189,12 +189,12 @@ registrarConduta({
             resumo: "Monitorização, O₂, alimentação e hidratação.",                    itens: [
                         "Hospitalizar se não houver resposta satisfatória às medidas iniciais em unidade de observação.",
                         "<strong>Monitorização:</strong> reavaliar continuamente até estabilizar. Depois, sinais vitais (oximetria, FC, FR, temperatura) a cada 2–3 h. Monitorização contínua se CNAF/VNI, apneia documentada ou risco de apneia (prematuros, < 2 meses). Controlar ingesta e diurese.",
-                        "<strong>Higiene nasal</strong> com NaCl 0,9% e aspiração nasal <strong>superficial</strong> pontual, se secreção abundante com desconforto ou dificuldade para alimentar. Aspiração profunda (oro/nasofaringe) não é recomendada de rotina.",
+                        "Higiene nasal com NaCl 0,9% e aspiração nasal superficial pontual, se secreção abundante com desconforto ou dificuldade para alimentar. Aspiração profunda (oro/nasofaringe) não é recomendada de rotina.",
                         `Aspirar antes das terapias inalatórias. Cabeceira elevada 30–45° em posição supina; se possível, no colo dos pais. ${IMIP}`,
-                        "<strong>O₂ suplementar umidificado</strong> se hipoxemia persistente (<strong>SatO₂ ≤ 92%</strong>) e/ou esforço respiratório persistente: cânula nasal 1–3 L/min ou máscara facial. Esforço persistente mesmo com saturação no alvo indica escalonar o suporte.",
-                        "<strong>CNAF</strong> indicada na BVA moderada/grave com necessidade de O₂, iniciada o mais precoce possível (ver Suporte ventilatório).",
-                        "<strong>Alimentação:</strong> manter VO se o padrão respiratório permitir (CNAF não contraindica VO). Se intolerância, má aceitação, vômitos ou risco de aspiração, usar <strong>sonda gástrica/enteral</strong>, preferível à hidratação venosa.",
-                        "<strong>Hidratação IV</strong> se desidratação ou intolerância à dieta enteral (distensão, vômitos). Usar <strong>solução isotônica</strong> (nunca hipotônica), com volume cuidadoso e reavaliado (o excesso piora a congestão). Hiponatremia é comum na BVA grave (secreção de ADH).",
+                        "O₂ suplementar umidificado se hipoxemia persistente (SatO₂ ≤ 92%) e/ou esforço respiratório persistente: cânula nasal 1–3 L/min ou máscara facial. Esforço persistente mesmo com saturação no alvo indica escalonar o suporte.",
+                        "CNAF indicada na BVA moderada/grave com necessidade de O₂, iniciada o mais precoce possível (ver Suporte ventilatório).",
+                        "<strong>Alimentação:</strong> manter VO se o padrão respiratório permitir (CNAF não contraindica VO). Se intolerância, má aceitação, vômitos ou risco de aspiração, usar sonda gástrica/enteral, preferível à hidratação venosa.",
+                        "<strong>Hidratação IV:</strong> se desidratação ou intolerância à dieta enteral (distensão, vômitos). Usar solução isotônica (nunca hipotônica), com volume cuidadoso e reavaliado (o excesso piora a congestão). Hiponatremia é comum na BVA grave (secreção de ADH).",
                         "Tratar a febre com antipirético.",
                         "Reavaliação clínica seriada. Reclassificar conforme a evolução."
                     ],
@@ -205,7 +205,7 @@ registrarConduta({
             icone: "🚨",
             resumo: "Suporte ventilatório, monitorização e sedação.",                    itens: [
                         "Monitorização contínua multiparamétrica. Monitorização invasiva da PA, em geral, não se justifica.",
-                        "Suporte ventilatório conforme a gravidade: CNAF → CPAP/VNI → VMI. Nas formas mais graves, <strong>VNI como primeira linha</strong> em vez da CNAF.",
+                        "Suporte ventilatório conforme a gravidade: CNAF → CPAP/VNI → VMI. Nas formas mais graves, VNI como primeira linha em vez da CNAF.",
                         "Higiene nasal, manejo da febre e suporte hídrico e nutricional (enteral preferível; IV isotônica, com balanço hídrico).",
                         "Pesquisa viral (RT-PCR) na admissão. Gasometria arterial periódica e individualizada na BVA crítica. Capnografia (ETCO₂) em alguns pacientes. Ecocardiograma funcional (POCUS) ao menos uma vez se em VMI, se disponível.",
                         "Aspiração profunda cuidadosa por equipe treinada pode ser considerada em casos graves na UTIP.",
@@ -224,10 +224,10 @@ registrarConduta({
                     nome: "Cânula nasal de alto fluxo (CNAF)",
                     itens: [
                         "Indicada na BVA moderada/grave, o mais precoce possível. Antes da instalação, considerar fisioterapia respiratória e higienização brônquica.",
-                        "<strong>Não indicar</strong> se insuficiência respiratória iminente, letargia, má perfusão ou apneias.",
+                        "<strong>Não indicar:</strong> se insuficiência respiratória iminente, letargia, má perfusão ou apneias.",
                         "FiO₂ inicial 40% ou o suficiente para SpO₂ ≥ 92%. Reavaliar a cada 2 h.",
                         "<strong>Falha:</strong> FiO₂ > 50–60% ou piora do desconforto, hipercapnia, taquipneia, apneia, taquicardia ou bradicardia → escalonar para CPAP, VNI ou VMI.",
-                        "<strong>Desmame:</strong> após 12–24 h de resposta, se FiO₂ < 30–40%, desconforto leve ou ausente e FC adequada: reduzir para o fluxo de desmame e a FiO₂. <strong>Retirada:</strong> FiO₂ < 30% e > 6 h no fluxo de desmame. Sucesso: 48 h fora da CNAF.",
+                        "<strong>Desmame:</strong> após 12–24 h de resposta, se FiO₂ < 30–40%, desconforto leve ou ausente e FC adequada: reduzir para o fluxo de desmame e a FiO₂. Retirada: FiO₂ < 30% e > 6 h no fluxo de desmame. Sucesso: 48 h fora da CNAF.",
                         "Complicações: hiperemia ou lesão do septo nasal, sangramento nasal, escape de ar."
                     ],
                     tabela: {
@@ -243,9 +243,9 @@ registrarConduta({
                     nome: "CPAP / VNI",
                     itens: [
                         "Considerar na BVA grave, esforço moderado a grave, insuficiência respiratória e/ou risco de progressão para VMI.",
-                        "<strong>CPAP inicial 7–8 cmH₂O</strong>, FiO₂ 40% ou o suficiente para SpO₂ ≥ 92%. Reavaliar a cada 2 h.",
+                        "CPAP inicial 7–8 cmH₂O, FiO₂ 40% ou o suficiente para SpO₂ ≥ 92%. Reavaliar a cada 2 h.",
                         "<strong>Falha:</strong> FiO₂ > 60% ou piora do desconforto, hipercapnia, taquipneia, apneia, taquicardia ou bradicardia → VNI ou VMI.",
-                        "<strong>Desmame:</strong> após 12–24 h, se FiO₂ ≤ 40% e desconforto leve a moderado: reduzir para 5 cmH₂O. <strong>Retirada:</strong> FiO₂ < 30% e desconforto leve ou ausente. Sucesso: 48 h fora do CPAP.",
+                        "<strong>Desmame:</strong> após 12–24 h, se FiO₂ ≤ 40% e desconforto leve a moderado: reduzir para 5 cmH₂O. Retirada: FiO₂ < 30% e desconforto leve ou ausente. Sucesso: 48 h fora do CPAP.",
                         "Interface que favoreça conforto e sincronia. Vigiar lesões de pele e septo nasal.",
                         `Preferir uso intermitente. Testar por 1–2 h. <strong>Insucesso:</strong> agitação, alteração da consciência e/ou hipotonia, FiO₂ > 40–45%, SatO₂/FiO₂ < 221, piora do padrão ou WDF > 7, ou sem resposta em até 2 h → intubação. ${IMIP}`
                     ]
@@ -301,14 +301,14 @@ registrarConduta({
             alerta: true,
             itens: [
                 "<strong>Antimicrobianos</strong>: só se infecção bacteriana concomitante confirmada ou forte suspeita.",
-                "<strong>Broncodilatadores β2</strong> inalatórios ou EV (salbutamol). Não fazer prova terapêutica de rotina quando o diagnóstico é claro.",
-                "<strong>Brometo de ipratrópio.</strong>",
-                "<strong>Adrenalina</strong> (epinefrina) inalatória.",
-                "<strong>Corticoide</strong> sistêmico ou inalatório.",
+                "Broncodilatadores β2 inalatórios ou EV (salbutamol). Não fazer prova terapêutica de rotina quando o diagnóstico é claro.",
+                "Brometo de ipratrópio.",
+                "Adrenalina (epinefrina) inalatória.",
+                "Corticoide sistêmico ou inalatório.",
                 "<strong>Nebulização com salina hipertônica</strong> (≥ 3%): evidência insuficiente para uso rotineiro.",
-                "<strong>Antileucotrienos</strong> (montelucaste), inclusive no pós-bronquiolite.",
+                "Antileucotrienos (montelucaste), inclusive no pós-bronquiolite.",
                 "Descongestionantes e antitussígenos.",
-                "Fluidos IV <strong>hipotônicos</strong>.",
+                "Fluidos IV hipotônicos.",
                 "Aspiração nasal profunda de rotina.",
                 `Sulfato de magnésio, heliox e antivirais. ${IMIP}`,
                 "<strong>Fisioterapia respiratória:</strong> não rotineira. Considerar individualmente em comorbidades que dificultem eliminar secreções (doença neuromuscular, alteração estrutural de vias aéreas) e em UTI sob VM."
@@ -326,14 +326,14 @@ registrarConduta({
             icone: "🏠",
             aberta: true,
             resumo: "Cuidados em casa e medicações.",                    itens: [
-                        "<strong>Idade < 2 meses → acompanhamento em leito de internação</strong>, mesmo se leve.",
+                        "Idade < 2 meses → acompanhamento em leito de internação, mesmo se leve.",
                         "Higiene nasal com SF 0,9%.",
                         "Manter hidratação e alimentação adequadas para a idade (ofertas frequentes e em pequenas quantidades).",
                         "Antitérmico se necessário.",
                         "Higiene das mãos, etiqueta respiratória, manter a criança em casa e evitar contato com outras pessoas. Evitar tabagismo passivo.",
-                        "<strong>Evitar descongestionantes e medicamentos para tosse</strong> (sem benefício e podem ser prejudiciais).",
+                        "<strong>Não usar:</strong> descongestionantes e medicamentos para tosse (sem benefício e podem ser prejudiciais).",
                         "Nenhuma intervenção farmacológica específica é necessária.",
-                        "Orientar evolução esperada e <strong>retorno para reavaliação</strong> (piora possível entre o 3º e o 5º dia). Retorno imediato se sinais de alerta.",
+                        "Orientar evolução esperada e retorno para reavaliação (piora possível entre o 3º e o 5º dia). Retorno imediato se sinais de alerta.",
                         "Manejo ambulatorial não indicado se cuidado insuficiente: insegurança familiar/social, impossibilidade de seguir orientações ou dificuldade de acesso."
                     ],
                     remedios: ["soro_nasal", "pct_gts", "dip_gts", "orientacoes_bva"]
@@ -361,11 +361,11 @@ registrarConduta({
             titulo: "Alta e seguimento",
             icone: "✅",
             itens: [
-                "<strong>Critérios de alta:</strong> estabilidade clínica por pelo menos <strong>12 h</strong>, <strong>SatO₂ > 92% em ar ambiente</strong>, melhora do padrão respiratório e ingestão oral suficiente para prevenir desidratação.",
+                "<strong>Critérios de alta:</strong> estabilidade clínica por pelo menos 12 h, SatO₂ > 92% em ar ambiente, melhora do padrão respiratório e ingestão oral suficiente para prevenir desidratação.",
                 "Cuidador apto a manter o tratamento, reconhecer sinais de alerta e com acesso ao serviço de saúde.",
                 `Alta da UTI: SatO₂ ≥ 92% sem O₂ há pelo menos 24 h e estabilidade clínica por no mínimo 24 h. ${IMIP}`,
-                "<strong>Reavaliação ambulatorial em até 48 h</strong> após a alta e seguimento na atenção primária.",
-                "Estridor ou desconforto persistente: reavaliar e encaminhar à atenção secundária. <strong>Tosse > 4 semanas:</strong> encaminhar para investigação.",
+                "Reavaliação ambulatorial em até 48 h após a alta e seguimento na atenção primária.",
+                "Estridor ou desconforto persistente: reavaliar e encaminhar à atenção secundária. Tosse > 4 semanas: encaminhar para investigação.",
                 "Não há medicamento que previna sibilância recorrente ou tosse pós-BVA. Risco de sibilância recorrente/asma cerca de 2,4×. Bronquiolite obliterante é rara (mais associada ao adenovírus)."
             ]
         },
@@ -374,11 +374,11 @@ registrarConduta({
             titulo: "Prevenção, isolamento e notificação",
             icone: "🛡️",
             itens: [
-                "<strong>Nirsevimabe</strong> (dose única, protege toda a sazonalidade), disponível nos CRIE desde fev/2026 para: prematuros com IG ≤ 36 semanas e 6 dias (qualquer peso); e crianças até 23 meses e 29 dias com cardiopatia congênita hemodinamicamente significativa, broncodisplasia, imunocomprometimento, síndrome de Down, fibrose cística, doença neuromuscular ou anomalias congênitas de vias aéreas.",
-                "<strong>Palivizumabe</strong> 15 mg/kg IM mensal na sazonalidade (até 5 doses). Em 2026, em transição para o nirsevimabe: consultar as Notas Técnicas vigentes.",
+                "Nirsevimabe (dose única, protege toda a sazonalidade), disponível nos CRIE desde fev/2026 para: prematuros com IG ≤ 36 semanas e 6 dias (qualquer peso); e crianças até 23 meses e 29 dias com cardiopatia congênita hemodinamicamente significativa, broncodisplasia, imunocomprometimento, síndrome de Down, fibrose cística, doença neuromuscular ou anomalias congênitas de vias aéreas.",
+                "Palivizumabe 15 mg/kg IM mensal na sazonalidade (até 5 doses). Em 2026, em transição para o nirsevimabe: consultar as Notas Técnicas vigentes.",
                 "<strong>Vacina VSR para gestantes:</strong> dose única a partir de 28 semanas de IG (exceto em trabalho de parto ativo).",
-                "<strong>No hospital:</strong> precauções padrão + contato e gotículas (máscara cirúrgica, proteção ocular, avental, luvas). Precaução para <strong>aerossóis (N95/PFF2)</strong> em intubação, VNI e broncoscopia. Quarto privativo ou coorte (≥ 1 m entre leitos).",
-                "<strong>Notificação:</strong> todo caso de <strong>SRAG hospitalizado</strong> (e óbito por SRAG) no <strong>Sivep-Gripe em até 24 h</strong>. Casos leves ambulatoriais não são de notificação compulsória.",
+                "<strong>No hospital:</strong> precauções padrão + contato e gotículas (máscara cirúrgica, proteção ocular, avental, luvas). Precaução para aerossóis (N95/PFF2) em intubação, VNI e broncoscopia. Quarto privativo ou coorte (≥ 1 m entre leitos).",
+                "<strong>Notificação:</strong> todo caso de SRAG hospitalizado (e óbito por SRAG) no Sivep-Gripe em até 24 h. Casos leves ambulatoriais não são de notificação compulsória.",
                 "Comunidade: higiene das mãos, etiqueta respiratória, evitar aglomerações e contato com pessoas gripadas, manter aleitamento materno e vacinas em dia, evitar tabagismo passivo."
             ]
         }
