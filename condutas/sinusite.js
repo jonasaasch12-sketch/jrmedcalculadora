@@ -26,14 +26,14 @@ registrarConduta({
                     icone: "🔎",
                     resumo: "Clínico. IVAS que dura mais de 10 dias, piora depois de melhorar ou começa grave.",
                     itens: [
-                        "<strong>Diagnóstico clínico</strong> em criança de 1 a 18 anos com IVAS e <strong>uma das três apresentações</strong> (AAP 2013):",
-                        "• <strong>Persistente:</strong> secreção nasal (de qualquer aspecto) e/ou <strong>tosse diurna</strong> por <strong>mais de 10 dias sem melhora</strong>.",
-                        "• <strong>Piora (dupla piora):</strong> volta ou piora da secreção nasal, da tosse diurna ou da febre <strong>depois de melhora inicial</strong>.",
-                        "• <strong>Início grave:</strong> <strong>febre ≥ 39 °C + secreção nasal purulenta</strong> por <strong>pelo menos 3 dias seguidos</strong>.",
-                        "<strong>Secreção amarela ou verde sozinha não é sinusite:</strong> no resfriado, a secreção fica purulenta em poucos dias e melhora sozinha.",
-                        "<strong>Não pedir exame de imagem</strong> (raio-X, tomografia ou ressonância) para diferenciar de IVAS viral: não ajuda no diagnóstico (AAP 2013).",
-                        "<strong>Tomografia com contraste</strong> só se suspeita de <strong>complicação orbitária ou intracraniana</strong>.",
-                        "<strong>Agentes:</strong> <em>S. pneumoniae</em>, <em>H. influenzae</em> não tipável e <em>M. catarrhalis</em>, os mesmos da otite."
+                        { texto: "Diagnóstico clínico, em criança de 1 a 18 anos com IVAS e uma das três apresentações abaixo (AAP 2013).", sub: [
+                            "<strong>Persistente:</strong> secreção nasal (de qualquer aspecto) e/ou tosse diurna por mais de 10 dias, sem melhora.",
+                            "<strong>Piora (dupla piora):</strong> volta ou piora da secreção nasal, da tosse diurna ou da febre depois de melhora inicial.",
+                            "<strong>Início grave:</strong> febre ≥ 39 °C e secreção nasal purulenta por pelo menos 3 dias seguidos."
+                        ] },
+                        "<strong>Exame de imagem:</strong> não pedir raio-X, tomografia ou ressonância para diferenciar de IVAS viral, porque não ajuda no diagnóstico (AAP 2013). Tomografia com contraste só na suspeita de complicação orbitária ou intracraniana.",
+                        "<strong>Agentes:</strong> <em>S. pneumoniae</em>, <em>H. influenzae</em> não tipável e <em>M. catarrhalis</em>, os mesmos da otite.",
+                        { alerta: "Secreção amarela ou verde sozinha não é sinusite: no resfriado, a secreção fica purulenta em poucos dias e melhora sozinha." }
                     ]
                 },
                 {
@@ -43,10 +43,10 @@ registrarConduta({
                     itens: [
                         "<strong>Resfriado comum (viral):</strong> pico dos sintomas no 3º a 5º dia e melhora em 7 a 10 dias. A tosse pode durar mais, mas melhorando.",
                         "<strong>Rinite alérgica:</strong> prurido, espirros em salva, secreção clara, sazonal, sem febre.",
-                        "<strong>Corpo estranho nasal:</strong> secreção <strong>unilateral, fétida</strong>, às vezes com sangue, em pré-escolar.",
+                        "<strong>Corpo estranho nasal:</strong> secreção unilateral e fétida, às vezes com sangue, em pré-escolar.",
                         "<strong>Hipertrofia de adenoide / adenoidite:</strong> roncos, respiração bucal, voz anasalada.",
                         "<strong>Coqueluche:</strong> tosse em acessos, guincho, vômito após a tosse.",
-                        "<strong>Celulite periorbitária</strong> sem sinusite: lesão de pele, picada ou trauma próximos ao olho."
+                        "<strong>Celulite periorbitária sem sinusite:</strong> lesão de pele, picada ou trauma próximos ao olho."
                     ]
                 },
                 {
@@ -54,8 +54,14 @@ registrarConduta({
                     icone: "⚠️",
                     resumo: "Creche, rinite alérgica, fumo passivo; < 2 anos e antibiótico recente pedem amoxicilina + clavulanato.",
                     itens: [
-                        "<strong>Para a doença:</strong> IVAS frequentes (creche), <strong>rinite alérgica</strong>, fumo passivo, hipertrofia de adenoide.",
-                        "<strong>Para pneumococo resistente / beta-lactamase</strong> (IDSA 2012): <strong>< 2 anos</strong>, <strong>creche</strong>, <strong>antibiótico nos últimos 30 dias</strong>, internação recente, imunodepressão.",
+                        "<strong>Para a doença:</strong> IVAS frequentes (creche), rinite alérgica, fumo passivo, hipertrofia de adenoide.",
+                        { texto: "<strong>Para pneumococo resistente ou produtor de beta-lactamase</strong> (IDSA 2012):", sub: [
+                            "menor de 2 anos;",
+                            "creche;",
+                            "antibiótico nos últimos 30 dias;",
+                            "internação recente;",
+                            "imunodepressão."
+                        ] },
                         "<strong>Sinusite recorrente</strong> (≥ 3 episódios em 6 meses ou ≥ 4 em 12 meses): investigar rinite alérgica, imunodeficiência, fibrose cística, discinesia ciliar e alteração anatômica."
                     ]
                 },
@@ -64,8 +70,8 @@ registrarConduta({
                     icone: "📊",
                     resumo: "Toque em cada item. Complicação: internar. Piora ou início grave: antibiótico. Persistente: antibiótico ou observar 3 dias.",
                     itens: [
-                        "<strong>Sinais de complicação</strong> (passo 1): edema ou vermelhidão ao redor do olho, olho saltado, dor ou limitação ao mexer o olho, visão dupla, cefaleia intensa, vômitos, rigidez de nuca, alteração de consciência.",
-                        "<strong>Observar</strong> só no quadro <strong>persistente</strong> não grave, com <strong>reavaliação garantida em 3 dias</strong> (AAP 2013)."
+                        "<strong>Sinais de complicação (passo 1):</strong> edema ou vermelhidão ao redor do olho, olho saltado, dor ou limitação ao mexer o olho, visão dupla, cefaleia intensa, vômitos, rigidez de nuca, alteração de consciência.",
+                        "<strong>Observar:</strong> só no quadro persistente não grave, com reavaliação garantida em 3 dias (AAP 2013)."
                     ],
                     escore: {
                         id: "sinusite_decisao",

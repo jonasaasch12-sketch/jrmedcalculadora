@@ -87,10 +87,22 @@ function renderizarListaCondutas() {
     document.getElementById('area-condutas').innerHTML = html;
 }
 
+// Um item da lista. Padrão de texto (pedido do Dr. Jonas): ver "Padrão de escrita" no CLAUDE.md.
+//   "texto"                          item simples (negrito só no rótulo do início, "<strong>Rótulo:</strong> ...")
+//   { texto, sub: ["...", "..."] }    item que abre uma lista: os subitens vêm recuados, com marcador ›
+//   { alerta: "..." }                 ponto de atenção (caixa amarela com ⚠️), no lugar de negrito no meio da frase
+function htmlItemConduta(t) {
+    if (t && typeof t === 'object') {
+        if (t.alerta) return `<li class="cond-item-alerta"><span aria-hidden="true">⚠️</span> ${t.alerta}</li>`;
+        return `<li>${t.texto || ''}${t.sub ? `<ul class="cond-sub">${t.sub.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}</li>`;
+    }
+    return `<li>${t}</li>`;
+}
+
 // Monta o conteúdo de uma seção ou de um grupo: lista, tabelas, nota e medicações.
 function htmlBlocoConduta(b) {
     let html = '';
-    if (b.itens) html += `<ul${b.lista === 'passos' ? ' class="cond-lista-passos"' : ''}>${b.itens.map(t => `<li>${t}</li>`).join('')}</ul>`;
+    if (b.itens) html += `<ul${b.lista === 'passos' ? ' class="cond-lista-passos"' : ''}>${b.itens.map(htmlItemConduta).join('')}</ul>`;
     [b.tabela, ...(b.tabelas || [])].filter(Boolean).forEach(t => {
         if (t.titulo) html += `<div class="cond-tabela-titulo">${t.titulo}</div>`;
         html += `<div class="cond-tabela-wrap"><table class="cond-tabela${t.gravidade ? ' cond-tabela-gravidade' : ''}"><thead><tr>${t.colunas.map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>`;
