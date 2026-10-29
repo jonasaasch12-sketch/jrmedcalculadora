@@ -182,7 +182,8 @@ registrarConduta({
     cor: "#ea580c",
     kw: "queimadura queimado queimados scq superficie corporal queimada lund browder regra dos nove parkland escaldadura inalacao fogo eletrica quimica atls",
     resumo: "Boneco clicável (Lund-Browder) para a SCQ com cálculo automático da hidratação pelo ATLS, profundidade, ABCDE do queimado, analgesia, curativo e transferência.",
-    legenda: "Conduta conforme o <strong>ATLS (American College of Surgeons)</strong> para o atendimento inicial do queimado, com <strong>Lund-Browder</strong> para a SCQ, primeiros socorros e cuidados da ferida pelas diretrizes da <strong>ISBI</strong> e critérios de transferência da <strong>American Burn Association</strong>. ⚠️ Os coeficientes da hidratação seguem o ATLS 10ª ed., que segundo resumos publicados se mantiveram na 11ª; confirmar no manual da 11ª edição.",
+    legenda: "Conduta conforme o ATLS (American College of Surgeons) para o atendimento inicial do queimado, com Lund-Browder para a SCQ, primeiros socorros e cuidados da ferida pelas diretrizes da ISBI e critérios de transferência da American Burn Association. ⚠️ Os coeficientes da hidratação seguem o ATLS 10ª ed., que segundo resumos publicados se mantiveram na 11ª; confirmar no manual da 11ª edição.",
+    padraoTexto: true, // padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
         {
@@ -195,7 +196,7 @@ registrarConduta({
                     icone: "🧍",
                     resumo: "Toque nas regiões queimadas: a % de SCQ e o volume do ATLS saem na hora.",
                     ferramenta: "ferramentaQueimados",
-                    nota: "Contar só queimaduras de <strong>2º e 3º grau</strong>; o 1º grau (só eritema, sem bolha) não entra na SCQ. Na frente, o lado direito do paciente fica à esquerda da tela. A idade e o peso digitados no topo escolhem a faixa e calculam o volume."
+                    nota: "Contar só queimaduras de 2º e 3º grau; o 1º grau (só eritema, sem bolha) não entra na SCQ. Na frente, o lado direito do paciente fica à esquerda da tela. A idade e o peso digitados no topo escolhem a faixa e calculam o volume."
                 },
                 {
                     titulo: "Profundidade da queimadura",
@@ -204,7 +205,7 @@ registrarConduta({
                     tabela: {
                         colunas: ["Profundidade", "Aspecto", "Dor e enchimento capilar", "Evolução"],
                         linhas: [
-                            ["1º grau (epidérmica)", "Eritema, seca, sem bolha (ex.: sol)", "Dolorosa; empalidece à pressão", "3 a 6 dias, sem cicatriz. <strong>Não entra na SCQ</strong>"],
+                            ["1º grau (epidérmica)", "Eritema, seca, sem bolha (ex.: sol)", "Dolorosa; empalidece à pressão", "3 a 6 dias, sem cicatriz. Não entra na SCQ"],
                             ["2º grau superficial", "Bolhas, rosada, úmida, brilhante", "Muito dolorosa; enchimento capilar rápido", "10 a 21 dias, pouca cicatriz"],
                             ["2º grau profundo", "Mais pálida ou rosa-manchada, menos úmida, bolhas rotas", "Menos dor; enchimento capilar lento ou ausente", "> 3 semanas; cicatriz hipertrófica; muitas vezes enxerto"],
                             ["3º grau (espessura total)", "Branca, marrom ou negra, seca, coriácea; vasos trombosados", "Indolor (terminações destruídas); não empalidece", "Não cicatriza sozinha: enxerto"]
@@ -217,8 +218,8 @@ registrarConduta({
                     icone: "✋",
                     resumo: "Regra da palma e por que não usar a regra dos 9 na criança.",
                     itens: [
-                        "<strong>Regra da palma:</strong> a palma da mão <strong>do paciente</strong>, com os dedos, corresponde a cerca de <strong>1% da SC</strong>. Útil em queimaduras pequenas ou salpicadas.",
-                        "<strong>Regra dos 9</strong> é para adultos: na criança a cabeça é proporcionalmente maior e as pernas menores. A <strong>tabela de Lund-Browder</strong>, que corrige pela idade, é a mais precisa em pediatria.",
+                        "<strong>Regra da palma:</strong> a palma da mão do paciente, com os dedos, corresponde a cerca de 1% da SC. Útil em queimaduras pequenas ou salpicadas.",
+                        "Regra dos 9 é para adultos: na criança a cabeça é proporcionalmente maior e as pernas menores. A tabela de Lund-Browder, que corrige pela idade, é a mais precisa em pediatria.",
                         "Região só parcialmente queimada: use \"metade\" no boneco ou some pela regra da palma."
                     ],
                     tabela: {
@@ -237,8 +238,8 @@ registrarConduta({
                     icone: "🫁",
                     resumo: "Suspeitar em incêndio em ambiente fechado. Saturação normal não exclui CO.",
                     itens: [
-                        "<strong>Sinais de lesão inalatória:</strong> queimadura de face e pescoço, sobrancelhas ou vibrissas chamuscadas, depósito de carvão na boca/orofaringe, <strong>escarro carbonáceo</strong>, rouquidão, estridor, alteração da consciência, história de incêndio em local fechado ou explosão.",
-                        "<strong>Monóxido de carbono:</strong> a oximetria de pulso fica falsamente normal. Pedir <strong>carboxi-hemoglobina</strong> na gasometria. Tratar com <strong>O₂ a 100%</strong> em máscara com reservatório.",
+                        "<strong>Sinais de lesão inalatória:</strong> queimadura de face e pescoço, sobrancelhas ou vibrissas chamuscadas, depósito de carvão na boca/orofaringe, escarro carbonáceo, rouquidão, estridor, alteração da consciência, história de incêndio em local fechado ou explosão.",
+                        "<strong>Monóxido de carbono:</strong> a oximetria de pulso fica falsamente normal. Pedir carboxi-hemoglobina na gasometria. Tratar com O₂ a 100% em máscara com reservatório.",
                         "<strong>Cianeto:</strong> suspeitar em incêndio fechado com acidose lática inexplicada, rebaixamento ou instabilidade."
                     ]
                 },
@@ -247,10 +248,10 @@ registrarConduta({
                     icone: "🛑",
                     resumo: "Padrões de imersão, cigarro e história incompatível: notificar.",
                     itens: [
-                        "<strong>Queimadura por imersão</strong> com limites nítidos, em \"luva\" ou \"meia\", simétrica, poupando dobras (flexuras) e a região glútea central.",
-                        "Queimaduras <strong>de contato com forma de objeto</strong> (ferro, grelha) ou <strong>de cigarro</strong> (circulares, 0,5 a 1 cm).",
-                        "História incompatível com a lesão ou com o desenvolvimento da criança, versões diferentes, <strong>atraso na procura</strong> de atendimento, outras lesões em fases diferentes.",
-                        "Na suspeita: proteger a criança (internar se necessário), registrar com detalhes e <strong>notificar</strong> (Conselho Tutelar / ficha do SINAN)."
+                        "Queimadura por imersão com limites nítidos, em \"luva\" ou \"meia\", simétrica, poupando dobras (flexuras) e a região glútea central.",
+                        "Queimaduras de contato com forma de objeto (ferro, grelha) ou de cigarro (circulares, 0,5 a 1 cm).",
+                        "História incompatível com a lesão ou com o desenvolvimento da criança, versões diferentes, atraso na procura de atendimento, outras lesões em fases diferentes.",
+                        "Na suspeita: proteger a criança (internar se necessário), registrar com detalhes e notificar (Conselho Tutelar / ficha do SINAN)."
                     ]
                 },
                 {
@@ -258,10 +259,10 @@ registrarConduta({
                     icone: "🚑",
                     resumo: "Critérios da American Burn Association.",
                     itens: [
-                        "2º grau (espessura parcial) <strong>&gt; 10% SCQ</strong>.",
-                        "Qualquer <strong>3º grau</strong> em criança.",
-                        "Queimaduras de <strong>face, mãos, pés, genitália, períneo ou grandes articulações</strong>.",
-                        "Queimaduras <strong>elétricas</strong> (inclusive raio), <strong>químicas</strong> ou com <strong>lesão inalatória</strong>.",
+                        "2º grau (espessura parcial) &gt; 10% SCQ.",
+                        "Qualquer 3º grau em criança.",
+                        "Queimaduras de face, mãos, pés, genitália, períneo ou grandes articulações.",
+                        "Queimaduras elétricas (inclusive raio), químicas ou com lesão inalatória.",
                         "Doença prévia que complique o tratamento ou trauma associado (estabilizar o trauma primeiro, se for o maior risco).",
                         "Hospital sem estrutura ou equipe pediátrica para o caso; necessidade de suporte social, emocional ou suspeita de maus-tratos.",
                         "Revisão de 2020 da ABA (consenso eDelphi): consultar o centro de queimados também em 2º grau profundo ≥ 10% e 3º grau ≥ 5%."
@@ -281,16 +282,16 @@ registrarConduta({
                     resumo: "Parar a queimadura → via aérea → O₂ → acesso e volume → SCQ e fórmula → analgesia → ferida → transferir.",
                     lista: "passos",
                     itens: [
-                        "<span class=\"cond-passo\">1</span> <strong>Destino:</strong> critérios clicáveis (UTI/centro de queimados · internar · casa). <strong>Não atrasa interromper a queimadura e o ABC</strong>",
+                        "<span class=\"cond-passo\">1</span> <strong>Destino:</strong> critérios clicáveis (UTI/centro de queimados · internar · casa). Não atrasa interromper a queimadura e o ABC",
                         "<span class=\"cond-passo\">2</span> <strong>Parar o processo:</strong> retirar roupas e adornos, resfriar com água corrente, evitar hipotermia",
                         "<span class=\"cond-passo\">3</span> <strong>A — via aérea:</strong> sinais de inalação → IOT precoce",
                         "<span class=\"cond-passo\">4</span> <strong>B — respiração:</strong> O₂ 100%, CO, escarotomia de tórax se restringir",
                         "<span class=\"cond-passo\">5</span> <strong>C — circulação:</strong> 2 acessos, taxa inicial por idade, sem bolus (exceto choque)",
-                        "<span class=\"cond-passo\">6</span> <strong>SCQ e fórmula do ATLS</strong> pelo boneco; sonda vesical e diurese-alvo",
+                        "<span class=\"cond-passo\">6</span> <strong>Hidratação:</strong> SCQ e fórmula do ATLS pelo boneco; sonda vesical e diurese-alvo",
                         "<span class=\"cond-passo\">7</span> <strong>D e E:</strong> trauma associado, glicemia, aquecer",
-                        "<span class=\"cond-passo\">8</span> <strong>Analgesia</strong> EV titulada",
+                        "<span class=\"cond-passo\">8</span> <strong>Analgesia:</strong> EV, titulada",
                         "<span class=\"cond-passo\">9</span> <strong>Ferida:</strong> cobrir, tétano, escarotomia se circunferencial",
-                        "<span class=\"cond-passo\">10</span> <strong>Transferir</strong> se critério (bloco 🔎)"
+                        "<span class=\"cond-passo\">10</span> <strong>Transferir:</strong> se houver critério (bloco 🔎)"
                     ]
                 },
                 {
@@ -300,7 +301,7 @@ registrarConduta({
                     resumo: "Para decidir o destino. Não atrasa interromper a queimadura e o ABC (passos 2 a 5).",
                     alerta: true,
                     itens: [
-                        "Os critérios de <strong>transferência para centro de queimados</strong> (American Burn Association) estão no bloco 🔎; aqui eles viram a decisão clicável."
+                        "Os critérios de transferência para centro de queimados (American Burn Association) estão no bloco 🔎; aqui eles viram a decisão clicável."
                     ],
                     escore: {
                         id: "internacao_queimados",
@@ -335,10 +336,11 @@ registrarConduta({
                     titulo: "Interromper a queimadura",
                     resumo: "Retirar roupas e adornos; resfriar com água corrente; não usar gelo.",
                     itens: [
-                        "Retirar <strong>toda a roupa, fraldas, anéis, pulseiras e relógios</strong> (o edema vai garrotear). Roupa grudada: cortar ao redor, não arrancar.",
-                        "<strong>Resfriar com água corrente</strong> em temperatura ambiente/fria (não gelada) por <strong>20 minutos</strong>, se ainda dentro das primeiras 3 horas (ISBI). <strong>Nunca gelo</strong>, nem pasta de dente, manteiga ou pomadas caseiras.",
-                        "<strong>Cuidado com hipotermia</strong>, sobretudo em lactentes e queimaduras extensas: resfriar só a área queimada e manter o resto coberto e aquecido.",
-                        "<strong>Química:</strong> pó seco → escovar antes; depois irrigar com <strong>água em abundância</strong> por 20 a 30 min (álcalis: mais tempo). Não tentar neutralizar. Olhos: irrigação contínua."
+                        "Retirar toda a roupa, fraldas, anéis, pulseiras e relógios (o edema vai garrotear). Roupa grudada: cortar ao redor, não arrancar.",
+                        "<strong>Resfriar:</strong> água corrente em temperatura ambiente/fria (não gelada) por 20 minutos, se ainda dentro das primeiras 3 horas (ISBI).",
+                        { alerta: "nunca gelo, nem pasta de dente, manteiga ou pomadas caseiras." },
+                        "Cuidado com hipotermia, sobretudo em lactentes e queimaduras extensas: resfriar só a área queimada e manter o resto coberto e aquecido.",
+                        "<strong>Química:</strong> pó seco → escovar antes; depois irrigar com água em abundância por 20 a 30 min (álcalis: mais tempo). Não tentar neutralizar. Olhos: irrigação contínua."
                     ]
                 },
                 {
@@ -347,9 +349,9 @@ registrarConduta({
                     alerta: true,
                     resumo: "Lesão inalatória: intubar cedo, antes do edema.",
                     itens: [
-                        "Avaliar os <strong>sinais de lesão inalatória</strong> (bloco 🔎). O edema de via aérea piora nas horas seguintes, principalmente com a hidratação.",
-                        "Rouquidão, estridor, queimadura profunda de face/pescoço ou circunferencial do pescoço, SCQ extensa ou rebaixamento: <strong>intubação precoce</strong> pelo profissional mais experiente.",
-                        "Usar <strong>tubo com cuff</strong> e <strong>não cortar o tubo</strong> (o edema facial aumenta e o tubo curto pode sair).",
+                        "Avaliar os sinais de lesão inalatória (bloco 🔎). O edema de via aérea piora nas horas seguintes, principalmente com a hidratação.",
+                        "Rouquidão, estridor, queimadura profunda de face/pescoço ou circunferencial do pescoço, SCQ extensa ou rebaixamento: intubação precoce pelo profissional mais experiente.",
+                        "Usar tubo com cuff e não cortar o tubo (o edema facial aumenta e o tubo curto pode sair).",
                         "Imobilização cervical se houver mecanismo de trauma (explosão, queda, acidente)."
                     ]
                 },
@@ -358,9 +360,9 @@ registrarConduta({
                     titulo: "B — respiração",
                     resumo: "O₂ a 100% em todos com suspeita de inalação ou CO.",
                     itens: [
-                        "<strong>O₂ a 100%</strong> por máscara com reservatório se incêndio em local fechado ou suspeita de CO, independentemente da saturação.",
-                        "Gasometria com <strong>carboxi-hemoglobina</strong> e lactato.",
-                        "Queimadura <strong>circunferencial do tórax/abdome</strong> limitando a expansão: <strong>escarotomia</strong> (cirurgião)."
+                        "O₂ a 100% por máscara com reservatório se incêndio em local fechado ou suspeita de CO, independentemente da saturação.",
+                        "Gasometria com carboxi-hemoglobina e lactato.",
+                        "Queimadura circunferencial do tórax/abdome limitando a expansão: escarotomia (cirurgião)."
                     ]
                 },
                 {
@@ -368,9 +370,9 @@ registrarConduta({
                     titulo: "C — circulação e acesso",
                     resumo: "Dois acessos calibrosos; taxa inicial por idade até calcular a SCQ.",
                     itens: [
-                        "<strong>Dois acessos periféricos calibrosos</strong>, de preferência em pele sã (se preciso, pode ser através da área queimada). Sem acesso: <strong>intraósseo</strong>.",
-                        "<strong>Antes de calcular a SCQ</strong>, iniciar Ringer lactato na taxa do ATLS: <strong>≤ 5 anos 125 mL/h · 6 a 13 anos 250 mL/h · ≥ 14 anos 500 mL/h</strong>.",
-                        "<strong>Não fazer bolus de rotina.</strong> Choque logo na chegada <strong>não</strong> é esperado só pela queimadura: procurar <strong>outra causa</strong> (trauma, sangramento) e tratar como choque.",
+                        "Dois acessos periféricos calibrosos, de preferência em pele sã (se preciso, pode ser através da área queimada). Sem acesso: intraósseo.",
+                        "Antes de calcular a SCQ, iniciar Ringer lactato na taxa do ATLS: ≤ 5 anos 125 mL/h · 6 a 13 anos 250 mL/h · ≥ 14 anos 500 mL/h.",
+                        "Não fazer bolus de rotina. Choque logo na chegada não é esperado só pela queimadura: procurar outra causa (trauma, sangramento) e tratar como choque.",
                         "Colher hemograma, eletrólitos, função renal, glicemia, gasometria com lactato e COHb; tipagem se trauma."
                     ]
                 },
@@ -379,12 +381,12 @@ registrarConduta({
                     titulo: "SCQ, fórmula do ATLS e diurese",
                     resumo: "O boneco do bloco 🔎 calcula o volume e a velocidade.",
                     itens: [
-                        "Calcular a <strong>SCQ</strong> (só 2º e 3º grau) no <strong>boneco do bloco 🔎</strong>: ele já mostra o volume e as velocidades.",
-                        "<strong>Fórmula do ATLS (Ringer lactato, 24 h):</strong> <strong>≤ 13 anos: 3 mL × kg × %SCQ</strong> · ≥ 14 anos: 2 mL × kg × %SCQ · <strong>elétrica: 4 mL × kg × %SCQ</strong>.",
-                        "<strong>Metade nas primeiras 8 h</strong> contadas <strong>desde a hora da queimadura</strong> (não da chegada); a outra metade nas 16 h seguintes.",
-                        "<strong>Crianças ≤ 30 kg:</strong> somar <strong>soro de manutenção com glicose</strong> (risco de hipoglicemia: pouca reserva de glicogênio).",
-                        "<strong>Sonda vesical e diurese horária.</strong> Alvo: <strong>1 mL/kg/h em ≤ 30 kg</strong> · 0,5 mL/kg/h em > 30 kg · elétrica com urina escura (mioglobinúria): 1 a 1,5 mL/kg/h até clarear.",
-                        "A fórmula é só o <strong>ponto de partida</strong>: aumentar ou reduzir a velocidade pela diurese. Excesso de volume causa edema, síndrome compartimental e piora respiratória (\"fluid creep\")."
+                        "Calcular a SCQ (só 2º e 3º grau) no boneco do bloco 🔎: ele já mostra o volume e as velocidades.",
+                        "<strong>Fórmula do ATLS (Ringer lactato, 24 h):</strong> ≤ 13 anos: 3 mL × kg × %SCQ · ≥ 14 anos: 2 mL × kg × %SCQ · elétrica: 4 mL × kg × %SCQ.",
+                        "Metade nas primeiras 8 h contadas desde a hora da queimadura (não da chegada); a outra metade nas 16 h seguintes.",
+                        "<strong>Crianças ≤ 30 kg:</strong> somar soro de manutenção com glicose (risco de hipoglicemia: pouca reserva de glicogênio).",
+                        "Sonda vesical e diurese horária. Alvo: 1 mL/kg/h em ≤ 30 kg · 0,5 mL/kg/h em > 30 kg · elétrica com urina escura (mioglobinúria): 1 a 1,5 mL/kg/h até clarear.",
+                        "A fórmula é só o ponto de partida: aumentar ou reduzir a velocidade pela diurese. Excesso de volume causa edema, síndrome compartimental e piora respiratória (\"fluid creep\")."
                     ]
                 },
                 {
@@ -392,10 +394,10 @@ registrarConduta({
                     titulo: "D e E — neurológico, trauma associado e temperatura",
                     resumo: "Rebaixamento: pensar em CO, hipóxia, TCE, hipoglicemia.",
                     itens: [
-                        "Rebaixamento de consciência: pensar em <strong>CO, cianeto, hipóxia, TCE ou hipoglicemia</strong>. Glicemia capilar.",
-                        "Exame secundário completo à procura de <strong>trauma associado</strong> (explosão, queda, choque elétrico com arremesso).",
+                        "Rebaixamento de consciência: pensar em CO, cianeto, hipóxia, TCE ou hipoglicemia. Glicemia capilar.",
+                        "Exame secundário completo à procura de trauma associado (explosão, queda, choque elétrico com arremesso).",
                         "<strong>Elétrica:</strong> ECG e monitorização cardíaca; procurar pontos de entrada e saída; a lesão interna pode ser muito maior que a da pele (rabdomiólise, síndrome compartimental).",
-                        "Manter o ambiente <strong>aquecido</strong>, soros aquecidos, cobrir o paciente."
+                        "Manter o ambiente aquecido, soros aquecidos, cobrir o paciente."
                     ]
                 },
                 {
@@ -403,8 +405,8 @@ registrarConduta({
                     titulo: "Analgesia",
                     resumo: "Dor intensa: opioide EV em doses pequenas e tituladas.",
                     itens: [
-                        "Queimadura dói muito, sobretudo o 2º grau superficial. <strong>Cobrir a ferida já alivia</strong> (o ar na ferida dói).",
-                        "Dor leve a moderada: dipirona ou paracetamol. Dor intensa ou queimadura extensa: <strong>opioide EV em doses pequenas, tituladas</strong> pela resposta (preferir EV: a absorção IM/SC é irregular no queimado), conforme o protocolo do serviço.",
+                        "Queimadura dói muito, sobretudo o 2º grau superficial. Cobrir a ferida já alivia (o ar na ferida dói).",
+                        "Dor leve a moderada: dipirona ou paracetamol. Dor intensa ou queimadura extensa: opioide EV em doses pequenas, tituladas pela resposta (preferir EV: a absorção IM/SC é irregular no queimado), conforme o protocolo do serviço.",
                         "Sedação/analgesia para curativos extensos: cetamina é uma boa opção (mantém a via aérea e a pressão)."
                     ],
                     remedios: ["dip_inj", "dip_gts", "pct_gts"]
@@ -414,10 +416,10 @@ registrarConduta({
                     titulo: "Ferida, tétano e escarotomia",
                     resumo: "Cobrir com material limpo e seco; vacina antitetânica; vigiar circulação.",
                     itens: [
-                        "No atendimento inicial, <strong>cobrir com filme plástico (PVC) ou compressas limpas e secas</strong>. Não aplicar pomadas antes da avaliação do centro que vai receber (atrapalha a avaliação da profundidade).",
-                        "<strong>Profilaxia do tétano</strong> conforme a situação vacinal.",
-                        "<strong>Não</strong> usar antibiótico sistêmico profilático.",
-                        "Queimadura <strong>circunferencial</strong> de membro: elevar o membro e vigiar pulsos, enchimento capilar, dor à extensão passiva → <strong>escarotomia</strong> se comprometimento circulatório.",
+                        "No atendimento inicial, cobrir com filme plástico (PVC) ou compressas limpas e secas. Não aplicar pomadas antes da avaliação do centro que vai receber (atrapalha a avaliação da profundidade).",
+                        "Profilaxia do tétano conforme a situação vacinal.",
+                        "Não usar antibiótico sistêmico profilático.",
+                        "Queimadura circunferencial de membro: elevar o membro e vigiar pulsos, enchimento capilar, dor à extensão passiva → escarotomia se comprometimento circulatório.",
                         "Elevar a cabeceira se queimadura de face/pescoço."
                     ]
                 },
@@ -426,8 +428,8 @@ registrarConduta({
                     titulo: "Transferência",
                     resumo: "Contato médico a médico; enviar a SCQ, o volume e a diurese.",
                     itens: [
-                        "Se houver critério (bloco 🔎), contatar o <strong>centro de queimados</strong> de referência.",
-                        "Enviar: hora da queimadura, mecanismo, <strong>SCQ e profundidade</strong>, volume recebido, diurese, via aérea, analgesia, vacinação e exames.",
+                        "Se houver critério (bloco 🔎), contatar o centro de queimados de referência.",
+                        "Enviar: hora da queimadura, mecanismo, SCQ e profundidade, volume recebido, diurese, via aérea, analgesia, vacinação e exames.",
                         "Transportar com via aérea segura, 2 acessos, sonda vesical, aquecido e com a ferida coberta."
                     ]
                 }
@@ -443,11 +445,11 @@ registrarConduta({
                     icone: "🩹",
                     resumo: "2º grau superficial pequeno, fora de áreas especiais, sem suspeita de maus-tratos.",
                     itens: [
-                        "Candidatos: queimadura pequena de 2º grau superficial (em geral &lt; 5–10% SCQ), <strong>fora</strong> de face, mãos, pés, genitália, períneo e articulações, sem critério de transferência e com família capaz de cuidar.",
+                        "Candidatos: queimadura pequena de 2º grau superficial (em geral &lt; 5–10% SCQ), fora de face, mãos, pés, genitália, períneo e articulações, sem critério de transferência e com família capaz de cuidar.",
                         "Limpar com água e sabão neutro ou SF. Bolhas pequenas e íntegras podem ser mantidas; bolhas grandes, tensas ou rotas: desbridar.",
-                        "Curativo conforme o padrão do serviço (curativo não aderente / sulfadiazina de prata 1%, evitar em &lt; 2 meses), trocas e reavaliação em <strong>24 a 48 h</strong>.",
+                        "Curativo conforme o padrão do serviço (curativo não aderente / sulfadiazina de prata 1%, evitar em &lt; 2 meses), trocas e reavaliação em 24 a 48 h.",
                         "Analgesia regular por via oral; profilaxia do tétano; manter o membro elevado.",
-                        "Após a cicatrização: hidratante, <strong>protetor solar</strong> e evitar sol por pelo menos 1 ano (hiperpigmentação)."
+                        "Após a cicatrização: hidratante, protetor solar e evitar sol por pelo menos 1 ano (hiperpigmentação)."
                     ],
                     remedios: ["dip_gts", "pct_gts"],
                     grupos: [
