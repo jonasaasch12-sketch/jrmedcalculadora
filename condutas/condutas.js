@@ -168,7 +168,7 @@ function abrirConduta(id) {
     let indice = blocos.filter(b => b.titulo).map((b, bi) =>
         `<a href="#cond-bloco-${bi}" class="cond-indice-bloco" style="--cor-bloco:${b.cor || c.cor}" onclick="document.getElementById('cond-bloco-${bi}').scrollIntoView({behavior:'smooth'});return false;">${b.icone || ''} ${escCond(b.titulo)}</a>`).join('');
     let html = `
-        <button type="button" class="cond-voltar" onclick="voltarListaCondutas()">← Todas as condutas</button>
+        <div class="cond-barra"><button type="button" class="cond-voltar" onclick="voltarListaCondutas()">← Todas as condutas</button><span class="cond-caminho">Condutas › <b>${escCond(c.nome)}</b></span></div>
         <div class="cond-cabecalho" style="--cor-cat:${c.cor}">
             <div class="cond-cabecalho-cat">${escCond(c.categoria)}</div>
             <h2>${escCond(c.nome)}</h2>
@@ -209,7 +209,7 @@ function linkarCitacoes(area, c) {
     if (!chaves.length) return;
     let esc = t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     let re = new RegExp('(?<![\\wÀ-ú])(' + chaves.map(esc).join('|') + ')(?![\\wÀ-ú])', 'g');
-    let pular = 'a, button, input, select, textarea, label, script, .cond-fonte, .cond-med, .cond-indice, .cond-voltar, .cond-acoes, .cadh, .cadg, .sy, .tr, .qm, .exg, [data-texto], [data-dose]';
+    let pular = 'a, button, input, select, textarea, label, script, .cond-fonte, .cond-med, .cond-indice, .cond-voltar, .cond-barra, .cond-acoes, .cadh, .cadg, .sy, .tr, .qm, .exg, [data-texto], [data-dose]';
     let walker = document.createTreeWalker(area, NodeFilter.SHOW_TEXT, {
         acceptNode: n => (!n.nodeValue.trim() || n.parentElement.closest(pular)) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
     });
