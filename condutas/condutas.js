@@ -93,7 +93,7 @@ function renderizarListaCondutas() {
 //   { alerta: "..." }                 ponto de atenção (caixa amarela com ⚠️), no lugar de negrito no meio da frase
 function htmlItemConduta(t) {
     if (t && typeof t === 'object') {
-        if (t.alerta) return `<li class="cond-item-alerta"><span aria-hidden="true">⚠️</span> ${t.alerta}</li>`;
+        if (t.alerta) return `<li class="cond-item-alerta"><span aria-hidden="true">⚠️</span> <strong>Atenção:</strong> ${t.alerta}</li>`;
         return `<li>${t.texto || ''}${t.sub ? `<ul class="cond-sub">${t.sub.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}</li>`;
     }
     return `<li>${t}</li>`;
@@ -160,6 +160,7 @@ function abrirConduta(id) {
     html += `<div class="cond-fonte" id="cond-fontes"><strong>Fontes:</strong><ol>${c.fontes.map((f, k) => `<li id="cond-fonte-${k}"><span class="cond-fonte-txt">${escCond(f)}</span><button type="button" class="cond-fonte-voltar" onclick="voltarDaFonte()">↩ voltar ao texto</button></li>`).join('')}</ol><strong>Revisão:</strong> ${escCond(c.revisao)}</div>`;
     let area = document.getElementById('area-condutas');
     area.innerHTML = html;
+    area.classList.toggle('cond-padrao', !!c.padraoTexto); /* conduta já reescrita no padrão de escrita (rótulo azul) */
     linkarCitacoes(area, c);
     atualizarDosesConduta();
     window.scrollTo(0, 0);

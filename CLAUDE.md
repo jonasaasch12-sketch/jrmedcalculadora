@@ -90,6 +90,14 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
   (agentes e diferencial dentro) → Tratamento ambulatorial (só as medicações de casa) → Tratamento hospitalar (1º grupo "🏥 Critérios de
   internação" clicáveis da doença — `internacaoPele()` —, depois grupo "💉 Tratamento" com os cards EV) → Complicações. Sem bloco geral
   separado. O índice do topo vira a lista de doenças. **Repetir o mesmo card** em várias doenças quando a dose é a mesma; dose diferente = card próprio.
+- **Padrão de escrita** (aprovado pelo Dr. Jonas, 10/2026; modelo: condutas/sinusite.js, com `padraoTexto: true`):
+  - **Negrito só no rótulo do início do item**, uma vez, terminando em dois-pontos (`<strong>Exame de imagem:</strong> ...`);
+    nas condutas com `padraoTexto: true` ele aparece em azul. **Nunca negrito no meio da frase.** Item sem rótulo, sem negrito.
+  - **Lista dentro de um item:** `{ texto: "<strong>Rótulo:</strong> ...", sub: ["...", "..."] }` → subitens com › num quadro cinza.
+    Nada de "•" digitado. **Não numerar** subitens (número parece ponto de escore).
+  - **Ponto de atenção:** `{ alerta: "texto em minúscula..." }` → caixa amarela "⚠️ Atenção:". No máximo 1 ou 2 por seção, só o que muda conduta.
+  - Itálico só em nome científico. Fonte entre parênteses no fim da frase. Legenda sem negrito.
+  - Conduta reescrita no padrão: acrescentar `padraoTexto: true`. As demais serão convertidas aos poucos.
 - Escores clínicos (WDF, PRAM...) sempre **clicáveis** (`escore: {...}`), com soma automática.
 - Ferramenta própria numa seção: `ferramenta: "<nomeDaFunção>"` (função global que devolve o HTML), ex.: boneco
   clicável de Lund-Browder em `condutas/queimados.js`.

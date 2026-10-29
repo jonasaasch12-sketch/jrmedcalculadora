@@ -297,10 +297,15 @@ html[data-theme="dark"] .sy-fase.on { border-color: #e2e8f0; box-shadow: 0 0 0 2
 .crise-crono-botoes button { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border, #ccc); background: var(--bg-soft, #f3f4f6); color: inherit; font: inherit; font-size: 13px; cursor: pointer; }
 .crise-crono-botoes button:first-child { background: #6d28d9; color: #fff; border-color: #6d28d9; }
 
-/* Padrão de escrita das condutas: subitens recuados (›) e ponto de atenção (caixa amarela). */
-.cond-secao ul.cond-sub { list-style: none; padding-left: 16px; margin: 4px 0 2px; }
-.cond-secao ul.cond-sub > li { position: relative; padding-left: 14px; margin-bottom: 3px; }
+/* Padrão de escrita das condutas (aprovado pelo Dr. Jonas, 10/2026): rótulo do início do item em azul,
+   subitens com › num quadro cinza, ponto de atenção em caixa amarela "⚠️ Atenção:". */
+.cond-secao ul.cond-sub { list-style: none; background: var(--surface-3, #eef2f6); border-radius: 10px; padding: 8px 10px 6px 10px; margin: 8px 0 6px -4px; }
+.cond-secao ul.cond-sub > li { position: relative; padding-left: 16px; margin-bottom: 6px; }
 .cond-secao ul.cond-sub > li::before { content: "›"; position: absolute; left: 0; top: -1px; font-weight: 800; color: var(--primary); }
 .cond-secao li.cond-item-alerta { list-style: none; margin: 8px 0 4px -20px; padding: 8px 10px; border-radius: 8px;
     background: #fef3c7; border-left: 4px solid #f59e0b; color: #78350f; }
+.cond-secao li.cond-item-alerta > strong { color: inherit !important; font-weight: 700 !important; }
 html[data-theme="dark"] .cond-secao li.cond-item-alerta { background: #3b2a06; color: #fde68a; }
+#area-condutas.cond-padrao .cond-secao ul:not(.cond-sub) > li::marker { color: var(--primary); }
+#area-condutas.cond-padrao .cond-secao li > strong:first-child,
+#area-condutas.cond-padrao .cond-secao li > .cond-passo + strong { font-weight: 600; color: var(--primary); }
