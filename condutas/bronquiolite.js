@@ -301,7 +301,7 @@ registrarConduta({
             icone: "🚫",
             alerta: true,
             itens: [
-                "<strong>Antimicrobianos</strong>: só se infecção bacteriana concomitante confirmada ou forte suspeita.",
+                "<strong>Antimicrobianos:</strong> só se infecção bacteriana concomitante confirmada ou forte suspeita.",
                 "Broncodilatadores β2 inalatórios ou EV (salbutamol). Não fazer prova terapêutica de rotina quando o diagnóstico é claro.",
                 "Brometo de ipratrópio.",
                 "Adrenalina (epinefrina) inalatória.",

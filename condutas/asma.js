@@ -183,7 +183,7 @@ registrarConduta({
                     itens: [
                         "Salbutamol spray de 20/20 min na 1ª hora.",
                         "Ipratrópio junto com o broncodilatador, a cada 20–30 min, até 3 vezes.",
-                        "<strong>Iniciar corticoide sistêmico</strong>: prednisolona VO (alternativa: dexametasona VO 0,3–0,6 mg/kg, máx. 12 mg, 1–2 dias; vomita menos)."
+                        "<strong>Iniciar corticoide sistêmico:</strong> prednisolona VO (alternativa: dexametasona VO 0,3–0,6 mg/kg, máx. 12 mg, 1–2 dias; vomita menos)."
                     ],
                     remedios: ["salb_spray", "ipra", "pred_sol"]
                 },

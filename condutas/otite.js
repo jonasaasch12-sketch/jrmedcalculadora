@@ -218,7 +218,7 @@ registrarConduta({
                     titulo: "Sem melhora em 48 a 72 h",
                     resumo: "Reexaminar. Observação → amoxicilina; amoxicilina → amoxicilina + clavulanato; esta → ceftriaxona IM 3 dias.",
                     itens: [
-                        "<strong>Reexaminar o ouvido</strong>: confirmar a OMA e descartar complicação (passo 1).",
+                        "<strong>Reexaminar o ouvido:</strong> confirmar a OMA e descartar complicação (passo 1).",
                         "<strong>Estava em observação:</strong> iniciar amoxicilina.",
                         "<strong>Estava com amoxicilina:</strong> trocar para amoxicilina + clavulanato.",
                         "<strong>Estava com amoxicilina + clavulanato:</strong> ceftriaxona IM por 3 dias (AAP 2013).",
