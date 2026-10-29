@@ -80,6 +80,7 @@ const categorias = [
     },
     { 
         id: "cat-rsi", titulo: "RSI", dotClass: "dot-rsi", cor: "tarja-rsi", nome: "RSI", icone: "💉 RSI",
+        conduta: "ventilacao", condutaNome: "Simulador de ventilador",
         patologias: [
             { nome: "Escolha de Material e Dispositivos", remedios: ["rsi_tubo"] },
             { nome: "Pré-medicação e Indução em Bólus", remedios: ["atropina", "rsi_lido", "rsi_fent", "rsi_ceta", "rsi_midaz", "rsi_roc", "rsi_succi"] },
