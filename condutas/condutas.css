@@ -296,3 +296,11 @@ html[data-theme="dark"] .sy-fase.on { border-color: #e2e8f0; box-shadow: 0 0 0 2
 .crise-crono-botoes { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
 .crise-crono-botoes button { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border, #ccc); background: var(--bg-soft, #f3f4f6); color: inherit; font: inherit; font-size: 13px; cursor: pointer; }
 .crise-crono-botoes button:first-child { background: #6d28d9; color: #fff; border-color: #6d28d9; }
+
+/* Padrão de escrita das condutas: subitens recuados (›) e ponto de atenção (caixa amarela). */
+.cond-secao ul.cond-sub { list-style: none; padding-left: 16px; margin: 4px 0 2px; }
+.cond-secao ul.cond-sub > li { position: relative; padding-left: 14px; margin-bottom: 3px; }
+.cond-secao ul.cond-sub > li::before { content: "›"; position: absolute; left: 0; top: -1px; font-weight: 800; color: var(--primary); }
+.cond-secao li.cond-item-alerta { list-style: none; margin: 8px 0 4px -20px; padding: 8px 10px; border-radius: 8px;
+    background: #fef3c7; border-left: 4px solid #f59e0b; color: #78350f; }
+html[data-theme="dark"] .cond-secao li.cond-item-alerta { background: #3b2a06; color: #fde68a; }
