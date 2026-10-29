@@ -249,7 +249,8 @@ registrarConduta({
     cor: "#ca8a04",
     kw: "ictericia neonatal hiperbilirrubinemia bilirrubina recem nascido rn fototerapia banho de luz exsanguineotransfusao kernicterus coombs g6pd aap 2022 bilitool",
     resumo: "Calculadora com gráfico (AAP 2022): IG, horas de vida, bilirrubina e fatores de risco → fototerapia, escalada de cuidado ou exsanguineotransfusão e seguimento na alta.",
-    legenda: "Conduta conforme a <strong>diretriz da American Academy of Pediatrics 2022</strong> para RN com <strong>35 semanas ou mais</strong> (Kemper et al., <em>Pediatrics</em> 2022). Os limiares da calculadora são os das <strong>Tabelas Suplementares 1 a 4</strong> da diretriz, hora a hora. ⚠️ A AAP informa que os limiares são opinião de especialistas e que a diretriz não foi desenhada para locais sem acesso rápido a BT, seguimento e exsanguineotransfusão.",
+    legenda: "Conduta conforme a diretriz da American Academy of Pediatrics 2022 para RN com 35 semanas ou mais (Kemper et al., <em>Pediatrics</em> 2022). Os limiares da calculadora são os das Tabelas Suplementares 1 a 4 da diretriz, hora a hora. ⚠️ A AAP informa que os limiares são opinião de especialistas e que a diretriz não foi desenhada para locais sem acesso rápido a BT, seguimento e exsanguineotransfusão.",
+    padraoTexto: true, // padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
         {
@@ -262,12 +263,12 @@ registrarConduta({
                     icone: "🔎",
                     resumo: "Avaliar a cada 12 h; todo RN com BTc ou BT entre 24 e 48 h; icterícia < 24 h = medir já.",
                     itens: [
-                        "Mais de 80% dos RN têm algum grau de icterícia. Avaliar visualmente <strong>pelo menos a cada 12 h</strong> até a alta.",
-                        "<strong>Icterícia nas primeiras 24 h:</strong> medir BTc ou BT <strong>o mais rápido possível</strong> (causa mais provável: hemólise).",
-                        "<strong>Todo RN:</strong> BTc ou BT entre <strong>24 e 48 h</strong> de vida, ou antes da alta se ela for mais cedo.",
+                        "Mais de 80% dos RN têm algum grau de icterícia. Avaliar visualmente pelo menos a cada 12 h até a alta.",
+                        "<strong>Icterícia nas primeiras 24 h:</strong> medir BTc ou BT o mais rápido possível (causa mais provável: hemólise).",
+                        "<strong>Todo RN:</strong> BTc ou BT entre 24 e 48 h de vida, ou antes da alta se ela for mais cedo.",
                         "A estimativa visual é pouco confiável (diferenças de até 13 a 15 mg/dL). Só ajuda a afastar: RN sem icterícia ou estimativa &lt; 4 mg/dL torna BT ≥ 12 muito improvável.",
-                        "<strong>A decisão de tratar é pela BT sérica.</strong> Colher BT se a BTc estiver a <strong>3 mg/dL ou menos do limiar</strong> de fototerapia, acima dele, ou se BTc ≥ 15 mg/dL.",
-                        "Usar a <strong>bilirrubina total</strong>: não subtrair a direta. Se a direta/conjugada for <strong>mais de 50% da total</strong>, discutir com especialista (gastroenterologia pediátrica ou neonatologia)."
+                        "A decisão de tratar é pela BT sérica. Colher BT se a BTc estiver a 3 mg/dL ou menos do limiar de fototerapia, acima dele, ou se BTc ≥ 15 mg/dL.",
+                        "Usar a bilirrubina total: não subtrair a direta. Se a direta/conjugada for mais de 50% da total, discutir com especialista (gastroenterologia pediátrica ou neonatologia)."
                     ]
                 },
                 {
@@ -305,11 +306,11 @@ registrarConduta({
                     icone: "🧠",
                     resumo: "Baixam o limiar de fototerapia e de exsanguineotransfusão (Tabela 2 da AAP).",
                     itens: [
-                        "<strong>IG &lt; 38 semanas</strong> (o risco aumenta quanto mais prematuro).",
-                        "<strong>Albumina &lt; 3,0 g/dL.</strong>",
-                        "<strong>Doença hemolítica isoimune</strong> (Coombs direto positivo), <strong>deficiência de G6PD</strong> ou outra doença hemolítica.",
-                        "<strong>Sepse.</strong>",
-                        "<strong>Instabilidade clínica significativa nas últimas 24 h.</strong> A acidemia pode indicar instabilidade, mas não há um pH de corte definido.",
+                        "IG &lt; 38 semanas (o risco aumenta quanto mais prematuro).",
+                        "Albumina &lt; 3,0 g/dL.",
+                        "Doença hemolítica isoimune (Coombs direto positivo), deficiência de G6PD ou outra doença hemolítica.",
+                        "Sepse.",
+                        "Instabilidade clínica significativa nas últimas 24 h. A acidemia pode indicar instabilidade, mas não há um pH de corte definido.",
                         "Não é necessário dosar albumina em todos os RN; dosar na escalada de cuidado."
                     ]
                 },
@@ -319,9 +320,9 @@ registrarConduta({
                     alerta: true,
                     resumo: "Sinais intermediários ou avançados = exsanguineotransfusão urgente.",
                     itens: [
-                        "<strong>Sinais de fase intermediária ou avançada:</strong> hipertonia, arqueamento, retrocolo, opistótono, choro agudo (estridente), apneias recorrentes. Presentes → <strong>exsanguineotransfusão urgente</strong>, qualquer que seja a BT.",
+                        "<strong>Sinais de fase intermediária ou avançada:</strong> hipertonia, arqueamento, retrocolo, opistótono, choro agudo (estridente), apneias recorrentes. Presentes → exsanguineotransfusão urgente, qualquer que seja a BT.",
                         "<strong>Kernicterus</strong> (sequela permanente): paralisia cerebral coreoatetoide, paresia do olhar para cima, displasia do esmalte dos dentes de leite, perda auditiva neurossensorial ou neuropatia auditiva.",
-                        "Orientar os pais a observar icterícia, desidratação e <strong>letargia</strong>, sucção fraca, irritabilidade e sinais de doença."
+                        "Orientar os pais a observar icterícia, desidratação e letargia, sucção fraca, irritabilidade e sinais de doença."
                     ]
                 },
                 {
@@ -348,11 +349,11 @@ registrarConduta({
                         "<span class=\"cond-passo\">1</span> <strong>Internar?</strong> Critérios clicáveis: UTI neonatal · fototerapia hospitalar · seguimento",
                         "<span class=\"cond-passo\">2</span> <strong>Confirmar e classificar:</strong> BT sérica, IG, horas de vida, fatores de risco → calculadora",
                         "<span class=\"cond-passo\">3</span> <strong>Investigar a causa:</strong> tipagem, Coombs direto, hemograma; G6PD se indicado",
-                        "<span class=\"cond-passo\">4</span> <strong>Fototerapia intensiva</strong> se BT no limiar ou acima; manter a amamentação",
-                        "<span class=\"cond-passo\">5</span> <strong>BT de controle</strong> em até 12 h e conforme a trajetória",
-                        "<span class=\"cond-passo\">6</span> <strong>Escalada de cuidado</strong> se BT a 2 mg/dL do limiar de exsanguineo",
-                        "<span class=\"cond-passo\">7</span> <strong>Exsanguineotransfusão</strong> se BT no limiar ou encefalopatia",
-                        "<span class=\"cond-passo\">8</span> <strong>Suspender</strong> com BT 2 mg/dL abaixo do limiar inicial; controle do rebote"
+                        "<span class=\"cond-passo\">4</span> <strong>Fototerapia intensiva:</strong> se BT no limiar ou acima; manter a amamentação",
+                        "<span class=\"cond-passo\">5</span> <strong>BT de controle:</strong> em até 12 h e conforme a trajetória",
+                        "<span class=\"cond-passo\">6</span> <strong>Escalada de cuidado:</strong> se BT a 2 mg/dL do limiar de exsanguineo",
+                        "<span class=\"cond-passo\">7</span> <strong>Exsanguineotransfusão:</strong> se BT no limiar ou encefalopatia",
+                        "<span class=\"cond-passo\">8</span> <strong>Suspender:</strong> com BT 2 mg/dL abaixo do limiar inicial; controle do rebote"
                     ]
                 },
                 {
@@ -362,7 +363,7 @@ registrarConduta({
                     resumo: "Primeiro decida: UTI neonatal, internar para fototerapia ou seguimento ambulatorial.",
                     alerta: true,
                     itens: [
-                        "Decidir pela <strong>BT sérica</strong> na <strong>calculadora</strong> (bloco 🔎) e pelo estado do RN (AAP 2022)."
+                        "Decidir pela BT sérica na calculadora (bloco 🔎) e pelo estado do RN (AAP 2022)."
                     ],
                     escore: {
                         id: "internacao_ictericia",
@@ -393,10 +394,10 @@ registrarConduta({
                     titulo: "Confirmar a BT e classificar o RN",
                     resumo: "Sempre BT sérica para decidir; limiar pela IG, horas de vida e fatores de risco.",
                     itens: [
-                        "Colher <strong>BT sérica</strong> (não decidir pela BTc nem pela estimativa visual).",
-                        "Preencher a <strong>calculadora</strong> (bloco 🔎): IG em semanas completas, horas de vida na coleta, BT e fatores de risco de neurotoxicidade.",
+                        "Colher BT sérica (não decidir pela BTc nem pela estimativa visual).",
+                        "Preencher a calculadora (bloco 🔎): IG em semanas completas, horas de vida na coleta, BT e fatores de risco de neurotoxicidade.",
                         "Se houver qualquer fator de risco de neurotoxicidade, usa-se a curva mais baixa (a calculadora já escolhe).",
-                        "Mãe com pesquisa de anticorpos <strong>positiva ou desconhecida</strong>: tipagem e <strong>Coombs direto do RN</strong> o quanto antes (sangue de cordão ou periférico)."
+                        "Mãe com pesquisa de anticorpos positiva ou desconhecida: tipagem e Coombs direto do RN o quanto antes (sangue de cordão ou periférico)."
                     ]
                 },
                 {
@@ -404,11 +405,11 @@ registrarConduta({
                     titulo: "Investigar a causa",
                     resumo: "Todo RN que precisa de fototerapia: hemoglobina/hematócrito ou hemograma e, conforme a mãe, Coombs direto.",
                     itens: [
-                        "<strong>Hemoglobina, hematócrito ou hemograma</strong> em todo RN com indicação de fototerapia (anemia e valor de base).",
-                        "<strong>Coombs direto</strong> se a mãe tem pesquisa de anticorpos positiva, é <strong>grupo O</strong> (qualquer Rh) ou é <strong>Rh negativo</strong>.",
-                        "<strong>G6PD</strong> se icterícia sem causa definida e: BT sobe apesar da fototerapia intensiva, sobe de repente, volta a subir depois de cair, ou precisa de escalada de cuidado.",
+                        "Hemoglobina, hematócrito ou hemograma em todo RN com indicação de fototerapia (anemia e valor de base).",
+                        "Coombs direto se a mãe tem pesquisa de anticorpos positiva, é grupo O (qualquer Rh) ou é Rh negativo.",
+                        "G6PD se icterícia sem causa definida e: BT sobe apesar da fototerapia intensiva, sobe de repente, volta a subir depois de cair, ou precisa de escalada de cuidado.",
                         "Coombs positivo só para anti-D em RN de mãe que recebeu imunoglobulina anti-D na gestação, sem anticorpo anti-D antes dela: em geral sem hemólise.",
-                        "BT acima do limiar com &lt; 24 h: <strong>provável hemólise</strong>."
+                        "BT acima do limiar com &lt; 24 h: provável hemólise."
                     ]
                 },
                 {
@@ -416,14 +417,14 @@ registrarConduta({
                     titulo: "Fototerapia intensiva",
                     resumo: "LED azul de espectro estreito, ≥ 30 µW/cm²/nm, na maior superfície corporal possível.",
                     itens: [
-                        "<strong>Fototerapia intensiva</strong> no limiar da calculadora ou acima: LED azul de espectro estreito, irradiância de <strong>pelo menos 30 µW/cm²/nm</strong> em torno de 475 nm (faixa de 460 a 490 nm), na <strong>maior área de pele possível</strong>.",
+                        "Fototerapia intensiva no limiar da calculadora ou acima: LED azul de espectro estreito, irradiância de pelo menos 30 µW/cm²/nm em torno de 475 nm (faixa de 460 a 490 nm), na maior área de pele possível.",
                         "Conferir se o aparelho entrega a irradiância indicada (seguir o fabricante); a irradiância é maior no centro do foco que na periferia.",
-                        "<strong>Manter a alimentação</strong> (ajuda a eliminar a bilirrubina e evita desidratação). Pausar a fototerapia para mamar não reduz a eficácia; minimizar as pausas se a BT estiver perto da escalada.",
-                        "<strong>Não dar água nem soro glicosado</strong> por via oral para prevenir ou baixar a bilirrubina.",
+                        "Manter a alimentação (ajuda a eliminar a bilirrubina e evita desidratação). Pausar a fototerapia para mamar não reduz a eficácia; minimizar as pausas se a BT estiver perto da escalada.",
+                        { alerta: "não dar água nem soro glicosado por via oral para prevenir ou baixar a bilirrubina." },
                         "Complemento com leite materno ordenhado, leite humano de banco ou fórmula: decisão compartilhada com os pais, pesando o risco para a amamentação.",
-                        "<strong>Hidratação EV só</strong> se desidratação que não corrige por via oral ou se a BT passar do limiar de escalada.",
+                        "Hidratação EV só se desidratação que não corrige por via oral ou se a BT passar do limiar de escalada.",
                         "Sempre que possível, fototerapia no quarto da mãe (alojamento conjunto).",
-                        "Fototerapia <strong>intermitente × contínua</strong>: revisão Cochrane (2023, 12 ECR) sem diferença na velocidade de queda da BT, com menos horas de exposição na intermitente; evidência de baixa certeza e dados de segurança insuficientes. Contínua parece mais eficaz em prematuros."
+                        "Fototerapia intermitente × contínua: revisão Cochrane (2023, 12 ECR) sem diferença na velocidade de queda da BT, com menos horas de exposição na intermitente; evidência de baixa certeza e dados de segurança insuficientes. Contínua parece mais eficaz em prematuros."
                     ]
                 },
                 {
@@ -431,9 +432,9 @@ registrarConduta({
                     titulo: "Monitorar durante a fototerapia",
                     resumo: "BT em até 12 h do início; depois conforme idade, fatores de risco, BT e trajetória.",
                     itens: [
-                        "RN internado: <strong>BT em até 12 h</strong> após iniciar a fototerapia.",
+                        "RN internado: BT em até 12 h após iniciar a fototerapia.",
                         "Frequência das próximas BT: pela idade, presença de fatores de risco de neurotoxicidade, valor da BT e trajetória.",
-                        "BT subindo apesar da fototerapia intensiva: o limiar de exsanguineotransfusão passa a ser o da curva <strong>com fator de risco</strong> (marque na calculadora).",
+                        "BT subindo apesar da fototerapia intensiva: o limiar de exsanguineotransfusão passa a ser o da curva com fator de risco (marque na calculadora).",
                         "Fototerapia domiciliar (quando disponível): BT diária; internar se a BT subir e se aproximar do limiar ou ficar ≥ 1 mg/dL acima dele."
                     ]
                 },
@@ -443,12 +444,12 @@ registrarConduta({
                     alerta: true,
                     resumo: "BT a 2 mg/dL ou menos do limiar de exsanguineotransfusão: emergência.",
                     itens: [
-                        "<strong>Exames STAT:</strong> BT e direta, hemograma, <strong>albumina</strong>, eletrólitos/bioquímica, <strong>tipagem e prova cruzada</strong>. Avisar o banco de sangue.",
-                        "<strong>Fototerapia intensiva de emergência</strong> + <strong>hidratação VO e EV</strong>.",
-                        "<strong>BT pelo menos a cada 2 h</strong> até sair da faixa de escalada; abaixo dela, voltar ao monitoramento do passo 5.",
-                        "<strong>Neonatologista</strong> e transferência urgente para UTI neonatal que faça exsanguineotransfusão, se o serviço não fizer. Manter a fototerapia e a hidratação durante o transporte, se possível.",
-                        "Doença hemolítica isoimune (Coombs +) com BT na escalada: <strong>imunoglobulina EV</strong> é uma opção (card abaixo). Benefício incerto e possível risco de enterocolite necrosante. Não substitui os outros passos da escalada.",
-                        "Calcular a <strong>relação B/A</strong> (BT ÷ albumina) com a albumina do STAT (campo opcional da calculadora)."
+                        "<strong>Exames STAT:</strong> BT e direta, hemograma, albumina, eletrólitos/bioquímica, tipagem e prova cruzada. Avisar o banco de sangue.",
+                        "Fototerapia intensiva de emergência + hidratação VO e EV.",
+                        "BT pelo menos a cada 2 h até sair da faixa de escalada; abaixo dela, voltar ao monitoramento do passo 5.",
+                        "Neonatologista e transferência urgente para UTI neonatal que faça exsanguineotransfusão, se o serviço não fizer. Manter a fototerapia e a hidratação durante o transporte, se possível.",
+                        "Doença hemolítica isoimune (Coombs +) com BT na escalada: imunoglobulina EV é uma opção (card abaixo). Benefício incerto e possível risco de enterocolite necrosante. Não substitui os outros passos da escalada.",
+                        "Calcular a relação B/A (BT ÷ albumina) com a albumina do STAT (campo opcional da calculadora)."
                     ],
                     remedios: ["ivig_neo"]
                 },
@@ -458,10 +459,10 @@ registrarConduta({
                     alerta: true,
                     resumo: "Urgente se BT no limiar ou acima, ou com sinais de encefalopatia intermediária/avançada.",
                     itens: [
-                        "<strong>Indicações de urgência:</strong> BT <strong>no limiar de exsanguineotransfusão ou acima</strong> (calculadora) <strong>ou</strong> sinais de encefalopatia bilirrubínica intermediária/avançada (hipertonia, arqueamento, retrocolo, opistótono, choro agudo, apneias recorrentes).",
+                        "<strong>Indicações de urgência:</strong> BT no limiar de exsanguineotransfusão ou acima (calculadora) ou sinais de encefalopatia bilirrubínica intermediária/avançada (hipertonia, arqueamento, retrocolo, opistótono, choro agudo, apneias recorrentes).",
                         "Se, durante o preparo, a BT cair abaixo do limiar e não houver sinais de encefalopatia: pode adiar, mantendo fototerapia intensiva e BT a cada 2 h até ficar abaixo do limiar de escalada.",
-                        "<strong>Relação B/A</strong> pode apoiar a decisão: considerar exsanguineo se B/A ≥ 8,0 (≥ 38 sem, sem fator) · ≥ 7,2 (≥ 38 sem, com fator) · ≥ 7,2 (35–37 sem, sem fator) · ≥ 6,8 (35–37 sem, com fator).",
-                        "Sangue preferido: <strong>hemácias lavadas com prova cruzada + plasma fresco congelado</strong>, com hematócrito em torno de 40%.",
+                        "Relação B/A pode apoiar a decisão: considerar exsanguineo se B/A ≥ 8,0 (≥ 38 sem, sem fator) · ≥ 7,2 (≥ 38 sem, com fator) · ≥ 7,2 (35–37 sem, sem fator) · ≥ 6,8 (35–37 sem, com fator).",
+                        "Sangue preferido: hemácias lavadas com prova cruzada + plasma fresco congelado, com hematócrito em torno de 40%.",
                         "Procedimento em UTI neonatal com equipe experiente."
                     ]
                 },
@@ -470,12 +471,12 @@ registrarConduta({
                     titulo: "Suspender a fototerapia e controlar o rebote",
                     resumo: "Suspensão é opção quando BT ≤ limiar do início − 2 mg/dL; BT de controle conforme o risco de rebote.",
                     itens: [
-                        "<strong>Suspender</strong> é uma opção quando a BT cair <strong>pelo menos 2 mg/dL abaixo do limiar da hora em que a fototerapia começou</strong> (a calculadora mostra esse valor ao indicar a fototerapia).",
-                        "Fototerapia mais longa é opção se houver risco de rebote: <strong>IG &lt; 38 sem</strong>, <strong>início &lt; 48 h</strong> de vida ou <strong>doença hemolítica</strong>.",
-                        "<strong>Rebote</strong> = BT atingir de novo o limiar de fototerapia em 72 a 96 h após a suspensão.",
-                        "Fototerapia na internação do nascimento <strong>e</strong> (início &lt; 48 h, Coombs + ou doença hemolítica conhecida/suspeita): <strong>BT 6 a 12 h após suspender</strong> e outra no dia seguinte.",
-                        "Demais RN que passaram do limiar na internação do nascimento: bilirrubina <strong>no dia seguinte</strong> à suspensão.",
-                        "Readmitidos (sem fototerapia no nascimento) ou tratados em casa: bilirrubina ou consulta em <strong>1 a 2 dias</strong> após suspender.",
+                        "Suspender é uma opção quando a BT cair pelo menos 2 mg/dL abaixo do limiar da hora em que a fototerapia começou (a calculadora mostra esse valor ao indicar a fototerapia).",
+                        "Fototerapia mais longa é opção se houver risco de rebote: IG &lt; 38 sem, início &lt; 48 h de vida ou doença hemolítica.",
+                        "Rebote = BT atingir de novo o limiar de fototerapia em 72 a 96 h após a suspensão.",
+                        "Fototerapia na internação do nascimento e (início &lt; 48 h, Coombs + ou doença hemolítica conhecida/suspeita): BT 6 a 12 h após suspender e outra no dia seguinte.",
+                        "Demais RN que passaram do limiar na internação do nascimento: bilirrubina no dia seguinte à suspensão.",
+                        "Readmitidos (sem fototerapia no nascimento) ou tratados em casa: bilirrubina ou consulta em 1 a 2 dias após suspender.",
                         "Pode usar BTc em vez de BT se já passaram pelo menos 24 h da suspensão."
                     ]
                 }
@@ -508,7 +509,7 @@ registrarConduta({
                     icone: "🏡",
                     resumo: "Opção para RN já de alta que passou do limiar, se todos os critérios forem cumpridos.",
                     itens: [
-                        "Critérios (todos): <strong>IG ≥ 38 sem</strong>, <strong>≥ 48 h</strong> de vida, bem e mamando bem, <strong>sem fator de risco de neurotoxicidade</strong>, sem fototerapia prévia, <strong>BT no máximo 1 mg/dL acima do limiar</strong>, aparelho de LED disponível em casa sem demora e BT diária possível.",
+                        "Critérios (todos): IG ≥ 38 sem, ≥ 48 h de vida, bem e mamando bem, sem fator de risco de neurotoxicidade, sem fototerapia prévia, BT no máximo 1 mg/dL acima do limiar, aparelho de LED disponível em casa sem demora e BT diária possível.",
                         "Internar se a BT subir e se aproximar do limiar ou ficar ≥ 1 mg/dL acima dele."
                     ]
                 },
@@ -517,8 +518,8 @@ registrarConduta({
                     icone: "⏳",
                     resumo: "Seio materno com 3–4 semanas ou fórmula com 2 semanas: BT e frações.",
                     itens: [
-                        "Ainda ictérico com <strong>3 a 4 semanas</strong> (aleitamento materno) ou <strong>2 semanas</strong> (fórmula): dosar <strong>BT e direta/conjugada</strong> para afastar colestase.",
-                        "Rever o <strong>teste do pezinho</strong> (hipotireoidismo, galactosemia, tirosinemia).",
+                        "Ainda ictérico com 3 a 4 semanas (aleitamento materno) ou 2 semanas (fórmula): dosar BT e direta/conjugada para afastar colestase.",
+                        "Rever o teste do pezinho (hipotireoidismo, galactosemia, tirosinemia).",
                         "RN de fórmula com qualquer icterícia prolongada, ou de seio materno com aumento da direta: discutir com gastroenterologista pediátrico.",
                         "RN com 7 dias ou mais e BT persistentemente a 2 mg/dL do limiar: confirmar se é indireta (frações). A maioria é icterícia do leite materno; outras causas: hemólise, hipotireoidismo, sangue extravascular, estenose de piloro."
                     ]
@@ -528,7 +529,7 @@ registrarConduta({
                     icone: "📝",
                     resumo: "Explicação oral e por escrito, com data e local do retorno e da BT de controle.",
                     itens: [
-                        "Explicar a icterícia, por escrito e oralmente. Entregar <strong>data, hora e local do retorno</strong> e, se precisar, o pedido da BTc/BT de controle.",
+                        "Explicar a icterícia, por escrito e oralmente. Entregar data, hora e local do retorno e, se precisar, o pedido da BTc/BT de controle.",
                         "Passar para o pediatra que vai acompanhar: última BTc/BT, idade em horas na coleta e Coombs direto (se feito).",
                         "Apoiar a amamentação (pelo menos 8 mamadas em 24 h)."
                     ],

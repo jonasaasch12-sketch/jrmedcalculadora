@@ -97,7 +97,7 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
     Nada de "•" digitado. **Não numerar** subitens (número parece ponto de escore).
   - **Ponto de atenção:** `{ alerta: "texto em minúscula..." }` → caixa amarela "⚠️ Atenção:". No máximo 1 ou 2 por seção, só o que muda conduta.
   - Itálico só em nome científico. Fonte entre parênteses no fim da frase. Legenda sem negrito.
-  - Conduta reescrita no padrão: acrescentar `padraoTexto: true`. As demais serão convertidas aos poucos.
+  - Toda conduta tem `padraoTexto: true` (todas convertidas em 10/2026). Conduta nova já nasce no padrão.
 - Escores clínicos (WDF, PRAM...) sempre **clicáveis** (`escore: {...}`), com soma automática.
 - Ferramenta própria numa seção: `ferramenta: "<nomeDaFunção>"` (função global que devolve o HTML), ex.: boneco
   clicável de Lund-Browder em `condutas/queimados.js`.

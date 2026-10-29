@@ -18,7 +18,8 @@ registrarConduta({
     cor: "#be123c",
     kw: "sarampo measles exantema maculopapular febre tosse coriza conjuntivite koplik notificacao imediata isolamento aerossol vitamina a bloqueio vacinal triplice viral imunoglobulina",
     resumo: "Caso suspeito, notificação imediata, isolamento por aerossol, critérios de internação clicáveis, vitamina A, complicações e proteção dos contatos (vacina em 72 h, imunoglobulina em 6 dias).",
-    legenda: "Conduta conforme o <strong>Guia de Vigilância em Saúde do Ministério da Saúde</strong> e a <strong>Nota Técnica Conjunta MS nº 02/2025</strong> (vitamina A). Fotos reais da Wikimedia Commons, com crédito.",
+    legenda: "Conduta conforme o Guia de Vigilância em Saúde do Ministério da Saúde e a Nota Técnica Conjunta MS nº 02/2025 (vitamina A). Fotos reais da Wikimedia Commons, com crédito.",
+    padraoTexto: true, // padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
         {
@@ -31,12 +32,12 @@ registrarConduta({
                     icone: "🔎",
                     resumo: "Febre + exantema maculopapular + tosse, coriza ou conjuntivite, em qualquer idade e situação vacinal.",
                     itens: [
-                        "<strong>Caso suspeito</strong> (MS): <strong>febre + exantema maculopapular</strong> + <strong>tosse e/ou coriza e/ou conjuntivite</strong>, <strong>independentemente da idade e da vacinação</strong>; ou qualquer pessoa com história de viagem ou contato com caso suspeito.",
-                        "<strong>Pródromo de 3 a 5 dias:</strong> febre alta, <strong>tosse, coriza e conjuntivite</strong> (os \"3 C\"), fotofobia, mal-estar.",
-                        "<strong>Manchas de Koplik</strong>: pontos branco-acinzentados na mucosa jugal, 1 a 2 dias antes do exantema (passageiras).",
-                        "<strong>Exantema</strong> maculopapular vermelho que começa <strong>atrás das orelhas e na face</strong> e desce (<strong>craniocaudal</strong>), ficando <strong>confluente</strong>; dura 4 a 7 dias e sai com descamação fina.",
-                        "<strong>Febre</strong> alta no início do exantema; <strong>febre que persiste</strong> mais de 3 dias após o exantema sugere <strong>complicação</strong>.",
-                        "<strong>Transmissão:</strong> de 6 dias antes a <strong>4 dias depois</strong> do início do exantema (MS). Uma das doenças mais contagiosas."
+                        "<strong>Caso suspeito</strong> (MS): febre + exantema maculopapular + tosse e/ou coriza e/ou conjuntivite, independentemente da idade e da vacinação; ou qualquer pessoa com história de viagem ou contato com caso suspeito.",
+                        "<strong>Pródromo de 3 a 5 dias:</strong> febre alta, tosse, coriza e conjuntivite (os \"3 C\"), fotofobia, mal-estar.",
+                        "<strong>Manchas de Koplik:</strong> pontos branco-acinzentados na mucosa jugal, 1 a 2 dias antes do exantema (passageiras).",
+                        "Exantema maculopapular vermelho que começa atrás das orelhas e na face e desce (craniocaudal), ficando confluente; dura 4 a 7 dias e sai com descamação fina.",
+                        "Febre alta no início do exantema; febre que persiste mais de 3 dias após o exantema sugere complicação.",
+                        "<strong>Transmissão:</strong> de 6 dias antes a 4 dias depois do início do exantema (MS). Uma das doenças mais contagiosas."
                     ],
                     ferramenta: "ferramentaSarampoFotos"
                 },
@@ -46,8 +47,8 @@ registrarConduta({
                     resumo: "Rubéola, dengue, exantema súbito, escarlatina, Kawasaki, reação a medicamento.",
                     itens: [
                         "<strong>Rubéola:</strong> febre baixa, exantema rosado não confluente, adenomegalia retroauricular e occipital.",
-                        "<strong>Dengue</strong>, <strong>exantema súbito</strong> (exantema depois que a febre some), <strong>eritema infeccioso</strong>, <strong>escarlatina</strong>, <strong>Kawasaki</strong>, enteroviroses e <strong>reação a medicamento</strong>.",
-                        "Use o <strong>Guia de identificação do exantema</strong> desta categoria para comparar."
+                        "Dengue, exantema súbito (exantema depois que a febre some), eritema infeccioso, escarlatina, Kawasaki, enteroviroses e reação a medicamento.",
+                        "Use o Guia de identificação do exantema desta categoria para comparar."
                     ]
                 },
                 {
@@ -55,11 +56,11 @@ registrarConduta({
                     icone: "🚩",
                     resumo: "Menores de 5 anos, desnutridos, imunodeprimidos e gestantes. Pneumonia é a principal causa de óbito.",
                     itens: [
-                        "<strong>Risco de forma grave:</strong> menores de 5 anos (sobretudo < 1 ano), <strong>desnutridos</strong> e com deficiência de vitamina A, <strong>imunodeprimidos</strong>, gestantes.",
-                        "<strong>Respiratórias:</strong> <strong>pneumonia</strong> (viral ou bacteriana secundária, a principal causa de óbito), laringotraqueobronquite, otite média.",
+                        "<strong>Risco de forma grave:</strong> menores de 5 anos (sobretudo < 1 ano), desnutridos e com deficiência de vitamina A, imunodeprimidos, gestantes.",
+                        "<strong>Respiratórias:</strong> pneumonia (viral ou bacteriana secundária, a principal causa de óbito), laringotraqueobronquite, otite média.",
                         "<strong>Digestivas:</strong> diarreia, desidratação, piora da desnutrição.",
                         "<strong>Oculares:</strong> ceratite e úlcera de córnea (cegueira, sobretudo com deficiência de vitamina A).",
-                        "<strong>Neurológicas:</strong> <strong>encefalite aguda</strong> (dias após o exantema) e <strong>panencefalite esclerosante subaguda</strong> (anos depois)."
+                        "<strong>Neurológicas:</strong> encefalite aguda (dias após o exantema) e panencefalite esclerosante subaguda (anos depois)."
                     ]
                 }
             ]
@@ -77,8 +78,8 @@ registrarConduta({
                     lista: "passos",
                     itens: [
                         "<span class=\"cond-passo\">1</span> <strong>Internar?</strong> Critérios clicáveis: UTI · enfermaria · casa",
-                        "<span class=\"cond-passo\">2</span> <strong>Isolar já</strong> (aerossol, N95), <strong>notificar em 24 h</strong> e colher sorologia + RT-PCR",
-                        "<span class=\"cond-passo\">3</span> <strong>Vitamina A</strong> (até 59 meses, 2 doses) e sintomáticos",
+                        "<span class=\"cond-passo\">2</span> <strong>Isolar já:</strong> aerossol (N95), notificar em 24 h e colher sorologia + RT-PCR",
+                        "<span class=\"cond-passo\">3</span> <strong>Vitamina A:</strong> até 59 meses, 2 doses; e sintomáticos",
                         "<span class=\"cond-passo\">4</span> <strong>Complicações:</strong> pneumonia, otite, laringite, diarreia, encefalite",
                         "<span class=\"cond-passo\">5</span> <strong>Contatos:</strong> vacina em até 72 h · imunoglobulina em até 6 dias (< 6 meses, gestante, imunodeprimido)",
                         "<span class=\"cond-passo\">6</span> <strong>Alta:</strong> isolamento em casa até 4 dias após o exantema e sinais de alarme"
@@ -90,7 +91,7 @@ registrarConduta({
                     resumo: "Primeiro decida: UTI, internar ou casa. O sarampo sem complicação é tratado em casa, isolado.",
                     alerta: true,
                     itens: [
-                        "O <strong>sarampo sem complicação</strong> é tratado <strong>em casa</strong>, com isolamento. Internar por <strong>complicação</strong>, <strong>grupo de risco</strong> ou quando não é possível tratar em casa. <strong>Na internação: quarto de isolamento para aerossol</strong> (MS)."
+                        "O sarampo sem complicação é tratado em casa, com isolamento. Internar por complicação, grupo de risco ou quando não é possível tratar em casa. Na internação: quarto de isolamento para aerossol (MS)."
                     ],
                     escore: {
                         id: "internacao_sarampo",
@@ -125,9 +126,9 @@ registrarConduta({
                     resumo: "Máscara no paciente, N95 na equipe, quarto privativo. Notificação imediata. Sorologia + RT-PCR no 1º atendimento.",
                     alerta: true,
                     itens: [
-                        "<strong>Isolar já na triagem:</strong> máscara cirúrgica no paciente, <strong>N95 na equipe</strong>, quarto privativo (de pressão negativa se houver). <strong>Precaução para aerossol até 4 dias após o início do exantema</strong>; no imunodeprimido, durante toda a doença (MS).",
-                        "<strong>Notificar imediatamente</strong> (em até 24 h) todo caso suspeito à vigilância (MS).",
-                        "<strong>Colher no 1º atendimento:</strong> <strong>sangue para sorologia</strong> (IgM e IgG) e <strong>swab de nasofaringe/orofaringe e urina para RT-PCR</strong> (até 7 dias do exantema) (MS).",
+                        "<strong>Isolar já na triagem:</strong> máscara cirúrgica no paciente, N95 na equipe, quarto privativo (de pressão negativa se houver). Precaução para aerossol até 4 dias após o início do exantema; no imunodeprimido, durante toda a doença (MS).",
+                        "Notificar imediatamente (em até 24 h) todo caso suspeito à vigilância (MS).",
+                        "<strong>Colher no 1º atendimento:</strong> sangue para sorologia (IgM e IgG) e swab de nasofaringe/orofaringe e urina para RT-PCR (até 7 dias do exantema) (MS).",
                         "Perguntar: vacinação, viagens, contato com caso, quem são os contatos (casa, escola, sala de espera)."
                     ]
                 },
@@ -136,9 +137,9 @@ registrarConduta({
                     titulo: "Vitamina A e sintomáticos",
                     resumo: "Vitamina A em 2 doses para toda criança até 59 meses com suspeita. Sem tratamento antiviral específico.",
                     itens: [
-                        "<strong>Vitamina A</strong> para <strong>toda criança até 59 meses com suspeita de sarampo</strong>, independentemente da vacinação ou de doses anteriores: <strong>2 doses</strong>, no dia da suspeita e no dia seguinte (MS 2025).",
-                        "<strong>Não há antiviral</strong> específico. Febre: paracetamol ou dipirona. Hidratação, alimentação e higiene dos olhos.",
-                        "<strong>Antibiótico só</strong> se infecção bacteriana secundária (otite, pneumonia)."
+                        "Vitamina A para toda criança até 59 meses com suspeita de sarampo, independentemente da vacinação ou de doses anteriores: 2 doses, no dia da suspeita e no dia seguinte (MS 2025).",
+                        "Não há antiviral específico. Febre: paracetamol ou dipirona. Hidratação, alimentação e higiene dos olhos.",
+                        "Antibiótico só se infecção bacteriana secundária (otite, pneumonia)."
                     ],
                     remedios: ["vit_a_sarampo", "pct_gts", "dip_gts"]
                 },
@@ -148,7 +149,7 @@ registrarConduta({
                     resumo: "Pneumonia, otite, laringite, diarreia, ceratite e encefalite: tratar conforme a conduta de cada uma.",
                     itens: [
                         "<strong>Pneumonia</strong> (taquipneia, hipoxemia, febre que volta ou persiste): RX e antibiótico como na conduta de pneumonia; O₂ se SpO₂ &lt; 92%.",
-                        "<strong>Otite média</strong> e <strong>laringotraqueíte</strong>: condutas de otite e de crupe.",
+                        "Otite média e laringotraqueíte: condutas de otite e de crupe.",
                         "<strong>Diarreia e desidratação:</strong> conduta de diarreia (planos A, B e C).",
                         "<strong>Ceratite:</strong> oftalmologia; vitamina A.",
                         "<strong>Encefalite</strong> (sonolência, convulsão, déficit focal dias após o exantema): internar, neurologia, suporte."
@@ -159,9 +160,9 @@ registrarConduta({
                     titulo: "Contatos: bloqueio vacinal e imunoglobulina",
                     resumo: "Vacina em até 72 h nos suscetíveis a partir de 6 meses. Imunoglobulina em até 6 dias nos que não podem vacinar.",
                     itens: [
-                        "<strong>A vigilância</strong> faz o bloqueio: <strong>vacinação seletiva dos contatos suscetíveis em até 72 h</strong> (MS).",
-                        "<strong>Lactentes de 6 a 11 meses:</strong> \"<strong>dose zero</strong>\" da tríplice viral, que não conta para o calendário (refazer aos 12 e 15 meses) (MS).",
-                        "<strong>Imunoglobulina humana</strong> em até <strong>6 dias (144 h)</strong> após a exposição, pelo CRIE, para quem não pode vacinar: <strong>menores de 6 meses</strong>, <strong>gestantes</strong> e <strong>imunodeprimidos</strong> sem imunidade (MS).",
+                        "A vigilância faz o bloqueio: vacinação seletiva dos contatos suscetíveis em até 72 h (MS).",
+                        "<strong>Lactentes de 6 a 11 meses:</strong> \"dose zero\" da tríplice viral, que não conta para o calendário (refazer aos 12 e 15 meses) (MS).",
+                        "Imunoglobulina humana em até 6 dias (144 h) após a exposição, pelo CRIE, para quem não pode vacinar: menores de 6 meses, gestantes e imunodeprimidos sem imunidade (MS).",
                         "Contato suscetível que não recebeu proteção: afastar do 5º ao 21º dia após a exposição."
                     ]
                 },
@@ -170,9 +171,9 @@ registrarConduta({
                     titulo: "Alta e sinais de alarme",
                     resumo: "Isolamento em casa até 4 dias após o exantema. Retorno se falta de ar, sonolência, convulsão ou febre que não cede.",
                     itens: [
-                        "<strong>Em casa:</strong> sem escola, creche e visitas até <strong>4 dias após o início do exantema</strong> (MS).",
-                        "<strong>Retornar se:</strong> <strong>falta de ar</strong> ou respiração rápida, <strong>febre que continua</strong> 3 dias depois do exantema ou que volta, <strong>sonolência</strong>, <strong>convulsão</strong>, dor de ouvido, diarreia com sinais de desidratação, dor ou vermelhidão nos olhos.",
-                        "Completar as <strong>2 doses de vitamina A</strong>."
+                        "<strong>Em casa:</strong> sem escola, creche e visitas até 4 dias após o início do exantema (MS).",
+                        "<strong>Retornar se:</strong> falta de ar ou respiração rápida, febre que continua 3 dias depois do exantema ou que volta, sonolência, convulsão, dor de ouvido, diarreia com sinais de desidratação, dor ou vermelhidão nos olhos.",
+                        "Completar as 2 doses de vitamina A."
                     ],
                     remedios: ["orientacoes_gerais"]
                 }
@@ -188,10 +189,10 @@ registrarConduta({
                     icone: "💉",
                     resumo: "Tríplice viral aos 12 meses e tetra viral aos 15 meses; dose zero de 6 a 11 meses em surtos.",
                     itens: [
-                        "<strong>Calendário do MS:</strong> <strong>tríplice viral aos 12 meses</strong> e <strong>tetra viral aos 15 meses</strong>; adolescentes e adultos não vacinados: atualizar o esquema (MS).",
-                        "<strong>Dose zero</strong> de 6 a 11 meses quando houver circulação do vírus ou viagem (MS).",
+                        "<strong>Calendário do MS:</strong> tríplice viral aos 12 meses e tetra viral aos 15 meses; adolescentes e adultos não vacinados: atualizar o esquema (MS).",
+                        "Dose zero de 6 a 11 meses quando houver circulação do vírus ou viagem (MS).",
                         "Vacina de vírus vivo: contraindicada em gestantes e imunodeprimidos graves (avaliar no CRIE).",
-                        "<strong>Conferir o cartão</strong> de toda criança atendida, sobretudo em surto."
+                        "Conferir o cartão de toda criança atendida, sobretudo em surto."
                     ]
                 },
                 {
@@ -200,7 +201,7 @@ registrarConduta({
                     resumo: "Acompanhar nutrição, visão e desenvolvimento.",
                     itens: [
                         "O sarampo deprime a imunidade por semanas a meses: atenção a novas infecções.",
-                        "Acompanhar <strong>estado nutricional</strong>, visão e desenvolvimento; quem teve sarampo fica imune pelo resto da vida."
+                        "Acompanhar estado nutricional, visão e desenvolvimento; quem teve sarampo fica imune pelo resto da vida."
                     ]
                 }
             ]
