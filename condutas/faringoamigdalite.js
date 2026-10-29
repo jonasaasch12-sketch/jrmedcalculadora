@@ -13,7 +13,8 @@ registrarConduta({
     cor: "#0f766e",
     kw: "faringoamigdalite faringite amigdalite tonsilite dor de garganta estreptococo beta hemolitico grupo a pyogenes escarlatina mcisaac centor teste rapido abscesso periamigdaliano febre reumatica",
     resumo: "Viral × estreptocócica, escore de McIsaac clicável, quando testar e tratar, antibiótico de 10 dias, alérgicos, complicações e amigdalectomia.",
-    legenda: "Conduta conforme a <strong>diretriz da IDSA (2012)</strong> e a <strong>atualização IDSA 2025</strong> (escore clínico para decidir o teste), com a <strong>recomendação do Departamento de Infectologia da SBP (2006)</strong>. Escore de <strong>McIsaac (1998)</strong>.",
+    legenda: "Conduta conforme a diretriz da IDSA (2012) e a atualização IDSA 2025 (escore clínico para decidir o teste), com a recomendação do Departamento de Infectologia da SBP (2006). Escore de McIsaac (1998).",
+    padraoTexto: true, // padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
         {
@@ -26,11 +27,11 @@ registrarConduta({
                     icone: "🔎",
                     resumo: "A maioria é viral. O estreptococo é 20 a 30% das dores de garganta na criança.",
                     itens: [
-                        "<strong>A maioria das faringoamigdalites é viral.</strong> O <strong>estreptococo beta-hemolítico do grupo A</strong> (<em>S. pyogenes</em>) causa <strong>20 a 30%</strong> das dores de garganta na criança e 5 a 15% no adulto (IDSA 2012).",
-                        "<strong>Idade típica do estreptococo: 5 a 15 anos.</strong> Raro abaixo de 3 anos; nessa idade a febre reumática é muito rara.",
-                        "<strong>Sugerem estreptococo:</strong> início súbito, febre, dor para engolir, exsudato amigdaliano, <strong>petéquias no palato</strong>, adenomegalia cervical anterior dolorosa, cefaleia, náuseas, vômitos e dor abdominal; inverno e primavera; contato com caso confirmado.",
-                        "<strong>Sugerem vírus (não testar):</strong> <strong>tosse, coriza, rouquidão</strong>, conjuntivite, úlceras orais ou vesículas, diarreia (IDSA 2012).",
-                        "<strong>O clínico não basta:</strong> os sinais se sobrepõem. O diagnóstico do estreptococo se confirma com <strong>teste rápido</strong> (antígeno) e/ou <strong>cultura de orofaringe</strong> (IDSA 2012; SBP)."
+                        "A maioria das faringoamigdalites é viral. O estreptococo beta-hemolítico do grupo A (<em>S. pyogenes</em>) causa 20 a 30% das dores de garganta na criança e 5 a 15% no adulto (IDSA 2012).",
+                        "<strong>Idade típica do estreptococo:</strong> 5 a 15 anos. Raro abaixo de 3 anos; nessa idade a febre reumática é muito rara.",
+                        "<strong>Sugerem estreptococo:</strong> início súbito, febre, dor para engolir, exsudato amigdaliano, petéquias no palato, adenomegalia cervical anterior dolorosa, cefaleia, náuseas, vômitos e dor abdominal; inverno e primavera; contato com caso confirmado.",
+                        "<strong>Sugerem vírus (não testar):</strong> tosse, coriza, rouquidão, conjuntivite, úlceras orais ou vesículas, diarreia (IDSA 2012).",
+                        "<strong>O clínico não basta:</strong> os sinais se sobrepõem. O diagnóstico do estreptococo se confirma com teste rápido (antígeno) e/ou cultura de orofaringe (IDSA 2012; SBP)."
                     ]
                 },
                 {
@@ -38,8 +39,8 @@ registrarConduta({
                     icone: "🍓",
                     resumo: "Faringite estreptocócica + exantema áspero (lixa) e língua em framboesa.",
                     itens: [
-                        "<strong>Exantema eritematoso micropapular áspero (\"lixa\")</strong>, que começa no tronco e pescoço, mais intenso nas dobras (<strong>sinal de Pastia</strong>); palidez perioral (<strong>sinal de Filatov</strong>).",
-                        "<strong>Língua em morango/framboesa</strong>; descamação das mãos e pés na convalescença.",
+                        "Exantema eritematoso micropapular áspero (\"lixa\"), que começa no tronco e pescoço, mais intenso nas dobras (sinal de Pastia); palidez perioral (sinal de Filatov).",
+                        "Língua em morango/framboesa; descamação das mãos e pés na convalescença.",
                         "Mesma conduta da faringite estreptocócica (testar e tratar 10 dias)."
                     ]
                 },
@@ -48,7 +49,7 @@ registrarConduta({
                     icone: "🧭",
                     resumo: "Mononucleose, adenovírus, herpangina, herpes, difteria e abscessos.",
                     itens: [
-                        "<strong>Mononucleose (EBV):</strong> exsudato extenso, <strong>adenomegalia cervical posterior</strong> e generalizada, hepatoesplenomegalia, fadiga. <strong>Exantema com amoxicilina.</strong> Evitar esporte de contato pelo risco de ruptura do baço.",
+                        "<strong>Mononucleose (EBV):</strong> exsudato extenso, adenomegalia cervical posterior e generalizada, hepatoesplenomegalia, fadiga. Exantema com amoxicilina. Evitar esporte de contato pelo risco de ruptura do baço.",
                         "<strong>Adenovírus:</strong> febre faringoconjuntival (faringite + conjuntivite).",
                         "<strong>Herpangina (Coxsackie):</strong> vesículas e úlceras no palato mole e pilares; mão-pé-boca.",
                         "<strong>Gengivoestomatite herpética:</strong> úlceras na gengiva e na boca anterior.",
@@ -61,7 +62,7 @@ registrarConduta({
                     icone: "📊",
                     resumo: "Toque em cada item. 0 a 1: não testar · 2 a 3: testar · 4 a 5: testar (ou tratar se não houver teste).",
                     itens: [
-                        "A IDSA 2025 recomenda usar um <strong>escore clínico</strong> (Centor/McIsaac) para decidir quem testar: o maior benefício é <strong>identificar quem tem baixa probabilidade</strong> e evitar exame e antibiótico desnecessários.",
+                        "A IDSA 2025 recomenda usar um escore clínico (Centor/McIsaac) para decidir quem testar: o maior benefício é identificar quem tem baixa probabilidade e evitar exame e antibiótico desnecessários.",
                         "<strong>Testar mesmo com escore baixo:</strong> contato domiciliar com estreptococo, febre reumática prévia ou quadro de escarlatina.",
                         "<strong>Menores de 3 anos:</strong> o escore funciona mal; em geral não testar, salvo irmão ou contato com estreptococo (IDSA 2012)."
                     ],
@@ -97,10 +98,10 @@ registrarConduta({
                     resumo: "Alarme → escore → teste → antibiótico de 10 dias → sintomáticos e orientações.",
                     itens: [
                         "<span class=\"cond-passo\">1</span> <strong>Internar?</strong> Critérios clicáveis: UTI · enfermaria · casa (estridor, sialorreia, trismo, torcicolo, desidratação, toxemia)",
-                        "<span class=\"cond-passo\">2</span> <strong>Escore de McIsaac:</strong> 0–1 não testar · ≥ 2 <strong>teste rápido ou cultura</strong>",
-                        "<span class=\"cond-passo\">3</span> <strong>Positivo:</strong> <strong>amoxicilina 10 dias</strong> ou <strong>penicilina benzatina IM dose única</strong>",
+                        "<span class=\"cond-passo\">2</span> <strong>Escore de McIsaac:</strong> 0–1 não testar · ≥ 2 teste rápido ou cultura",
+                        "<span class=\"cond-passo\">3</span> <strong>Positivo:</strong> amoxicilina 10 dias ou penicilina benzatina IM dose única",
                         "<span class=\"cond-passo\">4</span> <strong>Alérgico à penicilina:</strong> sem anafilaxia = cefadroxila 10 dias · com anafilaxia = azitromicina 5 dias",
-                        "<span class=\"cond-passo\">5</span> <strong>Dor e febre:</strong> ibuprofeno ou paracetamol. <strong>Sem corticoide.</strong> Orientar retorno"
+                        "<span class=\"cond-passo\">5</span> <strong>Dor e febre:</strong> ibuprofeno ou paracetamol. Sem corticoide. Orientar retorno"
                     ],
                     lista: "passos"
                 },
@@ -110,11 +111,12 @@ registrarConduta({
                     resumo: "Primeiro decida: UTI, internar ou tratar em casa. Abscesso, via aérea e desidratação internam.",
                     alerta: true,
                     itens: [
-                        "A <strong>faringoamigdalite é tratada em casa</strong>. Internar por <strong>via aérea ameaçada</strong>, <strong>abscesso</strong>, <strong>desidratação</strong> ou toxemia.",
-                        "<strong>Abscesso periamigdaliano:</strong> dor intensa e unilateral, <strong>trismo</strong>, <strong>voz de \"batata quente\"</strong>, abaulamento do palato e <strong>desvio da úvula</strong>. Adolescentes. Avaliação do otorrino para drenagem.",
-                        "<strong>Abscesso retrofaríngeo:</strong> menores de 5 anos, febre, <strong>torcicolo</strong> ou recusa a mexer o pescoço, sialorreia, abaulamento da parede posterior da faringe. Tomografia cervical com contraste.",
-                        "<strong>Epiglotite / obstrução de via aérea:</strong> estridor, sialorreia, posição em tripé, toxemia. <strong>Não examinar a orofaringe com espátula</strong>; manter a criança calma no colo e acionar a via aérea difícil (ver conduta de crupe).",
-                        "<strong>Desidratação</strong> por não aceitar líquidos: hidratação e analgesia antes de decidir a alta."
+                        "A faringoamigdalite é tratada em casa. Internar por via aérea ameaçada, abscesso, desidratação ou toxemia.",
+                        "<strong>Abscesso periamigdaliano:</strong> dor intensa e unilateral, trismo, voz de \"batata quente\", abaulamento do palato e desvio da úvula. Adolescentes. Avaliação do otorrino para drenagem.",
+                        "<strong>Abscesso retrofaríngeo:</strong> menores de 5 anos, febre, torcicolo ou recusa a mexer o pescoço, sialorreia, abaulamento da parede posterior da faringe. Tomografia cervical com contraste.",
+                        "<strong>Epiglotite / obstrução de via aérea:</strong> estridor, sialorreia, posição em tripé, toxemia.",
+                        { alerta: "na suspeita de epiglotite, não examinar a orofaringe com espátula; manter a criança calma no colo e acionar a via aérea difícil (ver conduta de crupe)." },
+                        "Desidratação por não aceitar líquidos: hidratação e analgesia antes de decidir a alta."
                     ],
                     escore: {
                         id: "internacao_faringo",
@@ -145,11 +147,11 @@ registrarConduta({
                     titulo: "Decidir o teste pelo escore",
                     resumo: "0 a 1: sem teste e sem antibiótico. 2 ou mais: teste rápido ou cultura.",
                     itens: [
-                        "<strong>Escore 0 a 1, ou quadro viral claro</strong> (tosse, coriza, rouquidão, úlceras): <strong>não testar e não dar antibiótico</strong>.",
-                        "<strong>Escore ≥ 2:</strong> <strong>teste rápido</strong> (antígeno) ou <strong>cultura de orofaringe</strong>. Colher esfregando as duas amígdalas e a parede posterior, sem tocar língua e bochecha.",
-                        "<strong>Teste rápido negativo na criança:</strong> confirmar com <strong>cultura</strong> (IDSA 2012). Teste rápido positivo: tratar, sem cultura.",
-                        "<strong>Sem teste disponível:</strong> decisão clínica; escore alto (≥ 4) favorece tratar. Iniciar o antibiótico <strong>até 9 dias</strong> do início dos sintomas ainda previne a febre reumática, então dá tempo de esperar a cultura.",
-                        "<strong>Não fazer</strong> teste de controle após o tratamento e <strong>não testar contactantes</strong> sem sintomas (IDSA 2012)."
+                        "<strong>Escore 0 a 1, ou quadro viral claro</strong> (tosse, coriza, rouquidão, úlceras): não testar e não dar antibiótico.",
+                        "<strong>Escore ≥ 2:</strong> teste rápido (antígeno) ou cultura de orofaringe. Colher esfregando as duas amígdalas e a parede posterior, sem tocar língua e bochecha.",
+                        "<strong>Teste rápido negativo na criança:</strong> confirmar com cultura (IDSA 2012). Teste rápido positivo: tratar, sem cultura.",
+                        "<strong>Sem teste disponível:</strong> decisão clínica; escore alto (≥ 4) favorece tratar. Iniciar o antibiótico até 9 dias do início dos sintomas ainda previne a febre reumática, então dá tempo de esperar a cultura.",
+                        "Não fazer teste de controle após o tratamento e não testar contactantes sem sintomas (IDSA 2012)."
                     ]
                 },
                 {
@@ -157,10 +159,10 @@ registrarConduta({
                     titulo: "Positivo: antibiótico de 10 dias",
                     resumo: "Amoxicilina VO 10 dias ou penicilina benzatina IM dose única.",
                     itens: [
-                        "<strong>1ª escolha: penicilina ou amoxicilina</strong> (IDSA 2012; SBP). Não há resistência do <em>S. pyogenes</em> à penicilina.",
-                        "<strong>Amoxicilina VO por 10 dias completos</strong>, mesmo com melhora em 2 a 3 dias: é o que previne a febre reumática.",
+                        "<strong>1ª escolha:</strong> penicilina ou amoxicilina (IDSA 2012; SBP). Não há resistência do <em>S. pyogenes</em> à penicilina.",
+                        { alerta: "amoxicilina VO por 10 dias completos, mesmo com melhora em 2 a 3 dias: é o que previne a febre reumática." },
                         "<strong>Penicilina benzatina IM dose única:</strong> quando há dúvida se a família vai completar os 10 dias, vômitos ou dificuldade de dar medicação oral.",
-                        "<strong>Penicilina V oral</strong> (acima de 5 anos) é alternativa (card na aba Prescrição).",
+                        "Penicilina V oral (acima de 5 anos) é alternativa (card na aba Prescrição).",
                         "Sem antibiótico de amplo espectro (cefalosporinas de 3ª geração, amoxicilina-clavulanato) na faringite não complicada."
                     ],
                     remedios: ["amox_faringo", "amox_faringo400", "benza"]
@@ -170,9 +172,9 @@ registrarConduta({
                     titulo: "Alérgico à penicilina",
                     resumo: "Sem anafilaxia: cefadroxila 10 dias. Com anafilaxia: azitromicina 5 dias.",
                     itens: [
-                        "<strong>Alergia sem reação imediata</strong> (exantema tardio, sem anafilaxia): <strong>cefalosporina de 1ª geração por 10 dias</strong> (cefadroxila ou cefalexina).",
-                        "<strong>Reação imediata ou anafilaxia:</strong> <strong>azitromicina 5 dias</strong> (ou clindamicina 10 dias). Evitar cefalosporinas.",
-                        "<strong>Macrolídeos:</strong> resistência do estreptococo em aumento, <strong>inclusive no Brasil</strong>, e erradicação menor que a da penicilina (meta-análise em rede 2026). Usar só nos alérgicos."
+                        "<strong>Alergia sem reação imediata</strong> (exantema tardio, sem anafilaxia): cefalosporina de 1ª geração por 10 dias (cefadroxila ou cefalexina).",
+                        "<strong>Reação imediata ou anafilaxia:</strong> azitromicina 5 dias (ou clindamicina 10 dias). Evitar cefalosporinas.",
+                        "<strong>Macrolídeos:</strong> resistência do estreptococo em aumento, inclusive no Brasil, e erradicação menor que a da penicilina (meta-análise em rede 2026). Usar só nos alérgicos."
                     ],
                     remedios: ["cefadroxila", "azitro_faringo"]
                 },
@@ -181,9 +183,9 @@ registrarConduta({
                     titulo: "Sintomáticos, alta e orientações",
                     resumo: "Ibuprofeno ou paracetamol. Sem corticoide. Retorno se piorar ou não melhorar em 48 a 72 h.",
                     itens: [
-                        "<strong>Dor e febre:</strong> ibuprofeno ou paracetamol. <strong>Não usar AAS</strong> na criança (síndrome de Reye).",
-                        "<strong>Corticoide não é recomendado</strong> como tratamento da faringite (IDSA 2012).",
-                        "<strong>Líquidos frios e alimentos pastosos</strong>; manter a hidratação.",
+                        "<strong>Dor e febre:</strong> ibuprofeno ou paracetamol. Não usar AAS na criança (síndrome de Reye).",
+                        "Corticoide não é recomendado como tratamento da faringite (IDSA 2012).",
+                        "Líquidos frios e alimentos pastosos; manter a hidratação.",
                         "<strong>Volta à escola:</strong> após 12 a 24 h de antibiótico e sem febre.",
                         "<strong>Retornar se:</strong> sem melhora em 48 a 72 h de antibiótico, dificuldade para engolir saliva ou líquidos, trismo, voz abafada, torcicolo, falta de ar ou manchas na pele."
                     ],
@@ -202,8 +204,8 @@ registrarConduta({
                     resumo: "Supurativas (abscessos, otite, sinusite) e não supurativas (febre reumática, GNPE).",
                     itens: [
                         "<strong>Supurativas:</strong> abscesso periamigdaliano e retrofaríngeo, adenite cervical, otite média, sinusite, mastoidite.",
-                        "<strong>Febre reumática:</strong> 2 a 4 semanas depois. <strong>O antibiótico correto (10 dias) previne</strong>, mesmo iniciado até 9 dias após o início dos sintomas.",
-                        "<strong>Glomerulonefrite pós-estreptocócica:</strong> 1 a 2 semanas depois (edema, hematúria, hipertensão). <strong>O antibiótico não previne.</strong>"
+                        "<strong>Febre reumática:</strong> 2 a 4 semanas depois. O antibiótico correto (10 dias) previne, mesmo iniciado até 9 dias após o início dos sintomas.",
+                        "<strong>Glomerulonefrite pós-estreptocócica:</strong> 1 a 2 semanas depois (edema, hematúria, hipertensão). O antibiótico não previne."
                     ]
                 },
                 {
@@ -211,7 +213,7 @@ registrarConduta({
                     icone: "🔁",
                     resumo: "Episódios repetidos com teste positivo podem ser portador com virose.",
                     itens: [
-                        "<strong>Portador crônico</strong> de estreptococo: tem a bactéria na garganta sem doença; episódios virais dão teste positivo. <strong>Não precisa tratar o portador</strong> (IDSA 2012).",
+                        "Portador crônico de estreptococo: tem a bactéria na garganta sem doença; episódios virais dão teste positivo. Não precisa tratar o portador (IDSA 2012).",
                         "<strong>Febre periódica (PFAPA):</strong> febre a cada 3 a 6 semanas com faringite, aftas e adenite, sem tosse e com a criança bem entre os episódios: encaminhar.",
                         "<strong>Falha clínica:</strong> rever adesão (10 dias), pensar em mononucleose, abscesso ou portador com nova virose."
                     ]
@@ -221,8 +223,8 @@ registrarConduta({
                     icone: "✂️",
                     resumo: "Critérios de Paradise: ≥ 7 episódios em 1 ano, ≥ 5/ano em 2 anos ou ≥ 3/ano em 3 anos.",
                     itens: [
-                        "<strong>Critérios de Paradise</strong> (AAO-HNS 2019): <strong>≥ 7 episódios em 1 ano</strong>, <strong>≥ 5 por ano em 2 anos</strong> ou <strong>≥ 3 por ano em 3 anos</strong>, cada um documentado com febre > 38,3 °C, adenomegalia cervical, exsudato ou teste positivo.",
-                        "Abaixo disso: <strong>acompanhar</strong> (conduta expectante). A IDSA não recomenda a cirurgia só para reduzir a frequência das faringites.",
+                        "<strong>Critérios de Paradise</strong> (AAO-HNS 2019): ≥ 7 episódios em 1 ano, ≥ 5 por ano em 2 anos ou ≥ 3 por ano em 3 anos, cada um documentado com febre > 38,3 °C, adenomegalia cervical, exsudato ou teste positivo.",
+                        "Abaixo disso: acompanhar (conduta expectante). A IDSA não recomenda a cirurgia só para reduzir a frequência das faringites.",
                         "Também encaminhar: abscesso periamigdaliano recorrente, apneia obstrutiva do sono por hipertrofia, PFAPA."
                     ]
                 }
