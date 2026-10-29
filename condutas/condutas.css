@@ -15,7 +15,16 @@
 .cond-item-resumo { font-size: 12.5px; color: var(--text-muted); }
 .cond-item-seta { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 24px; color: var(--cor-cat); }
 
-.cond-voltar { background: none; border: none; color: var(--primary); font-weight: 800; font-size: 13px; cursor: pointer; padding: 4px 0 10px; }
+/* Barra de voltar (opção C, escolhida pelo Dr. Jonas): presa logo abaixo do cabeçalho, acompanha a rolagem. */
+.cond-barra { position: sticky; top: var(--altura-topo, 0px); z-index: 20; display: flex; align-items: center; gap: 12px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px 10px; margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .08); }
+.cond-voltar { flex: none; background: var(--primary-soft); color: var(--primary); border: 1.5px solid var(--primary); font-weight: 700;
+    font-size: 15px; padding: 9px 16px; border-radius: 10px; cursor: pointer; }
+.cond-voltar:hover { background: var(--primary); color: #fff; }
+.cond-caminho { font-size: 14px; color: var(--text-muted); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cond-caminho b { color: var(--text-main); }
+@media (max-width: 600px) { .cond-voltar { font-size: 14px; padding: 8px 12px; } .cond-caminho { font-size: 13px; } }
 .cond-cabecalho { background: color-mix(in srgb, var(--cor-cat) 12%, #fff); border-left: 6px solid var(--cor-cat); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; }
 .cond-cabecalho h2 { margin: 2px 0 4px; font-size: 21px; color: color-mix(in srgb, var(--cor-cat) 82%, #000); }
 .cond-cabecalho-cat { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; color: var(--cor-cat); }
