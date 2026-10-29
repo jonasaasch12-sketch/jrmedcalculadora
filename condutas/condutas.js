@@ -49,7 +49,31 @@ function montarEstruturaCondutas() {
     });
 }
 
+// Botão "voltar" do celular/navegador (pedido do Dr. Jonas): cada troca de aba e cada conduta aberta
+// viram um passo no histórico. Voltar: conduta → lista de condutas → aba anterior, em vez de sair do app.
+let restaurandoHistorico = false;
+function empurrarHistorico(estado) {
+    if (restaurandoHistorico) return;
+    let atual = history.state || {};
+    if (atual.modo === estado.modo && (atual.cond || null) === (estado.cond || null)) return;
+    try { history.pushState(estado, '', location.href); } catch (e) { }
+}
+window.addEventListener('popstate', (ev) => {
+    if (!document.getElementById('area-condutas')) return;
+    let e = ev.state || { modo: 'prescricao' };
+    restaurandoHistorico = true;
+    try {
+        if (e.modo === 'condutas') {
+            condutaAberta = e.cond || null;
+            trocarModo('condutas');
+        } else if (modoAtual !== 'prescricao') {
+            trocarModo('prescricao');
+        }
+    } finally { restaurandoHistorico = false; }
+});
+
 function trocarModo(modo) {
+    if (modo !== modoAtual) empurrarHistorico(modo === 'condutas' ? { modo, cond: condutaAberta || null } : { modo });
     modoAtual = modo;
     document.querySelectorAll('.aba-modo, .tab-b[data-modo]').forEach(b => b.classList.toggle('ativa', b.dataset.modo === modo));
     document.body.classList.toggle('modo-condutas', modo === 'condutas');
@@ -62,6 +86,12 @@ function trocarModo(modo) {
     if (modo === 'condutas') { condutaAberta ? abrirConduta(condutaAberta) : renderizarListaCondutas(); }
     if (typeof atualizarAlturaTopo === 'function') atualizarAlturaTopo();
     window.scrollTo(0, 0);
+}
+
+// "← Todas as condutas": se a conduta entrou no histórico, volta por ele (igual ao botão do celular).
+function voltarListaCondutas() {
+    if (history.state && history.state.cond) { history.back(); return; }
+    renderizarListaCondutas(); window.scrollTo(0, 0);
 }
 
 function renderizarListaCondutas() {
@@ -132,12 +162,13 @@ function abrirConduta(id) {
     let c = condutasJR[id];
     if (!c) return;
     condutaAberta = id;
+    empurrarHistorico({ modo: 'condutas', cond: id });
     let blocos = c.blocos || [{ secoes: c.secoes }];
     let n = 0;
     let indice = blocos.filter(b => b.titulo).map((b, bi) =>
         `<a href="#cond-bloco-${bi}" class="cond-indice-bloco" style="--cor-bloco:${b.cor || c.cor}" onclick="document.getElementById('cond-bloco-${bi}').scrollIntoView({behavior:'smooth'});return false;">${b.icone || ''} ${escCond(b.titulo)}</a>`).join('');
     let html = `
-        <button type="button" class="cond-voltar" onclick="renderizarListaCondutas(); window.scrollTo(0,0);">← Todas as condutas</button>
+        <button type="button" class="cond-voltar" onclick="voltarListaCondutas()">← Todas as condutas</button>
         <div class="cond-cabecalho" style="--cor-cat:${c.cor}">
             <div class="cond-cabecalho-cat">${escCond(c.categoria)}</div>
             <h2>${escCond(c.nome)}</h2>
