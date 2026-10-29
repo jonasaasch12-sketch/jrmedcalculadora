@@ -15,7 +15,8 @@ registrarConduta({
     cor: "#0284c7",
     kw: "bronquiolite bva vsr sincicial lactente sibilancia j21",
     resumo: "Criança < 2 anos com infecção viral aguda: IVAS seguida de acometimento do trato respiratório inferior.",
-    legenda: `Conduta conforme o <strong>Guia de Manejo Clínico do Ministério da Saúde (2026)</strong>. Itens com ${IMIP} são informações adicionais do Protocolo do IMIP (2024).`,
+    legenda: `Conduta conforme o Guia de Manejo Clínico do Ministério da Saúde (2026). Itens com ${IMIP} são informações adicionais do Protocolo do IMIP (2024).`,
+    padraoTexto: true, // padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
         {
@@ -210,8 +211,8 @@ registrarConduta({
                         "Pesquisa viral (RT-PCR) na admissão. Gasometria arterial periódica e individualizada na BVA crítica. Capnografia (ETCO₂) em alguns pacientes. Ecocardiograma funcional (POCUS) ao menos uma vez se em VMI, se disponível.",
                         "Aspiração profunda cuidadosa por equipe treinada pode ser considerada em casos graves na UTIP.",
                         `Isolamento (ou coorte), precaução respiratória. Considerar posição prona nas etapas avançadas. ${IMIP}`,
-                        `<strong>Sedação</strong> é medida de exceção, em UTI, para adaptação à VNI quando as medidas não farmacológicas falham (presença ativa dos pais, otimizar interface e alimentação, sacarose). Ter material de intubação e drogas de urgência à mão. ${IMIP}`,
-                        `Sedação leve, esquema sugerido: 1ª linha <strong>dexmedetomidina 0,1–1 mcg/kg/h</strong> EV em infusão contínua. 2ª linha <strong>clonidina 4–6 mcg/kg/dose VO 6/6h</strong>. ${IMIP}`
+                        `Sedação é medida de exceção, em UTI, para adaptação à VNI quando as medidas não farmacológicas falham (presença ativa dos pais, otimizar interface e alimentação, sacarose). Ter material de intubação e drogas de urgência à mão. ${IMIP}`,
+                        `Sedação leve, esquema sugerido: 1ª linha dexmedetomidina 0,1–1 mcg/kg/h EV em infusão contínua. 2ª linha clonidina 4–6 mcg/kg/dose VO 6/6h. ${IMIP}`
                     ],
                     remedios: ["rsi_cont_precedex"]
         },
@@ -247,7 +248,7 @@ registrarConduta({
                         "<strong>Falha:</strong> FiO₂ > 60% ou piora do desconforto, hipercapnia, taquipneia, apneia, taquicardia ou bradicardia → VNI ou VMI.",
                         "<strong>Desmame:</strong> após 12–24 h, se FiO₂ ≤ 40% e desconforto leve a moderado: reduzir para 5 cmH₂O. Retirada: FiO₂ < 30% e desconforto leve ou ausente. Sucesso: 48 h fora do CPAP.",
                         "Interface que favoreça conforto e sincronia. Vigiar lesões de pele e septo nasal.",
-                        `Preferir uso intermitente. Testar por 1–2 h. <strong>Insucesso:</strong> agitação, alteração da consciência e/ou hipotonia, FiO₂ > 40–45%, SatO₂/FiO₂ < 221, piora do padrão ou WDF > 7, ou sem resposta em até 2 h → intubação. ${IMIP}`
+                        `Preferir uso intermitente. Testar por 1–2 h. Insucesso: agitação, alteração da consciência e/ou hipotonia, FiO₂ > 40–45%, SatO₂/FiO₂ < 221, piora do padrão ou WDF > 7, ou sem resposta em até 2 h → intubação. ${IMIP}`
                     ]
                 },
                 {
