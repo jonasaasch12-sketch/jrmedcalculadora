@@ -100,6 +100,7 @@ function renderizarListaCondutas() {
     let lista = Object.values(condutasJR).filter(c => !termo ||
         (typeof normalizar === 'function' ? normalizar : s => s.toLowerCase())(c.nome + ' ' + c.kw + ' ' + c.categoria).includes(termo));
     let porCat = {};
+    lista.sort((a, b) => (b.destaque ? 1 : 0) - (a.destaque ? 1 : 0)); /* conduta com destaque: true vem primeiro (ventilação mecânica, pedido do Dr. Jonas) */
     lista.forEach(c => (porCat[c.categoria] = porCat[c.categoria] || []).push(c));
 
     let html = `<div class="cond-intro">📖 <strong>Condutas</strong> — protocolos das doenças mais prevalentes. As medicações de cada conduta usam o peso e a idade digitados acima.</div>`;
@@ -107,7 +108,7 @@ function renderizarListaCondutas() {
     Object.keys(porCat).forEach(cat => {
         html += `<div class="cond-cat-titulo">${escCond(cat)}</div><div class="cond-grade">`;
         porCat[cat].forEach(c => {
-            html += `<button type="button" class="cond-item" style="--cor-cat:${c.cor}" onclick="abrirConduta('${c.id}')">
+            html += `<button type="button" class="cond-item${c.destaque ? ' cond-item-destaque' : ''}" style="--cor-cat:${c.cor}" onclick="abrirConduta('${c.id}')">
                 <span class="cond-item-nome">${escCond(c.nome)}</span>
                 <span class="cond-item-resumo">${escCond(c.resumo || '')}</span>
                 <span class="cond-item-seta">›</span></button>`;
@@ -176,6 +177,7 @@ function abrirConduta(id) {
         </div>
         ${c.legenda ? `<div class="cond-legenda">${c.legenda}</div>` : ''}
         ${indice ? `<nav class="cond-indice cond-indice-blocos">${indice}</nav>` : ''}
+        ${c.ferramentaTopo && typeof window[c.ferramentaTopo] === 'function' ? window[c.ferramentaTopo]() : ''}
         <div class="cond-acoes"><button type="button" onclick="abrirTodasSecoes(true)">⊕ Abrir tudo</button><button type="button" onclick="abrirTodasSecoes(false)">⊖ Fechar tudo</button></div>`;
 
     blocos.forEach((b, bi) => {
@@ -209,7 +211,7 @@ function linkarCitacoes(area, c) {
     if (!chaves.length) return;
     let esc = t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     let re = new RegExp('(?<![\\wÀ-ú])(' + chaves.map(esc).join('|') + ')(?![\\wÀ-ú])', 'g');
-    let pular = 'a, button, input, select, textarea, label, script, .cond-fonte, .cond-med, .cond-indice, .cond-voltar, .cond-barra, .cond-acoes, .cadh, .cadg, .sy, .tr, .qm, .exg, [data-texto], [data-dose]';
+    let pular = 'a, button, input, select, textarea, label, script, .cond-fonte, .cond-med, .cond-indice, .cond-voltar, .cond-barra, .vm-sim, .cond-acoes, .cadh, .cadg, .sy, .tr, .qm, .exg, [data-texto], [data-dose]';
     let walker = document.createTreeWalker(area, NodeFilter.SHOW_TEXT, {
         acceptNode: n => (!n.nodeValue.trim() || n.parentElement.closest(pular)) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
     });
