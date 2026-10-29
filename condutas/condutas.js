@@ -168,7 +168,7 @@ function abrirConduta(id) {
     let indice = blocos.filter(b => b.titulo).map((b, bi) =>
         `<a href="#cond-bloco-${bi}" class="cond-indice-bloco" style="--cor-bloco:${b.cor || c.cor}" onclick="document.getElementById('cond-bloco-${bi}').scrollIntoView({behavior:'smooth'});return false;">${b.icone || ''} ${escCond(b.titulo)}</a>`).join('');
     let html = `
-        <div class="cond-barra"><button type="button" class="cond-voltar" onclick="voltarListaCondutas()">← Todas as condutas</button><span class="cond-caminho">Condutas › <b>${escCond(c.nome)}</b></span></div>
+        <div class="cond-barra"><button type="button" class="cond-voltar" onclick="voltarListaCondutas()" title="Voltar para todas as condutas">← Condutas</button><span class="cond-caminho">Condutas › <b>${escCond(c.nome)}</b></span></div>
         <div class="cond-cabecalho" style="--cor-cat:${c.cor}">
             <div class="cond-cabecalho-cat">${escCond(c.categoria)}</div>
             <h2>${escCond(c.nome)}</h2>
