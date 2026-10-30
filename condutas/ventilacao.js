@@ -215,141 +215,378 @@ function vmConfig() {
     return cfg;
 }
 
-// ===== Navegação =====
-function vmIr(passo) { vmEstado.passo = passo; vmEstado.ajuda = ""; vmRender(true); }
-function vmTipo(t) { if (vmEstado.tipo !== t) { vmEstado.motivo = ""; vmEstado.modo = ""; vmEstado.prog = null; } vmEstado.tipo = t; vmIr(2); }
-function vmMotivo(m) { if (vmEstado.motivo !== m) { vmEstado.modo = ""; vmEstado.prog = null; } vmEstado.motivo = m; vmIr(4); }
-function vmModo(m) { if (vmEstado.modo !== m) vmEstado.prog = null; vmEstado.modo = m; vmIr(5); }
-function vmRecomecar() { vmEstado = { passo: 1, tipo: "", peso: "", idade: "", motivo: "", modo: "", prog: null, ajuda: "", gaso: {} }; vmRender(true); }
-function vmDados() {
-    let p = vmNum(document.getElementById('vm-peso').value), idEl = document.getElementById('vm-idade');
-    let i = idEl ? vmNum(idEl.value) : null, erro = "";
-    if (!p || p <= 0) erro = "Digite o peso.";
-    else if (vmEstado.tipo === "rn" && p > 6) erro = "Peso alto para RN: confira (ou escolha Criança).";
-    else if (vmEstado.tipo === "crianca" && (i == null || i < 0)) erro = "Digite a idade em anos (6 meses = 0,5).";
-    if (erro) { document.getElementById('vm-erro').textContent = erro; return; }
-    if (vmEstado.peso !== String(p) || vmEstado.idade !== String(i)) vmEstado.prog = null;
-    vmEstado.peso = String(p); vmEstado.idade = i == null ? "" : String(i);
-    vmIr(3);
+// =====================================================
+// TELA DO VENTILADOR (pedido do Dr. Jonas: "como se estivesse programando à beira-leito")
+// Layout inspirado nos ventiladores de UTI mais usados (padrão Mindray SV300/SV800, escolhido
+// pelo Dr. Jonas), sem marca nem logotipo: barra de cima com tipo de paciente, modo e alarmes;
+// curvas de pressão, fluxo e volume; valores monitorados à direita; teclas de parâmetro embaixo
+// (toca, ajusta com − e + e confirma, como o botão giratório).
+// As curvas vêm de um pulmão simulado de um compartimento (complacência e constante de tempo
+// ilustrativas por doença): servem para ensinar o efeito de cada ajuste, não são dado de paciente.
+// =====================================================
+
+// Nomes dos modos como aparecem no aparelho.
+const VM_ROTULO = { PCV: "P-A/C", VCV: "V-A/C", PRVC: "PRVC", IMV: "P-A/C" };
+
+// Pulmão simulado: complacência (mL/cmH2O por kg) e constante de tempo (s). Ilustrativo.
+// Constante de tempo de base: RN 0,15 s e lactente 0,20 s (Consenso SBP/AMIB, VNIPP).
+function vmPulmao() {
+    let e = vmEstado, p = vmNum(e.peso) || 1, idade = vmNum(e.idade) || 0;
+    let base = e.tipo === "rn" ? 0.15 : (idade < 1 ? 0.2 : idade < 6 ? 0.25 : 0.3);
+    let t = { normal: [1.0, 1], tce: [1.0, 1], choque: [0.9, 1], sdra: [0.6, 0.6], bronq: [0.7, 2.5], asma: [0.5, 3.5],
+              rn_comp: [0.5, 0.6], rn_resist: [0.9, 1.6], rn_controle: [1.0, 1] }[e.motivo] || [1, 1];
+    let C = t[0] * p, tau = base * t[1];
+    return { C, tau, R: tau / (C / 1000) };
 }
-function vmAjuda(id) { vmEstado.ajuda = vmEstado.ajuda === id ? "" : id; vmRender(); }
-function vmMexer(id, sinal) {
-    let cfg = vmConfig(), par = cfg.params.find(x => x.id === id);
-    if (!par) return;
-    let v = vmEstado.prog[id] + sinal * par.passo;
-    if (id === "fio2") v = Math.min(100, Math.max(21, v));
-    v = Math.max(par.passo, Number(v.toFixed(2)));
-    vmEstado.prog[id] = v;
-    vmRender();
+
+// Ciclo em regime estável: volume que fica preso (auto-PEEP), VT, pressões e as curvas de um ciclo.
+function vmSimular() {
+    let e = vmEstado, pr = e.prog, L = vmPulmao();
+    if (!pr) return null;
+    let f = pr.fr, Tt = 60 / f, Ti = Math.min(pr.ti, Tt * 0.9), Te = Tt - Ti, C = L.C, tau = L.tau, Rml = L.R / 1000;
+    let a = Math.exp(-Te / tau), b = Math.exp(-Ti / tau), peep = pr.peep, porVolume = e.modo === "VCV";
+    let dP, V0, Vend, VT, F = 0, ppico, limitado = false;
+    if (porVolume) {
+        VT = pr.vc; V0 = VT * a / (1 - a); Vend = V0 + VT; F = VT / Ti;
+        ppico = peep + Vend / C + F * Rml;
+    } else {
+        if (e.modo === "PRVC") {
+            dP = pr.vc * (1 - a * b) / (C * (1 - b) * (1 - a));
+            if (peep + dP > pr.plim - 5) { dP = Math.max(0, pr.plim - 5 - peep); limitado = true; } /* PRVC não passa de 5 abaixo do limite de pressão */
+        } else dP = pr.pinsp;
+        let Vinf = C * dP;
+        Vend = Vinf * (1 - b) / (1 - a * b); V0 = a * Vend; VT = Vend - V0;
+        ppico = peep + dP;
+    }
+    let pplat = peep + Vend / C, peepTot = peep + V0 / C;
+    // Curvas de um ciclo (200 pontos): pressão (cmH2O), fluxo (L/min), volume (mL, a partir do início da inspiração).
+    let n = 200, P = [], Fl = [], Vo = [], soma = 0;
+    for (let k = 0; k < n; k++) {
+        let t = k / n * Tt, v, fl, paw;
+        if (t < Ti) {
+            if (porVolume) { v = V0 + F * t; fl = F; paw = peep + v / C + F * Rml; }
+            else { let Vinf = C * dP; v = Vinf + (V0 - Vinf) * Math.exp(-t / tau); fl = (Vinf - v) / tau; paw = peep + dP * Math.min(1, t / 0.05); }
+        } else { let te = t - Ti; v = Vend * Math.exp(-te / tau); fl = -v / tau; paw = peep; }
+        P.push(paw); Fl.push(fl * 60 / 1000); Vo.push(Math.max(0, v - V0)); soma += paw;
+    }
+    return { Tt, Ti, Te, VT, V0, ppico, pplat, peepTot, autoPeep: V0 / C, pmedia: soma / n, mv: VT * f / 1000, dP: pplat - peep,
+             P, F: Fl, V: Vo, limitado, pinspEfetiva: ppico - peep, C, tau };
 }
+
+let vmAnim = { raf: 0, ultimo: 0, x: 0, buf: null, escala: null, t0: 0 };
+
+function vmNovoEstado() {
+    return { tela: "standby", tipo: "", peso: "", idade: "", motivo: "", modo: "", prog: null, sel: "", pend: null,
+             menu: "", congelado: false, pausa: "", gaso: {} };
+}
+vmEstado = vmNovoEstado();
+
+// Parâmetros que aparecem nas teclas, conforme o modo (Pinsp é a pressão acima da PEEP, como no aparelho).
+function vmTeclas() {
+    let e = vmEstado, cfg = vmConfig(), L = vmPulmao(), p = vmNum(e.peso) || 1;
+    let porId = {}; cfg.params.forEach(x => porId[x.id] = x);
+    let lista = [{ id: "fio2", nome: "O₂", un: "%", par: porId.fio2 }];
+    if (e.modo === "PCV" || e.modo === "IMV") {
+        let pip = porId.pip || {};
+        lista.push({ id: "pinsp", nome: "Pinsp", un: "cmH₂O", par: { passo: 1, ajudaExtra: pip.texto || "", pipFaixa: pip.faixa, alertaPip: pip.alerta } });
+    } else lista.push({ id: "vc", nome: e.modo === "PRVC" ? "VT alvo" : "VT", un: "mL", par: porId.vc });
+    lista.push({ id: "fr", nome: "f", un: "/min", par: porId.fr });
+    let ti = porId.ti;
+    if (ti && ti.texto) ti = Object.assign({}, ti, { faixa: [vmArred(3 * L.tau, 0.05), vmArred(5 * L.tau, 0.05)], passo: 0.05, dec: 2,
+        nota: "3–5 constantes de tempo do pulmão simulado (SBP)" });
+    lista.push({ id: "ti", nome: "Tinsp", un: "s", par: ti });
+    lista.push({ id: "peep", nome: "PEEP", un: "cmH₂O", par: porId.peep });
+    return lista;
+}
+function vmArred(x, passo) { return Math.round(x / passo) * passo; }
+
+// Valores iniciais: os da fonte (vmConfig); o que a fonte não traz em número é calculado no pulmão simulado.
+function vmIniciarProg() {
+    let e = vmEstado, cfg = vmConfig(), L = vmPulmao(), p = vmNum(e.peso) || 1, ant = e.prog;
+    let pr = { plim: e.tipo === "rn" ? 30 : 35 };
+    cfg.params.forEach(x => { if (x.ini != null) pr[x.id] = x.ini; });
+    if (cfg.params.some(x => x.faixaPeloFio2)) { let t = vmPeepDaFio2(pr.fio2); if (t) pr.peep = t.min; }
+    if (pr.ti == null) pr.ti = Math.max(0.3, vmArred(3 * L.tau, 0.05));
+    if (pr.vc == null) pr.vc = Math.round((e.tipo === "rn" ? 5 : e.motivo === "asma" ? 5 : 6) * p);
+    if (pr.pip != null) pr.pinsp = pr.pip - pr.peep;
+    else { /* Pinsp que dá o VT inicial no pulmão simulado */
+        let Tt = 60 / pr.fr, a = Math.exp(-(Tt - pr.ti) / L.tau), b = Math.exp(-pr.ti / L.tau);
+        pr.pinsp = Math.max(5, Math.round(pr.vc * (1 - a * b) / (L.C * (1 - b) * (1 - a))));
+    }
+    if (ant && ant.plim) pr.plim = ant.plim;
+    e.prog = pr;
+}
+
+// ===== Ações =====
+function vmTipo(t) { let e = vmEstado; if (e.tipo !== t) { e.motivo = ""; e.modo = ""; } e.tipo = t; vmRenderTela(); }
+function vmMotivo(m) { let e = vmEstado; e.motivo = m; let cfg = vmConfig(), s = cfg.modos.find(x => x.sug); e.modo = s ? s.id : ""; vmRenderTela(); }
+function vmModoStandby(m) { vmEstado.modo = m; vmRenderTela(); }
+function vmCampo(c, v) { vmEstado[c] = String(v).replace(",", "."); }
+function vmIniciar() {
+    let e = vmEstado, p = vmNum(e.peso), i = vmNum(e.idade), erro = "";
+    if (!e.tipo) erro = "Escolha o tipo de paciente.";
+    else if (!p || p <= 0) erro = "Digite o peso.";
+    else if (e.tipo === "rn" && p > 6) erro = "Peso alto para neonato: confira (ou escolha Pediátrico).";
+    else if (e.tipo === "crianca" && (i == null || i < 0)) erro = "Digite a idade em anos (6 meses = 0,5).";
+    else if (!e.motivo) erro = "Escolha o motivo da ventilação.";
+    else if (!e.modo) erro = "Escolha o modo.";
+    if (erro) { let el = document.getElementById('vm-erro'); if (el) el.textContent = erro; return; }
+    vmIniciarProg(); e.tela = "vent"; e.sel = ""; e.menu = ""; vmRender(true);
+}
+function vmStandby() { vmEstado.tela = "standby"; vmEstado.sel = ""; vmEstado.menu = ""; vmRender(); }
+function vmNovoPaciente() { vmEstado = vmNovoEstado(); vmRender(true); }
+function vmSel(id) {
+    let e = vmEstado; e.menu = "";
+    if (e.sel === id) { e.sel = ""; e.pend = null; } else { e.sel = id; e.pend = e.prog[id]; }
+    vmAtualizarPartes();
+}
+function vmGirar(sinal) {
+    let e = vmEstado, t = vmTeclas().find(x => x.id === e.sel); if (!t) return;
+    let passo = (t.par && t.par.passo) || 1, v = Number((e.pend + sinal * passo).toFixed(2));
+    if (e.sel === "fio2") v = Math.min(100, Math.max(21, v));
+    else v = Math.max(e.sel === "ti" ? 0.1 : e.sel === "peep" ? 0 : passo, v);
+    e.pend = v; vmAtualizarPartes();
+}
+function vmConfirmar() { let e = vmEstado; if (e.sel) { e.prog[e.sel] = e.pend; e.sel = ""; e.pend = null; vmAnim.escala = null; } vmAtualizarPartes(); }
+function vmCancelar() { vmEstado.sel = ""; vmEstado.pend = null; vmAtualizarPartes(); }
+function vmMenu(m) { let e = vmEstado; e.menu = e.menu === m ? "" : m; e.sel = ""; vmAtualizarPartes(); }
+function vmTrocarModo(m) {
+    let e = vmEstado, s = vmSimular();
+    if (m !== e.modo && s) { /* troca suave: mantém o volume e a pressão que já estavam entrando */
+        if (m === "VCV" || m === "PRVC") e.prog.vc = Math.round(s.VT);
+        else e.prog.pinsp = Math.round(s.pinspEfetiva);
+    }
+    e.modo = m; e.menu = ""; vmAnim.escala = null; vmAtualizarPartes();
+}
+function vmPlim(sinal) { let e = vmEstado; e.prog.plim = Math.max(15, Math.min(60, e.prog.plim + sinal)); vmAtualizarPartes(); }
+function vmCongelar() { vmEstado.congelado = !vmEstado.congelado; vmAtualizarPartes(); }
+function vmPausa(tipo) { vmEstado.pausa = tipo; vmAtualizarPartes(); clearTimeout(vmPausa.t); vmPausa.t = setTimeout(() => { vmEstado.pausa = ""; vmAtualizarPartes(); }, 5000); }
+
+// ===== Alarmes (o que as fontes dizem + o que o pulmão simulado mostra) =====
+function vmAlarmes(s) {
+    let e = vmEstado, pr = e.prog, p = vmNum(e.peso) || 1, cfg = vmConfig(), al = [];
+    if (!s) return al;
+    let add = (nivel, txt) => al.push({ nivel, txt });
+    if (Math.round(s.ppico) >= pr.plim) add(3, `Pressão alta: Ppico ${vmFmt(s.ppico)} ≥ limite ${pr.plim}`);
+    if (s.limitado) add(2, "PRVC limitado pela pressão: VT alvo não atingido");
+    let vtkg = s.VT / p;
+    if (e.tipo === "rn") { if (vtkg < 4 || vtkg > 6) add(2, `VTe ${vmFmt(vtkg, 1)} mL/kg: alvo 4–6 (MS 2014)`); }
+    else {
+        if (vtkg > 10) add(3, `VTe ${vmFmt(vtkg, 1)} mL/kg: evitar > 10 (PEMVECC)`);
+        else if (vtkg > 8) add(2, `VTe ${vmFmt(vtkg, 1)} mL/kg: acima de 8 (PALICC-2)`);
+        else if (vtkg < 4) add(2, `VTe ${vmFmt(vtkg, 1)} mL/kg: abaixo de 4 (PALICC-2)`);
+        let platMax = e.motivo === "asma" ? 30 : 28;
+        if (Math.round(s.pplat) > platMax) add(2, `Platô ${vmFmt(s.pplat)} cmH₂O: acima de ${platMax} (${e.motivo === "asma" ? "PEMVECC" : "PALICC-2"})`);
+        if (e.motivo === "sdra" && Math.round(s.dP) > 15) add(2, `Driving pressure ${vmFmt(s.dP)}: acima de 15 (PALICC-2)`);
+        if (["normal", "tce", "choque"].includes(e.motivo) && Math.round(s.ppico - pr.peep) >= 10) add(1, `PIP − PEEP ${vmFmt(s.ppico - pr.peep)}: sem doença pulmonar, < 10 (PEMVECC)`);
+    }
+    if (s.autoPeep >= 1) add(2, `PEEP intrínseca ${vmFmt(s.autoPeep, 1)} cmH₂O: o ar não sai todo (aumentar Te)`);
+    if (cfg.teMin && s.Te < cfg.teMin) add(1, `Te ${vmFmt(s.Te, 2)} s: abaixo de ${vmFmt(cfg.teMin, 1)} s`);
+    vmTeclas().forEach(t => {
+        if (!t.par) return;
+        let v = t.id === "pinsp" ? pr.pinsp + pr.peep : pr[t.id];
+        let msg = t.id === "pinsp" ? (t.par.alertaPip ? t.par.alertaPip(v, pr) : null) : (t.par.alerta ? t.par.alerta(v, pr) : null);
+        if (msg && !al.some(a => a.txt === msg)) add(1, msg);
+    });
+    return al.sort((x, y) => y.nivel - x.nivel);
+}
+
+// ===== Desenho =====
+function vmRenderTela() { let el = document.getElementById('vmx-tela'); if (el) el.innerHTML = vmHtmlStandby(); }
 function vmRender(topo) {
     let el = document.getElementById('vm-sim');
     if (!el) return;
     el.innerHTML = vmHtml();
-    if (topo) { let r = el.getBoundingClientRect(), alt = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--altura-topo')) || 0; if (r.top < alt + 40) window.scrollBy(0, r.top - alt - 40); }
+    vmAnim.buf = null; vmAnim.escala = null;
+    if (vmEstado.tela === "vent") { vmAtualizarPartes(); vmIniciarAnimacao(); }
+    if (topo) { let r = el.getBoundingClientRect(), alt = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--altura-topo')) || 0; if (r.top < alt + 10 || r.top > innerHeight * 0.6) window.scrollBy(0, r.top - alt - 10); }
 }
 
 // Função chamada pela conduta (ferramentaTopo).
-function htmlSimuladorVentilador() { return `<div id="vm-sim" class="vm-sim">${vmHtml()}</div>`; }
+function htmlSimuladorVentilador() { setTimeout(() => { if (vmEstado.tela === "vent") { vmAtualizarPartes(); vmIniciarAnimacao(); } }, 0); return `<div id="vm-sim" class="vm-sim">${vmHtml()}</div>`; }
 
 function vmHtml() {
-    let e = vmEstado, passos = ["Paciente", "Dados", "Motivo", "Modo", "Programação", "Metas"];
-    let resumo = [e.tipo === "rn" ? "RN" : (e.tipo ? "Criança" : ""), e.peso ? vmFmt(vmNum(e.peso), 1).replace(",0", "") + " kg" : "",
-        e.tipo === "crianca" && e.idade !== "" ? vmFmt(vmNum(e.idade), 1).replace(",0", "") + " a" : "",
-        e.motivo ? (VM_MOTIVOS[e.tipo] || []).find(x => x.id === e.motivo).nome : "", e.modo ? VM_MODOS[e.modo].nome : ""].filter(Boolean).join(" · ");
-    let h = `<div class="vm-topo"><div><small>🫁 Simulador de ventilador</small><b>${passos[e.passo - 1]}</b>${resumo ? `<span class="vm-resumo">${resumo}</span>` : ""}</div>
-        ${e.passo > 1 ? `<button type="button" class="vm-recomecar" onclick="vmRecomecar()">↺ Recomeçar</button>` : ""}</div>
-        <div class="vm-prog">${passos.map((n, i) => `<button type="button" class="${i < e.passo ? "on" : ""}" ${i + 1 < e.passo ? `onclick="vmIr(${i + 1})"` : "disabled"} title="${n}"><i></i><span>${n}</span></button>`).join("")}</div>
-        <div class="vm-corpo">`;
+    let e = vmEstado;
+    let h = `<div class="vmx">
+        <div class="vmx-top" id="vmx-top">${vmHtmlTopo()}</div>`;
+    if (e.tela === "standby") h += `<div class="vmx-tela" id="vmx-tela">${vmHtmlStandby()}</div>`;
+    else h += `<div class="vmx-meio"><div class="vmx-curvas"><canvas id="vm-canvas"></canvas><div class="vmx-pausa" id="vmx-pausa"></div></div>
+            <div class="vmx-mon" id="vmx-mon"></div></div>
+        <div class="vmx-ajuste" id="vmx-ajuste"></div>
+        <div class="vmx-teclas" id="vmx-teclas"></div>
+        <div class="vmx-funcoes" id="vmx-funcoes"></div>
+        <div class="vmx-menu" id="vmx-menu"></div>`;
+    h += `</div>`;
+    if (e.tela === "vent") h += `<div class="vm-guia" id="vm-guia">${vmHtmlGuia()}</div>`;
+    else h += `<div class="vm-nota vm-dica">Treino de programação: o pulmão é simulado. Os valores sugeridos e as metas seguem as fontes da conduta (lista no fim).</div>`;
+    return h;
+}
 
-    if (e.passo === 1) {
-        h += `<h4>Qual o tipo de paciente?</h4>
-            ${vmOpcao("vmTipo('rn')", "👶", "Recém-nascido", "período neonatal (fonte: Ministério da Saúde 2014)", e.tipo === "rn")}
-            ${vmOpcao("vmTipo('crianca')", "🧒", "Criança", "lactente a adolescente", e.tipo === "crianca")}
-            <div class="vm-balao"><b>Por que o ventilador pergunta isso?</b> Muda o circuito, o sensor de fluxo e as faixas de volume, pressão e tempo.</div>`;
-    } else if (e.passo === 2) {
-        let pesoApp = (document.getElementById('pesoInput') || {}).value || "", idadeApp = (document.getElementById('idadeInput') || {}).value || "";
-        let peso = e.peso || pesoApp, idade = e.idade !== "" ? e.idade : idadeApp;
-        h += `<h4>${e.tipo === "rn" ? "Peso do RN" : "Idade e peso"}</h4><div class="vm-campos">
-            ${e.tipo === "crianca" ? `<label>Idade (anos)<input id="vm-idade" type="text" inputmode="decimal" value="${escCond(String(idade).replace(".", ","))}" placeholder="ex.: 3 ou 0,5"></label>` : ""}
-            <label>Peso (kg)<input id="vm-peso" type="text" inputmode="decimal" value="${escCond(String(peso).replace(".", ","))}" placeholder="${e.tipo === "rn" ? "ex.: 1,2" : "ex.: 15"}"></label></div>
-            <div class="vm-erro" id="vm-erro"></div>
-            <div class="vm-balao">${e.tipo === "rn" ? "No RN, o volume corrente é calculado pelo peso atual." : "O volume corrente é calculado pelo peso. No obeso, usar o peso ideal (PEMVECC: volume por kg de peso ideal)."}</div>
-            <div class="vm-rodape"><button type="button" class="vm-btn" onclick="vmIr(1)">← Voltar</button><button type="button" class="vm-btn vm-btn-p" onclick="vmDados()">Avançar →</button></div>`;
-    } else if (e.passo === 3) {
-        h += `<h4>Por que intubou?</h4>${VM_MOTIVOS[e.tipo].map(x => vmOpcao(`vmMotivo('${x.id}')`, x.icone, x.nome, x.sub, e.motivo === x.id)).join("")}
-            <div class="vm-rodape"><button type="button" class="vm-btn" onclick="vmIr(2)">← Voltar</button></div>`;
-    } else if (e.passo === 4) {
-        let cfg = vmConfig();
-        h += `<div class="vm-sug"><b>💡 Sugestão:</b> ${cfg.sugestao}</div>
-            ${cfg.modos.map(md => { let M = VM_MODOS[md.id]; return `<button type="button" class="vm-modo${e.modo === md.id ? " on" : ""}${md.sug ? " sug" : ""}" onclick="vmModo('${md.id}')">
-                <span class="vm-modo-nome">${M.nome} <small>${M.longo}</small>${md.sug ? `<em>★ sugerido</em>` : ""}</span><span class="vm-modo-desc">${M.desc}</span></button>`; }).join("")}
-            <div class="vm-balao"><b>O que é o modo?</b> ${e.tipo === "rn" ? "É como o ventilador entrega cada respiração. Na IMV neonatal, a pressão é limitada pela PIP e o ciclo termina pelo tempo (Ti); o volume depende do pulmão." : "É o que o ventilador garante a cada respiração: a pressão (PCV) ou o volume (VCV, PRVC). PSV (só pressão de suporte, a criança dispara) e SIMV entram no desmame."}</div>
-            <div class="vm-rodape"><button type="button" class="vm-btn" onclick="vmIr(3)">← Voltar</button></div>`;
-    } else if (e.passo === 5) {
-        h += vmHtmlPainel();
-        h += `<div class="vm-rodape"><button type="button" class="vm-btn" onclick="vmIr(4)">← Voltar</button><button type="button" class="vm-btn vm-btn-p" onclick="vmIr(6)">Metas e gasometria →</button></div>`;
-    } else {
-        let cfg = vmConfig();
-        h += `<h4>🎯 Metas</h4><ul class="vm-lista">${cfg.metas.map(x => `<li>${x}</li>`).join("")}</ul>
-            <h4>🩸 Gasometria: o que mexer</h4>
-            <div class="vm-campos vm-gaso">${[["ph", "pH"], ["paco2", "PaCO₂"], ["pao2", "PaO₂"], ["spo2", "SpO₂ %"]].map(([k, n]) =>
-                `<label>${n}<input type="text" inputmode="decimal" value="${escCond(e.gaso[k] || "")}" oninput="vmEstado.gaso.${k}=this.value;vmGasoAtualizar()"></label>`).join("")}</div>
-            <div id="vm-gaso-res">${vmGasoHtml()}</div>
-            <div class="vm-dope"><b>🚨 Piorou de repente?</b> Tirar do ventilador e ventilar com bolsa e O₂ 100%. Pensar em <b>DOPE</b>: <b>D</b>eslocamento da cânula, <b>O</b>bstrução (secreção), <b>P</b>neumotórax, <b>E</b>quipamento (vazamento, circuito, gases).</div>
-            <div class="vm-rodape"><button type="button" class="vm-btn" onclick="vmIr(5)">← Programação</button><button type="button" class="vm-btn" onclick="vmRecomecar()">↺ Novo paciente</button></div>`;
+function vmHtmlTopo(al) {
+    let e = vmEstado, hora = new Date().toTimeString().slice(0, 5);
+    let pac = e.tipo === "rn" ? "👶 Neonato" : e.tipo === "crianca" ? "🧒 Pediátrico" : "—";
+    let modo = e.tela === "vent" ? VM_ROTULO[e.modo] : "STANDBY";
+    let alarme = "";
+    if (e.tela === "vent" && al) {
+        alarme = al.length ? `<button type="button" class="vmx-alarme n${al[0].nivel}" onclick="vmMenu('alarmes')">${al[0].nivel === 3 ? "!!! " : al[0].nivel === 2 ? "!! " : "! "}${al[0].txt}${al.length > 1 ? ` <b>+${al.length - 1}</b>` : ""}</button>`
+            : `<span class="vmx-alarme ok">Sem alarmes</span>`;
     }
-    return h + `</div>`;
+    return `<span class="vmx-pac">${pac}${e.peso ? ` · ${vmFmt(vmNum(e.peso), 1).replace(",0", "")} kg` : ""}</span><span class="vmx-modo">${modo}</span>${alarme}<span class="vmx-hora">${hora}</span>`;
 }
 
-function vmOpcao(acao, icone, nome, sub, on) {
-    return `<button type="button" class="vm-op${on ? " on" : ""}" onclick="${acao}"><span class="vm-op-ic">${icone}</span><span><b>${nome}</b><small>${sub}</small></span></button>`;
+function vmHtmlStandby() {
+    let e = vmEstado, cfg = e.tipo && e.motivo ? vmConfig() : null;
+    let pesoApp = (document.getElementById('pesoInput') || {}).value || "", idadeApp = (document.getElementById('idadeInput') || {}).value || "";
+    if (!e.peso && pesoApp) e.peso = pesoApp.replace(",", ".");
+    if (e.idade === "" && idadeApp) e.idade = idadeApp.replace(",", ".");
+    let h = `<div class="vmx-sb-titulo">Novo paciente</div>
+        <div class="vmx-sb-rot">Tipo de paciente</div>
+        <div class="vmx-sb-tipos">
+            <button type="button" class="${e.tipo === "rn" ? "on" : ""}" onclick="vmTipo('rn')">👶<span>Neonato</span></button>
+            <button type="button" class="${e.tipo === "crianca" ? "on" : ""}" onclick="vmTipo('crianca')">🧒<span>Pediátrico</span></button>
+            <button type="button" class="off" disabled>🧑<span>Adulto</span></button>
+        </div>`;
+    if (e.tipo) {
+        h += `<div class="vmx-sb-campos">${e.tipo === "crianca" ? `<label>Idade (anos)<input type="text" inputmode="decimal" value="${escCond(String(e.idade).replace(".", ","))}" oninput="vmCampo('idade',this.value)" placeholder="ex.: 3 ou 0,5"></label>` : ""}
+            <label>Peso (kg)<input type="text" inputmode="decimal" value="${escCond(String(e.peso).replace(".", ","))}" oninput="vmCampo('peso',this.value)" placeholder="${e.tipo === "rn" ? "ex.: 1,2" : "ex.: 15"}"></label></div>
+            <div class="vmx-sb-rot">Motivo da ventilação</div>
+            <div class="vmx-sb-motivos">${VM_MOTIVOS[e.tipo].map(x => `<button type="button" class="${e.motivo === x.id ? "on" : ""}" onclick="vmMotivo('${x.id}')"><b>${x.icone} ${x.nome}</b><small>${x.sub}</small></button>`).join("")}</div>`;
+    }
+    if (cfg) {
+        h += `<div class="vmx-sb-rot">Modo</div><div class="vmx-sb-modos">${cfg.modos.map(m => `<button type="button" class="${e.modo === m.id ? "on" : ""}" onclick="vmModoStandby('${m.id}')">${VM_ROTULO[m.id]}${m.sug ? " ★" : ""}<small>${VM_MODOS[m.id].longo}</small></button>`).join("")}</div>
+            <div class="vmx-sb-sug">💡 ${cfg.sugestao}</div>`;
+    }
+    h += `<div class="vm-erro" id="vm-erro"></div><button type="button" class="vmx-iniciar" onclick="vmIniciar()">▶ Iniciar ventilação</button>`;
+    return h;
 }
 
-// ===== Painel do ventilador =====
-function vmHtmlPainel() {
-    let e = vmEstado, cfg = vmConfig(), p = vmNum(e.peso);
-    if (!e.prog) { e.prog = {}; cfg.params.forEach(x => { if (x.ini != null) e.prog[x.id] = x.ini; }); }
-    let prog = e.prog;
-    // PEEP da SDRA começa pela tabela, conforme a FiO2 inicial.
-    let tabela = cfg.params.some(x => x.faixaPeloFio2) ? vmPeepDaFio2(prog.fio2) : null;
-    if (tabela && prog._peepIni == null) { prog.peep = tabela.min; prog._peepIni = true; }
+// Atualiza topo, monitor, teclas, ajuste e menus (o canvas continua, com a curva correndo).
+function vmAtualizarPartes() {
+    let e = vmEstado; if (e.tela !== "vent" || !document.getElementById('vmx-mon')) return;
+    let s = vmSimular(), al = vmAlarmes(s), pr = e.prog, p = vmNum(e.peso) || 1;
+    document.getElementById('vmx-top').innerHTML = vmHtmlTopo(al);
+    let mon = [
+        ["Ppico", vmFmt(s.ppico), "cmH₂O", "p"], ["Pplat", vmFmt(s.pplat), "cmH₂O", "p"], ["Pmédia", vmFmt(s.pmedia), "cmH₂O", "p"], ["PEEP", vmFmt(pr.peep), "cmH₂O", "p"],
+        ["VTe", vmFmt(s.VT), `mL · ${vmFmt(s.VT / p, 1)}/kg`, "v"], ["VM", vmFmt(s.mv, 2), "L/min", "v"], ["ftot", vmFmt(pr.fr), "/min", "v"],
+        ["I:E", `1:${vmFmt(s.Te / s.Ti, 1)}`, `Te ${vmFmt(s.Te, 2)} s`, "o"], ["O₂", vmFmt(pr.fio2), "%", "o"]
+    ];
+    document.getElementById('vmx-mon').innerHTML = mon.map(([n, v, u, c]) => `<div class="vmx-m ${c}"><span>${n}</span><b>${v}</b><small>${u}</small></div>`).join("");
+    let teclas = vmTeclas();
+    document.getElementById('vmx-teclas').innerHTML = `<button type="button" class="vmx-k vmx-k-modo" onclick="vmMenu('modos')"><span>Modos</span><b>${VM_ROTULO[e.modo]}</b></button>` +
+        teclas.map(t => { let v = e.sel === t.id ? e.pend : pr[t.id];
+            return `<button type="button" class="vmx-k${e.sel === t.id ? " sel" : ""}" onclick="vmSel('${t.id}')"><span>${t.nome}</span><b>${vmFmt(v, t.id === "ti" ? 2 : 0)}</b><small>${t.un}</small></button>`; }).join("");
+    document.getElementById('vmx-funcoes').innerHTML = `<button type="button" onclick="vmStandby()">⏸ Standby</button><button type="button" onclick="vmMenu('alarmes')">🔔 Alarmes</button>
+        <button type="button" onclick="vmPausa('insp')">Pausa insp.</button><button type="button" onclick="vmPausa('exp')">Pausa exp.</button>
+        <button type="button" class="${e.congelado ? "on" : ""}" onclick="vmCongelar()">${e.congelado ? "▶ Descongelar" : "❄ Congelar"}</button>`;
+    // Painel de ajuste (o "botão giratório")
+    let aj = "";
+    if (e.sel) {
+        let t = teclas.find(x => x.id === e.sel), par = t.par || {}, v = e.pend;
+        let faixa = par.faixa;
+        if (par.faixaPeloFio2) { let tb = vmPeepDaFio2(pr.fio2); faixa = tb ? [tb.min, tb.max] : null; }
+        if (par.faixaPelaFr) faixa = [60 / pr.fr / 5, 60 / pr.fr / 4];
+        let alerta = null, simul = Object.assign({}, pr, { [e.sel]: v });
+        if (e.sel === "pinsp") alerta = par.alertaPip ? par.alertaPip(v + pr.peep, simul) : null;
+        else if (par.alerta) alerta = par.alerta(v, simul);
+        let extra = e.sel === "pinsp" ? `PIP = Pinsp + PEEP = ${vmFmt(v + pr.peep)} cmH₂O${par.pipFaixa ? ` · PIP sugerida ${vmFaixaTxt(par.pipFaixa)}` : ""}` :
+            e.sel === "vc" ? `${vmFmt(v / p, 1)} mL/kg` : "";
+        let ajuda = { pinsp: VM_AJUDA.pip, vc: VM_AJUDA.vc, fr: VM_AJUDA.fr, ti: VM_AJUDA.ti, peep: VM_AJUDA.peep, fio2: VM_AJUDA.fio2 }[e.sel] || "";
+        aj = `<div class="vmx-aj-linha"><button type="button" class="vmx-giro" onclick="vmGirar(-1)">−</button>
+                <div class="vmx-aj-val"><span>${t.nome}</span><b class="${v !== pr[e.sel] ? "mudou" : ""}">${vmFmt(v, e.sel === "ti" ? 2 : 0)}</b><small>${t.un}</small></div>
+                <button type="button" class="vmx-giro" onclick="vmGirar(1)">+</button></div>
+            <div class="vmx-aj-info">${[extra, faixa ? `faixa sugerida ${vmFaixaTxt(faixa, par.dec, t.un)}` : "", par.nota || "", par.ajudaExtra || ""].filter(Boolean).join(" · ")}</div>
+            ${alerta ? `<div class="vmx-aj-al">⚠️ ${alerta}</div>` : ""}
+            ${e.sel === "ti" && vmConfig().params.some(x => x.id === "ti" && x.semFonte) && typeof MODO_TESTE !== 'undefined' && MODO_TESTE ? `<div class="vmx-aj-al">⚠️ Tinsp inicial sem fonte para esta situação (aguardando o Whitebook): valor estimado pelo pulmão simulado.</div>` : ""}
+            <div class="vmx-aj-ajuda">${ajuda}</div>
+            <div class="vmx-aj-bt"><button type="button" onclick="vmCancelar()">Cancelar</button><button type="button" class="ok" onclick="vmConfirmar()">✓ Confirmar</button></div>`;
+    }
+    let ajEl = document.getElementById('vmx-ajuste'); ajEl.innerHTML = aj; ajEl.style.display = aj ? "" : "none";
+    // Menus: modos e alarmes
+    let mn = "";
+    if (e.menu === "modos") {
+        let cfg = vmConfig();
+        mn = `<div class="vmx-menu-tit">Modos <button type="button" onclick="vmMenu('')">✕</button></div>
+            ${cfg.modos.map(m => `<button type="button" class="vmx-menu-op${e.modo === m.id ? " on" : ""}" onclick="vmTrocarModo('${m.id}')"><b>${VM_ROTULO[m.id]}${m.sug ? " ★" : ""}</b><small>${VM_MODOS[m.id].longo} — ${VM_MODOS[m.id].desc}</small></button>`).join("")}
+            <div class="vmx-menu-nota">💡 ${cfg.sugestao}</div>`;
+    } else if (e.menu === "alarmes") {
+        mn = `<div class="vmx-menu-tit">Alarmes <button type="button" onclick="vmMenu('')">✕</button></div>
+            <div class="vmx-plim"><span>Limite de pressão (Paw alta)</span><button type="button" onclick="vmPlim(-1)">−</button><b>${pr.plim}</b><button type="button" onclick="vmPlim(1)">+</button></div>
+            ${al.length ? `<ul class="vmx-al-lista">${al.map(a => `<li class="n${a.nivel}">${a.txt}</li>`).join("")}</ul>` : `<div class="vmx-menu-nota">Sem alarmes ativos.</div>`}
+            <div class="vmx-menu-nota">Vermelho = prioridade alta; amarelo = média; azul = baixa. As faixas seguem as fontes da conduta.</div>`;
+    }
+    let mnEl = document.getElementById('vmx-menu'); mnEl.innerHTML = mn; mnEl.style.display = mn ? "" : "none";
+    // Pausas
+    let pz = document.getElementById('vmx-pausa');
+    pz.innerHTML = e.pausa === "insp" ? `Pausa inspiratória<br><b>Pplat ${vmFmt(s.pplat)} cmH₂O</b><br>Driving pressure ${vmFmt(s.dP)} · Cst ${vmFmt(s.VT / Math.max(0.1, s.dP), 1)} mL/cmH₂O`
+        : e.pausa === "exp" ? `Pausa expiratória<br><b>PEEP total ${vmFmt(s.peepTot, 1)} cmH₂O</b><br>PEEP intrínseca ${vmFmt(s.autoPeep, 1)} cmH₂O` : "";
+    pz.style.display = e.pausa ? "" : "none";
+    let g = document.getElementById('vm-guia'); if (g) { let gr = document.getElementById('vm-gaso-res'); if (gr) gr.innerHTML = vmGasoHtml(); }
+}
 
-    let tiles = cfg.params.map(par => {
-        let v = prog[par.id], faixa = par.faixa, extra = "";
-        if (par.faixaPeloFio2) faixa = tabela ? [tabela.min, tabela.max] : null;
-        if (par.faixaPelaFr && prog.fr) faixa = [60 / prog.fr / 5, 60 / prog.fr / 4];
-        if (par.porKg && v != null) extra = `${vmFmt(v / p, 1)} mL/kg`;
-        let alerta = (v != null && par.alerta) ? par.alerta(v, prog) : null;
-        if (!alerta && v != null && faixa && !par.livre && !par.faixaPeloFio2 && (v < faixa[0] - 1e-9 || v > faixa[1] + 1e-9) && !(par.id === "fr" && e.motivo === "sdra" && v > faixa[1]))
-            alerta = "Fora da faixa sugerida.";
-        let faixaTxt = faixa ? `faixa ${vmFaixaTxt(faixa, par.dec, par.un)}${par.faixaPeloFio2 ? ` (FiO₂ ${prog.fio2}%)` : ""}${par.faixaPelaFr ? " (I:E 1:3–1:4)" : ""}` : "";
-        if (par.texto) {
-            return `<div class="vm-k vm-k-texto${par.semFonte && typeof MODO_TESTE !== 'undefined' && MODO_TESTE ? " vm-k-semfonte" : ""}"><button type="button" class="vm-q" onclick="vmAjuda('${par.id}')">?</button>
-                <div class="vm-k-n">${par.nome}</div><div class="vm-k-txt">${par.texto}</div>
-                ${par.semFonte && typeof MODO_TESTE !== 'undefined' && MODO_TESTE ? `<div class="vm-k-aviso">⚠️ Valor inicial em segundos ainda sem fonte (aguardando o Whitebook).</div>` : ""}</div>`;
+function vmHtmlGuia() {
+    let e = vmEstado, cfg = vmConfig();
+    return `<div class="vm-porque"><b>📌 Por que assim</b><ul>${cfg.porque.map(x => `<li>${x}</li>`).join("")}</ul></div>
+        <h4>🎯 Metas</h4><ul class="vm-lista">${cfg.metas.map(x => `<li>${x}</li>`).join("")}</ul>
+        <h4>🩸 Gasometria: o que mexer</h4>
+        <div class="vm-campos vm-gaso">${[["ph", "pH"], ["paco2", "PaCO₂"], ["pao2", "PaO₂"], ["spo2", "SpO₂ %"]].map(([k, n]) =>
+            `<label>${n}<input type="text" inputmode="decimal" value="${escCond(e.gaso[k] || "")}" oninput="vmEstado.gaso.${k}=this.value;vmGasoAtualizar()"></label>`).join("")}</div>
+        <div id="vm-gaso-res">${vmGasoHtml()}</div>
+        <div class="vm-dope"><b>🚨 Piorou de repente?</b> Tirar do ventilador e ventilar com bolsa e O₂ 100%. Pensar em <b>DOPE</b>: <b>D</b>eslocamento da cânula, <b>O</b>bstrução (secreção), <b>P</b>neumotórax, <b>E</b>quipamento (vazamento, circuito, gases).</div>
+        <div class="vm-nota">As curvas e os valores medidos vêm de um pulmão simulado (complacência e resistência ilustrativas da doença escolhida), para treinar a programação. Não substituem o monitor do aparelho.</div>
+        <button type="button" class="vm-btn" onclick="vmNovoPaciente()">↺ Novo paciente</button>`;
+}
+
+// ===== Curvas animadas (varredura da esquerda para a direita, como no monitor) =====
+function vmIniciarAnimacao() {
+    cancelAnimationFrame(vmAnim.raf);
+    vmAnim.t0 = performance.now(); vmAnim.ultimo = 0; vmAnim.x = 0; vmAnim.buf = null;
+    let passo = (agora) => {
+        let cv = document.getElementById('vm-canvas');
+        if (!cv || !document.body.contains(cv) || vmEstado.tela !== "vent") return;
+        vmDesenhar(cv, agora);
+        vmAnim.raf = requestAnimationFrame(passo);
+    };
+    vmAnim.raf = requestAnimationFrame(passo);
+}
+function vmDesenhar(cv, agora) {
+    let dpr = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight;
+    if (!w || !h) return;
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); vmAnim.buf = null; }
+    let s = vmSimular(); if (!s) return;
+    let janela = Math.max(6, Math.min(12, s.Tt * 3)); /* segundos visíveis */
+    if (!vmAnim.buf || vmAnim.buf.length !== Math.round(w)) { vmAnim.buf = new Array(Math.round(w)).fill(null); vmAnim.x = 0; vmAnim.t0 = agora; }
+    if (!vmAnim.escala) { /* escala fixa por programação */
+        let mx = a => Math.max(...a.map(Math.abs));
+        vmAnim.escala = { p: Math.max(10, Math.ceil(Math.max(...s.P, vmEstado.prog.plim) / 5) * 5), f: Math.max(2, mx(s.F) * 1.15), v: Math.max(10, Math.max(...s.V) * 1.25) };
+    }
+    if (!vmEstado.congelado) {
+        let alvoX = Math.floor(((agora - vmAnim.t0) / 1000 % janela) / janela * w);
+        let x = vmAnim.x, guarda = 0;
+        while (x !== alvoX && guarda++ < w) {
+            x = (x + 1) % Math.round(w);
+            let tempo = (agora - vmAnim.t0) / 1000 - ((alvoX - x + w) % w) / w * janela;
+            let fase = ((tempo % s.Tt) + s.Tt) % s.Tt, k = Math.floor(fase / s.Tt * s.P.length) % s.P.length;
+            vmAnim.buf[x] = [s.P[k], s.F[k], s.V[k]];
         }
-        return `<div class="vm-k${alerta ? " al" : ""}"><button type="button" class="vm-q" onclick="vmAjuda('${par.id}')">?</button>
-            <div class="vm-k-n">${par.nome}</div>
-            <div class="vm-k-v"><button type="button" class="vm-mm" onclick="vmMexer('${par.id}',-1)" aria-label="diminuir">−</button><span>${vmFmt(v, par.dec)}<small>${par.un}</small></span><button type="button" class="vm-mm" onclick="vmMexer('${par.id}',1)" aria-label="aumentar">+</button></div>
-            <div class="vm-k-f">${[extra, faixaTxt, par.nota].filter(Boolean).join(" · ")}</div>
-            ${alerta ? `<div class="vm-k-al">⚠️ ${alerta}</div>` : ""}</div>`;
-    }).join("");
-
-    // Valores derivados: Te, relação I:E, volume-minuto.
-    let deriv = [];
-    if (prog.fr && prog.ti) {
-        let te = 60 / prog.fr - prog.ti;
-        deriv.push(`Te ${vmFmt(te, 2)} s`, `I:E 1:${vmFmt(te / prog.ti, 1)}`);
-        if (cfg.teMin && te < cfg.teMin) deriv.push(`<span class="vm-d-al">⚠️ Te abaixo de ${vmFmt(cfg.teMin, 1)} s: risco de ar preso</span>`);
+        vmAnim.x = alvoX;
     }
-    if (prog.vc && prog.fr) deriv.push(`Volume-minuto ${vmFmt(prog.vc * prog.fr / 1000, 2)} L/min`);
-    if (prog.pip && prog.peep) deriv.push(`PIP − PEEP ${prog.pip - prog.peep} cmH₂O`);
-
-    let ajuda = e.ajuda && VM_AJUDA[e.ajuda] ? `<div class="vm-balao vm-balao-ajuda">${VM_AJUDA[e.ajuda]}</div>` : "";
-    return `<div class="vm-vent"><div class="vm-vent-topo"><span class="vm-md">${VM_MODOS[e.modo].nome}</span><span>programação inicial · toque em − e + para simular</span></div>
-        <div class="vm-grade">${tiles}</div>${deriv.length ? `<div class="vm-deriv">${deriv.join(" · ")}</div>` : ""}</div>${ajuda}
-        <div class="vm-porque"><b>📌 Por que assim</b><ul>${cfg.porque.map(x => `<li>${x}</li>`).join("")}</ul></div>`;
+    let c = cv.getContext('2d'); c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, w, h);
+    let faixas = [["Paw", "cmH₂O", "#ffd23f", 0, vmAnim.escala.p, false], ["Fluxo", "L/min", "#3ee07a", 1, vmAnim.escala.f, true], ["Volume", "mL", "#5fc8ff", 2, vmAnim.escala.v, false]];
+    let hh = h / 3;
+    faixas.forEach(([nome, un, cor, i, esc, simetrico], j) => {
+        let topo = j * hh + 4, alt = hh - 8, zero = simetrico ? topo + alt / 2 : topo + alt;
+        c.strokeStyle = "rgba(148,163,184,.18)"; c.lineWidth = 1; c.beginPath(); c.moveTo(0, zero); c.lineTo(w, zero); c.stroke();
+        c.fillStyle = cor; c.font = "600 10px system-ui, sans-serif"; c.fillText(`${nome} (${un})  ${vmFmt(esc, esc < 10 ? 1 : 0)}`, 4, topo + 10);
+        c.strokeStyle = cor; c.lineWidth = 1.6; c.beginPath(); let des = false;
+        for (let x = 0; x < vmAnim.buf.length; x++) {
+            let d = vmAnim.buf[x], vazio = !d || (!vmEstado.congelado && ((x - vmAnim.x + w) % w) > 0 && ((x - vmAnim.x + w) % w) < 12);
+            if (vazio) { des = false; continue; }
+            let y = simetrico ? zero - d[i] / esc * (alt / 2) : zero - d[i] / esc * alt;
+            if (!des) { c.moveTo(x, y); des = true; } else c.lineTo(x, y);
+        }
+        c.stroke();
+    });
+    if (!vmEstado.congelado) { c.fillStyle = "rgba(255,255,255,.35)"; c.fillRect(vmAnim.x, 0, 1, h); }
 }
 
 // ===== Gasometria: o que mexer =====

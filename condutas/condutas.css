@@ -323,7 +323,7 @@ html[data-theme="dark"] .cond-secao li.cond-item-alerta { background: #3b2a06; c
 .cond-item-destaque .cond-item-nome::before { content: "🫁 "; }
 
 /* ===== Simulador de ventilador (condutas/ventilacao.js) ===== */
-.vm-sim { background: var(--surface); border: 2px solid #0e7490; border-radius: 14px; margin-bottom: 14px; overflow: hidden; }
+.vm-sim { margin-bottom: 14px; }
 .vm-topo { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #0b3a4e; color: #fff; padding: 10px 14px; }
 .vm-topo small { display: block; font-size: 11px; opacity: .8; }
 .vm-topo b { font-size: 17px; }
@@ -393,3 +393,107 @@ html[data-theme="dark"] .cond-secao li.cond-item-alerta { background: #3b2a06; c
 .vm-gaso-res li.ok { background: color-mix(in srgb, #16a34a 10%, var(--surface)); border-left: 4px solid #16a34a; }
 .vm-dope { margin-top: 12px; background: color-mix(in srgb, #dc2626 9%, var(--surface)); border-left: 4px solid #dc2626; border-radius: 10px; padding: 8px 11px; font-size: 13px; line-height: 1.45; color: var(--text-main); }
 @media (max-width: 600px) { .vm-grade { grid-template-columns: 1fr 1fr; } .vm-k-v span { font-size: 22px; } .vm-mm { width: 30px; height: 30px; } }
+
+/* ===== Tela do ventilador (layout tipo Mindray SV300/SV800, sem marca) ===== */
+.vmx { background: #0a0f1a; border: 6px solid #2b3240; border-radius: 16px; overflow: hidden; color: #e5e7eb; position: relative; box-shadow: 0 6px 20px rgba(0,0,0,.25); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.vmx-top { display: flex; align-items: center; gap: 8px; background: #1b2433; padding: 6px 8px; min-height: 34px; font-size: 12px; }
+.vmx-pac { color: #cbd5e1; white-space: nowrap; }
+.vmx-modo { background: #1565c0; color: #fff; font-weight: 800; padding: 3px 9px; border-radius: 4px; font-size: 13px; white-space: nowrap; }
+.vmx-alarme { flex: 1; min-width: 0; text-align: left; border: none; border-radius: 4px; padding: 4px 8px; font-size: 12px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
+.vmx-alarme.n3 { background: #d32f2f; color: #fff; animation: vmx-pisca 1s steps(2) infinite; }
+.vmx-alarme.n2 { background: #f5c400; color: #111; }
+.vmx-alarme.n1 { background: #0e7fbf; color: #fff; }
+.vmx-alarme.ok { background: transparent; color: #64748b; font-weight: 500; cursor: default; }
+@keyframes vmx-pisca { 50% { background: #7f1d1d; } }
+.vmx-hora { color: #94a3b8; margin-left: auto; white-space: nowrap; }
+.vmx-alarme + .vmx-hora { margin-left: 0; }
+.vmx-meio { display: grid; grid-template-columns: 1fr 210px; }
+.vmx-curvas { position: relative; height: 270px; border-right: 1px solid #1f2937; }
+.vmx-curvas canvas { width: 100%; height: 100%; display: block; }
+.vmx-pausa { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: rgba(15,23,42,.94); border: 1px solid #ffd23f; border-radius: 8px; padding: 10px 14px; font-size: 12.5px; text-align: center; color: #e5e7eb; line-height: 1.5; }
+.vmx-pausa b { color: #ffd23f; font-size: 16px; }
+.vmx-mon { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #1f2937; align-content: start; }
+.vmx-m { background: #0d1422; padding: 5px 7px; display: flex; flex-direction: column; min-height: 52px; }
+.vmx-m span { font-size: 10.5px; color: #94a3b8; }
+.vmx-m b { font-size: 21px; font-weight: 700; line-height: 1.15; }
+.vmx-m small { font-size: 9.5px; color: #64748b; }
+.vmx-m.p b { color: #ffd23f; } .vmx-m.v b { color: #3ee07a; } .vmx-m.o b { color: #e5e7eb; }
+.vmx-teclas { display: flex; gap: 4px; padding: 6px; background: #121a28; overflow-x: auto; }
+.vmx-k { flex: 1 0 64px; background: #2a3446; border: 2px solid #3b475c; border-radius: 6px; color: #e5e7eb; padding: 4px 4px 3px; display: flex; flex-direction: column; align-items: center; cursor: pointer; font: inherit; }
+.vmx-k span { font-size: 11px; color: #cbd5e1; }
+.vmx-k b { font-size: 20px; line-height: 1.2; }
+.vmx-k small { font-size: 9.5px; color: #94a3b8; }
+.vmx-k.sel { background: #f5c400; border-color: #ffe066; color: #111; }
+.vmx-k.sel span, .vmx-k.sel small { color: #3b3200; }
+.vmx-k-modo { background: #1565c0; border-color: #1e88e5; }
+.vmx-k-modo b { font-size: 15px; }
+.vmx-funcoes { display: flex; gap: 4px; padding: 0 6px 6px; background: #121a28; flex-wrap: wrap; }
+.vmx-funcoes button { flex: 1 0 auto; background: #1b2433; border: 1px solid #334155; color: #cbd5e1; border-radius: 5px; padding: 6px 8px; font-size: 12px; cursor: pointer; }
+.vmx-funcoes button.on { background: #0ea5e9; color: #001018; }
+.vmx-ajuste { background: #172033; border-top: 2px solid #f5c400; padding: 8px 10px; }
+.vmx-aj-linha { display: flex; align-items: center; justify-content: center; gap: 14px; }
+.vmx-giro { width: 52px; height: 52px; border-radius: 50%; border: 2px solid #475569; background: radial-gradient(circle at 35% 30%, #4b5563, #1f2937); color: #fff; font-size: 26px; font-weight: 800; cursor: pointer; }
+.vmx-giro:active { background: #f5c400; color: #111; }
+.vmx-aj-val { text-align: center; min-width: 110px; }
+.vmx-aj-val span { display: block; font-size: 12px; color: #cbd5e1; }
+.vmx-aj-val b { font-size: 32px; color: #fff; }
+.vmx-aj-val b.mudou { color: #f5c400; }
+.vmx-aj-val small { font-size: 12px; color: #94a3b8; margin-left: 4px; }
+.vmx-aj-info { font-size: 12px; color: #a5f3fc; text-align: center; margin-top: 4px; line-height: 1.4; }
+.vmx-aj-al { font-size: 12px; color: #fbbf24; text-align: center; margin-top: 4px; line-height: 1.4; }
+.vmx-aj-ajuda { font-size: 12px; color: #cbd5e1; margin-top: 6px; line-height: 1.4; background: #0d1422; border-radius: 6px; padding: 6px 8px; }
+.vmx-aj-ajuda b { color: #7dd3fc; }
+.vmx-aj-bt { display: flex; gap: 8px; margin-top: 8px; }
+.vmx-aj-bt button { flex: 1; padding: 9px; border-radius: 6px; border: 1px solid #475569; background: #1f2937; color: #e5e7eb; font-weight: 700; font-size: 14px; cursor: pointer; }
+.vmx-aj-bt button.ok { background: #16a34a; border-color: #16a34a; color: #fff; }
+.vmx-menu { position: absolute; left: 8px; right: 8px; top: 40px; max-height: calc(100% - 48px); overflow: auto; background: #111827; border: 1px solid #475569; border-radius: 10px; padding: 10px; z-index: 5; box-shadow: 0 10px 30px rgba(0,0,0,.6); }
+.vmx-menu-tit { display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 15px; margin-bottom: 8px; }
+.vmx-menu-tit button { background: #334155; border: none; color: #fff; border-radius: 6px; width: 30px; height: 30px; cursor: pointer; }
+.vmx-menu-op { display: block; width: 100%; text-align: left; background: #1f2937; border: 2px solid #334155; border-radius: 8px; padding: 8px 10px; margin-bottom: 6px; color: #e5e7eb; cursor: pointer; font: inherit; }
+.vmx-menu-op.on { border-color: #1e88e5; background: #0f2a4a; }
+.vmx-menu-op b { display: block; font-size: 15px; }
+.vmx-menu-op small { font-size: 12px; color: #94a3b8; }
+.vmx-menu-nota { font-size: 12px; color: #a7f3d0; line-height: 1.45; margin-top: 6px; }
+.vmx-plim { display: flex; align-items: center; gap: 10px; background: #1f2937; border-radius: 8px; padding: 8px 10px; font-size: 13px; }
+.vmx-plim span { flex: 1; }
+.vmx-plim button { width: 34px; height: 34px; border-radius: 6px; border: none; background: #334155; color: #fff; font-size: 18px; font-weight: 800; cursor: pointer; }
+.vmx-plim b { font-size: 20px; color: #ffd23f; min-width: 30px; text-align: center; }
+.vmx-al-lista { list-style: none; padding: 0; margin: 8px 0 0; }
+.vmx-al-lista li { border-radius: 6px; padding: 6px 9px; margin-bottom: 4px; font-size: 12.5px; font-weight: 600; }
+.vmx-al-lista li.n3 { background: #d32f2f; color: #fff; } .vmx-al-lista li.n2 { background: #f5c400; color: #111; } .vmx-al-lista li.n1 { background: #0e7fbf; color: #fff; }
+/* Standby (configuração do paciente) */
+.vmx-tela { padding: 12px; }
+.vmx-sb-titulo { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+.vmx-sb-rot { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: .05em; margin: 12px 0 6px; }
+.vmx-sb-tipos { display: flex; gap: 8px; }
+.vmx-sb-tipos button { flex: 1; background: #1f2937; border: 2px solid #334155; border-radius: 10px; color: #e5e7eb; padding: 10px 4px; font-size: 24px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.vmx-sb-tipos button span { font-size: 13px; font-weight: 700; }
+.vmx-sb-tipos button.on { border-color: #1e88e5; background: #0f2a4a; }
+.vmx-sb-tipos button.off { opacity: .35; cursor: not-allowed; }
+.vmx-sb-campos { display: flex; gap: 8px; margin-top: 10px; }
+.vmx-sb-campos label { flex: 1; font-size: 12px; color: #94a3b8; display: flex; flex-direction: column; gap: 3px; }
+.vmx-sb-campos input { font-size: 20px; font-weight: 700; padding: 8px 10px; border-radius: 8px; border: 1px solid #475569; background: #0d1422; color: #fff; width: 100%; box-sizing: border-box; }
+.vmx-sb-motivos { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 6px; }
+.vmx-sb-motivos button { text-align: left; background: #1f2937; border: 2px solid #334155; border-radius: 8px; color: #e5e7eb; padding: 7px 9px; cursor: pointer; font: inherit; }
+.vmx-sb-motivos button b { display: block; font-size: 13.5px; }
+.vmx-sb-motivos button small { font-size: 11px; color: #94a3b8; }
+.vmx-sb-motivos button.on { border-color: #1e88e5; background: #0f2a4a; }
+.vmx-sb-modos { display: flex; gap: 6px; flex-wrap: wrap; }
+.vmx-sb-modos button { flex: 1; min-width: 90px; background: #1f2937; border: 2px solid #334155; border-radius: 8px; color: #fff; padding: 8px 6px; font-weight: 800; font-size: 15px; cursor: pointer; }
+.vmx-sb-modos button small { display: block; font-size: 10.5px; font-weight: 500; color: #94a3b8; }
+.vmx-sb-modos button.on { border-color: #1e88e5; background: #1565c0; }
+.vmx-sb-sug { font-size: 12.5px; color: #bbf7d0; background: #052e1b; border: 1px solid #166534; border-radius: 8px; padding: 8px 10px; margin-top: 8px; line-height: 1.45; }
+.vmx-iniciar { width: 100%; margin-top: 12px; padding: 13px; border: none; border-radius: 10px; background: #16a34a; color: #fff; font-size: 16px; font-weight: 800; cursor: pointer; }
+.vmx .vm-erro { color: #fca5a5; }
+.vm-guia { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px 14px; margin-top: 10px; }
+.vm-guia h4 { margin: 12px 0 6px; font-size: 15px; color: var(--text-main); }
+.vm-dica { margin: 6px 4px 0; }
+@media (max-width: 700px) {
+    .vmx { border-width: 4px; }
+    .vmx-meio { grid-template-columns: 1fr; }
+    .vmx-curvas { height: 210px; border-right: none; border-bottom: 1px solid #1f2937; }
+    .vmx-mon { grid-template-columns: repeat(3, 1fr); }
+    .vmx-m { min-height: 44px; padding: 4px 6px; } .vmx-m b { font-size: 18px; }
+    .vmx-k { flex-basis: 56px; } .vmx-k b { font-size: 17px; }
+    .vmx-pac { display: none; }
+}
