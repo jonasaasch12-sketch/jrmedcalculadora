@@ -139,7 +139,7 @@ function atualizarCadGlicose() {
         if (hgt <= 300 || caindoRapido) {
             res.innerHTML = caixa('#d97706', '➕', `COLOCAR GLICOSE NO SORO (HGT ${Math.round(hgt)})`, [
                 `Motivo: ${hgt <= 300 ? 'HGT ≤ 300' : 'queda > 90 mg/dL/h'}.${txtQueda}`,
-                `Passar para <strong>5%</strong> = ${cadAB(5, vel)}.`,
+                `Passar para 5% = ${cadAB(5, vel)}.`,
                 insul + ' Repetir o HGT em 1 h.']);
         } else {
             res.innerHTML = caixa('#2563eb', '⏸️', `MANTER SÓ B (HGT ${Math.round(hgt)})`, [
@@ -362,7 +362,8 @@ registrarConduta({
     cor: "#7c3aed",
     kw: "cetoacidose diabetica cad diabetes mellitus tipo 1 dm1 hiperglicemia cetonemia acidose insulina edema cerebral kussmaul",
     resumo: "Diagnóstico e gravidade, expansão, hidratação em 48h com potássio, insulina, duas soluções, edema cerebral e transição para insulina SC.",
-    legenda: "Conduta conforme o <strong>Protocolo de CAD da Sociedade Portuguesa de Pediatria (2019, ISPAD)</strong>, com adicionais da <strong>UTI pediátrica do IMIP (2018)</strong>, da <strong>Diretriz SBD 2026</strong>, do <strong>J Pediatr 2001 (duas soluções)</strong>, da <strong>SPSP 2024</strong> e do <strong>ISPAD 2022</strong>.",
+    legenda: "Conduta conforme o Protocolo de CAD da Sociedade Portuguesa de Pediatria (2019, ISPAD), com adicionais da UTI pediátrica do IMIP (2018), da Diretriz SBD 2026, do J Pediatr 2001 (duas soluções), da SPSP 2024 e do ISPAD 2022.",
+    padraoTexto: true, // padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
         {
@@ -375,11 +376,11 @@ registrarConduta({
                     icone: "🔎",
                     resumo: "Hiperglicemia + acidose + cetose, ao mesmo tempo.",
                     itens: [
-                        "A CAD é definida pela presença <strong>simultânea</strong> de:",
-                        "<strong>Glicemia > 200 mg/dL</strong>;",
-                        "<strong>pH venoso < 7,3</strong> e/ou <strong>bicarbonato < 18 mEq/L</strong> (ISPAD 2022; a SPP 2019 usava < 15);",
-                        "<strong>Cetonemia ≥ 3 mmol/L</strong> (beta-hidroxibutirato) ou, na impossibilidade, <strong>cetonúria ≥ 2+</strong>.",
-                        "<strong>Cetonemia capilar é preferível à cetonúria</strong> (mais acurada para o diagnóstico e o seguimento). Cetonemia de 1,5 a 3 mmol/L: risco aumentado, confirmar com gasometria e ânion gap (> 12).",
+                        "A CAD é definida pela presença simultânea de:",
+                        "Glicemia > 200 mg/dL;",
+                        "pH venoso < 7,3 e/ou bicarbonato < 18 mEq/L (ISPAD 2022; a SPP 2019 usava < 15);",
+                        "Cetonemia ≥ 3 mmol/L (beta-hidroxibutirato) ou, na impossibilidade, cetonúria ≥ 2+.",
+                        "Cetonemia capilar é preferível à cetonúria (mais acurada para o diagnóstico e o seguimento). Cetonemia de 1,5 a 3 mmol/L: risco aumentado, confirmar com gasometria e ânion gap (> 12).",
                         "A glicemia pode ser < 200 mg/dL (CAD euglicêmica), principalmente em quem já usa insulina.",
                         "A CAD é a apresentação de ~25% dos diagnósticos de DM1 na criança."
                     ],
@@ -403,11 +404,11 @@ registrarConduta({
                     icone: "🩺",
                     resumo: "Os 4 P, desidratação, Kussmaul, hálito cetônico e dor abdominal.",
                     itens: [
-                        "<strong>Poliúria</strong>, noctúria, enurese, candidíase perineal; <strong>polidipsia</strong>, polifagia e <strong>perda de peso</strong> (semanas a meses antes).",
+                        "Poliúria, noctúria, enurese, candidíase perineal; polidipsia, polifagia e perda de peso (semanas a meses antes).",
                         "Astenia, fadiga muscular.",
-                        "<strong>Desidratação</strong>, taquicardia; choque nos casos extremos.",
-                        "Taquipneia, <strong>hálito cetônico (frutado)</strong>, <strong>respiração de Kussmaul</strong>.",
-                        "Náuseas, vômitos, <strong>dor abdominal</strong> (pode imitar abdome agudo/apendicite: examinar com cuidado).",
+                        "Desidratação, taquicardia; choque nos casos extremos.",
+                        "Taquipneia, hálito cetônico (frutado), respiração de Kussmaul.",
+                        "Náuseas, vômitos, dor abdominal (pode imitar abdome agudo/apendicite: examinar com cuidado).",
                         "Visão turva, letargia, confusão, obnubilação progressiva, coma.",
                         "A desidratação clínica é difícil de estimar na CAD (desidratação hiperosmolar): na prática, considerar 5 a 7% na moderada e 7 a 10% na grave."
                     ]
@@ -418,10 +419,10 @@ registrarConduta({
                     resumo: "Outras acidoses, pneumonia, intoxicações, abdome agudo.",
                     itens: [
                         "Outras acidoses metabólicas (acidose lática, cetose de jejum) e acidose respiratória.",
-                        "Desconforto respiratório, <strong>pneumonia</strong>.",
+                        "Desconforto respiratório, pneumonia.",
                         "Hipocalemia.",
                         "<strong>Intoxicações:</strong> salicilatos, paracetamol, etanol, metanol, etilenoglicol.",
-                        "<strong>Abdome agudo</strong>, gastroenterite.",
+                        "Abdome agudo, gastroenterite.",
                         "Encefalopatia."
                     ]
                 },
@@ -433,16 +434,16 @@ registrarConduta({
                         {
                             nome: "CAD na abertura do diabetes",
                             itens: [
-                                "Criança pequena (<strong>principalmente < 2 anos</strong>).",
-                                "Sem familiares de 1º grau com DM1; menor acesso à saúde; <strong>atraso no diagnóstico</strong>."
+                                "Criança pequena (principalmente < 2 anos).",
+                                "Sem familiares de 1º grau com DM1; menor acesso à saúde; atraso no diagnóstico."
                             ]
                         },
                         {
                             nome: "CAD em quem já tem DM1",
                             itens: [
-                                "<strong>Omissão de insulina</strong> (causa mais comum), mau controle, CAD prévia.",
+                                "Omissão de insulina (causa mais comum), mau controle, CAD prévia.",
                                 "Adolescentes, transtorno alimentar, uso de álcool, família instável.",
-                                "<strong>Infecções</strong> (aumentam a resistência à insulina; a falta de apetite pode mascarar a CAD sem glicemia alta).",
+                                "Infecções (aumentam a resistência à insulina; a falta de apetite pode mascarar a CAD sem glicemia alta).",
                                 "Obstrução ou falha da bomba de insulina (sistema de infusão contínua).",
                                 "Medicamentos: corticoide, entre outros."
                             ]
@@ -454,11 +455,11 @@ registrarConduta({
                     icone: "🧪",
                     resumo: "Gasometria, eletrólitos, osmolaridade, Na corrigido e ânion gap.",
                     itens: [
-                        "<strong>Na chegada:</strong> HGT e cetonemia capilar, gasometria venosa com eletrólitos, <strong>ECG contínuo</strong> (onda T: potássio).",
+                        "<strong>Na chegada:</strong> HGT e cetonemia capilar, gasometria venosa com eletrólitos, ECG contínuo (onda T: potássio).",
                         "<strong>Sangue:</strong> glicose; Na, K, Cl, Ca, fósforo e magnésio; ureia e creatinina; osmolaridade; hemograma (leucocitose pode ser só estresse); HbA1c.",
                         "<strong>Suspeita de infecção:</strong> EAS, culturas, swab de orofaringe, radiografia de tórax.",
-                        "<strong>K da gasometria não substitui o K plasmático.</strong> Na 1ª hora o pH venoso pode piorar (lavagem do lactato com a hidratação).",
-                        "<strong>Cetonúria não serve para acompanhar o tratamento</strong> (pode parecer persistente por horas a dias)."
+                        "K da gasometria não substitui o K plasmático. Na 1ª hora o pH venoso pode piorar (lavagem do lactato com a hidratação).",
+                        "Cetonúria não serve para acompanhar o tratamento (pode parecer persistente por horas a dias)."
                     ],
                     tabelas: [
                         {
@@ -577,15 +578,15 @@ registrarConduta({
                     aberta: true,
                     resumo: "Toda a condução numa olhada. Os detalhes estão em cada passo abaixo.",
                     itens: [
-                        "<span class=\"cond-passo\">1</span> <strong>Chegada (0 min):</strong> Monitor, ABC, pesar, <strong>2 acessos</strong> e <strong>colher os exames</strong>",
-                        "<span class=\"cond-passo\">2</span> <strong>0 a 1 h:</strong> <strong>Expansão:</strong> SF 0,9% 10 mL/kg em 1h (choque: 10 a 20 mL/kg). <strong>Ainda sem insulina</strong>",
-                        "<span class=\"cond-passo\">3</span> <strong>Saiu o K:</strong> Decidir <strong>quando começar o potássio</strong>. Insulina só com <strong>K ≥ 3,3</strong>",
-                        "<span class=\"cond-passo\">4</span> <strong>A partir da 2ª hora:</strong> <strong>Hidratação de 48h</strong> com a <strong>solução padrão A/B</strong> (só B no início; card calcula o mL/h)",
-                        "<span class=\"cond-passo\">5</span> <strong>Após 1 h de expansão:</strong> <strong>Insulina regular EV contínua</strong>: < 5 anos 0,05 U/kg/h; ≥ 5 anos 0,1 U/kg/h (máx 10 U/h). <strong>Nunca bolus</strong>",
-                        "<span class=\"cond-passo\">6</span> <strong>HGT ≤ 300:</strong> <strong>Colocar glicose no soro</strong>: 5% = ½ A + ½ B. Não diminuir a insulina",
+                        "<span class=\"cond-passo\">1</span> <strong>Chegada (0 min):</strong> Monitor, ABC, pesar, 2 acessos e colher os exames",
+                        "<span class=\"cond-passo\">2</span> <strong>0 a 1 h:</strong> Expansão: SF 0,9% 10 mL/kg em 1h (choque: 10 a 20 mL/kg). Ainda sem insulina",
+                        "<span class=\"cond-passo\">3</span> <strong>Saiu o K:</strong> Decidir quando começar o potássio. Insulina só com K ≥ 3,3",
+                        "<span class=\"cond-passo\">4</span> <strong>A partir da 2ª hora:</strong> Hidratação de 48h com a solução padrão A/B (só B no início; card calcula o mL/h)",
+                        "<span class=\"cond-passo\">5</span> <strong>Após 1 h de expansão:</strong> Insulina regular EV contínua: < 5 anos 0,05 U/kg/h; ≥ 5 anos 0,1 U/kg/h (máx 10 U/h). Nunca bolus",
+                        "<span class=\"cond-passo\">6</span> <strong>HGT ≤ 300:</strong> Colocar glicose no soro: 5% = ½ A + ½ B. Não diminuir a insulina",
                         "<span class=\"cond-passo\">7</span> <strong>De 1/1h e 2/2h:</strong> HGT, sinais vitais e Glasgow 1/1h; gasometria, eletrólitos e cetonemia 2/2h",
-                        "<span class=\"cond-passo\">8</span> <strong>CAD resolvida:</strong> pH > 7,30, HCO₃ > 15, cetonemia < 1 e aceitando VO: <strong>insulina SC antes da refeição e desligar a bomba 30 a 60 min depois</strong>",
-                        "⚠️ <strong>A qualquer hora:</strong> Cefaleia, vômitos, sonolência, bradicardia: <strong>edema cerebral</strong>. HGT < 60: <strong>hipoglicemia</strong>"
+                        "<span class=\"cond-passo\">8</span> <strong>CAD resolvida:</strong> pH > 7,30, HCO₃ > 15, cetonemia < 1 e aceitando VO: insulina SC antes da refeição e desligar a bomba 30 a 60 min depois",
+                        { alerta: "a qualquer hora, cefaleia, vômitos, sonolência ou bradicardia sugerem edema cerebral; HGT < 60 é hipoglicemia." }
                     ],
                     lista: "passos"
                 },
@@ -595,14 +596,14 @@ registrarConduta({
                     aberta: true,
                     resumo: "Minuto 0. Monitor, ABC, peso, 2 acessos e exames.",
                     itens: [
-                        "<strong>Monitorizar:</strong> FC, FR, PA, SatO₂ e <strong>ECG contínuo</strong> (onda T mostra o potássio).",
+                        "<strong>Monitorizar:</strong> FC, FR, PA, SatO₂ e ECG contínuo (onda T mostra o potássio).",
                         "<strong>A — Via aérea:</strong> Glasgow ≤ 8: proteger a via aérea e passar SNG. Evitar intubar; se intubar, não hiperventilar (pCO₂ > 35).",
                         "<strong>B — Respiração:</strong> choque, inconsciente ou insuficiência respiratória: O₂ a 100% por máscara.",
-                        "<strong>C — Circulação:</strong> <strong>2 acessos venosos periféricos</strong> (um para soro/insulina, outro para coletas).",
+                        "<strong>C — Circulação:</strong> 2 acessos venosos periféricos (um para soro/insulina, outro para coletas).",
                         "<strong>D — Neurológico:</strong> Glasgow (escala no bloco 🔎). ≤ 13: UTI. Inconsciente: sonda vesical.",
-                        "<strong>Pesar a criança</strong> (peso atual, não o informado). Obeso: usar o peso ideal.",
-                        "Usa bomba de insulina: <strong>retirar</strong>.",
-                        "Marcar a <strong>gravidade</strong> (pH/bicarbonato) no bloco 🔎: grave ou choque → UTI."
+                        "Pesar a criança (peso atual, não o informado). Obeso: usar o peso ideal.",
+                        "Usa bomba de insulina: retirar.",
+                        "Marcar a gravidade (pH/bicarbonato) no bloco 🔎: grave ou choque → UTI."
                     ],
                     tabela: {
                         titulo: "🧪 Exames para pedir na chegada",
@@ -627,10 +628,10 @@ registrarConduta({
                     aberta: true,
                     resumo: "SF 0,9% 10 mL/kg em 1h. Choque: 10 a 20 mL/kg. Máximo 30 mL/kg.",
                     itens: [
-                        "<strong>Sem choque:</strong> SF 0,9% <strong>10 mL/kg em 60 minutos</strong>.",
-                        "<strong>Com choque:</strong> SF 0,9% <strong>10 a 20 mL/kg em 30 a 60 minutos</strong> (hipoperfusão grave: em 15 a 30 min). Reavaliar e repetir se preciso.",
-                        "<strong>Não passar de 30 mL/kg</strong> no total. <strong>Anotar o volume dado</strong>: ele é descontado no passo 4.",
-                        "❌ <strong>Não iniciar insulina nesta 1ª hora.</strong> ❌ <strong>Não dar bicarbonato.</strong>"
+                        "<strong>Sem choque:</strong> SF 0,9% 10 mL/kg em 60 minutos.",
+                        "<strong>Com choque:</strong> SF 0,9% 10 a 20 mL/kg em 30 a 60 minutos (hipoperfusão grave: em 15 a 30 min). Reavaliar e repetir se preciso.",
+                        "Não passar de 30 mL/kg no total. Anotar o volume dado: ele é descontado no passo 4.",
+                        { alerta: "não iniciar insulina nesta 1ª hora e não dar bicarbonato." }
                     ],
                     remedios: ["cad_expansao"]
                 },
@@ -642,13 +643,13 @@ registrarConduta({
                     tabela: {
                         colunas: ["K do exame", "O que fazer"],
                         linhas: [
-                            ["< 3,0 mEq/L", "<strong>KCl no soro já</strong> + <strong>correção rápida</strong> com o card KCl EV (0,5 a 1 mEq/kg em 2h, máx 40 mEq; dosar o K 1 a 2h após). <strong>Adiar a insulina</strong> até K ≥ 3,3"],
-                            ["3,0 a 3,2 mEq/L", "<strong>KCl no soro já</strong> (40 mEq/L). <strong>Adiar a insulina</strong> até K ≥ 3,3"],
-                            ["3,3 a 4,4 mEq/L", "<strong>KCl no soro já</strong> (40 mEq/L)"],
-                            ["4,5 a 5,4 mEq/L", "KCl no soro <strong>junto com o início da insulina</strong>"],
-                            ["≥ 5,5 mEq/L", "Sem K por enquanto (A e B <strong>sem KCl</strong>). Só <strong>após diurese</strong> e K < 5,5"]
+                            ["< 3,0 mEq/L", "KCl no soro já + correção rápida com o card KCl EV (0,5 a 1 mEq/kg em 2h, máx 40 mEq; dosar o K 1 a 2h após). Adiar a insulina até K ≥ 3,3"],
+                            ["3,0 a 3,2 mEq/L", "KCl no soro já (40 mEq/L). Adiar a insulina até K ≥ 3,3"],
+                            ["3,3 a 4,4 mEq/L", "KCl no soro já (40 mEq/L)"],
+                            ["4,5 a 5,4 mEq/L", "KCl no soro junto com o início da insulina"],
+                            ["≥ 5,5 mEq/L", "Sem K por enquanto (A e B sem KCl). Só após diurese e K < 5,5"]
                         ],
-                        nota: "<strong>Dose:</strong> 40 mEq/L no soro = KCl 19,1% 4 mL em cada solução A e B (20 mEq/L = 2 mL, se a velocidade for ≥ 10 mL/kg/h). <strong>Máximo: 0,5 mEq/kg/h.</strong> Sem diurese ou insuficiência renal: não repor. Sem resultado ainda? O ECG ajuda: T achatada, onda U, QT longo = K baixo; T apiculada = K alto. Fonte: SPP; K mínimo de 3,3 para a insulina e correção rápida com K < 3,0: IMIP 2018 (igual à SBD); dose da correção pelo card KCl EV (StatPearls). SPSP 2024: 60 mEq/L se K < 3,5."
+                        nota: "Dose: 40 mEq/L no soro = KCl 19,1% 4 mL em cada solução A e B (20 mEq/L = 2 mL, se a velocidade for ≥ 10 mL/kg/h). Máximo: 0,5 mEq/kg/h. Sem diurese ou insuficiência renal: não repor. Sem resultado ainda? O ECG ajuda: T achatada, onda U, QT longo = K baixo; T apiculada = K alto. Fonte: SPP; K mínimo de 3,3 para a insulina e correção rápida com K < 3,0: IMIP 2018 (igual à SBD); dose da correção pelo card KCl EV (StatPearls). SPSP 2024: 60 mEq/L se K < 3,5."
                     },
                     remedios: ["kcl_ev"]
                 },
@@ -658,10 +659,10 @@ registrarConduta({
                     aberta: true,
                     resumo: "O card calcula o mL/h por % de desidratação. Descontar a expansão.",
                     itens: [
-                        "<strong>Escolher a desidratação:</strong> CAD moderada <strong>5 a 7%</strong>; CAD grave <strong>7 a 10%</strong>.",
-                        "<strong>Velocidade (mL/h) = (déficit + 2 x manutenção − expansão) ÷ 48.</strong> Déficit = % x peso x 10. O card abaixo já faz a conta.",
-                        "<strong>Soro: solução padrão do IMIP em Y</strong> (K 40 mEq/L, Na 136 mEq/L). <strong>A:</strong> SG 10% 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. <strong>B:</strong> AD 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. <strong>Sem glicose: correr só a B</strong> no volume total; a glicose entra no passo 6.",
-                        "<strong>Não repor a diurese.</strong> Descontar o que beber. Total de até 2 x a manutenção.",
+                        "<strong>Escolher a desidratação:</strong> CAD moderada 5 a 7%; CAD grave 7 a 10%.",
+                        "Velocidade (mL/h) = (déficit + 2 x manutenção − expansão) ÷ 48. Déficit = % x peso x 10. O card abaixo já faz a conta.",
+                        "<strong>Soro:</strong> solução padrão do IMIP em Y (K 40 mEq/L, Na 136 mEq/L). A: SG 10% 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. B: AD 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. Sem glicose: correr só a B no volume total; a glicose entra no passo 6.",
+                        "Não repor a diurese. Descontar o que beber. Total de até 2 x a manutenção.",
                         "Na que não sobe enquanto a glicemia cai: aumentar o sódio do soro e vigiar edema cerebral."
                     ],
                     ferramenta: "ferramentaCadPasso4"
@@ -672,15 +673,15 @@ registrarConduta({
                     aberta: true,
                     resumo: "< 5 anos 0,05 U/kg/h; ≥ 5 anos 0,1 U/kg/h (máx 10 U/h). Nunca bolus.",
                     itens: [
-                        "<strong>Conferir antes:</strong> já passou 1 hora de expansão? <strong>K ≥ 3,3</strong> (passo 3)?",
-                        "<strong>Insulina regular EV contínua</strong> em bomba de infusão, equipo próprio (pode ir em Y com o soro): <strong>< 5 anos: 0,05 U/kg/h</strong>; <strong>≥ 5 anos: 0,1 U/kg/h</strong>. <strong>Máximo 10 U/h</strong> (IMIP).",
-                        "❌ <strong>Bolus de insulina é proibido</strong> na criança (edema cerebral, choque, hipocalemia).",
-                        "<strong>HGT < 300 com acidose: NÃO diminuir a insulina</strong>, acrescentar glicose ao soro (passo 6). Não desligar até a CAD resolver.",
-                        "<strong>HGT não cai 60 mg/dL/h ou acidose corrigindo muito devagar:</strong> checar acesso, equipo e preparo e <strong>aumentar para 0,15 a 0,2 U/kg/h</strong>.",
-                        "Acidose parcialmente compensada, ainda sem critério de suspensão: <strong>0,05 U/kg/h + glicose</strong>.",
-                        "<strong>CAD leve</strong>, sem vômitos e aceitando VO: pode ser insulina SC + hidratação oral; sem melhora, voltar para este esquema."
+                        "<strong>Conferir antes:</strong> já passou 1 hora de expansão? K ≥ 3,3 (passo 3)?",
+                        "Insulina regular EV contínua em bomba de infusão, equipo próprio (pode ir em Y com o soro): < 5 anos: 0,05 U/kg/h; ≥ 5 anos: 0,1 U/kg/h. Máximo 10 U/h (IMIP).",
+                        { alerta: "bolus de insulina é proibido na criança (edema cerebral, choque, hipocalemia)." },
+                        "<strong>HGT < 300 com acidose:</strong> NÃO diminuir a insulina, acrescentar glicose ao soro (passo 6). Não desligar até a CAD resolver.",
+                        "<strong>HGT não cai 60 mg/dL/h ou acidose corrigindo muito devagar:</strong> checar acesso, equipo e preparo e aumentar para 0,15 a 0,2 U/kg/h.",
+                        "Acidose parcialmente compensada, ainda sem critério de suspensão: 0,05 U/kg/h + glicose.",
+                        "CAD leve, sem vômitos e aceitando VO: pode ser insulina SC + hidratação oral; sem melhora, voltar para este esquema."
                     ],
-                    nota: "<strong>Preparo:</strong> insulina regular 1 mL (100 unidades) + SF 0,9% 99 mL = 1 U/mL. Trocar o frasco a cada 6 horas.",
+                    nota: "Preparo: insulina regular 1 mL (100 unidades) + SF 0,9% 99 mL = 1 U/mL. Trocar o frasco a cada 6 horas.",
                     remedios: ["insulina_cad"]
                 },
                 {
@@ -689,11 +690,11 @@ registrarConduta({
                     aberta: true,
                     resumo: "HGT ≤ 300 ou queda > 90/h: glicose pela proporção A/B. Não diminuir a insulina.",
                     itens: [
-                        "<strong>Gatilho (SPP):</strong> HGT <strong>≤ 300 mg/dL</strong> ou queda <strong>> 90 mg/dL/h</strong>.",
-                        "<strong>Começar com glicose a 5%</strong> = metade solução A + metade solução B. A <strong>velocidade total do passo 4 não muda</strong>: só a proporção entre A e B.",
-                        "CAD ainda não resolvida e HGT continua ≤ 300 ou caindo > 90 mg/dL/h: <strong>subir para 7,5%</strong> (¾ A + ¼ B) e depois <strong>10%</strong> (só A).",
-                        "HGT normal mas <strong>acidose ainda presente</strong>: aumentar a glicose e <strong>manter a insulina</strong> (SPP admite até 12,5%).",
-                        "<strong>Use o assistente abaixo</strong> a cada HGT: ele mostra a glicose certa e os mL/h de A e de B na bomba."
+                        "<strong>Gatilho (SPP):</strong> HGT ≤ 300 mg/dL ou queda > 90 mg/dL/h.",
+                        "Começar com glicose a 5% = metade solução A + metade solução B. A velocidade total do passo 4 não muda: só a proporção entre A e B.",
+                        "CAD ainda não resolvida e HGT continua ≤ 300 ou caindo > 90 mg/dL/h: subir para 7,5% (¾ A + ¼ B) e depois 10% (só A).",
+                        "HGT normal mas acidose ainda presente: aumentar a glicose e manter a insulina (SPP admite até 12,5%).",
+                        "Use o assistente abaixo a cada HGT: ele mostra a glicose certa e os mL/h de A e de B na bomba."
                     ],
                     ferramenta: "ferramentaCadGlicose"
                 },
@@ -705,7 +706,7 @@ registrarConduta({
                     tabela: {
                         colunas: ["Quando", "O que checar"],
                         linhas: [
-                            ["1/1h", "PA, FC, FR, SatO₂, ECG, <strong>Glasgow e sinais neurológicos</strong>, <strong>HGT</strong>, balanço hídrico, soro e insulina (velocidades)"],
+                            ["1/1h", "PA, FC, FR, SatO₂, ECG, Glasgow e sinais neurológicos, HGT, balanço hídrico, soro e insulina (velocidades)"],
                             ["2/2h", "Gasometria (pH, HCO₃), Na, K, Cl, glicose, osmolaridade, ânion gap, cetonemia capilar"],
                             ["4/4h", "Fósforo, cálcio e magnésio"],
                             ["6/6h", "Ureia, creatinina e hemograma (se alterados)"]
@@ -716,18 +717,18 @@ registrarConduta({
                         {
                             nome: "Não está melhorando? (pH, cetonemia, HCO₃ e ânion gap parados)",
                             itens: [
-                                "Rever a <strong>insulina</strong>: dose, preparo (há quanto tempo), equipo, acesso venoso.",
-                                "Rever a <strong>hidratação</strong> e se precisa de nova expansão.",
-                                "Procurar <strong>infecção</strong> (sepse).",
+                                "Rever a insulina: dose, preparo (há quanto tempo), equipo, acesso venoso.",
+                                "Rever a hidratação e se precisa de nova expansão.",
+                                "Procurar infecção (sepse).",
                                 "Fosfato < 2,5 mg/dL com sintomas: repor fosfato de potássio, vigiando o cálcio. Não repor de rotina."
                             ]
                         },
                         {
                             nome: "Bicarbonato: só se pH ≤ 6,9",
                             itens: [
-                                "<strong>Não é rotina</strong> (piora o K e aumenta o risco de edema cerebral).",
-                                "Só com <strong>pH ≤ 6,9</strong> (SPP) ou hipercalemia grave com disfunção cardíaca, em UTI.",
-                                "<strong>Dose (IMIP) = (12 − HCO₃ encontrado) x 0,3 x peso.</strong> Fazer <strong>metade da dose em 2 horas</strong>, diluído <strong>1:5 em AD</strong>. Repetir a gasometria ao final."
+                                "Não é rotina (piora o K e aumenta o risco de edema cerebral).",
+                                "Só com pH ≤ 6,9 (SPP) ou hipercalemia grave com disfunção cardíaca, em UTI.",
+                                "Dose (IMIP) = (12 − HCO₃ encontrado) x 0,3 x peso. Fazer metade da dose em 2 horas, diluído 1:5 em AD. Repetir a gasometria ao final."
                             ],
                             remedios: ["cad_bicarbonato"]
                         }
@@ -739,9 +740,9 @@ registrarConduta({
                     resumo: "Insulina SC antes de uma refeição; desligar a bomba 30 a 60 min depois (regular). Doses pelo peso e idade.",
                     itens: [
                         "<strong>Critérios:</strong> pH > 7,30, bicarbonato > 15 mEq/L, cetonemia < 1 mmol/L, glicemia ≤ 250 (IFF), sem vômitos e aceitando a via oral.",
-                        "<strong>Antes de uma refeição:</strong> insulina SC e <strong>só depois</strong> desligar a bomba: <strong>regular 30 a 60 min depois</strong> (IFF/UFTM); <strong>ultrarrápida 15 a 30 min depois</strong> (ISPAD 2022).",
-                        "<strong>Basal no diabetes novo</strong> (IFF/UFTM): <strong>0,5 U/kg/dia</strong> (< 4 anos: 0,3 U/kg/dia). NPH: 2/3 de manhã e 1/3 à noite; glargina: 1 vez ao dia, de manhã. <strong>Já usava insulina:</strong> retomar a dose de antes da internação.",
-                        "Depois, <strong>regular conforme o HGT</strong> de 4/4 h ou antes das refeições (escala abaixo)."
+                        "<strong>Antes de uma refeição:</strong> insulina SC e só depois desligar a bomba: regular 30 a 60 min depois (IFF/UFTM); ultrarrápida 15 a 30 min depois (ISPAD 2022).",
+                        "<strong>Basal no diabetes novo</strong> (IFF/UFTM): 0,5 U/kg/dia (< 4 anos: 0,3 U/kg/dia). NPH: 2/3 de manhã e 1/3 à noite; glargina: 1 vez ao dia, de manhã. Já usava insulina: retomar a dose de antes da internação.",
+                        "Depois, regular conforme o HGT de 4/4 h ou antes das refeições (escala abaixo)."
                     ],
                     ferramenta: "ferramentaCadTransicao"
                 },
@@ -751,10 +752,10 @@ registrarConduta({
                     alerta: true,
                     resumo: "Primeiras 12h. Tratar na suspeita: manitol ou NaCl 3%, sem esperar tomografia.",
                     itens: [
-                        "Complicação mais temida (1 a 3% das CAD, > 30% das mortes). Surge geralmente <strong>nas primeiras 12 horas</strong> do tratamento (pode ser antes ou após 24 a 48h).",
+                        "Complicação mais temida (1 a 3% das CAD, > 30% das mortes). Surge geralmente nas primeiras 12 horas do tratamento (pode ser antes ou após 24 a 48h).",
                         "<strong>Fatores de risco:</strong> idade ≤ 5 anos; diabetes de início; sintomas por muito tempo; pCO₂ muito baixa; ureia alta; pH inicial < 7,1; uso de bicarbonato; > 50 mL/kg de líquido nas primeiras 4h; queda rápida da osmolaridade ou do Na corrigido; insulina na 1ª hora.",
-                        "<strong>Sinais:</strong> cefaleia que surge ou piora após o início do tratamento; vômitos persistentes; irritabilidade, confusão, incontinência; paralisia de nervos cranianos, anisocoria, papiledema; <strong>tríade de Cushing</strong> (hipertensão, bradicardia, bradipneia); queda da saturação; Na que não sobe ou sobe rápido demais.",
-                        "Nos pacientes de risco: deixar a solução hipertônica <strong>com a dose calculada à beira do leito</strong>."
+                        "<strong>Sinais:</strong> cefaleia que surge ou piora após o início do tratamento; vômitos persistentes; irritabilidade, confusão, incontinência; paralisia de nervos cranianos, anisocoria, papiledema; tríade de Cushing (hipertensão, bradicardia, bradipneia); queda da saturação; Na que não sobe ou sobe rápido demais.",
+                        "Nos pacientes de risco: deixar a solução hipertônica com a dose calculada à beira do leito."
                     ],
                     escore: {
                         id: "edema_cad",
@@ -787,12 +788,12 @@ registrarConduta({
                         {
                             nome: "Tratamento",
                             itens: [
-                                "<strong>Cabeceira a 30°</strong>, cabeça na linha média.",
-                                "<strong>Manitol 0,5 a 1 g/kg EV em 15 min</strong> (pode repetir após 30 min) <strong>ou NaCl 3% 2,5 a 5 mL/kg em 15 min</strong> (alternativa ou 2ª linha). A SBD e o J Pediatr 2001 citam manitol 0,25 a 0,5 g/kg.",
-                                "<strong>Reduzir a hidratação para 1/3</strong>, mantendo a PA normal; corrigir o déficit em 72h.",
+                                "Cabeceira a 30°, cabeça na linha média.",
+                                "Manitol 0,5 a 1 g/kg EV em 15 min (pode repetir após 30 min) ou NaCl 3% 2,5 a 5 mL/kg em 15 min (alternativa ou 2ª linha). A SBD e o J Pediatr 2001 citam manitol 0,25 a 0,5 g/kg.",
+                                "Reduzir a hidratação para 1/3, mantendo a PA normal; corrigir o déficit em 72h.",
                                 "Sondagem vesical.",
-                                "Insuficiência respiratória: intubar <strong>sem hiperventilar</strong> (pCO₂ > 35 mmHg).",
-                                "Após estabilizar: considerar tomografia de crânio (hemorragia, trombose, isquemia). <strong>Transferir para UTI.</strong>"
+                                "Insuficiência respiratória: intubar sem hiperventilar (pCO₂ > 35 mmHg).",
+                                "Após estabilizar: considerar tomografia de crânio (hemorragia, trombose, isquemia). Transferir para UTI."
                             ],
                             remedios: ["cad_manitol", "cad_nacl3"]
                         }
@@ -824,9 +825,9 @@ registrarConduta({
                     resumo: "pH > 7,30, HCO₃ > 15, cetonemia < 1 e via oral: passar para insulina SC.",
                     itens: [
                         "<strong>CAD resolvida:</strong> pH > 7,30, bicarbonato > 15 mEq/L e cetonemia < 1 mmol/L, com tolerância oral. Então: suspender o soro e planejar a insulina SC intensiva.",
-                        "<strong>A troca (hora, doses e prescrição): passo 8</strong>, no bloco 🚨 acima. Antes de uma refeição; regular SC e desligar a bomba 30 a 60 min depois.",
+                        "<strong>A troca (hora, doses e prescrição):</strong> passo 8, no bloco 🚨 acima. Antes de uma refeição; regular SC e desligar a bomba 30 a 60 min depois.",
                         "Já usava insulina: retomar a dose prévia (50% basal e 50% bolus) ou recolocar a bomba de insulina.",
-                        "Diabetes novo, na internação: <strong>basal 0,5 U/kg/dia</strong> (< 4 anos: 0,3 U/kg/dia) + <strong>regular conforme o HGT</strong> (IFF/UFTM). O esquema definitivo (basal-bolus com contagem de carboidratos) é ajustado depois, com o endocrinologista.",
+                        "Diabetes novo, na internação: basal 0,5 U/kg/dia (< 4 anos: 0,3 U/kg/dia) + regular conforme o HGT (IFF/UFTM). O esquema definitivo (basal-bolus com contagem de carboidratos) é ajustado depois, com o endocrinologista.",
                         "HGT antes das refeições e às 3h da madrugada; corrigir com insulina rápida."
                     ],
                     tabela: {
@@ -862,8 +863,8 @@ registrarConduta({
                     resumo: "Educação da família, cetonas nas doenças intercorrentes, não omitir insulina.",
                     itens: [
                         "Quase toda CAD em quem já tem diabetes pode ser evitada com acompanhamento regular.",
-                        "<strong>Dias de doença (infecção):</strong> monitorar mais a glicemia e as <strong>cetonas</strong>; nunca suspender a insulina; procurar atendimento se vômitos, dor abdominal, respiração rápida ou cetonas altas.",
-                        "Atenção à <strong>omissão de insulina</strong> em adolescentes, transtorno alimentar e família com dificuldades: apoio psicológico e social.",
+                        "<strong>Dias de doença (infecção):</strong> monitorar mais a glicemia e as cetonas; nunca suspender a insulina; procurar atendimento se vômitos, dor abdominal, respiração rápida ou cetonas altas.",
+                        "Atenção à omissão de insulina em adolescentes, transtorno alimentar e família com dificuldades: apoio psicológico e social.",
                         "Usuários de bomba de insulina: saber reconhecer obstrução ou falha do sistema.",
                         "Reconhecer cedo os sintomas (poliúria, polidipsia, perda de peso) em crianças sem diagnóstico: o atraso é o principal fator de gravidade."
                     ]

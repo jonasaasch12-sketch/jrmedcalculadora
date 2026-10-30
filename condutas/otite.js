@@ -13,7 +13,8 @@ registrarConduta({
     cor: "#7c3aed",
     kw: "otite media aguda oma dor de ouvido otalgia otorreia abaulamento membrana timpanica otoscopia amoxicilina clavulanato mastoidite otite com efusao serosa recorrente tubo de ventilacao",
     resumo: "Critérios de diagnóstico, antibiótico ou observar (clicável), escolha e duração, falha em 48–72 h, alérgicos, mastoidite, efusão e recorrência.",
-    legenda: "Conduta conforme a <strong>diretriz da AAP (2013)</strong>, com a <strong>recomendação brasileira (SBP)</strong> e o <strong>consenso italiano (2025)</strong>. Efusão e tubos: <strong>AAO-HNS 2016 e 2022</strong>.",
+    legenda: "Conduta conforme a diretriz da AAP (2013), com a recomendação brasileira (SBP) e o consenso italiano (2025). Efusão e tubos: AAO-HNS 2016 e 2022.",
+    padraoTexto: true, // padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
         {
@@ -26,12 +27,13 @@ registrarConduta({
                     icone: "🔎",
                     resumo: "Abaulamento da membrana timpânica ou otorreia recente. Sem efusão, não é OMA.",
                     itens: [
-                        "<strong>Diagnosticar OMA quando houver</strong> (AAP 2013):",
-                        "• <strong>Abaulamento moderado a intenso</strong> da membrana timpânica, <strong>ou</strong>",
-                        "• <strong>Otorreia de início recente</strong> que não seja de otite externa, <strong>ou</strong>",
-                        "• <strong>Abaulamento leve</strong> + <strong>otalgia de início recente</strong> (< 48 h; no lactente: levar a mão à orelha, choro, irritabilidade) <strong>ou hiperemia intensa</strong> da membrana.",
-                        "<strong>Não diagnosticar OMA sem efusão</strong> no ouvido médio (otoscopia pneumática ou timpanometria) (AAP 2013).",
-                        "<strong>Hiperemia isolada não é OMA:</strong> choro e febre avermelham a membrana. O sinal mais confiável é o <strong>abaulamento</strong>.",
+                        { texto: "<strong>Diagnosticar OMA quando houver</strong> (AAP 2013):", sub: [
+                            "Abaulamento moderado a intenso da membrana timpânica, ou",
+                            "Otorreia de início recente que não seja de otite externa, ou",
+                            "Abaulamento leve + otalgia de início recente (< 48 h; no lactente: levar a mão à orelha, choro, irritabilidade) ou hiperemia intensa da membrana."
+                        ] },
+                        "Não diagnosticar OMA sem efusão no ouvido médio (otoscopia pneumática ou timpanometria) (AAP 2013).",
+                        { alerta: "hiperemia isolada não é OMA: choro e febre avermelham a membrana. O sinal mais confiável é o abaulamento." },
                         "<strong>Quadro típico:</strong> IVAS há alguns dias, depois febre, otalgia, irritabilidade, sono ruim, recusa alimentar. Febre e otalgia sozinhas não dão o diagnóstico.",
                         "<strong>Agentes:</strong> <em>S. pneumoniae</em>, <em>H. influenzae</em> não tipável (produz beta-lactamase) e <em>M. catarrhalis</em>; vírus respiratórios iniciam o quadro."
                     ]
@@ -41,8 +43,8 @@ registrarConduta({
                     icone: "🧭",
                     resumo: "Otite com efusão, otite externa, miringite, cerume, corpo estranho e dor referida.",
                     itens: [
-                        "<strong>Otite média com efusão (secretora):</strong> líquido atrás da membrana <strong>sem sinais agudos</strong> (sem abaulamento, sem otalgia aguda). <strong>Não usar antibiótico</strong> (AAO-HNS 2016).",
-                        "<strong>Otite externa:</strong> dor à <strong>tração do pavilhão</strong> ou ao pressionar o trago, conduto edemaciado, secreção no conduto, piscina. Tratamento tópico (cards em Otorrino: Ouvido).",
+                        "<strong>Otite média com efusão (secretora):</strong> líquido atrás da membrana sem sinais agudos (sem abaulamento, sem otalgia aguda). Não usar antibiótico (AAO-HNS 2016).",
+                        "<strong>Otite externa:</strong> dor à tração do pavilhão ou ao pressionar o trago, conduto edemaciado, secreção no conduto, piscina. Tratamento tópico (cards em Otorrino: Ouvido).",
                         "<strong>Miringite bolhosa:</strong> bolhas na membrana; tratar como OMA.",
                         "<strong>Cerume impactado e corpo estranho:</strong> limpar o conduto antes de concluir.",
                         "<strong>Dor referida:</strong> dente, faringe/amígdalas, articulação temporomandibular.",
@@ -54,9 +56,9 @@ registrarConduta({
                     icone: "⚠️",
                     resumo: "Menor de 2 anos, creche, fumo passivo, mamadeira deitado, sem aleitamento materno.",
                     itens: [
-                        "<strong>Idade 6 a 24 meses</strong>, creche, irmãos pequenos, inverno e IVAS.",
-                        "<strong>Fumo passivo</strong>, <strong>mamadeira deitado</strong>, chupeta, <strong>ausência de aleitamento materno</strong>.",
-                        "<strong>Fenda palatina, síndrome de Down</strong> e outras malformações craniofaciais; imunodeficiência.",
+                        "Idade 6 a 24 meses, creche, irmãos pequenos, inverno e IVAS.",
+                        "Fumo passivo, mamadeira deitado, chupeta, ausência de aleitamento materno.",
+                        "Fenda palatina, síndrome de Down e outras malformações craniofaciais; imunodeficiência.",
                         "Vacinação pneumocócica e de influenza incompletas."
                     ]
                 },
@@ -65,9 +67,9 @@ registrarConduta({
                     icone: "📊",
                     resumo: "Toque em cada item. Grave, otorreia, < 6 meses ou bilateral < 2 anos: antibiótico. Demais: antibiótico ou observar 48–72 h.",
                     itens: [
-                        "<strong>OMA grave</strong> (AAP 2013): <strong>otalgia moderada a intensa</strong>, <strong>otalgia há ≥ 48 h</strong> ou <strong>febre ≥ 39 °C</strong>.",
-                        "<strong>Observar sem antibiótico</strong> só com <strong>decisão compartilhada com a família</strong> e <strong>reavaliação garantida em 48 a 72 h</strong> (ou receita para iniciar se não melhorar).",
-                        "A AAP não se aplica a <strong>menores de 6 meses</strong>: nessa idade, tratar sempre (e, abaixo de 2 meses com febre, seguir a conduta de febre do lactente)."
+                        "<strong>OMA grave</strong> (AAP 2013): otalgia moderada a intensa, otalgia há ≥ 48 h ou febre ≥ 39 °C.",
+                        "Observar sem antibiótico só com decisão compartilhada com a família e reavaliação garantida em 48 a 72 h (ou receita para iniciar se não melhorar).",
+                        "A AAP não se aplica a menores de 6 meses: nessa idade, tratar sempre (e, abaixo de 2 meses com febre, seguir a conduta de febre do lactente)."
                     ],
                     escore: {
                         id: "oma_decisao",
@@ -108,7 +110,7 @@ registrarConduta({
                         "<span class=\"cond-passo\">2</span> <strong>Confirmar na otoscopia:</strong> abaulamento ou otorreia recente. Sem efusão não é OMA",
                         "<span class=\"cond-passo\">3</span> <strong>Analgesia sempre:</strong> ibuprofeno ou paracetamol",
                         "<span class=\"cond-passo\">4</span> <strong>Antibiótico ou observar:</strong> pelo quadro de gravidade (bloco 🔎)",
-                        "<span class=\"cond-passo\">5</span> <strong>1ª escolha: amoxicilina.</strong> Amoxicilina + clavulanato se amoxicilina nos últimos 30 dias, conjuntivite purulenta ou recorrência sem resposta",
+                        "<span class=\"cond-passo\">5</span> <strong>1ª escolha:</strong> amoxicilina. Amoxicilina + clavulanato se amoxicilina nos últimos 30 dias, conjuntivite purulenta ou recorrência sem resposta",
                         "<span class=\"cond-passo\">6</span> <strong>Alérgico:</strong> sem anafilaxia = cefalosporina · com anafilaxia = macrolídeo",
                         "<span class=\"cond-passo\">7</span> <strong>Sem melhora em 48–72 h:</strong> reexaminar e subir um degrau do antibiótico"
                     ],
@@ -120,11 +122,11 @@ registrarConduta({
                     resumo: "Primeiro decida: UTI, internar ou tratar em casa. Marque o que o paciente tem.",
                     alerta: true,
                     itens: [
-                        "A <strong>OMA simples é tratada em casa</strong>. Internar por <strong>complicação</strong>, <strong>idade de risco</strong> ou quando o tratamento oral não é possível (AAP 2013; revisão de mastoidite 2025).",
-                        "<strong>Mastoidite aguda:</strong> <strong>edema, hiperemia e dor atrás da orelha</strong>, apagamento do sulco retroauricular, <strong>pavilhão deslocado para frente e para baixo</strong>, febre. É a complicação mais comum.",
-                        "<strong>Intracranianas:</strong> cefaleia intensa, vômitos, <strong>rigidez de nuca</strong>, rebaixamento, convulsão, sinais focais (meningite, abscesso, <strong>trombose do seio sigmoide</strong>).",
-                        "<strong>Paralisia facial periférica</strong>, <strong>vertigem</strong> e nistagmo (labirintite), toxemia.",
-                        "<strong>Conduta:</strong> internar, colher exames, <strong>antibiótico EV</strong> (cefalosporina de 3ª geração é o mais usado), <strong>avaliação do otorrino</strong> e tomografia com contraste se suspeita de abscesso subperiosteal ou complicação intracraniana (revisão de mastoidite 2025).",
+                        "A OMA simples é tratada em casa. Internar por complicação, idade de risco ou quando o tratamento oral não é possível (AAP 2013; revisão de mastoidite 2025).",
+                        "<strong>Mastoidite aguda:</strong> edema, hiperemia e dor atrás da orelha, apagamento do sulco retroauricular, pavilhão deslocado para frente e para baixo, febre. É a complicação mais comum.",
+                        "<strong>Intracranianas:</strong> cefaleia intensa, vômitos, rigidez de nuca, rebaixamento, convulsão, sinais focais (meningite, abscesso, trombose do seio sigmoide).",
+                        "Paralisia facial periférica, vertigem e nistagmo (labirintite), toxemia.",
+                        "<strong>Conduta:</strong> internar, colher exames, antibiótico EV (cefalosporina de 3ª geração é o mais usado), avaliação do otorrino e tomografia com contraste se suspeita de abscesso subperiosteal ou complicação intracraniana (revisão de mastoidite 2025).",
                         "<strong>Menor de 2 meses com febre:</strong> não tratar como OMA simples; seguir a conduta de febre do lactente."
                     ],
                     escore: {
@@ -160,10 +162,10 @@ registrarConduta({
                     titulo: "Confirmar o diagnóstico na otoscopia",
                     resumo: "Abaulamento da membrana ou otorreia recente. Limpar o conduto se precisar.",
                     itens: [
-                        "<strong>Olhar os dois ouvidos.</strong> Remover cerume se impedir a visão da membrana.",
-                        "<strong>Abaulamento</strong> (membrana convexa, opaca, sem reflexo, cabo do martelo apagado) = OMA. <strong>Hiperemia sozinha não basta.</strong>",
-                        "<strong>Otorreia</strong> com perfuração: OMA supurada. Diferenciar de otite externa (dor à tração do pavilhão, conduto edemaciado).",
-                        "<strong>Líquido sem sinais agudos:</strong> otite com efusão; <strong>não dar antibiótico</strong> (bloco 🏠)."
+                        "Olhar os dois ouvidos. Remover cerume se impedir a visão da membrana.",
+                        "Abaulamento (membrana convexa, opaca, sem reflexo, cabo do martelo apagado) = OMA. Hiperemia sozinha não basta.",
+                        "Otorreia com perfuração: OMA supurada. Diferenciar de otite externa (dor à tração do pavilhão, conduto edemaciado).",
+                        "<strong>Líquido sem sinais agudos:</strong> otite com efusão; não dar antibiótico (bloco 🏠)."
                     ]
                 },
                 {
@@ -171,9 +173,9 @@ registrarConduta({
                     titulo: "Analgesia sempre",
                     resumo: "Ibuprofeno ou paracetamol, com ou sem antibiótico.",
                     itens: [
-                        "<strong>Tratar a dor em todos os casos</strong>, principalmente nas primeiras 24 h (AAP 2013). O antibiótico não alivia a dor no 1º dia.",
-                        "<strong>Ibuprofeno</strong> (a partir de 6 meses) ou <strong>paracetamol</strong>. Não usar AAS.",
-                        "<strong>Não usar</strong> descongestionante, anti-histamínico nem corticoide: não ajudam na OMA."
+                        "Tratar a dor em todos os casos, principalmente nas primeiras 24 h (AAP 2013). O antibiótico não alivia a dor no 1º dia.",
+                        "Ibuprofeno (a partir de 6 meses) ou paracetamol. Não usar AAS.",
+                        "Não usar descongestionante, anti-histamínico nem corticoide: não ajudam na OMA."
                     ],
                     remedios: ["ibu_gts", "pct_gts", "dip_gts"]
                 },
@@ -182,10 +184,10 @@ registrarConduta({
                     titulo: "Antibiótico ou observar",
                     resumo: "Usar o quadro de gravidade (bloco 🔎). Observar só com retorno garantido em 48–72 h.",
                     itens: [
-                        "<strong>Antibiótico sempre:</strong> menor de 6 meses, <strong>otorreia</strong>, <strong>OMA grave</strong> (otalgia moderada/intensa, otalgia ≥ 48 h, febre ≥ 39 °C) e <strong>bilateral abaixo de 2 anos</strong>.",
+                        "<strong>Antibiótico sempre:</strong> menor de 6 meses, otorreia, OMA grave (otalgia moderada/intensa, otalgia ≥ 48 h, febre ≥ 39 °C) e bilateral abaixo de 2 anos.",
                         "<strong>Antibiótico ou observar:</strong> unilateral não grave de 6 a 23 meses e não grave a partir de 2 anos.",
-                        "<strong>Observar</strong> = analgesia e reavaliação em 48 a 72 h. Iniciar o antibiótico se piorar ou não melhorar. Uma opção é deixar a receita com a família (\"receita de segurança\").",
-                        "<strong>Duração:</strong> < 2 anos ou grave = <strong>10 dias</strong> · 2 a 5 anos não grave = <strong>7 dias</strong> · ≥ 6 anos não grave = <strong>5 a 7 dias</strong> (AAP 2013)."
+                        "Observar = analgesia e reavaliação em 48 a 72 h. Iniciar o antibiótico se piorar ou não melhorar. Uma opção é deixar a receita com a família (\"receita de segurança\").",
+                        "<strong>Duração:</strong> < 2 anos ou grave = 10 dias · 2 a 5 anos não grave = 7 dias · ≥ 6 anos não grave = 5 a 7 dias (AAP 2013)."
                     ]
                 },
                 {
@@ -193,9 +195,9 @@ registrarConduta({
                     titulo: "Escolha do antibiótico",
                     resumo: "Amoxicilina. Amoxicilina + clavulanato se uso recente, conjuntivite purulenta ou recorrência sem resposta.",
                     itens: [
-                        "<strong>1ª escolha: amoxicilina</strong> (AAP 2013; SBP; consenso italiano 2025).",
-                        "<strong>Dose:</strong> a <strong>AAP</strong> e o <strong>consenso italiano</strong> usam <strong>dose alta (80 a 90 mg/kg/dia)</strong> pelo pneumococo resistente. A <strong>SBP</strong> aceita a dose padrão (50 mg/kg/dia) nos casos simples. <strong>Aqui usamos a dose alta</strong> (cards abaixo), com a duração calculada pela idade.",
-                        "<strong>Amoxicilina + clavulanato</strong> (AAP 2013) se: <strong>amoxicilina nos últimos 30 dias</strong>, <strong>conjuntivite purulenta</strong> associada (síndrome otite-conjuntivite, <em>H. influenzae</em>) ou <strong>OMA recorrente sem resposta à amoxicilina</strong>.",
+                        "<strong>1ª escolha:</strong> amoxicilina (AAP 2013; SBP; consenso italiano 2025).",
+                        "<strong>Dose:</strong> a AAP e o consenso italiano usam dose alta (80 a 90 mg/kg/dia) pelo pneumococo resistente. A SBP aceita a dose padrão (50 mg/kg/dia) nos casos simples. Aqui usamos a dose alta (cards abaixo), com a duração calculada pela idade.",
+                        "Amoxicilina + clavulanato (AAP 2013) se: amoxicilina nos últimos 30 dias, conjuntivite purulenta associada (síndrome otite-conjuntivite, <em>H. influenzae</em>) ou OMA recorrente sem resposta à amoxicilina.",
                         "<strong>Vômitos ou não aceita via oral:</strong> ceftriaxona IM (1 dose; 3 doses se falha)."
                     ],
                     remedios: ["amox_oma", "clav_oma", "cef_oma"]
@@ -205,9 +207,9 @@ registrarConduta({
                     titulo: "Alérgico à penicilina",
                     resumo: "Sem anafilaxia: cefalosporina (cefuroxima, ceftriaxona). Com anafilaxia: macrolídeo ou clindamicina.",
                     itens: [
-                        "<strong>Alergia sem reação imediata</strong> (exantema tardio): <strong>cefalosporina</strong> (cefuroxima VO, cefpodoxima ou ceftriaxona IM) (AAP 2013).",
-                        "<strong>Reação imediata ou anafilaxia:</strong> <strong>macrolídeo</strong> (azitromicina, claritromicina) ou clindamicina. Macrolídeos têm eficácia menor contra pneumococo e <em>H. influenzae</em>.",
-                        "<strong>Exantema durante a amoxicilina</strong> nem sempre é alergia (viroses, mononucleose): registrar e investigar depois."
+                        "<strong>Alergia sem reação imediata</strong> (exantema tardio): cefalosporina (cefuroxima VO, cefpodoxima ou ceftriaxona IM) (AAP 2013).",
+                        "<strong>Reação imediata ou anafilaxia:</strong> macrolídeo (azitromicina, claritromicina) ou clindamicina. Macrolídeos têm eficácia menor contra pneumococo e <em>H. influenzae</em>.",
+                        "Exantema durante a amoxicilina nem sempre é alergia (viroses, mononucleose): registrar e investigar depois."
                     ],
                     remedios: ["cef_oma"]
                 },
@@ -216,10 +218,10 @@ registrarConduta({
                     titulo: "Sem melhora em 48 a 72 h",
                     resumo: "Reexaminar. Observação → amoxicilina; amoxicilina → amoxicilina + clavulanato; esta → ceftriaxona IM 3 dias.",
                     itens: [
-                        "<strong>Reexaminar o ouvido</strong>: confirmar a OMA e descartar complicação (passo 1).",
-                        "<strong>Estava em observação:</strong> iniciar <strong>amoxicilina</strong>.",
-                        "<strong>Estava com amoxicilina:</strong> trocar para <strong>amoxicilina + clavulanato</strong>.",
-                        "<strong>Estava com amoxicilina + clavulanato:</strong> <strong>ceftriaxona IM por 3 dias</strong> (AAP 2013).",
+                        "<strong>Reexaminar o ouvido:</strong> confirmar a OMA e descartar complicação (passo 1).",
+                        "<strong>Estava em observação:</strong> iniciar amoxicilina.",
+                        "<strong>Estava com amoxicilina:</strong> trocar para amoxicilina + clavulanato.",
+                        "<strong>Estava com amoxicilina + clavulanato:</strong> ceftriaxona IM por 3 dias (AAP 2013).",
                         "<strong>Falha de novo:</strong> otorrino (timpanocentese com cultura); clindamicina com ou sem cefalosporina de 3ª geração.",
                         "<strong>Orientar retorno se:</strong> febre persistente, dor que não cede, inchaço atrás da orelha, rigidez de nuca, sonolência, vômitos repetidos ou paralisia facial."
                     ],
@@ -237,9 +239,9 @@ registrarConduta({
                     icone: "💧",
                     resumo: "Líquido atrás da membrana é esperado por semanas. Não tratar; reavaliar em 3 meses.",
                     itens: [
-                        "<strong>A efusão persiste</strong> em 60 a 70% das crianças em 2 semanas, 40% em 1 mês e 10 a 25% em 3 meses após a OMA (AAP 2013).",
-                        "<strong>Não dar antibiótico, corticoide, anti-histamínico ou descongestionante</strong> para a efusão (AAO-HNS 2016).",
-                        "<strong>Efusão ≥ 3 meses:</strong> <strong>audiometria</strong> e encaminhar ao otorrino. Criança de risco (atraso de fala, síndrome de Down, fenda palatina, autismo): avaliar antes.",
+                        "A efusão persiste em 60 a 70% das crianças em 2 semanas, 40% em 1 mês e 10 a 25% em 3 meses após a OMA (AAP 2013).",
+                        "Não dar antibiótico, corticoide, anti-histamínico ou descongestionante para a efusão (AAO-HNS 2016).",
+                        "<strong>Efusão ≥ 3 meses:</strong> audiometria e encaminhar ao otorrino. Criança de risco (atraso de fala, síndrome de Down, fenda palatina, autismo): avaliar antes.",
                         "Não precisa retorno de rotina se ficou bem, exceto menores de 2 anos ou com sintomas persistentes."
                     ]
                 },
@@ -248,10 +250,10 @@ registrarConduta({
                     icone: "🔁",
                     resumo: "≥ 3 episódios em 6 meses ou ≥ 4 em 12 meses (com 1 nos últimos 6): otorrino.",
                     itens: [
-                        "<strong>Definição:</strong> <strong>≥ 3 episódios em 6 meses</strong> ou <strong>≥ 4 em 12 meses</strong> com pelo menos 1 nos últimos 6 meses (AAP 2013).",
-                        "<strong>Não usar antibiótico profilático</strong> para reduzir episódios (AAP 2013).",
-                        "<strong>Tubo de ventilação:</strong> oferecer na OMA recorrente <strong>com efusão</strong> presente na avaliação; sem efusão, não indicar (AAO-HNS 2022).",
-                        "<strong>Otorreia com tubo de ventilação:</strong> gotas otológicas de antibiótico <strong>sem antibiótico oral</strong> (AAO-HNS 2022).",
+                        "<strong>Definição:</strong> ≥ 3 episódios em 6 meses ou ≥ 4 em 12 meses com pelo menos 1 nos últimos 6 meses (AAP 2013).",
+                        "Não usar antibiótico profilático para reduzir episódios (AAP 2013).",
+                        "<strong>Tubo de ventilação:</strong> oferecer na OMA recorrente com efusão presente na avaliação; sem efusão, não indicar (AAO-HNS 2022).",
+                        "<strong>Otorreia com tubo de ventilação:</strong> gotas otológicas de antibiótico sem antibiótico oral (AAO-HNS 2022).",
                         "Investigar imunodeficiência se infecções graves ou de outros sítios."
                     ]
                 },
@@ -260,9 +262,9 @@ registrarConduta({
                     icone: "🛡️",
                     resumo: "Vacinas pneumocócica e influenza, aleitamento materno, sem fumo passivo e sem mamadeira deitado.",
                     itens: [
-                        "<strong>Vacina pneumocócica conjugada</strong> e <strong>influenza anual</strong> em dia (AAP 2013).",
-                        "<strong>Aleitamento materno exclusivo</strong> até pelo menos 6 meses.",
-                        "<strong>Evitar fumo passivo</strong> e <strong>mamadeira com a criança deitada</strong>; reduzir chupeta após 6 meses.",
+                        "Vacina pneumocócica conjugada e influenza anual em dia (AAP 2013).",
+                        "Aleitamento materno exclusivo até pelo menos 6 meses.",
+                        "Evitar fumo passivo e mamadeira com a criança deitada; reduzir chupeta após 6 meses.",
                         "Lavar as mãos e evitar exposição a IVAS quando possível (creche)."
                     ]
                 }

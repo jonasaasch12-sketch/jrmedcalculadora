@@ -12,7 +12,8 @@ registrarConduta({
     cor: "#65a30d",
     kw: "parasitoses intestinais verminose vermes helmintos protozoarios ascaris lombriga oxiuro enterobius giardia ameba amebiase estrongiloides ancilostomo tenia solitaria tricuris himenolepis criptosporidio albendazol mebendazol nitazoxanida ivermectina",
     resumo: "Helmintos e protozoários: quando suspeitar, exames, tratamento por parasita (clicável) e complicações graves.",
-    legenda: "Conduta conforme o <strong>Guia Prático de Atualização nº 7 da SBP (2020): Parasitoses intestinais — diagnóstico e tratamento</strong>.",
+    legenda: "Conduta conforme o Guia Prático de Atualização nº 7 da SBP (2020): Parasitoses intestinais — diagnóstico e tratamento.",
+    padraoTexto: true, // padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
         {
@@ -28,7 +29,7 @@ registrarConduta({
                         "<strong>Helmintos:</strong> Ascaris (ascaridíase), ancilostomídeos (ancilostomíase), Strongyloides (estrongiloidíase), Enterobius (oxiuríase), Trichuris (tricuríase), Taenia (teníase), Hymenolepis nana (himenolepíase).",
                         "<strong>Protozoários:</strong> Giardia, Entamoeba histolytica/dispar (amebíase), Cryptosporidium, Cystoisospora (Isospora), Cyclospora, Balantidium, Blastocystis.",
                         "<strong>Quando pensar:</strong> dor abdominal, náuseas, vômitos, distensão, diarreia aguda ou arrastada, disenteria, má absorção e perda de peso, anemia ferropriva, eosinofilia, prurido anal noturno, eliminação de vermes ou proglotes, tosse com sibilância e eosinofilia (síndrome de Löeffler).",
-                        "Muitas infecções são <strong>assintomáticas</strong>; os quadros graves aparecem em cargas altas, desnutridos e imunodeprimidos."
+                        "Muitas infecções são assintomáticas; os quadros graves aparecem em cargas altas, desnutridos e imunodeprimidos."
                     ]
                 },
                 {
@@ -38,16 +39,16 @@ registrarConduta({
                     tabela: {
                         colunas: ["Parasita", "Principais manifestações"],
                         linhas: [
-                            ["Ascaris", "Pneumonite larvária (Löeffler); desnutrição; <strong>suboclusão/obstrução intestinal</strong>; migração: apendicite, pancreatite, colangite, abscesso hepático, asfixia"],
-                            ["Ancilostomídeos", "Dermatite larvária; dor epigástrica; <strong>anemia ferropriva</strong> crônica, hipoproteinemia e edema"],
-                            ["Strongyloides", "Dor epigástrica (pseudo-úlcera), má absorção; <strong>hiperinfecção/disseminação em imunossuprimidos ou em uso de corticoide</strong> (sepse, meningite por gram-negativos)"],
-                            ["Trichuris", "Geralmente leve; <strong>tricuríase maciça</strong>: disenteria crônica, tenesmo, anemia, desnutrição, prolapso retal"],
-                            ["Enterobius (oxiúro)", "<strong>Prurido anal noturno</strong> intenso, insônia; vulvovaginite em meninas"],
-                            ["Taenia", "Geralmente assintomática; eliminação de proglotes. <strong>T. solium</strong>: risco de cisticercose/neurocisticercose"],
+                            ["Ascaris", "Pneumonite larvária (Löeffler); desnutrição; suboclusão/obstrução intestinal; migração: apendicite, pancreatite, colangite, abscesso hepático, asfixia"],
+                            ["Ancilostomídeos", "Dermatite larvária; dor epigástrica; anemia ferropriva crônica, hipoproteinemia e edema"],
+                            ["Strongyloides", "Dor epigástrica (pseudo-úlcera), má absorção; hiperinfecção/disseminação em imunossuprimidos ou em uso de corticoide (sepse, meningite por gram-negativos)"],
+                            ["Trichuris", "Geralmente leve; tricuríase maciça: disenteria crônica, tenesmo, anemia, desnutrição, prolapso retal"],
+                            ["Enterobius (oxiúro)", "Prurido anal noturno intenso, insônia; vulvovaginite em meninas"],
+                            ["Taenia", "Geralmente assintomática; eliminação de proglotes. T. solium: risco de cisticercose/neurocisticercose"],
                             ["Hymenolepis nana", "Assintomática ou cólicas e diarreia crônica (autoinfestação)"],
-                            ["Giardia", "Diarreia aguda ou arrastada, dispepsia, <strong>má absorção</strong> semelhante à doença celíaca, déficit de crescimento"],
-                            ["E. histolytica", "Assintomática; colite não disentérica; <strong>disenteria amebiana</strong>; colite necrosante; ameboma; <strong>abscesso hepático</strong>"],
-                            ["Cryptosporidium / Isospora / Cyclospora", "Diarreia aquosa autolimitada no imunocompetente; <strong>grave e prolongada no imunodeprimido</strong> (AIDS)"]
+                            ["Giardia", "Diarreia aguda ou arrastada, dispepsia, má absorção semelhante à doença celíaca, déficit de crescimento"],
+                            ["E. histolytica", "Assintomática; colite não disentérica; disenteria amebiana; colite necrosante; ameboma; abscesso hepático"],
+                            ["Cryptosporidium / Isospora / Cyclospora", "Diarreia aquosa autolimitada no imunocompetente; grave e prolongada no imunodeprimido (AIDS)"]
                         ]
                     }
                 },
@@ -56,9 +57,9 @@ registrarConduta({
                     icone: "🧪",
                     resumo: "Parasitológico em pelo menos 3 amostras; Graham no prurido anal; eosinofilia sugere helminto.",
                     itens: [
-                        "<strong>Parasitológico de fezes (PPF):</strong> pelo menos <strong>3 amostras em 10 dias</strong> (eliminação intermitente). Amostra fresca, idealmente no laboratório em até 1 hora.",
-                        "<strong>Fita adesiva (Graham):</strong> oxiúro e Taenia; colher em <strong>3 manhãs seguidas</strong>, ao acordar e antes da higiene.",
-                        "<strong>Hemograma:</strong> eosinofilia (> 600/mm³ ou > 6%) sugere helminto. Giardíase <strong>não</strong> causa eosinofilia. Ancilostomíase maciça: Hb ≤ 5 g/dL e ferritina baixa.",
+                        "<strong>Parasitológico de fezes (PPF):</strong> pelo menos 3 amostras em 10 dias (eliminação intermitente). Amostra fresca, idealmente no laboratório em até 1 hora.",
+                        "<strong>Fita adesiva (Graham):</strong> oxiúro e Taenia; colher em 3 manhãs seguidas, ao acordar e antes da higiene.",
+                        "<strong>Hemograma:</strong> eosinofilia (> 600/mm³ ou > 6%) sugere helminto. Giardíase não causa eosinofilia. Ancilostomíase maciça: Hb ≤ 5 g/dL e ferritina baixa.",
                         "<strong>Protozoários:</strong> Giardia — antígeno nas fezes (ELISA/imunofluorescência, 90 a 100%); E. histolytica — antígeno nas fezes (ELISA) ou PCR distinguem da E. dispar; Cryptosporidium — pedir pesquisa específica (não entra no PPF de rotina); Isospora e Cyclospora — coloração de Kinyoun.",
                         "<strong>Strongyloides:</strong> PPF seriado (até 7 amostras), cultura de larvas (Baermann-Morais, Rugai), sorologia.",
                         "<strong>Ascaridíase complicada:</strong> RX de abdome (níveis hidroaéreos, imagem em \"feixe de charuto\"), ultrassom (vermes nas vias biliares)."
@@ -85,10 +86,10 @@ registrarConduta({
                     itens: [
                         "<strong>Suboclusão/obstrução por áscaris:</strong> cólica, distensão, vômitos biliosos, desidratação, eliminação de vermes pela boca/nariz/ânus, massa cilíndrica palpável, RHA ausentes.",
                         "<strong>Migração do áscaris:</strong> apendicite, pancreatite, colangite, abscesso hepático, obstrução de via aérea.",
-                        "<strong>Hiperinfecção por Strongyloides:</strong> imunossuprimido ou em corticoide com sintomas intestinais, respiratórios e <strong>sepse ou meningite</strong> por enterobactérias.",
+                        "<strong>Hiperinfecção por Strongyloides:</strong> imunossuprimido ou em corticoide com sintomas intestinais, respiratórios e sepse ou meningite por enterobactérias.",
                         "<strong>Amebíase invasiva:</strong> disenteria com mais de 10 evacuações/dia, febre, toxemia, peritonite (colite necrosante); febre e dor no hipocôndrio direito (abscesso hepático).",
                         "<strong>Tricuríase maciça:</strong> disenteria crônica, anemia, prolapso retal.",
-                        "<strong>Anemia grave</strong> (ancilostomíase) e <strong>desidratação</strong> (giardíase, criptosporidiose)."
+                        "Anemia grave (ancilostomíase) e desidratação (giardíase, criptosporidiose)."
                     ]
                 }
             ]
@@ -108,7 +109,7 @@ registrarConduta({
                     itens: [
                         "<span class=\"cond-passo\">1</span> <strong>Internar?</strong> Critérios clicáveis: UTI · enfermaria · tratamento em casa",
                         "<span class=\"cond-passo\">2</span> <strong>Avaliar:</strong> hidratação, abdome, sinais de obstrução, sepse e imunossupressão",
-                        "<span class=\"cond-passo\">3</span> <strong>Suboclusão por áscaris:</strong> jejum, hidratação EV, SNG, óleo mineral; <strong>sem ascaricida</strong> na fase aguda",
+                        "<span class=\"cond-passo\">3</span> <strong>Suboclusão por áscaris:</strong> jejum, hidratação EV, SNG, óleo mineral; sem ascaricida na fase aguda",
                         "<span class=\"cond-passo\">4</span> <strong>Áscaris biliar/pancreático:</strong> jejum, hidratação, antibiótico, analgesia; colangite = drenagem urgente",
                         "<span class=\"cond-passo\">5</span> <strong>Hiperinfecção por Strongyloides:</strong> reduzir imunossupressão + ivermectina diária",
                         "<span class=\"cond-passo\">6</span> <strong>Amebíase invasiva:</strong> metronidazol 10 dias e, depois, amebicida intraluminal"
@@ -121,7 +122,7 @@ registrarConduta({
                     resumo: "Primeiro decida: UTI, internar ou tratar em casa. O tratamento comum do parasita é ambulatorial (bloco 🏠).",
                     alerta: true,
                     itens: [
-                        "A maioria das parasitoses é tratada em casa. Internar pelas <strong>complicações</strong> (bloco 🔎, sinais de gravidade) (SBP)."
+                        "A maioria das parasitoses é tratada em casa. Internar pelas complicações (bloco 🔎, sinais de gravidade) (SBP)."
                     ],
                     escore: {
                         id: "internacao_parasitoses",
@@ -155,9 +156,9 @@ registrarConduta({
                     aberta: true,
                     resumo: "Hidratação, abdome, sepse e uso de imunossupressores.",
                     itens: [
-                        "Avaliar <strong>hidratação</strong> (conduta de diarreia), estado nutricional e anemia.",
-                        "Abdome: distensão, massa, RHA, peritonite. Pedir <strong>RX de abdome</strong> e <strong>ultrassom</strong> se suspeita de obstrução ou migração.",
-                        "Perguntar sempre por <strong>corticoide</strong>, quimioterapia, transplante, HIV, desnutrição grave.",
+                        "Avaliar hidratação (conduta de diarreia), estado nutricional e anemia.",
+                        "Abdome: distensão, massa, RHA, peritonite. Pedir RX de abdome e ultrassom se suspeita de obstrução ou migração.",
+                        "Perguntar sempre por corticoide, quimioterapia, transplante, HIV, desnutrição grave.",
                         "Hemograma, eletrólitos; hemocultura se febre/toxemia."
                     ]
                 },
@@ -167,12 +168,12 @@ registrarConduta({
                     aberta: true,
                     resumo: "Conservador 48 a 72h: hidratação EV, SNG e óleo mineral. Cirurgia se não resolver.",
                     itens: [
-                        "<strong>Suboclusão:</strong> jejum, <strong>hidratação venosa</strong> e <strong>sonda nasogástrica</strong> aberta por 48 a 72 horas.",
-                        "<strong>Óleo mineral 15 a 30 mL a cada 2 horas</strong> (lubrifica e facilita a eliminação dos vermes).",
+                        "<strong>Suboclusão:</strong> jejum, hidratação venosa e sonda nasogástrica aberta por 48 a 72 horas.",
+                        "Óleo mineral 15 a 30 mL a cada 2 horas (lubrifica e facilita a eliminação dos vermes).",
                         "<strong>Evitar ascaricida nesta fase:</strong> a morte maciça dos vermes libera toxinas (inflamação, paralisia, necrose, perfuração). A piperazina foi retirada do mercado (ANVISA, 1999).",
-                        "Sem resolução: <strong>enema com salina hipertônica</strong> ou <strong>gastrografina</strong> 15 a 30 mL (diluir em 3 vezes o volume de água em RN e lactentes; 2 vezes nas crianças).",
-                        "<strong>Cirurgia</strong> se sangramento retal, toxemia ou falha do tratamento clínico (ordenha do bolo de vermes para o cólon; volvo: enterotomia).",
-                        "Tratar o áscaris (albendazol ou mebendazol) <strong>depois da resolução</strong> do quadro agudo."
+                        "Sem resolução: enema com salina hipertônica ou gastrografina 15 a 30 mL (diluir em 3 vezes o volume de água em RN e lactentes; 2 vezes nas crianças).",
+                        "Cirurgia se sangramento retal, toxemia ou falha do tratamento clínico (ordenha do bolo de vermes para o cólon; volvo: enterotomia).",
+                        "Tratar o áscaris (albendazol ou mebendazol) depois da resolução do quadro agudo."
                     ],
                     remedios: ["oleo_mineral"]
                 },
@@ -182,7 +183,7 @@ registrarConduta({
                     resumo: "Clínico primeiro; anti-helmíntico após a remissão.",
                     itens: [
                         "<strong>Cólica biliar, colecistite, pancreatite:</strong> jejum, hidratação, antibiótico e analgesia; anti-helmíntico após a remissão dos sintomas agudos.",
-                        "<strong>Colangite aguda:</strong> grave; descompressão e drenagem biliar <strong>urgentes</strong> (endoscópica ou cirúrgica). CPRE pode remover os vermes.",
+                        "<strong>Colangite aguda:</strong> grave; descompressão e drenagem biliar urgentes (endoscópica ou cirúrgica). CPRE pode remover os vermes.",
                         "<strong>Abscesso hepático:</strong> aspiração guiada por ultrassom + antibiótico, analgesia e anti-helmíntico."
                     ]
                 },
@@ -193,7 +194,7 @@ registrarConduta({
                     resumo: "Reduzir a imunossupressão e ivermectina diária até exames negativos.",
                     itens: [
                         "Suspender ou reduzir a imunossupressão, se possível.",
-                        "<strong>Ivermectina 200 mcg/kg/dia VO</strong> por 2 semanas, até fezes e/ou escarro negativos (pode associar albendazol).",
+                        "Ivermectina 200 mcg/kg/dia VO por 2 semanas, até fezes e/ou escarro negativos (pode associar albendazol).",
                         "Tratar a sepse ou meningite por enterobactérias associada.",
                         "Sem via oral possível (íleo, obstrução, má absorção): relatos de uso retal.",
                         "<strong>Prevenção:</strong> antes de corticoide em dose alta ou prolongado, rastrear e tratar Strongyloides com ivermectina."
@@ -206,8 +207,8 @@ registrarConduta({
                     titulo: "Amebíase invasiva (disenteria, colite, abscesso hepático)",
                     resumo: "Metronidazol por 10 dias, sempre seguido de amebicida intraluminal.",
                     itens: [
-                        "<strong>Metronidazol 35 a 50 mg/kg/dia em 3 doses por 10 dias</strong> (ou tinidazol ≥ 3 anos 50 mg/kg dose única; ou secnidazol 30 mg/kg dose única).",
-                        "<strong>Depois, sempre:</strong> amebicida intraluminal — <strong>etofamida 500 mg 2x/dia por 3 dias</strong> ou <strong>teclosan 100 mg 3x/dia por 5 dias</strong>.",
+                        "Metronidazol 35 a 50 mg/kg/dia em 3 doses por 10 dias (ou tinidazol ≥ 3 anos 50 mg/kg dose única; ou secnidazol 30 mg/kg dose única).",
+                        "<strong>Depois, sempre:</strong> amebicida intraluminal — etofamida 500 mg 2x/dia por 3 dias ou teclosan 100 mg 3x/dia por 5 dias.",
                         "Abscesso hepático grande, sem resposta ou com risco de ruptura: aspiração percutânea ou cirúrgica.",
                         "Colite necrosante: suporte intensivo (choque, distúrbios metabólicos); risco de perfuração.",
                         "Exame de fezes de controle após o tratamento."

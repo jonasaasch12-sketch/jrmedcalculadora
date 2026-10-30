@@ -49,7 +49,31 @@ function montarEstruturaCondutas() {
     });
 }
 
+// Botão "voltar" do celular/navegador (pedido do Dr. Jonas): cada troca de aba e cada conduta aberta
+// viram um passo no histórico. Voltar: conduta → lista de condutas → aba anterior, em vez de sair do app.
+let restaurandoHistorico = false;
+function empurrarHistorico(estado) {
+    if (restaurandoHistorico) return;
+    let atual = history.state || {};
+    if (atual.modo === estado.modo && (atual.cond || null) === (estado.cond || null)) return;
+    try { history.pushState(estado, '', location.href); } catch (e) { }
+}
+window.addEventListener('popstate', (ev) => {
+    if (!document.getElementById('area-condutas')) return;
+    let e = ev.state || { modo: 'prescricao' };
+    restaurandoHistorico = true;
+    try {
+        if (e.modo === 'condutas') {
+            condutaAberta = e.cond || null;
+            trocarModo('condutas');
+        } else if (modoAtual !== 'prescricao') {
+            trocarModo('prescricao');
+        }
+    } finally { restaurandoHistorico = false; }
+});
+
 function trocarModo(modo) {
+    if (modo !== modoAtual) empurrarHistorico(modo === 'condutas' ? { modo, cond: condutaAberta || null } : { modo });
     modoAtual = modo;
     document.querySelectorAll('.aba-modo, .tab-b[data-modo]').forEach(b => b.classList.toggle('ativa', b.dataset.modo === modo));
     document.body.classList.toggle('modo-condutas', modo === 'condutas');
@@ -64,12 +88,19 @@ function trocarModo(modo) {
     window.scrollTo(0, 0);
 }
 
+// "← Todas as condutas": se a conduta entrou no histórico, volta por ele (igual ao botão do celular).
+function voltarListaCondutas() {
+    if (history.state && history.state.cond) { history.back(); return; }
+    renderizarListaCondutas(); window.scrollTo(0, 0);
+}
+
 function renderizarListaCondutas() {
     condutaAberta = null;
     let termo = (typeof normalizar === 'function' ? normalizar : s => s.toLowerCase())(document.getElementById('searchInput').value || '');
     let lista = Object.values(condutasJR).filter(c => !termo ||
         (typeof normalizar === 'function' ? normalizar : s => s.toLowerCase())(c.nome + ' ' + c.kw + ' ' + c.categoria).includes(termo));
     let porCat = {};
+    lista.sort((a, b) => (b.destaque ? 1 : 0) - (a.destaque ? 1 : 0)); /* conduta com destaque: true vem primeiro (ventilação mecânica, pedido do Dr. Jonas) */
     lista.forEach(c => (porCat[c.categoria] = porCat[c.categoria] || []).push(c));
 
     let html = `<div class="cond-intro">📖 <strong>Condutas</strong> — protocolos das doenças mais prevalentes. As medicações de cada conduta usam o peso e a idade digitados acima.</div>`;
@@ -77,7 +108,7 @@ function renderizarListaCondutas() {
     Object.keys(porCat).forEach(cat => {
         html += `<div class="cond-cat-titulo">${escCond(cat)}</div><div class="cond-grade">`;
         porCat[cat].forEach(c => {
-            html += `<button type="button" class="cond-item" style="--cor-cat:${c.cor}" onclick="abrirConduta('${c.id}')">
+            html += `<button type="button" class="cond-item${c.destaque ? ' cond-item-destaque' : ''}" style="--cor-cat:${c.cor}" onclick="abrirConduta('${c.id}')">
                 <span class="cond-item-nome">${escCond(c.nome)}</span>
                 <span class="cond-item-resumo">${escCond(c.resumo || '')}</span>
                 <span class="cond-item-seta">›</span></button>`;
@@ -87,10 +118,22 @@ function renderizarListaCondutas() {
     document.getElementById('area-condutas').innerHTML = html;
 }
 
+// Um item da lista. Padrão de texto (pedido do Dr. Jonas): ver "Padrão de escrita" no CLAUDE.md.
+//   "texto"                          item simples (negrito só no rótulo do início, "<strong>Rótulo:</strong> ...")
+//   { texto, sub: ["...", "..."] }    item que abre uma lista: os subitens vêm recuados, com marcador ›
+//   { alerta: "..." }                 ponto de atenção (caixa amarela com ⚠️), no lugar de negrito no meio da frase
+function htmlItemConduta(t) {
+    if (t && typeof t === 'object') {
+        if (t.alerta) return `<li class="cond-item-alerta"><span aria-hidden="true">⚠️</span> <strong>Atenção:</strong> ${t.alerta}</li>`;
+        return `<li>${t.texto || ''}${t.sub ? `<ul class="cond-sub">${t.sub.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}</li>`;
+    }
+    return `<li>${t}</li>`;
+}
+
 // Monta o conteúdo de uma seção ou de um grupo: lista, tabelas, nota e medicações.
 function htmlBlocoConduta(b) {
     let html = '';
-    if (b.itens) html += `<ul${b.lista === 'passos' ? ' class="cond-lista-passos"' : ''}>${b.itens.map(t => `<li>${t}</li>`).join('')}</ul>`;
+    if (b.itens) html += `<ul${b.lista === 'passos' ? ' class="cond-lista-passos"' : ''}>${b.itens.map(htmlItemConduta).join('')}</ul>`;
     [b.tabela, ...(b.tabelas || [])].filter(Boolean).forEach(t => {
         if (t.titulo) html += `<div class="cond-tabela-titulo">${t.titulo}</div>`;
         html += `<div class="cond-tabela-wrap"><table class="cond-tabela${t.gravidade ? ' cond-tabela-gravidade' : ''}"><thead><tr>${t.colunas.map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>`;
@@ -120,12 +163,13 @@ function abrirConduta(id) {
     let c = condutasJR[id];
     if (!c) return;
     condutaAberta = id;
+    empurrarHistorico({ modo: 'condutas', cond: id });
     let blocos = c.blocos || [{ secoes: c.secoes }];
     let n = 0;
     let indice = blocos.filter(b => b.titulo).map((b, bi) =>
         `<a href="#cond-bloco-${bi}" class="cond-indice-bloco" style="--cor-bloco:${b.cor || c.cor}" onclick="document.getElementById('cond-bloco-${bi}').scrollIntoView({behavior:'smooth'});return false;">${b.icone || ''} ${escCond(b.titulo)}</a>`).join('');
     let html = `
-        <button type="button" class="cond-voltar" onclick="renderizarListaCondutas(); window.scrollTo(0,0);">← Todas as condutas</button>
+        <div class="cond-barra"><button type="button" class="cond-voltar" onclick="voltarListaCondutas()" title="Voltar para todas as condutas">← Condutas</button><span class="cond-caminho">Condutas › <b>${escCond(c.nome)}</b></span></div>
         <div class="cond-cabecalho" style="--cor-cat:${c.cor}">
             <div class="cond-cabecalho-cat">${escCond(c.categoria)}</div>
             <h2>${escCond(c.nome)}</h2>
@@ -133,6 +177,7 @@ function abrirConduta(id) {
         </div>
         ${c.legenda ? `<div class="cond-legenda">${c.legenda}</div>` : ''}
         ${indice ? `<nav class="cond-indice cond-indice-blocos">${indice}</nav>` : ''}
+        ${c.ferramentaTopo && typeof window[c.ferramentaTopo] === 'function' ? window[c.ferramentaTopo]() : ''}
         <div class="cond-acoes"><button type="button" onclick="abrirTodasSecoes(true)">⊕ Abrir tudo</button><button type="button" onclick="abrirTodasSecoes(false)">⊖ Fechar tudo</button></div>`;
 
     blocos.forEach((b, bi) => {
@@ -148,6 +193,7 @@ function abrirConduta(id) {
     html += `<div class="cond-fonte" id="cond-fontes"><strong>Fontes:</strong><ol>${c.fontes.map((f, k) => `<li id="cond-fonte-${k}"><span class="cond-fonte-txt">${escCond(f)}</span><button type="button" class="cond-fonte-voltar" onclick="voltarDaFonte()">↩ voltar ao texto</button></li>`).join('')}</ol><strong>Revisão:</strong> ${escCond(c.revisao)}</div>`;
     let area = document.getElementById('area-condutas');
     area.innerHTML = html;
+    area.classList.toggle('cond-padrao', !!c.padraoTexto); /* conduta já reescrita no padrão de escrita (rótulo azul) */
     linkarCitacoes(area, c);
     atualizarDosesConduta();
     window.scrollTo(0, 0);
@@ -165,7 +211,7 @@ function linkarCitacoes(area, c) {
     if (!chaves.length) return;
     let esc = t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     let re = new RegExp('(?<![\\wÀ-ú])(' + chaves.map(esc).join('|') + ')(?![\\wÀ-ú])', 'g');
-    let pular = 'a, button, input, select, textarea, label, script, .cond-fonte, .cond-med, .cond-indice, .cond-voltar, .cond-acoes, .cadh, .cadg, .sy, .tr, .qm, .exg, [data-texto], [data-dose]';
+    let pular = 'a, button, input, select, textarea, label, script, .cond-fonte, .cond-med, .cond-indice, .cond-voltar, .cond-barra, .vm-sim, .cond-acoes, .cadh, .cadg, .sy, .tr, .qm, .exg, [data-texto], [data-dose]';
     let walker = document.createTreeWalker(area, NodeFilter.SHOW_TEXT, {
         acceptNode: n => (!n.nodeValue.trim() || n.parentElement.closest(pular)) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
     });

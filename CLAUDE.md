@@ -58,6 +58,11 @@ privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; c
 sw.js                      modo offline (rede primeiro)
 testes/verificar.js        verificação automática (só precisa de Node)
 condutas/condutas.js       área 📖 Condutas (aba ao lado de 💊 Prescrição)
+condutas/ventilacao.js     "Ventilação mecânica" (destaque: true = 1ª da lista; botão na 💉 RSI): tela de ventilador estilo Mindray SV300/SV800 (sem marca):
+                           standby (neonato/pediátrico, peso, idade, motivo, modo ★) → curvas animadas (pulmão simulado de 1 compartimento, ilustrativo),
+                           monitor, alarmes, teclas (toca → − + → Confirmar), Modos, Pausa insp./exp.; guia abaixo (por que, metas, gasometria, DOPE).
+                           Valores iniciais e alarmes de faixa vêm de vmConfig(). ferramentaTopo = ferramenta fora das seções (sempre visível).
+                           Fontes: PALICC-2, PEMVECC, Consenso SBP/AMIB, MS 2014 (RN), PALS (FR por idade). Ti da criança (fora asma/bronquiolite) sem fonte
 condutas/exantematicas.js  categoria "Doenças exantemáticas": guia de identificação clicável + varicela; fotos reais em FOTOS_EXANTEMA
                            (img/exantemas/). Só foto com licença livre e crédito: DermNet (CC BY-NC-ND 4.0, `fonte: "dermnet"`:
                            arquivo original, sem corte, com marca d'água, crédito "Image sourced from DermNet" + link) ou Wikimedia/CDC
@@ -90,6 +95,14 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
   (agentes e diferencial dentro) → Tratamento ambulatorial (só as medicações de casa) → Tratamento hospitalar (1º grupo "🏥 Critérios de
   internação" clicáveis da doença — `internacaoPele()` —, depois grupo "💉 Tratamento" com os cards EV) → Complicações. Sem bloco geral
   separado. O índice do topo vira a lista de doenças. **Repetir o mesmo card** em várias doenças quando a dose é a mesma; dose diferente = card próprio.
+- **Padrão de escrita** (aprovado pelo Dr. Jonas, 10/2026; modelo: condutas/sinusite.js, com `padraoTexto: true`):
+  - **Negrito só no rótulo do início do item**, uma vez, terminando em dois-pontos (`<strong>Exame de imagem:</strong> ...`);
+    nas condutas com `padraoTexto: true` ele aparece em azul. **Nunca negrito no meio da frase.** Item sem rótulo, sem negrito.
+  - **Lista dentro de um item:** `{ texto: "<strong>Rótulo:</strong> ...", sub: ["...", "..."] }` → subitens com › num quadro cinza.
+    Nada de "•" digitado. **Não numerar** subitens (número parece ponto de escore).
+  - **Ponto de atenção:** `{ alerta: "texto em minúscula..." }` → caixa amarela "⚠️ Atenção:". No máximo 1 ou 2 por seção, só o que muda conduta.
+  - Itálico só em nome científico. Fonte entre parênteses no fim da frase. Legenda sem negrito.
+  - Toda conduta tem `padraoTexto: true` (todas convertidas em 10/2026). Conduta nova já nasce no padrão.
 - Escores clínicos (WDF, PRAM...) sempre **clicáveis** (`escore: {...}`), com soma automática.
 - Ferramenta própria numa seção: `ferramenta: "<nomeDaFunção>"` (função global que devolve o HTML), ex.: boneco
   clicável de Lund-Browder em `condutas/queimados.js`.

@@ -13,7 +13,8 @@ registrarConduta({
     cor: "#0369a1",
     kw: "sinusite rinossinusite bacteriana aguda secrecao nasal purulenta tosse diurna 10 dias dupla piora celulite periorbitaria orbitaria chandler amoxicilina clavulanato",
     resumo: "As 3 apresentações (persistente, piora, grave), sem imagem, antibiótico ou observar (clicável), escolha e falha em 72 h, alérgicos e complicações orbitárias e intracranianas.",
-    legenda: "Conduta conforme a <strong>diretriz da AAP (2013)</strong> e a <strong>diretriz da IDSA (2012)</strong>. Complicações orbitárias pela <strong>classificação de Chandler</strong>.",
+    legenda: "Conduta conforme a diretriz da AAP (2013) e a diretriz da IDSA (2012). Complicações orbitárias pela classificação de Chandler.",
+    padraoTexto: true, // segue o padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
         {
@@ -26,14 +27,14 @@ registrarConduta({
                     icone: "🔎",
                     resumo: "Clínico. IVAS que dura mais de 10 dias, piora depois de melhorar ou começa grave.",
                     itens: [
-                        "<strong>Diagnóstico clínico</strong> em criança de 1 a 18 anos com IVAS e <strong>uma das três apresentações</strong> (AAP 2013):",
-                        "• <strong>Persistente:</strong> secreção nasal (de qualquer aspecto) e/ou <strong>tosse diurna</strong> por <strong>mais de 10 dias sem melhora</strong>.",
-                        "• <strong>Piora (dupla piora):</strong> volta ou piora da secreção nasal, da tosse diurna ou da febre <strong>depois de melhora inicial</strong>.",
-                        "• <strong>Início grave:</strong> <strong>febre ≥ 39 °C + secreção nasal purulenta</strong> por <strong>pelo menos 3 dias seguidos</strong>.",
-                        "<strong>Secreção amarela ou verde sozinha não é sinusite:</strong> no resfriado, a secreção fica purulenta em poucos dias e melhora sozinha.",
-                        "<strong>Não pedir exame de imagem</strong> (raio-X, tomografia ou ressonância) para diferenciar de IVAS viral: não ajuda no diagnóstico (AAP 2013).",
-                        "<strong>Tomografia com contraste</strong> só se suspeita de <strong>complicação orbitária ou intracraniana</strong>.",
-                        "<strong>Agentes:</strong> <em>S. pneumoniae</em>, <em>H. influenzae</em> não tipável e <em>M. catarrhalis</em>, os mesmos da otite."
+                        { texto: "Diagnóstico clínico, em criança de 1 a 18 anos com IVAS e uma das três apresentações abaixo (AAP 2013).", sub: [
+                            "<strong>Persistente:</strong> secreção nasal (de qualquer aspecto) e/ou tosse diurna por mais de 10 dias, sem melhora.",
+                            "<strong>Piora (dupla piora):</strong> volta ou piora da secreção nasal, da tosse diurna ou da febre depois de melhora inicial.",
+                            "<strong>Início grave:</strong> febre ≥ 39 °C e secreção nasal purulenta por pelo menos 3 dias seguidos."
+                        ] },
+                        "<strong>Exame de imagem:</strong> não pedir raio-X, tomografia ou ressonância para diferenciar de IVAS viral, porque não ajuda no diagnóstico (AAP 2013). Tomografia com contraste só na suspeita de complicação orbitária ou intracraniana.",
+                        "<strong>Agentes:</strong> <em>S. pneumoniae</em>, <em>H. influenzae</em> não tipável e <em>M. catarrhalis</em>, os mesmos da otite.",
+                        { alerta: "secreção amarela ou verde sozinha não é sinusite: no resfriado, a secreção fica purulenta em poucos dias e melhora sozinha." }
                     ]
                 },
                 {
@@ -43,10 +44,10 @@ registrarConduta({
                     itens: [
                         "<strong>Resfriado comum (viral):</strong> pico dos sintomas no 3º a 5º dia e melhora em 7 a 10 dias. A tosse pode durar mais, mas melhorando.",
                         "<strong>Rinite alérgica:</strong> prurido, espirros em salva, secreção clara, sazonal, sem febre.",
-                        "<strong>Corpo estranho nasal:</strong> secreção <strong>unilateral, fétida</strong>, às vezes com sangue, em pré-escolar.",
+                        "<strong>Corpo estranho nasal:</strong> secreção unilateral e fétida, às vezes com sangue, em pré-escolar.",
                         "<strong>Hipertrofia de adenoide / adenoidite:</strong> roncos, respiração bucal, voz anasalada.",
                         "<strong>Coqueluche:</strong> tosse em acessos, guincho, vômito após a tosse.",
-                        "<strong>Celulite periorbitária</strong> sem sinusite: lesão de pele, picada ou trauma próximos ao olho."
+                        "<strong>Celulite periorbitária sem sinusite:</strong> lesão de pele, picada ou trauma próximos ao olho."
                     ]
                 },
                 {
@@ -54,8 +55,14 @@ registrarConduta({
                     icone: "⚠️",
                     resumo: "Creche, rinite alérgica, fumo passivo; < 2 anos e antibiótico recente pedem amoxicilina + clavulanato.",
                     itens: [
-                        "<strong>Para a doença:</strong> IVAS frequentes (creche), <strong>rinite alérgica</strong>, fumo passivo, hipertrofia de adenoide.",
-                        "<strong>Para pneumococo resistente / beta-lactamase</strong> (IDSA 2012): <strong>< 2 anos</strong>, <strong>creche</strong>, <strong>antibiótico nos últimos 30 dias</strong>, internação recente, imunodepressão.",
+                        "<strong>Para a doença:</strong> IVAS frequentes (creche), rinite alérgica, fumo passivo, hipertrofia de adenoide.",
+                        { texto: "<strong>Para pneumococo resistente ou produtor de beta-lactamase</strong> (IDSA 2012):", sub: [
+                            "menor de 2 anos;",
+                            "creche;",
+                            "antibiótico nos últimos 30 dias;",
+                            "internação recente;",
+                            "imunodepressão."
+                        ] },
                         "<strong>Sinusite recorrente</strong> (≥ 3 episódios em 6 meses ou ≥ 4 em 12 meses): investigar rinite alérgica, imunodeficiência, fibrose cística, discinesia ciliar e alteração anatômica."
                     ]
                 },
@@ -64,8 +71,8 @@ registrarConduta({
                     icone: "📊",
                     resumo: "Toque em cada item. Complicação: internar. Piora ou início grave: antibiótico. Persistente: antibiótico ou observar 3 dias.",
                     itens: [
-                        "<strong>Sinais de complicação</strong> (passo 1): edema ou vermelhidão ao redor do olho, olho saltado, dor ou limitação ao mexer o olho, visão dupla, cefaleia intensa, vômitos, rigidez de nuca, alteração de consciência.",
-                        "<strong>Observar</strong> só no quadro <strong>persistente</strong> não grave, com <strong>reavaliação garantida em 3 dias</strong> (AAP 2013)."
+                        "<strong>Sinais de complicação (passo 1):</strong> edema ou vermelhidão ao redor do olho, olho saltado, dor ou limitação ao mexer o olho, visão dupla, cefaleia intensa, vômitos, rigidez de nuca, alteração de consciência.",
+                        "<strong>Observar:</strong> só no quadro persistente não grave, com reavaliação garantida em 3 dias (AAP 2013)."
                     ],
                     escore: {
                         id: "sinusite_decisao",
@@ -100,13 +107,13 @@ registrarConduta({
                     icone: "⏱️",
                     resumo: "Complicação? → confirmar a apresentação → antibiótico ou observar → amoxicilina (± clavulanato) 10 dias → reavaliar em 72 h.",
                     itens: [
-                        "<span class=\"cond-passo\">1</span> <strong>Internar?</strong> Critérios clicáveis: UTI · enfermaria · casa (celulite orbitária, proptose, dor ao mexer o olho, sinais neurológicos)",
-                        "<span class=\"cond-passo\">2</span> <strong>Confirmar a apresentação:</strong> persistente, piora ou início grave. <strong>Sem raio-X</strong>",
-                        "<span class=\"cond-passo\">3</span> <strong>Antibiótico ou observar:</strong> pelo quadro de gravidade (bloco 🔎)",
-                        "<span class=\"cond-passo\">4</span> <strong>Amoxicilina 10 dias;</strong> amoxicilina + clavulanato se fator de risco. Vômitos: ceftriaxona IM",
-                        "<span class=\"cond-passo\">5</span> <strong>Alérgico:</strong> sem anafilaxia = cefalosporina · com anafilaxia = levofloxacino ou clindamicina + cefixima",
-                        "<span class=\"cond-passo\">6</span> <strong>Sintomáticos:</strong> lavagem nasal e analgésico. Sem descongestionante ou anti-histamínico",
-                        "<span class=\"cond-passo\">7</span> <strong>Sem melhora em 72 h:</strong> reavaliar e subir um degrau"
+                        "<span class=\"cond-passo\">1</span> <strong>Internar?</strong> Critérios clicáveis: UTI, enfermaria ou casa (celulite orbitária, proptose, dor ao mexer o olho, sinais neurológicos).",
+                        "<span class=\"cond-passo\">2</span> <strong>Confirmar a apresentação:</strong> persistente, piora ou início grave. Sem raio-X.",
+                        "<span class=\"cond-passo\">3</span> <strong>Antibiótico ou observar:</strong> pelo quadro de gravidade (bloco 🔎).",
+                        "<span class=\"cond-passo\">4</span> <strong>Antibiótico:</strong> amoxicilina 10 dias; amoxicilina + clavulanato se fator de risco. Vômitos: ceftriaxona IM.",
+                        "<span class=\"cond-passo\">5</span> <strong>Alérgico:</strong> sem anafilaxia, cefalosporina; com anafilaxia, levofloxacino ou clindamicina + cefixima.",
+                        "<span class=\"cond-passo\">6</span> <strong>Sintomáticos:</strong> lavagem nasal e analgésico. Sem descongestionante ou anti-histamínico.",
+                        "<span class=\"cond-passo\">7</span> <strong>Sem melhora em 72 h:</strong> reavaliar e subir um degrau."
                     ],
                     lista: "passos"
                 },
@@ -116,14 +123,21 @@ registrarConduta({
                     resumo: "Primeiro decida: UTI, internar ou tratar em casa. Complicação orbitária ou intracraniana interna.",
                     alerta: true,
                     itens: [
-                        "A <strong>sinusite não complicada é tratada em casa</strong>. Internar por <strong>complicação orbitária ou intracraniana</strong>, toxemia ou quando o tratamento oral não é possível (AAP 2013).",
-                        "<strong>Orbitária</strong> (a mais comum; etmoidite em criança pequena): <strong>edema e hiperemia palpebral</strong>, <strong>proptose</strong>, <strong>dor ou limitação da movimentação ocular</strong>, diplopia, <strong>queda da acuidade visual</strong>.",
-                        "<strong>Intracraniana</strong> (adolescente; sinusite frontal): <strong>cefaleia intensa</strong>, vômitos, febre alta, <strong>rigidez de nuca</strong>, alteração de consciência, convulsão, déficit focal. <strong>Tumor de Pott</strong>: edema mole na testa.",
-                        "<strong>Conduta:</strong> internar, <strong>tomografia de seios da face e órbitas (e crânio, se sinal neurológico) com contraste</strong>, <strong>antibiótico EV</strong>, <strong>otorrino e oftalmologia</strong> (cirurgia se abscesso, piora visual ou falha) (AAP 2013; revisões 2023).",
-                        "<strong>Celulite pré-septal</strong> leve (sem proptose, movimento ocular normal, visão normal), criança bem: pode ser tratada por via oral com reavaliação em 24 a 48 h.",
-                        "<strong>Celulite orbitária: antibiótico EV</strong> (Whitebook) por 2 a 3 semanas ou até a resolução. <strong>Esquema A</strong> (preferencial): <strong>vancomicina + ceftriaxona</strong>. <strong>Esquema B</strong>: vancomicina + cefotaxima. <strong>Esquema C</strong> (sinais de infecção do SNC, sinusite crônica ou foco odontológico): A ou B <strong>+ metronidazol</strong>.",
-                        "<strong>Cuidados</strong> (Whitebook): sinais vitais de 6/6 h; <strong>oftalmologia</strong>; acuidade visual e reflexos pupilares todos os dias; <strong>sem melhora em 24 a 48 h</strong> de antibiótico adequado: <strong>nova imagem</strong> (abscesso) e avaliar cirurgia. Pode precisar de jejum para cirurgia, com hidratação basal.",
-                        "<strong>Sinais de alarme</strong> (Whitebook): febre, proptose, dor ao movimentar o olho, queda da acuidade visual, alteração da visão de cores e dos reflexos pupilares. <strong>Complicações:</strong> abscesso subperiosteal ou orbitário, cegueira, tromboflebite do seio cavernoso, abscesso cerebral."
+                        "<strong>Quem interna:</strong> a sinusite não complicada é tratada em casa. Internar por complicação orbitária ou intracraniana, toxemia ou quando o tratamento oral não é possível (AAP 2013).",
+                        { texto: "<strong>Sinais de complicação:</strong>", sub: [
+                            "<strong>Orbitária</strong> (a mais comum; etmoidite em criança pequena): edema e hiperemia palpebral, proptose, dor ou limitação da movimentação ocular, diplopia, queda da acuidade visual.",
+                            "<strong>Intracraniana</strong> (adolescente; sinusite frontal): cefaleia intensa, vômitos, febre alta, rigidez de nuca, alteração de consciência, convulsão, déficit focal. Tumor de Pott: edema mole na testa."
+                        ] },
+                        "<strong>Conduta:</strong> internar, tomografia de seios da face e órbitas (e crânio, se sinal neurológico) com contraste, antibiótico EV, otorrino e oftalmologia; cirurgia se abscesso, piora visual ou falha (AAP 2013; revisões 2023).",
+                        "<strong>Celulite pré-septal leve</strong> (sem proptose, movimento ocular normal, visão normal), criança bem: pode ser tratada por via oral, com reavaliação em 24 a 48 h.",
+                        { texto: "<strong>Celulite orbitária:</strong> antibiótico EV (Whitebook) por 2 a 3 semanas ou até a resolução.", sub: [
+                            "<strong>Esquema A</strong> (preferencial): vancomicina + ceftriaxona.",
+                            "<strong>Esquema B:</strong> vancomicina + cefotaxima.",
+                            "<strong>Esquema C</strong> (sinais de infecção do SNC, sinusite crônica ou foco odontológico): esquema A ou B + metronidazol."
+                        ] },
+                        "<strong>Cuidados</strong> (Whitebook): sinais vitais de 6/6 h; oftalmologia; acuidade visual e reflexos pupilares todos os dias. Pode precisar de jejum para cirurgia, com hidratação basal.",
+                        "<strong>Complicações:</strong> abscesso subperiosteal ou orbitário, cegueira, tromboflebite do seio cavernoso, abscesso cerebral.",
+                        { alerta: "sem melhora em 24 a 48 h de antibiótico adequado, fazer nova imagem (abscesso) e avaliar cirurgia. Sinais de alarme: febre, proptose, dor ao movimentar o olho, queda da acuidade visual, alteração da visão de cores e dos reflexos pupilares (Whitebook)." }
                     ],
                     remedios: ["cef_orbitaria", "vanco_orbitaria", "cefotax_orbitaria", "metro_orbitaria"],
                     tabela: {
@@ -168,9 +182,9 @@ registrarConduta({
                     titulo: "Confirmar a apresentação",
                     resumo: "Persistente (> 10 dias), piora após melhora ou início grave. Sem exame de imagem.",
                     itens: [
-                        "<strong>Contar os dias</strong> desde o início da IVAS e perguntar se houve <strong>melhora e depois piora</strong>.",
+                        "<strong>História:</strong> contar os dias desde o início da IVAS e perguntar se houve melhora e depois piora.",
                         "<strong>Exame:</strong> secreção purulenta na rinoscopia ou na orofaringe posterior, edema de mucosa, dor à palpação da face (pouco sensível na criança). Olhar os olhos e a movimentação ocular.",
-                        "<strong>Não pedir raio-X de seios da face</strong>: o resfriado também altera a imagem (AAP 2013).",
+                        "<strong>Exame de imagem:</strong> não pedir raio-X de seios da face, porque o resfriado também altera a imagem (AAP 2013).",
                         "<strong>Menor de 1 ano:</strong> seios pouco desenvolvidos; a diretriz não se aplica. Pensar em outra causa."
                     ]
                 },
@@ -179,9 +193,9 @@ registrarConduta({
                     titulo: "Antibiótico ou observar",
                     resumo: "Piora ou início grave: antibiótico. Persistente: antibiótico ou observar 3 dias.",
                     itens: [
-                        "<strong>Antibiótico:</strong> <strong>início grave</strong> e <strong>piora após melhora</strong> (AAP 2013).",
-                        "<strong>Persistente (> 10 dias):</strong> <strong>antibiótico ou observar mais 3 dias</strong>, decidindo com a família. Iniciar se piorar ou não melhorar.",
-                        "<strong>Duração:</strong> <strong>10 dias</strong> (IDSA 2012: 10 a 14 dias; AAP 2013: até 7 dias sem sintomas)."
+                        "<strong>Antibiótico:</strong> no início grave e na piora após melhora (AAP 2013).",
+                        "<strong>Persistente (> 10 dias):</strong> antibiótico ou observar mais 3 dias, decidindo com a família. Iniciar se piorar ou não melhorar.",
+                        "<strong>Duração:</strong> 10 dias (IDSA 2012: 10 a 14 dias; AAP 2013: até 7 dias sem sintomas)."
                     ]
                 },
                 {
@@ -189,10 +203,17 @@ registrarConduta({
                     titulo: "Escolha do antibiótico",
                     resumo: "Amoxicilina dose alta 10 dias. Fator de risco: amoxicilina + clavulanato. Vômitos: ceftriaxona IM.",
                     itens: [
-                        "<strong>1ª escolha: amoxicilina</strong> (AAP 2013). Dose alta pelo pneumococo resistente.",
-                        "<strong>Amoxicilina + clavulanato</strong> se <strong>< 2 anos</strong>, <strong>creche</strong>, <strong>antibiótico nos últimos 30 dias</strong>, quadro <strong>moderado a grave</strong> ou <strong>imunodeprimido</strong> (IDSA 2012). A IDSA prefere a amoxicilina + clavulanato para todos.",
-                        "<strong>Vômitos ou não aceita via oral:</strong> <strong>ceftriaxona IM dose única</strong>; melhorou em 24 h, completar com antibiótico oral (AAP 2013).",
-                        "<strong>Não usar</strong> macrolídeos (azitromicina, claritromicina) nem sulfametoxazol + trimetoprima: resistência alta do pneumococo e do <em>H. influenzae</em> (IDSA 2012)."
+                        "<strong>1ª escolha:</strong> amoxicilina (AAP 2013), em dose alta pelo pneumococo resistente.",
+                        { texto: "<strong>Amoxicilina + clavulanato</strong> se (IDSA 2012):", sub: [
+                            "menor de 2 anos;",
+                            "creche;",
+                            "antibiótico nos últimos 30 dias;",
+                            "quadro moderado a grave;",
+                            "imunodeprimido."
+                        ] },
+                        "<strong>Vômitos ou não aceita via oral:</strong> ceftriaxona IM dose única; melhorou em 24 h, completar com antibiótico oral (AAP 2013).",
+                        "<strong>IDSA:</strong> prefere a amoxicilina + clavulanato para todos.",
+                        { alerta: "não usar macrolídeos (azitromicina, claritromicina) nem sulfametoxazol + trimetoprima: resistência alta do pneumococo e do <em>H. influenzae</em> (IDSA 2012)." }
                     ],
                     remedios: ["amox_sinusite", "clav_sinusite", "cef_sinusite"]
                 },
@@ -201,9 +222,9 @@ registrarConduta({
                     titulo: "Alérgico à penicilina",
                     resumo: "Sem anafilaxia: cefalosporina. Com anafilaxia: levofloxacino ou clindamicina + cefixima.",
                     itens: [
-                        "<strong>Alergia sem reação imediata:</strong> <strong>cefalosporina</strong> de 2ª ou 3ª geração (cefuroxima, cefpodoxima) ou <strong>ceftriaxona IM</strong> (AAP 2013; IDSA 2012).",
-                        "<strong>Reação imediata ou anafilaxia:</strong> <strong>levofloxacino</strong> ou <strong>clindamicina + cefixima</strong> (IDSA 2012).",
-                        "Macrolídeo não é opção por resistência."
+                        "<strong>Alergia sem reação imediata:</strong> cefalosporina de 2ª ou 3ª geração (cefuroxima, cefpodoxima) ou ceftriaxona IM (AAP 2013; IDSA 2012).",
+                        "<strong>Reação imediata ou anafilaxia:</strong> levofloxacino ou clindamicina + cefixima (IDSA 2012).",
+                        "<strong>Macrolídeo:</strong> não é opção, por resistência."
                     ],
                     remedios: ["cef_sinusite"]
                 },
@@ -212,11 +233,15 @@ registrarConduta({
                     titulo: "Sintomáticos e orientações",
                     resumo: "Lavagem nasal com soro e analgésico. Sem descongestionante, anti-histamínico ou mucolítico.",
                     itens: [
-                        "<strong>Lavagem nasal com soro fisiológico</strong> (ou hipertônico): alivia os sintomas (IDSA 2012).",
+                        "<strong>Lavagem nasal:</strong> soro fisiológico (ou hipertônico) alivia os sintomas (IDSA 2012).",
                         "<strong>Dor e febre:</strong> paracetamol, dipirona ou ibuprofeno.",
-                        "<strong>Não usar</strong> descongestionante, anti-histamínico (exceto se rinite alérgica) nem mucolítico (IDSA 2012).",
-                        "<strong>Corticoide nasal:</strong> só como adjuvante em quem tem <strong>rinite alérgica</strong>.",
-                        "<strong>Retornar se:</strong> febre persistente após 72 h de antibiótico, inchaço ou vermelhidão ao redor do olho, dor ao mexer o olho, visão dupla, dor de cabeça forte, vômitos ou sonolência."
+                        "<strong>Não usar:</strong> descongestionante, anti-histamínico (exceto se rinite alérgica) nem mucolítico (IDSA 2012).",
+                        "<strong>Corticoide nasal:</strong> só como adjuvante em quem tem rinite alérgica.",
+                        { texto: "<strong>Retornar se:</strong>", sub: [
+                            "febre persistente após 72 h de antibiótico;",
+                            "inchaço ou vermelhidão ao redor do olho, dor ao mexer o olho ou visão dupla;",
+                            "dor de cabeça forte, vômitos ou sonolência."
+                        ] }
                     ],
                     remedios: ["soro_nasal", "pct_gts", "dip_gts", "ibu_gts"]
                 },
@@ -225,10 +250,12 @@ registrarConduta({
                     titulo: "Sem melhora em 72 h",
                     resumo: "Reavaliar. Observação → amoxicilina; amoxicilina → amoxicilina + clavulanato; esta → ceftriaxona ou otorrino.",
                     itens: [
-                        "<strong>Reavaliar</strong> se piora a qualquer momento ou <strong>sem melhora em 72 h</strong>: confirmar o diagnóstico e procurar complicação (passo 1).",
-                        "<strong>Estava em observação:</strong> iniciar <strong>amoxicilina</strong> (ou amoxicilina + clavulanato se fator de risco).",
-                        "<strong>Estava com amoxicilina:</strong> trocar para <strong>amoxicilina + clavulanato</strong>.",
-                        "<strong>Estava com amoxicilina + clavulanato:</strong> ceftriaxona IM ou levofloxacino; <strong>tomografia com contraste e otorrino</strong> se persistir (IDSA 2012)."
+                        "<strong>Reavaliar:</strong> se piorar a qualquer momento ou sem melhora em 72 h, confirmar o diagnóstico e procurar complicação (passo 1).",
+                        { texto: "<strong>Subir um degrau:</strong>", sub: [
+                            "<strong>Estava em observação:</strong> iniciar amoxicilina (ou amoxicilina + clavulanato se fator de risco).",
+                            "<strong>Estava com amoxicilina:</strong> trocar para amoxicilina + clavulanato.",
+                            "<strong>Estava com amoxicilina + clavulanato:</strong> ceftriaxona IM ou levofloxacino; tomografia com contraste e otorrino se persistir (IDSA 2012)."
+                        ] }
                     ],
                     remedios: ["clav_sinusite", "cef_sinusite"]
                 }
@@ -245,8 +272,15 @@ registrarConduta({
                     resumo: "≥ 3 episódios em 6 meses ou ≥ 4 em 12 meses: investigar a causa e encaminhar ao otorrino.",
                     itens: [
                         "<strong>Definição:</strong> ≥ 3 episódios em 6 meses ou ≥ 4 em 12 meses, com melhora completa entre eles.",
-                        "<strong>Investigar:</strong> <strong>rinite alérgica</strong> (a causa mais comum), imunodeficiência (imunoglobulinas), <strong>fibrose cística</strong>, discinesia ciliar, refluxo, alteração anatômica (desvio de septo, hipertrofia de adenoide).",
-                        "<strong>Encaminhar ao otorrino</strong> para avaliação e tomografia fora da crise."
+                        { texto: "<strong>Investigar:</strong>", sub: [
+                            "rinite alérgica (a causa mais comum);",
+                            "imunodeficiência (imunoglobulinas);",
+                            "fibrose cística;",
+                            "discinesia ciliar;",
+                            "refluxo;",
+                            "alteração anatômica (desvio de septo, hipertrofia de adenoide)."
+                        ] },
+                        "<strong>Encaminhar:</strong> otorrino, para avaliação e tomografia fora da crise."
                     ]
                 },
                 {
@@ -254,9 +288,9 @@ registrarConduta({
                     icone: "⏳",
                     resumo: "Sintomas por mais de 12 semanas: otorrino. Pensar em adenoide, alergia e fibrose cística.",
                     itens: [
-                        "<strong>Sintomas por mais de 12 semanas</strong>: secreção, obstrução nasal, tosse, cefaleia.",
-                        "<strong>Pólipo nasal na criança</strong>: investigar <strong>fibrose cística</strong>.",
-                        "Encaminhar ao <strong>otorrino</strong> (lavagem nasal, corticoide nasal, adenoidectomia quando indicada)."
+                        "<strong>Definição:</strong> sintomas por mais de 12 semanas (secreção, obstrução nasal, tosse, cefaleia).",
+                        "<strong>Pólipo nasal na criança:</strong> investigar fibrose cística.",
+                        "<strong>Encaminhar:</strong> otorrino (lavagem nasal, corticoide nasal, adenoidectomia quando indicada)."
                     ]
                 },
                 {
@@ -264,9 +298,9 @@ registrarConduta({
                     icone: "🛡️",
                     resumo: "Vacinas em dia, tratar a rinite alérgica, sem fumo passivo e lavagem nasal nas IVAS.",
                     itens: [
-                        "<strong>Vacinas pneumocócica conjugada e influenza</strong> em dia.",
-                        "<strong>Tratar a rinite alérgica</strong> e evitar fumo passivo.",
-                        "<strong>Lavagem nasal</strong> nas IVAS e lavar as mãos."
+                        "<strong>Vacinas:</strong> pneumocócica conjugada e influenza em dia.",
+                        "<strong>Rinite alérgica:</strong> tratar, e evitar fumo passivo.",
+                        "<strong>Nas IVAS:</strong> lavagem nasal e lavar as mãos."
                     ]
                 }
             ]

@@ -208,37 +208,37 @@ function abrirFotoExantema(k) {
 const DOENCAS_EXANTEMA = [
     { id: "sarampo", fotos: ["sarampo", "sarampo_corpo", "sarampo_koplik"], nome: "Sarampo", tipo: "mp", conduta: "sarampo", alerta: "Notificação imediata (até 24 h). Isolamento respiratório.",
       tags: ["mp", "febre_junto", "ini_face", "s_tosse", "s_koplik"],
-      texto: "Febre alta + <strong>tosse, coriza e conjuntivite</strong>; exantema no 3º a 5º dia, ainda com febre, que começa <strong>atrás das orelhas e na face</strong> e desce (craniocaudal), confluente. <strong>Manchas de Koplik</strong> na mucosa jugal." },
+      texto: "Febre alta + tosse, coriza e conjuntivite; exantema no 3º a 5º dia, ainda com febre, que começa atrás das orelhas e na face e desce (craniocaudal), confluente. Manchas de Koplik na mucosa jugal." },
     { id: "rubeola", fotos: ["rubeola"], nome: "Rubéola", tipo: "mp", conduta: "rubeola", alerta: "Notificação imediata (até 24 h).",
       tags: ["mp", "febre_pouca", "ini_face", "s_adeno_post"],
-      texto: "Febre baixa; exantema rosado, <strong>não confluente</strong>, da face para o corpo em 24 h, some em ~3 dias. <strong>Adenomegalia retroauricular e occipital.</strong>" },
+      texto: "Febre baixa; exantema rosado, não confluente, da face para o corpo em 24 h, some em ~3 dias. Adenomegalia retroauricular e occipital." },
     { id: "exantema_subito", fotos: ["roseola"], nome: "Exantema súbito (roséola)", tipo: "mp", conduta: "exantema_subito",
       tags: ["mp", "febre_antes", "ini_tronco"],
-      texto: "Lactente de 6 meses a 2 anos com <strong>febre alta por 3 a 5 dias</strong> e bom estado; <strong>a febre some e aí aparece</strong> o exantema rosado no tronco (herpesvírus 6)." },
+      texto: "Lactente de 6 meses a 2 anos com febre alta por 3 a 5 dias e bom estado; a febre some e aí aparece o exantema rosado no tronco (herpesvírus 6)." },
     { id: "eritema_infeccioso", fotos: ["eritema_infeccioso"], nome: "Eritema infeccioso (parvovírus B19)", tipo: "mp", conduta: "eritema_infeccioso",
       tags: ["mp", "febre_pouca", "ini_face", "s_bochecha"],
-      texto: "Escolar pouco febril; <strong>\"bochecha esbofeteada\"</strong>, depois exantema <strong>rendilhado</strong> nos membros, que volta com calor e sol. Risco de crise aplástica em anemia hemolítica." },
+      texto: "Escolar pouco febril; \"bochecha esbofeteada\", depois exantema rendilhado nos membros, que volta com calor e sol. Risco de crise aplástica em anemia hemolítica." },
     { id: "varicela", fotos: ["varicela_crianca", "varicela_vesicula"], nome: "Varicela (catapora)", tipo: "ves", conduta: "varicela",
       tags: ["ves", "febre_junto", "ini_tronco", "ini_face", "s_prurido", "s_fases"],
-      texto: "Vesículas pruriginosas em <strong>fases diferentes ao mesmo tempo</strong> (mácula, pápula, vesícula, crosta), começando no <strong>tronco, face e couro cabeludo</strong> (centrípeta); mucosas." },
+      texto: "Vesículas pruriginosas em fases diferentes ao mesmo tempo (mácula, pápula, vesícula, crosta), começando no tronco, face e couro cabeludo (centrípeta); mucosas." },
     { id: "mao_pe_boca", fotos: ["mao_pe_boca", "mao_pe_boca_boca"], nome: "Mão-pé-boca (Coxsackie)", tipo: "ves", conduta: "mao_pe_boca",
       tags: ["ves", "febre_junto", "febre_pouca", "ini_boca", "ini_extrem"],
-      texto: "Menor de 5 anos; <strong>úlceras na boca</strong> e vesículas em <strong>mãos, pés e nádegas</strong>. Atenção à desidratação por dor para engolir." },
+      texto: "Menor de 5 anos; úlceras na boca e vesículas em mãos, pés e nádegas. Atenção à desidratação por dor para engolir." },
     { id: "escarlatina", fotos: ["escarlatina", "escarlatina_lingua"], nome: "Escarlatina", tipo: "lixa", conduta: "faringoamigdalite", condutaNome: "Faringoamigdalite",
       tags: ["lixa", "febre_junto", "ini_tronco", "s_garganta", "s_lingua"],
-      texto: "Faringite + exantema <strong>áspero (\"lixa\")</strong> que começa no pescoço e tronco, mais forte nas dobras (<strong>Pastia</strong>), palidez ao redor da boca (<strong>Filatov</strong>), <strong>língua em framboesa</strong>. 5 a 15 anos." },
+      texto: "Faringite + exantema áspero (\"lixa\") que começa no pescoço e tronco, mais forte nas dobras (Pastia), palidez ao redor da boca (Filatov), língua em framboesa. 5 a 15 anos." },
     { id: "kawasaki", fotos: ["kawasaki_labios", "kawasaki_maos"], nome: "Doença de Kawasaki", tipo: "mp", conduta: "kawasaki", alerta: "Febre ≥ 5 dias: pensar e tratar cedo (aneurisma coronariano).",
       tags: ["mp", "febre_antes", "febre_junto", "ini_tronco", "s_febre5", "s_lingua", "s_maos_pes"],
-      texto: "<strong>Febre ≥ 5 dias</strong> + conjuntivite sem secreção, <strong>lábios rachados e língua em framboesa</strong>, exantema polimorfo (não vesicular), <strong>edema e eritema de mãos e pés</strong>, adenomegalia cervical ≥ 1,5 cm. Menor de 5 anos." },
+      texto: "Febre ≥ 5 dias + conjuntivite sem secreção, lábios rachados e língua em framboesa, exantema polimorfo (não vesicular), edema e eritema de mãos e pés, adenomegalia cervical ≥ 1,5 cm. Menor de 5 anos." },
     { id: "meningococcemia", fotos: ["petequias", "meningococcemia"], nome: "Meningococcemia", tipo: "pet", conduta: "meningococcemia", alerta: "EMERGÊNCIA: febre + petéquias = antibiótico e suporte já.",
       tags: ["pet", "febre_junto", "ini_extrem", "s_toxemia", "s_vitro"],
-      texto: "Febre, <strong>toxemia</strong> e <strong>petéquias ou púrpura que não somem ao apertar</strong> (vitropressão), em progressão rápida. Pode evoluir para choque em horas." },
+      texto: "Febre, toxemia e petéquias ou púrpura que não somem ao apertar (vitropressão), em progressão rápida. Pode evoluir para choque em horas." },
     { id: "dengue", fotos: ["dengue"], nome: "Dengue", tipo: "mp", conduta: "dengue", alerta: "Procurar sinais de alarme (dor abdominal, vômitos, sangramento).",
       tags: ["mp", "febre_antes", "febre_junto", "ini_tronco", "s_prurido", "s_vitro"],
       texto: "Febre alta, dor no corpo e atrás dos olhos; exantema morbiliforme pruriginoso perto da queda da febre, no tronco e membros (\"ilhas brancas\"). Pode ter petéquias; prova do laço." },
     { id: "mononucleose", fotos: ["mononucleose_amoxi"], nome: "Mononucleose / exantema com amoxicilina", tipo: "mp", conduta: null,
       tags: ["mp", "febre_junto", "ini_tronco", "s_garganta", "s_adeno_post", "s_amoxi"],
-      texto: "Faringite exsudativa, <strong>adenomegalia cervical posterior</strong>, hepatoesplenomegalia; exantema maculopapular, muitas vezes <strong>depois de amoxicilina</strong> (não é alergia verdadeira)." }
+      texto: "Faringite exsudativa, adenomegalia cervical posterior, hepatoesplenomegalia; exantema maculopapular, muitas vezes depois de amoxicilina (não é alergia verdadeira)." }
 ];
 
 const EX_FILTROS = [
@@ -304,7 +304,8 @@ registrarConduta({
     cor: "#be185d",
     kw: "exantema exantematica manchas pele rash erupção identificar diferencial sarampo rubeola varicela catapora roseola exantema subito eritema infeccioso parvovirus mao pe boca escarlatina kawasaki meningococcemia petequias dengue mononucleose",
     resumo: "Toque no tipo de lesão, na febre e em onde começou: as hipóteses sobem com fotos reais de cada doença. Sinais de alarme e notificação.",
-    legenda: "Guia de apoio ao diagnóstico diferencial dos exantemas na criança, com fotos reais (Wikimedia Commons, domínio público ou Creative Commons). Vigilância: <strong>Ministério da Saúde (Guia de Vigilância em Saúde, 2023)</strong>.",
+    legenda: "Guia de apoio ao diagnóstico diferencial dos exantemas na criança, com fotos reais (Wikimedia Commons, domínio público ou Creative Commons). Vigilância: Ministério da Saúde (Guia de Vigilância em Saúde, 2023).",
+    padraoTexto: true, // padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
         {
@@ -344,8 +345,8 @@ registrarConduta({
                     alerta: true,
                     resumo: "Meningococcemia até prova em contrário: antibiótico e suporte imediatos.",
                     itens: [
-                        "<strong>Petéquias ou púrpura que não somem ao apertar</strong>, com febre e toxemia, ou que aumentam em minutos a horas: <strong>meningococcemia</strong> até prova em contrário.",
-                        "<strong>Conduta:</strong> ABC, acesso, hemocultura e <strong>antibiótico EV sem atrasar</strong> (não esperar exames nem punção lombar), tratar o choque, isolamento respiratório por gotículas e <strong>notificação imediata</strong> (MS).",
+                        { alerta: "petéquias ou púrpura que não somem ao apertar, com febre e toxemia, ou que aumentam em minutos a horas: meningococcemia até prova em contrário." },
+                        "<strong>Conduta:</strong> ABC, acesso, hemocultura e antibiótico EV sem atrasar (não esperar exames nem punção lombar), tratar o choque, isolamento respiratório por gotículas e notificação imediata (MS).",
                         "Outras causas de petéquias: dengue, plaquetopenia (PTI, leucemia), tosse ou vômitos intensos (petéquias só acima da linha dos mamilos)."
                     ]
                 },
@@ -355,10 +356,10 @@ registrarConduta({
                     resumo: "Kawasaki, mucosas descolando (Stevens-Johnson), choque tóxico, sarampo.",
                     itens: [
                         "<strong>Kawasaki:</strong> febre ≥ 5 dias + critérios clínicos: imunoglobulina nos primeiros 10 dias reduz o aneurisma coronariano (AHA 2017).",
-                        "<strong>Stevens-Johnson / necrólise epidérmica tóxica:</strong> lesões em alvo atípicas, bolhas, <strong>descolamento da pele</strong> e <strong>mucosas</strong> (boca, olhos, genital), geralmente após medicamento: suspender o fármaco e internar.",
+                        "<strong>Stevens-Johnson / necrólise epidérmica tóxica:</strong> lesões em alvo atípicas, bolhas, descolamento da pele e mucosas (boca, olhos, genital), geralmente após medicamento: suspender o fármaco e internar.",
                         "<strong>Síndrome do choque tóxico:</strong> eritrodermia difusa (\"queimadura de sol\"), febre e hipotensão.",
                         "<strong>DRESS:</strong> exantema extenso, febre, adenomegalia, eosinofilia e acometimento de órgãos 2 a 8 semanas após anticonvulsivante, sulfa ou antibiótico.",
-                        "<strong>Sarampo e rubéola:</strong> <strong>notificação imediata (até 24 h)</strong>, isolamento e bloqueio vacinal dos contatos (MS)."
+                        "<strong>Sarampo e rubéola:</strong> notificação imediata (até 24 h), isolamento e bloqueio vacinal dos contatos (MS)."
                     ]
                 }
             ]
@@ -377,7 +378,7 @@ registrarConduta({
                         linhas: [
                             ["Sarampo", "Aerossol; até 4 dias após o início do exantema", "Imediata (24 h)"],
                             ["Rubéola", "Gotículas; até 7 dias após o início do exantema", "Imediata (24 h)"],
-                            ["Varicela", "Aerossol e contato; até <strong>todas as lesões em crosta</strong>", "Casos graves, óbitos e surtos"],
+                            ["Varicela", "Aerossol e contato; até todas as lesões em crosta", "Casos graves, óbitos e surtos"],
                             ["Escarlatina", "Volta após 12 a 24 h de antibiótico e sem febre", "Não"],
                             ["Mão-pé-boca", "Fezes e secreções por semanas; volta sem febre e com as lesões secando", "Surtos"],
                             ["Eritema infeccioso", "Já não transmite quando o exantema aparece", "Não"],
@@ -391,8 +392,8 @@ registrarConduta({
                     icone: "💉",
                     resumo: "Tríplice/tetra viral e varicela no calendário; meningocócicas.",
                     itens: [
-                        "<strong>Tríplice viral</strong> (sarampo, caxumba, rubéola) aos 12 meses e <strong>tetra viral</strong> (+ varicela) aos 15 meses; <strong>varicela</strong> aos 4 anos (calendário do MS).",
-                        "<strong>Meningocócica C</strong> (ou ACWY) no calendário. Conferir o cartão em toda criança com exantema."
+                        "Tríplice viral (sarampo, caxumba, rubéola) aos 12 meses e tetra viral (+ varicela) aos 15 meses; varicela aos 4 anos (calendário do MS).",
+                        "Meningocócica C (ou ACWY) no calendário. Conferir o cartão em toda criança com exantema."
                     ]
                 }
             ]
@@ -414,7 +415,7 @@ registrarConduta({
 // ---------- Varicela: fotos ----------
 function ferramentaVaricelaImagens() {
     return `<div class="exg ex-galeria">${["varicela_crianca", "varicela_vesicula", "varicela_grave"].map(k => htmlFotoExantema(k)).join('')}</div>
-        <div class="ex-card-desc">Cada lesão passa por <strong>mácula → pápula → vesícula ("gota de orvalho" sobre base vermelha) → pústula → crosta</strong> em 24 a 48 h, em surtos. <strong>Fases misturadas na mesma região</strong> diferenciam da varíola/mpox (lesões na mesma fase). Toque na foto para ampliar.</div>`;
+        <div class="ex-card-desc">Cada lesão passa por mácula → pápula → vesícula ("gota de orvalho" sobre base vermelha) → pústula → crosta em 24 a 48 h, em surtos. Fases misturadas na mesma região diferenciam da varíola/mpox (lesões na mesma fase). Toque na foto para ampliar.</div>`;
 }
 
 registrarConduta({
@@ -424,7 +425,8 @@ registrarConduta({
     cor: "#be185d",
     kw: "varicela catapora vesicula exantema vesicular coceira prurido aciclovir imunoglobulina vacina bloqueio contato fasciite infeccao secundaria pneumonia ataxia cerebelar encefalite reye",
     resumo: "Diagnóstico clínico com fotos reais, critérios de internação clicáveis, isolamento e notificação, sintomáticos, quando usar aciclovir e profilaxia dos contatos.",
-    legenda: "Conduta conforme o <strong>Guia de Vigilância em Saúde do Ministério da Saúde (2023)</strong> e o <strong>Manual dos CRIE</strong> (imunoglobulina e vacina pós-exposição).",
+    legenda: "Conduta conforme o Guia de Vigilância em Saúde do Ministério da Saúde (2023) e o Manual dos CRIE (imunoglobulina e vacina pós-exposição).",
+    padraoTexto: true, // padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
         {
@@ -437,11 +439,11 @@ registrarConduta({
                     icone: "🔎",
                     resumo: "Clínico: vesículas pruriginosas em fases diferentes, centrípetas, com febre baixa.",
                     itens: [
-                        "<strong>Diagnóstico clínico</strong> (MS). Incubação de <strong>10 a 21 dias</strong> (até 28 dias se recebeu imunoglobulina).",
-                        "<strong>Pródromo</strong> leve (febre baixa, mal-estar) por 1 a 2 dias; na criança pequena o exantema costuma ser o primeiro sinal.",
-                        "<strong>Exantema pruriginoso</strong>: mácula → pápula → <strong>vesícula</strong> → pústula → crosta, em <strong>surtos</strong>, com <strong>lesões em fases diferentes ao mesmo tempo</strong> (polimorfismo regional).",
-                        "<strong>Distribuição centrípeta:</strong> começa no couro cabeludo, face e tronco, menos nos membros. Pode acometer <strong>mucosas</strong> (boca, conjuntiva, genital).",
-                        "<strong>Transmissão:</strong> de 1 a 2 dias antes do exantema até <strong>todas as lesões virarem crosta</strong>.",
+                        "Diagnóstico clínico (MS). Incubação de 10 a 21 dias (até 28 dias se recebeu imunoglobulina).",
+                        "Pródromo leve (febre baixa, mal-estar) por 1 a 2 dias; na criança pequena o exantema costuma ser o primeiro sinal.",
+                        "<strong>Exantema pruriginoso:</strong> mácula → pápula → vesícula → pústula → crosta, em surtos, com lesões em fases diferentes ao mesmo tempo (polimorfismo regional).",
+                        "<strong>Distribuição centrípeta:</strong> começa no couro cabeludo, face e tronco, menos nos membros. Pode acometer mucosas (boca, conjuntiva, genital).",
+                        "<strong>Transmissão:</strong> de 1 a 2 dias antes do exantema até todas as lesões virarem crosta.",
                         "<strong>Exames:</strong> não são necessários no caso típico. Na dúvida ou no caso grave: PCR do líquido da vesícula."
                     ],
                     ferramenta: "ferramentaVaricelaImagens"
@@ -454,9 +456,9 @@ registrarConduta({
                         "<strong>Mão-pé-boca:</strong> vesículas em mãos, pés, boca e nádegas; poucas no tronco.",
                         "<strong>Estrófulo (prurigo por picada de inseto):</strong> pápulas com vesícula no centro em áreas expostas, sem febre, em surtos sazonais.",
                         "<strong>Impetigo bolhoso:</strong> bolhas que rompem e deixam crosta melicérica, sem polimorfismo.",
-                        "<strong>Herpes zoster disseminado</strong> (imunodeprimido) e <strong>eczema herpético</strong> (dermatite atópica com vesículas umbilicadas agrupadas).",
-                        "<strong>Mpox:</strong> lesões profundas, <strong>todas na mesma fase</strong>, centrífugas (palmas e plantas), com adenomegalia.",
-                        "Use o <strong>Guia de identificação do exantema</strong> nesta categoria para comparar."
+                        "Herpes zoster disseminado (imunodeprimido) e eczema herpético (dermatite atópica com vesículas umbilicadas agrupadas).",
+                        "<strong>Mpox:</strong> lesões profundas, todas na mesma fase, centrífugas (palmas e plantas), com adenomegalia.",
+                        "Use o Guia de identificação do exantema nesta categoria para comparar."
                     ]
                 },
                 {
@@ -465,9 +467,9 @@ registrarConduta({
                     resumo: "Imunodeprimidos, RN, adolescentes, doença crônica de pele ou pulmão, corticoide, salicilato.",
                     itens: [
                         "<strong>Imunodeprimidos</strong> (leucemia, quimioterapia, transplante, HIV, corticoide em dose imunossupressora): varicela disseminada, pneumonia, hepatite.",
-                        "<strong>Recém-nascido</strong> de mãe com varicela de 5 dias antes a 2 dias depois do parto: varicela neonatal grave.",
-                        "<strong>Maiores de 12 anos e adultos</strong>, <strong>doença crônica de pele ou pulmão</strong>, uso de <strong>corticoide</strong> (inclusive inalatório) ou de <strong>salicilato</strong> (risco de Reye).",
-                        "<strong>Caso secundário no mesmo domicílio</strong> costuma ser mais grave."
+                        "Recém-nascido de mãe com varicela de 5 dias antes a 2 dias depois do parto: varicela neonatal grave.",
+                        "Maiores de 12 anos e adultos, doença crônica de pele ou pulmão, uso de corticoide (inclusive inalatório) ou de salicilato (risco de Reye).",
+                        "Caso secundário no mesmo domicílio costuma ser mais grave."
                     ]
                 },
                 {
@@ -475,11 +477,11 @@ registrarConduta({
                     icone: "🚩",
                     resumo: "Infecção bacteriana da pele (a mais comum), pneumonia, ataxia cerebelar, encefalite, varicela hemorrágica.",
                     itens: [
-                        "<strong>Infecção bacteriana secundária</strong> (<em>S. aureus</em>, <em>S. pyogenes</em>): impetigo, celulite, abscesso; <strong>fasciíte necrosante</strong> e <strong>choque tóxico</strong>. Alerta: <strong>febre que volta</strong> depois do 3º ou 4º dia, eritema que se espalha, <strong>dor desproporcional</strong>.",
+                        "<strong>Infecção bacteriana secundária</strong> (<em>S. aureus</em>, <em>S. pyogenes</em>): impetigo, celulite, abscesso; fasciíte necrosante e choque tóxico. Alerta: febre que volta depois do 3º ou 4º dia, eritema que se espalha, dor desproporcional.",
                         "<strong>Pneumonia viral</strong> (adolescente, adulto, imunodeprimido): tosse, taquipneia, hipoxemia.",
-                        "<strong>Ataxia cerebelar aguda</strong> (em geral benigna) e <strong>encefalite</strong> (rebaixamento, convulsão).",
-                        "<strong>Varicela hemorrágica</strong>, plaquetopenia, hepatite, artrite, glomerulonefrite.",
-                        "<strong>Síndrome de Reye</strong> com AAS: <strong>nunca usar AAS</strong>."
+                        "Ataxia cerebelar aguda (em geral benigna) e encefalite (rebaixamento, convulsão).",
+                        "Varicela hemorrágica, plaquetopenia, hepatite, artrite, glomerulonefrite.",
+                        "Síndrome de Reye com AAS: nunca usar AAS."
                     ]
                 }
             ]
@@ -499,7 +501,7 @@ registrarConduta({
                         "<span class=\"cond-passo\">1</span> <strong>Internar?</strong> Critérios clicáveis: UTI · enfermaria · casa",
                         "<span class=\"cond-passo\">2</span> <strong>Confirmar o diagnóstico:</strong> clínico; lesões em fases diferentes, centrípetas",
                         "<span class=\"cond-passo\">3</span> <strong>Isolar e notificar:</strong> aerossol + contato até as crostas; notificar grave, óbito e surto",
-                        "<span class=\"cond-passo\">4</span> <strong>Sintomáticos:</strong> paracetamol ou dipirona, anti-histamínico, unhas curtas. <strong>Sem AAS</strong>",
+                        "<span class=\"cond-passo\">4</span> <strong>Sintomáticos:</strong> paracetamol ou dipirona, anti-histamínico, unhas curtas. Sem AAS",
                         "<span class=\"cond-passo\">5</span> <strong>Aciclovir:</strong> só nos grupos de risco (VO) ou nas formas graves e imunodeprimidos (EV)",
                         "<span class=\"cond-passo\">6</span> <strong>Contatos suscetíveis:</strong> vacina até 120 h · imunoglobulina até 96 h nos de risco",
                         "<span class=\"cond-passo\">7</span> <strong>Alta:</strong> sinais de alarme e volta à escola com todas as lesões em crosta"
@@ -511,7 +513,7 @@ registrarConduta({
                     resumo: "Primeiro decida: UTI, internar ou casa. A varicela comum é tratada em casa.",
                     alerta: true,
                     itens: [
-                        "A <strong>varicela da criança saudável é tratada em casa</strong>. Internar por <strong>complicação</strong>, <strong>imunodepressão</strong>, <strong>RN</strong> ou quando não é possível tratar em casa (MS)."
+                        "A varicela da criança saudável é tratada em casa. Internar por complicação, imunodepressão, RN ou quando não é possível tratar em casa (MS)."
                     ],
                     escore: {
                         id: "internacao_varicela",
@@ -546,10 +548,10 @@ registrarConduta({
                     titulo: "Confirmar o diagnóstico",
                     resumo: "Clínico. Procurar lesões em fases diferentes, couro cabeludo e mucosas.",
                     itens: [
-                        "Examinar <strong>couro cabeludo, boca e todo o corpo</strong>; ver se há lesões em fases diferentes.",
-                        "Perguntar: <strong>contato</strong> com varicela ou zoster há 10 a 21 dias, <strong>vacinação</strong>, imunodepressão, corticoide, AAS.",
+                        "Examinar couro cabeludo, boca e todo o corpo; ver se há lesões em fases diferentes.",
+                        "Perguntar: contato com varicela ou zoster há 10 a 21 dias, vacinação, imunodepressão, corticoide, AAS.",
                         "<strong>Varicela em vacinado</strong> (breakthrough): geralmente leve, menos de 50 lesões, mais maculopapulares que vesiculares; também transmite.",
-                        "Procurar sinais de <strong>infecção bacteriana</strong>, <strong>pneumonia</strong> e <strong>alteração neurológica</strong> (passo 1)."
+                        "Procurar sinais de infecção bacteriana, pneumonia e alteração neurológica (passo 1)."
                     ]
                 },
                 {
@@ -557,9 +559,9 @@ registrarConduta({
                     titulo: "Isolar e notificar",
                     resumo: "Aerossol e contato até todas as lesões em crosta. Notificar casos graves, óbitos e surtos.",
                     itens: [
-                        "<strong>No serviço de saúde:</strong> precaução para <strong>aerossol e contato</strong> até <strong>todas as lesões em crosta</strong> (MS).",
+                        "<strong>No serviço de saúde:</strong> precaução para aerossol e contato até todas as lesões em crosta (MS).",
                         "<strong>Escola/creche:</strong> afastar até todas as lesões em crosta (em geral 5 a 7 dias após o início do exantema).",
-                        "<strong>Notificar:</strong> casos <strong>graves (internados)</strong>, <strong>óbitos</strong> e <strong>surtos</strong> (MS).",
+                        "<strong>Notificar:</strong> casos graves (internados), óbitos e surtos (MS).",
                         "Evitar contato com gestantes, RN e imunodeprimidos suscetíveis."
                     ]
                 },
@@ -568,10 +570,10 @@ registrarConduta({
                     titulo: "Sintomáticos e cuidados com a pele",
                     resumo: "Paracetamol ou dipirona, anti-histamínico, banho, unhas curtas. Nunca AAS.",
                     itens: [
-                        "<strong>Febre e dor:</strong> paracetamol ou dipirona. <strong>Nunca AAS</strong> (síndrome de Reye).",
+                        "<strong>Febre e dor:</strong> paracetamol ou dipirona. Nunca AAS (síndrome de Reye).",
                         "<strong>Ibuprofeno:</strong> estudos observacionais associam o uso na varicela a infecção grave de pele e partes moles; preferir paracetamol ou dipirona.",
                         "<strong>Prurido:</strong> anti-histamínico oral; banho morno, roupas leves.",
-                        "<strong>Unhas curtas e limpas</strong> para evitar a infecção secundária; lavar as lesões com água e sabão."
+                        "Unhas curtas e limpas para evitar a infecção secundária; lavar as lesões com água e sabão."
                     ],
                     remedios: ["pct_gts", "dip_gts", "hixizine"]
                 },
@@ -580,10 +582,10 @@ registrarConduta({
                     titulo: "Aciclovir: quando usar",
                     resumo: "Criança saudável: não de rotina. VO nos grupos de risco, nas primeiras 24 h. EV nas formas graves e nos imunodeprimidos.",
                     itens: [
-                        "<strong>Criança saudável com varicela não complicada:</strong> aciclovir <strong>não é de rotina</strong> (benefício pequeno; só se iniciado nas primeiras 24 h do exantema) (MS).",
-                        "<strong>Aciclovir VO</strong> (sem imunodepressão), iniciado em até 24 h: <strong>maiores de 12 anos</strong>, <strong>doença crônica de pele ou pulmão</strong>, uso de <strong>corticoide</strong> ou de <strong>salicilato</strong>, <strong>caso secundário no domicílio</strong> (MS).",
-                        "<strong>Aciclovir EV</strong>: <strong>imunodeprimidos</strong>, <strong>RN</strong>, formas graves ou complicadas (<strong>pneumonia</strong>, <strong>encefalite</strong>, varicela hemorrágica), por 7 a 14 dias (MS).",
-                        "<strong>Aciclovir tópico não tem papel na varicela.</strong>"
+                        "<strong>Criança saudável com varicela não complicada:</strong> aciclovir não é de rotina (benefício pequeno; só se iniciado nas primeiras 24 h do exantema) (MS).",
+                        "Aciclovir VO (sem imunodepressão), iniciado em até 24 h: maiores de 12 anos, doença crônica de pele ou pulmão, uso de corticoide ou de salicilato, caso secundário no domicílio (MS).",
+                        "<strong>Aciclovir EV:</strong> imunodeprimidos, RN, formas graves ou complicadas (pneumonia, encefalite, varicela hemorrágica), por 7 a 14 dias (MS).",
+                        "Aciclovir tópico não tem papel na varicela."
                     ],
                     remedios: ["aciclovir_varicela_vo", "aciclovir_varicela_ev"]
                 },
@@ -592,9 +594,9 @@ registrarConduta({
                     titulo: "Contatos suscetíveis: profilaxia",
                     resumo: "Vacina até 120 h do contato. Imunoglobulina até 96 h nos de alto risco que não podem vacinar.",
                     itens: [
-                        "<strong>Suscetível</strong> = sem história de varicela e sem 2 doses da vacina.",
-                        "<strong>Vacina de bloqueio:</strong> até <strong>120 h (5 dias)</strong> após o contato, nos suscetíveis que podem receber a vacina (MS).",
-                        "<strong>Imunoglobulina antivaricela-zoster (IGHAVZ)</strong>, pelo CRIE, até <strong>96 h</strong> (ideal nas primeiras 48 h), em suscetíveis com contato significativo e <strong>risco especial</strong>: <strong>imunodeprimidos</strong>, <strong>gestantes</strong>, <strong>RN de mãe com varicela de 5 dias antes a 48 h depois do parto</strong>, <strong>prematuros ≥ 28 semanas</strong> de mãe sem varicela, <strong>prematuros &lt; 28 semanas ou &lt; 1.000 g</strong> independentemente da mãe (CRIE).",
+                        "Suscetível = sem história de varicela e sem 2 doses da vacina.",
+                        "<strong>Vacina de bloqueio:</strong> até 120 h (5 dias) após o contato, nos suscetíveis que podem receber a vacina (MS).",
+                        "Imunoglobulina antivaricela-zoster (IGHAVZ), pelo CRIE, até 96 h (ideal nas primeiras 48 h), em suscetíveis com contato significativo e risco especial: imunodeprimidos, gestantes, RN de mãe com varicela de 5 dias antes a 48 h depois do parto, prematuros ≥ 28 semanas de mãe sem varicela, prematuros &lt; 28 semanas ou &lt; 1.000 g independentemente da mãe (CRIE).",
                         "<strong>Dose da IGHAVZ:</strong> 125 UI a cada 10 kg, IM (máximo 625 UI) (CRIE). Não tem indicação para tratar a varicela já instalada."
                     ]
                 },
@@ -603,9 +605,9 @@ registrarConduta({
                     titulo: "Alta e sinais de alarme",
                     resumo: "Retornar se febre que volta, pele vermelha e dolorida, falta de ar, sonolência ou desequilíbrio.",
                     itens: [
-                        "<strong>Retornar se:</strong> <strong>febre que volta</strong> ou dura mais de 4 dias, <strong>vermelhidão que se espalha</strong>, inchaço ou <strong>dor forte</strong> em volta das lesões, lesões com sangue, <strong>falta de ar</strong>, <strong>sonolência</strong>, convulsão, <strong>desequilíbrio</strong> para andar, vômitos repetidos.",
-                        "<strong>Volta à escola</strong> com todas as lesões em crosta.",
-                        "Conferir a <strong>vacinação</strong> dos irmãos e contatos (passo 6)."
+                        "<strong>Retornar se:</strong> febre que volta ou dura mais de 4 dias, vermelhidão que se espalha, inchaço ou dor forte em volta das lesões, lesões com sangue, falta de ar, sonolência, convulsão, desequilíbrio para andar, vômitos repetidos.",
+                        "Volta à escola com todas as lesões em crosta.",
+                        "Conferir a vacinação dos irmãos e contatos (passo 6)."
                     ],
                     remedios: ["orientacoes_gerais"]
                 }
@@ -621,7 +623,7 @@ registrarConduta({
                     icone: "💉",
                     resumo: "Tetra viral aos 15 meses e varicela aos 4 anos (MS).",
                     itens: [
-                        "<strong>Calendário do MS:</strong> <strong>tetra viral</strong> (sarampo, caxumba, rubéola e varicela) aos <strong>15 meses</strong> e <strong>varicela</strong> aos <strong>4 anos</strong>.",
+                        "<strong>Calendário do MS:</strong> tetra viral (sarampo, caxumba, rubéola e varicela) aos 15 meses e varicela aos 4 anos.",
                         "Vacina de vírus vivo: contraindicada em imunodeprimidos e gestantes (avaliar no CRIE).",
                         "Quem teve varicela não precisa da vacina."
                     ]
@@ -632,7 +634,7 @@ registrarConduta({
                     resumo: "Cicatrizes, manchas e herpes zoster no futuro.",
                     itens: [
                         "As crostas caem em 1 a 2 semanas; manchas claras ou escuras somem aos poucos. Coçar e infectar deixa cicatriz.",
-                        "O vírus fica latente e pode voltar como <strong>herpes zoster</strong> anos depois."
+                        "O vírus fica latente e pode voltar como herpes zoster anos depois."
                     ]
                 }
             ]

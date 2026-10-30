@@ -12,7 +12,8 @@ registrarConduta({
     cor: "#0284c7",
     kw: "asma broncoespasmo crise asmatica sibilancia chiado bombinha gina pram exacerbacao",
     resumo: "Diagnóstico, controle, tratamento de manutenção por etapas e manejo da crise, com o escore PRAM.",
-    legenda: "Conduta conforme o <strong>GINA 2026</strong> (capítulos pediátricos), traduzido e adaptado. O manejo da crise neste documento é o da faixa de <strong>≤ 5 anos</strong>. O escore PRAM é validado de 2 a 17 anos.",
+    legenda: "Conduta conforme o GINA 2026 (capítulos pediátricos), traduzido e adaptado. O manejo da crise neste documento é o da faixa de ≤ 5 anos. O escore PRAM é validado de 2 a 17 anos.",
+    padraoTexto: true, // padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
         {
@@ -25,10 +26,11 @@ registrarConduta({
             titulo: "Diagnóstico (≤ 5 anos)",
             icone: "🔎",
             itens: [
-                "Diagnóstico <strong>essencialmente clínico</strong>. Os <strong>3 critérios</strong> devem estar presentes:",
-                "<strong>1. Episódios agudos de sibilância recorrentes:</strong> ≥ 2 episódios nos últimos 12 meses, <strong>ou</strong> ≥ 1 episódio + sintomas entre as crises (tosse seca, acessos de tosse, piora no sono ou após rir, chorar ou atividade). Cada episódio dura > 24 h. A sibilância deve ser confirmada ao menos uma vez por profissional de saúde (preferível) ou por relato convincente dos pais (vídeo, áudio ou imitação do som).",
-                "<strong>2. Nenhuma causa alternativa provável</strong> para os sintomas (exceto infecção viral concomitante). Exames de imagem ou laboratoriais geralmente não são necessários.",
-                "<strong>3. Resposta clínica oportuna ao tratamento:</strong> melhora em <strong>20–60 min</strong> após SABA; ou em 3–4 h após SABA + corticoide oral nas crises mais graves; ou melhora durante teste de <strong>2–3 meses com CI diário</strong> (ex.: fluticasona 100–250 mcg/dia ou equivalente, pMDI + espaçador) + SABA se necessário.",
+                { texto: "Diagnóstico essencialmente clínico. Os 3 critérios abaixo devem estar presentes.", sub: [
+                    "<strong>Episódios agudos de sibilância recorrentes:</strong> ≥ 2 episódios nos últimos 12 meses, ou ≥ 1 episódio + sintomas entre as crises (tosse seca, acessos de tosse, piora no sono ou após rir, chorar ou atividade). Cada episódio dura > 24 h. A sibilância deve ser confirmada ao menos uma vez por profissional de saúde (preferível) ou por relato convincente dos pais (vídeo, áudio ou imitação do som).",
+                    "<strong>Sem causa alternativa:</strong> nenhuma causa alternativa provável para os sintomas (exceto infecção viral concomitante). Exames de imagem ou laboratoriais geralmente não são necessários.",
+                    "<strong>Resposta clínica oportuna ao tratamento:</strong> melhora em 20–60 min após SABA; ou em 3–4 h após SABA + corticoide oral nas crises mais graves; ou melhora durante teste de 2–3 meses com CI diário (ex.: fluticasona 100–250 mcg/dia ou equivalente, pMDI + espaçador) + SABA se necessário."
+                ] },
                 "<strong>Asma suspeita:</strong> se só 1 ou 2 critérios forem cumpridos. Considerar tratamento e reavaliar periodicamente.",
                 "<strong>Reforçam (não obrigatórios):</strong> doença alérgica na criança (rinite, dermatite atópica, sensibilização) ou asma/alergia em parente de 1º grau.",
                 "<strong>Asma menos provável:</strong> < 12 meses no 1º episódio de sibilância (em geral bronquiolite); tosse produtiva como único sintoma; ausência documentada de resposta a SABA e/ou CI; sinais e sintomas atípicos.",
@@ -128,7 +130,7 @@ registrarConduta({
             alerta: true,
             resumo: "Primeiro decida: UTI, internar ou casa. Reavalie em 1 h de tratamento.",
             itens: [
-                "A decisão final é tomada <strong>após 1 h de tratamento</strong> (reavaliação abaixo), mas a ameaça à vida já indica UTI na chegada (GINA)."
+                "A decisão final é tomada após 1 h de tratamento (reavaliação abaixo), mas a ameaça à vida já indica UTI na chegada (GINA)."
             ],
             escore: {
                 id: "internacao_asma",
@@ -164,14 +166,14 @@ registrarConduta({
             resumo: "Salbutamol, ipratrópio, corticoide, O₂ e magnésio conforme a gravidade.",
             itens: [
                 "Avaliar se é asma ou outra causa (crupe, bronquiolite: mais provável se < 12 meses com crepitações, corpo estranho, cetoacidose). Perguntar o que já foi feito.",
-                "<strong>Se houver anafilaxia junto com a asma: adrenalina IM primeiro.</strong>",
-                "Broncodilatador por <strong>spray + espaçador</strong> (mais eficiente e confortável, não dispersa vírus). Máscara só se a criança não conseguir usar o bocal. Um jato por vez, agitando antes de cada jato, 5–6 respirações após cada jato."
+                "<strong>Se houver anafilaxia junto com a asma:</strong> adrenalina IM primeiro.",
+                "Broncodilatador por spray + espaçador (mais eficiente e confortável, não dispersa vírus). Máscara só se a criança não conseguir usar o bocal. Um jato por vez, agitando antes de cada jato, 5–6 respirações após cada jato."
             ],
             grupos: [
                 {
                     nome: "🟢 Leve",
                     itens: [
-                        "<strong>Salbutamol spray + espaçador</strong> conforme o card.",
+                        "Salbutamol spray + espaçador conforme o card.",
                         "Reavaliar a resposta e repetir se necessário."
                     ],
                     remedios: ["salb_spray"]
@@ -179,26 +181,26 @@ registrarConduta({
                 {
                     nome: "🟠 Moderada",
                     itens: [
-                        "<strong>Salbutamol spray</strong> de 20/20 min na 1ª hora.",
-                        "<strong>Ipratrópio</strong> junto com o broncodilatador, a cada 20–30 min, até 3 vezes.",
-                        "<strong>Iniciar corticoide sistêmico</strong>: prednisolona VO (alternativa: dexametasona VO 0,3–0,6 mg/kg, máx. 12 mg, 1–2 dias; vomita menos)."
+                        "Salbutamol spray de 20/20 min na 1ª hora.",
+                        "Ipratrópio junto com o broncodilatador, a cada 20–30 min, até 3 vezes.",
+                        "<strong>Iniciar corticoide sistêmico:</strong> prednisolona VO (alternativa: dexametasona VO 0,3–0,6 mg/kg, máx. 12 mg, 1–2 dias; vomita menos)."
                     ],
                     remedios: ["salb_spray", "ipra", "pred_sol"]
                 },
                 {
                     nome: "🔴 Grave",
                     itens: [
-                        "<strong>Iniciar o tratamento imediatamente</strong> (na atenção primária: transferir para unidade de urgência).",
+                        "Iniciar o tratamento imediatamente (na atenção primária: transferir para unidade de urgência).",
                         "Salbutamol de 20/20 min + ipratrópio a cada vez, até 3 vezes.",
-                        "<strong>O₂ se SpO₂ < 92%</strong> (acordado), alvo <strong>≥ 92%</strong>.",
-                        "Corticoide sistêmico (VO, ou EV se não tolerar VO). <strong>Considerar sulfato de magnésio EV.</strong> Monitorização contínua."
+                        "O₂ se SpO₂ < 92% (acordado), alvo ≥ 92%.",
+                        "Corticoide sistêmico (VO, ou EV se não tolerar VO). Considerar sulfato de magnésio EV. Monitorização contínua."
                     ],
                     remedios: ["salb_spray", "ipra", "metil", "magnesio_ev", "adrenalina_im"]
                 },
                 {
                     nome: "⛔ Ameaça à vida (sonolento, confuso, cianótico ou PRAM 11–12)",
                     itens: [
-                        "Tratar imediatamente: broncodilatador, ipratrópio, O₂ e corticoide sistêmico. <strong>Chamar UTI pediátrica ou anestesia.</strong>",
+                        "Tratar imediatamente: broncodilatador, ipratrópio, O₂ e corticoide sistêmico. Chamar UTI pediátrica ou anestesia.",
                         "Adrenalina IM primeiro se anafilaxia. Acesso EV e monitorização cardiorrespiratória contínua.",
                         "O₂ 100% por máscara não reinalante. Broncodilatador + ipratrópio contínuos/seriados na 1ª hora. Monitorar toxicidade do SABA.",
                         "Corticoide EV ou IM. Sulfato de magnésio EV. Radiografia de tórax. Considerar gasometria."
@@ -217,7 +219,7 @@ registrarConduta({
                     nome: "Reavaliar em 1 hora (ou antes)",
                     itens: [
                         "Repetir SpO₂, FR, musculatura acessória, entrada de ar e PRAM.",
-                        "<strong>Melhora acentuada</strong> sem novo SABA: avaliar alta.",
+                        "Melhora acentuada sem novo SABA: avaliar alta.",
                         "<strong>Melhora parcial:</strong> salbutamol adicional se necessário, considerar nova dose de ipratrópio, corticoide sistêmico se ainda não feito. Reavaliar no mínimo a cada hora.",
                         "<strong>Piora:</strong> pensar em causas alternativas ou adicionais; salbutamol + ipratrópio; corticoide; magnésio EV; considerar UTI."
                     ]
@@ -225,7 +227,7 @@ registrarConduta({
                 {
                     nome: "Transferência imediata para hospital (qualquer um)",
                     itens: [
-                        "Cianose · incapaz de falar ou beber · <strong>FR > 40/min</strong> · <strong>SpO₂ < 92%</strong> em ar ambiente · tórax silencioso com dispneia.",
+                        "Cianose · incapaz de falar ou beber · FR > 40/min · SpO₂ < 92% em ar ambiente · tórax silencioso com dispneia.",
                         "Sem resposta ao salbutamol de 20/20 min por até 3× (1 hora), ou taquipneia persistente após 3 doses, mesmo com outra melhora (FR normal: < 50 entre 2–12 meses; < 40 entre 1–5 anos).",
                         "Crise grave sem resolução em 1–2 h · parada ou parada iminente · recorrência de crise grave em 48 h (sobretudo já com corticoide).",
                         "Ambiente social que limita o tratamento ou cuidador incapaz de manejar em casa.",
@@ -240,8 +242,8 @@ registrarConduta({
             icone: "✅",
             resumo: "Critérios para liberar para casa.",
             itens: [
-                "Sintomas melhorados e critérios de crise \"leve\" por <strong>1–2 h após o último salbutamol</strong>.",
-                "<strong>SpO₂ ≥ 92%</strong> em ar ambiente.",
+                "Sintomas melhorados e critérios de crise \"leve\" por 1–2 h após o último salbutamol.",
+                "SpO₂ ≥ 92% em ar ambiente.",
                 "Estável (fora do leito, comendo e bebendo) e recursos adequados em casa.",
                 "Registrar o diagnóstico de asma se confirmado: sibilância observada, sem outra causa e resposta ao SABA.",
                 "Prescrição para casa: ver o bloco Ambulatório abaixo."
@@ -260,11 +262,11 @@ registrarConduta({
             aberta: true,
             resumo: "Broncodilatador, corticoide oral, corticoide inalatório e retorno.",
             itens: [
-                "<strong>Salbutamol spray + espaçador</strong> conforme o card (esquema de alta).",
+                "Salbutamol spray + espaçador conforme o card (esquema de alta).",
                 "<strong>Corticoide oral:</strong> completar o curso (prednisolona 3–5 dias no total, ou dexametasona 1–2 dias).",
-                "<strong>Corticoide inalatório:</strong> iniciar, manter ou aumentar se crise moderada/grave ou sintomas entre as crises (≥ 2 dias/semana). No 1º mês após a alta, usar o <strong>dobro da dose baixa</strong>, depois ajustar.",
+                "<strong>Corticoide inalatório:</strong> iniciar, manter ou aumentar se crise moderada/grave ou sintomas entre as crises (≥ 2 dias/semana). No 1º mês após a alta, usar o dobro da dose baixa, depois ajustar.",
                 "Treinar a técnica com espaçador. Entregar plano de ação escrito. Identificar gatilhos (virose, tabaco, poluição, alérgenos, adesão).",
-                "<strong>Retorno em 1–3 dias</strong> e novamente em <strong>2–3 meses</strong>. Encaminhar ao especialista se ≥ 1 crise nos últimos 12 meses ou > 1 curso de corticoide oral no ano.",
+                "Retorno em 1–3 dias e novamente em 2–3 meses. Encaminhar ao especialista se ≥ 1 crise nos últimos 12 meses ou > 1 curso de corticoide oral no ano.",
                 "Procurar atendimento se não melhorar ou piorar nas próximas 24–48 h."
             ],
             remedios: ["salb_spray", "pred_sol", "clenil_hfa"]
@@ -274,10 +276,10 @@ registrarConduta({
             titulo: "Plano de ação em casa (≤ 5 anos)",
             icone: "🏠",
             itens: [
-                "Iniciar <strong>salbutamol spray + espaçador</strong> (dose do card, um jato por vez). Pode repetir mais 2× a intervalos de 20 min se necessário. Se melhorar, manter em repouso e observar por 1 h ou mais.",
+                "Iniciar salbutamol spray + espaçador (dose do card, um jato por vez). Pode repetir mais 2× a intervalos de 20 min se necessário. Se melhorar, manter em repouso e observar por 1 h ou mais.",
                 "<strong>Procurar atendimento imediato se:</strong> desconforto agudo (falta de ar intensa, tiragem, cianose), sonolência/letargia ou piora; sem alívio rápido com o broncodilatador; alívio dura menos de 4 h ou cada vez menos; menor de 12 meses precisando de SABA repetido por várias horas.",
-                "<strong>Procurar atendimento no mesmo dia</strong> se precisar de nova dose em menos de 4 h ou de SABA > 3 vezes nas primeiras 12 h.",
-                "<strong>Corticoide oral iniciado pelos pais não é recomendado.</strong> CI em dose alta episódico só se o médico tiver certeza do uso adequado.",
+                "Procurar atendimento no mesmo dia se precisar de nova dose em menos de 4 h ou de SABA > 3 vezes nas primeiras 12 h.",
+                "Corticoide oral iniciado pelos pais não é recomendado. CI em dose alta episódico só se o médico tiver certeza do uso adequado.",
                 "Montelucaste no início de virose: evidência conflitante. Orientar efeitos em sono, comportamento e humor."
             ]
         },
@@ -332,20 +334,20 @@ registrarConduta({
                 colunas: ["Etapa", "Preferencial", "Outras opções", "Para quem"],
                 linhas: [
                     ["1", "Evidência insuficiente para controlador diário", "CI em curso curto intermitente no início de virose", "Sibilância aguda infrequente (ex.: viral), sem ou com poucos sintomas entre as crises"],
-                    ["2", "<strong>CI diário em dose baixa</strong>", "Antileucotrieno diário* ou CI curto intermitente no início de virose", "Asma não controlada ou ≥ 1 crise grave no último ano"],
-                    ["3", "<strong>Dobrar a dose baixa de CI</strong>", "Considerar encaminhar ao especialista", "Não controlada com CI em dose baixa"],
-                    ["4", "Manter o controlador e <strong>encaminhar</strong> para avaliação especializada", "—", "Não controlada na etapa 3"]
+                    ["2", "CI diário em dose baixa", "Antileucotrieno diário* ou CI curto intermitente no início de virose", "Asma não controlada ou ≥ 1 crise grave no último ano"],
+                    ["3", "Dobrar a dose baixa de CI", "Considerar encaminhar ao especialista", "Não controlada com CI em dose baixa"],
+                    ["4", "Manter o controlador e encaminhar para avaliação especializada", "—", "Não controlada na etapa 3"]
                 ],
-                nota: "Alívio em todas as etapas: <strong>SABA se necessário</strong>. Antes de subir de etapa: checar diagnóstico alternativo, técnica inalatória, adesão e exposições. *Antileucotrieno (montelucaste): orientar sobre efeitos neuropsiquiátricos (sono e comportamento)."
+                nota: "Alívio em todas as etapas: SABA se necessário. Antes de subir de etapa: checar diagnóstico alternativo, técnica inalatória, adesão e exposições. *Antileucotrieno (montelucaste): orientar sobre efeitos neuropsiquiátricos (sono e comportamento)."
             },
             grupos: [
                 {
                     nome: "Quando iniciar CI diário (etapa 2)",
                     itens: [
-                        "Sintomas não controlados (ex.: alívio > 2×/semana em média), <strong>ou</strong>",
+                        "Sintomas não controlados (ex.: alívio > 2×/semana em média), ou",
                         "≥ 1 crise ou episódio de sibilância nos últimos 12 meses com atendimento de urgência, corticoide oral ou internação.",
                         "Pode ser indicado também na asma viral recorrente.",
-                        "Manter inicialmente por pelo menos <strong>2–3 meses</strong> para avaliar a resposta. Com boa resposta por 2–3 meses, considerar reduzir a dose.",
+                        "Manter inicialmente por pelo menos 2–3 meses para avaliar a resposta. Com boa resposta por 2–3 meses, considerar reduzir a dose.",
                         "Reavaliar a necessidade do controlador a cada 3–6 meses (muitas crianças entram em remissão). Ao reduzir ou suspender, rever em 3–6 semanas."
                     ],
                     remedios: ["clenil_hfa"]
@@ -363,7 +365,7 @@ registrarConduta({
                             ["Mometasona furoato (pMDI, partícula padrão, HFA)", "100 (≥ 5 anos)"],
                             ["Fluticasona furoato (DPI) · ciclesonida", "Não estudadas o suficiente em ≤ 5 anos"]
                         ],
-                        nota: "Não é tabela de equivalência de potência. Na criança, o pMDI deve ser usado <strong>sempre com espaçador</strong>. Usar a menor dose eficaz."
+                        nota: "Não é tabela de equivalência de potência. Na criança, o pMDI deve ser usado sempre com espaçador. Usar a menor dose eficaz."
                     }
                 },
                 {
@@ -371,10 +373,10 @@ registrarConduta({
                     tabela: {
                         colunas: ["Idade", "Preferencial", "Alternativa"],
                         linhas: [
-                            ["0–3 anos", "pMDI + espaçador valvulado com <strong>máscara facial</strong>", "Nebulizador com máscara facial"],
-                            ["4–5 anos", "pMDI + espaçador valvulado com <strong>bocal</strong>", "pMDI + espaçador com máscara ou (se indisponível) nebulizador"]
+                            ["0–3 anos", "pMDI + espaçador valvulado com máscara facial", "Nebulizador com máscara facial"],
+                            ["4–5 anos", "pMDI + espaçador valvulado com bocal", "pMDI + espaçador com máscara ou (se indisponível) nebulizador"]
                         ],
-                        nota: "Um jato por vez, agitando o salbutamol antes de cada jato, com <strong>5–6 respirações</strong> após cada jato (respiração corrente). Iniciar a inalação logo após o disparo. Máscara bem ajustada; lavar o rosto depois. Passar para o bocal assim que a criança conseguir. Espaçador plástico: lavar com detergente sem enxaguar (reduz a carga estática)."
+                        nota: "Um jato por vez, agitando o salbutamol antes de cada jato, com 5–6 respirações após cada jato (respiração corrente). Iniciar a inalação logo após o disparo. Máscara bem ajustada; lavar o rosto depois. Passar para o bocal assim que a criança conseguir. Espaçador plástico: lavar com detergente sem enxaguar (reduz a carga estática)."
                     }
                 }
             ]
@@ -386,10 +388,10 @@ registrarConduta({
             tabela: {
                 colunas: ["Etapa", "Controlador preferencial", "Outras opções"],
                 linhas: [
-                    ["1", "<strong>Somente alívio anti-inflamatório (AIR):</strong> CI-formoterol dose baixa se necessário, <strong>ou</strong> CI + SABA se necessário (combinados ou inaladores separados)", "—"],
-                    ["2", "<strong>CI diário em dose baixa</strong>", "CI-formoterol ou CI-SABA se necessário; ou antileucotrieno diário*"],
-                    ["3", "CI dose média, <strong>ou</strong> CI-LABA dose baixa, <strong>ou</strong> MART com CI-formoterol dose baixa", "CI dose baixa + antileucotrieno*"],
-                    ["4", "CI-LABA dose média, <strong>ou</strong> MART com CI-formoterol dose baixa (dobro da etapa 3), <strong>ou</strong> encaminhar ao especialista", "Associar tiotrópio ou antileucotrieno* ao controlador da etapa 3"],
+                    ["1", "Somente alívio anti-inflamatório (AIR): CI-formoterol dose baixa se necessário, ou CI + SABA se necessário (combinados ou inaladores separados)", "—"],
+                    ["2", "CI diário em dose baixa", "CI-formoterol ou CI-SABA se necessário; ou antileucotrieno diário*"],
+                    ["3", "CI dose média, ou CI-LABA dose baixa, ou MART com CI-formoterol dose baixa", "CI dose baixa + antileucotrieno*"],
+                    ["4", "CI-LABA dose média, ou MART com CI-formoterol dose baixa (dobro da etapa 3), ou encaminhar ao especialista", "Associar tiotrópio ou antileucotrieno* ao controlador da etapa 3"],
                     ["5", "Encaminhar para fenotipagem; considerar CI-LABA dose alta ou terapia adicional (LAMA, anti-IgE, anti-IL4Rα, anti-IL5)", "Encaminhar ao especialista"]
                 ],
                 nota: "Alívio: CI-formoterol dose baixa ou CI-SABA se necessário, ou SABA se necessário (se AIR indisponível). \"CI + SABA com inaladores separados\" = usar CI em dose baixa toda vez que usar o SABA. *Antileucotrieno: orientar efeitos neuropsiquiátricos."
@@ -400,10 +402,10 @@ registrarConduta({
                     tabela: {
                         colunas: ["Sintomas nas últimas semanas", "Iniciar com"],
                         linhas: [
-                            ["≤ 2 dias/semana", "<strong>Etapa 1:</strong> CI-formoterol dose baixa se necessário, ou CI + SABA se necessário"],
-                            ["3–4 dias/semana", "<strong>Etapa 2:</strong> CI diário dose baixa + CI-SABA ou SABA se necessário"],
-                            ["Na maioria dos dias, despertar ≥ 1×/semana ou função pulmonar baixa", "<strong>Etapa 3:</strong> CI-LABA dose baixa ou CI dose média (+ alívio), ou MART dose baixa"],
-                            ["Sintomas diários, despertar ≥ 1×/semana <strong>e</strong> função pulmonar baixa ou crise recente", "<strong>Etapa 4:</strong> CI-LABA dose média (+ alívio), ou MART dose baixa"],
+                            ["≤ 2 dias/semana", "Etapa 1: CI-formoterol dose baixa se necessário, ou CI + SABA se necessário"],
+                            ["3–4 dias/semana", "Etapa 2: CI diário dose baixa + CI-SABA ou SABA se necessário"],
+                            ["Na maioria dos dias, despertar ≥ 1×/semana ou função pulmonar baixa", "Etapa 3: CI-LABA dose baixa ou CI dose média (+ alívio), ou MART dose baixa"],
+                            ["Sintomas diários, despertar ≥ 1×/semana e função pulmonar baixa ou crise recente", "Etapa 4: CI-LABA dose média (+ alívio), ou MART dose baixa"],
                             ["Apresentação inicial durante crise aguda", "Tratar a crise (com corticoide oral se grave) e iniciar etapa 3 ou 4 antes da alta"]
                         ]
                     }
@@ -412,8 +414,8 @@ registrarConduta({
                     nome: "Pontos práticos (6–11 anos)",
                     itens: [
                         "Antes de iniciar: registrar evidência do diagnóstico, nível de controle e fatores de risco (incluindo função pulmonar), escolher inalador adequado e checar a técnica.",
-                        "<strong>Reavaliar em 2–3 meses</strong>. <strong>Reduzir a etapa</strong> após 3 meses de bom controle.",
-                        "AIR com CI-formoterol: formulação sugerida <strong>budesonida-formoterol 80/4,5 mcg</strong> (dose liberada; 100/6 mcg dose medida), <strong>1 inalação se necessário</strong>. Procurar atendimento se > <strong>8 inalações em 24 h</strong>.",
+                        "Reavaliar em 2–3 meses. Reduzir a etapa após 3 meses de bom controle.",
+                        "AIR com CI-formoterol: formulação sugerida budesonida-formoterol 80/4,5 mcg (dose liberada; 100/6 mcg dose medida), 1 inalação se necessário. Procurar atendimento se > 8 inalações em 24 h.",
                         "MART etapa 3: budesonida-formoterol 80/4,5 mcg 1 inalação 1×/dia + 1 inalação se necessário. Etapa 4: manutenção 2×/dia (ainda dose baixa).",
                         "Subida de etapa conforme a etapa 1 prévia: CI-formoterol se necessário → MART dose baixa; CI-SABA combinado → CI diário + CI-SABA; CI + SABA separados → CI diário + SABA, com CI extra a cada uso do SABA.",
                         "<strong>Não recomendado:</strong> tratamento só com SABA (maior risco de morte e de atendimento de urgência); uso regular ou excessivo de SABA (≥ 3 frascos/ano dobra o risco de ida à emergência); SABA oral e teofilina; LABA sem CI."
@@ -442,7 +444,7 @@ registrarConduta({
             titulo: "Vacinas",
             icone: "💉",
                         itens: [
-                "<strong>Influenza</strong> anual na asma moderada a grave (ou quando indicada para a população geral).",
+                "Influenza anual na asma moderada a grave (ou quando indicada para a população geral).",
                 "Pneumocócica, coqueluche, influenza, VSR e COVID-19 conforme o calendário local.",
                 "Asma isolada não é indicação específica de vacina pneumocócica."
             ]

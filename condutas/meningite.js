@@ -13,7 +13,8 @@ registrarConduta({
     cor: "#7c2d12",
     kw: "meningite bacteriana viral asseptica liquor puncao lombar rigidez de nuca fontanela abaulada pneumococo meningococo haemophilus hib streptococcus agalactiae listeria dexametasona ceftriaxona vancomicina bacterial meningitis score",
     resumo: "Suspeita de meningite: antibiótico sem atrasar (punção só se seguro), dexametasona junto, esquema por idade, isolamento, notificação e quimioprofilaxia.",
-    legenda: "Conduta conforme a <strong>IDSA (2004)</strong>, a <strong>ESCMID (2016)</strong> e o <strong>Guia de Vigilância do Ministério da Saúde</strong>, com o <strong>Bacterial Meningitis Score</strong> (2007).",
+    legenda: "Conduta conforme a IDSA (2004), a ESCMID (2016) e o Guia de Vigilância do Ministério da Saúde, com o Bacterial Meningitis Score (2007).",
+    padraoTexto: true, // padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
         {
@@ -26,11 +27,11 @@ registrarConduta({
                     icone: "🔎",
                     resumo: "Lactente: febre, irritabilidade, fontanela abaulada, recusa alimentar. Maior: cefaleia, vômitos, rigidez de nuca. Confirmar pelo líquor.",
                     itens: [
-                        "<strong>Lactente:</strong> sinais pouco específicos: febre ou hipotermia, <strong>irritabilidade</strong> (choro ao ser pego no colo), <strong>sonolência</strong>, recusa alimentar, vômitos, <strong>fontanela abaulada</strong>, convulsão, apneia. A rigidez de nuca muitas vezes falta.",
-                        "<strong>Criança maior e adolescente:</strong> febre, <strong>cefaleia</strong>, <strong>vômitos</strong>, fotofobia, <strong>rigidez de nuca</strong>, sinais de Kernig e Brudzinski, confusão ou rebaixamento.",
-                        "<strong>Petéquias ou púrpura:</strong> pensar em <strong>meningococo</strong> (veja a conduta de doença meningocócica).",
-                        "<strong>Confirmação: líquor</strong> (citologia, bioquímica, Gram, cultura, látex e PCR). Hemocultura sempre (IDSA 2004).",
-                        "<strong>Caso suspeito é de notificação compulsória</strong> (MS)."
+                        "<strong>Lactente:</strong> sinais pouco específicos: febre ou hipotermia, irritabilidade (choro ao ser pego no colo), sonolência, recusa alimentar, vômitos, fontanela abaulada, convulsão, apneia. A rigidez de nuca muitas vezes falta.",
+                        "<strong>Criança maior e adolescente:</strong> febre, cefaleia, vômitos, fotofobia, rigidez de nuca, sinais de Kernig e Brudzinski, confusão ou rebaixamento.",
+                        "<strong>Petéquias ou púrpura:</strong> pensar em meningococo (veja a conduta de doença meningocócica).",
+                        "<strong>Confirmação:</strong> líquor (citologia, bioquímica, Gram, cultura, látex e PCR). Hemocultura sempre (IDSA 2004).",
+                        "Caso suspeito é de notificação compulsória (MS)."
                     ]
                 },
                 {
@@ -49,7 +50,7 @@ registrarConduta({
                     },
                     itens: [
                         "Recém-nascido tem valores normais maiores (até ~20 células/mm³ e proteína até ~100 mg/dL).",
-                        "Antibiótico antes da punção pode deixar a cultura negativa e diminuir os neutrófilos: <strong>PCR e látex</strong> continuam úteis."
+                        "Antibiótico antes da punção pode deixar a cultura negativa e diminuir os neutrófilos: PCR e látex continuam úteis."
                     ]
                 },
                 {
@@ -58,7 +59,7 @@ registrarConduta({
                     resumo: "Líquor com pleocitose: 0 ponto = risco muito baixo de meningite bacteriana (> 2 meses, sem antibiótico prévio).",
                     alerta: true,
                     itens: [
-                        "<strong>Só vale</strong> para criança de <strong>29 dias a 19 anos</strong> com pleocitose no líquor (≥ 10 células/mm³) e <strong>sem antibiótico antes da punção</strong>. <strong>Não usar</strong> se: menor de 2 meses, toxemia ou choque, <strong>petéquias ou púrpura</strong>, imunodepressão, derivação ventricular ou neurocirurgia recente (Nigrovic 2007).",
+                        "Só vale para criança de 29 dias a 19 anos com pleocitose no líquor (≥ 10 células/mm³) e sem antibiótico antes da punção. Não usar se: menor de 2 meses, toxemia ou choque, petéquias ou púrpura, imunodepressão, derivação ventricular ou neurocirurgia recente (Nigrovic 2007).",
                         "No estudo de validação, os 2 casos bacterianos com escore 0 eram menores de 2 meses (Nigrovic 2007)."
                     ],
                     escore: {
@@ -108,13 +109,13 @@ registrarConduta({
                     lista: "passos",
                     itens: [
                         "<span class=\"cond-passo\">1</span> <strong>Internar / UTI?</strong> Toda suspeita de bacteriana interna",
-                        "<span class=\"cond-passo\">2</span> <strong>ABC</strong>, acesso, glicemia, <strong>hemocultura</strong>; choque: conduta de sepse",
-                        "<span class=\"cond-passo\">3</span> <strong>Punção lombar</strong> só se segura; tomografia antes só se indicada",
-                        "<span class=\"cond-passo\">4</span> <strong>Dexametasona</strong> antes ou junto da 1ª dose do antibiótico",
-                        "<span class=\"cond-passo\">5</span> <strong>Antibiótico empírico por idade</strong>, sem atrasar",
-                        "<span class=\"cond-passo\">6</span> <strong>Convulsão, hipertensão intracraniana, líquidos</strong>",
-                        "<span class=\"cond-passo\">7</span> <strong>Isolar, notificar</strong> e <strong>quimioprofilaxia</strong> dos contatos",
-                        "<span class=\"cond-passo\">8</span> <strong>Duração</strong> pelo agente e <strong>complicações</strong>"
+                        "<span class=\"cond-passo\">2</span> <strong>Estabilizar:</strong> ABC, acesso, glicemia, hemocultura; choque: conduta de sepse",
+                        "<span class=\"cond-passo\">3</span> <strong>Punção lombar:</strong> só se segura; tomografia antes só se indicada",
+                        "<span class=\"cond-passo\">4</span> <strong>Dexametasona:</strong> antes ou junto da 1ª dose do antibiótico",
+                        "<span class=\"cond-passo\">5</span> <strong>Antibiótico empírico:</strong> por idade, sem atrasar",
+                        "<span class=\"cond-passo\">6</span> <strong>Complicações:</strong> convulsão, hipertensão intracraniana, líquidos",
+                        "<span class=\"cond-passo\">7</span> <strong>Isolamento:</strong> isolar, notificar e fazer quimioprofilaxia dos contatos",
+                        "<span class=\"cond-passo\">8</span> <strong>Duração:</strong> pelo agente e pelas complicações"
                     ]
                 },
                 {
@@ -123,7 +124,7 @@ registrarConduta({
                     resumo: "Suspeita de meningite bacteriana interna. Marque o que o paciente tem para decidir UTI. Não atrasa o antibiótico.",
                     alerta: true,
                     itens: [
-                        "<strong>Toda suspeita de meningite bacteriana é internada</strong>, com antibiótico EV. A decisão aqui é <strong>UTI ou enfermaria</strong>. Não atrasar o antibiótico (passo 5)."
+                        "Toda suspeita de meningite bacteriana é internada, com antibiótico EV. A decisão aqui é UTI ou enfermaria. Não atrasar o antibiótico (passo 5)."
                     ],
                     escore: {
                         id: "internacao_meningite",
@@ -154,10 +155,10 @@ registrarConduta({
                     titulo: "ABC, acesso e hemocultura",
                     resumo: "O₂, monitor, acesso, glicemia, hemocultura, exames. Choque: seguir a conduta de sepse.",
                     itens: [
-                        "<strong>O₂</strong>, monitor, oximetria, PA; <strong>glicemia capilar</strong>.",
-                        "<strong>Hemocultura</strong> antes do antibiótico, <strong>sem atrasá-lo</strong> (IDSA 2004).",
-                        "Exames: hemograma, PCR/procalcitonina, eletrólitos (<strong>sódio</strong>: risco de SIADH), função renal, coagulograma, gasometria, lactato.",
-                        "<strong>Choque ou má perfusão:</strong> ressuscitar primeiro (veja a conduta de <strong>sepse</strong>)."
+                        "O₂, monitor, oximetria, PA; glicemia capilar.",
+                        "Hemocultura antes do antibiótico, sem atrasá-lo (IDSA 2004).",
+                        "Exames: hemograma, PCR/procalcitonina, eletrólitos (sódio: risco de SIADH), função renal, coagulograma, gasometria, lactato.",
+                        "<strong>Choque ou má perfusão:</strong> ressuscitar primeiro (veja a conduta de sepse)."
                     ]
                 },
                 {
@@ -165,10 +166,10 @@ registrarConduta({
                     titulo: "Punção lombar: só se segura",
                     resumo: "Adiar se instável, coagulopatia, sinais de HIC ou infecção no local. Tomografia antes só se indicada; antibiótico primeiro.",
                     itens: [
-                        "<strong>A punção não pode atrasar o antibiótico.</strong> Se for demorar, colher hemocultura e tratar (IDSA 2004).",
-                        "<strong>Adiar a punção</strong> se: choque ou instabilidade, insuficiência respiratória, <strong>coagulopatia ou plaquetas baixas</strong>, <strong>sinais de hipertensão intracraniana</strong> (rebaixamento importante, pupilas alteradas, bradicardia com hipertensão, papiledema), <strong>déficit focal</strong>, convulsão prolongada recente, infecção no local.",
-                        "<strong>Tomografia antes da punção</strong> só se: déficit focal, papiledema, rebaixamento importante, convulsão nova, imunodepressão, derivação ventricular ou neurocirurgia (IDSA 2004). Nesses casos: <strong>hemocultura → dexametasona + antibiótico → tomografia → punção depois</strong>.",
-                        "Líquor: citologia, bioquímica, Gram, cultura, látex e <strong>PCR</strong>; medir a pressão de abertura se possível."
+                        { alerta: "a punção não pode atrasar o antibiótico. Se for demorar, colher hemocultura e tratar (IDSA 2004)." },
+                        "Adiar a punção se: choque ou instabilidade, insuficiência respiratória, coagulopatia ou plaquetas baixas, sinais de hipertensão intracraniana (rebaixamento importante, pupilas alteradas, bradicardia com hipertensão, papiledema), déficit focal, convulsão prolongada recente, infecção no local.",
+                        "Tomografia antes da punção só se: déficit focal, papiledema, rebaixamento importante, convulsão nova, imunodepressão, derivação ventricular ou neurocirurgia (IDSA 2004). Nesses casos: hemocultura → dexametasona + antibiótico → tomografia → punção depois.",
+                        "Líquor: citologia, bioquímica, Gram, cultura, látex e PCR; medir a pressão de abertura se possível."
                     ]
                 },
                 {
@@ -177,10 +178,10 @@ registrarConduta({
                     resumo: "Bacteriana suspeita em lactente e criança: 10–20 min antes ou junto da 1ª dose do antibiótico. Não no recém-nascido.",
                     alerta: true,
                     itens: [
-                        "<strong>Quando:</strong> suspeita de meningite bacteriana em lactentes e crianças, <strong>10 a 20 minutos antes ou junto</strong> da 1ª dose do antibiótico (IDSA 2004; ESCMID 2016).",
-                        "<strong>Benefício:</strong> menos <strong>surdez</strong> e sequelas neurológicas, principalmente na meningite por <strong>Hib</strong> e por <strong>pneumococo</strong> (Cochrane 2015).",
+                        "<strong>Quando:</strong> suspeita de meningite bacteriana em lactentes e crianças, 10 a 20 minutos antes ou junto da 1ª dose do antibiótico (IDSA 2004; ESCMID 2016).",
+                        "<strong>Benefício:</strong> menos surdez e sequelas neurológicas, principalmente na meningite por Hib e por pneumococo (Cochrane 2015).",
                         "<strong>Não fazer:</strong> no recém-nascido; se o antibiótico já foi dado há várias horas; na meningococcemia sem meningite; na meningite viral provável.",
-                        "<strong>Suspender</strong> se a cultura confirmar outro agente que não Hib ou pneumococo (ESCMID 2016)."
+                        "Suspender se a cultura confirmar outro agente que não Hib ou pneumococo (ESCMID 2016)."
                     ],
                     remedios: ["dexa_meningite"]
                 },
@@ -190,11 +191,11 @@ registrarConduta({
                     resumo: "RN: ampicilina + cefotaxima (± gentamicina). > 1 mês: ceftriaxona + vancomicina. Encefalite: + aciclovir.",
                     alerta: true,
                     itens: [
-                        "<strong>Menor de 1 mês:</strong> <strong>ampicilina + cefotaxima</strong> ou ampicilina + aminoglicosídeo (IDSA 2004); doses da meningite nos cards da sepse neonatal (linha \"com doença do SNC\").",
-                        "<strong>1 mês ou mais:</strong> <strong>ceftriaxona</strong> (MS) <strong>+ vancomicina</strong> (cobertura de pneumococo resistente, IDSA 2004). Retirar a vancomicina se o agente for sensível.",
-                        "<strong>1 a 3 meses:</strong> considerar associar <strong>ampicilina</strong> se suspeita de <em>Listeria</em> ou estreptococo do grupo B.",
-                        "<strong>Encefalite</strong> (alteração de comportamento, convulsão focal, líquor linfocitário): associar <strong>aciclovir</strong>.",
-                        "<strong>Ajustar</strong> pelo Gram, cultura e antibiograma."
+                        "<strong>Menor de 1 mês:</strong> ampicilina + cefotaxima ou ampicilina + aminoglicosídeo (IDSA 2004); doses da meningite nos cards da sepse neonatal (linha \"com doença do SNC\").",
+                        "<strong>1 mês ou mais:</strong> ceftriaxona (MS) + vancomicina (cobertura de pneumococo resistente, IDSA 2004). Retirar a vancomicina se o agente for sensível.",
+                        "<strong>1 a 3 meses:</strong> considerar associar ampicilina se suspeita de <em>Listeria</em> ou estreptococo do grupo B.",
+                        "<strong>Encefalite</strong> (alteração de comportamento, convulsão focal, líquor linfocitário): associar aciclovir.",
+                        "Ajustar pelo Gram, cultura e antibiograma."
                     ],
                     remedios: ["cef_meningo", "vancomicina", "amp_neo_sepse", "cefotax_neo_sepse", "genta_neo_sepse", "aciclovir_sepse"]
                 },
@@ -203,10 +204,10 @@ registrarConduta({
                     titulo: "Convulsão, hipertensão intracraniana e líquidos",
                     resumo: "Tratar convulsão (conduta própria). HIC: cabeceira 30°, normoventilação, osmoterapia na UTI. Manter normovolemia; vigiar sódio.",
                     itens: [
-                        "<strong>Convulsão:</strong> veja a conduta de <strong>crise convulsiva</strong>.",
+                        "<strong>Convulsão:</strong> veja a conduta de crise convulsiva.",
                         "<strong>Hipertensão intracraniana:</strong> cabeceira a 30°, cabeça na linha média, evitar hipóxia, hipercapnia e hipotensão, tratar febre; osmoterapia (manitol ou salina hipertônica) na UTI.",
-                        "<strong>Líquidos:</strong> manter <strong>normovolemia</strong>; não restringir de rotina. Restringir só se SIADH com hiponatremia, sem choque. <strong>Sódio de 12/12 h</strong> nos primeiros dias.",
-                        "<strong>Perímetro cefálico</strong> diário no lactente (hidrocefalia, coleção subdural)."
+                        "<strong>Líquidos:</strong> manter normovolemia; não restringir de rotina. Restringir só se SIADH com hiponatremia, sem choque. Sódio de 12/12 h nos primeiros dias.",
+                        "Perímetro cefálico diário no lactente (hidrocefalia, coleção subdural)."
                     ]
                 },
                 {
@@ -214,8 +215,8 @@ registrarConduta({
                     titulo: "Isolar, notificar e quimioprofilaxia",
                     resumo: "Gotículas por 24 h de antibiótico. Notificar. Meningococo e Hib: quimioprofilaxia dos contatos. Pneumococo: não.",
                     itens: [
-                        "<strong>Isolamento por gotículas</strong> até <strong>24 h de antibiótico</strong> eficaz (suspeita de meningococo ou Hib) (MS).",
-                        "<strong>Notificar</strong> a vigilância epidemiológica: ela define os contatos (MS).",
+                        "Isolamento por gotículas até 24 h de antibiótico eficaz (suspeita de meningococo ou Hib) (MS).",
+                        "Notificar a vigilância epidemiológica: ela define os contatos (MS).",
                         "<strong>Meningococo:</strong> rifampicina dos contatos próximos (veja a conduta de doença meningocócica).",
                         "<strong>Hib:</strong> rifampicina para os contatos, conforme a vigilância (domicílio com criança menor de 4 anos não vacinada ou imunodeprimida, creche). O paciente também recebe na alta se não tratou com ceftriaxona ou cefotaxima (MS).",
                         "<strong>Pneumococo:</strong> não há quimioprofilaxia."
@@ -227,11 +228,11 @@ registrarConduta({
                     titulo: "Duração e complicações",
                     resumo: "Meningococo 7 dias, Hib 7–10, pneumococo 10–14, estreptococo B 14–21, gram-negativo 21, Listeria ≥ 21. Audiometria em todos.",
                     itens: [
-                        "<strong>Duração</strong> (IDSA 2004): <strong>meningococo 7 dias</strong>; <strong>Hib 7 dias</strong>; <strong>pneumococo 10 a 14 dias</strong>; <strong>estreptococo do grupo B 14 a 21 dias</strong>; <strong>gram-negativo aeróbio 21 dias</strong>; <strong>Listeria 21 dias ou mais</strong>.",
-                        "<strong>Repetir a punção</strong> se não melhora em 48 h, no recém-nascido com gram-negativo e no pneumococo resistente que recebeu dexametasona (IDSA 2004).",
-                        "<strong>Complicações:</strong> SIADH, coleção subdural, abscesso, hidrocefalia, trombose venosa, infarto cerebral, <strong>surdez</strong>, epilepsia, atraso do desenvolvimento.",
-                        "<strong>Febre que volta ou persiste</strong> além de 5 a 7 dias: procurar coleção, flebite, febre por fármaco ou outro foco.",
-                        "<strong>Audiometria</strong> antes da alta ou logo depois em toda meningite bacteriana."
+                        "<strong>Duração</strong> (IDSA 2004): meningococo 7 dias; Hib 7 dias; pneumococo 10 a 14 dias; estreptococo do grupo B 14 a 21 dias; gram-negativo aeróbio 21 dias; Listeria 21 dias ou mais.",
+                        "Repetir a punção se não melhora em 48 h, no recém-nascido com gram-negativo e no pneumococo resistente que recebeu dexametasona (IDSA 2004).",
+                        "<strong>Complicações:</strong> SIADH, coleção subdural, abscesso, hidrocefalia, trombose venosa, infarto cerebral, surdez, epilepsia, atraso do desenvolvimento.",
+                        "Febre que volta ou persiste além de 5 a 7 dias: procurar coleção, flebite, febre por fármaco ou outro foco.",
+                        "Audiometria antes da alta ou logo depois em toda meningite bacteriana."
                     ]
                 }
             ]
@@ -246,9 +247,9 @@ registrarConduta({
                     icone: "🏠",
                     resumo: "Analgésico, antitérmico, hidratação, repouso. Retorno em 24 h ou antes se piorar.",
                     itens: [
-                        "Criança maior de 2 meses, em bom estado, <strong>Bacterial Meningitis Score 0</strong>, tolerando via oral e com retorno garantido: tratamento sintomático em casa.",
-                        "<strong>Analgésico/antitérmico</strong>, hidratação, repouso. Melhora em 7 a 10 dias.",
-                        "<strong>Voltar já</strong> se: sonolência ou confusão, convulsão, vômitos que não param, manchas roxas na pele, piora da dor de cabeça ou da febre."
+                        "Criança maior de 2 meses, em bom estado, Bacterial Meningitis Score 0, tolerando via oral e com retorno garantido: tratamento sintomático em casa.",
+                        "Analgésico/antitérmico, hidratação, repouso. Melhora em 7 a 10 dias.",
+                        "Voltar já se: sonolência ou confusão, convulsão, vômitos que não param, manchas roxas na pele, piora da dor de cabeça ou da febre."
                     ]
                 },
                 {
@@ -256,9 +257,9 @@ registrarConduta({
                     icone: "📋",
                     resumo: "Audiometria, desenvolvimento, neurologia se sequela, vacinas, investigar imunidade se recorrente.",
                     itens: [
-                        "<strong>Audiometria</strong> (se surdez profunda, encaminhar logo: implante coclear tem janela curta por ossificação da cóclea).",
-                        "Acompanhar <strong>desenvolvimento</strong>, aprendizagem e epilepsia; neurologia e reabilitação se sequela.",
-                        "<strong>Meningite recorrente</strong>: investigar fístula liquórica, defeito anatômico, asplenia e deficiência de complemento ou de anticorpos.",
+                        "Audiometria (se surdez profunda, encaminhar logo: implante coclear tem janela curta por ossificação da cóclea).",
+                        "Acompanhar desenvolvimento, aprendizagem e epilepsia; neurologia e reabilitação se sequela.",
+                        "<strong>Meningite recorrente:</strong> investigar fístula liquórica, defeito anatômico, asplenia e deficiência de complemento ou de anticorpos.",
                         "<strong>Vacinas:</strong> pneumocócica, Hib, meningocócicas C/ACWY e B conforme calendário e CRIE."
                     ]
                 }
