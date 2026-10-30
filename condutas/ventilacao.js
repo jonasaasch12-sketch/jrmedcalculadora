@@ -233,7 +233,7 @@ const VM_ROTULO = { PCV: "P-A/C", VCV: "V-A/C", PRVC: "PRVC", IMV: "P-A/C" };
 function vmPulmao() {
     let e = vmEstado, p = vmNum(e.peso) || 1, idade = vmNum(e.idade) || 0;
     let base = e.tipo === "rn" ? 0.15 : (idade < 1 ? 0.2 : idade < 6 ? 0.25 : 0.3);
-    let t = { normal: [1.0, 1], tce: [1.0, 1], choque: [0.9, 1], sdra: [0.6, 0.6], bronq: [0.7, 2.5], asma: [0.5, 3.5],
+    let t = { normal: [1.0, 1], tce: [1.0, 1], choque: [0.9, 1], sdra: [0.6, 0.6], bronq: [0.45, 2.5], asma: [0.5, 3.5],
               rn_comp: [0.5, 0.6], rn_resist: [0.9, 1.6], rn_controle: [1.0, 1] }[e.motivo] || [1, 1];
     let C = t[0] * p, tau = base * t[1];
     return { C, tau, R: tau / (C / 1000) };
@@ -431,7 +431,9 @@ function vmHtmlTopo(al) {
         alarme = al.length ? `<button type="button" class="vmx-alarme n${al[0].nivel}" onclick="vmMenu('alarmes')">${al[0].nivel === 3 ? "!!! " : al[0].nivel === 2 ? "!! " : "! "}${al[0].txt}${al.length > 1 ? ` <b>+${al.length - 1}</b>` : ""}</button>`
             : `<span class="vmx-alarme ok">Sem alarmes</span>`;
     }
-    return `<span class="vmx-pac">${pac}${e.peso ? ` · ${vmFmt(vmNum(e.peso), 1).replace(",0", "")} kg` : ""}</span><span class="vmx-modo">${modo}</span>${alarme}<span class="vmx-hora">${hora}</span>`;
+    let cheia = !!(document.getElementById('vm-sim') || { classList: { contains: () => false } }).classList.contains('vm-cheia');
+    return `<span class="vmx-pac">${pac}${e.peso ? ` · ${vmFmt(vmNum(e.peso), 1).replace(",0", "")} kg` : ""}</span><span class="vmx-modo">${modo}</span>${alarme}<span class="vmx-hora">${hora}</span>
+        <button type="button" class="vmx-cheia-bt" onclick="vmTelaCheia()" title="${cheia ? "Sair da tela cheia" : "Tela cheia"}">${cheia ? "✕ Sair" : "⛶ Tela cheia"}</button>`;
 }
 
 function vmHtmlStandby() {
@@ -535,6 +537,43 @@ function vmHtmlGuia() {
         <div class="vm-nota">As curvas e os valores medidos vêm de um pulmão simulado (complacência e resistência ilustrativas da doença escolhida), para treinar a programação. Não substituem o monitor do aparelho.</div>
         <button type="button" class="vm-btn" onclick="vmNovoPaciente()">↺ Novo paciente</button>`;
 }
+
+// ===== Tela cheia (pedido do Dr. Jonas): só o ventilador ocupa a tela. Usa o modo tela cheia do navegador;
+// onde ele não existe (iPhone), a classe vm-cheia faz o mesmo efeito por CSS. No celular, tenta virar para paisagem.
+function vmTelaCheia() {
+    let el = document.getElementById('vm-sim'); if (!el) return;
+    let ativo = document.fullscreenElement || document.webkitFullscreenElement;
+    if (el.classList.contains('vm-cheia')) {
+        if (ativo) { try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (err) { } }
+        vmSairCheia();
+        return;
+    }
+    el.classList.add('vm-cheia'); document.body.classList.add('vm-cheia-on');
+    let req = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (req) {
+        try {
+            let pr = req.call(el);
+            if (pr && pr.then) pr.then(() => { try { screen.orientation.lock('landscape').catch(() => { }); } catch (err) { } }).catch(() => { });
+        } catch (err) { }
+    }
+    vmAposCheia();
+}
+function vmSairCheia() {
+    let el = document.getElementById('vm-sim');
+    if (el) el.classList.remove('vm-cheia');
+    document.body.classList.remove('vm-cheia-on');
+    try { screen.orientation.unlock(); } catch (err) { }
+    vmAposCheia();
+}
+function vmAposCheia() {
+    let top = document.getElementById('vmx-top');
+    if (vmEstado.tela === "vent") vmAtualizarPartes(); else if (top) top.innerHTML = vmHtmlTopo();
+    vmAnim.buf = null;
+}
+["fullscreenchange", "webkitfullscreenchange"].forEach(ev => document.addEventListener(ev, () => {
+    let el = document.getElementById('vm-sim');
+    if (el && el.classList.contains('vm-cheia') && !(document.fullscreenElement || document.webkitFullscreenElement)) vmSairCheia();
+}));
 
 // ===== Curvas animadas (varredura da esquerda para a direita, como no monitor) =====
 function vmIniciarAnimacao() {

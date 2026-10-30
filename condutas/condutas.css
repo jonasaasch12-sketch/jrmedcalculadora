@@ -497,3 +497,34 @@ html[data-theme="dark"] .cond-secao li.cond-item-alerta { background: #3b2a06; c
     .vmx-k { flex-basis: 56px; } .vmx-k b { font-size: 17px; }
     .vmx-pac { display: none; }
 }
+
+/* Tela cheia do ventilador */
+.vmx-cheia-bt { flex: none; background: #334155; border: 1px solid #475569; color: #e5e7eb; border-radius: 5px; padding: 4px 8px; font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.vmx-cheia-bt:hover { background: #475569; }
+#vm-sim.vm-cheia { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 99999; background: #000; margin: 0; overflow: auto; display: flex; flex-direction: column; }
+#vm-sim.vm-cheia .vmx { flex: 1; min-height: 100%; display: flex; flex-direction: column; border-radius: 0; border-width: 0; box-sizing: border-box; }
+#vm-sim.vm-cheia .vmx-meio { flex: 1; min-height: 0; }
+#vm-sim.vm-cheia .vmx-curvas { height: auto; min-height: 220px; }
+#vm-sim.vm-cheia .vmx-mon { align-content: stretch; }
+#vm-sim.vm-cheia .vmx-m b { font-size: 26px; }
+#vm-sim.vm-cheia .vmx-tela { flex: 1; overflow: auto; }
+#vm-sim.vm-cheia .vm-guia, #vm-sim.vm-cheia .vm-dica { display: none; }
+body.vm-cheia-on { overflow: hidden; }
+@media (max-width: 700px) {
+    #vm-sim.vm-cheia .vmx-meio { display: flex; flex-direction: column; }
+    #vm-sim.vm-cheia .vmx-curvas { flex: 1; }
+    #vm-sim.vm-cheia .vmx-m b { font-size: 19px; }
+    .vmx-cheia-bt { padding: 4px 6px; font-size: 11px; }
+}
+@media (max-height: 520px) { /* celular deitado em tela cheia */
+    #vm-sim.vm-cheia .vmx-meio { display: grid; grid-template-columns: 1fr 300px; overflow: hidden; }
+    #vm-sim.vm-cheia .vmx-curvas { min-height: 0; height: 100%; }
+    #vm-sim.vm-cheia .vmx-mon { grid-template-columns: repeat(3, 1fr); overflow: auto; }
+    #vm-sim.vm-cheia .vmx-m { min-height: 0; padding: 2px 6px; }
+    #vm-sim.vm-cheia .vmx-m b { font-size: 17px; }
+    #vm-sim.vm-cheia .vmx-m small { display: none; }
+    #vm-sim.vm-cheia .vmx-top { min-height: 28px; padding: 3px 6px; }
+    #vm-sim.vm-cheia .vmx-k { padding: 2px; } #vm-sim.vm-cheia .vmx-k b { font-size: 16px; } #vm-sim.vm-cheia .vmx-k small { display: none; }
+    #vm-sim.vm-cheia .vmx-funcoes button { padding: 3px 6px; font-size: 11px; }
+    #vm-sim.vm-cheia .vmx-ajuste { position: absolute; left: 0; right: 0; bottom: 0; z-index: 4; max-height: 75%; overflow: auto; }
+}
