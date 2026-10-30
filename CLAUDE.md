@@ -115,8 +115,9 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
   (com "↩ voltar ao texto"). Fonte nova: acrescentar a sigla em `citacoes`. Não linka dentro de cards, ferramentas e botões.
 - Categoria ou seção da Prescrição ligada a uma conduta: `conduta: "<id>"` (e `condutaNome` opcional) no menu.js põe o botão
   "📖 Conduta passo a passo" na tarja/título, que abre a conduta já no bloco "Condução..." (só onde a aba Condutas existe).
-- **Condutas ficam só no teste** até o Dr. Jonas liberar: `CONDUTAS_LIBERADAS = false` em
-  `condutas/condutas.js` esconde a aba no site oficial. Trocar para `true` só quando ele pedir.
+- **Condutas liberadas no oficial** (pedido do Dr. Jonas, 10/2026): `CONDUTAS_LIBERADAS = true` em `condutas/condutas.js`.
+  Exceção: **Ventilação mecânica só no teste** (`VENTILACAO_LIBERADA = false` em `medicamentos/menu.js`), até ele conferir
+  com a fisioterapia; trocar para `true` só quando ele pedir. Conduta nova que ainda não foi conferida: mesma ideia (registrar só com `MODO_TESTE`).
 - **Cards criados ou ajustados durante uma conduta podem ir direto para o oficial** (autorizado
   pelo Dr. Jonas): depois do teste, já fazer o PR `teste` → `main`. A conduta continua escondida.
 

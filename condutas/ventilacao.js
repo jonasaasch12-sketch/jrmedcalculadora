@@ -681,7 +681,8 @@ function vmGasoLista(msg) {
     return msg.length ? `<ul class="vm-gaso-res">${msg.map(([t, x]) => `<li class="${t}">${x}</li>`).join("")}</ul>` : "";
 }
 
-registrarConduta({
+// No site oficial só aparece quando VENTILACAO_LIBERADA = true (medicamentos/menu.js).
+if (VENTILACAO_LIBERADA || (typeof MODO_TESTE !== 'undefined' && MODO_TESTE)) registrarConduta({
     id: "ventilacao",
     nome: "Ventilação mecânica",
     destaque: true, // pedido do Dr. Jonas: a 1ª da lista de Condutas
