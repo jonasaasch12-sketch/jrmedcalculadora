@@ -7,7 +7,7 @@
 // =====================================================
 // Enquanto for false, a aba 📖 Condutas só aparece na versão de teste (/teste/).
 // Para liberar as condutas para toda a equipe, trocar para true.
-const CONDUTAS_LIBERADAS = false;
+const CONDUTAS_LIBERADAS = true;
 
 const condutasJR = {};
 let modoAtual = "prescricao";

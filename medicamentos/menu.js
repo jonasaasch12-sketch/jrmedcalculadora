@@ -1,3 +1,7 @@
+// Conduta "Ventilação mecânica" (simulador de ventilador): só no teste até o Dr. Jonas conferir com a fisioterapia.
+// Trocar para true quando ele liberar (vale para o atalho na RSI e para a conduta em condutas/ventilacao.js).
+const VENTILACAO_LIBERADA = false;
+
 // =====================================================
 // MENU: categorias → seções → remédios (ids dos cards), na ordem em que aparecem.
 // Um mesmo remédio pode aparecer em mais de uma seção.
@@ -80,7 +84,7 @@ const categorias = [
     },
     { 
         id: "cat-rsi", titulo: "RSI", dotClass: "dot-rsi", cor: "tarja-rsi", nome: "RSI", icone: "💉 RSI",
-        conduta: "ventilacao", condutaNome: "Simulador de ventilador",
+        ...(VENTILACAO_LIBERADA || (typeof MODO_TESTE !== 'undefined' && MODO_TESTE) ? { conduta: "ventilacao", condutaNome: "Simulador de ventilador" } : {}),
         patologias: [
             { nome: "Escolha de Material e Dispositivos", remedios: ["rsi_tubo"] },
             { nome: "Pré-medicação e Indução em Bólus", remedios: ["atropina", "rsi_lido", "rsi_fent", "rsi_ceta", "rsi_midaz", "rsi_roc", "rsi_succi"] },
