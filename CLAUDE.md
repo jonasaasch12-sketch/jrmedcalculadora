@@ -58,8 +58,10 @@ privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; c
 sw.js                      modo offline (rede primeiro)
 testes/verificar.js        verificação automática (só precisa de Node)
 condutas/condutas.js       área 📖 Condutas (aba ao lado de 💊 Prescrição)
-condutas/ventilacao.js     "Ventilação mecânica" (destaque: true = 1ª da lista; botão na 💉 RSI): simulador passo a passo (RN ou criança → peso/idade →
-                           motivo → modo sugerido → painel com − e + → metas e gasometria). ferramentaTopo = ferramenta fora das seções (sempre visível).
+condutas/ventilacao.js     "Ventilação mecânica" (destaque: true = 1ª da lista; botão na 💉 RSI): tela de ventilador estilo Mindray SV300/SV800 (sem marca):
+                           standby (neonato/pediátrico, peso, idade, motivo, modo ★) → curvas animadas (pulmão simulado de 1 compartimento, ilustrativo),
+                           monitor, alarmes, teclas (toca → − + → Confirmar), Modos, Pausa insp./exp.; guia abaixo (por que, metas, gasometria, DOPE).
+                           Valores iniciais e alarmes de faixa vêm de vmConfig(). ferramentaTopo = ferramenta fora das seções (sempre visível).
                            Fontes: PALICC-2, PEMVECC, Consenso SBP/AMIB, MS 2014 (RN), PALS (FR por idade). Ti da criança (fora asma/bronquiolite) sem fonte
 condutas/exantematicas.js  categoria "Doenças exantemáticas": guia de identificação clicável + varicela; fotos reais em FOTOS_EXANTEMA
                            (img/exantemas/). Só foto com licença livre e crédito: DermNet (CC BY-NC-ND 4.0, `fonte: "dermnet"`:
