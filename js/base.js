@@ -1,3 +1,7 @@
+// Segurança: o JR MED não pode ser aberto dentro de outro site (moldura/iframe), para evitar que
+// alguém imite a tela e capture cliques ou senhas (clickjacking).
+if (typeof window !== 'undefined' && window.top !== window.self) { document.documentElement.style.display = 'none'; try { window.top.location.replace(window.location.href); } catch (e) { } }
+
 // Funções auxiliares usadas dentro dos cálculos dos cards (carregar antes de medicamentos/).
 
 const recHead = "USO ORAL\n\n";
