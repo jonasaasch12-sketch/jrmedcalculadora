@@ -264,7 +264,7 @@ function atualizarCadSoroY() {
 function addSoroYReceita(botao) {
     let texto = document.getElementById('sy-texto').innerText.trim();
     carrinhoPrescricao.push({ nome: "Soro da CAD em Y (Solução A + B)", apres: "Solução padrão IMIP", texto, via: texto.split('\n')[0].trim() });
-    atualizarCarrinhoUI();
+    manterNaTela(botao, atualizarCarrinhoUI);
     let o = botao.innerHTML; botao.innerHTML = "✓ Na receita"; botao.classList.add('adicionado');
     setTimeout(() => { botao.innerHTML = o; botao.classList.remove('adicionado'); }, 1200);
 }
@@ -345,7 +345,7 @@ function atualizarCadTransicao() {
 function addCadTransicaoReceita(botao) {
     let texto = document.getElementById('tr-texto').innerText.trim();
     carrinhoPrescricao.push({ nome: "Transição para insulina SC (CAD)", apres: "IFF / HC-UFTM", texto, via: texto.split('\n')[0].trim() });
-    atualizarCarrinhoUI();
+    manterNaTela(botao, atualizarCarrinhoUI);
     let o = botao.innerHTML; botao.innerHTML = "✓ Na receita"; botao.classList.add('adicionado');
     setTimeout(() => { botao.innerHTML = o; botao.classList.remove('adicionado'); }, 1200);
 }
