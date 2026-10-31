@@ -332,7 +332,7 @@ function addCondutaReceita(rid, botao) {
     let texto = box.querySelector('[data-texto]').innerText.trim();
     if (box.classList.contains('sem-peso')) { alert("Digite o peso (ou a idade) do paciente no topo antes de adicionar à receita."); return; }
     carrinhoPrescricao.push({ nome: med.nome, apres: med.apres, texto, via: viaDoTextoConduta(texto, med) });
-    atualizarCarrinhoUI();
+    manterNaTela(box, atualizarCarrinhoUI); /* a receita aparecendo à direita não muda o ponto da tela */
     let original = botao.innerHTML;
     botao.innerHTML = "✓ Na receita";
     botao.classList.add('adicionado');
