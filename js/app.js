@@ -802,6 +802,30 @@ function novoPaciente() {
 // ===================================================== 
 let carrinhoPrescricao = []; // { nome, apres, texto }
 
+// No computador (≥ 1280 px) a receita fica fixa à direita e só aparece com 1 item ou mais: quando ela
+// aparece ou some, a coluna dos cards muda de largura, os cards mudam de altura e a página "pulava"
+// para outra categoria (bug relatado pelo Dr. Jonas em TGI → tela ia para Urinário).
+// manterNaTela() guarda onde o card estava na tela, faz a mudança e devolve a rolagem para o mesmo ponto.
+function manterNaTela(ancora, mudar) {
+    if (!ancora) { mudar(); return; }
+    let alvo = ancora.getBoundingClientRect().top;
+    mudar();
+    let corrigir = () => {
+        if (!document.body.contains(ancora)) return;
+        let dif = ancora.getBoundingClientRect().top - alvo;
+        if (Math.abs(dif) > 1) window.scrollBy(0, dif);
+    };
+    corrigir();
+    let fim = performance.now() + 600; /* repete enquanto a fonte e as imagens terminam de acomodar */
+    let seguir = () => { corrigir(); if (performance.now() < fim) requestAnimationFrame(seguir); };
+    requestAnimationFrame(seguir);
+}
+// Primeiro card visível abaixo do cabeçalho (âncora quando o clique foi na própria receita).
+function cardVisivelNaTela() {
+    let topo = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--altura-topo')) || 0;
+    return [...document.querySelectorAll('.med-card')].find(c => { let r = c.getBoundingClientRect(); return r.height > 0 && r.bottom > topo + 10; }) || null;
+}
+
         function adicionarAoCarrinho(instanceId, btnId) {
     let inst = instanciasRenderizadas.find(i => i.instanceId === instanceId);
     let med = buscarMed(inst && (inst.grupo ? inst.escolha : inst.medKey));
@@ -843,17 +867,17 @@ let carrinhoPrescricao = []; // { nome, apres, texto }
     botao.classList.add("adicionado");
     setTimeout(() => { botao.innerHTML = original; botao.classList.remove("adicionado"); }, 1200);
 
-    atualizarCarrinhoUI();
+    manterNaTela(document.getElementById('card-' + instanceId) || botao, atualizarCarrinhoUI);
 }
 
 function removerDoCarrinho(index) {
     carrinhoPrescricao.splice(index, 1);
-    atualizarCarrinhoUI();
+    manterNaTela(cardVisivelNaTela(), atualizarCarrinhoUI);
 }
 
 function limparCarrinho() {
     carrinhoPrescricao = [];
-    atualizarCarrinhoUI();
+    manterNaTela(cardVisivelNaTela(), atualizarCarrinhoUI);
 }
 
 function atualizarCarrinhoUI() {
