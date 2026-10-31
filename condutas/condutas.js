@@ -88,9 +88,13 @@ function trocarModo(modo) {
     window.scrollTo(0, 0);
 }
 
-// "← Todas as condutas": se a conduta entrou no histórico, volta por ele (igual ao botão do celular).
+// "← Condutas": sempre mostra a lista de condutas. Se a conduta foi aberta a partir da lista, volta pelo
+// histórico (igual ao botão do celular). Se veio direto da Prescrição (link "Conduta passo a passo"),
+// voltar pelo histórico levaria à Prescrição (bug relatado pelo Dr. Jonas): troca o passo atual pela lista.
 function voltarListaCondutas() {
-    if (history.state && history.state.cond) { history.back(); return; }
+    let st = history.state || {};
+    if (st.cond && st.daLista) { history.back(); return; }
+    if (st.cond) { try { history.replaceState({ modo: 'condutas', cond: null }, '', location.href); } catch (e) { } }
     renderizarListaCondutas(); window.scrollTo(0, 0);
 }
 
@@ -163,7 +167,9 @@ function abrirConduta(id) {
     let c = condutasJR[id];
     if (!c) return;
     condutaAberta = id;
-    empurrarHistorico({ modo: 'condutas', cond: id });
+    let st = history.state || {};
+    /* daLista: a conduta foi aberta a partir da lista; aí o "← Condutas" pode voltar pelo histórico */
+    empurrarHistorico({ modo: 'condutas', cond: id, daLista: st.modo === 'condutas' && !st.cond });
     let blocos = c.blocos || [{ secoes: c.secoes }];
     let n = 0;
     let indice = blocos.filter(b => b.titulo).map((b, bi) =>
