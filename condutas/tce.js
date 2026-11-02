@@ -197,7 +197,7 @@ registrarConduta({
                             let g = Math.max(...v);
                             if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "TC urgente, neurocirurgia desde o início e UTI pediátrica (passos 5 a 9)." };
                             if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Internar para observação neurológica seriada e avaliação da neurocirurgia; repetir a TC se piorar." };
-                            return { num: "🏠", rotulo: "Observar 4–6 h e alta", cor: "#16a34a", texto: "Observação de no mínimo 4 h (até 6 a 8 h) no PS e alta com as orientações do bloco 🏠." };
+                            return { num: "🏠", rotulo: "Observar 4–6 h e alta", cor: "#16a34a", texto: "Observação de no mínimo 4 h (até 6 a 8 h) no PS e alta com as orientações da aba Ambulatório." };
                         },
                         nota: "UTI no moderado e no grave: SBP. Observação e TC pelo PECARN. Os demais critérios de internação reúnem as situações de risco descritas no Einstein e na SBP."
                     }
@@ -215,9 +215,9 @@ registrarConduta({
                 {
                     passo: 3,
                     titulo: "Glasgow, pupilas e glicemia",
-                    resumo: "Classificar a gravidade pelo Glasgow do bloco 🔎.",
+                    resumo: "Classificar a gravidade pelo Glasgow da aba Diagnóstico.",
                     itens: [
-                        "Calcular o Glasgow (versão para &lt; 2 anos se necessário) no bloco 🔎. Leve 13–15 · moderado 9–12 · grave 3–8.",
+                        "Calcular o Glasgow (versão para &lt; 2 anos se necessário) na aba Diagnóstico. Leve 13–15 · moderado 9–12 · grave 3–8.",
                         "Pupilas (tamanho, simetria, reação), postura, déficit focal, fontanela.",
                         "Glicemia capilar: tratar a hipoglicemia; manter glicemia até 180 mg/dL (Einstein).",
                         "Examinar o couro cabeludo (hematomas, afundamento), sinais de fratura de base e a coluna cervical."
@@ -228,11 +228,11 @@ registrarConduta({
                     titulo: "TCE leve: PECARN e observação",
                     resumo: "TC só se o PECARN indicar; senão, observar 4 a 6 h.",
                     itens: [
-                        "Aplicar o PECARN da idade (bloco 🔎): alto risco → TC · intermediário → TC ou observação · todos \"Não\" → sem TC.",
+                        "Aplicar o PECARN da idade (aba Diagnóstico): alto risco → TC · intermediário → TC ou observação · todos \"Não\" → sem TC.",
                         "Equilibrar o risco de lesão com a radiação da TC: o objetivo é não deixar passar lesão e não irradiar sem necessidade.",
                         "<strong>Observação:</strong> mínimo de 4 horas, no máximo 6 a 8 h (SBP). Piora durante a observação (vômitos, sonolência, cefaleia, queda do Glasgow) → TC.",
                         "TC inicial normal: em geral não precisa repetir nem internar para observação neurológica. Repetir a TC se houver qualquer piora neurológica.",
-                        "Alta com orientações do bloco 🏠."
+                        "Alta com orientações da aba Ambulatório."
                     ]
                 },
                 {

@@ -600,10 +600,10 @@ registrarConduta({
                         "<strong>A — Via aérea:</strong> Glasgow ≤ 8: proteger a via aérea e passar SNG. Evitar intubar; se intubar, não hiperventilar (pCO₂ > 35).",
                         "<strong>B — Respiração:</strong> choque, inconsciente ou insuficiência respiratória: O₂ a 100% por máscara.",
                         "<strong>C — Circulação:</strong> 2 acessos venosos periféricos (um para soro/insulina, outro para coletas).",
-                        "<strong>D — Neurológico:</strong> Glasgow (escala no bloco 🔎). ≤ 13: UTI. Inconsciente: sonda vesical.",
+                        "<strong>D — Neurológico:</strong> Glasgow (escala na aba Diagnóstico). ≤ 13: UTI. Inconsciente: sonda vesical.",
                         "Pesar a criança (peso atual, não o informado). Obeso: usar o peso ideal.",
                         "Usa bomba de insulina: retirar.",
-                        "Marcar a gravidade (pH/bicarbonato) no bloco 🔎: grave ou choque → UTI."
+                        "Marcar a gravidade (pH/bicarbonato) na aba Diagnóstico: grave ou choque → UTI."
                     ],
                     tabela: {
                         titulo: "🧪 Exames para pedir na chegada",
@@ -619,7 +619,7 @@ registrarConduta({
                             ["HbA1c", "Controle prévio / diabetes de início"],
                             ["Se suspeita de infecção", "EAS, urocultura, hemocultura, RX de tórax, swab de orofaringe"]
                         ],
-                        nota: "Fórmulas (Na corrigido, osmolaridade, ânion gap) e o que se espera da correção: seção 🧪 Exames e cálculos, no bloco 🔎. K da gasometria não substitui o K do sangue."
+                        nota: "Fórmulas (Na corrigido, osmolaridade, ânion gap) e o que se espera da correção: seção 🧪 Exames e cálculos, na aba Diagnóstico. K da gasometria não substitui o K do sangue."
                     }
                 },
                 {
@@ -825,7 +825,7 @@ registrarConduta({
                     resumo: "pH > 7,30, HCO₃ > 15, cetonemia < 1 e via oral: passar para insulina SC.",
                     itens: [
                         "<strong>CAD resolvida:</strong> pH > 7,30, bicarbonato > 15 mEq/L e cetonemia < 1 mmol/L, com tolerância oral. Então: suspender o soro e planejar a insulina SC intensiva.",
-                        "<strong>A troca (hora, doses e prescrição):</strong> passo 8, no bloco 🚨 acima. Antes de uma refeição; regular SC e desligar a bomba 30 a 60 min depois.",
+                        "<strong>A troca (hora, doses e prescrição):</strong> passo 8, na aba Emergência. Antes de uma refeição; regular SC e desligar a bomba 30 a 60 min depois.",
                         "Já usava insulina: retomar a dose prévia (50% basal e 50% bolus) ou recolocar a bomba de insulina.",
                         "Diabetes novo, na internação: basal 0,5 U/kg/dia (< 4 anos: 0,3 U/kg/dia) + regular conforme o HGT (IFF/UFTM). O esquema definitivo (basal-bolus com contagem de carboidratos) é ajustado depois, com o endocrinologista.",
                         "HGT antes das refeições e às 3h da madrugada; corrigir com insulina rápida."

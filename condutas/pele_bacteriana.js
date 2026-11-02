@@ -70,7 +70,7 @@ registrarConduta({
     cor: "#be185d",
     kw: "impetigo bolhoso crostoso foliculite furunculo carbunculo abscesso ectima erisipela celulite celulite orbitaria periorbitaria fasciite necrosante sindrome da pele escaldada estafilococica paroniquia dactilite bolhosa dermatite perianal estreptococica piodermite staphylococcus aureus estreptococo mrsa",
     resumo: "Uma página por doença: impetigo, foliculite, furúnculo, ectima, paroníquia, dermatite perianal, erisipela, celulite, celulite orbitária, pele escaldada e fasciíte — clínica, diagnóstico, tratamento em casa e no hospital, complicações.",
-    legenda: "Conduta conforme a SBP – Departamentos de Dermatologia e Infectologia (2022), o Whitebook (impetigo, celulite, celulite orbitária e erisipela) e a IDSA (2014). Fotos reais do DermNet, com crédito. Toque no nome da doença no índice acima.",
+    legenda: "Conduta conforme a SBP – Departamentos de Dermatologia e Infectologia (2022), o Whitebook (impetigo, celulite, celulite orbitária e erisipela) e a IDSA (2014). Fotos reais do DermNet, com crédito. Toque no nome da doença nas abas acima.",
     padraoTexto: true, // padrão de escrita (rótulo azul, subitens ›, caixa de atenção)
 
     blocos: [
