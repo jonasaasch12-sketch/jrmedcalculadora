@@ -109,7 +109,7 @@ registrarConduta({
                     itens: [
                         "<span class=\"cond-passo\">1</span> <strong>Internar?</strong> Critérios clicáveis: UTI, enfermaria ou casa (celulite orbitária, proptose, dor ao mexer o olho, sinais neurológicos).",
                         "<span class=\"cond-passo\">2</span> <strong>Confirmar a apresentação:</strong> persistente, piora ou início grave. Sem raio-X.",
-                        "<span class=\"cond-passo\">3</span> <strong>Antibiótico ou observar:</strong> pelo quadro de gravidade (bloco 🔎).",
+                        "<span class=\"cond-passo\">3</span> <strong>Antibiótico ou observar:</strong> pelo quadro de gravidade (aba Diagnóstico).",
                         "<span class=\"cond-passo\">4</span> <strong>Antibiótico:</strong> amoxicilina 10 dias; amoxicilina + clavulanato se fator de risco. Vômitos: ceftriaxona IM.",
                         "<span class=\"cond-passo\">5</span> <strong>Alérgico:</strong> sem anafilaxia, cefalosporina; com anafilaxia, levofloxacino ou clindamicina + cefixima.",
                         "<span class=\"cond-passo\">6</span> <strong>Sintomáticos:</strong> lavagem nasal e analgésico. Sem descongestionante ou anti-histamínico.",

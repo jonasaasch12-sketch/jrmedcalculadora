@@ -145,7 +145,7 @@ registrarConduta({
                             let g = Math.max(...v);
                             if (g === 3) return { num: "UTI", rotulo: "UTI pediátrica", cor: "#dc2626", texto: "Estabilizar (conduta de sepse se choque), antibiótico já, punção adiada, acionar a UTI." };
                             if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Antibiótico EV, dexametasona se bacteriana suspeita, sinais vitais, nível de consciência e perímetro cefálico (lactente) seriados." };
-                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Sintomáticos, hidratação oral, retorno em 24 h ou antes se piorar (bloco 🏠). Na dúvida, internar." };
+                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Sintomáticos, hidratação oral, retorno em 24 h ou antes se piorar (aba Ambulatório). Na dúvida, internar." };
                         },
                         nota: "As diretrizes não trazem lista formal de internação. Critérios reunidos dos sinais de gravidade (IDSA 2004, ESCMID 2016) e do Bacterial Meningitis Score (Nigrovic 2007)."
                     }

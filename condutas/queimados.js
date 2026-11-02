@@ -291,7 +291,7 @@ registrarConduta({
                         "<span class=\"cond-passo\">7</span> <strong>D e E:</strong> trauma associado, glicemia, aquecer",
                         "<span class=\"cond-passo\">8</span> <strong>Analgesia:</strong> EV, titulada",
                         "<span class=\"cond-passo\">9</span> <strong>Ferida:</strong> cobrir, tétano, escarotomia se circunferencial",
-                        "<span class=\"cond-passo\">10</span> <strong>Transferir:</strong> se houver critério (bloco 🔎)"
+                        "<span class=\"cond-passo\">10</span> <strong>Transferir:</strong> se houver critério (aba Diagnóstico)"
                     ]
                 },
                 {
@@ -301,7 +301,7 @@ registrarConduta({
                     resumo: "Para decidir o destino. Não atrasa interromper a queimadura e o ABC (passos 2 a 5).",
                     alerta: true,
                     itens: [
-                        "Os critérios de transferência para centro de queimados (American Burn Association) estão no bloco 🔎; aqui eles viram a decisão clicável."
+                        "Os critérios de transferência para centro de queimados (American Burn Association) estão na aba Diagnóstico; aqui eles viram a decisão clicável."
                     ],
                     escore: {
                         id: "internacao_queimados",
@@ -326,9 +326,9 @@ registrarConduta({
                             let g = Math.max(...v);
                             if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "Via aérea segura, 2 acessos, fórmula do ATLS, sonda vesical; UTI e transferência para centro de queimados (passo 10)." };
                             if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Internar e contatar o centro de queimados de referência (critérios da American Burn Association)." };
-                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Pequeno queimado sem critério: tratamento em casa (bloco 🏠)." };
+                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Pequeno queimado sem critério: tratamento em casa (aba Ambulatório)." };
                         },
-                        nota: "Critérios de transferência da American Burn Association (bloco 🔎). Revisão de 2020 da ABA: consultar também em 2º grau profundo ≥ 10% e 3º grau ≥ 5%."
+                        nota: "Critérios de transferência da American Burn Association (aba Diagnóstico). Revisão de 2020 da ABA: consultar também em 2º grau profundo ≥ 10% e 3º grau ≥ 5%."
                     }
                 },
                 {
@@ -349,7 +349,7 @@ registrarConduta({
                     alerta: true,
                     resumo: "Lesão inalatória: intubar cedo, antes do edema.",
                     itens: [
-                        "Avaliar os sinais de lesão inalatória (bloco 🔎). O edema de via aérea piora nas horas seguintes, principalmente com a hidratação.",
+                        "Avaliar os sinais de lesão inalatória (aba Diagnóstico). O edema de via aérea piora nas horas seguintes, principalmente com a hidratação.",
                         "Rouquidão, estridor, queimadura profunda de face/pescoço ou circunferencial do pescoço, SCQ extensa ou rebaixamento: intubação precoce pelo profissional mais experiente.",
                         "Usar tubo com cuff e não cortar o tubo (o edema facial aumenta e o tubo curto pode sair).",
                         "Imobilização cervical se houver mecanismo de trauma (explosão, queda, acidente)."
@@ -379,9 +379,9 @@ registrarConduta({
                 {
                     passo: 6,
                     titulo: "SCQ, fórmula do ATLS e diurese",
-                    resumo: "O boneco do bloco 🔎 calcula o volume e a velocidade.",
+                    resumo: "O boneco da aba Diagnóstico calcula o volume e a velocidade.",
                     itens: [
-                        "Calcular a SCQ (só 2º e 3º grau) no boneco do bloco 🔎: ele já mostra o volume e as velocidades.",
+                        "Calcular a SCQ (só 2º e 3º grau) no boneco da aba Diagnóstico: ele já mostra o volume e as velocidades.",
                         "<strong>Fórmula do ATLS (Ringer lactato, 24 h):</strong> ≤ 13 anos: 3 mL × kg × %SCQ · ≥ 14 anos: 2 mL × kg × %SCQ · elétrica: 4 mL × kg × %SCQ.",
                         "Metade nas primeiras 8 h contadas desde a hora da queimadura (não da chegada); a outra metade nas 16 h seguintes.",
                         "<strong>Crianças ≤ 30 kg:</strong> somar soro de manutenção com glicose (risco de hipoglicemia: pouca reserva de glicogênio).",
@@ -428,7 +428,7 @@ registrarConduta({
                     titulo: "Transferência",
                     resumo: "Contato médico a médico; enviar a SCQ, o volume e a diurese.",
                     itens: [
-                        "Se houver critério (bloco 🔎), contatar o centro de queimados de referência.",
+                        "Se houver critério (aba Diagnóstico), contatar o centro de queimados de referência.",
                         "Enviar: hora da queimadura, mecanismo, SCQ e profundidade, volume recebido, diurese, via aérea, analgesia, vacinação e exames.",
                         "Transportar com via aérea segura, 2 acessos, sonda vesical, aquecido e com a ferida coberta."
                     ]

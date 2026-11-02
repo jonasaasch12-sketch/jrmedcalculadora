@@ -98,7 +98,7 @@ registrarConduta({
             titulo: "Condução na emergência: complicações",
             icone: "🚨",
             cor: "#dc2626",
-            subtitulo: "Para os casos graves. O tratamento comum do parasita está no bloco 🏠.",
+            subtitulo: "Para os casos graves. O tratamento comum do parasita está na aba Ambulatório.",
             secoes: [
                 {
                     titulo: "Linha do tempo (resumo)",
@@ -119,10 +119,10 @@ registrarConduta({
                     passo: 1,
                     titulo: "🏥 Critérios de internação",
                     icone: "🏥",
-                    resumo: "Primeiro decida: UTI, internar ou tratar em casa. O tratamento comum do parasita é ambulatorial (bloco 🏠).",
+                    resumo: "Primeiro decida: UTI, internar ou tratar em casa. O tratamento comum do parasita é ambulatorial (aba Ambulatório).",
                     alerta: true,
                     itens: [
-                        "A maioria das parasitoses é tratada em casa. Internar pelas complicações (bloco 🔎, sinais de gravidade) (SBP)."
+                        "A maioria das parasitoses é tratada em casa. Internar pelas complicações (aba Diagnóstico, sinais de gravidade) (SBP)."
                     ],
                     escore: {
                         id: "internacao_parasitoses",
@@ -145,9 +145,9 @@ registrarConduta({
                             let g = Math.max(...v);
                             if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "Estabilizar, antibiótico EV, cirurgia pediátrica de urgência se abdome agudo; UTI pediátrica." };
                             if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Jejum e hidratação EV conforme o caso, exames de imagem e cirurgia pediátrica se suspeita de obstrução ou migração (passos 3 a 6)." };
-                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Tratamento do parasita em casa (bloco 🏠) e controle de cura quando indicado." };
+                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Tratamento do parasita em casa (aba Ambulatório) e controle de cura quando indicado." };
                         },
-                        nota: "Critérios reunidos a partir dos sinais de gravidade e das complicações descritas na SBP (bloco 🔎 e passos 3 a 6)."
+                        nota: "Critérios reunidos a partir dos sinais de gravidade e das complicações descritas na SBP (aba Diagnóstico e passos 3 a 6)."
                     }
                 },
                 {

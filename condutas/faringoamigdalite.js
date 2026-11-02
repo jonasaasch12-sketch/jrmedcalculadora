@@ -139,7 +139,7 @@ registrarConduta({
                             if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Hidratação EV, analgesia, antibiótico EV se abscesso; otorrino para drenagem. Tomografia cervical com contraste se suspeita de abscesso profundo." };
                             return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Tratamento em casa (passos 2 a 5). Retornar se dificuldade para engolir saliva, trismo, voz abafada, torcicolo ou falta de ar." };
                         },
-                        nota: "A IDSA 2012 não traz uma lista formal de internação. Estes critérios reúnem os sinais de alarme deste passo (abscessos, epiglotite, desidratação) e as complicações supurativas descritas no bloco 🏠."
+                        nota: "A IDSA 2012 não traz uma lista formal de internação. Estes critérios reúnem os sinais de alarme deste passo (abscessos, epiglotite, desidratação) e as complicações supurativas descritas na aba Ambulatório."
                     }
                 },
                 {

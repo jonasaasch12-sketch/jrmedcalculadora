@@ -138,7 +138,7 @@ registrarConduta({
                             let g = Math.max(...v);
                             if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "Estabilizar (PALS), corrigir a glicose e o sódio, gasometria; UTI pediátrica." };
                             if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Plano C (hidratação EV) ou gastróclise, eletrólitos e reavaliação frequente." };
-                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Desidratação sem gravidade: Plano B na unidade até reidratar e depois Plano A em casa (bloco 🏠)." };
+                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Desidratação sem gravidade: Plano B na unidade até reidratar e depois Plano A em casa (aba Ambulatório)." };
                         },
                         nota: "Plano C e falha do Plano B: Guia da SBP e Ministério da Saúde. Vômitos biliosos/incoercíveis, suspeita cirúrgica, alteração neurológica e cuidador incapaz: ESPGHAN 2014. O nível UTI reúne as complicações graves descritas nessas fontes."
                     }

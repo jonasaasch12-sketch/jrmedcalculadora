@@ -107,7 +107,7 @@ function renderizarListaCondutas() {
     lista.sort((a, b) => (b.destaque ? 1 : 0) - (a.destaque ? 1 : 0)); /* conduta com destaque: true vem primeiro (ventilação mecânica, pedido do Dr. Jonas) */
     lista.forEach(c => (porCat[c.categoria] = porCat[c.categoria] || []).push(c));
 
-    let html = `<div class="cond-intro">📖 <strong>Condutas</strong> — protocolos das doenças mais prevalentes. As medicações de cada conduta usam o peso e a idade digitados acima.</div>`;
+    let html = `<div class="cond-intro"><h2>Condutas</h2><p>Protocolos das doenças mais prevalentes. As medicações de cada conduta usam o peso e a idade digitados acima.</p></div>`;
     if (!lista.length) html += `<div class="cond-vazio">Nenhuma conduta encontrada.</div>`;
     Object.keys(porCat).forEach(cat => {
         html += `<div class="cond-cat-titulo">${escCond(cat)}</div><div class="cond-grade">`;
@@ -160,41 +160,65 @@ function htmlBlocoConduta(b) {
     return html;
 }
 
-// Uma conduta pode ter "blocos" (ex.: Diagnóstico · Emergência · Ambulatório),
-// cada um com suas seções; ou só "secoes" (um bloco sem título).
-// As seções abrem e fecham com um toque. Todas começam fechadas (pedido do Dr. Jonas); "aberta" é ignorado.
-function abrirConduta(id) {
+// Visual "referência clínica" (escolhido pelo Dr. Jonas, 11/2026): sem emojis nos títulos, uma cor de destaque,
+// abas por etapa (Diagnóstico | Emergência | Ambulatório) e seções que abrem e fecham com + e −.
+// Uma conduta pode ter "blocos" (cada um vira uma aba, com suas seções) ou só "secoes" (sem abas).
+// As seções começam fechadas (pedido do Dr. Jonas); "aberta" é ignorado.
+let blocoAtivoConduta = 0;
+const RE_EMOJI = /[\p{Extended_Pictographic}\uFE0F\u200D]/gu;
+function semEmoji(t) { return String(t || '').replace(RE_EMOJI, '').replace(/\s{2,}/g, ' ').trim(); }
+
+// Nome curto da aba a partir do título do bloco (ou b.aba, se a conduta quiser outro).
+function nomeAbaBloco(b) {
+    if (b.aba) return b.aba;
+    let t = semEmoji(b.titulo), m = t.toLowerCase();
+    if (m.startsWith('diagnóstico')) return 'Diagnóstico';
+    if (m.includes('emergência') || m.includes('pronto-socorro')) return 'Emergência';
+    if (m.startsWith('condução hospitalar')) return 'Hospitalar';
+    if (m.startsWith('condução')) return 'Condução';
+    if (m.startsWith('ambulatório')) return 'Ambulatório';
+    return t.split(/[:,]/)[0].trim();
+}
+
+function abrirConduta(id, bloco) {
     let c = condutasJR[id];
     if (!c) return;
+    let mesma = condutaAberta === id;
     condutaAberta = id;
     let st = history.state || {};
     /* daLista: a conduta foi aberta a partir da lista; aí o "← Condutas" pode voltar pelo histórico */
     empurrarHistorico({ modo: 'condutas', cond: id, daLista: st.modo === 'condutas' && !st.cond });
     let blocos = c.blocos || [{ secoes: c.secoes }];
+    let comAbas = blocos.filter(b => b.titulo).length > 1;
+    if (typeof bloco === 'number') blocoAtivoConduta = bloco;
+    else if (!mesma) blocoAtivoConduta = 0;
+    if (!blocos[blocoAtivoConduta]) blocoAtivoConduta = 0;
     let n = 0;
-    let indice = blocos.filter(b => b.titulo).map((b, bi) =>
-        `<a href="#cond-bloco-${bi}" class="cond-indice-bloco" style="--cor-bloco:${b.cor || c.cor}" onclick="document.getElementById('cond-bloco-${bi}').scrollIntoView({behavior:'smooth'});return false;">${b.icone || ''} ${escCond(b.titulo)}</a>`).join('');
+    let abas = comAbas ? blocos.map((b, bi) => b.titulo
+        ? `<button type="button" role="tab" class="cond-aba${bi === blocoAtivoConduta ? ' ativa' : ''}" data-bloco="${bi}" aria-selected="${bi === blocoAtivoConduta}" onclick="mostrarBlocoConduta(${bi})" title="${escCond(semEmoji(b.titulo))}">${escCond(nomeAbaBloco(b))}</button>` : '').join('') : '';
     let html = `
         <div class="cond-barra"><button type="button" class="cond-voltar" onclick="voltarListaCondutas()" title="Voltar para todas as condutas">← Condutas</button><span class="cond-caminho">Condutas › <b>${escCond(c.nome)}</b></span></div>
-        <div class="cond-cabecalho" style="--cor-cat:${c.cor}">
+        <div class="cond-cabecalho">
             <div class="cond-cabecalho-cat">${escCond(c.categoria)}</div>
             <h2>${escCond(c.nome)}</h2>
             <div class="cond-cabecalho-resumo">${escCond(c.resumo || '')}</div>
         </div>
         ${c.legenda ? `<div class="cond-legenda">${c.legenda}</div>` : ''}
-        ${indice ? `<nav class="cond-indice cond-indice-blocos">${indice}</nav>` : ''}
         ${c.ferramentaTopo && typeof window[c.ferramentaTopo] === 'function' ? window[c.ferramentaTopo]() : ''}
-        <div class="cond-acoes"><button type="button" onclick="abrirTodasSecoes(true)">⊕ Abrir tudo</button><button type="button" onclick="abrirTodasSecoes(false)">⊖ Fechar tudo</button></div>`;
+        ${abas ? `<nav class="cond-abas" role="tablist">${abas}</nav>` : ''}`;
 
     blocos.forEach((b, bi) => {
-        if (b.titulo) html += `<div class="cond-bloco" id="cond-bloco-${bi}" style="--cor-bloco:${b.cor || c.cor}"><span>${b.icone || ''} ${escCond(b.titulo)}</span>${b.subtitulo ? `<small>${b.subtitulo}</small>` : ''}</div>`;
+        let oculto = comAbas && bi !== blocoAtivoConduta;
+        html += `<div class="cond-bloco-corpo" id="cond-bloco-${bi}" data-bloco="${bi}"${oculto ? ' hidden' : ''}>`;
+        if (b.titulo) html += `<div class="cond-bloco"><span class="cond-bloco-titulo">${escCond(semEmoji(b.titulo))}</span>${b.subtitulo ? `<small>${b.subtitulo}</small>` : ''}</div>`;
         b.secoes.forEach(s => {
             let i = n++;
-            html += `<details class="cond-secao${s.alerta ? ' cond-alerta' : ''}" id="cond-sec-${i}" style="--cor-cat:${c.cor}">
-                <summary><h3>${s.passo ? `<span class="cond-passo">${s.passo}</span>` : (s.icone || '')} ${escCond(s.titulo)}</h3>${s.resumo ? `<div class="cond-secao-resumo">${s.resumo}</div>` : ''}</summary>
+            html += `<details class="cond-secao${s.alerta ? ' cond-alerta' : ''}" id="cond-sec-${i}">
+                <summary><h3>${s.passo ? `<span class="cond-passo">${s.passo}</span>` : ''}${escCond(semEmoji(s.titulo))}</h3>${s.resumo ? `<div class="cond-secao-resumo">${s.resumo}</div>` : ''}</summary>
                 <div class="cond-secao-corpo">${htmlBlocoConduta(s)}</div>
             </details>`;
         });
+        html += `</div>`;
     });
     html += `<div class="cond-fonte" id="cond-fontes"><strong>Fontes:</strong><ol>${c.fontes.map((f, k) => `<li id="cond-fonte-${k}"><span class="cond-fonte-txt">${escCond(f)}</span><button type="button" class="cond-fonte-voltar" onclick="voltarDaFonte()">↩ voltar ao texto</button></li>`).join('')}</ol><strong>Revisão:</strong> ${escCond(c.revisao)}</div>`;
     let area = document.getElementById('area-condutas');
@@ -257,10 +281,30 @@ function irParaFonte(link) {
 function voltarDaFonte() {
     document.querySelectorAll('#cond-fontes li.destacada').forEach(li => li.classList.remove('destacada'));
     if (citacaoOrigem && citacaoOrigem.isConnected) {
+        mostrarAbaDe(citacaoOrigem);
         citacaoOrigem.scrollIntoView({ behavior: 'smooth', block: 'center' });
         citacaoOrigem.classList.add('piscando');
         let el = citacaoOrigem; setTimeout(() => el.classList.remove('piscando'), 1600);
     }
+}
+
+// Troca de aba (sem recriar a página: o que foi aberto e marcado continua lá).
+function mostrarBlocoConduta(bi) {
+    blocoAtivoConduta = bi;
+    document.querySelectorAll('#area-condutas .cond-bloco-corpo').forEach(el => { el.hidden = Number(el.dataset.bloco) !== bi; });
+    document.querySelectorAll('#area-condutas .cond-aba').forEach(a => { let on = Number(a.dataset.bloco) === bi; a.classList.toggle('ativa', on); a.setAttribute('aria-selected', on); });
+    let abas = document.querySelector('#area-condutas .cond-abas');
+    if (abas) {
+        let topo = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--altura-topo')) || 0) + 34;
+        let y = abas.getBoundingClientRect().top;
+        if (y < topo) window.scrollBy(0, y - topo);
+        let ativa = abas.querySelector('.cond-aba.ativa'); if (ativa) ativa.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
+}
+// Mostra a aba em que está um elemento (seção, citação...) antes de rolar até ele.
+function mostrarAbaDe(el) {
+    let corpo = el && el.closest && el.closest('.cond-bloco-corpo');
+    if (corpo && corpo.hidden) mostrarBlocoConduta(Number(corpo.dataset.bloco));
 }
 
 function abrirTodasSecoes(abrir) {
@@ -272,17 +316,18 @@ function abrirTodasSecoes(abrir) {
 // (ex.: 'condução' = primeiro bloco cujo título tem "condução": emergência/hospital).
 function irParaConduta(id, bloco) {
     if (!condutasJR[id] || !document.getElementById('area-condutas')) return;
+    if (condutaAberta !== id) blocoAtivoConduta = 0;
     condutaAberta = id;
     trocarModo('condutas');
     let blocos = condutasJR[id].blocos || [];
     let bi = bloco ? blocos.findIndex(b => (b.titulo || '').toLowerCase().includes(bloco)) : -1;
-    let alvo = bi >= 0 ? document.getElementById('cond-bloco-' + bi) : null;
-    if (alvo) setTimeout(() => alvo.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    if (bi >= 0) mostrarBlocoConduta(bi); /* abre já na aba da condução (emergência/hospital) */
 }
 
 function abrirSecaoConduta(i) {
     let sec = document.getElementById('cond-sec-' + i);
     if (!sec) return;
+    mostrarAbaDe(sec);
     sec.open = true;
     sec.scrollIntoView({ behavior: 'smooth' });
 }
