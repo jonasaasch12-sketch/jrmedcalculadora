@@ -114,6 +114,21 @@ registrarMedicamentos({
             atencao: "Não diluir em líquido quente."
         }
     },
+    "tgi_culturelle": {
+        cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "culturelle junior lactobacillus rhamnosus gg lgg probiotico diarreia gastroenterite tgi oral ambulatorial sache",
+        nome: "Culturelle Júnior (Lactobacillus rhamnosus GG)", apres: "Sachê 5 bilhões UFC",
+        info: "<strong>Conduta:</strong> 1 sachê de 12/12h por 5 dias (10¹⁰ UFC/dia). A partir de 1 ano.", badge: "1 Sachê 12/12h", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: (p, i) => {
+            if (i !== "" && parseFloat(i) < 1) return { v: "≥ 1 ano", r: "CULTURELLE JÚNIOR: USO A PARTIR DE 1 ANO (FABRICANTE)." };
+            return { v: "1 Sachê 12/12h", r: `${recHead}1) CULTURELLE JÚNIOR (LACTOBACILLUS RHAMNOSUS GG 5 BILHÕES UFC) SACHÊ ---- 2 CAIXAS\nDILUIR 1 SACHÊ EM ALIMENTO OU BEBIDA FRIA E TOMAR DE 12/12 HORAS POR 5 DIAS.` };
+        },
+        detalhes: {
+            indicacao: "Diarreia aguda (probiótico).",
+            dose: "1 sachê (5 × 10⁹ UFC) de 12/12h por 5 dias, a partir de 1 ano.",
+            atencao: "Não misturar em alimento ou bebida quente. Caixa com 6 sachês: 5 dias = 10 sachês (2 caixas)."
+        }
+    },
     "tgi_azitro": {
         cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)", 
         kw: "azitromicina diarreia disenteria antibiotico oral ambulatorial", nome: "Azitromicina Suspensão (Disenteria)", apres: "200 mg / 5 mL",
