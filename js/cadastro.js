@@ -117,7 +117,7 @@ function lerFormPerfil(px) {
 // null = perfil completo. Senão, o motivo (texto) para pedir que complete.
 function pendenciaPerfil(p) {
     if (!p || !p.nome || !ATIVIDADES_PERFIL[p.atividade] || !p.aceiteEm) return "Para continuar usando o JR MED, complete o seu cadastro profissional.";
-    if (p.aceiteVersao !== VERSAO_TERMOS) return "Publicamos os Termos de Uso e a Política de Privacidade do JR MED (LGPD). Confira os seus dados, leia os documentos e marque o aceite no final.";
+    if (!(String(p.aceiteVersao || "") >= VERSAO_TERMOS)) return /* ">=": aceite de versão mais nova (teste) vale no oficial */ "Publicamos os Termos de Uso e a Política de Privacidade do JR MED (LGPD). Confira os seus dados, leia os documentos e marque o aceite no final.";
     if (ATIVIDADES_PERFIL[p.atividade].conselho && (!p.registro || !p.uf)) return `Falta informar o seu ${ATIVIDADES_PERFIL[p.atividade].conselho} e a UF.`;
     if (p.atividade === 'academico') {
         if (!p.formaturaMes || !p.formaturaAno || !p.instituicao) return "Falta informar a faculdade e a previsão de formatura.";
