@@ -826,6 +826,21 @@ function cardVisivelNaTela() {
     return [...document.querySelectorAll('.med-card')].find(c => { let r = c.getBoundingClientRect(); return r.height > 0 && r.bottom > topo + 10; }) || null;
 }
 
+// Via da receita (cabeçalho do grupo na receita copiada) = 1ª linha do texto do card, quando ela indica a via.
+function viaDaReceita(textoCompleto, med) {
+    let primeiraLinha = textoCompleto.split('\n')[0].trim();
+    let primeiraLinhaUpper = primeiraLinha.toUpperCase();
+    if (primeiraLinhaUpper.startsWith("USO") ||
+        primeiraLinhaUpper.startsWith("VIA") ||
+        primeiraLinhaUpper.includes("NEBULIZAÇÃO") ||
+        primeiraLinhaUpper.includes("VENÓCLISE") ||
+        primeiraLinhaUpper.includes("DISPOSITIVOS") ||
+        primeiraLinhaUpper.includes("ORIENTAÇÕES")) return primeiraLinha;
+    /* remédio da equipe cadastrado sem cabeçalho */
+    if (med && med.custom && med._regra && med._regra.via) return `USO ${med._regra.via.toUpperCase()}`;
+    return "USO ORAL"; /* padrão de segurança */
+}
+
         function adicionarAoCarrinho(instanceId, btnId) {
     let inst = instanciasRenderizadas.find(i => i.instanceId === instanceId);
     let med = buscarMed(inst && (inst.grupo ? inst.escolha : inst.medKey));
@@ -835,24 +850,7 @@ function cardVisivelNaTela() {
 
     // Extrai o texto gerado
     let textoCompleto = textoDaCaixa(recBox).trim();
-    // A "Via" será identificada automaticamente pela 1ª linha do texto do card
-    let primeiraLinha = textoCompleto.split('\n')[0].trim();
-    let primeiraLinhaUpper = primeiraLinha.toUpperCase();
-    
-    let cabecalhoVia = "USO ORAL"; // Padrão de segurança
-    
-    // Se a primeira linha indicar a rota (USO, VIA, etc), usamos ela como cabeçalho
-    if (primeiraLinhaUpper.startsWith("USO") || 
-        primeiraLinhaUpper.startsWith("VIA") || 
-        primeiraLinhaUpper.includes("NEBULIZAÇÃO") || 
-        primeiraLinhaUpper.includes("VENÓCLISE") || 
-        primeiraLinhaUpper.includes("DISPOSITIVOS") ||
-        primeiraLinhaUpper.includes("ORIENTAÇÕES")) {
-        cabecalhoVia = primeiraLinha;
-    } else if (med.custom && med._regra && med._regra.via) {
-        // Caso seja um remédio da equipe cadastrado manualmente sem cabeçalho
-        cabecalhoVia = `USO ${med._regra.via.toUpperCase()}`;
-    }
+    let cabecalhoVia = viaDaReceita(textoCompleto, med);
 
     let nomeItem = med.nome;
     if (inst && inst.grupo) {
@@ -886,6 +884,7 @@ function atualizarCarrinhoUI() {
     badge.innerText = carrinhoPrescricao.length;
     fab.classList.toggle('visivel', carrinhoPrescricao.length > 0);
 
+    if (typeof atalhosAtualizarReceita === 'function') atalhosAtualizarReceita(); /* janela de ⚡ Atalhos */
     let lista = document.getElementById('listaCarrinho');
     document.body.classList.toggle('receita-vazia', carrinhoPrescricao.length === 0);
     if (carrinhoPrescricao.length === 0) {
@@ -912,7 +911,8 @@ function atualizarCarrinhoUI() {
     lista.innerHTML = html;
 }
 
-        function copiarReceitaCompleta() {
+// Texto da receita completa (itens agrupados pela via). Usado aqui e na janela de ⚡ Atalhos.
+function textoReceitaCompleta() {
     // Agrupar itens pela via exata que capturamos
     let porVia = {};
     carrinhoPrescricao.forEach(item => {
@@ -954,6 +954,11 @@ function atualizarCarrinhoUI() {
 
         return linhas.join('\n\n'); // Espaçamento duplo entre as medicações de um grupo
     }).join('\n\n'); // Entre vias diferentes: só uma linha em branco, sem traço
+    return texto;
+}
+
+function copiarReceitaCompleta() {
+    let texto = textoReceitaCompleta();
 
     navigator.clipboard.writeText(texto).then(() => {
         let btn = document.querySelector('.btn-copiar-receita-completa');
