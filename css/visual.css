@@ -305,7 +305,12 @@ html[data-theme="dark"] .login-box { background: var(--surface); }
 .faixa-teste { font-size: 12px; padding: 6px 12px; background: #b91c1c; letter-spacing: .01em; }
 
 /* ---------- Condutas (harmonia com o novo visual) ---------- */
-/* Condutas: visual próprio em condutas/condutas.css ("referência clínica", 11/2026). */
+/* Visual anterior das condutas (oficial); o visual novo, só no teste, está no fim de condutas/condutas.css. */
+:where(html:not(.cond-visual-novo)) .cond-item, :where(html:not(.cond-visual-novo)) .cond-secao, :where(html:not(.cond-visual-novo)) .cond-intro { border-radius: var(--radius); box-shadow: var(--shadow-xs); }
+:where(html:not(.cond-visual-novo)) .cond-item { border-left-width: 5px; }
+:where(html:not(.cond-visual-novo)) .cond-item-nome { font-weight: 700; }
+:where(html:not(.cond-visual-novo)) .cond-cabecalho { border-radius: var(--radius); background: color-mix(in srgb, var(--cor-cat) 9%, var(--surface)); }
+:where(html:not(.cond-visual-novo)) .cond-indice a { border-radius: 999px; font-weight: 600; }
 
 /* ---------- Ajustes finos ---------- */
 .header-banner, .control-panel { background: color-mix(in srgb, var(--surface) 97%, transparent); }

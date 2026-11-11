@@ -82,3 +82,11 @@ html.visual-c .bottom-nav button { border-color:#e5e5ea!important }
 .visual-teste-btn { border: 1.5px solid var(--border-strong); background: var(--surface); color: var(--text-main); border-radius: 10px; padding: 10px 8px; font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; }
 .visual-teste-btn.ativo { border-color: var(--primary); background: var(--primary-soft); color: var(--primary-dark); box-shadow: inset 0 0 0 1px var(--primary); }
 .visual-teste-dica { display: block; margin-top: 8px; color: var(--text-muted); font-size: 12px; }
+
+/* Condutas no visual anterior (oficial). O visual novo (html.cond-visual-novo) só existe no teste. */
+html.visual-a:where(:not(.cond-visual-novo)) .cond-indice-blocos a.cond-indice-bloco, html.visual-b:where(:not(.cond-visual-novo)) .cond-indice-blocos a.cond-indice-bloco, html.visual-c:where(:not(.cond-visual-novo)) .cond-indice-blocos a.cond-indice-bloco { background:var(--surface)!important;color:var(--text-main)!important;border:1px solid var(--border)!important;border-left:6px solid var(--cor-bloco)!important;text-align:left;padding-left:12px }
+html.visual-a:where(:not(.cond-visual-novo)) .cond-bloco, html.visual-b:where(:not(.cond-visual-novo)) .cond-bloco, html.visual-c:where(:not(.cond-visual-novo)) .cond-bloco { background:var(--surface)!important;color:var(--text-main)!important;border:1px solid var(--border);border-left:6px solid var(--cor-bloco) }
+html.visual-a:where(:not(.cond-visual-novo)) .cond-cabecalho, html.visual-b:where(:not(.cond-visual-novo)) .cond-cabecalho, html.visual-c:where(:not(.cond-visual-novo)) .cond-cabecalho { background:var(--surface)!important;border:1px solid var(--border);border-left:6px solid var(--cor-cat) }
+html.visual-a:where(:not(.cond-visual-novo)) .cond-cabecalho h2, html.visual-b:where(:not(.cond-visual-novo)) .cond-cabecalho h2, html.visual-c:where(:not(.cond-visual-novo)) .cond-cabecalho h2 { color:var(--text-main)!important }
+html.visual-b:where(:not(.cond-visual-novo)) .cond-cabecalho-resumo,
+html.visual-b:where(:not(.cond-visual-novo)) .cond-legenda { color:#c3cfdb!important }
