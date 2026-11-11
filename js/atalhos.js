@@ -21,7 +21,33 @@ const ATALHOS_ORIENTACOES = [
 const ATALHOS_CHAVE_MEUS = "jrmed_atalhos_meus";
 
 let janelaAtalhos = null;
-let atalhosEstado = { minimizado: false };
+let atalhosEstado = { minimizado: false, largura: 380, altura: 640 };
+
+// Diminui (só a barra azul) ou volta ao tamanho normal. O navegador só deixa mudar o tamanho
+// da janela logo depois de um clique nela; quando não deixa, a janela fica como estava.
+function atalhosConfirmar(win, msg) {
+    atalhosEstado.dialogo = true;
+    try { return win.confirm(msg); } finally { setTimeout(() => { atalhosEstado.dialogo = false; }, 300); }
+}
+function atalhosMinimizar(win, minimizar) {
+    let doc = win.document;
+    if (minimizar && atalhosEstado.dialogo) return; /* a caixa "Limpar a receita?" tira o foco, mas não é clique fora */
+    if (minimizar === atalhosEstado.minimizado) return;
+    if (minimizar) { atalhosEstado.largura = win.outerWidth || 380; atalhosEstado.altura = win.outerHeight || 640; }
+    atalhosEstado.minimizado = minimizar;
+    doc.body.classList.toggle("min", minimizar);
+    let b = doc.getElementById("at-min"); if (b) b.textContent = minimizar ? "Aumentar" : "Diminuir";
+    try { minimizar ? win.resizeTo(300, 90) : win.resizeTo(atalhosEstado.largura, atalhosEstado.altura); } catch (e) {}
+    if (minimizar) {
+        /* não conseguiu diminuir a janela (sem clique): volta o conteúdo para não ficar uma janela vazia */
+        setTimeout(() => {
+            if (atalhosEstado.minimizado && win.innerHeight > 200) {
+                atalhosEstado.minimizado = false; doc.body.classList.remove("min");
+                if (b) b.textContent = "Diminuir";
+            }
+        }, 250);
+    }
+}
 
 function atalhosDisponivel() {
     return ATALHOS_LIBERADOS || (typeof MODO_TESTE !== "undefined" && MODO_TESTE);
@@ -50,6 +76,7 @@ body{margin:0;font:15px/1.4 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans
 .topo #at-novo-pac{background:#fff;color:var(--azul);font-weight:800;white-space:nowrap}
 .topo #at-novo-pac:hover{background:#e3f0ff}
 body.min .topo #at-novo-pac{display:none}
+body.min .topo{cursor:pointer}
 .topo button{background:rgba(255,255,255,.18);color:#fff;border:0;border-radius:6px;padding:6px 10px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 .topo button:hover{background:rgba(255,255,255,.28)}
 .corpo{padding:10px;display:grid;gap:10px}
@@ -139,6 +166,8 @@ function htmlAtalhos() {
 function atalhosCopiar(doc, texto, botao) {
     let win = doc.defaultView;
     let ok = () => {
+        /* copiou → a janela diminui sozinha para liberar o prontuário (pedido do Dr. Jonas) */
+        setTimeout(() => atalhosMinimizar(win, true), 650);
         if (!botao) return;
         let antes = botao.textContent;
         botao.classList.add("copiado"); botao.textContent = "✓ Copiado";
@@ -240,12 +269,12 @@ function montarAtalhos(win) {
         } else if (b.id === "at-copiar-receita") {
             atalhosCopiar(doc, textoReceitaCompleta(), b);
         } else if (b.id === "at-limpar") {
-            if (win.confirm("Limpar a receita?")) { carrinhoPrescricao = []; atualizarCarrinhoUI(); }
+            if (atalhosConfirmar(win, "Limpar a receita?")) { carrinhoPrescricao = []; atualizarCarrinhoUI(); }
         } else if (b.dataset.meu) {
             let a = lerAtalhosMeus()[+b.dataset.meu]; if (a) atalhosCopiar(doc, a.texto, b);
         } else if (b.dataset.apagar) {
             let lista = lerAtalhosMeus(), a = lista[+b.dataset.apagar];
-            if (a && win.confirm(`Apagar o atalho "${a.nome}"?`)) { lista.splice(+b.dataset.apagar, 1); gravarAtalhosMeus(lista); atalhosMeusHtml(doc); }
+            if (a && atalhosConfirmar(win, `Apagar o atalho "${a.nome}"?`)) { lista.splice(+b.dataset.apagar, 1); gravarAtalhosMeus(lista); atalhosMeusHtml(doc); }
         } else if (b.id === "at-novo-btn") {
             $("at-novo").classList.add("on"); $("at-novo-nome").focus();
         } else if (b.id === "at-novo-cancelar") {
@@ -264,12 +293,15 @@ function montarAtalhos(win) {
             b.textContent = "✓ Limpo"; setTimeout(() => { b.textContent = "↺ Novo paciente"; }, 1000);
             $("at-peso").focus();
         } else if (b.id === "at-min") {
-            atalhosEstado.minimizado = !atalhosEstado.minimizado;
-            doc.body.classList.toggle("min", atalhosEstado.minimizado);
-            b.textContent = atalhosEstado.minimizado ? "Aumentar" : "Diminuir";
-            try { atalhosEstado.minimizado ? win.resizeTo(260, 90) : win.resizeTo(380, 640); } catch (e) {}
+            atalhosMinimizar(win, !atalhosEstado.minimizado);
         }
     });
+    /* diminuída: clicar em qualquer ponto da barra azul abre de novo */
+    doc.querySelector(".topo").addEventListener("click", (ev) => {
+        if (atalhosEstado.minimizado && !ev.target.closest("button")) atalhosMinimizar(win, false);
+    });
+    /* clicou fora (no prontuário): tenta diminuir; se o navegador não deixar, fica como está */
+    win.addEventListener("blur", () => atalhosMinimizar(win, true));
     $("at-peso").addEventListener("input", () => atalhosResultados(doc));
     $("at-idade").addEventListener("input", () => atalhosResultados(doc));
     $("at-busca").addEventListener("input", () => atalhosResultados(doc));
