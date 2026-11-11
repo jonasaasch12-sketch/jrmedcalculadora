@@ -107,7 +107,9 @@ function renderizarListaCondutas() {
     lista.sort((a, b) => (b.destaque ? 1 : 0) - (a.destaque ? 1 : 0)); /* conduta com destaque: true vem primeiro (ventilação mecânica, pedido do Dr. Jonas) */
     lista.forEach(c => (porCat[c.categoria] = porCat[c.categoria] || []).push(c));
 
-    let html = `<div class="cond-intro"><h2>Condutas</h2><p>Protocolos das doenças mais prevalentes. As medicações de cada conduta usam o peso e a idade digitados acima.</p></div>`;
+    let html = CONDUTAS_VISUAL_NOVO
+        ? `<div class="cond-intro"><h2>Condutas</h2><p>Protocolos das doenças mais prevalentes. As medicações de cada conduta usam o peso e a idade digitados acima.</p></div>`
+        : `<div class="cond-intro">📖 <strong>Condutas</strong> — protocolos das doenças mais prevalentes. As medicações de cada conduta usam o peso e a idade digitados acima.</div>`;
     if (!lista.length) html += `<div class="cond-vazio">Nenhuma conduta encontrada.</div>`;
     Object.keys(porCat).forEach(cat => {
         html += `<div class="cond-cat-titulo">${escCond(cat)}</div><div class="cond-grade">`;
@@ -164,6 +166,18 @@ function htmlBlocoConduta(b) {
 // abas por etapa (Diagnóstico | Emergência | Ambulatório) e seções que abrem e fecham com + e −.
 // Uma conduta pode ter "blocos" (cada um vira uma aba, com suas seções) ou só "secoes" (sem abas).
 // As seções começam fechadas (pedido do Dr. Jonas); "aberta" é ignorado.
+// O visual novo (abas, sem emojis) vale só na versão de teste até o Dr. Jonas liberar (decisão de 11/2026).
+// No oficial, as condutas mantêm o visual anterior (índice colorido, blocos com ícone, "Abrir tudo").
+const CONDUTAS_VISUAL_NOVO = typeof MODO_TESTE !== 'undefined' && MODO_TESTE;
+document.documentElement.classList.toggle('cond-visual-novo', CONDUTAS_VISUAL_NOVO);
+// Os textos das condutas falam em "aba Diagnóstico/Emergência/Ambulatório"; no visual anterior viram "bloco 🔎/🚨/🏠".
+function textoVisualAntigo(html) {
+    const ic = { 'Diagnóstico': '🔎', 'Emergência': '🚨', 'Ambulatório': '🏠' };
+    return html.replace(/\bna aba (Diagnóstico|Emergência|Ambulatório)/g, (m, x) => 'no bloco ' + ic[x])
+        .replace(/\bda aba (Diagnóstico|Emergência|Ambulatório)/g, (m, x) => 'do bloco ' + ic[x])
+        .replace(/\baba (Diagnóstico|Emergência|Ambulatório)/g, (m, x) => 'bloco ' + ic[x])
+        .replace(/nas abas acima/g, 'no índice acima');
+}
 let blocoAtivoConduta = 0;
 const RE_EMOJI = /[\p{Extended_Pictographic}\uFE0F\u200D]/gu;
 function semEmoji(t) { return String(t || '').replace(RE_EMOJI, '').replace(/\s{2,}/g, ' ').trim(); }
@@ -189,32 +203,41 @@ function abrirConduta(id, bloco) {
     /* daLista: a conduta foi aberta a partir da lista; aí o "← Condutas" pode voltar pelo histórico */
     empurrarHistorico({ modo: 'condutas', cond: id, daLista: st.modo === 'condutas' && !st.cond });
     let blocos = c.blocos || [{ secoes: c.secoes }];
-    let comAbas = blocos.filter(b => b.titulo).length > 1;
+    let novo = CONDUTAS_VISUAL_NOVO;
+    let comAbas = novo && blocos.filter(b => b.titulo).length > 1;
     if (typeof bloco === 'number') blocoAtivoConduta = bloco;
     else if (!mesma) blocoAtivoConduta = 0;
     if (!blocos[blocoAtivoConduta]) blocoAtivoConduta = 0;
     let n = 0;
     let abas = comAbas ? blocos.map((b, bi) => b.titulo
         ? `<button type="button" role="tab" class="cond-aba${bi === blocoAtivoConduta ? ' ativa' : ''}" data-bloco="${bi}" aria-selected="${bi === blocoAtivoConduta}" onclick="mostrarBlocoConduta(${bi})" title="${escCond(semEmoji(b.titulo))}">${escCond(nomeAbaBloco(b))}</button>` : '').join('') : '';
+    let indice = novo ? '' : blocos.filter(b => b.titulo).map((b, bi) =>
+        `<a href="#cond-bloco-${bi}" class="cond-indice-bloco" style="--cor-bloco:${b.cor || c.cor}" onclick="document.getElementById('cond-bloco-${bi}').scrollIntoView({behavior:'smooth'});return false;">${b.icone || ''} ${escCond(b.titulo)}</a>`).join('');
     let html = `
         <div class="cond-barra"><button type="button" class="cond-voltar" onclick="voltarListaCondutas()" title="Voltar para todas as condutas">← Condutas</button><span class="cond-caminho">Condutas › <b>${escCond(c.nome)}</b></span></div>
-        <div class="cond-cabecalho">
+        <div class="cond-cabecalho" style="--cor-cat:${c.cor}">
             <div class="cond-cabecalho-cat">${escCond(c.categoria)}</div>
             <h2>${escCond(c.nome)}</h2>
             <div class="cond-cabecalho-resumo">${escCond(c.resumo || '')}</div>
         </div>
         ${c.legenda ? `<div class="cond-legenda">${c.legenda}</div>` : ''}
+        ${indice ? `<nav class="cond-indice cond-indice-blocos">${indice}</nav>` : ''}
         ${c.ferramentaTopo && typeof window[c.ferramentaTopo] === 'function' ? window[c.ferramentaTopo]() : ''}
-        ${abas ? `<nav class="cond-abas" role="tablist">${abas}</nav>` : ''}`;
+        ${abas ? `<nav class="cond-abas" role="tablist">${abas}</nav>` : ''}
+        ${novo ? '' : `<div class="cond-acoes"><button type="button" onclick="abrirTodasSecoes(true)">⊕ Abrir tudo</button><button type="button" onclick="abrirTodasSecoes(false)">⊖ Fechar tudo</button></div>`}`;
 
     blocos.forEach((b, bi) => {
         let oculto = comAbas && bi !== blocoAtivoConduta;
         html += `<div class="cond-bloco-corpo" id="cond-bloco-${bi}" data-bloco="${bi}"${oculto ? ' hidden' : ''}>`;
-        if (b.titulo) html += `<div class="cond-bloco"><span class="cond-bloco-titulo">${escCond(semEmoji(b.titulo))}</span>${b.subtitulo ? `<small>${b.subtitulo}</small>` : ''}</div>`;
+        if (b.titulo) html += novo
+            ? `<div class="cond-bloco"><span class="cond-bloco-titulo">${escCond(semEmoji(b.titulo))}</span>${b.subtitulo ? `<small>${b.subtitulo}</small>` : ''}</div>`
+            : `<div class="cond-bloco" style="--cor-bloco:${b.cor || c.cor}"><span>${b.icone || ''} ${escCond(b.titulo)}</span>${b.subtitulo ? `<small>${b.subtitulo}</small>` : ''}</div>`;
         b.secoes.forEach(s => {
             let i = n++;
-            html += `<details class="cond-secao${s.alerta ? ' cond-alerta' : ''}" id="cond-sec-${i}">
-                <summary><h3>${s.passo ? `<span class="cond-passo">${s.passo}</span>` : ''}${escCond(semEmoji(s.titulo))}</h3>${s.resumo ? `<div class="cond-secao-resumo">${s.resumo}</div>` : ''}</summary>
+            let tit = novo ? `${s.passo ? `<span class="cond-passo">${s.passo}</span>` : ''}${escCond(semEmoji(s.titulo))}`
+                : `${s.passo ? `<span class="cond-passo">${s.passo}</span>` : (s.icone || '')} ${escCond(s.titulo)}`;
+            html += `<details class="cond-secao${s.alerta ? ' cond-alerta' : ''}" id="cond-sec-${i}" style="--cor-cat:${c.cor}">
+                <summary><h3>${tit}</h3>${s.resumo ? `<div class="cond-secao-resumo">${s.resumo}</div>` : ''}</summary>
                 <div class="cond-secao-corpo">${htmlBlocoConduta(s)}</div>
             </details>`;
         });
@@ -222,7 +245,7 @@ function abrirConduta(id, bloco) {
     });
     html += `<div class="cond-fonte" id="cond-fontes"><strong>Fontes:</strong><ol>${c.fontes.map((f, k) => `<li id="cond-fonte-${k}"><span class="cond-fonte-txt">${escCond(f)}</span><button type="button" class="cond-fonte-voltar" onclick="voltarDaFonte()">↩ voltar ao texto</button></li>`).join('')}</ol><strong>Revisão:</strong> ${escCond(c.revisao)}</div>`;
     let area = document.getElementById('area-condutas');
-    area.innerHTML = html;
+    area.innerHTML = novo ? html : textoVisualAntigo(html);
     area.classList.toggle('cond-padrao', !!c.padraoTexto); /* conduta já reescrita no padrão de escrita (rótulo azul) */
     linkarCitacoes(area, c);
     atualizarDosesConduta();
@@ -321,7 +344,8 @@ function irParaConduta(id, bloco) {
     trocarModo('condutas');
     let blocos = condutasJR[id].blocos || [];
     let bi = bloco ? blocos.findIndex(b => (b.titulo || '').toLowerCase().includes(bloco)) : -1;
-    if (bi >= 0) mostrarBlocoConduta(bi); /* abre já na aba da condução (emergência/hospital) */
+    if (bi >= 0 && CONDUTAS_VISUAL_NOVO) mostrarBlocoConduta(bi); /* abre já na aba da condução (emergência/hospital) */
+    else if (bi >= 0) { let alvo = document.getElementById('cond-bloco-' + bi); if (alvo) setTimeout(() => alvo.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50); }
 }
 
 function abrirSecaoConduta(i) {
