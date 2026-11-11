@@ -37,27 +37,37 @@ function gravarAtalhosMeus(lista) {
 
 const ATALHOS_CSS = `
 *{box-sizing:border-box}
-body{margin:0;font:14px/1.35 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--fundo);color:var(--texto)}
-:root{--fundo:#f4f6f9;--card:#fff;--texto:#1b2430;--suave:#5b6675;--borda:#dfe4ea;--azul:#0b3d6b;--acento:#1565c0;--ok:#2e7d32}
-:root.escuro{--fundo:#11161d;--card:#1a2129;--texto:#e6ebf1;--suave:#9aa6b4;--borda:#2c3540;--azul:#0d2a47;--acento:#64a8f0;--ok:#66bb6a}
+body{margin:0;font:15px/1.4 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--fundo);color:var(--texto)}
+:root{--fundo:#eef2f6;--card:#fff;--texto:#0b1220;--suave:#2f3b4a;--borda:#9aa7b5;--azul:#0b3d6b;--acento:#0d47a1;--ok:#1b5e20}
+:root.escuro{--fundo:#0b0f14;--card:#161c24;--texto:#ffffff;--suave:#d5dde6;--borda:#56616e;--azul:#0d2a47;--acento:#8cc4ff;--ok:#81c784}
+:root.escuro .b.forte{color:#0b1220}
 .topo{display:flex;align-items:center;gap:8px;background:var(--azul);color:#fff;padding:8px 10px;position:sticky;top:0;z-index:2}
 .logo{font-weight:800;letter-spacing:.3px;white-space:nowrap}
-.logo span{opacity:.75;font-weight:600}
-.dica{font-size:11.5px;opacity:.85;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.topo button{background:rgba(255,255,255,.15);color:#fff;border:0;border-radius:6px;padding:5px 9px;font:inherit;font-size:12px;cursor:pointer}
+.logo span{opacity:.9;font-weight:700}
+.esp{flex:1}
+.dica{background:#fff8d6;color:#3d2e00;font-size:13px;font-weight:700;text-align:center;padding:5px 10px;border-bottom:1px solid #e3cf7a}
+:root.escuro .dica{background:#3a3110;color:#ffe9a0;border-color:#5c4d17}
+.topo #at-novo-pac{background:#fff;color:var(--azul);font-weight:800;white-space:nowrap}
+.topo #at-novo-pac:hover{background:#e3f0ff}
+body.min .topo #at-novo-pac{display:none}
+.topo button{background:rgba(255,255,255,.18);color:#fff;border:0;border-radius:6px;padding:6px 10px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 .topo button:hover{background:rgba(255,255,255,.28)}
 .corpo{padding:10px;display:grid;gap:10px}
 .sec{background:var(--card);border:1px solid var(--borda);border-radius:10px;padding:10px}
-.sec h2{margin:0 0 8px;font-size:11px;letter-spacing:1px;color:var(--suave);display:flex;align-items:center;justify-content:space-between}
+.sec h2{margin:0 0 8px;font-size:12.5px;font-weight:800;letter-spacing:1px;color:var(--texto);display:flex;align-items:center;justify-content:space-between}
 .btns{display:flex;flex-wrap:wrap;gap:6px}
-.b{border:1px solid var(--borda);background:var(--fundo);color:var(--texto);border-radius:8px;padding:7px 10px;font:inherit;font-size:13px;cursor:pointer;text-align:left}
+.b{border:1px solid var(--borda);background:var(--fundo);color:var(--texto);border-radius:8px;padding:8px 11px;font:inherit;font-size:14px;font-weight:600;cursor:pointer;text-align:left}
 .b:hover{border-color:var(--acento);color:var(--acento)}
 .b.forte{background:var(--acento);border-color:var(--acento);color:#fff;font-weight:600}
 .b.forte:hover{filter:brightness(1.08);color:#fff}
 .b.copiado,.b.forte.copiado{background:var(--ok);border-color:var(--ok);color:#fff}
-input{width:100%;border:1px solid var(--borda);background:var(--card);color:var(--texto);border-radius:7px;padding:6px 8px;font:inherit;font-size:13px}
+input{width:100%;border:1px solid var(--borda);background:var(--card);color:var(--texto);border-radius:7px;padding:7px 9px;font:inherit;font-size:15px;font-weight:600;border-width:1.5px}
+input::placeholder,textarea::placeholder{color:#55606e;font-weight:500;opacity:1}
+:root.escuro input::placeholder,:root.escuro textarea::placeholder{color:#aab4bf}
+label.campo{display:block;font-size:12.5px;font-weight:700;color:var(--texto)}
+label.campo input{margin-top:3px}
 input:focus{outline:2px solid var(--acento);outline-offset:-1px}
-.sub{font-size:11px;color:var(--suave);margin:8px 0 4px}
+.sub{font-size:12.5px;font-weight:700;color:var(--suave);margin:8px 0 4px}
 .meu{display:inline-flex}
 .meu .x{border-left:0;border-radius:0 8px 8px 0;padding:7px 7px;color:var(--suave)}
 .meu .b:first-child{border-radius:8px 0 0 8px}
@@ -68,17 +78,17 @@ textarea{width:100%;min-height:70px;border:1px solid var(--borda);background:var
 .linha2 .peso{width:90px;flex:none}
 .res{display:grid;gap:6px;margin-top:8px}
 .item{border:1px solid var(--borda);border-radius:8px;padding:7px 9px;background:var(--fundo)}
-.item .n{font-weight:600;font-size:13px}
-.item .a{font-size:11.5px;color:var(--suave)}
-.item .d{margin:4px 0 6px;font-size:13px;color:var(--acento);font-weight:600;white-space:pre-line}
-.vazio{font-size:12.5px;color:var(--suave);padding:6px 2px}
+.item .n{font-weight:700;font-size:14.5px}
+.item .a{font-size:13px;color:var(--suave);font-weight:500}
+.item .d{margin:4px 0 6px;font-size:16px;color:var(--acento);font-weight:600;white-space:pre-line}
+.vazio{font-size:13.5px;color:var(--suave);padding:6px 2px}
 .cab{display:flex;justify-content:space-between;align-items:center;gap:6px}
 .cab .x{padding:2px 7px;font-size:12px;color:var(--suave)}
-.txt{font:12px/1.4 ui-monospace,Consolas,monospace;white-space:pre-wrap;margin-top:4px;color:var(--texto)}
+.txt{font:600 13px/1.45 ui-monospace,Consolas,monospace;white-space:pre-wrap;margin-top:4px;color:var(--texto)}
 .forte.b{flex:1;text-align:center}
 body.min .corpo{display:none}
 body.min .dica{display:none}
-.rod{font-size:10.5px;color:var(--suave);text-align:center;padding:0 10px 10px}
+.rod{font-size:12px;font-weight:600;color:var(--suave);text-align:center;padding:0 10px 10px}
 `;
 
 function htmlAtalhos() {
@@ -88,9 +98,11 @@ function htmlAtalhos() {
     return `
 <div class="topo">
   <div class="logo">JR MED <span>⚡ Atalhos</span></div>
-  <div class="dica">Clique, depois Ctrl+V</div>
+  <div class="esp"></div>
+  <button id="at-novo-pac" title="Limpa peso, idade, busca e a receita">↺ Novo paciente</button>
   <button id="at-min" title="Diminuir / aumentar a janela">Diminuir</button>
 </div>
+<div class="dica">Clique no botão, depois Ctrl+V no prontuário</div>
 <div class="corpo">
   <div class="sec">
     <h2>PRONTUÁRIO</h2>
@@ -112,10 +124,11 @@ function htmlAtalhos() {
   <div class="sec">
     <h2>CALCULADORA</h2>
     <div class="linha2">
-      <input class="peso" id="at-peso" type="number" min="0" step="0.1" inputmode="decimal" placeholder="Peso kg">
-      <input id="at-busca" placeholder="Droga ou indicação (ex.: amoxicilina, otite)">
+      <label class="campo" style="flex:1">Peso (kg)<input id="at-peso" type="number" min="0" step="0.1" inputmode="decimal" placeholder="ex.: 15"></label>
+      <label class="campo" style="flex:1">Idade (anos)<input id="at-idade" type="number" min="0" step="0.1" inputmode="decimal" placeholder="ex.: 4"></label>
     </div>
-    <div class="res" id="at-res"><div class="vazio">Digite o peso e o nome do remédio ou da doença.</div></div>
+    <label class="campo" style="margin-top:6px">Remédio ou doença<input id="at-busca" placeholder="ex.: amoxicilina, otite"></label>
+    <div class="res" id="at-res"><div class="vazio">Digite o peso, a idade e o nome do remédio ou da doença.</div></div>
   </div>
   <div class="sec" id="at-receita"></div>
 </div>
@@ -145,8 +158,8 @@ function atalhosResultados(doc) {
     let caixa = doc.getElementById("at-res");
     let p = parseFloat(doc.getElementById("at-peso").value);
     let q = normalizar(doc.getElementById("at-busca").value.trim());
-    if (!q) { caixa.innerHTML = `<div class="vazio">Digite o peso e o nome do remédio ou da doença.</div>`; return; }
-    let idade = (document.getElementById("idadeInput") || {}).value || "";
+    if (!q) { caixa.innerHTML = `<div class="vazio">Digite o peso, a idade e o nome do remédio ou da doença.</div>`; return; }
+    let idade = doc.getElementById("at-idade").value.trim();
     let ids = Object.keys(farmaciaJR).concat(Object.keys(typeof medsCustomizados !== "undefined" ? medsCustomizados : {}));
     let achados = ids.filter((id) => {
         let m = buscarMed(id);
@@ -177,9 +190,9 @@ function atalhosReceitaHtml(doc) {
 function atalhosAtualizarReceita() {
     if (janelaAtalhos && !janelaAtalhos.closed) atalhosReceitaHtml(janelaAtalhos.document);
 }
-function atalhosAdicionar(id, p) {
+function atalhosAdicionar(id, p, idade) {
     let med = buscarMed(id); if (!med) return false;
-    let texto = String(med.calc(p, (document.getElementById("idadeInput") || {}).value || "").r || "").trim();
+    let texto = String(med.calc(p, idade).r || "").trim();
     if (!texto) return false;
     carrinhoPrescricao.push({ nome: med.nome, apres: med.apres, texto, via: viaDaReceita(texto, med) });
     atualizarCarrinhoUI();
@@ -202,6 +215,9 @@ function montarAtalhos(win) {
     let $ = (id) => doc.getElementById(id);
     let pesoApp = (document.getElementById("pesoInput") || {}).value;
     if (pesoApp) $("at-peso").value = pesoApp;
+    let idadeApp = (document.getElementById("idadeInput") || {}).value;
+    if (idadeApp) $("at-idade").value = idadeApp;
+    let idadeJanela = () => $("at-idade").value.trim();
     atalhosMeusHtml(doc);
     atalhosReceitaHtml(doc);
 
@@ -211,10 +227,10 @@ function montarAtalhos(win) {
             let m = buscarMed(b.dataset.copiarCard); if (m) atalhosCopiar(doc, m.calc().r, b);
         } else if (b.dataset.receita) {
             let m = buscarMed(b.dataset.receita), p = parseFloat($("at-peso").value);
-            try { atalhosCopiar(doc, m.calc(p, (document.getElementById("idadeInput") || {}).value || "").r, b); } catch (e) {}
+            try { atalhosCopiar(doc, m.calc(p, idadeJanela()).r, b); } catch (e) {}
         } else if (b.dataset.add) {
             try {
-                if (atalhosAdicionar(b.dataset.add, parseFloat($("at-peso").value))) {
+                if (atalhosAdicionar(b.dataset.add, parseFloat($("at-peso").value), idadeJanela())) {
                     b.classList.add("copiado"); b.textContent = "✓ Na receita";
                     setTimeout(() => { b.classList.remove("copiado"); b.textContent = "+ Receita"; }, 1100);
                 }
@@ -240,6 +256,13 @@ function montarAtalhos(win) {
             let lista = lerAtalhosMeus(); lista.push({ nome, texto }); gravarAtalhosMeus(lista);
             $("at-novo-nome").value = ""; $("at-novo-texto").value = ""; $("at-novo").classList.remove("on");
             atalhosMeusHtml(doc);
+        } else if (b.id === "at-novo-pac") {
+            /* mesmo "Novo paciente" do app (limpa peso, idade, alergias e receita) + os campos da janela */
+            if (typeof novoPaciente === "function") novoPaciente(); else { carrinhoPrescricao = []; atualizarCarrinhoUI(); }
+            ["at-peso", "at-idade", "at-busca"].forEach(id => { $(id).value = ""; });
+            atalhosResultados(doc); atalhosReceitaHtml(doc);
+            b.textContent = "✓ Limpo"; setTimeout(() => { b.textContent = "↺ Novo paciente"; }, 1000);
+            $("at-peso").focus();
         } else if (b.id === "at-min") {
             atalhosEstado.minimizado = !atalhosEstado.minimizado;
             doc.body.classList.toggle("min", atalhosEstado.minimizado);
@@ -248,6 +271,7 @@ function montarAtalhos(win) {
         }
     });
     $("at-peso").addEventListener("input", () => atalhosResultados(doc));
+    $("at-idade").addEventListener("input", () => atalhosResultados(doc));
     $("at-busca").addEventListener("input", () => atalhosResultados(doc));
     atalhosResultados(doc);
 }
