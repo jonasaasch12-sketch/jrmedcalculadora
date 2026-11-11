@@ -27,12 +27,53 @@ function atalhosDisponivel() {
     return ATALHOS_LIBERADOS || (typeof MODO_TESTE !== "undefined" && MODO_TESTE);
 }
 
-function lerAtalhosMeus() {
-    try { return JSON.parse(localStorage.getItem(ATALHOS_CHAVE_MEUS) || "[]").filter(a => a && a.nome && a.texto); }
+// ===== Meus atalhos: salvos NA CONTA do usuário (Firestore "atalhos_usuarios/{uid}", só ele lê e grava) =====
+// Dois tipos: { tipo: "card", id, nome } = card do sistema; { tipo: "texto", nome, texto } = modelo próprio
+// (ex.: modelo de prontuário do hospital do plantão). Nunca dados de paciente (aviso na tela).
+// Sem login ou sem a regra publicada no Firebase: ficam só neste computador (localStorage), com aviso.
+const ATALHOS_MAX = 30, ATALHOS_MAX_TEXTO = 5000, ATALHOS_MAX_NOME = 40;
+let atalhosMeus = [];
+let atalhosOrigem = "local"; /* "conta" ou "local" */
+
+function lerAtalhosLocal() {
+    try { return limparAtalhos(JSON.parse(localStorage.getItem(ATALHOS_CHAVE_MEUS) || "[]")); }
     catch (e) { return []; }
 }
-function gravarAtalhosMeus(lista) {
-    try { localStorage.setItem(ATALHOS_CHAVE_MEUS, JSON.stringify(lista)); } catch (e) {}
+// Só aceita os dois formatos, com limite de tamanho (o que vem do banco também passa por aqui).
+function limparAtalhos(lista) {
+    if (!Array.isArray(lista)) return [];
+    return lista.map((a) => {
+        if (!a || typeof a.nome !== "string" || !a.nome.trim()) return null;
+        let nome = a.nome.trim().slice(0, ATALHOS_MAX_NOME);
+        if (a.tipo === "card" && typeof a.id === "string") return { tipo: "card", id: a.id.slice(0, 80), nome };
+        if (typeof a.texto === "string" && a.texto.trim()) return { tipo: "texto", nome, texto: a.texto.slice(0, ATALHOS_MAX_TEXTO) };
+        return null;
+    }).filter(Boolean).slice(0, ATALHOS_MAX);
+}
+async function carregarAtalhosMeus() {
+    let locais = lerAtalhosLocal();
+    try {
+        if (!window.JRAtalhos || !window.__usuarioAtual) throw new Error("sem-login");
+        atalhosMeus = limparAtalhos(await window.JRAtalhos.ler());
+        atalhosOrigem = "conta";
+        if (locais.length) { /* os criados antes, só neste computador, passam para a conta */
+            let juntos = limparAtalhos(atalhosMeus.concat(locais));
+            await window.JRAtalhos.salvar(juntos);
+            atalhosMeus = juntos;
+            try { localStorage.removeItem(ATALHOS_CHAVE_MEUS); } catch (e) {}
+        }
+    } catch (e) {
+        atalhosMeus = locais; atalhosOrigem = "local";
+    }
+}
+async function gravarAtalhosMeus(lista) {
+    atalhosMeus = limparAtalhos(lista);
+    if (atalhosOrigem === "conta") {
+        try { await window.JRAtalhos.salvar(atalhosMeus); return true; }
+        catch (e) { atalhosOrigem = "local"; }
+    }
+    try { localStorage.setItem(ATALHOS_CHAVE_MEUS, JSON.stringify(atalhosMeus)); } catch (e) {}
+    return true;
 }
 
 const ATALHOS_CSS = `
@@ -73,7 +114,7 @@ input:focus{outline:2px solid var(--acento);outline-offset:-1px}
 .meu .b:first-child{border-radius:8px 0 0 8px}
 .novo{display:none;gap:6px;flex-direction:column;margin-top:6px}
 .novo.on{display:flex}
-textarea{width:100%;min-height:70px;border:1px solid var(--borda);background:var(--card);color:var(--texto);border-radius:7px;padding:6px 8px;font:inherit;font-size:12.5px;resize:vertical}
+textarea{width:100%;min-height:130px;border:1px solid var(--borda);background:var(--card);color:var(--texto);border-radius:7px;padding:6px 8px;font:inherit;font-size:12.5px;resize:vertical}
 .linha2{display:flex;gap:6px}
 .linha2 .peso{width:90px;flex:none}
 .res{display:grid;gap:6px;margin-top:8px}
@@ -88,6 +129,16 @@ textarea{width:100%;min-height:70px;border:1px solid var(--borda);background:var
 .forte.b{flex:1;text-align:center}
 body.min .corpo{display:none}
 body.min .dica{display:none}
+.abas{display:flex;gap:6px}
+.aba{flex:1;border:1.5px solid var(--borda);background:var(--card);color:var(--texto);border-radius:8px;padding:7px;font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.aba.on{background:var(--acento);border-color:var(--acento);color:#fff}
+:root.escuro .aba.on{color:#0b1220}
+.aviso{background:#fff3cd;color:#3d2e00;border:1px solid #e0b84a;border-radius:8px;padding:7px 9px;font-size:13px;font-weight:600}
+:root.escuro .aviso{background:#3a3110;color:#ffe9a0;border-color:#5c4d17}
+.onde{font-weight:600;color:var(--suave)}
+.sis{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.sis .n{font-size:14px}
+.ja{font-size:12.5px;font-weight:700;color:var(--ok)}
 .rod{font-size:12px;font-weight:600;color:var(--suave);text-align:center;padding:0 10px 10px}
 `;
 
@@ -112,13 +163,22 @@ function htmlAtalhos() {
     </div>
     <div class="sub">Orientações de alta</div>
     <div class="btns">${ori}</div>
-    <div class="sub">Meus atalhos <span style="opacity:.7">(ficam só neste computador)</span></div>
+    <div class="sub">Meus atalhos <span id="at-onde" class="onde"></span></div>
     <div class="btns" id="at-meus"></div>
-    <div class="btns" style="margin-top:6px"><button class="b" id="at-novo-btn">+ Criar meu atalho</button></div>
+    <div class="btns" style="margin-top:6px"><button class="b" id="at-novo-btn">+ Adicionar atalho</button></div>
     <div class="novo" id="at-novo">
-      <input id="at-novo-nome" placeholder="Nome do botão (ex.: Reavaliação)" maxlength="40">
-      <textarea id="at-novo-texto" placeholder="Texto que vai ser colado no prontuário"></textarea>
-      <div class="linha2"><button class="b forte" id="at-novo-salvar">Salvar</button><button class="b" id="at-novo-cancelar">Cancelar</button></div>
+      <div class="abas"><button class="aba on" data-aba="sistema">Do sistema</button><button class="aba" data-aba="texto">Texto meu</button></div>
+      <div id="at-aba-sistema">
+        <input id="at-sis-busca" placeholder="Buscar no JR MED (ex.: dipirona, GECA, exame)">
+        <div class="res" id="at-sis-res"></div>
+      </div>
+      <div id="at-aba-texto" hidden>
+        <div class="aviso">⚠️ <b>Não coloque dados de pacientes</b> (nome, prontuário, CPF, data de nascimento). Use só o modelo em branco.</div>
+        <input id="at-novo-nome" placeholder="Nome do botão (ex.: Evolução Hospital X)" maxlength="${ATALHOS_MAX_NOME}">
+        <textarea id="at-novo-texto" placeholder="Cole aqui o seu modelo (ex.: o modelo de prontuário do hospital)" maxlength="${ATALHOS_MAX_TEXTO}"></textarea>
+        <div class="linha2"><button class="b forte" id="at-novo-salvar">Salvar</button></div>
+      </div>
+      <div class="linha2"><button class="b" id="at-novo-cancelar">Fechar</button></div>
     </div>
   </div>
   <div class="sec">
@@ -199,11 +259,34 @@ function atalhosAdicionar(id, p, idade) {
     return true;
 }
 
+// Card que só tem texto pronto (exame, orientações): o atalho copia. Remédio: o atalho põe na receita.
+function atalhoEhTextoPronto(med) { return !!(med && (med.ignoraPeso || med.cat === "cat-exame-fisico")); }
+
 function atalhosMeusHtml(doc) {
-    let lista = lerAtalhosMeus();
-    doc.getElementById("at-meus").innerHTML = lista.length ? lista.map((a, i) =>
-        `<span class="meu"><button class="b" data-meu="${i}">${escaparHtml(a.nome)}</button><button class="b x" data-apagar="${i}" title="Apagar este atalho">✕</button></span>`).join("")
-        : `<span class="vazio">Nenhum ainda. Ex.: texto de reavaliação, anamnese padrão.</span>`;
+    let onde = doc.getElementById("at-onde");
+    if (onde) onde.textContent = atalhosOrigem === "conta" ? "(salvos na sua conta)" : "(salvos só neste computador)";
+    doc.getElementById("at-meus").innerHTML = atalhosMeus.length ? atalhosMeus.map((a, i) => {
+        let icone = a.tipo === "texto" ? "📝 " : (atalhoEhTextoPronto(buscarMed(a.id)) ? "📋 " : "💊 ");
+        return `<span class="meu"><button class="b" data-meu="${i}" title="${a.tipo === "texto" ? "Copia o seu texto" : (icone === "💊 " ? "Põe na receita (usa o peso e a idade da calculadora)" : "Copia o texto do card")}">${icone}${escaparHtml(a.nome)}</button><button class="b x" data-apagar="${i}" title="Apagar este atalho">✕</button></span>`;
+    }).join("") : `<span class="vazio">Nenhum ainda. Toque em "+ Adicionar atalho".</span>`;
+}
+
+// Busca de cards do sistema para virar atalho.
+function atalhosSistemaHtml(doc) {
+    let caixa = doc.getElementById("at-sis-res");
+    let q = normalizar(doc.getElementById("at-sis-busca").value.trim());
+    if (!q) { caixa.innerHTML = `<div class="vazio">Digite o nome do remédio, da orientação ou "exame".</div>`; return; }
+    let ids = Object.keys(farmaciaJR).concat(Object.keys(typeof medsCustomizados !== "undefined" ? medsCustomizados : {}));
+    let achados = ids.filter((id) => {
+        let m = buscarMed(id);
+        return m && cardCorrespondeABusca(normalizar([m.nome, m.kw, m.apres, m.sub].join(" ")), q);
+    }).slice(0, 10);
+    if (!achados.length) { caixa.innerHTML = `<div class="vazio">Nada encontrado.</div>`; return; }
+    caixa.innerHTML = achados.map((id) => {
+        let m = buscarMed(id), ja = atalhosMeus.some(a => a.tipo === "card" && a.id === id);
+        return `<div class="item sis"><div><div class="n">${escaparHtml(m.nome)}</div><div class="a">${escaparHtml(m.apres || "")}</div></div>` +
+            (ja ? `<span class="ja">✓ Já é atalho</span>` : `<button class="b forte" data-sis="${escaparHtml(id)}" style="flex:none">+ Adicionar</button>`) + `</div>`;
+    }).join("");
 }
 
 function montarAtalhos(win) {
@@ -220,6 +303,7 @@ function montarAtalhos(win) {
     let idadeJanela = () => $("at-idade").value.trim();
     atalhosMeusHtml(doc);
     atalhosReceitaHtml(doc);
+    carregarAtalhosMeus().then(() => atalhosMeusHtml(doc));
 
     doc.addEventListener("click", (ev) => {
         let b = ev.target.closest("button"); if (!b) return;
@@ -242,20 +326,43 @@ function montarAtalhos(win) {
         } else if (b.id === "at-limpar") {
             if (win.confirm("Limpar a receita?")) { carrinhoPrescricao = []; atualizarCarrinhoUI(); }
         } else if (b.dataset.meu) {
-            let a = lerAtalhosMeus()[+b.dataset.meu]; if (a) atalhosCopiar(doc, a.texto, b);
+            let a = atalhosMeus[+b.dataset.meu]; if (!a) return;
+            if (a.tipo === "texto") { atalhosCopiar(doc, a.texto, b); return; }
+            let m = buscarMed(a.id);
+            if (!m) { win.alert("Este card não existe mais no JR MED. Apague o atalho (✕)."); return; }
+            if (atalhoEhTextoPronto(m)) { atalhosCopiar(doc, m.calc().r, b); return; }
+            let p = parseFloat($("at-peso").value);
+            if (isNaN(p) || p <= 0) { $("at-peso").focus(); win.alert("Digite o peso na calculadora para pôr este remédio na receita."); return; }
+            let antes = b.textContent;
+            try { if (atalhosAdicionar(a.id, p, idadeJanela())) { b.classList.add("copiado"); b.textContent = "✓ Na receita"; setTimeout(() => { b.classList.remove("copiado"); b.textContent = antes; }, 1100); } } catch (e) {}
         } else if (b.dataset.apagar) {
-            let lista = lerAtalhosMeus(), a = lista[+b.dataset.apagar];
-            if (a && win.confirm(`Apagar o atalho "${a.nome}"?`)) { lista.splice(+b.dataset.apagar, 1); gravarAtalhosMeus(lista); atalhosMeusHtml(doc); }
+            let a = atalhosMeus[+b.dataset.apagar];
+            if (a && win.confirm(`Apagar o atalho "${a.nome}"?`)) {
+                let lista = atalhosMeus.slice(); lista.splice(+b.dataset.apagar, 1);
+                gravarAtalhosMeus(lista).then(() => { atalhosMeusHtml(doc); atalhosSistemaHtml(doc); });
+            }
         } else if (b.id === "at-novo-btn") {
-            $("at-novo").classList.add("on"); $("at-novo-nome").focus();
+            $("at-novo").classList.add("on"); atalhosSistemaHtml(doc); $("at-sis-busca").focus();
+        } else if (b.dataset.aba) {
+            doc.querySelectorAll(".aba").forEach(x => x.classList.toggle("on", x === b));
+            $("at-aba-sistema").hidden = b.dataset.aba !== "sistema";
+            $("at-aba-texto").hidden = b.dataset.aba !== "texto";
+            (b.dataset.aba === "texto" ? $("at-novo-nome") : $("at-sis-busca")).focus();
+        } else if (b.dataset.sis) {
+            if (atalhosMeus.length >= ATALHOS_MAX) { win.alert(`Limite de ${ATALHOS_MAX} atalhos. Apague algum para adicionar outro.`); return; }
+            let m = buscarMed(b.dataset.sis); if (!m) return;
+            gravarAtalhosMeus(atalhosMeus.concat([{ tipo: "card", id: b.dataset.sis, nome: m.nome }]))
+                .then(() => { atalhosMeusHtml(doc); atalhosSistemaHtml(doc); });
         } else if (b.id === "at-novo-cancelar") {
             $("at-novo").classList.remove("on");
         } else if (b.id === "at-novo-salvar") {
             let nome = $("at-novo-nome").value.trim(), texto = $("at-novo-texto").value.trim();
             if (!nome || !texto) { (nome ? $("at-novo-texto") : $("at-novo-nome")).focus(); return; }
-            let lista = lerAtalhosMeus(); lista.push({ nome, texto }); gravarAtalhosMeus(lista);
-            $("at-novo-nome").value = ""; $("at-novo-texto").value = ""; $("at-novo").classList.remove("on");
-            atalhosMeusHtml(doc);
+            if (atalhosMeus.length >= ATALHOS_MAX) { win.alert(`Limite de ${ATALHOS_MAX} atalhos. Apague algum para adicionar outro.`); return; }
+            gravarAtalhosMeus(atalhosMeus.concat([{ tipo: "texto", nome, texto }])).then(() => {
+                $("at-novo-nome").value = ""; $("at-novo-texto").value = ""; $("at-novo").classList.remove("on");
+                atalhosMeusHtml(doc);
+            });
         } else if (b.id === "at-novo-pac") {
             /* mesmo "Novo paciente" do app (limpa peso, idade, alergias e receita) + os campos da janela */
             if (typeof novoPaciente === "function") novoPaciente(); else { carrinhoPrescricao = []; atualizarCarrinhoUI(); }
@@ -273,6 +380,7 @@ function montarAtalhos(win) {
     $("at-peso").addEventListener("input", () => atalhosResultados(doc));
     $("at-idade").addEventListener("input", () => atalhosResultados(doc));
     $("at-busca").addEventListener("input", () => atalhosResultados(doc));
+    $("at-sis-busca").addEventListener("input", () => atalhosSistemaHtml(doc));
     atalhosResultados(doc);
 }
 

@@ -54,6 +54,10 @@ js/digital.js              celular: desbloqueio com digital/rosto (WebAuthn, só
 js/atalhos.js              ⚡ Atalhos por cima do prontuário (Document Picture-in-Picture, Chrome/Edge no computador):
                            exame físico ♂/♀ e orientações de alta (1 clique = copiado), "meus atalhos" (localStorage), calculadora (peso + busca)
                            com "+ Receita" na MESMA receita do app (carrinhoPrescricao; textoReceitaCompleta/viaDaReceita em app.js). Só no teste (ATALHOS_LIBERADOS)
+                           "Meus atalhos" (+ Adicionar atalho → Do sistema = card / Texto meu = modelo livre, ex.: prontuário do hospital) salvos NA CONTA:
+                           Firestore `atalhos_usuarios/{uid}` (window.JRAtalhos em firebase.js; precisa da regra publicada no console; sem ela, localStorage).
+                           Limite 30 atalhos × 5000 letras. Aviso "não coloque dados de pacientes". Termos (item 5) e Privacidade já citam os atalhos.
+                           AO LIBERAR: subir VERSAO_TERMOS (js/cadastro.js) para "2026-11" e a "versão" no topo de termos.html/privacidade.html
 js/firebase.js             login e Firestore (módulo); sem e-mail de confirmação (suspenso: não chegava), o cadastro pede o e-mail 2x; grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)
 privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; contato jrmedprescricao@gmail.com). Mudou o texto?

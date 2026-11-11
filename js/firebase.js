@@ -325,6 +325,21 @@ function pararListenerFichas() {
     if (paradaListenerFichas) { paradaListenerFichas(); paradaListenerFichas = null; }
 }
 
+// ⚡ Atalhos do usuário (js/atalhos.js): um documento por conta em "atalhos_usuarios/{uid}",
+// que só o próprio usuário lê e grava (regra no Firestore). Nada de paciente: só modelos e ids de cards.
+const COLECAO_ATALHOS = "atalhos_usuarios";
+window.JRAtalhos = {
+    ler: async () => {
+        let u = auth.currentUser; if (!u) throw new Error("sem-login");
+        let snap = await getDoc(doc(db, COLECAO_ATALHOS, u.uid));
+        return snap.exists() && Array.isArray(snap.data().itens) ? snap.data().itens : [];
+    },
+    salvar: async (itens) => {
+        let u = auth.currentUser; if (!u) throw new Error("sem-login");
+        await setDoc(doc(db, COLECAO_ATALHOS, u.uid), { itens, atualizadoEm: serverTimestamp() });
+    }
+};
+
 // Exposto para o script principal do app (não-módulo) poder salvar/excluir.
 window.JRFirestore = {
     salvarMedicamento: async (regra) => {
@@ -475,6 +490,7 @@ document.getElementById('btnBaixarMeusDados').addEventListener('click', async ()
             Object.assign(dados, { perfil: x.perfil || null, acessos: x.acessos || null, ultimoAcesso: x.ultimoAcesso?.toDate ? x.ultimoAcesso.toDate().toISOString() : null });
         }
     } catch (e) { dados.perfil = window.__perfilAtual || null; }
+    try { dados.atalhos = await window.JRAtalhos.ler(); } catch (e) { }
     baixarArquivo("meus-dados-jrmed.json", JSON.stringify(dados, null, 2), "application/json");
     msgMeusDados("Arquivo \"meus-dados-jrmed.json\" baixado.", "#16a34a");
 });
@@ -487,8 +503,9 @@ document.getElementById('btnExcluirConta').addEventListener('click', async () =>
     msgMeusDados("Excluindo...");
     try {
         await reauthenticateWithCredential(u, EmailAuthProvider.credential(u.email, senha));
+        try { await deleteDoc(doc(db, COLECAO_ATALHOS, u.uid)); } catch (e) { }
         await deleteDoc(doc(db, COLECAO_USUARIOS, u.uid));
-        ['jrmed_perfil', 'jrmed_digital', CHAVE_ATIVIDADE].forEach(k => { try { localStorage.removeItem(k); } catch (e) { } });
+        ['jrmed_perfil', 'jrmed_atalhos_meus', 'jrmed_digital', CHAVE_ATIVIDADE].forEach(k => { try { localStorage.removeItem(k); } catch (e) { } });
         await deleteUser(u);
         fecharModal('modalMeusDados');
         msgErro.style.color = "#16a34a";
