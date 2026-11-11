@@ -1,9 +1,9 @@
 // =====================================================
 // ⚡ ATALHOS POR CIMA DO PRONTUÁRIO (só no teste, por enquanto)
 // Uma janelinha que fica na frente de qualquer programa (prontuário do hospital), com:
-//  - Prontuário: exame físico normal (♂/♀) com FC/FR/SpO2 já preenchidos, orientações de alta
-//    e "atalhos meus" (texto livre, salvo só neste computador);
-//  - Calculadora: peso + busca → dose e receita do card, prontas para colar.
+//  - Prontuário: exame físico masculino/feminino e orientações de alta (um clique = copiado)
+//    e "meus atalhos" (texto livre, salvo só neste computador);
+//  - Calculadora: peso + busca → dose do card e "+ Receita" (a mesma receita do app: carrinhoPrescricao).
 // Clique no botão → o texto vai para a área de transferência → Ctrl+V no prontuário.
 // Usa a "janela flutuante" do Chrome/Edge no computador (Document Picture-in-Picture).
 // Sem ela (Firefox, Safari, celular), abre uma janela comum.
@@ -21,7 +21,7 @@ const ATALHOS_ORIENTACOES = [
 const ATALHOS_CHAVE_MEUS = "jrmed_atalhos_meus";
 
 let janelaAtalhos = null;
-let atalhosEstado = { sexo: "m", minimizado: false };
+let atalhosEstado = { minimizado: false };
 
 function atalhosDisponivel() {
     return ATALHOS_LIBERADOS || (typeof MODO_TESTE !== "undefined" && MODO_TESTE);
@@ -33,17 +33,6 @@ function lerAtalhosMeus() {
 }
 function gravarAtalhosMeus(lista) {
     try { localStorage.setItem(ATALHOS_CHAVE_MEUS, JSON.stringify(lista)); } catch (e) {}
-}
-
-// Texto do exame físico do card, com FC, FR e SpO2 preenchidos (se digitados).
-function textoExameAtalho(sexo, fc, fr, sat) {
-    let med = buscarMed(sexo === "f" ? "exame_feminino" : "exame_masculino");
-    if (!med) return "";
-    let t = med.calc().r;
-    if (fc) t = t.replace(/FC: ?/, "FC: " + fc + " BPM");
-    if (fr) t = t.replace(/FR: +/, "FR: " + fr + " IRPM ");
-    if (sat) t = t.replace(/SpO2: +AA/, "SpO2: " + sat + "% EM AA");
-    return t;
 }
 
 const ATALHOS_CSS = `
@@ -60,17 +49,12 @@ body{margin:0;font:14px/1.35 Inter,system-ui,-apple-system,"Segoe UI",Roboto,san
 .corpo{padding:10px;display:grid;gap:10px}
 .sec{background:var(--card);border:1px solid var(--borda);border-radius:10px;padding:10px}
 .sec h2{margin:0 0 8px;font-size:11px;letter-spacing:1px;color:var(--suave);display:flex;align-items:center;justify-content:space-between}
-.alterna{display:inline-flex;border:1px solid var(--borda);border-radius:7px;overflow:hidden}
-.alterna button{border:0;background:transparent;color:var(--suave);padding:3px 9px;font:inherit;font-size:12px;cursor:pointer}
-.alterna button.on{background:var(--acento);color:#fff}
 .btns{display:flex;flex-wrap:wrap;gap:6px}
 .b{border:1px solid var(--borda);background:var(--fundo);color:var(--texto);border-radius:8px;padding:7px 10px;font:inherit;font-size:13px;cursor:pointer;text-align:left}
 .b:hover{border-color:var(--acento);color:var(--acento)}
 .b.forte{background:var(--acento);border-color:var(--acento);color:#fff;font-weight:600}
 .b.forte:hover{filter:brightness(1.08);color:#fff}
 .b.copiado,.b.forte.copiado{background:var(--ok);border-color:var(--ok);color:#fff}
-.vitais{display:flex;gap:6px;margin:8px 0}
-.vitais label{flex:1;font-size:11px;color:var(--suave)}
 input{width:100%;border:1px solid var(--borda);background:var(--card);color:var(--texto);border-radius:7px;padding:6px 8px;font:inherit;font-size:13px}
 input:focus{outline:2px solid var(--acento);outline-offset:-1px}
 .sub{font-size:11px;color:var(--suave);margin:8px 0 4px}
@@ -88,7 +72,10 @@ textarea{width:100%;min-height:70px;border:1px solid var(--borda);background:var
 .item .a{font-size:11.5px;color:var(--suave)}
 .item .d{margin:4px 0 6px;font-size:13px;color:var(--acento);font-weight:600;white-space:pre-line}
 .vazio{font-size:12.5px;color:var(--suave);padding:6px 2px}
-.mini{display:none}
+.cab{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.cab .x{padding:2px 7px;font-size:12px;color:var(--suave)}
+.txt{font:12px/1.4 ui-monospace,Consolas,monospace;white-space:pre-wrap;margin-top:4px;color:var(--texto)}
+.forte.b{flex:1;text-align:center}
 body.min .corpo{display:none}
 body.min .dica{display:none}
 .rod{font-size:10.5px;color:var(--suave);text-align:center;padding:0 10px 10px}
@@ -106,17 +93,11 @@ function htmlAtalhos() {
 </div>
 <div class="corpo">
   <div class="sec">
-    <h2>PRONTUÁRIO
-      <span class="alterna" role="group" aria-label="Sexo">
-        <button data-sexo="m" class="on">♂ Masc.</button><button data-sexo="f">♀ Fem.</button>
-      </span>
-    </h2>
-    <div class="vitais">
-      <label>FC<input id="at-fc" inputmode="numeric" placeholder="bpm"></label>
-      <label>FR<input id="at-fr" inputmode="numeric" placeholder="irpm"></label>
-      <label>Sat %<input id="at-sat" inputmode="numeric" placeholder="%"></label>
+    <h2>PRONTUÁRIO</h2>
+    <div class="btns">
+      <button class="b forte" data-copiar-card="exame_masculino">♂ Exame físico masculino</button>
+      <button class="b forte" data-copiar-card="exame_feminino">♀ Exame físico feminino</button>
     </div>
-    <div class="btns"><button class="b forte" id="at-exame">📋 Exame físico normal</button></div>
     <div class="sub">Orientações de alta</div>
     <div class="btns">${ori}</div>
     <div class="sub">Meus atalhos <span style="opacity:.7">(ficam só neste computador)</span></div>
@@ -136,6 +117,7 @@ function htmlAtalhos() {
     </div>
     <div class="res" id="at-res"><div class="vazio">Digite o peso e o nome do remédio ou da doença.</div></div>
   </div>
+  <div class="sec" id="at-receita"></div>
 </div>
 <div class="rod">Doses calculadas pelos cards do JR MED: confira antes de prescrever.</div>`;
 }
@@ -178,8 +160,30 @@ function atalhosResultados(doc) {
         if (semPeso && !m.ignoraPeso) { d = "Digite o peso"; pode = false; }
         else { try { d = m.calc(p, idade).v; } catch (e) { d = "Erro no cálculo"; pode = false; } }
         return `<div class="item"><div class="n">${escaparHtml(m.nome)}</div><div class="a">${escaparHtml(m.apres || "")}</div>
-<div class="d">${escaparHtml(String(d))}</div>${pode ? `<button class="b" data-receita="${escaparHtml(id)}">Copiar receita</button>` : ""}</div>`;
+<div class="d">${escaparHtml(String(d))}</div>${pode ? `<div class="btns"><button class="b forte" data-add="${escaparHtml(id)}">+ Receita</button><button class="b" data-receita="${escaparHtml(id)}">Copiar só este</button></div>` : ""}</div>`;
     }).join("");
+}
+
+// Receita: a mesma do app (carrinhoPrescricao). Atualiza sozinha quando muda no app ou aqui.
+function atalhosReceitaHtml(doc) {
+    let caixa = doc.getElementById("at-receita"); if (!caixa) return;
+    let n = carrinhoPrescricao.length;
+    if (!n) { caixa.innerHTML = `<h2>RECEITA</h2><div class="vazio">Vazia. Use "+ Receita" nos remédios acima.</div>`; return; }
+    caixa.innerHTML = `<h2>RECEITA (${n})</h2><div class="res">` + carrinhoPrescricao.map((it, i) =>
+        `<div class="item"><div class="cab"><span class="n">${i + 1}. ${escaparHtml(it.nome)}</span><button class="b x" data-tirar="${i}" title="Tirar da receita">✕</button></div>
+<div class="txt">${escaparHtml(it.texto)}</div></div>`).join("") +
+        `</div><div class="btns" style="margin-top:8px"><button class="b forte" id="at-copiar-receita">📋 Copiar receita completa</button><button class="b" id="at-limpar">Limpar</button></div>`;
+}
+function atalhosAtualizarReceita() {
+    if (janelaAtalhos && !janelaAtalhos.closed) atalhosReceitaHtml(janelaAtalhos.document);
+}
+function atalhosAdicionar(id, p) {
+    let med = buscarMed(id); if (!med) return false;
+    let texto = String(med.calc(p, (document.getElementById("idadeInput") || {}).value || "").r || "").trim();
+    if (!texto) return false;
+    carrinhoPrescricao.push({ nome: med.nome, apres: med.apres, texto, via: viaDaReceita(texto, med) });
+    atualizarCarrinhoUI();
+    return true;
 }
 
 function atalhosMeusHtml(doc) {
@@ -199,20 +203,28 @@ function montarAtalhos(win) {
     let pesoApp = (document.getElementById("pesoInput") || {}).value;
     if (pesoApp) $("at-peso").value = pesoApp;
     atalhosMeusHtml(doc);
-    doc.querySelectorAll("[data-sexo]").forEach(b => b.classList.toggle("on", b.dataset.sexo === atalhosEstado.sexo));
+    atalhosReceitaHtml(doc);
 
     doc.addEventListener("click", (ev) => {
         let b = ev.target.closest("button"); if (!b) return;
-        if (b.dataset.sexo) {
-            atalhosEstado.sexo = b.dataset.sexo;
-            doc.querySelectorAll("[data-sexo]").forEach(x => x.classList.toggle("on", x === b));
-        } else if (b.id === "at-exame") {
-            atalhosCopiar(doc, textoExameAtalho(atalhosEstado.sexo, $("at-fc").value.trim(), $("at-fr").value.trim(), $("at-sat").value.trim()), b);
-        } else if (b.dataset.copiarCard) {
+        if (b.dataset.copiarCard) {
             let m = buscarMed(b.dataset.copiarCard); if (m) atalhosCopiar(doc, m.calc().r, b);
         } else if (b.dataset.receita) {
             let m = buscarMed(b.dataset.receita), p = parseFloat($("at-peso").value);
             try { atalhosCopiar(doc, m.calc(p, (document.getElementById("idadeInput") || {}).value || "").r, b); } catch (e) {}
+        } else if (b.dataset.add) {
+            try {
+                if (atalhosAdicionar(b.dataset.add, parseFloat($("at-peso").value))) {
+                    b.classList.add("copiado"); b.textContent = "✓ Na receita";
+                    setTimeout(() => { b.classList.remove("copiado"); b.textContent = "+ Receita"; }, 1100);
+                }
+            } catch (e) {}
+        } else if (b.dataset.tirar) {
+            carrinhoPrescricao.splice(+b.dataset.tirar, 1); atualizarCarrinhoUI();
+        } else if (b.id === "at-copiar-receita") {
+            atalhosCopiar(doc, textoReceitaCompleta(), b);
+        } else if (b.id === "at-limpar") {
+            if (win.confirm("Limpar a receita?")) { carrinhoPrescricao = []; atualizarCarrinhoUI(); }
         } else if (b.dataset.meu) {
             let a = lerAtalhosMeus()[+b.dataset.meu]; if (a) atalhosCopiar(doc, a.texto, b);
         } else if (b.dataset.apagar) {

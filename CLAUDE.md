@@ -51,8 +51,9 @@ js/formularios.js          modais (cadastro da equipe, categorias, ficha) + inic
 js/cadastro.js             cadastro profissional (nome, atividade, CRM/COREN/CRF+UF ou faculdade+formatura, aceite);
                            pendenciaPerfil() decide quando pedir "Complete seu cadastro"
 js/digital.js              celular: desbloqueio com digital/rosto (WebAuthn, só no aparelho); computador: sessão sai após 1 h sem uso (firebase.js)
-js/atalhos.js              ⚡ Atalhos por cima do prontuário (Document Picture-in-Picture, Chrome/Edge no computador): exame físico com FC/FR/SpO2,
-                           orientações de alta, "meus atalhos" (localStorage) e calculadora (peso + busca → dose/receita do card). Só no teste (ATALHOS_LIBERADOS)
+js/atalhos.js              ⚡ Atalhos por cima do prontuário (Document Picture-in-Picture, Chrome/Edge no computador):
+                           exame físico ♂/♀ e orientações de alta (1 clique = copiado), "meus atalhos" (localStorage), calculadora (peso + busca)
+                           com "+ Receita" na MESMA receita do app (carrinhoPrescricao; textoReceitaCompleta/viaDaReceita em app.js). Só no teste (ATALHOS_LIBERADOS)
 js/firebase.js             login e Firestore (módulo); sem e-mail de confirmação (suspenso: não chegava), o cadastro pede o e-mail 2x; grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)
 privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; contato jrmedprescricao@gmail.com). Mudou o texto?
