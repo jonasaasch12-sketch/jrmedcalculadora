@@ -278,7 +278,7 @@ function abrirConduta(id, bloco) {
             let tit = novo ? `${s.passo ? `<span class="cond-passo">${s.passo}</span>` : ''}${escCond(semEmoji(s.titulo))}`
                 : `${s.passo ? `<span class="cond-passo">${s.passo}</span>` : (apple ? '' : (s.icone || '') + ' ')}${escCond(apple ? semEmoji(s.titulo) : s.titulo)}`;
             html += `<details class="cond-secao${s.alerta ? ' cond-alerta' : ''}" id="cond-sec-${i}" style="--cor-cat:${c.cor}">
-                <summary>${apple ? `<i class="cond-ico" aria-hidden="true" style="background:${CORES_APPLE[i % CORES_APPLE.length]}"><svg viewBox="0 0 24 24">${icoSecaoApple(s.titulo, i)}</svg></i>` : ''}<h3>${tit}</h3>${s.resumo ? `<div class="cond-secao-resumo">${s.resumo}</div>` : ''}</summary>
+                <summary>${apple && s.passo ? `<i class="cond-ico cond-num" aria-hidden="true" style="background:${CORES_APPLE[i % CORES_APPLE.length]}">${s.passo}</i><h3>${escCond(semEmoji(s.titulo))}</h3>` : apple ? `<i class="cond-ico" aria-hidden="true" style="background:${CORES_APPLE[i % CORES_APPLE.length]}"><svg viewBox="0 0 24 24">${icoSecaoApple(s.titulo, i)}</svg></i><h3>${tit}</h3>` : `<h3>${tit}</h3>`}${s.resumo ? `<div class="cond-secao-resumo">${s.resumo}</div>` : ''}</summary>
                 <div class="cond-secao-corpo">${htmlBlocoConduta(s)}</div>
             </details>`;
         });
