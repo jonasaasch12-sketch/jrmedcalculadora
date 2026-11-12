@@ -128,6 +128,10 @@ textarea{width:100%;min-height:130px;border:1px solid var(--borda);background:va
 .txt{font:600 13px/1.45 ui-monospace,Consolas,monospace;white-space:pre-wrap;margin-top:4px;color:var(--texto)}
 .forte.b{flex:1;text-align:center}
 body.min .corpo{display:none}
+body.min .rod{display:none}
+body.painel .topo{gap:6px;padding:8px}
+body.painel .logo .marca{display:none}
+body.painel .topo button{padding:6px 8px}
 body.min .dica{display:none}
 .abas{display:flex;gap:6px}
 .aba{flex:1;border:1.5px solid var(--borda);background:var(--card);color:var(--texto);border-radius:8px;padding:7px;font:inherit;font-size:14px;font-weight:700;cursor:pointer}
@@ -148,10 +152,11 @@ function htmlAtalhos() {
         .map(([id, nome]) => `<button class="b" data-copiar-card="${id}">${e(nome)}</button>`).join("");
     return `
 <div class="topo">
-  <div class="logo">JR MED <span>⚡ Atalhos</span></div>
+  <div class="logo"><span class="marca">JR MED </span><span>⚡ Atalhos</span></div>
   <div class="esp"></div>
   <button id="at-novo-pac" title="Limpa peso, idade, busca e a receita">↺ Novo paciente</button>
   <button id="at-min" title="Diminuir / aumentar a janela">Diminuir</button>
+  ${atalhosEstado.painel ? `<button id="at-fechar" title="Fechar os atalhos">✕</button>` : ""}
 </div>
 <div class="dica">Clique no botão, depois Ctrl+V no prontuário</div>
 <div class="corpo">
@@ -264,7 +269,7 @@ function atalhoEhTextoPronto(med) { return !!(med && (med.ignoraPeso || med.cat 
 
 function atalhosMeusHtml(doc) {
     let onde = doc.getElementById("at-onde");
-    if (onde) onde.textContent = atalhosOrigem === "conta" ? "(salvos na sua conta)" : "(salvos só neste computador)";
+    if (onde) onde.textContent = atalhosOrigem === "conta" ? "(salvos na sua conta)" : (atalhosEstado.painel ? "(salvos só neste aparelho)" : "(salvos só neste computador)");
     doc.getElementById("at-meus").innerHTML = atalhosMeus.length ? atalhosMeus.map((a, i) => {
         let icone = a.tipo === "texto" ? "📝 " : (atalhoEhTextoPronto(buscarMed(a.id)) ? "📋 " : "💊 ");
         return `<span class="meu"><button class="b" data-meu="${i}" title="${a.tipo === "texto" ? "Copia o seu texto" : (icone === "💊 " ? "Põe na receita (usa o peso e a idade da calculadora)" : "Copia o texto do card")}">${icone}${escaparHtml(a.nome)}</button><button class="b x" data-apagar="${i}" title="Apagar este atalho">✕</button></span>`;
@@ -295,6 +300,7 @@ function montarAtalhos(win) {
     let st = doc.createElement("style"); st.textContent = ATALHOS_CSS; doc.head.appendChild(st);
     doc.documentElement.classList.toggle("escuro", document.documentElement.getAttribute("data-theme") === "dark");
     doc.body.innerHTML = htmlAtalhos();
+    doc.body.classList.toggle("painel", !!atalhosEstado.painel);
     let $ = (id) => doc.getElementById(id);
     let pesoApp = (document.getElementById("pesoInput") || {}).value;
     if (pesoApp) $("at-peso").value = pesoApp;
@@ -374,7 +380,10 @@ function montarAtalhos(win) {
             atalhosEstado.minimizado = !atalhosEstado.minimizado;
             doc.body.classList.toggle("min", atalhosEstado.minimizado);
             b.textContent = atalhosEstado.minimizado ? "Aumentar" : "Diminuir";
-            try { atalhosEstado.minimizado ? win.resizeTo(260, 90) : win.resizeTo(380, 640); } catch (e) {}
+            if (atalhosEstado.painel) atalhosEstado.painel.classList.toggle("min", atalhosEstado.minimizado);
+            else { try { atalhosEstado.minimizado ? win.resizeTo(260, 90) : win.resizeTo(380, 640); } catch (e) {} }
+        } else if (b.id === "at-fechar") {
+            fecharPainelAtalhos();
         }
     });
     $("at-peso").addEventListener("input", () => atalhosResultados(doc));
@@ -384,10 +393,52 @@ function montarAtalhos(win) {
     atalhosResultados(doc);
 }
 
+// Tablet (Android/iPad): o navegador não abre janela por cima de outro aplicativo. Os atalhos abrem
+// num painel à direita, dentro do JR MED (dá para usar com a tela dividida do tablet, ao lado do prontuário).
+function ehTablet() {
+    let toque = /Android|iPad/i.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+    return toque && Math.min(screen.width, screen.height) >= 600;
+}
+function ehCelular() {
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) && !ehTablet();
+}
+function abrirPainelAtalhos() {
+    let painel = document.createElement("div");
+    painel.id = "painelAtalhos";
+    painel.style.cssText = "position:fixed;top:0;right:0;bottom:0;width:min(400px,100vw);z-index:9999;box-shadow:-8px 0 30px rgba(0,0,0,.35);background:#eef2f6;transition:height .15s";
+    let ifr = document.createElement("iframe"); /* sem src: documento em branco do próprio site */
+    ifr.title = "JR MED · Atalhos";
+    ifr.style.cssText = "border:0;width:100%;height:100%;display:block";
+    painel.appendChild(ifr);
+    document.body.appendChild(painel);
+    let st = document.getElementById("estiloPainelAtalhos");
+    if (!st) {
+        st = document.createElement("style"); st.id = "estiloPainelAtalhos";
+        st.textContent = "#painelAtalhos.min{bottom:auto;height:52px}";
+        document.head.appendChild(st);
+    }
+    atalhosEstado.painel = painel;
+    janelaAtalhos = ifr.contentWindow;
+    let meta = ifr.contentDocument.createElement("meta");
+    meta.name = "viewport"; meta.content = "width=device-width, initial-scale=1";
+    ifr.contentDocument.head.appendChild(meta);
+    montarAtalhos(ifr.contentWindow);
+}
+function fecharPainelAtalhos() {
+    if (atalhosEstado.painel) atalhosEstado.painel.remove();
+    atalhosEstado.painel = null; janelaAtalhos = null; atalhosEstado.minimizado = false;
+}
+
 async function abrirAtalhos() {
     if (typeof fecharConfig === "function") fecharConfig();
+    if (atalhosEstado.painel) { /* tablet: o botão abre e fecha o painel */
+        if (atalhosEstado.minimizado) { atalhosEstado.minimizado = false; atalhosEstado.painel.classList.remove("min"); janelaAtalhos.document.body.classList.remove("min"); let b = janelaAtalhos.document.getElementById("at-min"); if (b) b.textContent = "Diminuir"; }
+        else fecharPainelAtalhos();
+        return;
+    }
     if (janelaAtalhos && !janelaAtalhos.closed) { try { janelaAtalhos.focus(); } catch (e) {} return; }
     atalhosEstado.minimizado = false;
+    if (ehTablet()) { abrirPainelAtalhos(); return; }
     let win = null;
     if ("documentPictureInPicture" in window) {
         try { win = await documentPictureInPicture.requestWindow({ width: 380, height: 640 }); } catch (e) { win = null; }
@@ -403,11 +454,10 @@ async function abrirAtalhos() {
     montarAtalhos(win);
 }
 
-// Botão no Menu (seção "Ferramentas") e no cabeçalho do computador.
+// Botão no Menu (seção "Ferramentas") e no cabeçalho (computador e tablet na horizontal).
 function instalarBotaoAtalhos() {
     if (!atalhosDisponivel()) return;
-    let celular = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (celular) return; /* no celular não existe janela por cima de outro programa */
+    if (ehCelular()) return; /* celular: tela pequena demais; tablet abre como painel (abrirPainelAtalhos) */
     let drawer = document.querySelector("#painelConfig .config-rodape");
     if (drawer && !document.getElementById("btnAtalhosCfg")) {
         let sec = document.createElement("div");
