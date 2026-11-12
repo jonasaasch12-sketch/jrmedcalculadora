@@ -333,14 +333,18 @@ function atalhosKitHtml(doc) {
 
 // Texto da prescrição pronta com o peso e a idade (mesmo formato da "Copiar receita completa").
 function textoKitAtalho(a, p, idade) {
-    let itens = [], faltam = [];
+    let itens = [], faltam = [], erros = [];
     a.ids.forEach((id) => {
         let m = buscarMed(id);
         if (!m) { faltam.push(id); return; }
-        let texto = String(m.calc(p, idade).r || "").trim();
-        if (texto) itens.push({ texto, via: viaDaReceita(texto, m) });
+        /* um card com problema não derruba a prescrição inteira: fica de fora, com aviso */
+        try {
+            let res = m.calc(p, idade) || {};
+            let texto = String(res.r || "").trim();
+            if (texto) itens.push({ texto, via: viaDaReceita(texto, m) });
+        } catch (e) { erros.push(m.nome || id); console.warn("Atalho: erro no card", id, e); }
     });
-    return { texto: itens.length ? textoReceitaDeItens(itens) : "", faltam };
+    return { texto: itens.length ? textoReceitaDeItens(itens) : "", faltam, erros };
 }
 
 function montarAtalhos(win) {
@@ -390,10 +394,16 @@ function montarAtalhos(win) {
                     win.alert("Para copiar a prescrição pronta, digite o PESO e a IDADE na calculadora: as doses são calculadas com eles.");
                     return;
                 }
-                let r; try { r = textoKitAtalho(a, p, idade); } catch (e) { win.alert("Não foi possível calcular esta prescrição."); return; }
-                if (!r.texto) { win.alert("Os itens desta prescrição não existem mais no JR MED. Apague e crie de novo."); return; }
+                if (typeof textoReceitaDeItens !== "function" || typeof viaDaReceita !== "function") {
+                    win.alert("O JR MED foi atualizado. Feche e abra de novo a página para usar a prescrição pronta."); return;
+                }
+                let r; try { r = textoKitAtalho(a, p, idade); } catch (e) { console.warn(e); win.alert("Não foi possível calcular esta prescrição (" + (e && e.message || e) + ")."); return; }
+                if (!r.texto) { win.alert(r.erros.length ? "Não foi possível calcular: " + r.erros.join(", ") + "." : "Os itens desta prescrição não existem mais no JR MED. Apague e crie de novo."); return; }
                 atalhosCopiar(doc, r.texto, b);
-                if (r.faltam.length) win.alert(`${r.faltam.length} item(ns) desta prescrição não existem mais no JR MED e ficaram de fora.`);
+                let avisos = [];
+                if (r.faltam.length) avisos.push(`${r.faltam.length} item(ns) não existem mais no JR MED`);
+                if (r.erros.length) avisos.push(`não foi possível calcular: ${r.erros.join(", ")}`);
+                if (avisos.length) win.alert("Copiado, mas atenção: " + avisos.join("; ") + ". Esses itens ficaram de fora.");
                 return;
             }
             let m = buscarMed(a.id);
