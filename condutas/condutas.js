@@ -183,46 +183,48 @@ const RE_EMOJI = /[\p{Extended_Pictographic}\uFE0F\u200D]/gu;
 function semEmoji(t) { return String(t || '').replace(RE_EMOJI, '').replace(/\s{2,}/g, ' ').trim(); }
 
 // Nome curto da aba a partir do título do bloco (ou b.aba, se a conduta quiser outro).
-/* Cores e ícones de traço por seção (estilo Apple). Cada seção tem uma cor própria (rodízio) e um ícone pelo tipo do título. */
-const CORES_APPLE = ['#0a84ff', '#ff9f0a', '#34c759', '#af52de', '#ff3b30', '#30b0c7', '#5e5ce6', '#ff2d55', '#64d2ff', '#a2845e'];
-const ICONES_APPLE = {
-    lupa: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/>',
-    bussola: '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
-    alerta: '<path d="M12 9v4M12 17h.01"/><path d="M10.3 4.2 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"/>',
-    pulso: '<path d="M2.5 12h4l2.5-6 4 12 2.5-6h6"/>',
-    grafico: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
-    escudo: '<path d="M12 3 4.5 6v5.5c0 4.5 3.2 8 7.5 9.5 4.3-1.5 7.5-5 7.5-9.5V6z"/>',
-    casa: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-6h4v6h5V9.5"/>',
-    termometro: '<path d="M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0z"/><path d="M12 9v7"/>',
-    gota: '<path d="M12 3.5s6 6.2 6 10.5a6 6 0 0 1-12 0c0-4.3 6-10.5 6-10.5z"/>',
-    pilula: '<rect x="3" y="8.5" width="18" height="7" rx="3.5" transform="rotate(-45 12 12)"/><path d="m8.5 8.5 7 7"/>',
-    cama: '<path d="M3 18V6M3 14h18v4M21 14v-3a3 3 0 0 0-3-3h-7v6"/><circle cx="7" cy="11" r="1.6"/>',
-    lista: '<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>',
-    pessoa: '<circle cx="12" cy="7" r="3.5"/><path d="M5 21v-3a7 7 0 0 1 14 0v3"/>',
-    relogio: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'
+/* Ícone e cor de cada seção (estilo Apple), pelo SIGNIFICADO do título, não pela posição.
+   Cada tipo tem um ícone e uma cor fixos: atenção = laranja com triângulo; emergência = vermelho com cruz;
+   diagnóstico = azul com lupa; casa/alta = verde; tratamento = verde-azulado com pílula; etc.
+   A primeira regra que bater vence. */
+const TIPOS_APPLE = {
+    atencao:   { cor: '#ff9f0a', ic: '<path d="M12 9v4M12 17h.01"/><path d="M10.3 4.2 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"/>' },
+    emergencia:{ cor: '#ff3b30', ic: '<path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/>' },
+    diagnostico:{ cor: '#0a84ff', ic: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/>' },
+    diferencial:{ cor: '#5e5ce6', ic: '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>' },
+    escore:    { cor: '#ff2d55', ic: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>' },
+    exames:    { cor: '#af52de', ic: '<path d="M9 3h6M10 3v6.5L5 18.5A2 2 0 0 0 6.8 21.5h10.4a2 2 0 0 0 1.8-3L14 9.5V3"/><path d="M8 15h8"/>' },
+    hidratacao:{ cor: '#64d2ff', ic: '<path d="M12 3.5s6 6.2 6 10.5a6 6 0 0 1-12 0c0-4.3 6-10.5 6-10.5z"/>' },
+    tratamento:{ cor: '#30b0c7', ic: '<rect x="3" y="8.5" width="18" height="7" rx="3.5" transform="rotate(-45 12 12)"/><path d="m8.5 8.5 7 7"/>' },
+    casa:      { cor: '#34c759', ic: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-6h4v6h5V9.5"/>' },
+    prevencao: { cor: '#00b894', ic: '<path d="M12 3 4.5 6v5.5c0 4.5 3.2 8 7.5 9.5 4.3-1.5 7.5-5 7.5-9.5V6z"/>' },
+    sinais:    { cor: '#ff375f', ic: '<path d="M2.5 12h4l2.5-6 4 12 2.5-6h6"/>' },
+    respiracao:{ cor: '#5ac8fa', ic: '<path d="M3 8h11a3 3 0 1 0-3-3M3 16h14a3 3 0 1 1-3 3"/>' },
+    tempo:     { cor: '#8e8e93', ic: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>' },
+    outro:     { cor: '#636366', ic: '<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>' }
 };
-/* tipo de seção pelo título (primeira regra que bate) */
-const REGRAS_ICONE_APPLE = [
-    [/diferencial/, 'bussola'],
-    [/defini|diagn[oó]stic|quadro|exame|clin/, 'lupa'],
-    [/risco|alarme|complica|sinal/, 'alerta'],
-    [/vital|esfor|taquip|frequ|respira/, 'pulso'],
-    [/gravidade|classifica|escore|tabela|prognos/, 'grafico'],
-    [/crit[eé]rio|interna|uti|emerg|grave/, 'escudo'],
-    [/febre|antit[eé]rm|temperatura/, 'termometro'],
-    [/hidrata|diurese|l[ií]quido|soro|gota/, 'gota'],
-    [/tratamento|medica|antibi|oxig|droga/, 'pilula'],
-    [/leito|monitor|hospital/, 'cama'],
-    [/casa|ambulat|cuidado|domic|seguimento|orienta/, 'casa'],
-    [/quando|retorno|tempo/, 'relogio']
+const REGRAS_TIPO_APPLE = [
+    [/diferencial/, 'diferencial'],
+    [/crit[eé]rios de interna|interna[çc][ãa]o|terapia intensiva|\buti\b|choque|refrat|(?<!alta da )emerg|herniação|transfer[êe]ncia|intubar|via a[ée]rea|manitol|leito de interna|grave:|suporte ventilat|vasoativo|convuls|hipertens[ãa]o intracran|exsangu|interromp|reconhecer|piora s[úu]bita|estado de mal|destino/, 'emergencia'],
+    [/sinais? de (alerta|alarme|gravidade|choque)|sinais de alerta|alarme/, 'atencao'],
+    [/em casa|ambulat|alta|seguimento|orienta|fam[íi]lia|volta|retorno|escola|prescri[çc][ãa]o para casa|depois d|pequeno queimado|plano de a[çc][ãa]o|cart[ãa]o|plano a\b|domic|encaminh/, 'casa'],
+    [/\bexames?\b|laborat|l[ií]quor|hemocultura|colher|imagem|ecocardiogr|\beco\b|gasometria|pun[çc][ãa]o|cultura|hemograma|notificar, colher/, 'exames'],
+    [/prevenç|preven|prevenir|isolar|isolamento|notifica|vacin|contato|quimioprofil/, 'prevencao'],
+    [/escore|gravidade|classifica|glasgow|\bescala\b|calculadora|pecarn|mcisaac|phoenix|rochester|meningitis score|prova do la[çc]o|scq|tabela|menor de 30|\d+ a \d+ meses|algoritmo|semáforo|calcul/, 'escore'],
+    [/hidrata|reidrat|plano [bc]\b|expans[ãa]o vol[êe]mica|volume:|^0 a 1 hora|^a partir da 2[ªa] hora|grupo c|soro|potássio|pot[áa]ssio|desnutrid|alimenta|nutri|l[ií]quido|diurese/, 'hidratacao'],
+    [/tratamento|antibi[óo]tic|medica[çc]|adrenalina|insulina|dexametasona|aciclovir|analges|sintom[áa]tic|antit[ée]rmic|antiem[ée]tic|corticoide|imunoglobulina|aas\b|ceftriaxona|manuten|neuroprote|suspender|medicamento|dor e febre|cir[úu]rg|dura[çc][ãa]o|doses ev|dose|escalada|t[ée]tano|ferida|escarot|vitamina|anti-hist/, 'tratamento'],
+    [/aten[çc][ãa]o|al[ée]rg|n[ãa]o recomendado|o que n[ãa]o fazer|sem melhora|recorrência|recorrencia|gestante|encefalopatia|kernicterus|hiperinfec|complica[çc][õo]es|a qualquer momento|risco|cuidado|perigo|suspeita de maus|petéquia|falha|reavalia[çc][ãa]o e sinais|dano|sequela|desencadeante|obstru|suboclus|áscaris|ascaris/, 'atencao'],
+    [/vital|monitor|esfor[çc]o|press[ãa]o|pulso|f[ií]sico|glicemia|abcde|abc\b|neurol[óo]gico|^[a-e] [—-]|circula[çc][ãa]o|acesso|estado geral/, 'sinais'],
+    [/oxig|respira|ventila|sopro|inalat|cianeto|broncoespasmo|laringe|peep|modos|pulmonar|dope|aer[óo]bica/, 'respiracao'],
+    [/^linha do tempo|hora em hora|^\d+ ?a \d+ ?(min|h|hora)|^chegada|1\/1h|2\/2h/, 'tempo'],
+    [/diagn[óo]stic|defini[çc]|quadro cl[ií]nico|apresenta[çc][ãa]o|manifesta[çc]|caso suspeito|identificar|fases|agentes|etiologia|causas|investig|profundidade|como (descrever|estimar)|sinusite|\boma\b|recorrente|outras formas|amebíase|icterícia|arboviroses|fase febril|fatores de risco|escarlatina|avalia[çc][ãa]o do controle|pac complicada/, 'diagnostico']
 ];
-const ORDEM_ICONES_APPLE = ['lupa', 'bussola', 'alerta', 'pulso', 'grafico', 'escudo', 'casa', 'pilula', 'gota', 'cama'];
-function icoSecaoApple(t, i) {
-    let m = semEmoji(t || '').toLowerCase();
-    let regra = REGRAS_ICONE_APPLE.find(([re]) => re.test(m));
-    let nome = regra ? regra[1] : ORDEM_ICONES_APPLE[(i || 0) % ORDEM_ICONES_APPLE.length];
-    return ICONES_APPLE[nome];
+function tipoSecaoApple(titulo) {
+    let m = semEmoji(titulo || '').toLowerCase();
+    let r = REGRAS_TIPO_APPLE.find(([re]) => re.test(m));
+    return TIPOS_APPLE[r ? r[1] : 'outro'];
 }
+function icoSecaoApple(t) { return tipoSecaoApple(t).ic; }
 function nomeAbaBloco(b) {
     if (b.aba) return b.aba;
     let t = semEmoji(b.titulo), m = t.toLowerCase();
@@ -278,7 +280,7 @@ function abrirConduta(id, bloco) {
             let tit = novo ? `${s.passo ? `<span class="cond-passo">${s.passo}</span>` : ''}${escCond(semEmoji(s.titulo))}`
                 : `${s.passo ? `<span class="cond-passo">${s.passo}</span>` : (apple ? '' : (s.icone || '') + ' ')}${escCond(apple ? semEmoji(s.titulo) : s.titulo)}`;
             html += `<details class="cond-secao${s.alerta ? ' cond-alerta' : ''}" id="cond-sec-${i}" style="--cor-cat:${c.cor}">
-                <summary>${apple && s.passo ? `<i class="cond-ico cond-num" aria-hidden="true" style="background:${CORES_APPLE[i % CORES_APPLE.length]}">${s.passo}</i><h3>${escCond(semEmoji(s.titulo))}</h3>` : apple ? `<i class="cond-ico" aria-hidden="true" style="background:${CORES_APPLE[i % CORES_APPLE.length]}"><svg viewBox="0 0 24 24">${icoSecaoApple(s.titulo, i)}</svg></i><h3>${tit}</h3>` : `<h3>${tit}</h3>`}${s.resumo ? `<div class="cond-secao-resumo">${s.resumo}</div>` : ''}</summary>
+                <summary>${apple && s.passo ? `<i class="cond-ico cond-num" aria-hidden="true" style="background:${tipoSecaoApple(s.titulo).cor}">${s.passo}</i><h3>${escCond(semEmoji(s.titulo))}</h3>` : apple ? `<i class="cond-ico" aria-hidden="true" style="background:${tipoSecaoApple(s.titulo).cor}"><svg viewBox="0 0 24 24">${icoSecaoApple(s.titulo)}</svg></i><h3>${tit}</h3>` : `<h3>${tit}</h3>`}${s.resumo ? `<div class="cond-secao-resumo">${s.resumo}</div>` : ''}</summary>
                 <div class="cond-secao-corpo">${htmlBlocoConduta(s)}</div>
             </details>`;
         });
