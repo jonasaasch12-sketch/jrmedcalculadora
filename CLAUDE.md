@@ -61,6 +61,11 @@ js/atalhos.js              ⚡ Atalhos por cima do prontuário (Document Picture
                            Tablet (Android/iPad, ehTablet()): não há janela por cima de outro app → abre num PAINEL à direita dentro do app
                            (iframe sem src, abrirPainelAtalhos; ✕ fecha). Celular: botão não aparece.
                            AO LIBERAR: subir VERSAO_TERMOS (js/cadastro.js) para "2026-11" e a "versão" no topo de termos.html/privacidade.html
+js/inicio.js + css/inicio.css  🏠 TELA INICIAL depois do login (só no teste: INICIO_LIBERADO = false): estilo "Apple" (ícones SVG de traço,
+                           listas com ›), blocos Pediatria (Prescrição, Condutas, Emergência = cat-pals, Exame físico, Atalhos) e Adulto ("Em breve"),
+                           Prescrições prontas (kits dos atalhos) e Recentes (localStorage jrmed_recentes; embrulha adicionarAoCarrinho/abrirConduta).
+                           firebase.js chama aoEntrarNoApp()/aoSairDoApp(). Volta: "‹ Início" no cabeçalho, aba 🏠 no celular, item no Menu.
+                           O adulto terá os PRÓPRIOS atalhos (decisão do Dr. Jonas). No oficial nada muda.
 js/firebase.js             login e Firestore (módulo); sem e-mail de confirmação (suspenso: não chegava), o cadastro pede o e-mail 2x; grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)
 privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; contato jrmedprescricao@gmail.com). Mudou o texto?
