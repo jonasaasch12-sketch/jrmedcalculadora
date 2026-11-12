@@ -31,7 +31,9 @@ function atalhosDisponivel() {
 // Dois tipos: { tipo: "card", id, nome } = card do sistema; { tipo: "texto", nome, texto } = modelo próprio
 // (ex.: modelo de prontuário do hospital do plantão). Nunca dados de paciente (aviso na tela).
 // Sem login ou sem a regra publicada no Firebase: ficam só neste computador (localStorage), com aviso.
-const ATALHOS_MAX = 30, ATALHOS_MAX_TEXTO = 5000, ATALHOS_MAX_NOME = 40;
+const ATALHOS_MAX = 30, ATALHOS_MAX_TEXTO = 5000, ATALHOS_MAX_NOME = 40, ATALHOS_MAX_KIT = 15;
+/* { tipo: "kit", nome, ids: [...] } = prescrição pronta (ex.: GECA): só copia com peso E idade, que calculam as doses */
+let atalhosKitNovo = []; /* cards escolhidos na aba "Prescrição pronta", antes de salvar */
 let atalhosMeus = [];
 let atalhosOrigem = "local"; /* "conta" ou "local" */
 
@@ -46,6 +48,10 @@ function limparAtalhos(lista) {
         if (!a || typeof a.nome !== "string" || !a.nome.trim()) return null;
         let nome = a.nome.trim().slice(0, ATALHOS_MAX_NOME);
         if (a.tipo === "card" && typeof a.id === "string") return { tipo: "card", id: a.id.slice(0, 80), nome };
+        if (a.tipo === "kit" && Array.isArray(a.ids)) {
+            let ids = a.ids.filter(x => typeof x === "string").map(x => x.slice(0, 80)).slice(0, ATALHOS_MAX_KIT);
+            return ids.length ? { tipo: "kit", nome, ids } : null;
+        }
         if (typeof a.texto === "string" && a.texto.trim()) return { tipo: "texto", nome, texto: a.texto.slice(0, ATALHOS_MAX_TEXTO) };
         return null;
     }).filter(Boolean).slice(0, ATALHOS_MAX);
@@ -134,7 +140,7 @@ body.painel .logo .marca{display:none}
 body.painel .topo button{padding:6px 8px}
 body.min .dica{display:none}
 .abas{display:flex;gap:6px}
-.aba{flex:1;border:1.5px solid var(--borda);background:var(--card);color:var(--texto);border-radius:8px;padding:7px;font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.aba{flex:1;line-height:1.15;border:1.5px solid var(--borda);background:var(--card);color:var(--texto);border-radius:8px;padding:7px;font:inherit;font-size:14px;font-weight:700;cursor:pointer}
 .aba.on{background:var(--acento);border-color:var(--acento);color:#fff}
 :root.escuro .aba.on{color:#0b1220}
 .aviso{background:#fff3cd;color:#3d2e00;border:1px solid #e0b84a;border-radius:8px;padding:7px 9px;font-size:13px;font-weight:600}
@@ -172,10 +178,19 @@ function htmlAtalhos() {
     <div class="btns" id="at-meus"></div>
     <div class="btns" style="margin-top:6px"><button class="b" id="at-novo-btn">+ Adicionar atalho</button></div>
     <div class="novo" id="at-novo">
-      <div class="abas"><button class="aba on" data-aba="sistema">Do sistema</button><button class="aba" data-aba="texto">Texto meu</button></div>
+      <div class="abas"><button class="aba on" data-aba="sistema">Do sistema</button><button class="aba" data-aba="kit">Prescrição pronta</button><button class="aba" data-aba="texto">Texto meu</button></div>
       <div id="at-aba-sistema">
         <input id="at-sis-busca" placeholder="Buscar no JR MED (ex.: dipirona, GECA, exame)">
         <div class="res" id="at-sis-res"></div>
+      </div>
+      <div id="at-aba-kit" hidden>
+        <input id="at-kit-nome" placeholder="Nome da prescrição (ex.: GECA, IVAS)" maxlength="${ATALHOS_MAX_NOME}">
+        <div class="sub">Itens da prescrição</div>
+        <div id="at-kit-lista"></div>
+        <input id="at-kit-busca" placeholder="Buscar remédio ou orientação para incluir">
+        <div class="res" id="at-kit-res"></div>
+        <div class="vazio">As doses são calculadas na hora, com o peso e a idade da calculadora.</div>
+        <div class="linha2"><button class="b forte" id="at-kit-salvar">Salvar prescrição</button></div>
       </div>
       <div id="at-aba-texto" hidden>
         <div class="aviso">⚠️ <b>Não coloque dados de pacientes</b> (nome, prontuário, CPF, data de nascimento). Use só o modelo em branco.</div>
@@ -271,8 +286,9 @@ function atalhosMeusHtml(doc) {
     let onde = doc.getElementById("at-onde");
     if (onde) onde.textContent = atalhosOrigem === "conta" ? "(salvos na sua conta)" : (atalhosEstado.painel ? "(salvos só neste aparelho)" : "(salvos só neste computador)");
     doc.getElementById("at-meus").innerHTML = atalhosMeus.length ? atalhosMeus.map((a, i) => {
-        let icone = a.tipo === "texto" ? "📝 " : (atalhoEhTextoPronto(buscarMed(a.id)) ? "📋 " : "💊 ");
-        return `<span class="meu"><button class="b" data-meu="${i}" title="${a.tipo === "texto" ? "Copia o seu texto" : (icone === "💊 " ? "Põe na receita (usa o peso e a idade da calculadora)" : "Copia o texto do card")}">${icone}${escaparHtml(a.nome)}</button><button class="b x" data-apagar="${i}" title="Apagar este atalho">✕</button></span>`;
+        let icone = a.tipo === "texto" ? "📝 " : a.tipo === "kit" ? "🧾 " : (atalhoEhTextoPronto(buscarMed(a.id)) ? "📋 " : "💊 ");
+        let dica = a.tipo === "texto" ? "Copia o seu texto" : a.tipo === "kit" ? "Copia a prescrição inteira (precisa do peso e da idade)" : (icone === "💊 " ? "Põe na receita (usa o peso e a idade da calculadora)" : "Copia o texto do card");
+        return `<span class="meu"><button class="b" data-meu="${i}" title="${dica}">${icone}${escaparHtml(a.nome)}</button><button class="b x" data-apagar="${i}" title="Apagar este atalho">✕</button></span>`;
     }).join("") : `<span class="vazio">Nenhum ainda. Toque em "+ Adicionar atalho".</span>`;
 }
 
@@ -292,6 +308,39 @@ function atalhosSistemaHtml(doc) {
         return `<div class="item sis"><div><div class="n">${escaparHtml(m.nome)}</div><div class="a">${escaparHtml(m.apres || "")}</div></div>` +
             (ja ? `<span class="ja">✓ Já é atalho</span>` : `<button class="b forte" data-sis="${escaparHtml(id)}" style="flex:none">+ Adicionar</button>`) + `</div>`;
     }).join("");
+}
+
+// Aba "Prescrição pronta": itens escolhidos e busca de cards para incluir.
+function atalhosKitHtml(doc) {
+    doc.getElementById("at-kit-lista").innerHTML = atalhosKitNovo.length
+        ? atalhosKitNovo.map((id, i) => { let m = buscarMed(id);
+            return `<div class="item cab"><span class="n">${i + 1}. ${escaparHtml(m ? m.nome : id)}</span><button class="b x" data-kit-tirar="${i}" title="Tirar">✕</button></div>`; }).join("")
+        : `<div class="vazio">Nenhum item ainda. Busque abaixo e toque em "+ Incluir".</div>`;
+    let caixa = doc.getElementById("at-kit-res");
+    let q = normalizar(doc.getElementById("at-kit-busca").value.trim());
+    if (!q) { caixa.innerHTML = ""; return; }
+    let ids = Object.keys(farmaciaJR).concat(Object.keys(typeof medsCustomizados !== "undefined" ? medsCustomizados : {}));
+    let achados = ids.filter((id) => {
+        let m = buscarMed(id);
+        return m && m.cat !== "cat-exame-fisico" && cardCorrespondeABusca(normalizar([m.nome, m.kw, m.apres, m.sub].join(" ")), q) || (m && m.cat === "cat-exame-fisico" && id.startsWith("orientacoes") && cardCorrespondeABusca(normalizar([m.nome, m.kw].join(" ")), q));
+    }).slice(0, 8);
+    caixa.innerHTML = achados.length ? achados.map((id) => {
+        let m = buscarMed(id), ja = atalhosKitNovo.includes(id);
+        return `<div class="item sis"><div><div class="n">${escaparHtml(m.nome)}</div><div class="a">${escaparHtml(m.apres || "")}</div></div>` +
+            (ja ? `<span class="ja">✓ Incluído</span>` : `<button class="b forte" data-kit-incluir="${escaparHtml(id)}" style="flex:none">+ Incluir</button>`) + `</div>`;
+    }).join("") : `<div class="vazio">Nada encontrado.</div>`;
+}
+
+// Texto da prescrição pronta com o peso e a idade (mesmo formato da "Copiar receita completa").
+function textoKitAtalho(a, p, idade) {
+    let itens = [], faltam = [];
+    a.ids.forEach((id) => {
+        let m = buscarMed(id);
+        if (!m) { faltam.push(id); return; }
+        let texto = String(m.calc(p, idade).r || "").trim();
+        if (texto) itens.push({ texto, via: viaDaReceita(texto, m) });
+    });
+    return { texto: itens.length ? textoReceitaDeItens(itens) : "", faltam };
 }
 
 function montarAtalhos(win) {
@@ -334,6 +383,19 @@ function montarAtalhos(win) {
         } else if (b.dataset.meu) {
             let a = atalhosMeus[+b.dataset.meu]; if (!a) return;
             if (a.tipo === "texto") { atalhosCopiar(doc, a.texto, b); return; }
+            if (a.tipo === "kit") {
+                let p = parseFloat($("at-peso").value), idade = idadeJanela();
+                if (isNaN(p) || p <= 0 || idade === "" || isNaN(parseFloat(idade))) {
+                    (isNaN(p) || p <= 0 ? $("at-peso") : $("at-idade")).focus();
+                    win.alert("Para copiar a prescrição pronta, digite o PESO e a IDADE na calculadora: as doses são calculadas com eles.");
+                    return;
+                }
+                let r; try { r = textoKitAtalho(a, p, idade); } catch (e) { win.alert("Não foi possível calcular esta prescrição."); return; }
+                if (!r.texto) { win.alert("Os itens desta prescrição não existem mais no JR MED. Apague e crie de novo."); return; }
+                atalhosCopiar(doc, r.texto, b);
+                if (r.faltam.length) win.alert(`${r.faltam.length} item(ns) desta prescrição não existem mais no JR MED e ficaram de fora.`);
+                return;
+            }
             let m = buscarMed(a.id);
             if (!m) { win.alert("Este card não existe mais no JR MED. Apague o atalho (✕)."); return; }
             if (atalhoEhTextoPronto(m)) { atalhosCopiar(doc, m.calc().r, b); return; }
@@ -353,7 +415,23 @@ function montarAtalhos(win) {
             doc.querySelectorAll(".aba").forEach(x => x.classList.toggle("on", x === b));
             $("at-aba-sistema").hidden = b.dataset.aba !== "sistema";
             $("at-aba-texto").hidden = b.dataset.aba !== "texto";
-            (b.dataset.aba === "texto" ? $("at-novo-nome") : $("at-sis-busca")).focus();
+            $("at-aba-kit").hidden = b.dataset.aba !== "kit";
+            if (b.dataset.aba === "kit") atalhosKitHtml(doc);
+            ({ texto: $("at-novo-nome"), kit: $("at-kit-nome"), sistema: $("at-sis-busca") })[b.dataset.aba].focus();
+        } else if (b.dataset.kitIncluir) {
+            if (atalhosKitNovo.length >= ATALHOS_MAX_KIT) { win.alert(`Até ${ATALHOS_MAX_KIT} itens por prescrição.`); return; }
+            atalhosKitNovo.push(b.dataset.kitIncluir); atalhosKitHtml(doc);
+        } else if (b.dataset.kitTirar) {
+            atalhosKitNovo.splice(+b.dataset.kitTirar, 1); atalhosKitHtml(doc);
+        } else if (b.id === "at-kit-salvar") {
+            let nome = $("at-kit-nome").value.trim();
+            if (!nome) { $("at-kit-nome").focus(); return; }
+            if (!atalhosKitNovo.length) { $("at-kit-busca").focus(); win.alert("Inclua pelo menos um item na prescrição."); return; }
+            if (atalhosMeus.length >= ATALHOS_MAX) { win.alert(`Limite de ${ATALHOS_MAX} atalhos. Apague algum para adicionar outro.`); return; }
+            gravarAtalhosMeus(atalhosMeus.concat([{ tipo: "kit", nome, ids: atalhosKitNovo.slice() }])).then(() => {
+                atalhosKitNovo = []; $("at-kit-nome").value = ""; $("at-kit-busca").value = "";
+                atalhosKitHtml(doc); $("at-novo").classList.remove("on"); atalhosMeusHtml(doc);
+            });
         } else if (b.dataset.sis) {
             if (atalhosMeus.length >= ATALHOS_MAX) { win.alert(`Limite de ${ATALHOS_MAX} atalhos. Apague algum para adicionar outro.`); return; }
             let m = buscarMed(b.dataset.sis); if (!m) return;
@@ -390,6 +468,7 @@ function montarAtalhos(win) {
     $("at-idade").addEventListener("input", () => atalhosResultados(doc));
     $("at-busca").addEventListener("input", () => atalhosResultados(doc));
     $("at-sis-busca").addEventListener("input", () => atalhosSistemaHtml(doc));
+    $("at-kit-busca").addEventListener("input", () => atalhosKitHtml(doc));
     atalhosResultados(doc);
 }
 
