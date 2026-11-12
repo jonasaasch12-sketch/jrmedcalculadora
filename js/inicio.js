@@ -293,9 +293,24 @@ window.aoSairDoApp = function () {
     if (tela) tela.style.display = "none";
     document.body.classList.remove("na-tela-inicio");
 };
+/* Estilo Apple (só no teste): a busca sai do cabeçalho e fica no canto superior esquerdo, na frente de
+   Peso e Idade (nessa ordem, que é também a ordem do Tab). O menu lateral não muda. */
+function arrumarPainelApple() {
+    let linha = document.querySelector('.control-panel .linha-secundaria');
+    let busca = document.querySelector('.header-banner .search-container');
+    let ins = document.querySelector('.control-panel .inputs-inline');
+    let novo = document.getElementById('btnNovoPaciente');
+    if (!linha || !busca || !ins || !novo || busca.dataset.movida) return;
+    linha.insertBefore(busca, linha.firstChild);
+    busca.dataset.movida = '1';
+    linha.insertBefore(ins, novo);
+    let grupos = ins.querySelectorAll('.input-group');
+    if (grupos.length === 2) ins.insertBefore(grupos[1], grupos[0]); /* peso antes da idade */
+}
 if (typeof document !== "undefined") {
     /* estilo Apple só no teste (css/inicio.css, bloco html.estilo-apple) */
     if (typeof MODO_TESTE !== "undefined" && MODO_TESTE) document.documentElement.classList.add("estilo-apple");
     let iniciar = () => { if (inicioAtivo()) { instalarRecentes(); instalarBotoesInicio(); } };
+    if (document.documentElement.classList.contains('estilo-apple')) arrumarPainelApple();
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", iniciar); else iniciar();
 }
