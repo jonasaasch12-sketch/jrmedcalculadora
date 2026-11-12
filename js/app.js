@@ -950,8 +950,9 @@ function textoReceitaDeItens(itens) {
             // Remove a numeração antiga ("1) ", "2) ", etc)
             textoLimpo = textoLimpo.replace(/^\d+\)\s*/, '');
 
-            // Adiciona a nova numeração (1, 2, 3...) reiniciando dentro de cada grupo
-            linhas.push(`${idx + 1}) ${textoLimpo}`);
+            // Adiciona a nova numeração (1, 2, 3...) reiniciando dentro de cada grupo.
+            // Orientações não são numeradas (pedido do Dr. Jonas): ficava "1) - Agravamento...".
+            linhas.push(ehOrientacao(via) ? textoLimpo : `${idx + 1}) ${textoLimpo}`);
         });
 
         return linhas.join('\n\n'); // Espaçamento duplo entre as medicações de um grupo
