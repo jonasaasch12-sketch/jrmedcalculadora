@@ -168,7 +168,7 @@ function htmlBlocoConduta(b) {
 // As seções começam fechadas (pedido do Dr. Jonas); "aberta" é ignorado.
 // O visual novo (abas, sem emojis) vale só na versão de teste até o Dr. Jonas liberar (decisão de 11/2026).
 // No oficial, as condutas mantêm o visual anterior (índice colorido, blocos com ícone, "Abrir tudo").
-const CONDUTAS_VISUAL_NOVO = typeof MODO_TESTE !== 'undefined' && MODO_TESTE;
+const CONDUTAS_VISUAL_NOVO = false; /* visual 'referência clínica' aposentado (11/2026): teste e oficial usam a estrutura oficial, com o estilo Apple (css/inicio.css, html.estilo-apple) */
 document.documentElement.classList.toggle('cond-visual-novo', CONDUTAS_VISUAL_NOVO);
 // Os textos das condutas falam em "aba Diagnóstico/Emergência/Ambulatório"; no visual anterior viram "bloco 🔎/🚨/🏠".
 function textoVisualAntigo(html) {
@@ -204,6 +204,7 @@ function abrirConduta(id, bloco) {
     empurrarHistorico({ modo: 'condutas', cond: id, daLista: st.modo === 'condutas' && !st.cond });
     let blocos = c.blocos || [{ secoes: c.secoes }];
     let novo = CONDUTAS_VISUAL_NOVO;
+    let apple = document.documentElement.classList.contains('estilo-apple'); /* estilo Apple: sem emojis (desenho aprovado) */
     let comAbas = novo && blocos.filter(b => b.titulo).length > 1;
     if (typeof bloco === 'number') blocoAtivoConduta = bloco;
     else if (!mesma) blocoAtivoConduta = 0;
@@ -212,7 +213,7 @@ function abrirConduta(id, bloco) {
     let abas = comAbas ? blocos.map((b, bi) => b.titulo
         ? `<button type="button" role="tab" class="cond-aba${bi === blocoAtivoConduta ? ' ativa' : ''}" data-bloco="${bi}" aria-selected="${bi === blocoAtivoConduta}" onclick="mostrarBlocoConduta(${bi})" title="${escCond(semEmoji(b.titulo))}">${escCond(nomeAbaBloco(b))}</button>` : '').join('') : '';
     let indice = novo ? '' : blocos.filter(b => b.titulo).map((b, bi) =>
-        `<a href="#cond-bloco-${bi}" class="cond-indice-bloco" style="--cor-bloco:${b.cor || c.cor}" onclick="document.getElementById('cond-bloco-${bi}').scrollIntoView({behavior:'smooth'});return false;">${b.icone || ''} ${escCond(b.titulo)}</a>`).join('');
+        `<a href="#cond-bloco-${bi}" class="cond-indice-bloco" style="--cor-bloco:${b.cor || c.cor}" onclick="document.getElementById('cond-bloco-${bi}').scrollIntoView({behavior:'smooth'});return false;">${apple ? '' : (b.icone || '') + ' '}${escCond(apple ? semEmoji(b.titulo) : b.titulo)}</a>`).join('');
     let html = `
         <div class="cond-barra"><button type="button" class="cond-voltar" onclick="voltarListaCondutas()" title="Voltar para todas as condutas">← Condutas</button><span class="cond-caminho">Condutas › <b>${escCond(c.nome)}</b></span></div>
         <div class="cond-cabecalho" style="--cor-cat:${c.cor}">
@@ -231,11 +232,11 @@ function abrirConduta(id, bloco) {
         html += `<div class="cond-bloco-corpo" id="cond-bloco-${bi}" data-bloco="${bi}"${oculto ? ' hidden' : ''}>`;
         if (b.titulo) html += novo
             ? `<div class="cond-bloco"><span class="cond-bloco-titulo">${escCond(semEmoji(b.titulo))}</span>${b.subtitulo ? `<small>${b.subtitulo}</small>` : ''}</div>`
-            : `<div class="cond-bloco" style="--cor-bloco:${b.cor || c.cor}"><span>${b.icone || ''} ${escCond(b.titulo)}</span>${b.subtitulo ? `<small>${b.subtitulo}</small>` : ''}</div>`;
+            : `<div class="cond-bloco" style="--cor-bloco:${b.cor || c.cor}"><span>${apple ? '' : (b.icone || '') + ' '}${escCond(apple ? semEmoji(b.titulo) : b.titulo)}</span>${b.subtitulo ? `<small>${b.subtitulo}</small>` : ''}</div>`;
         b.secoes.forEach(s => {
             let i = n++;
             let tit = novo ? `${s.passo ? `<span class="cond-passo">${s.passo}</span>` : ''}${escCond(semEmoji(s.titulo))}`
-                : `${s.passo ? `<span class="cond-passo">${s.passo}</span>` : (s.icone || '')} ${escCond(s.titulo)}`;
+                : `${s.passo ? `<span class="cond-passo">${s.passo}</span>` : (apple ? '' : (s.icone || '') + ' ')}${escCond(apple ? semEmoji(s.titulo) : s.titulo)}`;
             html += `<details class="cond-secao${s.alerta ? ' cond-alerta' : ''}" id="cond-sec-${i}" style="--cor-cat:${c.cor}">
                 <summary><h3>${tit}</h3>${s.resumo ? `<div class="cond-secao-resumo">${s.resumo}</div>` : ''}</summary>
                 <div class="cond-secao-corpo">${htmlBlocoConduta(s)}</div>

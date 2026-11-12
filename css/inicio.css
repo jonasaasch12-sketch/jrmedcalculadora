@@ -211,3 +211,38 @@ html.estilo-apple #modalCarrinho .btn-limpar-carrinho { background: #fff !import
 html.estilo-apple[data-theme="dark"] #modalCarrinho .btn-limpar-carrinho { background: #2c2c2e !important; }
 html.estilo-apple .cart-fab { background: #0071e3 !important; border-radius: 999px !important; box-shadow: 0 8px 24px rgba(0,113,227,.35) !important; font-weight: 600; font-size: 15px; }
 html.estilo-apple .cart-fab .badge-count { color: #0071e3 !important; }
+
+/* ===== Condutas, estilo Apple (só no teste: html.estilo-apple). Estrutura oficial, visual do desenho aprovado ===== */
+html.estilo-apple #area-condutas { color: #1d1d1f; }
+html.estilo-apple #area-condutas .cond-barra { background: rgba(245,245,247,.97) !important; border: 0 !important; border-bottom: 1px solid rgba(0,0,0,.08) !important; border-radius: 0 !important; box-shadow: none !important; padding: 12px 16px !important; }
+html.estilo-apple #area-condutas .cond-voltar { background: #fff !important; color: #0071e3 !important; border: 0 !important; border-radius: 999px !important; font-weight: 600 !important; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+html.estilo-apple #area-condutas .cond-caminho { color: #6e6e73 !important; font-size: 13.5px; }
+html.estilo-apple #area-condutas .cond-cabecalho { background: #fff !important; border: 0 !important; border-left: 0 !important; border-radius: 18px !important; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 6px 22px rgba(0,0,0,.05); padding: 18px !important; margin: 14px 16px 0 !important; }
+html.estilo-apple #area-condutas .cond-cabecalho-cat { color: #ff3b30 !important; font-size: 12px !important; font-weight: 600 !important; text-transform: uppercase; letter-spacing: .04em; }
+html.estilo-apple #area-condutas .cond-cabecalho h2 { font-size: 26px !important; font-weight: 700 !important; letter-spacing: -.03em; margin-top: 4px; color: #1d1d1f !important; }
+html.estilo-apple #area-condutas .cond-cabecalho-resumo { font-size: 15px; color: #6e6e73; margin-top: 6px; line-height: 1.4; }
+html.estilo-apple #area-condutas .cond-legenda { margin: 12px 16px 0; background: #fff; border-radius: 14px; padding: 12px 14px; font-size: 13px; color: #6e6e73; line-height: 1.45; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+html.estilo-apple #area-condutas .cond-indice-blocos { margin: 14px 16px 0 !important; display: flex !important; background: rgba(118,118,128,.12); border-radius: 10px; padding: 2px; gap: 0; }
+html.estilo-apple #area-condutas .cond-indice-bloco { flex: 1; text-align: center; font-size: 13.5px; font-weight: 600; padding: 7px 4px; border-radius: 8px; color: #1d1d1f !important; text-decoration: none; background: transparent !important; border: 0 !important; }
+html.estilo-apple #area-condutas .cond-indice-bloco:hover { background: #fff !important; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+html.estilo-apple #area-condutas .cond-acoes { margin: 10px 16px 0 !important; display: flex; justify-content: flex-end; gap: 14px; }
+html.estilo-apple #area-condutas .cond-acoes button { background: none !important; border: 0 !important; color: #0071e3 !important; font-size: 15px; padding: 0 !important; box-shadow: none !important; }
+html.estilo-apple #area-condutas .cond-bloco { font-size: 13px; color: #86868b; text-transform: uppercase; letter-spacing: .03em; padding: 22px 20px 0; font-weight: 500; }
+html.estilo-apple #area-condutas .cond-bloco small { display: block; text-transform: none; letter-spacing: 0; font-size: 13px; margin-top: 2px; }
+html.estilo-apple #area-condutas .cond-bloco-corpo details.cond-secao { background: #fff !important; border: 0 !important; border-radius: 14px !important; margin: 8px 16px 0 !important; box-shadow: 0 1px 2px rgba(0,0,0,.04); overflow: hidden; }
+html.estilo-apple #area-condutas details.cond-secao + details.cond-secao { margin-top: 1px !important; border-top-left-radius: 0 !important; border-top-right-radius: 0 !important; }
+html.estilo-apple #area-condutas details.cond-secao summary { display: flex; align-items: center; gap: 12px; padding: 12px 14px !important; list-style: none; cursor: pointer; position: relative; background: transparent !important; border: 0 !important; }
+html.estilo-apple #area-condutas details.cond-secao summary::-webkit-details-marker { display: none; }
+html.estilo-apple #area-condutas details.cond-secao summary::before { content: ""; width: 30px; height: 30px; border-radius: 8px; background: var(--cor-cat, #0071e3); flex: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.2); }
+html.estilo-apple #area-condutas details.cond-secao summary::after { content: "›"; margin-left: auto; font-size: 22px; color: #c7c7cc; transition: transform .15s; line-height: 1; }
+html.estilo-apple #area-condutas details.cond-secao[open] summary::after { transform: rotate(90deg); }
+html.estilo-apple #area-condutas details.cond-secao summary h3 { font-size: 16px !important; font-weight: 500 !important; color: #1d1d1f !important; letter-spacing: -.01em; margin: 0; }
+html.estilo-apple #area-condutas .cond-secao-resumo { font-size: 13px; color: #6e6e73; margin-top: 2px; }
+html.estilo-apple #area-condutas .cond-secao-corpo { padding: 4px 16px 16px 58px; font-size: 15px; line-height: 1.5; color: #1d1d1f; }
+html.estilo-apple #area-condutas .cond-alerta { box-shadow: inset 3px 0 0 #ff9f0a, 0 1px 2px rgba(0,0,0,.04) !important; }
+html.estilo-apple #area-condutas .cond-fonte { margin: 16px 16px 0 !important; background: #fff; border-radius: 14px !important; padding: 14px !important; font-size: 13px; color: #6e6e73; box-shadow: 0 1px 2px rgba(0,0,0,.04); border: 0 !important; }
+html.estilo-apple #area-condutas .cond-fonte strong { color: #1d1d1f; }
+html.estilo-apple[data-theme="dark"] #area-condutas { color: #f5f5f7; }
+html.estilo-apple[data-theme="dark"] #area-condutas .cond-cabecalho, html.estilo-apple[data-theme="dark"] #area-condutas details.cond-secao, html.estilo-apple[data-theme="dark"] #area-condutas .cond-fonte, html.estilo-apple[data-theme="dark"] #area-condutas .cond-legenda { background: #1c1c1e !important; }
+html.estilo-apple[data-theme="dark"] #area-condutas .cond-cabecalho h2, html.estilo-apple[data-theme="dark"] #area-condutas summary h3, html.estilo-apple[data-theme="dark"] #area-condutas .cond-secao-corpo { color: #f5f5f7 !important; }
+html.estilo-apple #area-condutas .cond-bloco { background: none !important; border: 0 !important; border-left: 0 !important; box-shadow: none !important; border-radius: 0 !important; }
