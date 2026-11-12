@@ -82,7 +82,6 @@ html[data-theme="dark"] #tela-inicio {
 #tela-inicio .in-tx { flex: 1; }
 #tela-inicio .in-tx, #tela-inicio .in-tx small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 #tela-inicio .in-row { min-width: 0; }
-#tela-inicio, #tela-inicio main { overflow-x: hidden; }
 
 /* abas do celular */
 #tela-inicio .in-tab { display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: rgba(249, 249, 249, .88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--in-linha); justify-content: space-around; padding: 8px 0 calc(10px + env(safe-area-inset-bottom)); }
@@ -91,9 +90,18 @@ html[data-theme="dark"] #tela-inicio .in-tab { background: rgba(22, 22, 24, .88)
 #tela-inicio .in-tab button svg.in-i { width: 25px; height: 25px; stroke-width: 1.6; }
 #tela-inicio .in-tab .on { color: var(--in-azul); }
 
+/* cabeçalho da marca: só no celular, fixo no topo (no computador a marca fica na barra lateral) */
+#tela-inicio .in-topo-cel { display: none; }
 @media (max-width: 849px), (orientation: portrait) {
+    #tela-inicio { flex-direction: column; }
+    #tela-inicio .in-topo-cel { display: flex; align-items: center; justify-content: space-between; gap: 10px; position: sticky; top: 0; z-index: 4; padding: calc(12px + env(safe-area-inset-top)) 16px 12px; background: rgba(245, 245, 247, .97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--in-linha); }
+    #tela-inicio .in-logo-cel { display: flex; align-items: center; gap: 10px; }
+    #tela-inicio .in-logo-cel .in-lg { width: 32px; height: 32px; border-radius: 9px; font-size: 13px; }
+    #tela-inicio .in-logo-cel b { display: block; font-size: 17px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
+    #tela-inicio .in-logo-cel small { display: block; font-size: 12px; color: var(--in-sec); }
+    #tela-inicio .in-topo-cel .in-teste { font-size: 10px; font-weight: 800; background: #ff3b30; color: #fff; padding: 3px 7px; border-radius: 99px; }
     #tela-inicio aside { display: none; }
-    #tela-inicio main { padding: 26px 16px 110px; }
+    #tela-inicio main { padding: 18px 16px 110px; }
     #tela-inicio h1 { font-size: 34px; }
     #tela-inicio .in-data { font-size: 12.5px; }
     #tela-inicio main .in-busca { margin: 12px 0 0; max-width: none; font-size: 16px; }
