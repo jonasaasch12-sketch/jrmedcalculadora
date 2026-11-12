@@ -912,10 +912,12 @@ function atualizarCarrinhoUI() {
 }
 
 // Texto da receita completa (itens agrupados pela via). Usado aqui e na janela de ⚡ Atalhos.
-function textoReceitaCompleta() {
+function textoReceitaCompleta() { return textoReceitaDeItens(carrinhoPrescricao); }
+// Monta a receita (agrupada pela via) de uma lista { texto, via }: a do carrinho ou a de uma prescrição pronta (⚡ Atalhos).
+function textoReceitaDeItens(itens) {
     // Agrupar itens pela via exata que capturamos
     let porVia = {};
-    carrinhoPrescricao.forEach(item => {
+    itens.forEach(item => {
         let via = item.via || "USO ORAL";
         if (!porVia[via]) porVia[via] = [];
         porVia[via].push(item.texto);
