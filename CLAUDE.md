@@ -88,7 +88,8 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
 
 ## Padrão das condutas (definido pelo Dr. Jonas)
 
-- **Visual "referência clínica" — SÓ NO TESTE** (Dr. Jonas ainda não quis liberar, 11/2026): `CONDUTAS_VISUAL_NOVO = MODO_TESTE` em
+- **[Aposentado em 11/2026] Visual "referência clínica"**: hoje `CONDUTAS_VISUAL_NOVO = false`; teste e oficial usam a estrutura oficial com o estilo Apple (css/inicio.css, html.estilo-apple). Texto antigo abaixo só como histórico.
+- **Visual "referência clínica" — (histórico)** (Dr. Jonas ainda não quis liberar, 11/2026): `CONDUTAS_VISUAL_NOVO = MODO_TESTE` em
   condutas/condutas.js põe a classe `html.cond-visual-novo`; todo o CSS novo (fim de condutas.css) vale só com ela. No oficial fica o visual
   anterior (índice colorido, blocos com ícone, "Abrir tudo"; regras em temas-teste.css/visual.css com `:not(.cond-visual-novo)`), e
   `textoVisualAntigo()` troca "aba Diagnóstico" por "bloco 🔎" no texto. Para liberar: trocar a constante para `true`.
