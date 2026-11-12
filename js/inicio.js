@@ -294,6 +294,8 @@ window.aoSairDoApp = function () {
     document.body.classList.remove("na-tela-inicio");
 };
 if (typeof document !== "undefined") {
+    /* estilo Apple só no teste (css/inicio.css, bloco html.estilo-apple) */
+    if (typeof MODO_TESTE !== "undefined" && MODO_TESTE) document.documentElement.classList.add("estilo-apple");
     let iniciar = () => { if (inicioAtivo()) { instalarRecentes(); instalarBotoesInicio(); } };
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", iniciar); else iniciar();
 }
