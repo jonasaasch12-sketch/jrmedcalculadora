@@ -122,6 +122,7 @@ html[data-theme="dark"] .escore-pts { background: #334155; color: #e2e8f0; }
 .cond-lista-passos { list-style: none; padding-left: 0 !important; }
 .cond-lista-passos li { margin-bottom: 10px !important; padding-left: 36px; text-indent: -36px; }
 .cond-lista-passos .cond-passo { text-indent: 0; margin-right: 6px; }
+.cond-lista-passos li.cond-item-alerta { text-indent: 0; }  /* aviso amarelo: a 1ª linha (⚠️ Atenção) fica dentro da caixa */
 
 /* Link "Conduta passo a passo" na tarja da categoria da Prescrição (só onde a aba Condutas existe) */
 .link-conduta { display: none; }
