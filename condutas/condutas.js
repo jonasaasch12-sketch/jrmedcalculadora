@@ -183,19 +183,45 @@ const RE_EMOJI = /[\p{Extended_Pictographic}\uFE0F\u200D]/gu;
 function semEmoji(t) { return String(t || '').replace(RE_EMOJI, '').replace(/\s{2,}/g, ' ').trim(); }
 
 // Nome curto da aba a partir do título do bloco (ou b.aba, se a conduta quiser outro).
-/* Ícone de traço por seção (estilo Apple), escolhido pelo título. Sem emojis. */
-function icoSecaoApple(t) {
+/* Cores e ícones de traço por seção (estilo Apple). Cada seção tem uma cor própria (rodízio) e um ícone pelo tipo do título. */
+const CORES_APPLE = ['#0a84ff', '#ff9f0a', '#34c759', '#af52de', '#ff3b30', '#30b0c7', '#5e5ce6', '#ff2d55', '#64d2ff', '#a2845e'];
+const ICONES_APPLE = {
+    lupa: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/>',
+    bussola: '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
+    alerta: '<path d="M12 9v4M12 17h.01"/><path d="M10.3 4.2 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"/>',
+    pulso: '<path d="M2.5 12h4l2.5-6 4 12 2.5-6h6"/>',
+    grafico: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+    escudo: '<path d="M12 3 4.5 6v5.5c0 4.5 3.2 8 7.5 9.5 4.3-1.5 7.5-5 7.5-9.5V6z"/>',
+    casa: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-6h4v6h5V9.5"/>',
+    termometro: '<path d="M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0z"/><path d="M12 9v7"/>',
+    gota: '<path d="M12 3.5s6 6.2 6 10.5a6 6 0 0 1-12 0c0-4.3 6-10.5 6-10.5z"/>',
+    pilula: '<rect x="3" y="8.5" width="18" height="7" rx="3.5" transform="rotate(-45 12 12)"/><path d="m8.5 8.5 7 7"/>',
+    cama: '<path d="M3 18V6M3 14h18v4M21 14v-3a3 3 0 0 0-3-3h-7v6"/><circle cx="7" cy="11" r="1.6"/>',
+    lista: '<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>',
+    pessoa: '<circle cx="12" cy="7" r="3.5"/><path d="M5 21v-3a7 7 0 0 1 14 0v3"/>',
+    relogio: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'
+};
+/* tipo de seção pelo título (primeira regra que bate) */
+const REGRAS_ICONE_APPLE = [
+    [/diferencial/, 'bussola'],
+    [/defini|diagn[oó]stic|quadro|exame|clin/, 'lupa'],
+    [/risco|alarme|complica|sinal/, 'alerta'],
+    [/vital|esfor|taquip|frequ|respira/, 'pulso'],
+    [/gravidade|classifica|escore|tabela|prognos/, 'grafico'],
+    [/crit[eé]rio|interna|uti|emerg|grave/, 'escudo'],
+    [/febre|antit[eé]rm|temperatura/, 'termometro'],
+    [/hidrata|diurese|l[ií]quido|soro|gota/, 'gota'],
+    [/tratamento|medica|antibi|oxig|droga/, 'pilula'],
+    [/leito|monitor|hospital/, 'cama'],
+    [/casa|ambulat|cuidado|domic|seguimento|orienta/, 'casa'],
+    [/quando|retorno|tempo/, 'relogio']
+];
+const ORDEM_ICONES_APPLE = ['lupa', 'bussola', 'alerta', 'pulso', 'grafico', 'escudo', 'casa', 'pilula', 'gota', 'cama'];
+function icoSecaoApple(t, i) {
     let m = semEmoji(t || '').toLowerCase();
-    let p = (d) => `<path d="${d}"/>`;
-    if (/diferencial|diagn[oó]stic/.test(m) && /diferencial/.test(m)) return p('M15.5 8.5l-2 5-5 2 2-5z') + '<circle cx="12" cy="12" r="9"/>';
-    if (/defini|diagn[oó]stic|quadro|exame/.test(m)) return '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/>';
-    if (/risco|alerta|sinal de alarme|complica/.test(m)) return p('M12 9v4M12 17h.01') + p('M10.3 4.2 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z');
-    if (/vital|esfor|taquip|frequ/.test(m)) return p('M2.5 12h4l2.5-6 4 12 2.5-6h6');
-    if (/gravidade|classifica|escore|tabela/.test(m)) return p('M4 20V10M10 20V4M16 20v-7M22 20H2');
-    if (/interna|crit[eé]rio|uti|emerg/.test(m)) return p('M2.5 12h4l2.5-6 4 12 2.5-6h6');
-    if (/tratamento|hospital|oxig|medica/.test(m)) return p('M12 3 4.5 6v5.5c0 4.5 3.2 8 7.5 9.5 4.3-1.5 7.5-5 7.5-9.5V6z');
-    if (/casa|ambulat|cuidado|domic|orienta/.test(m)) return p('M3 10.5 12 3l9 7.5') + p('M5 9.5V20h5v-6h4v6h5V9.5');
-    return p('M4 6h16M4 12h16M4 18h10');
+    let regra = REGRAS_ICONE_APPLE.find(([re]) => re.test(m));
+    let nome = regra ? regra[1] : ORDEM_ICONES_APPLE[(i || 0) % ORDEM_ICONES_APPLE.length];
+    return ICONES_APPLE[nome];
 }
 function nomeAbaBloco(b) {
     if (b.aba) return b.aba;
@@ -219,14 +245,14 @@ function abrirConduta(id, bloco) {
     let blocos = c.blocos || [{ secoes: c.secoes }];
     let novo = CONDUTAS_VISUAL_NOVO;
     let apple = document.documentElement.classList.contains('estilo-apple'); /* estilo Apple: sem emojis (desenho aprovado) */
-    let comAbas = novo && blocos.filter(b => b.titulo).length > 1;
+    let comAbas = novo && !apple && blocos.filter(b => b.titulo).length > 1; /* estilo Apple: sem a tarja de abas; todos os blocos aparecem */
     if (typeof bloco === 'number') blocoAtivoConduta = bloco;
     else if (!mesma) blocoAtivoConduta = 0;
     if (!blocos[blocoAtivoConduta]) blocoAtivoConduta = 0;
     let n = 0;
     let abas = comAbas ? blocos.map((b, bi) => b.titulo
         ? `<button type="button" role="tab" class="cond-aba${bi === blocoAtivoConduta ? ' ativa' : ''}" data-bloco="${bi}" aria-selected="${bi === blocoAtivoConduta}" onclick="mostrarBlocoConduta(${bi})" title="${escCond(semEmoji(b.titulo))}">${escCond(nomeAbaBloco(b))}</button>` : '').join('') : '';
-    let indice = novo ? '' : blocos.filter(b => b.titulo).map((b, bi) =>
+    let indice = (novo || apple) ? '' : blocos.filter(b => b.titulo).map((b, bi) =>
         `<a href="#cond-bloco-${bi}" class="cond-indice-bloco" style="--cor-bloco:${b.cor || c.cor}" onclick="document.getElementById('cond-bloco-${bi}').scrollIntoView({behavior:'smooth'});return false;">${apple ? '' : (b.icone || '') + ' '}${escCond(apple ? nomeAbaBloco(b) : b.titulo)}</a>`).join('');
     let html = `
         <div class="cond-barra"><button type="button" class="cond-voltar" onclick="voltarListaCondutas()" title="Voltar para todas as condutas">← Condutas</button><span class="cond-caminho">Condutas › <b>${escCond(c.nome)}</b></span></div>
@@ -252,7 +278,7 @@ function abrirConduta(id, bloco) {
             let tit = novo ? `${s.passo ? `<span class="cond-passo">${s.passo}</span>` : ''}${escCond(semEmoji(s.titulo))}`
                 : `${s.passo ? `<span class="cond-passo">${s.passo}</span>` : (apple ? '' : (s.icone || '') + ' ')}${escCond(apple ? semEmoji(s.titulo) : s.titulo)}`;
             html += `<details class="cond-secao${s.alerta ? ' cond-alerta' : ''}" id="cond-sec-${i}" style="--cor-cat:${c.cor}">
-                <summary>${apple ? `<i class="cond-ico" aria-hidden="true"><svg viewBox="0 0 24 24">${icoSecaoApple(s.titulo)}</svg></i>` : ''}<h3>${tit}</h3>${s.resumo ? `<div class="cond-secao-resumo">${s.resumo}</div>` : ''}</summary>
+                <summary>${apple ? `<i class="cond-ico" aria-hidden="true" style="background:${CORES_APPLE[i % CORES_APPLE.length]}"><svg viewBox="0 0 24 24">${icoSecaoApple(s.titulo, i)}</svg></i>` : ''}<h3>${tit}</h3>${s.resumo ? `<div class="cond-secao-resumo">${s.resumo}</div>` : ''}</summary>
                 <div class="cond-secao-corpo">${htmlBlocoConduta(s)}</div>
             </details>`;
         });
