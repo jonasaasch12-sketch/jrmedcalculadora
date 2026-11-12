@@ -118,6 +118,8 @@ input:focus{outline:2px solid var(--acento);outline-offset:-1px}
 .meu{display:inline-flex}
 .meu .x{border-left:0;border-radius:0 8px 8px 0;padding:7px 7px;color:var(--suave)}
 .meu .b:first-child{border-radius:8px 0 0 8px}
+.meu .mais{color:var(--acento);font-weight:800;padding:7px 9px;font-size:13px}
+.meu .mais.copiado{color:#fff}
 .novo{display:none;gap:6px;flex-direction:column;margin-top:6px}
 .novo.on{display:flex}
 textarea{width:100%;min-height:130px;border:1px solid var(--borda);background:var(--card);color:var(--texto);border-radius:7px;padding:6px 8px;font:inherit;font-size:12.5px;resize:vertical}
@@ -155,7 +157,7 @@ body.min .dica{display:none}
 function htmlAtalhos() {
     let e = escaparHtml;
     let ori = ATALHOS_ORIENTACOES.filter(([id]) => buscarMed(id))
-        .map(([id, nome]) => `<button class="b" data-copiar-card="${id}">${e(nome)}</button>`).join("");
+        .map(([id, nome]) => `<span class="meu"><button class="b" data-copiar-card="${id}" title="Copiar só esta orientação">${e(nome)}</button><button class="b x mais" data-add="${id}" title="Pôr esta orientação na receita">+ Receita</button></span>`).join("");
     return `
 <div class="topo">
   <div class="logo"><span class="marca">JR MED </span><span>⚡ Atalhos</span></div>
@@ -172,7 +174,7 @@ function htmlAtalhos() {
       <button class="b forte" data-copiar-card="exame_masculino">♂ Exame físico masculino</button>
       <button class="b forte" data-copiar-card="exame_feminino">♀ Exame físico feminino</button>
     </div>
-    <div class="sub">Orientações de alta</div>
+    <div class="sub">Orientações de alta <span class="onde">(nome = copia · + Receita = entra na receita)</span></div>
     <div class="btns">${ori}</div>
     <div class="sub">Meus atalhos <span id="at-onde" class="onde"></span></div>
     <div class="btns" id="at-meus"></div>
@@ -243,7 +245,7 @@ function atalhosResultados(doc) {
     let ids = Object.keys(farmaciaJR).concat(Object.keys(typeof medsCustomizados !== "undefined" ? medsCustomizados : {}));
     let achados = ids.filter((id) => {
         let m = buscarMed(id);
-        if (!m || m.cat === "cat-exame-fisico") return false;
+        if (!m || /^exame_/.test(id)) return false; /* orientações de alta também aparecem (+ Receita) */
         return cardCorrespondeABusca(normalizar([m.nome, m.kw, m.apres, m.sub].join(" ")), q);
     }).slice(0, 12);
     if (!achados.length) { caixa.innerHTML = `<div class="vazio">Nada encontrado para "${escaparHtml(q)}".</div>`; return; }
@@ -288,7 +290,8 @@ function atalhosMeusHtml(doc) {
     doc.getElementById("at-meus").innerHTML = atalhosMeus.length ? atalhosMeus.map((a, i) => {
         let icone = a.tipo === "texto" ? "📝 " : a.tipo === "kit" ? "🧾 " : (atalhoEhTextoPronto(buscarMed(a.id)) ? "📋 " : "💊 ");
         let dica = a.tipo === "texto" ? "Copia o seu texto" : a.tipo === "kit" ? "Copia a prescrição inteira (precisa do peso e da idade)" : (icone === "💊 " ? "Põe na receita (usa o peso e a idade da calculadora)" : "Copia o texto do card");
-        return `<span class="meu"><button class="b" data-meu="${i}" title="${dica}">${icone}${escaparHtml(a.nome)}</button><button class="b x" data-apagar="${i}" title="Apagar este atalho">✕</button></span>`;
+        let mais = (icone === "📋 " && !/^exame_/.test(a.id)) ? `<button class="b x mais" data-add="${escaparHtml(a.id)}" title="Pôr na receita">+ Receita</button>` : "";
+        return `<span class="meu"><button class="b" data-meu="${i}" title="${dica}">${icone}${escaparHtml(a.nome)}</button>${mais}<button class="b x" data-apagar="${i}" title="Apagar este atalho">✕</button></span>`;
     }).join("") : `<span class="vazio">Nenhum ainda. Toque em "+ Adicionar atalho".</span>`;
 }
 
@@ -374,8 +377,9 @@ function montarAtalhos(win) {
         } else if (b.dataset.add) {
             try {
                 if (atalhosAdicionar(b.dataset.add, parseFloat($("at-peso").value), idadeJanela())) {
+                    let antes = b.textContent;
                     b.classList.add("copiado"); b.textContent = "✓ Na receita";
-                    setTimeout(() => { b.classList.remove("copiado"); b.textContent = "+ Receita"; }, 1100);
+                    setTimeout(() => { b.classList.remove("copiado"); b.textContent = antes; }, 1100);
                 }
             } catch (e) {}
         } else if (b.dataset.tirar) {
