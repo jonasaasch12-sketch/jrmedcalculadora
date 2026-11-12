@@ -610,6 +610,7 @@ function mostrarApp(user, perfil) {
     iniciarListenerCategorias();
     iniciarListenerFichas();
     if (window.atualizarVisibilidadeAdmin) window.atualizarVisibilidadeAdmin();
+    if (window.aoEntrarNoApp) aoEntrarNoApp(); /* tela inicial (js/inicio.js), só no teste */
 }
 
 // Pede o cadastro profissional (bloqueia o app até salvar).
@@ -677,6 +678,7 @@ onAuthStateChanged(auth, async (user) => {
         telaLogin.style.display = "flex";
         telaPerfil.style.display = "none";
         appPrincipal.style.display = "none";
+        if (window.aoSairDoApp) aoSairDoApp();
         if (!modoCadastro) { emailInput.value = ""; senhaInput.value = ""; }
         if (sessaoExpirada) {
             sessaoExpirada = false;

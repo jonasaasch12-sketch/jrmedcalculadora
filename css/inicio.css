@@ -1,0 +1,115 @@
+/* =====================================================
+   🏠 TELA INICIAL (js/inicio.js) — estilo "Apple": fundo claro, cartões brancos,
+   ícones de traço fino em quadradinhos coloridos, listas com › (como os Ajustes do iPhone).
+   Só no teste por enquanto (INICIO_LIBERADO em js/inicio.js). Vale só dentro de #tela-inicio.
+   ===================================================== */
+#tela-inicio {
+    --in-bg: #f5f5f7; --in-card: #fff; --in-txt: #1d1d1f; --in-sec: #6e6e73; --in-ter: #86868b;
+    --in-linha: rgba(0, 0, 0, .08); --in-azul: #0071e3; --in-lista: #f5f5f7; --in-busca: rgba(0, 0, 0, .055);
+    --in-ped: #0a84ff; --in-adu: #30b0a0; --in-cond: #af52de; --in-emer: #ff3b30; --in-exa: #34c759; --in-ata: #ff9f0a;
+    --in-aside: rgba(236, 236, 240, .75); --in-on: rgba(0, 113, 227, .12);
+    font-family: -apple-system, "SF Pro Text", Inter, system-ui, sans-serif; color: var(--in-txt); background: var(--in-bg);
+    letter-spacing: -.01em; min-height: 100vh; display: flex; -webkit-font-smoothing: antialiased;
+}
+html[data-theme="dark"] #tela-inicio {
+    --in-bg: #000; --in-card: #1c1c1e; --in-txt: #f5f5f7; --in-sec: #a1a1a6; --in-ter: #8e8e93;
+    --in-linha: rgba(255, 255, 255, .1); --in-azul: #0a84ff; --in-lista: #2c2c2e; --in-busca: rgba(255, 255, 255, .1);
+    --in-aside: #141416; --in-on: rgba(10, 132, 255, .22);
+}
+#tela-inicio * { box-sizing: border-box; }
+#tela-inicio button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; text-align: left; letter-spacing: inherit; }
+#tela-inicio svg.in-i { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+#tela-inicio .in-q { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; color: #fff; flex: none; }
+#tela-inicio .in-q svg.in-i { width: 17px; height: 17px; stroke-width: 2; }
+
+/* barra lateral (computador) */
+#tela-inicio aside { width: 264px; flex: none; background: var(--in-aside); border-right: 1px solid var(--in-linha); padding: 22px 14px; display: flex; flex-direction: column; gap: 2px; position: sticky; top: 0; height: 100vh; }
+#tela-inicio .in-marca { display: flex; align-items: center; gap: 9px; padding: 0 8px 18px; font-weight: 700; font-size: 17px; letter-spacing: -.02em; }
+#tela-inicio .in-lg { width: 26px; height: 26px; border-radius: 7px; background: linear-gradient(160deg, #2b8cff, #0057c2); color: #fff; font-size: 11px; font-weight: 800; display: grid; place-items: center; letter-spacing: 0; }
+#tela-inicio .in-marca .in-teste { font-size: 10px; font-weight: 800; background: #ff3b30; color: #fff; padding: 2px 6px; border-radius: 99px; letter-spacing: .02em; }
+#tela-inicio .in-grp { font-size: 11.5px; font-weight: 600; color: var(--in-ter); padding: 14px 10px 5px; }
+#tela-inicio .in-it { display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 8px; font-size: 14.5px; width: 100%; }
+#tela-inicio .in-it svg.in-i { color: var(--in-azul); }
+#tela-inicio .in-it:hover { background: var(--in-on); }
+#tela-inicio .in-it.on { background: var(--in-on); color: var(--in-azul); font-weight: 600; }
+#tela-inicio .in-it .in-mt { margin-left: auto; font-size: 11.5px; color: var(--in-ter); }
+#tela-inicio .in-it.off { color: var(--in-ter); cursor: default; }
+#tela-inicio .in-it.off:hover { background: none; }
+#tela-inicio .in-it.off svg.in-i { color: var(--in-ter); }
+#tela-inicio .in-esp { flex: 1; }
+#tela-inicio .in-user { display: flex; align-items: center; gap: 10px; padding: 10px; border-top: 1px solid var(--in-linha); margin-top: 10px; font-size: 13.5px; }
+#tela-inicio .in-av { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(160deg, #9aa4b2, #6b7280); color: #fff; display: grid; place-items: center; font-weight: 600; font-size: 13px; flex: none; }
+#tela-inicio .in-user small { display: block; color: var(--in-ter); font-size: 12px; }
+#tela-inicio .in-user .in-sair { margin-left: auto; color: var(--in-azul); font-size: 13px; }
+
+/* conteúdo */
+#tela-inicio main { flex: 1; padding: 48px 56px 60px; max-width: 1180px; min-width: 0; }
+#tela-inicio .in-data { font-size: 13px; font-weight: 600; color: var(--in-ter); text-transform: uppercase; letter-spacing: .04em; }
+#tela-inicio h1 { font-size: 40px; font-weight: 700; letter-spacing: -.035em; margin: 4px 0 0; color: var(--in-txt); }
+#tela-inicio h2 { font-size: 22px; font-weight: 700; letter-spacing: -.025em; margin: 40px 0 14px; color: var(--in-txt); display: flex; align-items: baseline; gap: 8px; }
+#tela-inicio h2 .in-peq { font-size: 13px; font-weight: 500; color: var(--in-ter); letter-spacing: 0; }
+#tela-inicio h2 .in-ver { margin-left: auto; color: var(--in-azul); font-size: 15px; font-weight: 400; }
+#tela-inicio .in-busca { display: flex; align-items: center; gap: 8px; background: var(--in-busca); border-radius: 10px; padding: 9px 12px; color: var(--in-ter); font-size: 15px; margin: 0 2px 14px; }
+#tela-inicio .in-busca input { flex: 1; border: 0; background: none; font: inherit; color: var(--in-txt); outline: none; min-width: 0; }
+#tela-inicio .in-busca input::placeholder { color: var(--in-ter); }
+#tela-inicio main .in-busca { margin: 22px 0 0; max-width: 560px; }
+
+#tela-inicio .in-areas { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 30px; }
+#tela-inicio .in-area { background: var(--in-card); border-radius: 20px; padding: 22px; box-shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 6px 24px rgba(0, 0, 0, .05); }
+#tela-inicio .in-acab { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; position: relative; }
+#tela-inicio .in-acab h3 { font-size: 24px; font-weight: 700; letter-spacing: -.03em; margin: 0; color: var(--in-txt); }
+#tela-inicio .in-acab p { font-size: 14px; color: var(--in-sec); margin: 2px 0 0; }
+#tela-inicio .in-q.grande { width: 52px; height: 52px; border-radius: 14px; }
+#tela-inicio .in-q.grande svg.in-i { width: 27px; height: 27px; }
+#tela-inicio .in-breve { position: absolute; right: 0; top: 4px; font-size: 12.5px; color: var(--in-sec); background: var(--in-lista); padding: 4px 10px; border-radius: 99px; font-weight: 500; }
+#tela-inicio .in-lista { background: var(--in-card); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 2px rgba(0, 0, 0, .04); }
+#tela-inicio .in-area .in-lista { box-shadow: none; background: var(--in-lista); }
+#tela-inicio .in-row { display: flex; align-items: center; gap: 12px; padding: 11px 16px; font-size: 15px; position: relative; width: 100%; }
+#tela-inicio .in-area .in-row { padding: 12px 14px; }
+#tela-inicio .in-row + .in-row::before { content: ""; position: absolute; top: 0; left: 58px; right: 0; height: 1px; background: var(--in-linha); }
+#tela-inicio button.in-row:hover { background: rgba(0, 113, 227, .06); }
+#tela-inicio .in-tx { display: flex; flex-direction: column; font-size: 15.5px; font-weight: 500; min-width: 0; }
+#tela-inicio .in-tx small { font-size: 13px; color: var(--in-sec); font-weight: 400; margin-top: 1px; }
+#tela-inicio .in-d { margin-left: auto; color: var(--in-ter); font-size: 13.5px; display: flex; align-items: center; gap: 6px; flex: none; }
+#tela-inicio .in-d svg.in-i { width: 13px; height: 13px; stroke-width: 2.2; }
+#tela-inicio .in-area.off .in-q { filter: saturate(.2) brightness(1.2); }
+#tela-inicio .in-area.off .in-row { cursor: default; }
+#tela-inicio .in-area.off .in-tx { color: var(--in-ter); }
+#tela-inicio .in-area.off .in-tx small { color: #a1a1a6; }
+#tela-inicio .in-duas { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+#tela-inicio .in-vazio { padding: 14px 16px; font-size: 14px; color: var(--in-ter); }
+#tela-inicio .in-nome { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#tela-inicio .in-tx { flex: 1; }
+#tela-inicio .in-tx, #tela-inicio .in-tx small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#tela-inicio .in-row { min-width: 0; }
+#tela-inicio, #tela-inicio main { overflow-x: hidden; }
+
+/* abas do celular */
+#tela-inicio .in-tab { display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: rgba(249, 249, 249, .88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--in-linha); justify-content: space-around; padding: 8px 0 calc(10px + env(safe-area-inset-bottom)); }
+html[data-theme="dark"] #tela-inicio .in-tab { background: rgba(22, 22, 24, .88); }
+#tela-inicio .in-tab button { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10.5px; font-weight: 500; color: #8e8e93; }
+#tela-inicio .in-tab button svg.in-i { width: 25px; height: 25px; stroke-width: 1.6; }
+#tela-inicio .in-tab .on { color: var(--in-azul); }
+
+@media (max-width: 849px), (orientation: portrait) {
+    #tela-inicio aside { display: none; }
+    #tela-inicio main { padding: 26px 16px 110px; }
+    #tela-inicio h1 { font-size: 34px; }
+    #tela-inicio .in-data { font-size: 12.5px; }
+    #tela-inicio main .in-busca { margin: 12px 0 0; max-width: none; font-size: 16px; }
+    #tela-inicio h2 { font-size: 20px; margin: 28px 4px 8px; }
+    #tela-inicio .in-areas { grid-template-columns: 1fr; gap: 16px; margin-top: 20px; }
+    #tela-inicio .in-area { padding: 16px; }
+    #tela-inicio .in-acab h3 { font-size: 21px; }
+    #tela-inicio .in-acab p { font-size: 13px; }
+    #tela-inicio .in-q.grande { width: 44px; height: 44px; }
+    #tela-inicio .in-duas { grid-template-columns: 1fr; gap: 0; }
+    #tela-inicio .in-row { padding: 12px 16px; font-size: 16px; }
+    #tela-inicio .in-tab { display: flex; }
+}
+
+/* botão "‹ Início" no cabeçalho do app e aba "Início" na barra do celular */
+.btn-inicio { display: inline-flex; align-items: center; gap: 4px; height: 38px; padding: 0 12px 0 8px; margin-right: 10px; border-radius: 10px; border: 1px solid var(--border, #dbe2ea); background: var(--surface, #fff); color: var(--primary, #1565c0); font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; flex: none; }
+.btn-inicio svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.btn-inicio:hover { border-color: var(--primary, #1565c0); }
+@media (max-width: 849px), (orientation: portrait) { .btn-inicio { display: none; } }
