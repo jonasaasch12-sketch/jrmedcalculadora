@@ -6,7 +6,7 @@
 // (J Pediatr 2001, sistema de duas soluções), SPSP 2024 e ISPAD 2022 (DynaMed).
 // Os remédios são ids dos cards (farmaciaJR): a dose é calculada lá.
 // =====================================================
-// "Como chegar ao cálculo" (passo 4): a mesma conta do card cad_hidratacao, mostrada em 3 peças.
+// "Como chegar ao cálculo" (passo 5): a mesma conta do card cad_hidratacao, mostrada em 3 peças.
 // Usa o peso do topo; sem peso, mostra o exemplo de 30 kg.
 let cadHidEstado = { pct: 7, expMlKg: 10 };
 function ferramentaCadHidratacao() {
@@ -17,7 +17,7 @@ function ferramentaCadHidratacao() {
     </div>`;
 }
 function cadHidEscolher(campo, v) { cadHidEstado[campo] = v; atualizarCadHidratacao(); atualizarCadSoroY(); if (document.getElementById('cadg')) { cadGliEstado.vel = null; atualizarCadGlicose(); } }
-// Velocidade total do passo 4 (mL/h) com as escolhas do quadro "Como chegar ao cálculo". null = sem peso.
+// Velocidade total do passo 5 (mL/h) com as escolhas do quadro "Como chegar ao cálculo". null = sem peso.
 function cadTaxaPasso4() {
     let p = parseFloat((document.getElementById('pesoInput') || {}).value);
     if (!(p > 0)) return null;
@@ -63,7 +63,7 @@ function atualizarCadHidratacao() {
 // ===== Passo 6: assistente "Qual glicose no soro agora?" =====
 // Só aplica as regras já escritas na conduta (SPP/IMIP): começa sem glicose (só B); HGT ≤ 300 ou queda > 90 mg/dL/h
 // → 5%; CAD não resolvida e HGT ainda caindo → 7,5% → 10% (→ 12,5% SPP); HGT < 60 → glicose +25%; nunca baixar a
-// insulina por causa da glicose enquanto houver acidose. A velocidade total (passo 4) não muda: só a proporção A/B.
+// insulina por causa da glicose enquanto houver acidose. A velocidade total (passo 5) não muda: só a proporção A/B.
 let cadGliEstado = { atual: 0, acidose: true, vel: null };
 const CAD_DEGRAUS = [0, 5, 7.5, 10]; // a escada da conduta (2,5% fica só na tabela, como degrau opcional)
 function ferramentaCadGlicose() {
@@ -74,7 +74,7 @@ function ferramentaCadGlicose() {
         <div class="cadg-campos">
             <label class="ict-campo"><span>HGT agora</span><input type="number" inputmode="numeric" id="cadgHgt" placeholder="mg/dL" oninput="atualizarCadGlicose()"></label>
             <label class="ict-campo"><span>HGT de 1 h atrás</span><input type="number" inputmode="numeric" id="cadgAnt" placeholder="mg/dL (opcional)" oninput="atualizarCadGlicose()"></label>
-            <label class="ict-campo"><span>Soro total (mL/h)</span><input type="number" inputmode="decimal" id="cadgVel" placeholder="passo 4" oninput="cadGliEstado.vel = this.value; atualizarCadGlicose()"></label>
+            <label class="ict-campo"><span>Soro total (mL/h)</span><input type="number" inputmode="decimal" id="cadgVel" placeholder="passo 5" oninput="cadGliEstado.vel = this.value; atualizarCadGlicose()"></label>
         </div>
         <div class="cadh-linha"><span class="cadh-rot">Glicose que está correndo</span><span class="cadh-opcoes" id="cadg-atual"></span></div>
         <div class="cadh-linha"><span class="cadh-rot">Acidose ainda presente?</span><span class="cadh-opcoes" id="cadg-acid"></span></div>
@@ -108,7 +108,7 @@ function atualizarCadGlicose() {
     let bomba = c => { let fA = c / 10, r = n => Math.round(n); return c === 0 ? `B ${r(vel)}` : c === 10 ? `A ${r(vel)}` : `A ${r(vel * fA)} + B ${r(vel * (1 - fA))}`; };
     let tab = [0, 2.5, 5, 7.5, 10].map((c, k) => `<tr${c === E.atual ? ' class="cadg-atual"' : ''}><th>${c ? fmtConc(c) : '0%'}</th><td>${mistura[k]}</td>${vel > 0 ? `<td>${bomba(c)}</td>` : ''}</tr>`).join('');
     document.getElementById('cadg-tabela').innerHTML = `<div class="cond-tabela-wrap"><table class="cond-tabela"><thead><tr><th>Glicose</th><th>Mistura</th>${vel > 0 ? '<th>Bomba (mL/h)</th>' : ''}</tr></thead><tbody>${tab}</tbody></table></div>
-        <div class="cond-nota"><strong>Solução padrão do IMIP (em Y), K 40 mEq/L e Na 136 mEq/L. A:</strong> SG 10% 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. <strong>B:</strong> AD 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. K ≥ 5,5: preparar sem o KCl. 2,5% é degrau opcional (não está na escada da SPP). 12,5% (SPP): SG 5% em SF 350 mL + SG 30% 150 mL.${auto === null ? ' Digite o <strong>peso</strong> no topo para o soro total vir do passo 4.' : ''}</div>`;
+        <div class="cond-nota"><strong>Solução padrão do IMIP (em Y), K 40 mEq/L e Na 136 mEq/L. A:</strong> SG 10% 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. <strong>B:</strong> AD 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. K ≥ 5,5: preparar sem o KCl. 2,5% é degrau opcional (não está na escada da SPP). 12,5% (SPP): SG 5% em SF 350 mL + SG 30% 150 mL.${auto === null ? ' Digite o <strong>peso</strong> no topo para o soro total vir do passo 5.' : ''}</div>`;
     let caixa = (cor, icone, titulo, linhas) => `<div class="cadg-acao" style="--cor-acao:${cor}"><div class="cadg-acao-tit">${icone} ${titulo}</div><ul>${linhas.map(l => `<li>${l}</li>`).join('')}</ul></div>`;
     let insul = 'Manter a insulina na mesma velocidade.';
     if (!(hgt > 0)) { res.innerHTML = `<div class="cond-nota">👆 Digite o <strong>HGT agora</strong> (e o de 1 h atrás, se tiver) para ver o que fazer.</div>`; return; }
@@ -169,13 +169,13 @@ function atualizarCadGlicose() {
     }
     res.innerHTML = caixa('#16a34a', '✔️', `MANTER ${fmtConc(E.atual)} (HGT ${Math.round(hgt)})`, [
         `${hgt > 300 ? 'HGT > 300' : 'HGT estável ou subindo'} com glicose no soro: manter ${cadAB(E.atual, vel)}.${txtQueda}`,
-        hgt > 300 ? 'Se o HGT não cai ~60 mg/dL/h ou a acidose melhora devagar: conferir acesso, equipo e preparo da insulina (passo 5).' : 'Objetivo: HGT estável enquanto a insulina corrige a acidose.',
+        hgt > 300 ? 'Se o HGT não cai ~60 mg/dL/h ou a acidose melhora devagar: conferir acesso, equipo e preparo da insulina (passo 4).' : 'Objetivo: HGT estável enquanto a insulina corrige a acidose.',
         insul + ' Repetir o HGT em 1 h.']);
 }
 
 
 
-// ===== Passo 4: painel "Soro da CAD em Y" (aprovado pelo Dr. Jonas no lugar do card cad_hidratacao) =====
+// ===== Passo 5 (hidratação): painel "Soro da CAD em Y" (aprovado pelo Dr. Jonas no lugar do card cad_hidratacao) =====
 // Velocidade total (do cálculo de 48 h), os dois frascos, os 4 momentos da glicose, o preparo para copiar e o potássio.
 function ferramentaCadPasso4() {
     setTimeout(atualizarCadSoroY, 0);
@@ -581,8 +581,8 @@ registrarConduta({
                         "<span class=\"cond-passo\">1</span> <strong>Chegada (0 min):</strong> Monitor, ABC, pesar, 2 acessos e colher os exames",
                         "<span class=\"cond-passo\">2</span> <strong>0 a 1 h:</strong> Expansão: SF 0,9% 10 mL/kg em 1h (choque: 10 a 20 mL/kg). Ainda sem insulina",
                         "<span class=\"cond-passo\">3</span> <strong>Saiu o K:</strong> Decidir quando começar o potássio. Insulina só com K ≥ 3,3",
-                        "<span class=\"cond-passo\">4</span> <strong>A partir da 2ª hora:</strong> Hidratação de 48h com a solução padrão A/B (só B no início; card calcula o mL/h)",
-                        "<span class=\"cond-passo\">5</span> <strong>Após 1 h de expansão:</strong> Insulina regular EV contínua: < 5 anos 0,05 U/kg/h; ≥ 5 anos 0,1 U/kg/h (máx 10 U/h). Nunca bolus",
+                        "<span class=\"cond-passo\">4</span> <strong>Após 1 h de expansão:</strong> Insulina regular EV contínua: < 5 anos 0,05 U/kg/h; ≥ 5 anos 0,1 U/kg/h (máx 10 U/h). Nunca bolus",
+                        "<span class=\"cond-passo\">5</span> <strong>A partir da 2ª hora:</strong> Hidratação de 48h com a solução padrão A/B (só B no início; card calcula o mL/h)",
                         "<span class=\"cond-passo\">6</span> <strong>HGT ≤ 300:</strong> Colocar glicose no soro: 5% = ½ A + ½ B. Não diminuir a insulina",
                         "<span class=\"cond-passo\">7</span> <strong>De 1/1h e 2/2h:</strong> HGT, sinais vitais e Glasgow 1/1h; gasometria, eletrólitos e cetonemia 2/2h",
                         "<span class=\"cond-passo\">8</span> <strong>CAD resolvida:</strong> pH > 7,30, HCO₃ > 15, cetonemia < 1 e aceitando VO: insulina SC antes da refeição e desligar a bomba 30 a 60 min depois",
@@ -630,7 +630,7 @@ registrarConduta({
                     itens: [
                         "<strong>Sem choque:</strong> SF 0,9% 10 mL/kg em 60 minutos.",
                         "<strong>Com choque:</strong> SF 0,9% 10 a 20 mL/kg em 30 a 60 minutos (hipoperfusão grave: em 15 a 30 min). Reavaliar e repetir se preciso.",
-                        "Não passar de 30 mL/kg no total. Anotar o volume dado: ele é descontado no passo 4.",
+                        "Não passar de 30 mL/kg no total. Anotar o volume dado: ele é descontado no passo 5.",
                         { alerta: "não iniciar insulina nesta 1ª hora e não dar bicarbonato." }
                     ],
                     remedios: ["cad_expansao"]
@@ -655,20 +655,6 @@ registrarConduta({
                 },
                 {
                     passo: 4,
-                    titulo: "A partir da 2ª hora: hidratação de 48h com potássio",
-                    aberta: true,
-                    resumo: "O card calcula o mL/h por % de desidratação. Descontar a expansão.",
-                    itens: [
-                        "<strong>Escolher a desidratação:</strong> CAD moderada 5 a 7%; CAD grave 7 a 10%.",
-                        "Velocidade (mL/h) = (déficit + 2 x manutenção − expansão) ÷ 48. Déficit = % x peso x 10. O card abaixo já faz a conta.",
-                        "<strong>Soro:</strong> solução padrão do IMIP em Y (K 40 mEq/L, Na 136 mEq/L). A: SG 10% 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. B: AD 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. Sem glicose: correr só a B no volume total; a glicose entra no passo 6.",
-                        "Não repor a diurese. Descontar o que beber. Total de até 2 x a manutenção.",
-                        "Na que não sobe enquanto a glicemia cai: aumentar o sódio do soro e vigiar edema cerebral."
-                    ],
-                    ferramenta: "ferramentaCadPasso4"
-                },
-                {
-                    passo: 5,
                     titulo: "Após 1 hora de expansão: insulina contínua",
                     aberta: true,
                     resumo: "< 5 anos 0,05 U/kg/h; ≥ 5 anos 0,1 U/kg/h (máx 10 U/h). Nunca bolus.",
@@ -685,13 +671,27 @@ registrarConduta({
                     remedios: ["insulina_cad"]
                 },
                 {
+                    passo: 5,
+                    titulo: "A partir da 2ª hora: hidratação de 48h com potássio",
+                    aberta: true,
+                    resumo: "O card calcula o mL/h por % de desidratação. Descontar a expansão.",
+                    itens: [
+                        "<strong>Escolher a desidratação:</strong> CAD moderada 5 a 7%; CAD grave 7 a 10%.",
+                        "Velocidade (mL/h) = (déficit + 2 x manutenção − expansão) ÷ 48. Déficit = % x peso x 10. O card abaixo já faz a conta.",
+                        "<strong>Soro:</strong> solução padrão do IMIP em Y (K 40 mEq/L, Na 136 mEq/L). A: SG 10% 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. B: AD 250 mL + NaCl 20% 10 mL + KCl 19,1% 4 mL. Sem glicose: correr só a B no volume total; a glicose entra no passo 6.",
+                        "Não repor a diurese. Descontar o que beber. Total de até 2 x a manutenção.",
+                        "Na que não sobe enquanto a glicemia cai: aumentar o sódio do soro e vigiar edema cerebral."
+                    ],
+                    ferramenta: "ferramentaCadPasso4"
+                },
+                {
                     passo: 6,
                     titulo: "HGT caiu: colocar glicose no soro",
                     aberta: true,
                     resumo: "HGT ≤ 300 ou queda > 90/h: glicose pela proporção A/B. Não diminuir a insulina.",
                     itens: [
                         "<strong>Gatilho (SPP):</strong> HGT ≤ 300 mg/dL ou queda > 90 mg/dL/h.",
-                        "Começar com glicose a 5% = metade solução A + metade solução B. A velocidade total do passo 4 não muda: só a proporção entre A e B.",
+                        "Começar com glicose a 5% = metade solução A + metade solução B. A velocidade total do passo 5 não muda: só a proporção entre A e B.",
                         "CAD ainda não resolvida e HGT continua ≤ 300 ou caindo > 90 mg/dL/h: subir para 7,5% (¾ A + ¼ B) e depois 10% (só A).",
                         "HGT normal mas acidose ainda presente: aumentar a glicose e manter a insulina (SPP admite até 12,5%).",
                         "Use o assistente abaixo a cada HGT: ele mostra a glicose certa e os mL/h de A e de B na bomba."
