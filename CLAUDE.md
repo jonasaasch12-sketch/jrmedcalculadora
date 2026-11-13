@@ -193,6 +193,20 @@ funcionar na raiz e em `/teste/`. `js/modo-teste.js` detecta `/teste/` (constant
 - Novo remédio: criar o bloco no arquivo da categoria **e** colocar o id em `medicamentos/menu.js`.
   Se tiver teto de dose, acrescentar em `TETOS` (testes/verificar.js).
 
+## Padrão visual (combinado com o Dr. Jonas, 11/2026)
+
+Todas as telas (login, início, prescrição, condutas e as próximas) seguem o mesmo padrão. Ao criar tela nova, usar estes valores; não inventar cor nova.
+
+- **Tarja azul no topo:** `#005eb8` (faixa do cabeçalho da Prescrição e da tarja do login). Texto da tarja em branco.
+- **Botão principal:** azul sólido `#005eb8` (hover `#0a6fd6`), cantos 10px, sem degradê e sem sombra forte.
+- **Logo:** "JR" em quadrado verde-azulado (gradiente de `#0f766e` a `#14b8a6`). Não mudar a cor do logo.
+- **Fundo das telas:** cinza claro `#f2f4f7` (login, início e lateral). Blocos e cartões brancos.
+- **Cartões:** fundo branco, borda `#e3e7ec`, cantos 12–14px, sombra suave (`0 10px 30px rgba(16,24,40,.08)`).
+- **Campos:** borda `#cfd6de`, cantos 10px; foco com contorno azul fino.
+- **Texto:** `#212b32` para título e corpo; `#5b6670` para legenda. Fonte Inter.
+- **Verde (opção D · Verde, Menu → 🎨 Visual (teste)):** `#0f766e`, o tom do login, para comparar com o azul.
+- **Onde fica:** o estilo novo vale só no teste (`html.estilo-apple`, em `css/inicio.css`). Nas opções de visual (`css/temas-teste.css`), cada uma redefine as cores de `--primary` e do cabeçalho.
+
 ## Testar a tela
 
 Servir a pasta (`python3 -m http.server`) e abrir no Playwright (Chromium já instalado).

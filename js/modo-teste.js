@@ -34,14 +34,14 @@ function mostrarBloqueioTeste(email) {
 // O visual A · Hospitalar é o PADRÃO (liberado pelo Dr. Jonas em 10/2026), no oficial e no teste.
 // No modo escuro ele sai, e fica o tema escuro normal (o A foi feito para o modo claro).
 // No teste, Menu → 🎨 Visual (teste) ainda deixa comparar com os outros (salvo neste aparelho).
-const VISUAIS_TESTE = { a: "A · Hospitalar (padrão)", atual: "Antigo", b: "B · Plantão noturno", c: "C · Apple Saúde" };
+const VISUAIS_TESTE = { a: "A · Hospitalar (padrão)", atual: "Antigo", b: "B · Plantão noturno", c: "C · Apple Saúde", d: "D · Verde (tom do login)" };
 function lerVisualTeste() { try { return localStorage.getItem('jrmed_visual_teste') || 'a'; } catch (e) { return 'a'; } }
 function sincronizarVisual() {
     let html = document.documentElement;
     let v = MODO_TESTE ? lerVisualTeste() : 'a';
     if (!VISUAIS_TESTE[v]) v = 'a';
     let escuro = html.getAttribute('data-theme') === 'dark';
-    html.classList.remove('visual-a', 'visual-b', 'visual-c');
+    html.classList.remove('visual-a', 'visual-b', 'visual-c', 'visual-d');
     if (v !== 'atual' && !(escuro && v === 'a')) html.classList.add('visual-' + v);
 }
 function aplicarVisualTeste(v) {

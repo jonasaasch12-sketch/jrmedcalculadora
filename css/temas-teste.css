@@ -90,3 +90,13 @@ html.visual-a:where(:not(.cond-visual-novo)) .cond-cabecalho, html.visual-b:wher
 html.visual-a:where(:not(.cond-visual-novo)) .cond-cabecalho h2, html.visual-b:where(:not(.cond-visual-novo)) .cond-cabecalho h2, html.visual-c:where(:not(.cond-visual-novo)) .cond-cabecalho h2 { color:var(--text-main)!important }
 html.visual-b:where(:not(.cond-visual-novo)) .cond-cabecalho-resumo,
 html.visual-b:where(:not(.cond-visual-novo)) .cond-legenda { color:#c3cfdb!important }
+
+/* ---------- visual-d · Verde (tom do login): mesmo desenho do A, com o verde-azulado do logo ---------- */
+html.visual-d { --primary:#0f766e;--primary-dark:#115e59;--primary-soft:#e6f4f2;--navy:#0f766e;--navy-2:#14857b;--rail-ativo:#0f766e;--gelo:#0f766e; }
+html.visual-d:not([data-theme=dark]) .header-banner { background:#0f766e!important;border-bottom:0!important }
+html.visual-d .sidebar-link.aberto { box-shadow:inset 4px 0 0 #0f766e }
+html.visual-d #app-container .med-card { border-top-color:#0f766e!important }
+html.visual-d .login-box::before { background:#0f766e!important }
+html.visual-d .login-box .btn-login { background:#0f766e!important }
+html.visual-d .login-box .btn-login:hover { background:#14857b!important }
+html.visual-d .login-box .login-input:focus { border-color:#0f766e;box-shadow:0 0 0 3px rgba(15,118,110,.15) }
