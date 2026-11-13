@@ -262,12 +262,15 @@ html.estilo-apple #area-condutas .cond-ico.cond-num { font-size: 15px; font-weig
 /* ===== Painel do paciente, estilo Apple (só no teste): faixa azul só com o nome; linha branca com peso, idade e busca ===== */
 html.estilo-apple .control-panel, html.estilo-apple[data-theme="dark"] .control-panel { background: #fff !important; border-bottom: 1px solid rgba(0,0,0,.08) !important; box-shadow: none !important; }
 html.estilo-apple .control-panel .panel-inner { display: none !important; }
-html.estilo-apple .control-panel .linha-secundaria { display: flex !important; align-items: center; gap: 10px; padding: 12px 22px !important; flex-wrap: nowrap; }
+/* Em tela estreita (tablet na horizontal) a linha quebra: a alergia desce para a 2ª linha, sem rolagem lateral */
+html.estilo-apple .control-panel .linha-secundaria { display: flex !important; align-items: center; gap: 10px; padding: 12px 22px !important; flex-wrap: wrap; row-gap: 8px; }
 html.estilo-apple .control-panel .inputs-inline { display: contents !important; }
 html.estilo-apple .control-panel .search-container { order: 3; flex: 1 1 auto; min-width: 240px; margin: 0 !important; }
 html.estilo-apple .control-panel .inputs-inline .input-group:nth-child(1) { order: 1; }
 html.estilo-apple .control-panel .inputs-inline .input-group:nth-child(2) { order: 2; }
-html.estilo-apple .control-panel #btnNovoPaciente { order: 4; }
+/* "Novo paciente" entre a busca e a alergia (computador e tablet). O tema A deixava o texto branco: sumia no painel branco */
+html.estilo-apple .control-panel #btnNovoPaciente { order: 4; background: #fff !important; color: #005eb8 !important; border: 1px solid #d2d2d7 !important; height: 40px; padding: 0 14px; font-size: 14px; font-weight: 600; white-space: nowrap; }
+html.estilo-apple .control-panel #btnNovoPaciente:hover { background: #f5f7f8 !important; }
 html.estilo-apple .control-panel .allergy-input { order: 5; flex: 0 0 240px; }
 html.estilo-apple .control-panel .input-group { background: #fff; border: 1.5px solid #0a84ff; border-radius: 12px; padding: 5px 12px; min-width: 110px; box-shadow: 0 0 0 3px rgba(10,132,255,.12); }
 html.estilo-apple .control-panel .input-group input { width: 3.4em; min-width: 3em; flex: 0 0 auto; }
