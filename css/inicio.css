@@ -294,6 +294,11 @@ html.estilo-apple .control-panel .input-group .input-label { color: #6e6e73; }
 html.estilo-apple .control-panel .input-group input { color: #1d1d1f; }
 html.estilo-apple .control-panel .search-input { background: #fff !important; color: #1d1d1f !important; border: 1px solid #d2d2d7 !important; border-radius: 12px !important; }
 html.estilo-apple .header-banner .search-container { display: none !important; }
+/* Cabeçalho do computador: sem a troca Prescrição/Condutas e sem o botão Atalhos (ficam no Menu) */
+html.estilo-apple .slot-abas, html.estilo-apple #btnAtalhosTopo { display: none !important; }
+html.estilo-apple .btn-ir-prescricao { display: none; }
+html.estilo-apple body.modo-condutas .btn-ir-prescricao { display: inline-flex; }
+@media (max-width: 849px) { html.estilo-apple .btn-ir-prescricao { display: none !important; } }
 html.estilo-apple .control-panel .allergy-input, html.estilo-apple .control-panel #btnNovoPaciente { border-radius: 12px; }
 @media (max-width: 849px), (orientation: portrait) {
     html.estilo-apple .control-panel .linha-secundaria { flex-wrap: wrap; padding: 10px 14px !important; }
