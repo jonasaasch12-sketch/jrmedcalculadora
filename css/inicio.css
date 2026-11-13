@@ -297,7 +297,7 @@ html.estilo-apple .header-banner .search-container { display: none !important; }
 /* Cabeçalho do computador: sem a troca Prescrição/Condutas e sem o botão Atalhos (ficam no Menu) */
 html.estilo-apple .slot-abas, html.estilo-apple #btnAtalhosTopo { display: none !important; }
 html.estilo-apple .btn-ir-prescricao { display: none; }
-html.estilo-apple body.modo-condutas .btn-ir-prescricao { display: inline-flex; }
+html.estilo-apple body.modo-condutas .btn-ir-prescricao { display: inline-flex; margin-left: auto; margin-right: 10px; }
 @media (max-width: 849px) { html.estilo-apple .btn-ir-prescricao { display: none !important; } }
 html.estilo-apple .control-panel .allergy-input, html.estilo-apple .control-panel #btnNovoPaciente { border-radius: 12px; }
 @media (max-width: 849px), (orientation: portrait) {
