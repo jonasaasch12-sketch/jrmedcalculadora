@@ -141,6 +141,10 @@ body.painel .topo{gap:6px;padding:8px}
 body.painel .logo .marca{display:none}
 body.painel .topo button{padding:6px 8px}
 body.min .dica{display:none}
+body.min{cursor:pointer}
+body.min #at-min{display:none}
+body.min .topo .esp{text-align:right}
+body.min .topo .esp::after{content:"▲";font-size:14px;opacity:.9}
 .abas{display:flex;gap:6px}
 .aba{flex:1;line-height:1.15;border:1.5px solid var(--borda);background:var(--card);color:var(--texto);border-radius:8px;padding:7px;font:inherit;font-size:14px;font-weight:700;cursor:pointer}
 .aba.on{background:var(--acento);border-color:var(--acento);color:#fff}
@@ -350,6 +354,17 @@ function textoKitAtalho(a, p, idade) {
     return { texto: itens.length ? textoReceitaDeItens(itens) : "", faltam, erros };
 }
 
+// Diminuir / aumentar a janela de atalhos. Vale para o botão "Diminuir" e, quando está minimizada,
+// para qualquer clique no ícone (a janela inteira): o ✕ continua só fechando.
+function alternarAtalhosMinimizado(doc, win) {
+    atalhosEstado.minimizado = !atalhosEstado.minimizado;
+    doc.body.classList.toggle("min", atalhosEstado.minimizado);
+    let b = doc.getElementById("at-min");
+    if (b) b.textContent = atalhosEstado.minimizado ? "Aumentar" : "Diminuir";
+    if (atalhosEstado.painel) atalhosEstado.painel.classList.toggle("min", atalhosEstado.minimizado);
+    else { try { atalhosEstado.minimizado ? win.resizeTo(260, 90) : win.resizeTo(380, 640); } catch (e) { } }
+}
+
 function montarAtalhos(win) {
     let doc = win.document;
     doc.title = "JR MED · Atalhos";
@@ -368,6 +383,7 @@ function montarAtalhos(win) {
     carregarAtalhosMeus().then(() => atalhosMeusHtml(doc));
 
     doc.addEventListener("click", (ev) => {
+        if (atalhosEstado.minimizado && !(ev.target.closest && ev.target.closest("#at-fechar"))) { alternarAtalhosMinimizado(doc, win); return; }
         let b = ev.target.closest("button"); if (!b) return;
         if (b.dataset.copiarCard) {
             let m = buscarMed(b.dataset.copiarCard); if (m) atalhosCopiar(doc, m.calc().r, b);
@@ -469,11 +485,7 @@ function montarAtalhos(win) {
             b.textContent = "✓ Limpo"; setTimeout(() => { b.textContent = "↺ Novo paciente"; }, 1000);
             $("at-peso").focus();
         } else if (b.id === "at-min") {
-            atalhosEstado.minimizado = !atalhosEstado.minimizado;
-            doc.body.classList.toggle("min", atalhosEstado.minimizado);
-            b.textContent = atalhosEstado.minimizado ? "Aumentar" : "Diminuir";
-            if (atalhosEstado.painel) atalhosEstado.painel.classList.toggle("min", atalhosEstado.minimizado);
-            else { try { atalhosEstado.minimizado ? win.resizeTo(260, 90) : win.resizeTo(380, 640); } catch (e) {} }
+            alternarAtalhosMinimizado(doc, win);
         } else if (b.id === "at-fechar") {
             fecharPainelAtalhos();
         }
