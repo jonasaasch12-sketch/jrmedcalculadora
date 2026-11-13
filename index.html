@@ -7,6 +7,31 @@
     <!-- Segurança (pedido do Dr. Jonas para a TI do hospital): só carrega código, fontes e conexões das origens listadas. -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://*.googleapis.com https://www.gstatic.com https://jrmed-calculadora.firebaseapp.com https://*.firebaseio.com wss://*.firebaseio.com; frame-src https://jrmed-calculadora.firebaseapp.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <meta name="referrer" content="strict-origin-when-cross-origin">
+    <script>
+    /* Só na versão de teste (/teste/). Enquanto o Firebase confere a sessão, a tela mostra "Verificando acesso…"
+       (classe html.verificando-acesso, css/inicio.css). As bibliotecas do Firebase começam a baixar já aqui,
+       em paralelo com os demais arquivos. Se o Firebase não responder em 8 s, mostra o login com um aviso.
+       O site oficial (/) não muda. */
+    (function () {
+        if (location.pathname.indexOf('/teste/') === -1) return;
+        var raiz = document.documentElement;
+        raiz.classList.add('verificando-acesso');
+        ['firebase-app.js', 'firebase-auth.js', 'firebase-firestore.js'].forEach(function (arq) {
+            var pre = document.createElement('link');
+            pre.rel = 'modulepreload';
+            pre.href = 'https://www.gstatic.com/firebasejs/10.8.1/' + arq;
+            document.head.appendChild(pre);
+        });
+        setTimeout(function () {
+            if (window.__authResolvido || !raiz.classList.contains('verificando-acesso')) return;
+            raiz.classList.remove('verificando-acesso');
+            var login = document.getElementById('tela-login');
+            if (login) login.style.display = 'flex';
+            var msg = document.getElementById('mensagemErro');
+            if (msg) { msg.style.color = '#dc2626'; msg.innerText = 'Não foi possível verificar o acesso agora. Confira a internet e tente de novo.'; }
+        }, 8000);
+    })();
+    </script>
     <title>JR MED - Manual & Calculadora de Bolso</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -26,6 +51,14 @@
     <!-- ========================================== -->
     <!-- TELA DE LOGIN                              -->
     <!-- ========================================== -->
+    <!-- Só no teste: enquanto o Firebase confere a sessão (ver css/inicio.css, html.verificando-acesso) -->
+    <div id="telaVerificando" class="login-container" role="status" aria-live="polite">
+        <div class="login-box verificando-box">
+            <div class="logo-futurista logo-login" aria-hidden="true">JR</div>
+            <h2 class="login-titulo">JR MED</h2>
+            <p class="verificando-txt"><span class="verificando-giro" aria-hidden="true"></span>Verificando acesso…</p>
+        </div>
+    </div>
     <div id="tela-login" class="login-container">
         <div class="login-box">
             <div class="logo-futurista logo-login" aria-hidden="true">JR</div>

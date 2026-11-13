@@ -585,7 +585,41 @@ const telaPerfil = document.getElementById('tela-perfil');
 function lerPerfilLocal(uid) { try { let d = JSON.parse(localStorage.getItem('jrmed_perfil') || 'null'); return d && d.uid === uid ? d.perfil : null; } catch (e) { return null; } }
 function guardarPerfilLocal(uid, perfil) { try { localStorage.setItem('jrmed_perfil', JSON.stringify({ uid, perfil })); } catch (e) { } }
 
+// Teste: tira a tela "Verificando acesso…" (css/inicio.css). No site oficial a classe nunca é colocada.
+function sairDaVerificacao() { document.documentElement.classList.remove('verificando-acesso'); }
+
+// Teste: atualiza o nome e o e-mail na tela quando o cadastro no servidor for diferente da cópia do aparelho.
+function atualizarPerfilNaTela(user, perfil) {
+    window.__perfilAtual = perfil || null;
+    window.__usuarioAtual = { uid: user.uid, email: user.email, nome: perfil?.nome || "" };
+    let tag = document.getElementById('userEmailTag');
+    if (tag) tag.innerText = (perfil?.nome ? perfil.nome + " · " : "") + user.email + (EMAILS_ADMIN.includes(user.email) ? " (admin)" : "");
+    let avatar = document.getElementById('configAvatar');
+    if (avatar) avatar.innerText = (perfil?.nome || user.email || "?").charAt(0).toUpperCase();
+}
+
+// Teste: depois de abrir o app com a cópia do aparelho, confere o cadastro no servidor sem travar a tela.
+async function conferirPerfilDepois(user, copia) {
+    registrarAcesso(user);
+    try {
+        let snap = await getDoc(doc(db, COLECAO_USUARIOS, user.uid));
+        let doServidor = snap.exists() ? (snap.data().perfil || null) : null;
+        if (pendenciaPerfil(doServidor)) {
+            // Servidor sem cadastro completo: grava a cópia que está completa (igual à entrada de antes)
+            setDoc(doc(db, COLECAO_USUARIOS, user.uid), { email: user.email, perfil: copia }, { merge: true }).catch(() => { });
+        } else if (JSON.stringify(doServidor) !== JSON.stringify(copia)) {
+            // Cadastro mudou em outro aparelho: atualiza a cópia e o nome na tela
+            guardarPerfilLocal(user.uid, doServidor);
+            atualizarPerfilNaTela(user, doServidor);
+        }
+    } catch (e) {
+        // Sem internet agora: segue com a cópia do aparelho
+        console.warn("Perfil não conferido agora:", e.code || e.message);
+    }
+}
+
 function mostrarApp(user, perfil) {
+    sairDaVerificacao();
     telaLogin.style.display = "none";
     telaPerfil.style.display = "none";
     appPrincipal.style.display = "block";
@@ -615,6 +649,7 @@ function mostrarApp(user, perfil) {
 
 // Pede o cadastro profissional (bloqueia o app até salvar).
 function pedirPerfil(user, perfil, motivo) {
+    sairDaVerificacao();
     telaLogin.style.display = "none";
     appPrincipal.style.display = "none";
     telaPerfil.style.display = "flex";
@@ -639,18 +674,32 @@ function pedirPerfil(user, perfil, motivo) {
 document.getElementById('btnSairPerfil').addEventListener('click', () => signOut(auth));
 
 onAuthStateChanged(auth, async (user) => {
+    window.__authResolvido = true; // o Firebase já respondeu (usado pelo aviso de 8 s no index.html, só no teste)
     if (user) { // e-mail de confirmação suspenso: qualquer conta logada entra
         if (conferirInatividade()) return;
         if (!lerAtividade()) marcarAtividade();
         let ehAdmin = EMAILS_ADMIN.includes(user.email);
         // Versão de teste (/teste/): só administradores entram.
-        if (MODO_TESTE && !ehAdmin) { registrarAcesso(user); telaLogin.style.display = "none"; appPrincipal.style.display = "block"; mostrarBloqueioTeste(user.email); return; }
+        if (MODO_TESTE && !ehAdmin) { registrarAcesso(user); sairDaVerificacao(); telaLogin.style.display = "none"; appPrincipal.style.display = "block"; mostrarBloqueioTeste(user.email); return; }
         // Celular com digital ativada: pede a digital antes de mostrar o app.
         if (!entrouComSenha && window.digitalAtivadaPara && digitalAtivadaPara(user.uid)) {
+            sairDaVerificacao();
             telaLogin.style.display = "none";
             if (!(await exigirDigital())) { window.sairDaConta(); return; }
         }
         entrouComSenha = false;
+        // Teste: se o aparelho já guarda um cadastro completo desta conta, abre o app na hora
+        // e confere com o servidor depois (sem deixar a tela esperando a internet).
+        if (MODO_TESTE) {
+            let copiaRapida = lerPerfilLocal(user.uid);
+            if (perfilDoCadastro && perfilDoCadastro.email === (user.email || '').toLowerCase()) { copiaRapida = perfilDoCadastro.perfil; perfilDoCadastro = null; }
+            if (copiaRapida && !pendenciaPerfil(copiaRapida)) {
+                sairDaVerificacao();
+                mostrarApp(user, copiaRapida);
+                conferirPerfilDepois(user, copiaRapida);
+                return;
+            }
+        }
         // Lê o perfil ANTES de gravar o acesso: com uma gravação pendente, o Firebase devolvia a cópia
         // local (só com os dados do acesso, sem o perfil) e o app pedia o cadastro de novo a cada entrada.
         let perfil = null, lido = false;
@@ -675,6 +724,7 @@ onAuthStateChanged(auth, async (user) => {
         if (motivo) pedirPerfil(user, perfil, motivo);
         else mostrarApp(user, perfil);
     } else {
+        sairDaVerificacao();
         telaLogin.style.display = "flex";
         telaPerfil.style.display = "none";
         appPrincipal.style.display = "none";
