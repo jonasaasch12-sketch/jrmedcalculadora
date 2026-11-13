@@ -121,6 +121,11 @@ function htmlInicio() {
     <div class="in-logo-cel"><div class="in-lg">JR</div><div><b>JR MED</b><small>Prescrição médica</small></div></div>
     ${teste ? '<span class="in-teste">TESTE</span>' : ""}
   </header>
+<header class="in-band">
+  <div class="in-b-l"><div class="in-lg">JR</div><div><b>JR MED</b>${teste ? '<span class="in-teste">TESTE</span>' : ""}<small>Início</small></div></div>
+  <button type="button" class="in-menu" data-ir="menu">☰ Menu</button>
+</header>
+<div class="in-corpo">
 <aside>
   <div class="in-marca"><div class="in-lg">JR</div>JR MED${teste ? ' <span class="in-teste">TESTE</span>' : ""}</div>
   <label class="in-busca">${inIcone("lupa")}<input id="inicioBuscaLado" placeholder="Buscar" autocomplete="off"></label>
@@ -149,6 +154,7 @@ function htmlInicio() {
     <div id="inicioRecentes"></div>
   </div>
 </main>
+</div>
 <nav class="in-tab" aria-label="Início">
   <button type="button" class="on">${inIcone("casa")}Início</button>
   <button type="button" data-ir="prescricao">${inIcone("crianca")}Pediatria</button>

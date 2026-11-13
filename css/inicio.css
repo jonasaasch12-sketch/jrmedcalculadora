@@ -321,3 +321,35 @@ html.estilo-apple .login-box .btn-login:hover { background: #0a6fd6 !important; 
 html.estilo-apple .login-box .login-input { border-radius: 10px; border: 1px solid #cfd6de; }
 html.estilo-apple .login-box .login-input:focus { border-color: #005eb8; box-shadow: 0 0 0 3px rgba(0,94,184,.15); }
 html.estilo-apple #tela-login, html.estilo-apple .login-container { background: #f2f4f7 !important; background-image: none !important; }
+
+/* ===== Início no computador: mesma faixa azul e mesma barra lateral da Prescrição (opção 1, aprovada 11/2026; só no teste) ===== */
+#tela-inicio .in-band { display: none; }
+#tela-inicio .in-corpo { display: flex; flex: 1; min-height: 0; }
+@media (min-width: 850px) and (orientation: landscape) {
+    #tela-inicio { flex-direction: column; }
+    #tela-inicio .in-band { display: flex; align-items: center; justify-content: space-between; height: 58px; padding: 0 20px; background: #005eb8; color: #fff; position: sticky; top: 0; z-index: 6; }
+    #tela-inicio .in-band .in-b-l { display: flex; align-items: center; gap: 10px; }
+    #tela-inicio .in-band .in-lg { width: 32px; height: 32px; border-radius: 9px; font-size: 13px; background: #0f766e; }
+    #tela-inicio .in-band b { font-size: 17px; font-weight: 700; letter-spacing: -.02em; }
+    #tela-inicio .in-band small { display: block; font-size: 12px; opacity: .85; }
+    #tela-inicio .in-band .in-teste { font-size: 10px; font-weight: 800; background: #e0342f; color: #fff; padding: 2px 7px; border-radius: 99px; margin-left: 6px; vertical-align: middle; }
+    #tela-inicio .in-band .in-menu { background: #fff; color: #005eb8; border-radius: 999px; padding: 7px 16px; font-weight: 700; font-size: 14px; }
+    #tela-inicio aside { top: 58px; height: calc(100vh - 58px); }
+    #tela-inicio .in-marca, #tela-inicio aside .in-busca { display: none; }
+    html:not([data-theme="dark"]) #tela-inicio { --in-bg: #f0f4f5; }
+    html:not([data-theme="dark"]) #tela-inicio aside { background: #f2f4f7; border-right: 1px solid #d8dde0; width: 232px; padding-top: 18px; }
+    html:not([data-theme="dark"]) #tela-inicio aside::before { content: "Navegação"; text-transform: uppercase; display: block; font-size: 11px; font-weight: 700; color: #5b6670; letter-spacing: .04em; padding: 6px 10px 8px; }
+    html:not([data-theme="dark"]) #tela-inicio .in-it { font-size: 14px; color: #212b32; }
+    html:not([data-theme="dark"]) #tela-inicio .in-it svg.in-i { color: #212b32; }
+    html:not([data-theme="dark"]) #tela-inicio .in-it.on { background: #fff; color: #005eb8; font-weight: 700; box-shadow: inset 3px 0 0 #005eb8; }
+    html:not([data-theme="dark"]) #tela-inicio .in-it.on svg.in-i, html:not([data-theme="dark"]) #tela-inicio .in-it:not(.off) svg.in-i { color: #005eb8; }
+    html:not([data-theme="dark"]) #tela-inicio main { max-width: none; padding: 30px 34px 40px; }
+    html:not([data-theme="dark"]) #tela-inicio h1 { font-size: 26px; color: #212b32; }
+    html:not([data-theme="dark"]) #tela-inicio main .in-busca { background: #fff; border: 1px solid #cfd6de; max-width: none; }
+    html:not([data-theme="dark"]) #tela-inicio .in-area { background: #fff; border: 1px solid #d8dde0; border-top: 4px solid #005eb8; border-radius: 6px; box-shadow: none; padding: 18px; }
+    html:not([data-theme="dark"]) #tela-inicio .in-area .in-lista { background: #f5f7f8; border-radius: 6px; box-shadow: none; }
+    html:not([data-theme="dark"]) #tela-inicio .in-q { background: #005eb8 !important; }
+    html:not([data-theme="dark"]) #tela-inicio .in-area.off .in-q { background: #9aa5b1 !important; }
+    html:not([data-theme="dark"]) #tela-inicio .in-acab h3 { color: #212b32; }
+    html:not([data-theme="dark"]) #tela-inicio .in-ver, html:not([data-theme="dark"]) #tela-inicio .in-breve { color: #005eb8; }
+}
