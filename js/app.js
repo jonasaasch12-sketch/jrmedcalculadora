@@ -403,7 +403,11 @@ function inicializarApp() {
     let contadorPorRemedio = {};
 
     let htmlFinal = "";
-    let htmlMenuSidebar = `<div class="nav-category-title">NAVEGAÇÃO</div>`;
+    // Computador (teste): item "Início" no topo da lateral, acima de NAVEGAÇÃO (mesmo padrão da tela inicial)
+    let itemInicioLateral = ((typeof MODO_TESTE !== 'undefined' && MODO_TESTE) && document.getElementById('tela-inicio'))
+        ? `<button type="button" class="sidebar-link sidebar-inicio" onclick="mostrarInicio()" title="Voltar à tela inicial"><span class="dot"></span><span class="rail-ico" aria-hidden="true">🏠</span><span class="rail-txt">Início</span><span class="rail-nome">Início</span></button>`
+        : '';
+    let htmlMenuSidebar = `${itemInicioLateral}<div class="nav-category-title">NAVEGAÇÃO</div>`;
     let htmlMenuBottom = "";
 
     let todasCategorias = construirCategoriasComCustom();
