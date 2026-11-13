@@ -378,3 +378,14 @@ html.estilo-apple .cond-btn-inicio { display: inline-flex; align-items: center; 
 html.estilo-apple .cond-btn-inicio span { color: #005eb8; font-size: 15px; }
 html.estilo-apple .cond-btn-inicio:hover { background: rgba(0, 94, 184, .08); }
 @media (max-width: 849px), (orientation: portrait) { html.estilo-apple .cond-inicio-linha { display: none; } }
+
+/* ===== Entrada no teste: "Verificando acesso…" enquanto o Firebase confere a sessão.
+   Só vale com html.verificando-acesso, que o índice liga apenas em /teste/ (index.html). ===== */
+#telaVerificando { display: none; }
+html.verificando-acesso #telaVerificando { display: flex; }
+html.verificando-acesso #tela-login { display: none !important; }
+.verificando-box { text-align: center; }
+.verificando-txt { margin: 16px 0 0; font-size: 14px; color: #5b6670; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.verificando-giro { display: inline-block; width: 16px; height: 16px; border-radius: 50%; border: 2px solid #cfd6de; border-top-color: #005eb8; animation: verificando-giro .8s linear infinite; }
+@keyframes verificando-giro { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .verificando-giro { animation-duration: 2.4s; } }
