@@ -34,6 +34,26 @@ function montarEstruturaCondutas() {
     if (slot) slot.appendChild(abas); else painel.insertBefore(abas, painel.firstChild);
     abas.querySelectorAll('.aba-modo').forEach(b => b.addEventListener('click', () => trocarModo(b.dataset.modo)));
 
+    // Cabeçalho (computador): sem a troca Prescrição/Condutas. Na tela de Condutas aparece o botão
+    // "Prescrição" ao lado do Menu; Condutas fica no Menu (☰), na seção Telas.
+    let btnPresc = document.createElement('button');
+    btnPresc.type = 'button'; btnPresc.id = 'btnIrPrescricao'; btnPresc.className = 'btn-config btn-ir-prescricao';
+    btnPresc.title = 'Voltar para a Prescrição';
+    btnPresc.innerHTML = '<span aria-hidden="true">💊</span><span class="btn-config-texto">Prescrição</span>';
+    btnPresc.addEventListener('click', () => trocarModo('prescricao'));
+    let btnMenu = document.getElementById('btnAbrirConfig');
+    if (btnMenu) btnMenu.parentNode.insertBefore(btnPresc, btnMenu);
+
+    let drawer = document.querySelector('#painelConfig .config-rodape') || document.getElementById('painelConfig');
+    let secaoTelas = document.createElement('div');
+    secaoTelas.className = 'config-secao';
+    secaoTelas.innerHTML = `<div class="config-secao-titulo">Telas</div>
+<button type="button" id="btnIrCondutas" class="config-acao"><span>📖</span> Condutas</button>`;
+    let primeiraSecao = document.querySelector('#painelConfig .config-secao');
+    if (primeiraSecao) primeiraSecao.parentNode.insertBefore(secaoTelas, primeiraSecao);
+    else if (drawer) drawer.parentNode.insertBefore(secaoTelas, drawer);
+    secaoTelas.querySelector('button').addEventListener('click', () => { if (typeof fecharConfig === 'function') fecharConfig(); trocarModo('condutas'); });
+
     let area = document.createElement('div');
     area.id = 'area-condutas';
     area.style.display = 'none';
