@@ -360,7 +360,7 @@ function montarAtalhos(win) {
     let $ = (id) => doc.getElementById(id);
     let pesoApp = (document.getElementById("pesoInput") || {}).value;
     if (pesoApp) $("at-peso").value = pesoApp;
-    let idadeApp = (document.getElementById("idadeInput") || {}).value;
+    let idadeApp = typeof idadeComoAnos === "function" ? idadeComoAnos() : (document.getElementById("idadeInput") || {}).value;
     if (idadeApp) $("at-idade").value = idadeApp;
     let idadeJanela = () => $("at-idade").value.trim();
     atalhosMeusHtml(doc);
