@@ -312,3 +312,12 @@ html.estilo-apple .control-panel .allergy-input, html.estilo-apple .control-pane
     html.estilo-apple .control-panel .inputs-inline .input-group:nth-child(2) { min-width: 0; }
     html.estilo-apple .control-panel .linha-secundaria { row-gap: 8px; }
 }
+
+/* ===== Login no padrão do Início (só no teste): tarja azul no topo, botão azul sólido, cantos iguais ===== */
+html.estilo-apple .login-box { border-radius: 14px; border: 1px solid #e3e7ec; box-shadow: 0 10px 30px rgba(16,24,40,.08); overflow: hidden; padding-top: 0 !important; }
+html.estilo-apple .login-box::before { content: ""; display: block; height: 12px; background: #005eb8; margin: 0 -30px 26px; }
+html.estilo-apple .login-box .btn-login { background: #005eb8 !important; background-image: none !important; box-shadow: none !important; border-radius: 10px; }
+html.estilo-apple .login-box .btn-login:hover { background: #0a6fd6 !important; }
+html.estilo-apple .login-box .login-input { border-radius: 10px; border: 1px solid #cfd6de; }
+html.estilo-apple .login-box .login-input:focus { border-color: #005eb8; box-shadow: 0 0 0 3px rgba(0,94,184,.15); }
+html.estilo-apple #tela-login, html.estilo-apple .login-container { background: #f2f4f7 !important; background-image: none !important; }
