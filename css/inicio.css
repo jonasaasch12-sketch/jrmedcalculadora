@@ -326,15 +326,19 @@ html.estilo-apple #tela-login, html.estilo-apple .login-container { background: 
 #tela-inicio .in-band { display: none; }
 #tela-inicio .in-corpo { display: flex; flex: 1; min-height: 0; }
 @media (min-width: 850px) and (orientation: landscape) {
-    #tela-inicio { flex-direction: column; }
-    #tela-inicio .in-band { display: flex; align-items: center; justify-content: space-between; height: 58px; padding: 0 20px; background: #005eb8; color: #fff; position: sticky; top: 0; z-index: 6; }
+    /* Grade: faixa em cima (linha 1) e barra lateral + conteúdo (linha 2). Funciona com ou sem o .in-corpo,
+       para o layout não quebrar se o celular/computador ainda tiver o js/inicio.js antigo em cache. */
+    #tela-inicio { display: grid !important; grid-template-columns: 232px minmax(0, 1fr); grid-template-rows: 58px auto; align-items: start; /* !important: js/inicio.js põe display:flex no estilo da tela */ }
+    #tela-inicio .in-corpo { display: contents; }
+    #tela-inicio .in-band { grid-column: 1 / -1; grid-row: 1; display: flex; align-items: center; justify-content: space-between; height: 58px; padding: 0 20px; background: #005eb8; color: #fff; position: sticky; top: 0; z-index: 6; }
     #tela-inicio .in-band .in-b-l { display: flex; align-items: center; gap: 10px; }
     #tela-inicio .in-band .in-lg { width: 32px; height: 32px; border-radius: 9px; font-size: 13px; background: #0f766e; }
     #tela-inicio .in-band b { font-size: 17px; font-weight: 700; letter-spacing: -.02em; }
     #tela-inicio .in-band small { display: block; font-size: 12px; opacity: .85; }
     #tela-inicio .in-band .in-teste { font-size: 10px; font-weight: 800; background: #e0342f; color: #fff; padding: 2px 7px; border-radius: 99px; margin-left: 6px; vertical-align: middle; }
     #tela-inicio .in-band .in-menu { background: #fff; color: #005eb8; border-radius: 999px; padding: 7px 16px; font-weight: 700; font-size: 14px; }
-    #tela-inicio aside { top: 58px; height: calc(100vh - 58px); }
+    #tela-inicio aside { grid-column: 1; grid-row: 2; position: sticky; top: 58px; height: calc(100vh - 58px); width: 232px; }
+    #tela-inicio main { grid-column: 2; grid-row: 2; min-width: 0; }
     #tela-inicio .in-marca, #tela-inicio aside .in-busca { display: none; }
     html:not([data-theme="dark"]) #tela-inicio { --in-bg: #f0f4f5; }
     html:not([data-theme="dark"]) #tela-inicio aside { background: #f2f4f7; border-right: 1px solid #d8dde0; width: 232px; padding-top: 18px; }
