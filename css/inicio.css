@@ -247,32 +247,16 @@ html.estilo-apple[data-theme="dark"] #area-condutas .cond-cabecalho, html.estilo
 html.estilo-apple[data-theme="dark"] #area-condutas .cond-cabecalho h2, html.estilo-apple[data-theme="dark"] #area-condutas summary h3, html.estilo-apple[data-theme="dark"] #area-condutas .cond-secao-corpo { color: #f5f5f7 !important; }
 html.estilo-apple #area-condutas .cond-bloco { background: none !important; border: 0 !important; border-left: 0 !important; box-shadow: none !important; border-radius: 0 !important; }
 
-/* Condutas (estilo Apple, como o desenho): ícone de traço em cada seção e duas colunas no computador */
+/* Condutas (estilo Apple, como o desenho): ícone de traço em cada seção. Uma coluna, no computador e no celular */
 html.estilo-apple #area-condutas .cond-ico { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; flex: none; background: var(--cor-cat, #0071e3); color: #fff; font-style: normal; }
 html.estilo-apple #area-condutas .cond-ico svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 html.estilo-apple #area-condutas details.cond-secao summary::before { content: none !important; }
-@media (min-width: 850px) and (orientation: landscape) {
-    html.estilo-apple #area-condutas .cond-bloco-corpo { display: inline-block; vertical-align: top; width: calc(50% - 9px); margin-right: 18px; }
-    html.estilo-apple #area-condutas .cond-bloco-corpo:nth-of-type(2n) { margin-right: 0; }
-    html.estilo-apple #area-condutas .cond-bloco-corpo { width: calc(50% - 9px); }
-    html.estilo-apple #area-condutas .cond-bloco-corpo:nth-of-type(2n) { margin-right: 0; }
-    html.estilo-apple #area-condutas .cond-secao-corpo { padding-left: 58px; }
-}
 html.estilo-apple #area-condutas details.cond-secao summary { display: grid !important; grid-template-columns: 30px 1fr 16px; column-gap: 12px; row-gap: 2px; align-items: center; }
 html.estilo-apple #area-condutas details.cond-secao summary > .cond-ico { grid-column: 1; grid-row: 1 / 3; }
 html.estilo-apple #area-condutas details.cond-secao summary > h3 { grid-column: 2; grid-row: 1; }
 html.estilo-apple #area-condutas details.cond-secao summary > .cond-secao-resumo { grid-column: 2; grid-row: 2; }
 html.estilo-apple #area-condutas details.cond-secao summary::after { grid-column: 3; grid-row: 1 / 3; margin: 0; justify-self: end; }
 html.estilo-apple #area-condutas details.cond-secao summary { padding-left: 14px !important; padding-right: 14px !important; }
-/* Condutas no computador (paisagem larga), como o desenho: Diagnóstico à esquerda; Emergência e Ambulatório à direita */
-@media (min-width: 850px) and (orientation: landscape) {
-    html.estilo-apple body.modo-condutas #area-condutas { display: grid !important; grid-template-columns: 1fr 1fr; column-gap: 18px; align-items: start; } /* só com a tela de Condutas aberta (body.modo-condutas): senão as Condutas apareciam embaixo da Prescrição */
-    html.estilo-apple #area-condutas > :not(.cond-bloco-corpo) { grid-column: 1 / -1; }
-    html.estilo-apple #area-condutas .cond-bloco-corpo { width: auto !important; margin: 0 !important; display: block !important; min-width: 0; }
-    html.estilo-apple #area-condutas .cond-bloco-corpo[hidden] { display: block !important; }
-    html.estilo-apple #area-condutas .cond-bloco-corpo[data-bloco="0"] { grid-column: 1; }
-    html.estilo-apple #area-condutas .cond-bloco-corpo[data-bloco="1"], html.estilo-apple #area-condutas .cond-bloco-corpo[data-bloco="2"] { grid-column: 2; }
-}
 html.estilo-apple #area-condutas .cond-ico.cond-num { font-size: 15px; font-weight: 700; font-style: normal; color: #fff; }
 
 /* ===== Painel do paciente, estilo Apple (só no teste): faixa azul só com o nome; linha branca com peso, idade e busca ===== */
