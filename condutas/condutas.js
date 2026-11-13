@@ -118,6 +118,13 @@ function voltarListaCondutas() {
     renderizarListaCondutas(); window.scrollTo(0, 0);
 }
 
+// Botão "Início" fora da tarja (computador), no mesmo estilo do item Início da lateral
+function htmlBotaoInicioCondutas() {
+    return (typeof inicioAtivo === 'function' && inicioAtivo())
+        ? `<div class="cond-inicio-linha"><button type="button" class="cond-btn-inicio" onclick="mostrarInicio()" title="Voltar à tela inicial"><span aria-hidden="true">🏠</span>Início</button></div>`
+        : '';
+}
+
 function renderizarListaCondutas() {
     condutaAberta = null;
     let termo = (typeof normalizar === 'function' ? normalizar : s => s.toLowerCase())(document.getElementById('searchInput').value || '');
@@ -127,9 +134,10 @@ function renderizarListaCondutas() {
     lista.sort((a, b) => (b.destaque ? 1 : 0) - (a.destaque ? 1 : 0)); /* conduta com destaque: true vem primeiro (ventilação mecânica, pedido do Dr. Jonas) */
     lista.forEach(c => (porCat[c.categoria] = porCat[c.categoria] || []).push(c));
 
-    let html = CONDUTAS_VISUAL_NOVO
+    let topoInicio = htmlBotaoInicioCondutas();
+    let html = topoInicio + (CONDUTAS_VISUAL_NOVO
         ? `<div class="cond-intro"><h2>Condutas</h2><p>Protocolos das doenças mais prevalentes. As medicações de cada conduta usam o peso e a idade digitados acima.</p></div>`
-        : `<div class="cond-intro">📖 <strong>Condutas</strong> — protocolos das doenças mais prevalentes. As medicações de cada conduta usam o peso e a idade digitados acima.</div>`;
+        : `<div class="cond-intro">📖 <strong>Condutas</strong> — protocolos das doenças mais prevalentes. As medicações de cada conduta usam o peso e a idade digitados acima.</div>`);
     if (!lista.length) html += `<div class="cond-vazio">Nenhuma conduta encontrada.</div>`;
     Object.keys(porCat).forEach(cat => {
         html += `<div class="cond-cat-titulo">${escCond(cat)}</div><div class="cond-grade">`;
@@ -308,7 +316,8 @@ function abrirConduta(id, bloco) {
     });
     html += `<div class="cond-fonte" id="cond-fontes"><strong>Fontes:</strong><ol>${c.fontes.map((f, k) => `<li id="cond-fonte-${k}"><span class="cond-fonte-txt">${escCond(f)}</span><button type="button" class="cond-fonte-voltar" onclick="voltarDaFonte()">↩ voltar ao texto</button></li>`).join('')}</ol><strong>Revisão:</strong> ${escCond(c.revisao)}</div>`;
     let area = document.getElementById('area-condutas');
-    area.innerHTML = novo ? html : textoVisualAntigo(html);
+    let topoInicio = htmlBotaoInicioCondutas();
+    area.innerHTML = novo ? topoInicio + html : topoInicio + textoVisualAntigo(html);
     area.classList.toggle('cond-padrao', !!c.padraoTexto); /* conduta já reescrita no padrão de escrita (rótulo azul) */
     linkarCitacoes(area, c);
     atualizarDosesConduta();

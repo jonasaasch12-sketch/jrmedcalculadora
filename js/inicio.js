@@ -261,14 +261,7 @@ window.addEventListener("popstate", (ev) => {
 // Botões para voltar ao início: "‹ Início" no cabeçalho (computador), aba na barra do celular e item no Menu.
 function instalarBotoesInicio() {
     if (!inicioAtivo()) return;
-    let left = document.querySelector("#aplicativo-principal .header-left");
-    if (left && !document.getElementById("btnInicioTopo")) {
-        let b = document.createElement("button");
-        b.type = "button"; b.id = "btnInicioTopo"; b.className = "btn-inicio"; b.title = "Voltar à tela inicial";
-        b.innerHTML = '<svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg>Início';
-        b.addEventListener("click", () => mostrarInicio());
-        left.insertBefore(b, left.firstChild);
-    }
+    /* O "‹ Início" da tarja saiu: no computador o Início fica no topo da lateral (js/app.js) e nas Condutas, fora da tarja (condutas/condutas.js) */
     let barra = document.getElementById("barraAbas");
     if (barra && !document.getElementById("tabInicio")) {
         let b = document.createElement("button");

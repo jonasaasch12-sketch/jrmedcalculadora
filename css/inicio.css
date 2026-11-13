@@ -371,3 +371,10 @@ html.estilo-apple #tela-login, html.estilo-apple .login-container { background: 
     #tela-inicio .in-data { display: none; }
     #tela-inicio main .in-busca { margin-top: 0; }
 }
+
+/* Botão "Início" fora da tarja (Condutas, computador e tablet na horizontal): mesmo padrão do item Início da tela inicial */
+html.estilo-apple .cond-inicio-linha { margin: 0 0 6px; }
+html.estilo-apple .cond-btn-inicio { display: inline-flex; align-items: center; gap: 8px; padding: 7px 10px; border: 0; border-radius: 8px; background: transparent; color: #212b32; font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; }
+html.estilo-apple .cond-btn-inicio span { color: #005eb8; font-size: 15px; }
+html.estilo-apple .cond-btn-inicio:hover { background: rgba(0, 94, 184, .08); }
+@media (max-width: 849px), (orientation: portrait) { html.estilo-apple .cond-inicio-linha { display: none; } }
