@@ -325,6 +325,21 @@ function pararListenerFichas() {
     if (paradaListenerFichas) { paradaListenerFichas(); paradaListenerFichas = null; }
 }
 
+// ⚡ Atalhos do usuário (js/atalhos.js): um documento por conta em "atalhos_usuarios/{uid}",
+// que só o próprio usuário lê e grava (regra no Firestore). Nada de paciente: só modelos e ids de cards.
+const COLECAO_ATALHOS = "atalhos_usuarios";
+window.JRAtalhos = {
+    ler: async () => {
+        let u = auth.currentUser; if (!u) throw new Error("sem-login");
+        let snap = await getDoc(doc(db, COLECAO_ATALHOS, u.uid));
+        return snap.exists() && Array.isArray(snap.data().itens) ? snap.data().itens : [];
+    },
+    salvar: async (itens) => {
+        let u = auth.currentUser; if (!u) throw new Error("sem-login");
+        await setDoc(doc(db, COLECAO_ATALHOS, u.uid), { itens, atualizadoEm: serverTimestamp() });
+    }
+};
+
 // Exposto para o script principal do app (não-módulo) poder salvar/excluir.
 window.JRFirestore = {
     salvarMedicamento: async (regra) => {
@@ -422,7 +437,7 @@ window.renderizarUsuarios = function () {
                 <div class="usu-email">${esc(u.perfil?.nome || u.email || "(sem e-mail)")}${EMAILS_ADMIN.includes(u.email) ? ' <span class="usu-tag">admin</span>' : ''}${pendenciaPerfil(u.perfil) ? ' <span class="usu-tag usu-tag-pend">cadastro incompleto</span>' : ''}</div>
                 ${u.perfil?.nome ? `<div class="usu-info">${esc(u.email)}</div>` : ''}
                 ${u.perfil ? `<div class="usu-perfil">${esc(resumoPerfil(u.perfil))}${u.perfil.celular ? ' · ' + esc(u.perfil.celular) : ''}</div>` : ''}
-                <div class="usu-info">Cadastro: ${dataBR(u.cadastro)} · Último acesso: ${dataBR(u.ultimo, true)}${u.versao === 'teste' ? ' (teste)' : ''} · ${u.acessos || 1} acesso(s)</div>
+                <div class="usu-info">Cadastro: ${dataBR(u.cadastro)} · Último acesso: ${dataBR(u.ultimo, true)}${u.versao === 'teste' ? ' (teste)' : ''} · ${esc(String(u.acessos || 1))} acesso(s)</div>
             </div>
         </div>`).join('') : '<p class="form-hint">Nenhum usuário encontrado.</p>');
 };
@@ -475,6 +490,7 @@ document.getElementById('btnBaixarMeusDados').addEventListener('click', async ()
             Object.assign(dados, { perfil: x.perfil || null, acessos: x.acessos || null, ultimoAcesso: x.ultimoAcesso?.toDate ? x.ultimoAcesso.toDate().toISOString() : null });
         }
     } catch (e) { dados.perfil = window.__perfilAtual || null; }
+    try { dados.atalhos = await window.JRAtalhos.ler(); } catch (e) { }
     baixarArquivo("meus-dados-jrmed.json", JSON.stringify(dados, null, 2), "application/json");
     msgMeusDados("Arquivo \"meus-dados-jrmed.json\" baixado.", "#16a34a");
 });
@@ -487,8 +503,9 @@ document.getElementById('btnExcluirConta').addEventListener('click', async () =>
     msgMeusDados("Excluindo...");
     try {
         await reauthenticateWithCredential(u, EmailAuthProvider.credential(u.email, senha));
+        try { await deleteDoc(doc(db, COLECAO_ATALHOS, u.uid)); } catch (e) { }
         await deleteDoc(doc(db, COLECAO_USUARIOS, u.uid));
-        ['jrmed_perfil', 'jrmed_digital', CHAVE_ATIVIDADE].forEach(k => { try { localStorage.removeItem(k); } catch (e) { } });
+        ['jrmed_perfil', 'jrmed_atalhos_meus', 'jrmed_digital', CHAVE_ATIVIDADE].forEach(k => { try { localStorage.removeItem(k); } catch (e) { } });
         await deleteUser(u);
         fecharModal('modalMeusDados');
         msgErro.style.color = "#16a34a";
@@ -512,7 +529,11 @@ window.excluirInativos = async function () {
 // Planilha (CSV com ";" e acentos, abre direto no Excel).
 window.baixarUsuariosCSV = function () {
     let cab = ["Nome", "E-mail", "Atividade", "Conselho", "Registro", "UF", "Especialidade", "Faculdade", "Formatura", "Celular", "Cadastro", "Último acesso", "Acessos", "Situação"];
-    let cel = v => '"' + String(v ?? "").replace(/"/g, '""') + '"';
+    let cel = v => {
+        let s = String(v ?? "");
+        if (/^[=@\-\t\r]|^\+(?!\d)/.test(s)) s = "'" + s; // fórmula de planilha: texto que começa com = @ - ou + (sem número depois) ganha apóstrofo
+        return '"' + s.replace(/"/g, '""') + '"';
+    };
     let linhas = usuariosCarregados.map(u => {
         let p = u.perfil || {};
         return [p.nome, u.email, ATIVIDADES_PERFIL[p.atividade]?.nome, p.conselho, p.registro, p.uf, p.especialidade, p.instituicao,
@@ -568,7 +589,42 @@ const telaPerfil = document.getElementById('tela-perfil');
 function lerPerfilLocal(uid) { try { let d = JSON.parse(localStorage.getItem('jrmed_perfil') || 'null'); return d && d.uid === uid ? d.perfil : null; } catch (e) { return null; } }
 function guardarPerfilLocal(uid, perfil) { try { localStorage.setItem('jrmed_perfil', JSON.stringify({ uid, perfil })); } catch (e) { } }
 
+// Teste: tira a tela "Verificando acesso…" (css/inicio.css). No site oficial a classe nunca é colocada.
+function sairDaVerificacao() { document.documentElement.classList.remove('verificando-acesso', 'login-aberto', 'com-sessao'); } // 'login-aberto': o login volta a ficar escondido até o botão "Entrar" da página inicial
+
+// Teste: atualiza o nome e o e-mail na tela quando o cadastro no servidor for diferente da cópia do aparelho.
+function atualizarPerfilNaTela(user, perfil) {
+    window.__perfilAtual = perfil || null;
+    window.__usuarioAtual = { uid: user.uid, email: user.email, nome: perfil?.nome || "" };
+    let tag = document.getElementById('userEmailTag');
+    if (tag) tag.innerText = (perfil?.nome ? perfil.nome + " · " : "") + user.email + (EMAILS_ADMIN.includes(user.email) ? " (admin)" : "");
+    let avatar = document.getElementById('configAvatar');
+    if (avatar) avatar.innerText = (perfil?.nome || user.email || "?").charAt(0).toUpperCase();
+}
+
+// Teste: depois de abrir o app com a cópia do aparelho, confere o cadastro no servidor sem travar a tela.
+async function conferirPerfilDepois(user, copia) {
+    registrarAcesso(user);
+    try {
+        let snap = await getDoc(doc(db, COLECAO_USUARIOS, user.uid));
+        let doServidor = snap.exists() ? (snap.data().perfil || null) : null;
+        if (pendenciaPerfil(doServidor)) {
+            // Servidor sem cadastro completo: grava a cópia que está completa (igual à entrada de antes)
+            setDoc(doc(db, COLECAO_USUARIOS, user.uid), { email: user.email, perfil: copia }, { merge: true }).catch(() => { });
+        } else if (JSON.stringify(doServidor) !== JSON.stringify(copia)) {
+            // Cadastro mudou em outro aparelho: atualiza a cópia e o nome na tela
+            guardarPerfilLocal(user.uid, doServidor);
+            atualizarPerfilNaTela(user, doServidor);
+        }
+    } catch (e) {
+        // Sem internet agora: segue com a cópia do aparelho
+        console.warn("Perfil não conferido agora:", e.code || e.message);
+    }
+}
+
 function mostrarApp(user, perfil) {
+    sairDaVerificacao();
+    document.documentElement.classList.add('com-sessao'); // esconde a página inicial pública (teste)
     telaLogin.style.display = "none";
     telaPerfil.style.display = "none";
     appPrincipal.style.display = "block";
@@ -593,10 +649,13 @@ function mostrarApp(user, perfil) {
     iniciarListenerCategorias();
     iniciarListenerFichas();
     if (window.atualizarVisibilidadeAdmin) window.atualizarVisibilidadeAdmin();
+    if (window.aoEntrarNoApp) aoEntrarNoApp(); /* tela inicial (js/inicio.js), só no teste */
 }
 
 // Pede o cadastro profissional (bloqueia o app até salvar).
 function pedirPerfil(user, perfil, motivo) {
+    sairDaVerificacao();
+    document.documentElement.classList.add('com-sessao');
     telaLogin.style.display = "none";
     appPrincipal.style.display = "none";
     telaPerfil.style.display = "flex";
@@ -621,18 +680,34 @@ function pedirPerfil(user, perfil, motivo) {
 document.getElementById('btnSairPerfil').addEventListener('click', () => signOut(auth));
 
 onAuthStateChanged(auth, async (user) => {
+    const primeiraResposta = !window.__authResolvido; // a primeira resposta do Firebase nesta página
+    window.__authResolvido = true; // o Firebase já respondeu (usado pelo fallback de 8 s no index.html, só no teste)
     if (user) { // e-mail de confirmação suspenso: qualquer conta logada entra
         if (conferirInatividade()) return;
         if (!lerAtividade()) marcarAtividade();
         let ehAdmin = EMAILS_ADMIN.includes(user.email);
         // Versão de teste (/teste/): só administradores entram.
-        if (MODO_TESTE && !ehAdmin) { registrarAcesso(user); telaLogin.style.display = "none"; appPrincipal.style.display = "block"; mostrarBloqueioTeste(user.email); return; }
+        if (MODO_TESTE && !ehAdmin) { registrarAcesso(user); sairDaVerificacao(); document.documentElement.classList.add('login-aberto'); telaLogin.style.display = "none"; appPrincipal.style.display = "block"; mostrarBloqueioTeste(user.email); return; }
         // Celular com digital ativada: pede a digital antes de mostrar o app.
         if (!entrouComSenha && window.digitalAtivadaPara && digitalAtivadaPara(user.uid)) {
+            sairDaVerificacao();
+            document.documentElement.classList.add('com-sessao');
             telaLogin.style.display = "none";
             if (!(await exigirDigital())) { window.sairDaConta(); return; }
         }
         entrouComSenha = false;
+        // Teste: se o aparelho já guarda um cadastro completo desta conta, abre o app na hora
+        // e confere com o servidor depois (sem deixar a tela esperando a internet).
+        if (MODO_TESTE) {
+            let copiaRapida = lerPerfilLocal(user.uid);
+            if (perfilDoCadastro && perfilDoCadastro.email === (user.email || '').toLowerCase()) { copiaRapida = perfilDoCadastro.perfil; perfilDoCadastro = null; }
+            if (copiaRapida && !pendenciaPerfil(copiaRapida)) {
+                sairDaVerificacao();
+                mostrarApp(user, copiaRapida);
+                conferirPerfilDepois(user, copiaRapida);
+                return;
+            }
+        }
         // Lê o perfil ANTES de gravar o acesso: com uma gravação pendente, o Firebase devolvia a cópia
         // local (só com os dados do acesso, sem o perfil) e o app pedia o cadastro de novo a cada entrada.
         let perfil = null, lido = false;
@@ -657,9 +732,15 @@ onAuthStateChanged(auth, async (user) => {
         if (motivo) pedirPerfil(user, perfil, motivo);
         else mostrarApp(user, perfil);
     } else {
+        // Visitante (teste): aparece a apresentação; o login abre pelo botão "Entrar" (ou se a sessão expirou, com o aviso).
+        // Se a pessoa já tocou em "Entrar" antes da primeira resposta do Firebase, o login continua aberto.
+        document.documentElement.classList.remove('verificando-acesso', 'com-sessao');
+        if (sessaoExpirada) document.documentElement.classList.add('login-aberto');
+        else if (!primeiraResposta) document.documentElement.classList.remove('login-aberto');
         telaLogin.style.display = "flex";
         telaPerfil.style.display = "none";
         appPrincipal.style.display = "none";
+        if (window.aoSairDoApp) aoSairDoApp();
         if (!modoCadastro) { emailInput.value = ""; senhaInput.value = ""; }
         if (sessaoExpirada) {
             sessaoExpirada = false;

@@ -43,7 +43,7 @@ registrarConduta({
                         ],
                         classificar: (v) => {
                             let sim = v.filter(x => x === 1).length;
-                            if (sim > 0) return { num: "✓", rotulo: "Anafilaxia altamente provável", cor: "#dc2626", texto: "Adrenalina IM AGORA (bloco 🚨, passo 3)." };
+                            if (sim > 0) return { num: "✓", rotulo: "Anafilaxia altamente provável", cor: "#dc2626", texto: "Adrenalina IM AGORA (aba Emergência, passo 3)." };
                             if (v.filter(x => x === 0).length === 2) return { num: "—", rotulo: "Critérios não preenchidos", cor: "#16a34a", texto: "Reavaliar: a reação pode progredir. Na dúvida com sinais graves, tratar como anafilaxia." };
                             return { num: "?", rotulo: "Responda os critérios", cor: "#64748b", texto: "" };
                         },
@@ -157,7 +157,7 @@ registrarConduta({
                             let g = Math.max(...v);
                             if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "UTI ou semi-intensiva (Einstein). Monitorização contínua." };
                             if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Observação de no mínimo 24 h, em semi-intensiva ou enfermaria monitorizada (Einstein; SBP 24 a 48 h)." };
-                            return { num: "🏠", rotulo: "Observar 6–8 h e alta", cor: "#16a34a", texto: "Reação leve: observar no mínimo 6 a 8 h no PS. Alta com a prescrição e as orientações do bloco 🏠. Coletar triptase se possível." };
+                            return { num: "🏠", rotulo: "Observar 6–8 h e alta", cor: "#16a34a", texto: "Reação leve: observar no mínimo 6 a 8 h no PS. Alta com a prescrição e as orientações da aba Ambulatório. Coletar triptase se possível." };
                         },
                         nota: "Tempos de observação: SBP (leve 6 a 8 h; grave 24 a 48 h) e Einstein (leve PS ≥ 8 h; moderada ≥ 24 h semi-intensiva/UTI; grave UTI). Mais de 2 doses de adrenalina = anafilaxia refratária (passo 8)."
                     }
@@ -246,7 +246,7 @@ registrarConduta({
                         "<strong>Observação:</strong> casos leves no mínimo 6 a 8 h; casos graves 24 a 48 h.",
                         "<strong>Reação bifásica:</strong> sintomas voltam 8 a 12 h depois, em até 10% dos casos, sem nova exposição. Mais risco: reação inicial grave, demora no tratamento ou na melhora, absorção contínua do alérgeno, asma mal controlada, reação bifásica prévia.",
                         "(Einstein) Leve: PS por no mínimo 8 h. Moderada: no mínimo 24 h em semi-intensiva/UTI. Grave: UTI. Coletar triptase antes da alta se possível.",
-                        "Alta só com a prescrição e as orientações do bloco 🏠."
+                        "Alta só com a prescrição e as orientações da aba Ambulatório."
                     ]
                 }
             ]

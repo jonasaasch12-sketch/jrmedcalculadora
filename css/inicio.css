@@ -1,0 +1,432 @@
+/* =====================================================
+   🏠 TELA INICIAL (js/inicio.js) — estilo "Apple": fundo claro, cartões brancos,
+   ícones de traço fino em quadradinhos coloridos, listas com › (como os Ajustes do iPhone).
+   Só no teste por enquanto (INICIO_LIBERADO em js/inicio.js). Vale só dentro de #tela-inicio.
+   ===================================================== */
+#tela-inicio {
+    --in-bg: #f5f5f7; --in-card: #fff; --in-txt: #1d1d1f; --in-sec: #6e6e73; --in-ter: #86868b;
+    --in-linha: rgba(0, 0, 0, .08); --in-azul: #0071e3; --in-lista: #f5f5f7; --in-busca: rgba(0, 0, 0, .055);
+    --in-ped: #0a84ff; --in-adu: #30b0a0; --in-cond: #af52de; --in-emer: #ff3b30; --in-exa: #34c759; --in-ata: #ff9f0a;
+    --in-aside: rgba(236, 236, 240, .75); --in-on: rgba(0, 113, 227, .12);
+    font-family: -apple-system, "SF Pro Text", Inter, system-ui, sans-serif; color: var(--in-txt); background: var(--in-bg);
+    letter-spacing: -.01em; min-height: 100vh; display: flex; -webkit-font-smoothing: antialiased;
+}
+html[data-theme="dark"] #tela-inicio {
+    --in-bg: #000; --in-card: #1c1c1e; --in-txt: #f5f5f7; --in-sec: #a1a1a6; --in-ter: #8e8e93;
+    --in-linha: rgba(255, 255, 255, .1); --in-azul: #0a84ff; --in-lista: #2c2c2e; --in-busca: rgba(255, 255, 255, .1);
+    --in-aside: #141416; --in-on: rgba(10, 132, 255, .22);
+}
+#tela-inicio * { box-sizing: border-box; }
+#tela-inicio button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; text-align: left; letter-spacing: inherit; }
+#tela-inicio svg.in-i { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+#tela-inicio .in-q { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; color: #fff; flex: none; }
+#tela-inicio .in-q svg.in-i { width: 17px; height: 17px; stroke-width: 2; }
+
+/* barra lateral (computador) */
+#tela-inicio aside { width: 264px; flex: none; background: var(--in-aside); border-right: 1px solid var(--in-linha); padding: 22px 14px; display: flex; flex-direction: column; gap: 2px; position: sticky; top: 0; height: 100vh; }
+#tela-inicio .in-marca { display: flex; align-items: center; gap: 9px; padding: 0 8px 18px; font-weight: 700; font-size: 17px; letter-spacing: -.02em; }
+#tela-inicio .in-lg { width: 26px; height: 26px; border-radius: 7px; background: linear-gradient(160deg, #2b8cff, #0057c2); color: #fff; font-size: 11px; font-weight: 800; display: grid; place-items: center; letter-spacing: 0; }
+#tela-inicio .in-marca .in-teste { font-size: 10px; font-weight: 800; background: #ff3b30; color: #fff; padding: 2px 6px; border-radius: 99px; letter-spacing: .02em; }
+#tela-inicio .in-grp { font-size: 11.5px; font-weight: 600; color: var(--in-ter); padding: 14px 10px 5px; }
+#tela-inicio .in-it { display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 8px; font-size: 14.5px; width: 100%; }
+#tela-inicio .in-it svg.in-i { color: var(--in-azul); }
+#tela-inicio .in-it:hover { background: var(--in-on); }
+#tela-inicio .in-it.on { background: var(--in-on); color: var(--in-azul); font-weight: 600; }
+#tela-inicio .in-it .in-mt { margin-left: auto; font-size: 11.5px; color: var(--in-ter); }
+#tela-inicio .in-it.off { color: var(--in-ter); cursor: default; }
+#tela-inicio .in-it.off:hover { background: none; }
+#tela-inicio .in-it.off svg.in-i { color: var(--in-ter); }
+#tela-inicio .in-esp { flex: 1; }
+#tela-inicio .in-user { display: flex; align-items: center; gap: 10px; padding: 10px; border-top: 1px solid var(--in-linha); margin-top: 10px; font-size: 13.5px; }
+#tela-inicio .in-av { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(160deg, #9aa4b2, #6b7280); color: #fff; display: grid; place-items: center; font-weight: 600; font-size: 13px; flex: none; }
+#tela-inicio .in-user small { display: block; color: var(--in-ter); font-size: 12px; }
+#tela-inicio .in-user .in-sair { margin-left: auto; color: var(--in-azul); font-size: 13px; }
+
+/* conteúdo */
+#tela-inicio main { flex: 1; padding: 48px 56px 60px; max-width: 1180px; min-width: 0; }
+#tela-inicio .in-data { font-size: 13px; font-weight: 600; color: var(--in-ter); text-transform: uppercase; letter-spacing: .04em; }
+#tela-inicio h1 { font-size: 40px; font-weight: 700; letter-spacing: -.035em; margin: 4px 0 0; color: var(--in-txt); }
+#tela-inicio h2 { font-size: 22px; font-weight: 700; letter-spacing: -.025em; margin: 40px 0 14px; color: var(--in-txt); display: flex; align-items: baseline; gap: 8px; }
+#tela-inicio h2 .in-peq { font-size: 13px; font-weight: 500; color: var(--in-ter); letter-spacing: 0; }
+#tela-inicio h2 .in-ver { margin-left: auto; color: var(--in-azul); font-size: 15px; font-weight: 400; }
+#tela-inicio .in-busca { display: flex; align-items: center; gap: 8px; background: var(--in-busca); border-radius: 10px; padding: 9px 12px; color: var(--in-ter); font-size: 15px; margin: 0 2px 14px; }
+#tela-inicio .in-busca input { flex: 1; border: 0; background: none; font: inherit; color: var(--in-txt); outline: none; min-width: 0; }
+#tela-inicio .in-busca input::placeholder { color: var(--in-ter); }
+#tela-inicio main .in-busca { margin: 22px 0 0; max-width: 560px; }
+
+#tela-inicio .in-areas { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 30px; }
+#tela-inicio .in-area { background: var(--in-card); border-radius: 20px; padding: 22px; box-shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 6px 24px rgba(0, 0, 0, .05); }
+#tela-inicio .in-acab { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; position: relative; }
+#tela-inicio .in-acab h3 { font-size: 24px; font-weight: 700; letter-spacing: -.03em; margin: 0; color: var(--in-txt); }
+#tela-inicio .in-acab p { font-size: 14px; color: var(--in-sec); margin: 2px 0 0; }
+#tela-inicio .in-q.grande { width: 52px; height: 52px; border-radius: 14px; }
+#tela-inicio .in-q.grande svg.in-i { width: 27px; height: 27px; }
+#tela-inicio .in-breve { position: absolute; right: 0; top: 4px; font-size: 12.5px; color: var(--in-sec); background: var(--in-lista); padding: 4px 10px; border-radius: 99px; font-weight: 500; }
+#tela-inicio .in-lista { background: var(--in-card); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 2px rgba(0, 0, 0, .04); }
+#tela-inicio .in-area .in-lista { box-shadow: none; background: var(--in-lista); }
+#tela-inicio .in-row { display: flex; align-items: center; gap: 12px; padding: 11px 16px; font-size: 15px; position: relative; width: 100%; }
+#tela-inicio .in-area .in-row { padding: 12px 14px; }
+#tela-inicio .in-row + .in-row::before { content: ""; position: absolute; top: 0; left: 58px; right: 0; height: 1px; background: var(--in-linha); }
+#tela-inicio button.in-row:hover { background: rgba(0, 113, 227, .06); }
+#tela-inicio .in-tx { display: flex; flex-direction: column; font-size: 15.5px; font-weight: 500; min-width: 0; }
+#tela-inicio .in-tx small { font-size: 13px; color: var(--in-sec); font-weight: 400; margin-top: 1px; }
+#tela-inicio .in-d { margin-left: auto; color: var(--in-ter); font-size: 13.5px; display: flex; align-items: center; gap: 6px; flex: none; }
+#tela-inicio .in-d svg.in-i { width: 13px; height: 13px; stroke-width: 2.2; }
+#tela-inicio .in-area.off .in-q { filter: saturate(.2) brightness(1.2); }
+#tela-inicio .in-area.off .in-row { cursor: default; }
+#tela-inicio .in-area.off .in-tx { color: var(--in-ter); }
+#tela-inicio .in-area.off .in-tx small { color: #a1a1a6; }
+#tela-inicio .in-duas { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+#tela-inicio .in-vazio { padding: 14px 16px; font-size: 14px; color: var(--in-ter); }
+#tela-inicio .in-nome { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#tela-inicio .in-tx { flex: 1; }
+#tela-inicio .in-tx, #tela-inicio .in-tx small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#tela-inicio .in-row { min-width: 0; }
+
+/* abas do celular */
+#tela-inicio .in-tab { display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: rgba(249, 249, 249, .88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--in-linha); justify-content: space-around; padding: 8px 0 calc(10px + env(safe-area-inset-bottom)); }
+html[data-theme="dark"] #tela-inicio .in-tab { background: rgba(22, 22, 24, .88); }
+#tela-inicio .in-tab button { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10.5px; font-weight: 500; color: #8e8e93; }
+#tela-inicio .in-tab button svg.in-i { width: 25px; height: 25px; stroke-width: 1.6; }
+#tela-inicio .in-tab .on { color: var(--in-azul); }
+
+/* cabeçalho da marca: só no celular, fixo no topo (no computador a marca fica na barra lateral) */
+#tela-inicio .in-topo-cel { display: none; }
+@media (max-width: 849px), (orientation: portrait) {
+    #tela-inicio { flex-direction: column; }
+    #tela-inicio .in-topo-cel { display: flex; align-items: center; justify-content: space-between; gap: 10px; position: sticky; top: 0; z-index: 4; padding: calc(12px + env(safe-area-inset-top)) 16px 12px; background: rgba(245, 245, 247, .97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--in-linha); }
+    #tela-inicio .in-logo-cel { display: flex; align-items: center; gap: 10px; }
+    #tela-inicio .in-logo-cel .in-lg { width: 32px; height: 32px; border-radius: 9px; font-size: 13px; }
+    #tela-inicio .in-logo-cel b { display: block; font-size: 17px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
+    #tela-inicio .in-logo-cel small { display: block; font-size: 12px; color: var(--in-sec); }
+    #tela-inicio .in-topo-cel .in-teste { font-size: 10px; font-weight: 800; background: #ff3b30; color: #fff; padding: 3px 7px; border-radius: 99px; }
+    #tela-inicio aside { display: none; }
+    #tela-inicio main { padding: 18px 16px 110px; }
+    #tela-inicio h1 { font-size: 34px; }
+    #tela-inicio .in-data { font-size: 12.5px; }
+    #tela-inicio main .in-busca { margin: 12px 0 0; max-width: none; font-size: 16px; }
+    #tela-inicio h2 { font-size: 20px; margin: 28px 4px 8px; }
+    #tela-inicio .in-areas { grid-template-columns: 1fr; gap: 16px; margin-top: 20px; }
+    #tela-inicio .in-area { padding: 16px; }
+    #tela-inicio .in-acab h3 { font-size: 21px; }
+    #tela-inicio .in-acab p { font-size: 13px; }
+    #tela-inicio .in-q.grande { width: 44px; height: 44px; }
+    #tela-inicio .in-duas { grid-template-columns: 1fr; gap: 0; }
+    #tela-inicio .in-row { padding: 12px 16px; font-size: 16px; }
+    #tela-inicio .in-tab { display: flex; }
+}
+
+/* botão "‹ Início" no cabeçalho do app e aba "Início" na barra do celular */
+.btn-inicio { display: inline-flex; align-items: center; gap: 4px; height: 38px; padding: 0 12px 0 8px; margin-right: 10px; border-radius: 10px; border: 1px solid var(--border, #dbe2ea); background: var(--surface, #fff); color: var(--primary, #1565c0); font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; flex: none; }
+.btn-inicio svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.btn-inicio:hover { border-color: var(--primary, #1565c0); }
+@media (max-width: 849px), (orientation: portrait) { .btn-inicio { display: none; } }
+
+/* ===== Prescrição no celular, estilo Apple (só no teste: html.estilo-apple, ligado em js/inicio.js) ===== */
+@media (max-width: 849px), (orientation: portrait) {
+    html.estilo-apple .bottom-nav, html.estilo-apple[data-theme="dark"] .bottom-nav {
+        background: rgba(245, 245, 247, .97); box-shadow: none; border-bottom: 1px solid var(--in-linha);
+        padding: 10px 12px; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    html.estilo-apple .bottom-nav::-webkit-scrollbar { display: none; }
+    html.estilo-apple .bottom-nav .nav-btn {
+        background: #fff !important; border: 0 !important; border-radius: 999px !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, .05), 0 2px 8px rgba(0, 0, 0, .04);
+        color: #1d1d1f !important; font-weight: 600; font-size: 14px; padding: 8px 14px; white-space: nowrap; flex: none;
+        display: inline-flex; align-items: center; gap: 6px;
+    }
+    html.estilo-apple[data-theme="dark"] .bottom-nav .nav-btn { background: #2c2c2e !important; color: #f5f5f7 !important; }
+    html.estilo-apple .bottom-nav .nav-btn.ativa, html.estilo-apple .bottom-nav .nav-btn:active { background: #0071e3 !important; color: #fff !important; }
+}
+
+/* ===== Card do remédio, estilo Apple, em todos os tamanhos (só no teste: html.estilo-apple) ===== */
+@media all {
+    html.estilo-apple #app-container .med-card {
+        background: #fff !important; border: 0 !important; border-radius: 18px !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 6px 22px rgba(0, 0, 0, .06) !important;
+        padding: 16px !important; margin: 0 0 14px !important;
+    }
+    html.estilo-apple[data-theme="dark"] #app-container .med-card { background: #1c1c1e !important; }
+    html.estilo-apple #app-container .med-name { font-size: 17px; font-weight: 700; letter-spacing: -.02em; color: var(#1d1d1f); }
+    html.estilo-apple #app-container .med-presentation { display: block; font-size: 14px; color: #6e6e73; margin-top: 2px; }
+    html.estilo-apple #app-container .result-box {
+        background: #e8f1fd !important; color: #0a5bbd !important; border: 0 !important; border-radius: 12px !important;
+        font-size: 17px; font-weight: 700; padding: 10px 14px !important; min-width: 0 !important;
+    }
+    html.estilo-apple #app-container .result-box.static-blue { background: #e8f1fd !important; color: #0a5bbd !important; }
+    html.estilo-apple[data-theme="dark"] #app-container .result-box { background: rgba(10, 132, 255, .18) !important; color: #7fb8ff !important; }
+    html.estilo-apple #app-container .card-actions-row { display: flex; gap: 8px; }
+    html.estilo-apple #app-container .btn-add-carrinho, html.estilo-apple #app-container .btn-copiar {
+        height: 40px !important; border-radius: 12px !important; font-size: 15px !important; font-weight: 600 !important;
+        padding: 0 16px !important; border: 0 !important; flex: 1; justify-content: center;
+    }
+    html.estilo-apple #app-container .card-actions-row .btn-add-carrinho, html.estilo-apple.visual-a #app-container .card-actions-row .btn-add-carrinho { background: #0071e3 !important; color: #fff !important; box-shadow: none !important; }
+    html.estilo-apple #app-container .card-actions-row .btn-add-carrinho:hover { background: #0062c7 !important; }
+    html.estilo-apple #app-container .btn-copiar { background: #e9e9ee !important; color: #0071e3 !important; }
+    html.estilo-apple[data-theme="dark"] #app-container .btn-copiar { background: #2c2c2e !important; color: #0a84ff !important; }
+    html.estilo-apple #app-container .prescription-text-box {
+        background: #f5f5f7 !important; border: 0 !important; border-radius: 12px !important; padding: 12px 14px !important;
+        font-size: 13.5px; line-height: 1.5;
+    }
+    html.estilo-apple[data-theme="dark"] #app-container .prescription-text-box { background: #2c2c2e !important; color: #f5f5f7 !important; }
+    html.estilo-apple #app-container .prescription-label { font-size: 12px; color: #86868b; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; }
+}
+
+/* ===== Computador (≥850 px, paisagem), estilo Apple: barra lateral clara com as categorias (só no teste) ===== */
+@media (min-width: 850px) and (orientation: landscape) {
+    html.estilo-apple .sidebar-nav {
+        background: rgba(236, 236, 240, .8) !important; border-right: 1px solid var(--in-linha);
+        padding: 16px 12px 24px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    }
+    html.estilo-apple .sidebar-nav .nav-category-title { color: #86868b; font-size: 11.5px; font-weight: 600; letter-spacing: 0; margin: 2px 10px 8px; }
+    html.estilo-apple .sidebar-link { color: #1d1d1f !important; font-weight: 500; border-radius: 9px; font-size: 14.5px; }
+    html.estilo-apple .sidebar-link:hover { background: rgba(0, 0, 0, .05) !important; color: #1d1d1f !important; }
+    html.estilo-apple .sidebar-link.aberto { background: rgba(0, 113, 227, .12) !important; color: #0071e3 !important; font-weight: 600; }
+    html.estilo-apple .sidebar-sub { border-left: 1px solid rgba(0, 0, 0, .12); }
+    html.estilo-apple .sidebar-sublink { color: #3a3a3c !important; font-size: 13px; border-radius: 7px; }
+    html.estilo-apple .sidebar-sublink:hover { background: rgba(0, 0, 0, .05) !important; }
+    html.estilo-apple .sidebar-sublink.ativo { background: rgba(0, 113, 227, .12) !important; color: #0071e3 !important; font-weight: 600; }
+    html.estilo-apple[data-theme="dark"] .sidebar-nav { background: rgba(28, 28, 30, .85) !important; }
+    html.estilo-apple[data-theme="dark"] .sidebar-link, html.estilo-apple[data-theme="dark"] .sidebar-sublink { color: #f5f5f7 !important; }
+    html.estilo-apple[data-theme="dark"] .sidebar-link.aberto { background: rgba(10, 132, 255, .22) !important; color: #7fb8ff !important; }
+}
+
+/* ===== Receita, estilo Apple, em todos os tamanhos (só no teste: html.estilo-apple) ===== */
+html.estilo-apple #modalCarrinho .modal-box { background: #f5f5f7 !important; border-radius: 20px !important; }
+html.estilo-apple[data-theme="dark"] #modalCarrinho .modal-box { background: #1c1c1e !important; }
+html.estilo-apple #modalCarrinho .modal-title { font-size: 20px; font-weight: 700; letter-spacing: -.02em; color: #1d1d1f; }
+html.estilo-apple[data-theme="dark"] #modalCarrinho .modal-title { color: #f5f5f7; }
+html.estilo-apple #modalCarrinho .btn-fechar-modal { background: #e9e9ee; color: #3a3a3c; border: 0; border-radius: 999px; width: 30px; height: 30px; }
+html.estilo-apple #modalCarrinho .cart-item { background: #fff !important; border-radius: 16px !important; padding: 14px !important; margin-bottom: 10px !important; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.05); border: 0 !important; }
+html.estilo-apple[data-theme="dark"] #modalCarrinho .cart-item { background: #2c2c2e !important; }
+html.estilo-apple #modalCarrinho .cart-item-nome { font-size: 15.5px; font-weight: 600; letter-spacing: -.01em; color: #1d1d1f; }
+html.estilo-apple[data-theme="dark"] #modalCarrinho .cart-item-nome { color: #f5f5f7; }
+html.estilo-apple #modalCarrinho .btn-remover-item { color: #ff3b30; font-size: 14px; font-weight: 500; padding: 4px 8px; border-radius: 8px; background: rgba(255,59,48,.08); }
+html.estilo-apple #modalCarrinho .cart-item-texto { background: #f5f5f7 !important; border-radius: 12px; padding: 12px 14px !important; font-size: 13px !important; line-height: 1.5; color: #1d1d1f; }
+html.estilo-apple[data-theme="dark"] #modalCarrinho .cart-item-texto { background: #3a3a3c !important; color: #f5f5f7; }
+html.estilo-apple #modalCarrinho .cart-acoes { background: #f5f5f7 !important; border-top: 0 !important; box-shadow: none !important; }
+html.estilo-apple[data-theme="dark"] #modalCarrinho .cart-acoes { background: #1c1c1e !important; }
+html.estilo-apple #modalCarrinho .btn-copiar-receita-completa { background: #0071e3 !important; color: #fff !important; border: 0 !important; border-radius: 14px !important; font-size: 16px !important; font-weight: 600 !important; padding: 14px !important; box-shadow: none !important; }
+html.estilo-apple #modalCarrinho .btn-limpar-carrinho { background: #fff !important; color: #ff3b30 !important; border: 0 !important; border-radius: 14px !important; font-size: 15px !important; font-weight: 500 !important; padding: 12px !important; margin-top: 8px; }
+html.estilo-apple[data-theme="dark"] #modalCarrinho .btn-limpar-carrinho { background: #2c2c2e !important; }
+html.estilo-apple .cart-fab { background: #0071e3 !important; border-radius: 999px !important; box-shadow: 0 8px 24px rgba(0,113,227,.35) !important; font-weight: 600; font-size: 15px; }
+html.estilo-apple .cart-fab .badge-count { color: #0071e3 !important; }
+
+/* ===== Condutas, estilo Apple (só no teste: html.estilo-apple). Estrutura oficial, visual do desenho aprovado ===== */
+html.estilo-apple #area-condutas { color: #1d1d1f; }
+html.estilo-apple #area-condutas .cond-barra { background: rgba(245,245,247,.97) !important; border: 0 !important; border-bottom: 1px solid rgba(0,0,0,.08) !important; border-radius: 0 !important; box-shadow: none !important; padding: 12px 16px !important; }
+html.estilo-apple #area-condutas .cond-voltar { background: #fff !important; color: #0071e3 !important; border: 0 !important; border-radius: 999px !important; font-weight: 600 !important; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+html.estilo-apple #area-condutas .cond-caminho { color: #6e6e73 !important; font-size: 13.5px; }
+html.estilo-apple #area-condutas .cond-cabecalho { background: #fff !important; border: 0 !important; border-left: 0 !important; border-radius: 18px !important; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 6px 22px rgba(0,0,0,.05); padding: 18px !important; margin: 14px 16px 0 !important; }
+html.estilo-apple #area-condutas .cond-cabecalho-cat { color: #ff3b30 !important; font-size: 12px !important; font-weight: 600 !important; text-transform: uppercase; letter-spacing: .04em; }
+html.estilo-apple #area-condutas .cond-cabecalho h2 { font-size: 26px !important; font-weight: 700 !important; letter-spacing: -.03em; margin-top: 4px; color: #1d1d1f !important; }
+html.estilo-apple #area-condutas .cond-cabecalho-resumo { font-size: 15px; color: #6e6e73; margin-top: 6px; line-height: 1.4; }
+html.estilo-apple #area-condutas .cond-legenda { margin: 12px 16px 0; background: #fff; border-radius: 14px; padding: 12px 14px; font-size: 13px; color: #6e6e73; line-height: 1.45; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+html.estilo-apple #area-condutas .cond-indice-blocos { margin: 14px 16px 0 !important; display: flex !important; background: rgba(118,118,128,.12); border-radius: 10px; padding: 2px; gap: 0; }
+html.estilo-apple #area-condutas .cond-indice-bloco { flex: 1; text-align: center; font-size: 13.5px; font-weight: 600; padding: 7px 4px; border-radius: 8px; color: #1d1d1f !important; text-decoration: none; background: transparent !important; border: 0 !important; }
+html.estilo-apple #area-condutas .cond-indice-bloco:hover { background: #fff !important; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+html.estilo-apple #area-condutas .cond-acoes { margin: 10px 16px 0 !important; display: flex; justify-content: flex-end; gap: 14px; }
+html.estilo-apple #area-condutas .cond-acoes button { background: none !important; border: 0 !important; color: #0071e3 !important; font-size: 15px; padding: 0 !important; box-shadow: none !important; }
+html.estilo-apple #area-condutas .cond-bloco { font-size: 13px; color: #86868b; text-transform: uppercase; letter-spacing: .03em; padding: 22px 20px 0; font-weight: 500; }
+html.estilo-apple #area-condutas .cond-bloco small { display: block; text-transform: none; letter-spacing: 0; font-size: 13px; margin-top: 2px; }
+html.estilo-apple #area-condutas .cond-bloco-corpo details.cond-secao { background: #fff !important; border: 0 !important; border-radius: 14px !important; margin: 8px 16px 0 !important; box-shadow: 0 1px 2px rgba(0,0,0,.04); overflow: hidden; }
+html.estilo-apple #area-condutas details.cond-secao + details.cond-secao { margin-top: 1px !important; border-top-left-radius: 0 !important; border-top-right-radius: 0 !important; }
+html.estilo-apple #area-condutas details.cond-secao summary { display: flex; align-items: center; gap: 12px; padding: 12px 14px !important; list-style: none; cursor: pointer; position: relative; background: transparent !important; border: 0 !important; }
+html.estilo-apple #area-condutas details.cond-secao summary::-webkit-details-marker { display: none; }
+html.estilo-apple #area-condutas details.cond-secao summary::before { content: ""; width: 30px; height: 30px; border-radius: 8px; background: var(--cor-cat, #0071e3); flex: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.2); }
+html.estilo-apple #area-condutas details.cond-secao summary::after { content: "›"; margin-left: auto; font-size: 22px; color: #c7c7cc; transition: transform .15s; line-height: 1; }
+html.estilo-apple #area-condutas details.cond-secao[open] summary::after { transform: rotate(90deg); }
+html.estilo-apple #area-condutas details.cond-secao summary h3 { font-size: 16px !important; font-weight: 500 !important; color: #1d1d1f !important; letter-spacing: -.01em; margin: 0; }
+html.estilo-apple #area-condutas .cond-secao-resumo { font-size: 13px; color: #6e6e73; margin-top: 2px; }
+html.estilo-apple #area-condutas .cond-secao-corpo { padding: 4px 16px 16px 58px; font-size: 15px; line-height: 1.5; color: #1d1d1f; }
+html.estilo-apple #area-condutas .cond-alerta { box-shadow: inset 3px 0 0 #ff9f0a, 0 1px 2px rgba(0,0,0,.04) !important; }
+html.estilo-apple #area-condutas .cond-fonte { margin: 16px 16px 0 !important; background: #fff; border-radius: 14px !important; padding: 14px !important; font-size: 13px; color: #6e6e73; box-shadow: 0 1px 2px rgba(0,0,0,.04); border: 0 !important; }
+html.estilo-apple #area-condutas .cond-fonte strong { color: #1d1d1f; }
+html.estilo-apple[data-theme="dark"] #area-condutas { color: #f5f5f7; }
+html.estilo-apple[data-theme="dark"] #area-condutas .cond-cabecalho, html.estilo-apple[data-theme="dark"] #area-condutas details.cond-secao, html.estilo-apple[data-theme="dark"] #area-condutas .cond-fonte, html.estilo-apple[data-theme="dark"] #area-condutas .cond-legenda { background: #1c1c1e !important; }
+html.estilo-apple[data-theme="dark"] #area-condutas .cond-cabecalho h2, html.estilo-apple[data-theme="dark"] #area-condutas summary h3, html.estilo-apple[data-theme="dark"] #area-condutas .cond-secao-corpo { color: #f5f5f7 !important; }
+html.estilo-apple #area-condutas .cond-bloco { background: none !important; border: 0 !important; border-left: 0 !important; box-shadow: none !important; border-radius: 0 !important; }
+
+/* Condutas (estilo Apple, como o desenho): ícone de traço em cada seção. Uma coluna, no computador e no celular */
+html.estilo-apple #area-condutas .cond-ico { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; flex: none; background: var(--cor-cat, #0071e3); color: #fff; font-style: normal; }
+html.estilo-apple #area-condutas .cond-ico svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+html.estilo-apple #area-condutas details.cond-secao summary::before { content: none !important; }
+html.estilo-apple #area-condutas details.cond-secao summary { display: grid !important; grid-template-columns: 30px 1fr 16px; column-gap: 12px; row-gap: 2px; align-items: center; }
+html.estilo-apple #area-condutas details.cond-secao summary > .cond-ico { grid-column: 1; grid-row: 1 / 3; }
+html.estilo-apple #area-condutas details.cond-secao summary > h3 { grid-column: 2; grid-row: 1; }
+html.estilo-apple #area-condutas details.cond-secao summary > .cond-secao-resumo { grid-column: 2; grid-row: 2; }
+html.estilo-apple #area-condutas details.cond-secao summary::after { grid-column: 3; grid-row: 1 / 3; margin: 0; justify-self: end; }
+html.estilo-apple #area-condutas details.cond-secao summary { padding-left: 14px !important; padding-right: 14px !important; }
+html.estilo-apple #area-condutas .cond-ico.cond-num { font-size: 15px; font-weight: 700; font-style: normal; color: #fff; }
+
+/* ===== Painel do paciente, estilo Apple (só no teste): faixa azul só com o nome; linha branca com peso, idade e busca ===== */
+html.estilo-apple .control-panel, html.estilo-apple[data-theme="dark"] .control-panel { background: #fff !important; border-bottom: 1px solid rgba(0,0,0,.08) !important; box-shadow: none !important; }
+html.estilo-apple .control-panel .panel-inner { display: none !important; }
+/* Em tela estreita (tablet na horizontal) a linha quebra: a alergia desce para a 2ª linha, sem rolagem lateral */
+html.estilo-apple .control-panel .linha-secundaria { display: flex !important; align-items: center; gap: 10px; padding: 12px 22px !important; flex-wrap: wrap; row-gap: 8px; }
+html.estilo-apple .control-panel .inputs-inline { display: contents !important; }
+html.estilo-apple .control-panel .search-container { order: 3; flex: 1 1 auto; min-width: 240px; margin: 0 !important; }
+html.estilo-apple .control-panel .inputs-inline .input-group:nth-child(1) { order: 1; }
+html.estilo-apple .control-panel .inputs-inline .input-group:nth-child(2) { order: 2; }
+/* "Novo paciente" entre a busca e a alergia (computador e tablet). O tema A deixava o texto branco: sumia no painel branco */
+html.estilo-apple .control-panel #btnNovoPaciente { order: 4; background: #fff !important; color: #005eb8 !important; border: 1px solid #d2d2d7 !important; height: 40px; padding: 0 14px; font-size: 14px; font-weight: 600; white-space: nowrap; }
+html.estilo-apple .control-panel #btnNovoPaciente:hover { background: #f5f7f8 !important; }
+html.estilo-apple .control-panel .allergy-input { order: 5; flex: 0 0 240px; }
+html.estilo-apple .control-panel .input-group { background: #fff; border: 1.5px solid #0a84ff; border-radius: 12px; padding: 5px 12px; min-width: 110px; box-shadow: 0 0 0 3px rgba(10,132,255,.12); }
+html.estilo-apple .control-panel .input-group input { width: 3.4em; min-width: 3em; flex: 0 0 auto; }
+html.estilo-apple .control-panel .input-group { padding-right: 18px; }
+html.estilo-apple .control-panel .inputs-inline .input-group:nth-child(2) { min-width: 160px; }
+html.estilo-apple .control-panel .idade-unidade { border: none; background: transparent; color: #6e6e73; font: inherit; font-size: 14px; padding: 0 0 0 4px; cursor: pointer; outline: none; }
+html.estilo-apple .control-panel .input-group .input-label { color: #6e6e73; }
+html.estilo-apple .control-panel .input-group input { color: #1d1d1f; }
+html.estilo-apple .control-panel .search-input { background: #fff !important; color: #1d1d1f !important; border: 1px solid #d2d2d7 !important; border-radius: 12px !important; }
+html.estilo-apple .header-banner .search-container { display: none !important; }
+/* Cabeçalho do computador: sem a troca Prescrição/Condutas e sem o botão Atalhos (ficam no Menu) */
+html.estilo-apple .slot-abas, html.estilo-apple #btnAtalhosTopo { display: none !important; }
+html.estilo-apple .btn-ir-prescricao { display: none; }
+html.estilo-apple body.modo-condutas .btn-ir-prescricao { display: inline-flex; margin-left: auto; margin-right: 10px; }
+@media (max-width: 849px) { html.estilo-apple .btn-ir-prescricao { display: none !important; } }
+html.estilo-apple .control-panel .allergy-input, html.estilo-apple .control-panel #btnNovoPaciente { border-radius: 12px; }
+@media (max-width: 849px), (orientation: portrait) {
+    html.estilo-apple .control-panel .linha-secundaria { flex-wrap: wrap; padding: 10px 14px !important; }
+    html.estilo-apple .control-panel .search-container { flex: 1 1 100%; order: 1; }
+    html.estilo-apple .control-panel .inputs-inline .input-group:nth-child(1), html.estilo-apple .control-panel .inputs-inline .input-group:nth-child(2) { flex: 0 0 auto; min-width: 0; }
+    html.estilo-apple .control-panel .input-group input { width: 2.6em !important; min-width: 0 !important; flex: 0 0 auto; box-sizing: content-box; }
+    html.estilo-apple .control-panel .inputs-inline { gap: 10px; }
+    html.estilo-apple .control-panel .input-group { padding: 5px 8px; gap: 6px; }
+    html.estilo-apple .control-panel .allergy-input { flex: 1 1 150px; min-width: 150px; order: 5; }
+    html.estilo-apple .control-panel #btnNovoPaciente { order: 6; flex: 0 0 auto; width: auto; padding: 8px 12px; font-size: 13px; background: #fff !important; color: #0a84ff !important; border: 1px solid #d2d2d7 !important; }
+    html.estilo-apple .control-panel .inputs-inline .input-group:nth-child(2) { min-width: 0; }
+    html.estilo-apple .control-panel .linha-secundaria { row-gap: 8px; }
+}
+
+/* ===== Login no padrão do Início (só no teste): tarja azul no topo, botão azul sólido, cantos iguais ===== */
+html.estilo-apple .login-box { border-radius: 14px; border: 1px solid #e3e7ec; box-shadow: 0 10px 30px rgba(16,24,40,.08); overflow: hidden; padding-top: 0 !important; }
+html.estilo-apple .login-box::before { content: ""; display: block; height: 12px; background: #005eb8; margin: 0 -30px 26px; }
+html.estilo-apple .login-box .btn-login { background: #005eb8 !important; background-image: none !important; box-shadow: none !important; border-radius: 10px; }
+html.estilo-apple .login-box .btn-login:hover { background: #0a6fd6 !important; }
+html.estilo-apple .login-box .login-input { border-radius: 10px; border: 1px solid #cfd6de; }
+html.estilo-apple .login-box .login-input:focus { border-color: #005eb8; box-shadow: 0 0 0 3px rgba(0,94,184,.15); }
+html.estilo-apple #tela-login, html.estilo-apple .login-container { background: #f2f4f7 !important; background-image: none !important; }
+
+/* ===== Início no computador: mesma faixa azul e mesma barra lateral da Prescrição (opção 1, aprovada 11/2026; só no teste) ===== */
+#tela-inicio .in-band { display: none; }
+#tela-inicio .in-corpo { display: flex; flex: 1; min-height: 0; }
+@media (min-width: 850px) and (orientation: landscape) {
+    /* Tela fixa (computador e tablet na horizontal): a faixa azul e a barra lateral ficam no lugar.
+       Só a área da direita rola, se o conteúdo for maior que a tela. Sem display forçado aqui:
+       js/inicio.js esconde a tela (display:none) ao abrir a Prescrição ou as Condutas. */
+    #tela-inicio { flex-wrap: wrap; align-content: flex-start; height: 100vh; overflow: hidden; }
+    body.na-tela-inicio { padding: 0 !important; margin: 0; overflow: hidden; }
+    #tela-inicio .in-areas { margin-top: 14px; gap: 16px; }
+    #tela-inicio .in-area .in-row { padding: 9px 14px; }
+    #tela-inicio .in-acab { margin-bottom: 10px; }
+    #tela-inicio h2 { margin: 18px 0 8px; font-size: 19px; }
+    #tela-inicio .in-q.grande { width: 44px; height: 44px; }
+    #tela-inicio h1 { font-size: 22px; margin: 0; }
+    #tela-inicio .in-band { flex: 0 0 100%; display: flex; align-items: center; justify-content: space-between; height: 58px; padding: 0 20px; background: #005eb8; color: #fff; position: relative; z-index: 6; }
+    #tela-inicio .in-corpo { display: flex; flex: 0 0 100%; min-height: 0; height: calc(100vh - 58px); }
+    #tela-inicio .in-band .in-b-l { display: flex; align-items: center; gap: 10px; }
+    #tela-inicio .in-band .in-lg { width: 32px; height: 32px; border-radius: 9px; font-size: 13px; background: #0f766e; }
+    #tela-inicio .in-band b { font-size: 17px; font-weight: 700; letter-spacing: -.02em; }
+    #tela-inicio .in-band small { display: block; font-size: 12px; opacity: .85; }
+    #tela-inicio .in-band .in-teste { font-size: 10px; font-weight: 800; background: #e0342f; color: #fff; padding: 2px 7px; border-radius: 99px; margin-left: 6px; vertical-align: middle; }
+    #tela-inicio .in-band .in-menu { background: #fff; color: #005eb8; border-radius: 999px; padding: 7px 16px; font-weight: 700; font-size: 14px; }
+    #tela-inicio aside { flex: none; position: relative; width: 232px; height: 100%; }
+    #tela-inicio main { flex: 1 1 0; min-width: 0; height: 100%; overflow-y: auto; padding: 18px 30px 14px; }
+    #tela-inicio .in-marca, #tela-inicio aside .in-busca { display: none; }
+    html:not([data-theme="dark"]) #tela-inicio { --in-bg: #f0f4f5; }
+    html:not([data-theme="dark"]) #tela-inicio aside { background: #f2f4f7; border-right: 1px solid #d8dde0; width: 232px; padding-top: 18px; }
+    html:not([data-theme="dark"]) #tela-inicio aside::before { content: "Navegação"; text-transform: uppercase; display: block; font-size: 11px; font-weight: 700; color: #5b6670; letter-spacing: .04em; padding: 6px 10px 8px; }
+    html:not([data-theme="dark"]) #tela-inicio .in-it { font-size: 14px; color: #212b32; }
+    html:not([data-theme="dark"]) #tela-inicio .in-it svg.in-i { color: #212b32; }
+    html:not([data-theme="dark"]) #tela-inicio .in-it.on { background: #fff; color: #005eb8; font-weight: 700; box-shadow: inset 3px 0 0 #005eb8; }
+    html:not([data-theme="dark"]) #tela-inicio .in-it.on svg.in-i, html:not([data-theme="dark"]) #tela-inicio .in-it:not(.off) svg.in-i { color: #005eb8; }
+    html:not([data-theme="dark"]) #tela-inicio main { max-width: none; padding: 18px 30px 14px; }
+    html:not([data-theme="dark"]) #tela-inicio h1 { font-size: 22px; color: #212b32; }
+    html:not([data-theme="dark"]) #tela-inicio main .in-busca { background: #fff; border: 1px solid #cfd6de; max-width: none; margin: 12px 0 0; }
+    html:not([data-theme="dark"]) #tela-inicio .in-area { background: #fff; border: 1px solid #d8dde0; border-top: 4px solid #005eb8; border-radius: 6px; box-shadow: none; padding: 14px; }
+    html:not([data-theme="dark"]) #tela-inicio .in-area .in-lista { background: #f5f7f8; border-radius: 6px; box-shadow: none; }
+    /* Os quadros de ícone mantêm a cor de cada bloco, como no celular. O Adulto fica dessaturado pela regra .in-area.off (acima). */
+    html:not([data-theme="dark"]) #tela-inicio .in-acab h3 { color: #212b32; }
+    html:not([data-theme="dark"]) #tela-inicio .in-ver, html:not([data-theme="dark"]) #tela-inicio .in-breve { color: #005eb8; }
+}
+
+/* Janela baixa (computador pequeno): some a data para a tela do Início caber sem rolar */
+@media (min-width: 850px) and (orientation: landscape) and (max-height: 720px) {
+    #tela-inicio .in-data { display: none; }
+    #tela-inicio main .in-busca { margin-top: 0; }
+}
+
+/* Botão "Início" fora da tarja (Condutas, computador e tablet na horizontal): mesmo padrão do item Início da tela inicial */
+html.estilo-apple .cond-inicio-linha { margin: 0 0 6px; }
+html.estilo-apple .cond-btn-inicio { display: inline-flex; align-items: center; gap: 8px; padding: 7px 10px; border: 0; border-radius: 8px; background: transparent; color: #212b32; font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; }
+html.estilo-apple .cond-btn-inicio span { color: #005eb8; font-size: 15px; }
+html.estilo-apple .cond-btn-inicio:hover { background: rgba(0, 94, 184, .08); }
+@media (max-width: 849px), (orientation: portrait) { html.estilo-apple .cond-inicio-linha { display: none; } }
+
+/* ===== Entrada no teste: "Verificando acesso…" enquanto o Firebase confere a sessão.
+   Só vale com html.verificando-acesso, que o índice liga apenas em /teste/ (index.html). ===== */
+#telaVerificando { display: none; }
+html.verificando-acesso #telaVerificando { display: flex; }
+html.verificando-acesso #tela-login { display: none !important; }
+.verificando-box { text-align: center; }
+.verificando-txt { margin: 16px 0 0; font-size: 14px; color: #5b6670; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.verificando-giro { display: inline-block; width: 16px; height: 16px; border-radius: 50%; border: 2px solid #cfd6de; border-top-color: #005eb8; animation: verificando-giro .8s linear infinite; }
+@keyframes verificando-giro { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .verificando-giro { animation-duration: 2.4s; } }
+
+/* ===== Página inicial pública (apresentação do JR MED), só no teste por enquanto.
+   Ligada por html.pagina-publica-ativa (index.html). "Entrar" põe html.login-aberto e mostra o login. ===== */
+#paginaInicialPublica { display: none; min-height: 100vh; background: #f2f4f7; color: #212b32; font-family: Inter, -apple-system, "Segoe UI", Arial, sans-serif; }
+html.pagina-publica-ativa:not(.login-aberto) #paginaInicialPublica { display: block; }
+html.pagina-publica-ativa.login-aberto #paginaInicialPublica { display: none !important; }
+html.verificando-acesso #paginaInicialPublica { display: none !important; }
+html.pagina-publica-ativa #tela-login { display: none !important; }
+html.pagina-publica-ativa.login-aberto #tela-login { display: flex !important; }
+.login-voltar-pag { display: none; background: none; border: 0; color: #005eb8; font: inherit; font-weight: 700; font-size: 14px; cursor: pointer; padding: 0 0 12px; }
+html.pagina-publica-ativa .login-voltar-pag { display: block; }
+.pub-topo { background: #005eb8; color: #fff; height: 58px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+.pub-marca { display: flex; align-items: center; gap: 10px; }
+.pub-marca b { display: block; font-size: 17px; line-height: 1.1; }
+.pub-marca small { display: block; font-size: 12px; opacity: .85; }
+.pub-marca .logo-login { width: 32px; height: 32px; font-size: 13px; border-radius: 9px; }
+.pub-entrar { background: #fff; color: #005eb8; border: 0; border-radius: 999px; padding: 8px 18px; font: inherit; font-weight: 700; font-size: 14px; cursor: pointer; }
+.pub-capa { max-width: 1040px; margin: 0 auto; padding: 52px 24px 18px; }
+.pub-selo { display: inline-block; font-size: 12.5px; font-weight: 700; color: #005eb8; background: #e8f1fa; padding: 5px 12px; border-radius: 999px; margin: 0 0 14px; }
+.pub-capa h1 { font-size: 34px; line-height: 1.15; letter-spacing: -.02em; margin: 0 0 14px; max-width: 760px; }
+.pub-capa > p { font-size: 17px; line-height: 1.55; color: #3d4a57; max-width: 720px; margin: 0 0 22px; }
+.pub-botoes { display: flex; flex-wrap: wrap; gap: 10px; }
+.pub-btn-primario { background: #005eb8; color: #fff; border: 0; border-radius: 10px; padding: 12px 20px; font: inherit; font-weight: 700; font-size: 15px; cursor: pointer; }
+.pub-btn-primario:hover { background: #0a6fd6; }
+.pub-btn-secundario { color: #005eb8; border: 1px solid #cfd6de; background: #fff; border-radius: 10px; padding: 11px 18px; font-weight: 700; font-size: 15px; text-decoration: none; }
+.pub-secao { max-width: 1040px; margin: 0 auto; padding: 26px 24px; }
+.pub-secao h2 { font-size: 22px; letter-spacing: -.01em; margin: 0 0 16px; }
+.pub-video-grade { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 40px; }
+.pub-video-figura { flex: 0 1 340px; max-width: 340px; margin: 0; }
+.pub-video { display: block; width: 100%; aspect-ratio: 9 / 16; height: auto; object-fit: cover; border-radius: 22px; background: #000; box-shadow: 0 16px 40px rgba(16,24,40,.18); }
+.pub-video-passos { flex: 1 1 340px; max-width: 460px; margin: 0; padding: 0; list-style: none; counter-reset: passo; }
+.pub-video-passos li { counter-increment: passo; position: relative; padding: 14px 0 14px 58px; border-bottom: 1px solid #e3e7ec; font-size: 17px; line-height: 1.5; color: #212b32; }
+.pub-video-passos li:last-child { border-bottom: 0; }
+.pub-video-passos li::before { content: counter(passo); position: absolute; left: 0; top: 12px; width: 38px; height: 38px; border-radius: 12px; background: #005eb8; color: #fff; font-weight: 800; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+.pub-video-passos strong { color: #005eb8; }
+.pub-legenda { text-align: center; font-size: 13.5px; color: #5b6670; margin: 10px 0 0; }
+.pub-grade { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.pub-card { background: #fff; border: 1px solid #e3e7ec; border-top: 4px solid #005eb8; border-radius: 12px; padding: 18px; box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+.pub-card h3 { font-size: 16px; margin: 0 0 6px; }
+.pub-card p { font-size: 14.5px; line-height: 1.5; color: #4c5966; margin: 0; }
+.pub-aviso-bloco { padding-top: 6px; }
+.pub-aviso { background: #fff8e1; border: 1px solid #f1d88a; color: #5c4300; border-radius: 12px; padding: 14px 16px; font-size: 14px; line-height: 1.5; }
+.pub-texto { font-size: 15.5px; line-height: 1.6; color: #3d4a57; max-width: 760px; margin: 0 0 12px; }
+.pub-texto a, .pub-rodape a { color: #005eb8; }
+.pub-rodape { text-align: center; font-size: 13px; color: #5b6670; padding: 26px 16px 34px; }
+@media (max-width: 849px) {
+    .pub-topo { padding: 0 14px; }
+    .pub-capa { padding: 34px 18px 12px; }
+    .pub-capa h1 { font-size: 27px; }
+    .pub-capa > p { font-size: 16px; }
+    .pub-grade { grid-template-columns: 1fr; }
+    .pub-secao { padding: 22px 18px; }
+}
+/* Com sessão aberta (app ou cadastro), a página inicial pública não aparece */
+html.com-sessao #paginaInicialPublica { display: none !important; }

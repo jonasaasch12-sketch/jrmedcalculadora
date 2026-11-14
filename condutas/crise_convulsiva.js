@@ -168,7 +168,7 @@ registrarConduta({
                             if (g === 3) return { num: "UTI", rotulo: "UTI pediátrica", cor: "#dc2626", texto: "Via aérea, infusão contínua (passo 6), EEG. Acionar a UTI e transferir estabilizado." };
                             if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Observar nível de consciência e novas crises, tratar a causa (passo 7), manter o anticonvulsivante de 2ª linha se foi usado." };
                             if (g === 1) return { num: "?", rotulo: "Considerar internar", cor: "#ca8a04", texto: "Observar no pronto-socorro até voltar ao normal; internar se dúvida, idade baixa ou falta de condições de retorno." };
-                            return { num: "🏠", rotulo: "Alta com orientação", cor: "#16a34a", texto: "Após voltar ao estado habitual. Orientar os sinais de retorno e o que fazer numa nova crise (bloco 🏠)." };
+                            return { num: "🏠", rotulo: "Alta com orientação", cor: "#16a34a", texto: "Após voltar ao estado habitual. Orientar os sinais de retorno e o que fazer numa nova crise (aba Ambulatório)." };
                         },
                         nota: "As diretrizes de estado de mal não trazem lista formal de internação. Critérios reunidos dos sinais de gravidade (AES 2016, Neurocritical Care Society 2012) e da avaliação da 1ª crise e da convulsão febril (AAN 2000, AAP 2011)."
                     }

@@ -7,7 +7,46 @@
     <!-- Segurança (pedido do Dr. Jonas para a TI do hospital): só carrega código, fontes e conexões das origens listadas. -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://*.googleapis.com https://www.gstatic.com https://jrmed-calculadora.firebaseapp.com https://*.firebaseio.com wss://*.firebaseio.com; frame-src https://jrmed-calculadora.firebaseapp.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>JR MED - Manual & Calculadora de Bolso</title>
+    <script>
+    /* Página inicial pública (teste por enquanto): "Entrar" mostra o login; "Página inicial" volta para a apresentação. */
+    function abrirLoginDaPagina() { document.documentElement.classList.add('login-aberto'); setTimeout(function () { var e = document.getElementById('emailInput'); if (e) e.focus(); }, 0); }
+    function voltarPaginaInicial() { document.documentElement.classList.remove('login-aberto'); window.scrollTo(0, 0); }
+    </script>
+    <script>
+    /* Só na versão de teste (/teste/). Quem chega sem entrar vê a apresentação logo, sem esperar o Firebase.
+       Quem já entrou neste aparelho (há cópia do perfil, jrmed_perfil) vê "Verificando acesso…" (classe
+       html.verificando-acesso, css/inicio.css) até o Firebase conferir a conta, para não mostrar a apresentação
+       antes do app. Se o Firebase não responder em 8 s, mostra a apresentação (o login só abre pelo "Entrar").
+       As bibliotecas do Firebase começam a baixar já aqui. O site oficial (/) não muda. */
+    (function () {
+        if (location.pathname.indexOf('/teste/') === -1) return;
+        var raiz = document.documentElement;
+        raiz.classList.add('pagina-publica-ativa');
+        var jaEntrouNesteAparelho = false;
+        try { jaEntrouNesteAparelho = !!localStorage.getItem('jrmed_perfil'); } catch (e) { }
+        if (jaEntrouNesteAparelho) raiz.classList.add('verificando-acesso');
+        ['firebase-app.js', 'firebase-auth.js', 'firebase-firestore.js'].forEach(function (arq) {
+            var pre = document.createElement('link');
+            pre.rel = 'modulepreload';
+            pre.href = 'https://www.gstatic.com/firebasejs/10.8.1/' + arq;
+            document.head.appendChild(pre);
+        });
+        setTimeout(function () {
+            if (window.__authResolvido || !raiz.classList.contains('verificando-acesso')) return;
+            raiz.classList.remove('verificando-acesso');
+        }, 8000);
+    })();
+    </script>
+    <title>JR MED - Prescrição e condutas médicas</title>
+    <meta name="description" content="JR MED: prescrição e condutas médicas para profissionais de saúde. Começamos pela pediatria, com doses por peso e idade. Acesso restrito a profissionais.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.jrmedprescricao.com.br/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="JR MED">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:title" content="JR MED - Prescrição e condutas médicas">
+    <meta property="og:description" content="Prescrição e condutas médicas para profissionais de saúde. Começamos pela pediatria.">
+    <meta property="og:url" content="https://www.jrmedprescricao.com.br/">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="icon.svg" type="image/svg+xml">
     <meta name="theme-color" content="#0b4f86">
@@ -18,6 +57,7 @@
     <link rel="stylesheet" href="condutas/condutas.css">
     <link rel="stylesheet" href="css/visual.css">
     <link rel="stylesheet" href="css/layout-b.css">
+    <link rel="stylesheet" href="css/inicio.css">
     <link rel="stylesheet" href="css/temas-teste.css">
 </head>
 <body>
@@ -25,11 +65,75 @@
     <!-- ========================================== -->
     <!-- TELA DE LOGIN                              -->
     <!-- ========================================== -->
-    <div id="tela-login" class="login-container">
-        <div class="login-box">
+    <!-- Página inicial pública (apresentação do JR MED). Teste por enquanto: html.pagina-publica-ativa (ver css/inicio.css) -->
+    <div id="paginaInicialPublica">
+        <header class="pub-topo">
+            <div class="pub-marca"><div class="logo-futurista logo-login" aria-hidden="true">JR</div><div><b>JR MED</b><small>Prescrição e condutas médicas</small></div></div>
+            <button type="button" class="pub-entrar" onclick="abrirLoginDaPagina()">Entrar</button>
+        </header>
+        <section class="pub-capa">
+            <p class="pub-selo">Acesso restrito a profissionais de saúde</p>
+            <h1>Prescrição médica e condutas, em um só lugar</h1>
+            <p>Começamos pela pediatria: doses pelo peso e pela idade, com a fonte de cada dose.</p>
+            <div class="pub-botoes">
+                <button type="button" class="pub-btn-primario" onclick="abrirLoginDaPagina()">Entrar no JR MED</button>
+                <a href="#pubVideo" class="pub-btn-secundario">Ver como funciona</a>
+            </div>
+        </section>
+        <section class="pub-secao" id="pubVideo">
+            <h2>Veja como usar, em 1 minuto</h2>
+            <div class="pub-video-grade">
+                <figure class="pub-video-figura">
+                    <video class="pub-video" controls playsinline preload="none" poster="video/apresentacao-capa.jpg" aria-label="Vídeo de cerca de 1 minuto: como usar o JR MED">
+                        <source src="video/apresentacao.mp4" type="video/mp4">
+                        Seu navegador não mostra o vídeo.
+                    </video>
+                    <figcaption class="pub-legenda">Vídeo de cerca de 1 minuto, com narração. Os dados das telas são de exemplo.</figcaption>
+                </figure>
+                <ol class="pub-video-passos">
+                    <li><strong>Busque</strong> o remédio, a doença ou o sintoma.</li>
+                    <li><strong>Digite</strong> a idade e o peso. A dose aparece na hora, com a fonte.</li>
+                    <li><strong>Adicione</strong> à receita e copie tudo de uma vez.</li>
+                    <li><strong>Veja</strong> as condutas passo a passo, com critérios de internação.</li>
+                    <li><strong>Informe</strong> as alergias. O app avisa o remédio compatível.</li>
+                </ol>
+            </div>
+        </section>
+        <section class="pub-secao">
+            <h2>O que tem no JR MED</h2>
+            <div class="pub-grade">
+                <article class="pub-card"><h3>Prescrição</h3><p>Doses por peso e idade, com a fonte de cada dose e a receita pronta para copiar.</p></article>
+                <article class="pub-card"><h3>Condutas</h3><p>Passo a passo de cada doença: diagnóstico, emergência e ambulatório, com escores e critérios de internação.</p></article>
+                <article class="pub-card"><h3>Emergência</h3><p>Sequências rápidas de intubação (RSI) e PALS, separadas por etapa.</p></article>
+                <article class="pub-card"><h3>Exame físico e orientações</h3><p>Modelos de exame físico e de orientação de alta, prontos para copiar.</p></article>
+                <article class="pub-card"><h3>Alergias</h3><p>Informe as alergias do paciente e o app mostra o alerta nos remédios que podem causar reação.</p></article>
+                <article class="pub-card"><h3>Celular e computador</h3><p>Funciona no navegador, sem instalar nada. Pode ser usado no plantão, no celular ou no computador.</p></article>
+            </div>
+        </section>
+        <section class="pub-secao pub-aviso-bloco">
+            <div class="pub-aviso"><strong>Ferramenta de apoio à decisão.</strong> As doses são calculadas automaticamente e devem ser sempre conferidas pelo profissional prescritor antes do uso, considerando o quadro clínico completo, alergias, contraindicações e protocolos vigentes na instituição.</div>
+        </section>
+        <section class="pub-secao">
+            <h2>Para quem é</h2>
+            <p class="pub-texto">Para médicos, enfermeiros e farmacêuticos que prescrevem. Hoje o conteúdo é de pediatria, e o adulto vem depois. O acesso é restrito. No cadastro, você informa o seu registro profissional.</p>
+            <p class="pub-texto">Seus dados são protegidos conforme a LGPD. Leia a <a href="privacidade.html">Política de Privacidade</a> e os <a href="termos.html">Termos de Uso</a>.</p>
+        </section>
+        <footer class="pub-rodape">© 2026 JR MED · Contato: <a href="mailto:jrmedprescricao@gmail.com">jrmedprescricao@gmail.com</a></footer>
+    </div>
+    <!-- Só no teste: enquanto o Firebase confere a sessão (ver css/inicio.css, html.verificando-acesso) -->
+    <div id="telaVerificando" class="login-container" role="status" aria-live="polite">
+        <div class="login-box verificando-box">
             <div class="logo-futurista logo-login" aria-hidden="true">JR</div>
             <h2 class="login-titulo">JR MED</h2>
-            <p class="login-sub">Prescrição e condutas pediátricas<br><span>Acesso restrito a profissionais de saúde</span></p>
+            <p class="verificando-txt"><span class="verificando-giro" aria-hidden="true"></span>Verificando acesso…</p>
+        </div>
+    </div>
+    <div id="tela-login" class="login-container">
+        <div class="login-box">
+            <button type="button" class="login-voltar-pag" onclick="voltarPaginaInicial()">← Página inicial</button>
+            <div class="logo-futurista logo-login" aria-hidden="true">JR</div>
+            <h2 class="login-titulo">JR MED</h2>
+            <p class="login-sub">Prescrição e condutas médicas<br><span>Acesso restrito a profissionais de saúde</span></p>
 
             <label class="login-label" for="emailInput">E-mail</label>
             <div class="login-input-group">
@@ -82,13 +186,16 @@
     <!-- ========================================== -->
     <!-- APLICATIVO PRINCIPAL                       -->
     <!-- ========================================== -->
+    <!-- TELA INICIAL (Pediatria | Adulto), montada por js/inicio.js; só no teste -->
+    <div id="tela-inicio" style="display:none;"></div>
+
     <div id="aplicativo-principal" style="display: none;">
         <header class="header-banner">
             <div class="header-left">
                 <div class="logo-futurista logo-header" aria-hidden="true">JR</div>
                 <div>
                     <h1 class="brand-title">JR MED</h1>
-                    <p class="brand-subtitle">Prescrição Pediátrica</p>
+                    <p class="brand-subtitle">Prescrição e condutas médicas</p>
                 </div>
             </div>
             <div id="slotAbas" class="slot-abas"></div>
@@ -169,8 +276,12 @@
                 <div class="inputs-inline">
                     <div class="input-group">
                         <span class="input-label">Idade</span>
-                        <input type="number" id="idadeInput" class="age-input" value="" min="0" step="0.1" placeholder="—" inputmode="decimal" oninput="calcularTudo()">
-                        <span class="input-unidade">anos</span>
+                        <input type="number" id="idadeInput" class="age-input" value="" min="0" step="any" placeholder="—" inputmode="decimal" oninput="calcularTudo()" onchange="ajustarUnidadeIdade()">
+                        <select id="idadeUnidade" class="idade-unidade" onchange="calcularTudo()" aria-label="Unidade da idade">
+                            <option value="dias">dias</option>
+                            <option value="meses">meses</option>
+                            <option value="anos" selected>anos</option>
+                        </select>
                     </div>
                     <div class="input-group">
                         <span class="input-label">Peso</span>
@@ -568,6 +679,7 @@
     <script src="js/digital.js"></script>
     <script src="js/app.js"></script>
     <script src="js/formularios.js"></script>
+    <script src="js/atalhos.js"></script>
     <!-- Área de Condutas: cada doença em condutas/<doenca>.js -->
     <script src="condutas/condutas.js"></script>
     <script src="condutas/ventilacao.js"></script>
@@ -598,6 +710,7 @@
     <script src="condutas/meningite.js"></script>
     <script src="condutas/itu.js"></script>
     <script src="condutas/pele_bacteriana.js"></script>
+    <script src="js/inicio.js"></script>
 
 
     <!-- ========================================== -->

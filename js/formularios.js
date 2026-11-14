@@ -402,7 +402,12 @@ inicializarApp();
 aplicarTemaSalvo();
 aplicarFonteSalva();
 
-document.getElementById('btnNovoPaciente').addEventListener('click', novoPaciente);
+// "Novo paciente": limpa tudo e já põe o cursor no peso, para digitar sem clicar no campo
+document.getElementById('btnNovoPaciente').addEventListener('click', () => {
+    novoPaciente();
+    let peso = document.getElementById('pesoInput');
+    if (peso) peso.focus();
+});
 // Menu de configurações (painel lateral): fonte, tema, equipe e sair ficam aqui, não no cabeçalho.
 function abrirConfig() {
     document.body.classList.add('config-aberto');

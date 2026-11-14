@@ -34,6 +34,26 @@ function montarEstruturaCondutas() {
     if (slot) slot.appendChild(abas); else painel.insertBefore(abas, painel.firstChild);
     abas.querySelectorAll('.aba-modo').forEach(b => b.addEventListener('click', () => trocarModo(b.dataset.modo)));
 
+    // Cabeçalho (computador): sem a troca Prescrição/Condutas. Na tela de Condutas aparece o botão
+    // "Prescrição" ao lado do Menu; Condutas fica no Menu (☰), na seção Telas.
+    let btnPresc = document.createElement('button');
+    btnPresc.type = 'button'; btnPresc.id = 'btnIrPrescricao'; btnPresc.className = 'btn-config btn-ir-prescricao';
+    btnPresc.title = 'Voltar para a Prescrição';
+    btnPresc.innerHTML = '<span aria-hidden="true">💊</span><span class="btn-config-texto">Prescrição</span>';
+    btnPresc.addEventListener('click', () => trocarModo('prescricao'));
+    let btnMenu = document.getElementById('btnAbrirConfig');
+    if (btnMenu) btnMenu.parentNode.insertBefore(btnPresc, btnMenu);
+
+    let drawer = document.querySelector('#painelConfig .config-rodape') || document.getElementById('painelConfig');
+    let secaoTelas = document.createElement('div');
+    secaoTelas.className = 'config-secao';
+    secaoTelas.innerHTML = `<div class="config-secao-titulo">Telas</div>
+<button type="button" id="btnIrCondutas" class="config-acao"><span>📖</span> Condutas</button>`;
+    let primeiraSecao = document.querySelector('#painelConfig .config-secao');
+    if (primeiraSecao) primeiraSecao.parentNode.insertBefore(secaoTelas, primeiraSecao);
+    else if (drawer) drawer.parentNode.insertBefore(secaoTelas, drawer);
+    secaoTelas.querySelector('button').addEventListener('click', () => { if (typeof fecharConfig === 'function') fecharConfig(); trocarModo('condutas'); });
+
     let area = document.createElement('div');
     area.id = 'area-condutas';
     area.style.display = 'none';
@@ -98,6 +118,13 @@ function voltarListaCondutas() {
     renderizarListaCondutas(); window.scrollTo(0, 0);
 }
 
+// Botão "Início" fora da tarja (computador), no mesmo estilo do item Início da lateral
+function htmlBotaoInicioCondutas() {
+    return (typeof inicioAtivo === 'function' && inicioAtivo())
+        ? `<div class="cond-inicio-linha"><button type="button" class="cond-btn-inicio" onclick="mostrarInicio()" title="Voltar à tela inicial"><span aria-hidden="true">🏠</span>Início</button></div>`
+        : '';
+}
+
 function renderizarListaCondutas() {
     condutaAberta = null;
     let termo = (typeof normalizar === 'function' ? normalizar : s => s.toLowerCase())(document.getElementById('searchInput').value || '');
@@ -107,7 +134,10 @@ function renderizarListaCondutas() {
     lista.sort((a, b) => (b.destaque ? 1 : 0) - (a.destaque ? 1 : 0)); /* conduta com destaque: true vem primeiro (ventilação mecânica, pedido do Dr. Jonas) */
     lista.forEach(c => (porCat[c.categoria] = porCat[c.categoria] || []).push(c));
 
-    let html = `<div class="cond-intro">📖 <strong>Condutas</strong> — protocolos das doenças mais prevalentes. As medicações de cada conduta usam o peso e a idade digitados acima.</div>`;
+    let topoInicio = htmlBotaoInicioCondutas();
+    let html = topoInicio + (CONDUTAS_VISUAL_NOVO
+        ? `<div class="cond-intro"><h2>Condutas</h2><p>Protocolos das doenças mais prevalentes. As medicações de cada conduta usam o peso e a idade digitados acima.</p></div>`
+        : `<div class="cond-intro">📖 <strong>Condutas</strong> — protocolos das doenças mais prevalentes. As medicações de cada conduta usam o peso e a idade digitados acima.</div>`);
     if (!lista.length) html += `<div class="cond-vazio">Nenhuma conduta encontrada.</div>`;
     Object.keys(porCat).forEach(cat => {
         html += `<div class="cond-cat-titulo">${escCond(cat)}</div><div class="cond-grade">`;
@@ -160,20 +190,100 @@ function htmlBlocoConduta(b) {
     return html;
 }
 
-// Uma conduta pode ter "blocos" (ex.: Diagnóstico · Emergência · Ambulatório),
-// cada um com suas seções; ou só "secoes" (um bloco sem título).
-// As seções abrem e fecham com um toque. Todas começam fechadas (pedido do Dr. Jonas); "aberta" é ignorado.
-function abrirConduta(id) {
+// Visual "referência clínica" (escolhido pelo Dr. Jonas, 11/2026): sem emojis nos títulos, uma cor de destaque,
+// abas por etapa (Diagnóstico | Emergência | Ambulatório) e seções que abrem e fecham com + e −.
+// Uma conduta pode ter "blocos" (cada um vira uma aba, com suas seções) ou só "secoes" (sem abas).
+// As seções começam fechadas (pedido do Dr. Jonas); "aberta" é ignorado.
+// O visual novo (abas, sem emojis) vale só na versão de teste até o Dr. Jonas liberar (decisão de 11/2026).
+// No oficial, as condutas mantêm o visual anterior (índice colorido, blocos com ícone, "Abrir tudo").
+const CONDUTAS_VISUAL_NOVO = false; /* visual 'referência clínica' aposentado (11/2026): teste e oficial usam a estrutura oficial, com o estilo Apple (css/inicio.css, html.estilo-apple) */
+document.documentElement.classList.toggle('cond-visual-novo', CONDUTAS_VISUAL_NOVO);
+// Os textos das condutas falam em "aba Diagnóstico/Emergência/Ambulatório"; no visual anterior viram "bloco 🔎/🚨/🏠".
+function textoVisualAntigo(html) {
+    const ic = { 'Diagnóstico': '🔎', 'Emergência': '🚨', 'Ambulatório': '🏠' };
+    return html.replace(/\bna aba (Diagnóstico|Emergência|Ambulatório)/g, (m, x) => 'no bloco ' + ic[x])
+        .replace(/\bda aba (Diagnóstico|Emergência|Ambulatório)/g, (m, x) => 'do bloco ' + ic[x])
+        .replace(/\baba (Diagnóstico|Emergência|Ambulatório)/g, (m, x) => 'bloco ' + ic[x])
+        .replace(/nas abas acima/g, 'no índice acima');
+}
+let blocoAtivoConduta = 0;
+const RE_EMOJI = /[\p{Extended_Pictographic}\uFE0F\u200D]/gu;
+function semEmoji(t) { return String(t || '').replace(RE_EMOJI, '').replace(/\s{2,}/g, ' ').trim(); }
+
+// Nome curto da aba a partir do título do bloco (ou b.aba, se a conduta quiser outro).
+/* Ícone e cor de cada seção (estilo Apple), pelo SIGNIFICADO do título, não pela posição.
+   Cada tipo tem um ícone e uma cor fixos: atenção = laranja com triângulo; emergência = vermelho com cruz;
+   diagnóstico = azul com lupa; casa/alta = verde; tratamento = verde-azulado com pílula; etc.
+   A primeira regra que bater vence. */
+const TIPOS_APPLE = {
+    atencao:   { cor: '#ff9f0a', ic: '<path d="M12 9v4M12 17h.01"/><path d="M10.3 4.2 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"/>' },
+    emergencia:{ cor: '#ff3b30', ic: '<path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/>' },
+    diagnostico:{ cor: '#0a84ff', ic: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/>' },
+    diferencial:{ cor: '#5e5ce6', ic: '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>' },
+    escore:    { cor: '#ff2d55', ic: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>' },
+    exames:    { cor: '#af52de', ic: '<path d="M9 3h6M10 3v6.5L5 18.5A2 2 0 0 0 6.8 21.5h10.4a2 2 0 0 0 1.8-3L14 9.5V3"/><path d="M8 15h8"/>' },
+    hidratacao:{ cor: '#64d2ff', ic: '<path d="M12 3.5s6 6.2 6 10.5a6 6 0 0 1-12 0c0-4.3 6-10.5 6-10.5z"/>' },
+    tratamento:{ cor: '#30b0c7', ic: '<rect x="3" y="8.5" width="18" height="7" rx="3.5" transform="rotate(-45 12 12)"/><path d="m8.5 8.5 7 7"/>' },
+    casa:      { cor: '#34c759', ic: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-6h4v6h5V9.5"/>' },
+    prevencao: { cor: '#00b894', ic: '<path d="M12 3 4.5 6v5.5c0 4.5 3.2 8 7.5 9.5 4.3-1.5 7.5-5 7.5-9.5V6z"/>' },
+    sinais:    { cor: '#ff375f', ic: '<path d="M2.5 12h4l2.5-6 4 12 2.5-6h6"/>' },
+    respiracao:{ cor: '#5ac8fa', ic: '<path d="M3 8h11a3 3 0 1 0-3-3M3 16h14a3 3 0 1 1-3 3"/>' },
+    tempo:     { cor: '#8e8e93', ic: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>' },
+    outro:     { cor: '#636366', ic: '<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>' }
+};
+const REGRAS_TIPO_APPLE = [
+    [/diferencial/, 'diferencial'],
+    [/crit[eé]rios de interna|interna[çc][ãa]o|terapia intensiva|\buti\b|choque|refrat|(?<!alta da )emerg|herniação|transfer[êe]ncia|intubar|via a[ée]rea|manitol|leito de interna|grave:|suporte ventilat|vasoativo|convuls|hipertens[ãa]o intracran|exsangu|interromp|reconhecer|piora s[úu]bita|estado de mal|destino/, 'emergencia'],
+    [/sinais? de (alerta|alarme|gravidade|choque)|sinais de alerta|alarme/, 'atencao'],
+    [/em casa|ambulat|alta|seguimento|orienta|fam[íi]lia|volta|retorno|escola|prescri[çc][ãa]o para casa|depois d|pequeno queimado|plano de a[çc][ãa]o|cart[ãa]o|plano a\b|domic|encaminh/, 'casa'],
+    [/\bexames?\b|laborat|l[ií]quor|hemocultura|colher|imagem|ecocardiogr|\beco\b|gasometria|pun[çc][ãa]o|cultura|hemograma|notificar, colher/, 'exames'],
+    [/prevenç|preven|prevenir|isolar|isolamento|notifica|vacin|contato|quimioprofil/, 'prevencao'],
+    [/escore|gravidade|classifica|glasgow|\bescala\b|calculadora|pecarn|mcisaac|phoenix|rochester|meningitis score|prova do la[çc]o|scq|tabela|menor de 30|\d+ a \d+ meses|algoritmo|semáforo|calcul/, 'escore'],
+    [/hidrata|reidrat|plano [bc]\b|expans[ãa]o vol[êe]mica|volume:|^0 a 1 hora|^a partir da 2[ªa] hora|grupo c|soro|potássio|pot[áa]ssio|desnutrid|alimenta|nutri|l[ií]quido|diurese/, 'hidratacao'],
+    [/tratamento|antibi[óo]tic|medica[çc]|adrenalina|insulina|dexametasona|aciclovir|analges|sintom[áa]tic|antit[ée]rmic|antiem[ée]tic|corticoide|imunoglobulina|aas\b|ceftriaxona|manuten|neuroprote|suspender|medicamento|dor e febre|cir[úu]rg|dura[çc][ãa]o|doses ev|dose|escalada|t[ée]tano|ferida|escarot|vitamina|anti-hist/, 'tratamento'],
+    [/aten[çc][ãa]o|al[ée]rg|n[ãa]o recomendado|o que n[ãa]o fazer|sem melhora|recorrência|recorrencia|gestante|encefalopatia|kernicterus|hiperinfec|complica[çc][õo]es|a qualquer momento|risco|cuidado|perigo|suspeita de maus|petéquia|falha|reavalia[çc][ãa]o e sinais|dano|sequela|desencadeante|obstru|suboclus|áscaris|ascaris/, 'atencao'],
+    [/vital|monitor|esfor[çc]o|press[ãa]o|pulso|f[ií]sico|glicemia|abcde|abc\b|neurol[óo]gico|^[a-e] [—-]|circula[çc][ãa]o|acesso|estado geral/, 'sinais'],
+    [/oxig|respira|ventila|sopro|inalat|cianeto|broncoespasmo|laringe|peep|modos|pulmonar|dope|aer[óo]bica/, 'respiracao'],
+    [/^linha do tempo|hora em hora|^\d+ ?a \d+ ?(min|h|hora)|^chegada|1\/1h|2\/2h/, 'tempo'],
+    [/diagn[óo]stic|defini[çc]|quadro cl[ií]nico|apresenta[çc][ãa]o|manifesta[çc]|caso suspeito|identificar|fases|agentes|etiologia|causas|investig|profundidade|como (descrever|estimar)|sinusite|\boma\b|recorrente|outras formas|amebíase|icterícia|arboviroses|fase febril|fatores de risco|escarlatina|avalia[çc][ãa]o do controle|pac complicada/, 'diagnostico']
+];
+function tipoSecaoApple(titulo) {
+    let m = semEmoji(titulo || '').toLowerCase();
+    let r = REGRAS_TIPO_APPLE.find(([re]) => re.test(m));
+    return TIPOS_APPLE[r ? r[1] : 'outro'];
+}
+function icoSecaoApple(t) { return tipoSecaoApple(t).ic; }
+function nomeAbaBloco(b) {
+    if (b.aba) return b.aba;
+    let t = semEmoji(b.titulo), m = t.toLowerCase();
+    if (m.startsWith('diagnóstico')) return 'Diagnóstico';
+    if (m.includes('emergência') || m.includes('pronto-socorro')) return 'Emergência';
+    if (m.startsWith('condução hospitalar')) return 'Hospitalar';
+    if (m.startsWith('condução')) return 'Condução';
+    if (m.startsWith('ambulatório')) return 'Ambulatório';
+    return t.split(/[:,]/)[0].trim();
+}
+
+function abrirConduta(id, bloco) {
     let c = condutasJR[id];
     if (!c) return;
+    let mesma = condutaAberta === id;
     condutaAberta = id;
     let st = history.state || {};
     /* daLista: a conduta foi aberta a partir da lista; aí o "← Condutas" pode voltar pelo histórico */
     empurrarHistorico({ modo: 'condutas', cond: id, daLista: st.modo === 'condutas' && !st.cond });
     let blocos = c.blocos || [{ secoes: c.secoes }];
+    let novo = CONDUTAS_VISUAL_NOVO;
+    let apple = document.documentElement.classList.contains('estilo-apple'); /* estilo Apple: sem emojis (desenho aprovado) */
+    let comAbas = novo && !apple && blocos.filter(b => b.titulo).length > 1; /* estilo Apple: sem a tarja de abas; todos os blocos aparecem */
+    if (typeof bloco === 'number') blocoAtivoConduta = bloco;
+    else if (!mesma) blocoAtivoConduta = 0;
+    if (!blocos[blocoAtivoConduta]) blocoAtivoConduta = 0;
     let n = 0;
-    let indice = blocos.filter(b => b.titulo).map((b, bi) =>
-        `<a href="#cond-bloco-${bi}" class="cond-indice-bloco" style="--cor-bloco:${b.cor || c.cor}" onclick="document.getElementById('cond-bloco-${bi}').scrollIntoView({behavior:'smooth'});return false;">${b.icone || ''} ${escCond(b.titulo)}</a>`).join('');
+    let abas = comAbas ? blocos.map((b, bi) => b.titulo
+        ? `<button type="button" role="tab" class="cond-aba${bi === blocoAtivoConduta ? ' ativa' : ''}" data-bloco="${bi}" aria-selected="${bi === blocoAtivoConduta}" onclick="mostrarBlocoConduta(${bi})" title="${escCond(semEmoji(b.titulo))}">${escCond(nomeAbaBloco(b))}</button>` : '').join('') : '';
+    let indice = (novo || apple) ? '' : blocos.filter(b => b.titulo).map((b, bi) =>
+        `<a href="#cond-bloco-${bi}" class="cond-indice-bloco" style="--cor-bloco:${b.cor || c.cor}" onclick="document.getElementById('cond-bloco-${bi}').scrollIntoView({behavior:'smooth'});return false;">${apple ? '' : (b.icone || '') + ' '}${escCond(apple ? nomeAbaBloco(b) : b.titulo)}</a>`).join('');
     let html = `
         <div class="cond-barra"><button type="button" class="cond-voltar" onclick="voltarListaCondutas()" title="Voltar para todas as condutas">← Condutas</button><span class="cond-caminho">Condutas › <b>${escCond(c.nome)}</b></span></div>
         <div class="cond-cabecalho" style="--cor-cat:${c.cor}">
@@ -184,21 +294,30 @@ function abrirConduta(id) {
         ${c.legenda ? `<div class="cond-legenda">${c.legenda}</div>` : ''}
         ${indice ? `<nav class="cond-indice cond-indice-blocos">${indice}</nav>` : ''}
         ${c.ferramentaTopo && typeof window[c.ferramentaTopo] === 'function' ? window[c.ferramentaTopo]() : ''}
-        <div class="cond-acoes"><button type="button" onclick="abrirTodasSecoes(true)">⊕ Abrir tudo</button><button type="button" onclick="abrirTodasSecoes(false)">⊖ Fechar tudo</button></div>`;
+        ${abas ? `<nav class="cond-abas" role="tablist">${abas}</nav>` : ''}
+        ${novo ? '' : `<div class="cond-acoes"><button type="button" onclick="abrirTodasSecoes(true)">⊕ Abrir tudo</button><button type="button" onclick="abrirTodasSecoes(false)">⊖ Fechar tudo</button></div>`}`;
 
     blocos.forEach((b, bi) => {
-        if (b.titulo) html += `<div class="cond-bloco" id="cond-bloco-${bi}" style="--cor-bloco:${b.cor || c.cor}"><span>${b.icone || ''} ${escCond(b.titulo)}</span>${b.subtitulo ? `<small>${b.subtitulo}</small>` : ''}</div>`;
+        let oculto = comAbas && bi !== blocoAtivoConduta;
+        html += `<div class="cond-bloco-corpo" id="cond-bloco-${bi}" data-bloco="${bi}"${oculto ? ' hidden' : ''}>`;
+        if (b.titulo) html += novo
+            ? `<div class="cond-bloco"><span class="cond-bloco-titulo">${escCond(semEmoji(b.titulo))}</span>${b.subtitulo ? `<small>${b.subtitulo}</small>` : ''}</div>`
+            : `<div class="cond-bloco" style="--cor-bloco:${b.cor || c.cor}"><span>${apple ? '' : (b.icone || '') + ' '}${escCond(apple ? semEmoji(b.titulo) : b.titulo)}</span>${b.subtitulo ? `<small>${b.subtitulo}</small>` : ''}</div>`;
         b.secoes.forEach(s => {
             let i = n++;
+            let tit = novo ? `${s.passo ? `<span class="cond-passo">${s.passo}</span>` : ''}${escCond(semEmoji(s.titulo))}`
+                : `${s.passo ? `<span class="cond-passo">${s.passo}</span>` : (apple ? '' : (s.icone || '') + ' ')}${escCond(apple ? semEmoji(s.titulo) : s.titulo)}`;
             html += `<details class="cond-secao${s.alerta ? ' cond-alerta' : ''}" id="cond-sec-${i}" style="--cor-cat:${c.cor}">
-                <summary><h3>${s.passo ? `<span class="cond-passo">${s.passo}</span>` : (s.icone || '')} ${escCond(s.titulo)}</h3>${s.resumo ? `<div class="cond-secao-resumo">${s.resumo}</div>` : ''}</summary>
+                <summary>${apple && s.passo ? `<i class="cond-ico cond-num" aria-hidden="true" style="background:${tipoSecaoApple(s.titulo).cor}">${s.passo}</i><h3>${escCond(semEmoji(s.titulo))}</h3>` : apple ? `<i class="cond-ico" aria-hidden="true" style="background:${tipoSecaoApple(s.titulo).cor}"><svg viewBox="0 0 24 24">${icoSecaoApple(s.titulo)}</svg></i><h3>${tit}</h3>` : `<h3>${tit}</h3>`}${s.resumo ? `<div class="cond-secao-resumo">${s.resumo}</div>` : ''}</summary>
                 <div class="cond-secao-corpo">${htmlBlocoConduta(s)}</div>
             </details>`;
         });
+        html += `</div>`;
     });
     html += `<div class="cond-fonte" id="cond-fontes"><strong>Fontes:</strong><ol>${c.fontes.map((f, k) => `<li id="cond-fonte-${k}"><span class="cond-fonte-txt">${escCond(f)}</span><button type="button" class="cond-fonte-voltar" onclick="voltarDaFonte()">↩ voltar ao texto</button></li>`).join('')}</ol><strong>Revisão:</strong> ${escCond(c.revisao)}</div>`;
     let area = document.getElementById('area-condutas');
-    area.innerHTML = html;
+    let topoInicio = htmlBotaoInicioCondutas();
+    area.innerHTML = novo ? topoInicio + html : topoInicio + textoVisualAntigo(html);
     area.classList.toggle('cond-padrao', !!c.padraoTexto); /* conduta já reescrita no padrão de escrita (rótulo azul) */
     linkarCitacoes(area, c);
     atualizarDosesConduta();
@@ -257,10 +376,30 @@ function irParaFonte(link) {
 function voltarDaFonte() {
     document.querySelectorAll('#cond-fontes li.destacada').forEach(li => li.classList.remove('destacada'));
     if (citacaoOrigem && citacaoOrigem.isConnected) {
+        mostrarAbaDe(citacaoOrigem);
         citacaoOrigem.scrollIntoView({ behavior: 'smooth', block: 'center' });
         citacaoOrigem.classList.add('piscando');
         let el = citacaoOrigem; setTimeout(() => el.classList.remove('piscando'), 1600);
     }
+}
+
+// Troca de aba (sem recriar a página: o que foi aberto e marcado continua lá).
+function mostrarBlocoConduta(bi) {
+    blocoAtivoConduta = bi;
+    document.querySelectorAll('#area-condutas .cond-bloco-corpo').forEach(el => { el.hidden = Number(el.dataset.bloco) !== bi; });
+    document.querySelectorAll('#area-condutas .cond-aba').forEach(a => { let on = Number(a.dataset.bloco) === bi; a.classList.toggle('ativa', on); a.setAttribute('aria-selected', on); });
+    let abas = document.querySelector('#area-condutas .cond-abas');
+    if (abas) {
+        let topo = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--altura-topo')) || 0) + 34;
+        let y = abas.getBoundingClientRect().top;
+        if (y < topo) window.scrollBy(0, y - topo);
+        let ativa = abas.querySelector('.cond-aba.ativa'); if (ativa) ativa.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
+}
+// Mostra a aba em que está um elemento (seção, citação...) antes de rolar até ele.
+function mostrarAbaDe(el) {
+    let corpo = el && el.closest && el.closest('.cond-bloco-corpo');
+    if (corpo && corpo.hidden) mostrarBlocoConduta(Number(corpo.dataset.bloco));
 }
 
 function abrirTodasSecoes(abrir) {
@@ -272,17 +411,19 @@ function abrirTodasSecoes(abrir) {
 // (ex.: 'condução' = primeiro bloco cujo título tem "condução": emergência/hospital).
 function irParaConduta(id, bloco) {
     if (!condutasJR[id] || !document.getElementById('area-condutas')) return;
+    if (condutaAberta !== id) blocoAtivoConduta = 0;
     condutaAberta = id;
     trocarModo('condutas');
     let blocos = condutasJR[id].blocos || [];
     let bi = bloco ? blocos.findIndex(b => (b.titulo || '').toLowerCase().includes(bloco)) : -1;
-    let alvo = bi >= 0 ? document.getElementById('cond-bloco-' + bi) : null;
-    if (alvo) setTimeout(() => alvo.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    if (bi >= 0 && CONDUTAS_VISUAL_NOVO) mostrarBlocoConduta(bi); /* abre já na aba da condução (emergência/hospital) */
+    else if (bi >= 0) { let alvo = document.getElementById('cond-bloco-' + bi); if (alvo) setTimeout(() => alvo.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50); }
 }
 
 function abrirSecaoConduta(i) {
     let sec = document.getElementById('cond-sec-' + i);
     if (!sec) return;
+    mostrarAbaDe(sec);
     sec.open = true;
     sec.scrollIntoView({ behavior: 'smooth' });
 }

@@ -188,7 +188,7 @@ registrarConduta({
                     itens: [
                         "<strong>Exames:</strong> hemograma, plaquetas, PCR e VHS, albumina, TGP, sódio, urina (leucocitúria estéril), ECG.",
                         "Ecocardiograma ao diagnóstico, sem atrasar o tratamento (AHA 2017).",
-                        "Descartar os diferenciais (bloco 🔎): sorologias e testes virais conforme o quadro, teste para estreptococo, hemoculturas se toxemia.",
+                        "Descartar os diferenciais (aba Diagnóstico): sorologias e testes virais conforme o quadro, teste para estreptococo, hemoculturas se toxemia.",
                         "Não esperar todos os critérios aparecerem se o algoritmo do incompleto indicar tratamento."
                     ]
                 },

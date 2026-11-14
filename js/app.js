@@ -403,7 +403,11 @@ function inicializarApp() {
     let contadorPorRemedio = {};
 
     let htmlFinal = "";
-    let htmlMenuSidebar = `<div class="nav-category-title">NAVEGAÇÃO</div>`;
+    // Computador (teste): item "Início" no topo da lateral, acima de NAVEGAÇÃO (mesmo padrão da tela inicial)
+    let itemInicioLateral = ((typeof MODO_TESTE !== 'undefined' && MODO_TESTE) && document.getElementById('tela-inicio'))
+        ? `<button type="button" class="sidebar-link sidebar-inicio" onclick="mostrarInicio()" title="Voltar à tela inicial"><span class="dot"></span><span class="rail-ico" aria-hidden="true">🏠</span><span class="rail-txt">Início</span><span class="rail-nome">Início</span></button>`
+        : '';
+    let htmlMenuSidebar = `${itemInicioLateral}<div class="nav-category-title">NAVEGAÇÃO</div>`;
     let htmlMenuBottom = "";
 
     let todasCategorias = construirCategoriasComCustom();
@@ -739,10 +743,24 @@ const CORES_CATEGORIA = {
     "tarja-alergias": "#c026d3", "tarja-especialidades": "#0d9488", "tarja-cad": "#be123c", "tarja-personalizada": "#334155"
 };
 
+/* Idade digitada em dias, meses ou anos; os cálculos recebem sempre em anos (texto) */
+function idadeComoAnos() {
+    let raw = document.getElementById('idadeInput').value;
+    if (raw === "") return "";
+    let n = parseFloat(raw);
+    if (isNaN(n) || n < 0) return "";
+    let unidade = (document.getElementById('idadeUnidade') || {}).value || "anos";
+    let anos = unidade === "dias" ? n / 365.25 : unidade === "meses" ? n / 12 : n;
+    return String(anos);
+}
+
+/* Ao sair do campo: NÃO muda o número nem a unidade que a pessoa digitou (sem arredondar). Só recalcula. */
+function ajustarUnidadeIdade() { calcularTudo(); }
+
 function calcularTudo() {
     let pRaw = document.getElementById('pesoInput').value;
     let p = parseFloat(pRaw);
-    let iRaw = document.getElementById('idadeInput').value;
+    let iRaw = idadeComoAnos();
     let invalido = isNaN(p) || p <= 0 || pRaw === "";
 
     atualizarAvisoPesoIdade(p, iRaw);
@@ -789,6 +807,7 @@ function calcularTudo() {
 function novoPaciente() {
     document.getElementById('pesoInput').value = "";
     document.getElementById('idadeInput').value = "";
+    if (document.getElementById('idadeUnidade')) document.getElementById('idadeUnidade').value = "anos";
     document.getElementById('alergiaInput').value = "";
     document.getElementById('searchInput').value = "";
     carrinhoPrescricao = [];
@@ -826,6 +845,21 @@ function cardVisivelNaTela() {
     return [...document.querySelectorAll('.med-card')].find(c => { let r = c.getBoundingClientRect(); return r.height > 0 && r.bottom > topo + 10; }) || null;
 }
 
+// Via da receita (cabeçalho do grupo na receita copiada) = 1ª linha do texto do card, quando ela indica a via.
+function viaDaReceita(textoCompleto, med) {
+    let primeiraLinha = textoCompleto.split('\n')[0].trim();
+    let primeiraLinhaUpper = primeiraLinha.toUpperCase();
+    if (primeiraLinhaUpper.startsWith("USO") ||
+        primeiraLinhaUpper.startsWith("VIA") ||
+        primeiraLinhaUpper.includes("NEBULIZAÇÃO") ||
+        primeiraLinhaUpper.includes("VENÓCLISE") ||
+        primeiraLinhaUpper.includes("DISPOSITIVOS") ||
+        primeiraLinhaUpper.includes("ORIENTAÇÕES")) return primeiraLinha;
+    /* remédio da equipe cadastrado sem cabeçalho */
+    if (med && med.custom && med._regra && med._regra.via) return `USO ${med._regra.via.toUpperCase()}`;
+    return "USO ORAL"; /* padrão de segurança */
+}
+
         function adicionarAoCarrinho(instanceId, btnId) {
     let inst = instanciasRenderizadas.find(i => i.instanceId === instanceId);
     let med = buscarMed(inst && (inst.grupo ? inst.escolha : inst.medKey));
@@ -835,24 +869,7 @@ function cardVisivelNaTela() {
 
     // Extrai o texto gerado
     let textoCompleto = textoDaCaixa(recBox).trim();
-    // A "Via" será identificada automaticamente pela 1ª linha do texto do card
-    let primeiraLinha = textoCompleto.split('\n')[0].trim();
-    let primeiraLinhaUpper = primeiraLinha.toUpperCase();
-    
-    let cabecalhoVia = "USO ORAL"; // Padrão de segurança
-    
-    // Se a primeira linha indicar a rota (USO, VIA, etc), usamos ela como cabeçalho
-    if (primeiraLinhaUpper.startsWith("USO") || 
-        primeiraLinhaUpper.startsWith("VIA") || 
-        primeiraLinhaUpper.includes("NEBULIZAÇÃO") || 
-        primeiraLinhaUpper.includes("VENÓCLISE") || 
-        primeiraLinhaUpper.includes("DISPOSITIVOS") ||
-        primeiraLinhaUpper.includes("ORIENTAÇÕES")) {
-        cabecalhoVia = primeiraLinha;
-    } else if (med.custom && med._regra && med._regra.via) {
-        // Caso seja um remédio da equipe cadastrado manualmente sem cabeçalho
-        cabecalhoVia = `USO ${med._regra.via.toUpperCase()}`;
-    }
+    let cabecalhoVia = viaDaReceita(textoCompleto, med);
 
     let nomeItem = med.nome;
     if (inst && inst.grupo) {
@@ -886,6 +903,7 @@ function atualizarCarrinhoUI() {
     badge.innerText = carrinhoPrescricao.length;
     fab.classList.toggle('visivel', carrinhoPrescricao.length > 0);
 
+    if (typeof atalhosAtualizarReceita === 'function') atalhosAtualizarReceita(); /* janela de ⚡ Atalhos */
     let lista = document.getElementById('listaCarrinho');
     document.body.classList.toggle('receita-vazia', carrinhoPrescricao.length === 0);
     if (carrinhoPrescricao.length === 0) {
@@ -912,10 +930,13 @@ function atualizarCarrinhoUI() {
     lista.innerHTML = html;
 }
 
-        function copiarReceitaCompleta() {
+// Texto da receita completa (itens agrupados pela via). Usado aqui e na janela de ⚡ Atalhos.
+function textoReceitaCompleta() { return textoReceitaDeItens(carrinhoPrescricao); }
+// Monta a receita (agrupada pela via) de uma lista { texto, via }: a do carrinho ou a de uma prescrição pronta (⚡ Atalhos).
+function textoReceitaDeItens(itens) {
     // Agrupar itens pela via exata que capturamos
     let porVia = {};
-    carrinhoPrescricao.forEach(item => {
+    itens.forEach(item => {
         let via = item.via || "USO ORAL";
         if (!porVia[via]) porVia[via] = [];
         porVia[via].push(item.texto);
@@ -948,12 +969,18 @@ function atualizarCarrinhoUI() {
             // Remove a numeração antiga ("1) ", "2) ", etc)
             textoLimpo = textoLimpo.replace(/^\d+\)\s*/, '');
 
-            // Adiciona a nova numeração (1, 2, 3...) reiniciando dentro de cada grupo
-            linhas.push(`${idx + 1}) ${textoLimpo}`);
+            // Adiciona a nova numeração (1, 2, 3...) reiniciando dentro de cada grupo.
+            // Orientações não são numeradas (pedido do Dr. Jonas): ficava "1) - Agravamento...".
+            linhas.push(ehOrientacao(via) ? textoLimpo : `${idx + 1}) ${textoLimpo}`);
         });
 
         return linhas.join('\n\n'); // Espaçamento duplo entre as medicações de um grupo
     }).join('\n\n'); // Entre vias diferentes: só uma linha em branco, sem traço
+    return texto;
+}
+
+function copiarReceitaCompleta() {
+    let texto = textoReceitaCompleta();
 
     navigator.clipboard.writeText(texto).then(() => {
         let btn = document.querySelector('.btn-copiar-receita-completa');

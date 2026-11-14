@@ -363,7 +363,7 @@ registrarConduta({
                     resumo: "Primeiro decida: UTI neonatal, internar para fototerapia ou seguimento ambulatorial.",
                     alerta: true,
                     itens: [
-                        "Decidir pela BT sérica na calculadora (bloco 🔎) e pelo estado do RN (AAP 2022)."
+                        "Decidir pela BT sérica na calculadora (aba Diagnóstico) e pelo estado do RN (AAP 2022)."
                     ],
                     escore: {
                         id: "internacao_ictericia",
@@ -384,7 +384,7 @@ registrarConduta({
                             let g = Math.max(...v);
                             if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "Exames STAT, fototerapia intensiva de emergência, hidratação e neonatologista; UTI neonatal que faça exsanguineotransfusão (passos 6 e 7)." };
                             if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Fototerapia intensiva hospitalar (passo 4), investigar a causa (passo 3) e BT em até 12 h." };
-                            return { num: "🏠", rotulo: "Seguimento ambulatorial", cor: "#16a34a", texto: "BT abaixo do limiar: seguimento conforme a distância do limiar (bloco 🏠). Fototerapia domiciliar só nos critérios do bloco 🏠." };
+                            return { num: "🏠", rotulo: "Seguimento ambulatorial", cor: "#16a34a", texto: "BT abaixo do limiar: seguimento conforme a distância do limiar (aba Ambulatório). Fototerapia domiciliar só nos critérios da aba Ambulatório." };
                         },
                         nota: "AAP 2022 (Kemper): limiares de fototerapia, escalada de cuidado (até 2 mg/dL do limiar de exsanguineotransfusão) e critérios de fototerapia domiciliar."
                     }
@@ -395,7 +395,7 @@ registrarConduta({
                     resumo: "Sempre BT sérica para decidir; limiar pela IG, horas de vida e fatores de risco.",
                     itens: [
                         "Colher BT sérica (não decidir pela BTc nem pela estimativa visual).",
-                        "Preencher a calculadora (bloco 🔎): IG em semanas completas, horas de vida na coleta, BT e fatores de risco de neurotoxicidade.",
+                        "Preencher a calculadora (aba Diagnóstico): IG em semanas completas, horas de vida na coleta, BT e fatores de risco de neurotoxicidade.",
                         "Se houver qualquer fator de risco de neurotoxicidade, usa-se a curva mais baixa (a calculadora já escolhe).",
                         "Mãe com pesquisa de anticorpos positiva ou desconhecida: tipagem e Coombs direto do RN o quanto antes (sangue de cordão ou periférico)."
                     ]

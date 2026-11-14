@@ -157,7 +157,7 @@ registrarConduta({
                             let g = Math.max(...v);
                             if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "O₂, adrenalina inalatória repetida e via aérea pelo mais experiente (passo 7)." };
                             if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Internar, manter dexametasona já feita e adrenalina se necessário; reavaliar com o escore." };
-                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Crupe leve após dexametasona, ou moderado que melhorou: sem estridor em repouso, sem desconforto e sem hipoxemia após 3 a 4 h de observação. Orientações do bloco 🏠." };
+                            return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Crupe leve após dexametasona, ou moderado que melhorou: sem estridor em repouso, sem desconforto e sem hipoxemia após 3 a 4 h de observação. Orientações da aba Ambulatório." };
                         },
                         nota: "Critérios de alta, internação e UTI da SBP e do Einstein (antes no passo de decisão). Reavaliar a decisão depois da observação de 3 a 4 h após a adrenalina (passo 6)."
                     }
@@ -168,7 +168,7 @@ registrarConduta({
                     resumo: "Colo dos pais, oximetria, escore e sinais de outra causa.",
                     itens: [
                         "Manter a criança o mais calma possível, no colo dos pais. Evitar manipulação e exames desnecessários: o choro piora o colapso da via aérea e a resistência ao fluxo.",
-                        "Oximetria em todos. Classificar a gravidade pelo escore (bloco 🔎).",
+                        "Oximetria em todos. Classificar a gravidade pelo escore (aba Diagnóstico).",
                         "Procurar sinais de outra causa: toxemia, febre alta, salivação, voz abafada, ausência de tosse ladrante (supraglotite, traqueíte bacteriana, abscesso) ou início súbito (corpo estranho).",
                         "<strong>Não fazer:</strong> RX de rotina. Nebulização com SF ou ar umidificado não tem eficácia comprovada: não insistir se a criança ficar mais agitada."
                     ]

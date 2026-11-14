@@ -109,7 +109,7 @@ registrarConduta({
                         "<span class=\"cond-passo\">1</span> <strong>Internar?</strong> Critérios clicáveis: UTI · enfermaria · casa (mastoidite, paralisia facial, meningismo, toxemia, < 2 meses com febre)",
                         "<span class=\"cond-passo\">2</span> <strong>Confirmar na otoscopia:</strong> abaulamento ou otorreia recente. Sem efusão não é OMA",
                         "<span class=\"cond-passo\">3</span> <strong>Analgesia sempre:</strong> ibuprofeno ou paracetamol",
-                        "<span class=\"cond-passo\">4</span> <strong>Antibiótico ou observar:</strong> pelo quadro de gravidade (bloco 🔎)",
+                        "<span class=\"cond-passo\">4</span> <strong>Antibiótico ou observar:</strong> pelo quadro de gravidade (aba Diagnóstico)",
                         "<span class=\"cond-passo\">5</span> <strong>1ª escolha:</strong> amoxicilina. Amoxicilina + clavulanato se amoxicilina nos últimos 30 dias, conjuntivite purulenta ou recorrência sem resposta",
                         "<span class=\"cond-passo\">6</span> <strong>Alérgico:</strong> sem anafilaxia = cefalosporina · com anafilaxia = macrolídeo",
                         "<span class=\"cond-passo\">7</span> <strong>Sem melhora em 48–72 h:</strong> reexaminar e subir um degrau do antibiótico"
@@ -165,7 +165,7 @@ registrarConduta({
                         "Olhar os dois ouvidos. Remover cerume se impedir a visão da membrana.",
                         "Abaulamento (membrana convexa, opaca, sem reflexo, cabo do martelo apagado) = OMA. Hiperemia sozinha não basta.",
                         "Otorreia com perfuração: OMA supurada. Diferenciar de otite externa (dor à tração do pavilhão, conduto edemaciado).",
-                        "<strong>Líquido sem sinais agudos:</strong> otite com efusão; não dar antibiótico (bloco 🏠)."
+                        "<strong>Líquido sem sinais agudos:</strong> otite com efusão; não dar antibiótico (aba Ambulatório)."
                     ]
                 },
                 {
@@ -182,7 +182,7 @@ registrarConduta({
                 {
                     passo: 4,
                     titulo: "Antibiótico ou observar",
-                    resumo: "Usar o quadro de gravidade (bloco 🔎). Observar só com retorno garantido em 48–72 h.",
+                    resumo: "Usar o quadro de gravidade (aba Diagnóstico). Observar só com retorno garantido em 48–72 h.",
                     itens: [
                         "<strong>Antibiótico sempre:</strong> menor de 6 meses, otorreia, OMA grave (otalgia moderada/intensa, otalgia ≥ 48 h, febre ≥ 39 °C) e bilateral abaixo de 2 anos.",
                         "<strong>Antibiótico ou observar:</strong> unilateral não grave de 6 a 23 meses e não grave a partir de 2 anos.",

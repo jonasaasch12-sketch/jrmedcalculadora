@@ -13,7 +13,7 @@ const MESES_PERFIL = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho"
 const TEXTO_ACEITE_PERFIL = "Declaro que as informações são verdadeiras, que sou profissional ou estudante da área da saúde e que entendo que o JR MED é ferramenta de apoio: doses e condutas devem ser conferidas pelo prescritor.";
 // Versão dos Termos de Uso e da Política de Privacidade (termos.html / privacidade.html).
 // Mudou a versão = todos aceitam de novo no próximo acesso.
-const VERSAO_TERMOS = "2026-10";
+const VERSAO_TERMOS = "2026-11";
 const TEXTO_ACEITE_TERMOS = 'Li e concordo com os <a href="termos.html" target="_blank" rel="noopener">Termos de Uso</a> e a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.';
 
 function escPerfil(t) { return String(t ?? "").replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch])); }
@@ -117,7 +117,7 @@ function lerFormPerfil(px) {
 // null = perfil completo. Senão, o motivo (texto) para pedir que complete.
 function pendenciaPerfil(p) {
     if (!p || !p.nome || !ATIVIDADES_PERFIL[p.atividade] || !p.aceiteEm) return "Para continuar usando o JR MED, complete o seu cadastro profissional.";
-    if (p.aceiteVersao !== VERSAO_TERMOS) return "Publicamos os Termos de Uso e a Política de Privacidade do JR MED (LGPD). Confira os seus dados, leia os documentos e marque o aceite no final.";
+    if (!(String(p.aceiteVersao || "") >= VERSAO_TERMOS)) return /* ">=": aceite de versão mais nova (teste) vale no oficial */ "Publicamos os Termos de Uso e a Política de Privacidade do JR MED (LGPD). Confira os seus dados, leia os documentos e marque o aceite no final.";
     if (ATIVIDADES_PERFIL[p.atividade].conselho && (!p.registro || !p.uf)) return `Falta informar o seu ${ATIVIDADES_PERFIL[p.atividade].conselho} e a UF.`;
     if (p.atividade === 'academico') {
         if (!p.formaturaMes || !p.formaturaAno || !p.instituicao) return "Falta informar a faculdade e a previsão de formatura.";

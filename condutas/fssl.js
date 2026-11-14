@@ -41,7 +41,7 @@ registrarConduta({
                     resumo: "Bacteremia oculta, ITU, pneumonia oculta, arboviroses e febre de origem indeterminada.",
                     itens: [
                         "Infecções bacterianas graves ocultas: infecção urinária, bacteremia oculta, pneumonia sem sinais respiratórios.",
-                        "<strong>Arboviroses</strong> (dengue, chikungunya, zika, febre amarela): avaliar história epidemiológica, exantema, artralgia, sangramentos, vômitos (bloco 🏠).",
+                        "<strong>Arboviroses</strong> (dengue, chikungunya, zika, febre amarela): avaliar história epidemiológica, exantema, artralgia, sangramentos, vômitos (aba Ambulatório).",
                         "<strong>Febre de origem indeterminada (criança):</strong> febre ≥ 38,3 °C diária por ≥ 14 dias, sem causa após avaliação clínica e laboratorial básica. Causas: infecciosas (30 a 40%: CMV, EBV, HIV, tuberculose, endocardite, abscessos, Bartonella, salmonelose, osteomielite, ITU, malária, toxoplasmose), neoplásicas (20 a 30%), reumatológicas/inflamatórias (15 a 20%) e outras (10 a 20%)."
                     ]
                 },
@@ -156,7 +156,7 @@ registrarConduta({
                         itens: [
                             { nome: "🔴 UTI", opcoes: [[3, "Choque: hipotensão, enchimento capilar > 3 s com taquicardia, extremidades frias", "🔴"]] },
                             { nome: "", opcoes: [[3, "Rebaixamento da consciência, convulsão ou insuficiência respiratória", "🔴"]] },
-                            { nome: "🟠 Internar (enfermaria)", opcoes: [[2, "Comprometimento do estado geral ou sinal de alerta do semáforo (bloco 🔎)", "🟠"]] },
+                            { nome: "🟠 Internar (enfermaria)", opcoes: [[2, "Comprometimento do estado geral ou sinal de alerta do semáforo (aba Diagnóstico)", "🟠"]] },
                             { nome: "", opcoes: [[2, "Menor de 30 dias com febre (sempre)", "🟠"]] },
                             { nome: "", opcoes: [[2, "1 a 3 meses que não cumpre todos os critérios de Rochester (alto risco)", "🟠"]] },
                             { nome: "", opcoes: [[2, "Sem condição de reavaliação diária ou risco social", "🟠"]] },
@@ -178,7 +178,7 @@ registrarConduta({
                     resumo: "Comprometido: internar em qualquer idade.",
                     itens: [
                         "Anamnese detalhada e exame físico completo procurando o foco da febre.",
-                        "Avaliar FC, FR, SatO₂, enchimento capilar, hidratação, atividade e resposta aos estímulos (escore 🚦 no bloco 🔎).",
+                        "Avaliar FC, FR, SatO₂, enchimento capilar, hidratação, atividade e resposta aos estímulos (escore 🚦 na aba Diagnóstico).",
                         "<strong>Comprometimento do estado geral, em qualquer idade:</strong> internar, colher hemocultura, urocultura, LCR e RX de tórax e iniciar antibiótico empírico.",
                         "Bom estado geral: seguir pela idade (passos 3 a 6)."
                     ]
@@ -273,7 +273,7 @@ registrarConduta({
                     itens: [
                         "Antitérmico quando a febre causa desconforto (choro intenso, irritabilidade, redução da atividade, do apetite ou do sono), não por um número de temperatura.",
                         "Monoterapia. Não alternar nem associar antitérmicos.",
-                        "Doses e cards: bloco 🏠 (Antitérmicos).",
+                        "Doses e cards: aba Ambulatório (Antitérmicos).",
                         "Orientar sinais de alerta e garantir a reavaliação diária nos casos indicados."
                     ]
                 }

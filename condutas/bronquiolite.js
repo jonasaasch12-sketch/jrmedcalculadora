@@ -178,7 +178,7 @@ registrarConduta({
                     if (g === 3) return { num: "UTI", rotulo: "UTI", cor: "#dc2626", texto: "Terapia intensiva (ver Grave: terapia intensiva e Suporte ventilatório). Pelo Guia do MS, toda BVA grave deve ficar em leito de UTI." };
                     if (g === 2) return { num: "🏥", rotulo: "Internar", cor: "#d97706", texto: "Leito de internação (ver Moderada: leito de internação): monitorização, O₂ se SatO₂ ≤ 92%, alimentação e hidratação." };
                     if (g === 1) return { num: "🟡", rotulo: "Considerar internar", cor: "#ca8a04", texto: "Critério relativo: pesar com a família e o acesso ao serviço; na dúvida, observar mais tempo ou internar." };
-                    return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Leve: acompanhamento ambulatorial e sinais de alerta para a família (bloco 🏠)." };
+                    return { num: "🏠", rotulo: "Alta com retorno", cor: "#16a34a", texto: "Leve: acompanhamento ambulatorial e sinais de alerta para a família (aba Ambulatório)." };
                 },
                 nota: "Absolutos e relativos: Guia do Ministério da Saúde. Admissão em UTI: IMIP. Antes era a lista \"Critérios de internação\"; o conteúdo é o mesmo."
             }

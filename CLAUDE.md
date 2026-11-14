@@ -29,6 +29,10 @@ está no repositório é exatamente o que vai para o ar. Login e dados da equipe
 
 ```
 index.html                 telas (login, cabeçalho, painel, modais) + lista de <script>
+                           Página inicial pública (apresentação com vídeo, #paginaInicialPublica): SÓ NO TESTE. O script do <head>
+                           age só em /teste/ (põe html.pagina-publica-ativa; html.verificando-acesso só se o aparelho já tem cópia do perfil; o CSS fica em css/inicio.css).
+                           Vídeo video/apresentacao.mp4 (cerca de 1 min, com narração) e capa video/apresentacao-capa.jpg, no início da página (formato de celular). Fonte e como refazer: testes/video-fonte/ (não é publicada).
+                           O vídeo mostra uma dose de exemplo (dipirona, 4 anos, 16 kg): decide o Dr. Jonas antes de liberar. Para liberar no oficial: trocar a 1ª linha desse script (o `if` de /teste/).
 css/estilo.css             aparência base (inclui tema escuro: html[data-theme="dark"])
 css/visual.css             camada visual "profissional" (tokens, Inter, cabeçalho, menu de configurações)
 css/layout-b.css           Layout B (proposta do Figma): barra lateral de ícones, faixa do paciente, cards um embaixo do outro,
@@ -51,6 +55,21 @@ js/formularios.js          modais (cadastro da equipe, categorias, ficha) + inic
 js/cadastro.js             cadastro profissional (nome, atividade, CRM/COREN/CRF+UF ou faculdade+formatura, aceite);
                            pendenciaPerfil() decide quando pedir "Complete seu cadastro"
 js/digital.js              celular: desbloqueio com digital/rosto (WebAuthn, só no aparelho); computador: sessão sai após 1 h sem uso (firebase.js)
+js/atalhos.js              ⚡ Atalhos por cima do prontuário (Document Picture-in-Picture, Chrome/Edge no computador):
+                           exame físico ♂/♀ e orientações de alta (1 clique = copiado), "meus atalhos" (localStorage), calculadora (peso + busca)
+                           com "+ Receita" na MESMA receita do app (carrinhoPrescricao; textoReceitaCompleta/viaDaReceita em app.js). Só no teste (ATALHOS_LIBERADOS)
+                           "Meus atalhos" (+ Adicionar atalho → Do sistema = card / Texto meu = modelo livre, ex.: prontuário do hospital) salvos NA CONTA:
+                           Firestore `atalhos_usuarios/{uid}` (window.JRAtalhos em firebase.js; precisa da regra publicada no console; sem ela, localStorage).
+                           Aba "Prescrição pronta" ({tipo:"kit", nome, ids}, até 15 cards): só copia com PESO e IDADE; texto = textoReceitaDeItens() (app.js).
+                           Limite 30 atalhos × 5000 letras. Aviso "não coloque dados de pacientes". Termos (item 5) e Privacidade já citam os atalhos.
+                           Tablet (Android/iPad, ehTablet()): não há janela por cima de outro app → abre num PAINEL à direita dentro do app
+                           (iframe sem src, abrirPainelAtalhos; ✕ fecha). Celular: botão não aparece.
+                           AO LIBERAR: subir VERSAO_TERMOS (js/cadastro.js) para "2026-11" e a "versão" no topo de termos.html/privacidade.html
+js/inicio.js + css/inicio.css  🏠 TELA INICIAL depois do login (só no teste: INICIO_LIBERADO = false): estilo "Apple" (ícones SVG de traço,
+                           listas com ›), blocos Pediatria (Prescrição, Condutas, Emergência = cat-pals, Exame físico, Atalhos) e Adulto ("Em breve"),
+                           Prescrições prontas (kits dos atalhos) e Recentes (localStorage jrmed_recentes; embrulha adicionarAoCarrinho/abrirConduta).
+                           firebase.js chama aoEntrarNoApp()/aoSairDoApp(). Volta: "‹ Início" no cabeçalho, aba 🏠 no celular, item no Menu.
+                           O adulto terá os PRÓPRIOS atalhos (decisão do Dr. Jonas). No oficial nada muda.
 js/firebase.js             login e Firestore (módulo); sem e-mail de confirmação (suspenso: não chegava), o cadastro pede o e-mail 2x; grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)
 privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; contato jrmedprescricao@gmail.com). Mudou o texto?
@@ -72,6 +91,16 @@ condutas/<doenca>.js       uma doença por arquivo: registrarConduta({...}); as 
 ```
 
 ## Padrão das condutas (definido pelo Dr. Jonas)
+
+- **[Aposentado em 11/2026] Visual "referência clínica"**: hoje `CONDUTAS_VISUAL_NOVO = false`; teste e oficial usam a estrutura oficial com o estilo Apple (css/inicio.css, html.estilo-apple). Texto antigo abaixo só como histórico.
+- **Visual "referência clínica" — (histórico)** (Dr. Jonas ainda não quis liberar, 11/2026): `CONDUTAS_VISUAL_NOVO = MODO_TESTE` em
+  condutas/condutas.js põe a classe `html.cond-visual-novo`; todo o CSS novo (fim de condutas.css) vale só com ela. No oficial fica o visual
+  anterior (índice colorido, blocos com ícone, "Abrir tudo"; regras em temas-teste.css/visual.css com `:not(.cond-visual-novo)`), e
+  `textoVisualAntigo()` troca "aba Diagnóstico" por "bloco 🔎" no texto. Para liberar: trocar a constante para `true`.
+  Visual novo: página branca, uma cor de
+  destaque (`--cond-acento`, verde-petróleo), **sem emoji nos títulos** (o `icone` das seções e dos blocos não aparece; `semEmoji()` limpa o título),
+  **cada bloco vira uma aba** (Diagnóstico | Emergência | Ambulatório; nome curto por `nomeAbaBloco()` ou `aba: "..."` no bloco) e as seções
+  abrem e fecham com + e −. Texto que remete a outra parte da conduta diz "aba Diagnóstico/Emergência/Ambulatório" (não "bloco 🔎").
 
 - 3 blocos, nesta ordem: **🔎 Diagnóstico e apresentação clínica** (azul) → **🚨 Condução na
   emergência / hospitalar** (vermelho) → **🏠 Ambulatório: casa e manutenção** (verde).
@@ -167,6 +196,20 @@ funcionar na raiz e em `/teste/`. `js/modo-teste.js` detecta `/teste/` (constant
   Repetir em outra seção só quando lá ele serve para outra coisa (ex.: ivermectina em Pele = sarna; em Parasitoses = verme).
 - Novo remédio: criar o bloco no arquivo da categoria **e** colocar o id em `medicamentos/menu.js`.
   Se tiver teto de dose, acrescentar em `TETOS` (testes/verificar.js).
+
+## Padrão visual (combinado com o Dr. Jonas, 11/2026)
+
+Todas as telas (login, início, prescrição, condutas e as próximas) seguem o mesmo padrão. Ao criar tela nova, usar estes valores; não inventar cor nova.
+
+- **Tarja azul no topo:** `#005eb8` (faixa do cabeçalho da Prescrição e da tarja do login). Texto da tarja em branco.
+- **Botão principal:** azul sólido `#005eb8` (hover `#0a6fd6`), cantos 10px, sem degradê e sem sombra forte.
+- **Logo:** "JR" em quadrado verde-azulado (gradiente de `#0f766e` a `#14b8a6`). Não mudar a cor do logo.
+- **Fundo das telas:** cinza claro `#f2f4f7` (login, início e lateral). Blocos e cartões brancos.
+- **Cartões:** fundo branco, borda `#e3e7ec`, cantos 12–14px, sombra suave (`0 10px 30px rgba(16,24,40,.08)`).
+- **Campos:** borda `#cfd6de`, cantos 10px; foco com contorno azul fino.
+- **Texto:** `#212b32` para título e corpo; `#5b6670` para legenda. Fonte Inter.
+- **Verde (opção D · Verde, Menu → 🎨 Visual (teste)):** `#0f766e`, o tom do login, para comparar com o azul.
+- **Onde fica:** o estilo novo vale só no teste (`html.estilo-apple`, em `css/inicio.css`). Nas opções de visual (`css/temas-teste.css`), cada uma redefine as cores de `--primary` e do cabeçalho.
 
 ## Testar a tela
 
