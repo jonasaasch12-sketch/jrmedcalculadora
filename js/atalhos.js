@@ -9,7 +9,7 @@
 // Sem ela (Firefox, Safari, celular), abre uma janela comum.
 // Todo o texto clínico vem dos próprios cards (farmaciaJR): nada é escrito aqui.
 // =====================================================
-const ATALHOS_LIBERADOS = false; /* trocar para true quando o Dr. Jonas liberar para todos */
+const ATALHOS_LIBERADOS = true; /* liberados para todos (11/2026) */
 
 const ATALHOS_ORIENTACOES = [
     ["orientacoes_gerais", "Alarme respiratório"],
