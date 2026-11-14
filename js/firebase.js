@@ -681,7 +681,13 @@ document.getElementById('btnSairPerfil').addEventListener('click', () => signOut
 
 onAuthStateChanged(auth, async (user) => {
     const primeiraResposta = !window.__authResolvido; // a primeira resposta do Firebase nesta página
-    window.__authResolvido = true; // o Firebase já respondeu (usado pelo fallback de 8 s no index.html, só no teste)
+    window.__authResolvido = true; // o Firebase já respondeu (usado pelo fallback de 8 s no index.html)
+    // Marca apenas que este aparelho já teve uma sessão autenticada. Não autentica ninguém:
+    // a validade da sessão continua sendo decidida exclusivamente pelo Firebase.
+    try {
+        if (user) localStorage.setItem('jrmed_sessao_conhecida', '1');
+        else localStorage.removeItem('jrmed_sessao_conhecida');
+    } catch (e) { }
     if (user) { // e-mail de confirmação suspenso: qualquer conta logada entra
         if (conferirInatividade()) return;
         if (!lerAtividade()) marcarAtividade();
