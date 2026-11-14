@@ -376,3 +376,51 @@ html.verificando-acesso #tela-login { display: none !important; }
 .verificando-giro { display: inline-block; width: 16px; height: 16px; border-radius: 50%; border: 2px solid #cfd6de; border-top-color: #005eb8; animation: verificando-giro .8s linear infinite; }
 @keyframes verificando-giro { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .verificando-giro { animation-duration: 2.4s; } }
+
+/* ===== Página inicial pública (apresentação do JR MED), só no teste por enquanto.
+   Ligada por html.pagina-publica-ativa (index.html). "Entrar" põe html.login-aberto e mostra o login. ===== */
+#paginaInicialPublica { display: none; min-height: 100vh; background: #f2f4f7; color: #212b32; font-family: Inter, -apple-system, "Segoe UI", Arial, sans-serif; }
+html.pagina-publica-ativa:not(.login-aberto) #paginaInicialPublica { display: block; }
+html.pagina-publica-ativa.login-aberto #paginaInicialPublica { display: none !important; }
+html.verificando-acesso #paginaInicialPublica { display: none !important; }
+html.pagina-publica-ativa #tela-login { display: none !important; }
+html.pagina-publica-ativa.login-aberto #tela-login { display: flex !important; }
+.login-voltar-pag { display: none; background: none; border: 0; color: #005eb8; font: inherit; font-weight: 700; font-size: 14px; cursor: pointer; padding: 0 0 12px; }
+html.pagina-publica-ativa .login-voltar-pag { display: block; }
+.pub-topo { background: #005eb8; color: #fff; height: 58px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+.pub-marca { display: flex; align-items: center; gap: 10px; }
+.pub-marca b { display: block; font-size: 17px; line-height: 1.1; }
+.pub-marca small { display: block; font-size: 12px; opacity: .85; }
+.pub-marca .logo-login { width: 32px; height: 32px; font-size: 13px; border-radius: 9px; }
+.pub-entrar { background: #fff; color: #005eb8; border: 0; border-radius: 999px; padding: 8px 18px; font: inherit; font-weight: 700; font-size: 14px; cursor: pointer; }
+.pub-capa { max-width: 1040px; margin: 0 auto; padding: 52px 24px 18px; }
+.pub-selo { display: inline-block; font-size: 12.5px; font-weight: 700; color: #005eb8; background: #e8f1fa; padding: 5px 12px; border-radius: 999px; margin: 0 0 14px; }
+.pub-capa h1 { font-size: 34px; line-height: 1.15; letter-spacing: -.02em; margin: 0 0 14px; max-width: 760px; }
+.pub-capa > p { font-size: 17px; line-height: 1.55; color: #3d4a57; max-width: 720px; margin: 0 0 22px; }
+.pub-botoes { display: flex; flex-wrap: wrap; gap: 10px; }
+.pub-btn-primario { background: #005eb8; color: #fff; border: 0; border-radius: 10px; padding: 12px 20px; font: inherit; font-weight: 700; font-size: 15px; cursor: pointer; }
+.pub-btn-primario:hover { background: #0a6fd6; }
+.pub-btn-secundario { color: #005eb8; border: 1px solid #cfd6de; background: #fff; border-radius: 10px; padding: 11px 18px; font-weight: 700; font-size: 15px; text-decoration: none; }
+.pub-secao { max-width: 1040px; margin: 0 auto; padding: 26px 24px; }
+.pub-secao h2 { font-size: 22px; letter-spacing: -.01em; margin: 0 0 16px; }
+.pub-video { display: block; width: min(300px, 80%); margin: 0 auto; border-radius: 14px; background: #000; box-shadow: 0 10px 30px rgba(16,24,40,.12); }
+.pub-legenda { text-align: center; font-size: 13.5px; color: #5b6670; margin: 10px 0 0; }
+.pub-grade { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.pub-card { background: #fff; border: 1px solid #e3e7ec; border-top: 4px solid #005eb8; border-radius: 12px; padding: 18px; box-shadow: 0 1px 2px rgba(16,24,40,.04); }
+.pub-card h3 { font-size: 16px; margin: 0 0 6px; }
+.pub-card p { font-size: 14.5px; line-height: 1.5; color: #4c5966; margin: 0; }
+.pub-aviso-bloco { padding-top: 6px; }
+.pub-aviso { background: #fff8e1; border: 1px solid #f1d88a; color: #5c4300; border-radius: 12px; padding: 14px 16px; font-size: 14px; line-height: 1.5; }
+.pub-texto { font-size: 15.5px; line-height: 1.6; color: #3d4a57; max-width: 760px; margin: 0 0 12px; }
+.pub-texto a, .pub-rodape a { color: #005eb8; }
+.pub-rodape { text-align: center; font-size: 13px; color: #5b6670; padding: 26px 16px 34px; }
+@media (max-width: 849px) {
+    .pub-topo { padding: 0 14px; }
+    .pub-capa { padding: 34px 18px 12px; }
+    .pub-capa h1 { font-size: 27px; }
+    .pub-capa > p { font-size: 16px; }
+    .pub-grade { grid-template-columns: 1fr; }
+    .pub-secao { padding: 22px 18px; }
+}
+/* Com sessão aberta (app ou cadastro), a página inicial pública não aparece */
+html.com-sessao #paginaInicialPublica { display: none !important; }

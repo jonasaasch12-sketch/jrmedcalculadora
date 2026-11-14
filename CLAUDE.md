@@ -29,6 +29,10 @@ está no repositório é exatamente o que vai para o ar. Login e dados da equipe
 
 ```
 index.html                 telas (login, cabeçalho, painel, modais) + lista de <script>
+                           Página inicial pública (apresentação com vídeo, #paginaInicialPublica): SÓ NO TESTE. O script do <head>
+                           age só em /teste/ (põe html.pagina-publica-ativa e html.verificando-acesso; o CSS fica em css/inicio.css).
+                           Vídeo video/apresentacao.mp4, capa video/apresentacao-capa.jpg. Para liberar no oficial: trocar a 1ª linha
+                           desse script (o `if` de /teste/) e conferir antes o vídeo (mostra doses de exemplo; decide o Dr. Jonas).
 css/estilo.css             aparência base (inclui tema escuro: html[data-theme="dark"])
 css/visual.css             camada visual "profissional" (tokens, Inter, cabeçalho, menu de configurações)
 css/layout-b.css           Layout B (proposta do Figma): barra lateral de ícones, faixa do paciente, cards um embaixo do outro,

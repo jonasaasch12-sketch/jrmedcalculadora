@@ -8,6 +8,11 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://*.googleapis.com https://www.gstatic.com https://jrmed-calculadora.firebaseapp.com https://*.firebaseio.com wss://*.firebaseio.com; frame-src https://jrmed-calculadora.firebaseapp.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <script>
+    /* Página inicial pública (teste por enquanto): "Entrar" mostra o login; "Página inicial" volta para a apresentação. */
+    function abrirLoginDaPagina() { document.documentElement.classList.add('login-aberto'); setTimeout(function () { var e = document.getElementById('emailInput'); if (e) e.focus(); }, 0); }
+    function voltarPaginaInicial() { document.documentElement.classList.remove('login-aberto'); window.scrollTo(0, 0); }
+    </script>
+    <script>
     /* Só na versão de teste (/teste/). Enquanto o Firebase confere a sessão, a tela mostra "Verificando acesso…"
        (classe html.verificando-acesso, css/inicio.css). As bibliotecas do Firebase começam a baixar já aqui,
        em paralelo com os demais arquivos. Se o Firebase não responder em 8 s, mostra o login com um aviso.
@@ -16,6 +21,7 @@
         if (location.pathname.indexOf('/teste/') === -1) return;
         var raiz = document.documentElement;
         raiz.classList.add('verificando-acesso');
+        raiz.classList.add('pagina-publica-ativa');
         ['firebase-app.js', 'firebase-auth.js', 'firebase-firestore.js'].forEach(function (arq) {
             var pre = document.createElement('link');
             pre.rel = 'modulepreload';
@@ -25,6 +31,7 @@
         setTimeout(function () {
             if (window.__authResolvido || !raiz.classList.contains('verificando-acesso')) return;
             raiz.classList.remove('verificando-acesso');
+            raiz.classList.add('login-aberto');
             var login = document.getElementById('tela-login');
             if (login) login.style.display = 'flex';
             var msg = document.getElementById('mensagemErro');
@@ -60,6 +67,50 @@
     <!-- ========================================== -->
     <!-- TELA DE LOGIN                              -->
     <!-- ========================================== -->
+    <!-- Página inicial pública (apresentação do JR MED). Teste por enquanto: html.pagina-publica-ativa (ver css/inicio.css) -->
+    <div id="paginaInicialPublica">
+        <header class="pub-topo">
+            <div class="pub-marca"><div class="logo-futurista logo-login" aria-hidden="true">JR</div><div><b>JR MED</b><small>Prescrição e condutas pediátricas</small></div></div>
+            <button type="button" class="pub-entrar" onclick="abrirLoginDaPagina()">Entrar</button>
+        </header>
+        <section class="pub-capa">
+            <p class="pub-selo">Acesso restrito a profissionais de saúde</p>
+            <h1>Prescrição pediátrica em segundos, do peso à receita pronta</h1>
+            <p>Digite a idade e o peso e veja a dose de cada remédio, com a fonte de cada dose. Monte a receita com um toque e copie para o prontuário. Condutas passo a passo para o plantão.</p>
+            <div class="pub-botoes">
+                <button type="button" class="pub-btn-primario" onclick="abrirLoginDaPagina()">Entrar no JR MED</button>
+                <a href="#pubVideo" class="pub-btn-secundario">Ver como funciona</a>
+            </div>
+        </section>
+        <section class="pub-secao" id="pubVideo">
+            <h2>Veja como funciona</h2>
+            <video class="pub-video" controls playsinline preload="none" poster="video/apresentacao-capa.jpg" aria-label="Vídeo de apresentação do JR MED">
+                <source src="video/apresentacao.mp4" type="video/mp4">
+                Seu navegador não mostra o vídeo.
+            </video>
+            <p class="pub-legenda">Vídeo de apresentação, mostrando o celular.</p>
+        </section>
+        <section class="pub-secao">
+            <h2>O que tem no JR MED</h2>
+            <div class="pub-grade">
+                <article class="pub-card"><h3>Prescrição</h3><p>Doses por peso e idade, com a fonte de cada dose e a receita pronta para copiar.</p></article>
+                <article class="pub-card"><h3>Condutas</h3><p>Passo a passo de cada doença: diagnóstico, emergência e ambulatório, com escores e critérios de internação.</p></article>
+                <article class="pub-card"><h3>Emergência</h3><p>Sequências rápidas de intubação (RSI) e PALS, separadas por etapa.</p></article>
+                <article class="pub-card"><h3>Exame físico e orientações</h3><p>Modelos de exame físico e de orientação de alta, prontos para copiar.</p></article>
+                <article class="pub-card"><h3>Alergias</h3><p>Informe as alergias do paciente e o app mostra o alerta nos remédios que podem causar reação.</p></article>
+                <article class="pub-card"><h3>Celular e computador</h3><p>Funciona no navegador, sem instalar nada. Pode ser usado no plantão, no celular ou no computador.</p></article>
+            </div>
+        </section>
+        <section class="pub-secao pub-aviso-bloco">
+            <div class="pub-aviso"><strong>Ferramenta de apoio à decisão.</strong> As doses são calculadas automaticamente e devem ser sempre conferidas pelo profissional prescritor antes do uso, considerando o quadro clínico completo, alergias, contraindicações e protocolos vigentes na instituição.</div>
+        </section>
+        <section class="pub-secao">
+            <h2>Para quem é</h2>
+            <p class="pub-texto">Para profissionais de saúde que atendem crianças: médicos, enfermeiros e farmacêuticos. O acesso é restrito. No cadastro, você informa o seu registro profissional.</p>
+            <p class="pub-texto">Seus dados são protegidos conforme a LGPD. Leia a <a href="privacidade.html">Política de Privacidade</a> e os <a href="termos.html">Termos de Uso</a>.</p>
+        </section>
+        <footer class="pub-rodape">© 2026 JR MED · Contato: <a href="mailto:jrmedprescricao@gmail.com">jrmedprescricao@gmail.com</a></footer>
+    </div>
     <!-- Só no teste: enquanto o Firebase confere a sessão (ver css/inicio.css, html.verificando-acesso) -->
     <div id="telaVerificando" class="login-container" role="status" aria-live="polite">
         <div class="login-box verificando-box">
@@ -70,6 +121,7 @@
     </div>
     <div id="tela-login" class="login-container">
         <div class="login-box">
+            <button type="button" class="login-voltar-pag" onclick="voltarPaginaInicial()">← Página inicial</button>
             <div class="logo-futurista logo-login" aria-hidden="true">JR</div>
             <h2 class="login-titulo">JR MED</h2>
             <p class="login-sub">Prescrição e condutas pediátricas<br><span>Acesso restrito a profissionais de saúde</span></p>
