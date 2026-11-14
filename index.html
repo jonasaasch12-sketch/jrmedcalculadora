@@ -13,15 +13,18 @@
     function voltarPaginaInicial() { document.documentElement.classList.remove('login-aberto'); window.scrollTo(0, 0); }
     </script>
     <script>
-    /* Só na versão de teste (/teste/). Enquanto o Firebase confere a sessão, a tela mostra "Verificando acesso…"
-       (classe html.verificando-acesso, css/inicio.css). As bibliotecas do Firebase começam a baixar já aqui,
-       em paralelo com os demais arquivos. Se o Firebase não responder em 8 s, mostra o login com um aviso.
-       O site oficial (/) não muda. */
+    /* Só na versão de teste (/teste/). Quem chega sem entrar vê a apresentação logo, sem esperar o Firebase.
+       Quem já entrou neste aparelho (há cópia do perfil, jrmed_perfil) vê "Verificando acesso…" (classe
+       html.verificando-acesso, css/inicio.css) até o Firebase conferir a conta, para não mostrar a apresentação
+       antes do app. Se o Firebase não responder em 8 s, mostra a apresentação (o login só abre pelo "Entrar").
+       As bibliotecas do Firebase começam a baixar já aqui. O site oficial (/) não muda. */
     (function () {
         if (location.pathname.indexOf('/teste/') === -1) return;
         var raiz = document.documentElement;
-        raiz.classList.add('verificando-acesso');
         raiz.classList.add('pagina-publica-ativa');
+        var jaEntrouNesteAparelho = false;
+        try { jaEntrouNesteAparelho = !!localStorage.getItem('jrmed_perfil'); } catch (e) { }
+        if (jaEntrouNesteAparelho) raiz.classList.add('verificando-acesso');
         ['firebase-app.js', 'firebase-auth.js', 'firebase-firestore.js'].forEach(function (arq) {
             var pre = document.createElement('link');
             pre.rel = 'modulepreload';
@@ -31,11 +34,6 @@
         setTimeout(function () {
             if (window.__authResolvido || !raiz.classList.contains('verificando-acesso')) return;
             raiz.classList.remove('verificando-acesso');
-            raiz.classList.add('login-aberto');
-            var login = document.getElementById('tela-login');
-            if (login) login.style.display = 'flex';
-            var msg = document.getElementById('mensagemErro');
-            if (msg) { msg.style.color = '#dc2626'; msg.innerText = 'Não foi possível verificar o acesso agora. Confira a internet e tente de novo.'; }
         }, 8000);
     })();
     </script>

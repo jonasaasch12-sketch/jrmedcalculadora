@@ -676,7 +676,8 @@ function pedirPerfil(user, perfil, motivo) {
 document.getElementById('btnSairPerfil').addEventListener('click', () => signOut(auth));
 
 onAuthStateChanged(auth, async (user) => {
-    window.__authResolvido = true; // o Firebase já respondeu (usado pelo aviso de 8 s no index.html, só no teste)
+    const primeiraResposta = !window.__authResolvido; // a primeira resposta do Firebase nesta página
+    window.__authResolvido = true; // o Firebase já respondeu (usado pelo fallback de 8 s no index.html, só no teste)
     if (user) { // e-mail de confirmação suspenso: qualquer conta logada entra
         if (conferirInatividade()) return;
         if (!lerAtividade()) marcarAtividade();
@@ -727,7 +728,11 @@ onAuthStateChanged(auth, async (user) => {
         if (motivo) pedirPerfil(user, perfil, motivo);
         else mostrarApp(user, perfil);
     } else {
-        sairDaVerificacao();
+        // Visitante (teste): aparece a apresentação; o login abre pelo botão "Entrar" (ou se a sessão expirou, com o aviso).
+        // Se a pessoa já tocou em "Entrar" antes da primeira resposta do Firebase, o login continua aberto.
+        document.documentElement.classList.remove('verificando-acesso', 'com-sessao');
+        if (sessaoExpirada) document.documentElement.classList.add('login-aberto');
+        else if (!primeiraResposta) document.documentElement.classList.remove('login-aberto');
         telaLogin.style.display = "flex";
         telaPerfil.style.display = "none";
         appPrincipal.style.display = "none";
