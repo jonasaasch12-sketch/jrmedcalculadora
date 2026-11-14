@@ -245,6 +245,14 @@
                 <button type="button" id="btnMeusDados" class="config-acao" title="Ver, corrigir, baixar ou excluir os seus dados"><span>👤</span> Meus dados</button>
             </div>
 
+            <!-- Diagnóstico temporário do Auth (só /teste/ e só para a conta de administrador; js/firebase.js). REMOVER antes de liberar para o oficial. -->
+            <div class="config-secao" id="diagAuth" style="display:none;">
+                <div class="config-secao-titulo">Diagnóstico de login (temporário)</div>
+                <div class="config-linha"><div><strong>E-mail</strong><small id="diagAuthEmail">—</small></div></div>
+                <div class="config-linha"><div><strong>emailVerified</strong><small id="diagAuthVerificado">—</small></div></div>
+                <div class="config-linha"><div><strong>UID</strong><small id="diagAuthUid" style="word-break:break-all;">—</small></div></div>
+            </div>
+
             <div class="config-secao" id="linhaDigital" style="display:none;">
                 <div class="config-secao-titulo">Segurança</div>
                 <div class="config-linha">
