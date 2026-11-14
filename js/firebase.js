@@ -675,6 +675,23 @@ function pedirPerfil(user, perfil, motivo) {
 }
 document.getElementById('btnSairPerfil').addEventListener('click', () => signOut(auth));
 
+// ===== Diagnóstico temporário do Auth (só na versão de teste, só para a conta de administrador) =====
+// Mostra, no menu, o e-mail, o emailVerified e o UID do usuário atual, lidos do Firebase Authentication.
+// Só lê: não grava nada e não mexe no login. REMOVER antes de liberar para o oficial.
+function diagAuthMostrar() {
+    let bloco = document.getElementById('diagAuth');
+    if (!bloco) return;
+    let u = auth.currentUser;
+    let admin = MODO_TESTE && !!u && EMAILS_ADMIN.includes(u.email);
+    bloco.style.display = admin ? 'block' : 'none';
+    if (!admin) return;
+    document.getElementById('diagAuthEmail').innerText = u.email || '(sem e-mail)';
+    document.getElementById('diagAuthVerificado').innerText = String(u.emailVerified);
+    document.getElementById('diagAuthUid').innerText = u.uid;
+}
+const abrirConfigSemDiag = window.abrirConfig;
+window.abrirConfig = function () { abrirConfigSemDiag.apply(this, arguments); diagAuthMostrar(); };
+
 onAuthStateChanged(auth, async (user) => {
     const primeiraResposta = !window.__authResolvido; // a primeira resposta do Firebase nesta página
     window.__authResolvido = true; // o Firebase já respondeu (usado pelo fallback de 8 s no index.html, só no teste)
