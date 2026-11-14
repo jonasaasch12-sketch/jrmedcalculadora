@@ -696,9 +696,9 @@ onAuthStateChanged(auth, async (user) => {
             if (!(await exigirDigital())) { window.sairDaConta(); return; }
         }
         entrouComSenha = false;
-        // Teste: se o aparelho já guarda um cadastro completo desta conta, abre o app na hora
+        // Se o aparelho já guarda um cadastro completo desta conta, abre o app na hora
         // e confere com o servidor depois (sem deixar a tela esperando a internet).
-        if (MODO_TESTE) {
+        {
             let copiaRapida = lerPerfilLocal(user.uid);
             if (perfilDoCadastro && perfilDoCadastro.email === (user.email || '').toLowerCase()) { copiaRapida = perfilDoCadastro.perfil; perfilDoCadastro = null; }
             if (copiaRapida && !pendenciaPerfil(copiaRapida)) {

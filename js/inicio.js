@@ -2,11 +2,11 @@
 // 🏠 TELA INICIAL (depois do login): Pediatria | Adulto, prescrições prontas e recentes.
 // Estilo "Apple" (css/inicio.css). Pedido do Dr. Jonas (11/2026): o JR MED vai virar um sistema de
 // prescrição médica geral; a pediatria é o que já existe, o adulto vem depois ("Em breve").
-// Só no teste por enquanto (INICIO_LIBERADO). Sem a tela, tudo fica exatamente como antes.
+// Tela inicial (INICIO_LIBERADO). Sem a tela, tudo fica exatamente como antes.
 // Carregado por último (depois de app.js, atalhos.js e condutas): usa trocarModo, irParaCategoria,
 // abrirAtalhos, atalhosMeus, condutasJR, farmaciaJR.
 // =====================================================
-const INICIO_LIBERADO = false; /* trocar para true quando o Dr. Jonas liberar para todos */
+const INICIO_LIBERADO = true; /* liberada para todos (11/2026) */
 const INICIO_CHAVE_RECENTES = "jrmed_recentes";
 const INICIO_MAX_RECENTES = 6;
 
@@ -307,8 +307,8 @@ function arrumarPainelApple() {
     if (grupos.length === 2) ins.insertBefore(grupos[1], grupos[0]); /* peso antes da idade */
 }
 if (typeof document !== "undefined") {
-    /* estilo Apple só no teste (css/inicio.css, bloco html.estilo-apple) */
-    if (typeof MODO_TESTE !== "undefined" && MODO_TESTE) document.documentElement.classList.add("estilo-apple");
+    /* estilo Apple (css/inicio.css, bloco html.estilo-apple) */
+    document.documentElement.classList.add("estilo-apple");
     let iniciar = () => { if (inicioAtivo()) { instalarRecentes(); instalarBotoesInicio(); } };
     if (document.documentElement.classList.contains('estilo-apple')) arrumarPainelApple();
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", iniciar); else iniciar();
