@@ -1,0 +1,7 @@
+# JR MED: o site oficial pode ser indexado pelos buscadores.
+# A versão de teste (/teste/) fica fora da busca.
+User-agent: *
+Allow: /
+Disallow: /teste/
+
+Sitemap: https://www.jrmedprescricao.com.br/sitemap.xml
