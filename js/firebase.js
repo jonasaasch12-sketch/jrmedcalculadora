@@ -586,7 +586,7 @@ function lerPerfilLocal(uid) { try { let d = JSON.parse(localStorage.getItem('jr
 function guardarPerfilLocal(uid, perfil) { try { localStorage.setItem('jrmed_perfil', JSON.stringify({ uid, perfil })); } catch (e) { } }
 
 // Teste: tira a tela "Verificando acesso…" (css/inicio.css). No site oficial a classe nunca é colocada.
-function sairDaVerificacao() { document.documentElement.classList.remove('verificando-acesso'); }
+function sairDaVerificacao() { document.documentElement.classList.remove('verificando-acesso', 'login-aberto', 'com-sessao'); } // 'login-aberto': o login volta a ficar escondido até o botão "Entrar" da página inicial
 
 // Teste: atualiza o nome e o e-mail na tela quando o cadastro no servidor for diferente da cópia do aparelho.
 function atualizarPerfilNaTela(user, perfil) {
@@ -620,6 +620,7 @@ async function conferirPerfilDepois(user, copia) {
 
 function mostrarApp(user, perfil) {
     sairDaVerificacao();
+    document.documentElement.classList.add('com-sessao'); // esconde a página inicial pública (teste)
     telaLogin.style.display = "none";
     telaPerfil.style.display = "none";
     appPrincipal.style.display = "block";
@@ -650,6 +651,7 @@ function mostrarApp(user, perfil) {
 // Pede o cadastro profissional (bloqueia o app até salvar).
 function pedirPerfil(user, perfil, motivo) {
     sairDaVerificacao();
+    document.documentElement.classList.add('com-sessao');
     telaLogin.style.display = "none";
     appPrincipal.style.display = "none";
     telaPerfil.style.display = "flex";
@@ -680,10 +682,11 @@ onAuthStateChanged(auth, async (user) => {
         if (!lerAtividade()) marcarAtividade();
         let ehAdmin = EMAILS_ADMIN.includes(user.email);
         // Versão de teste (/teste/): só administradores entram.
-        if (MODO_TESTE && !ehAdmin) { registrarAcesso(user); sairDaVerificacao(); telaLogin.style.display = "none"; appPrincipal.style.display = "block"; mostrarBloqueioTeste(user.email); return; }
+        if (MODO_TESTE && !ehAdmin) { registrarAcesso(user); sairDaVerificacao(); document.documentElement.classList.add('login-aberto'); telaLogin.style.display = "none"; appPrincipal.style.display = "block"; mostrarBloqueioTeste(user.email); return; }
         // Celular com digital ativada: pede a digital antes de mostrar o app.
         if (!entrouComSenha && window.digitalAtivadaPara && digitalAtivadaPara(user.uid)) {
             sairDaVerificacao();
+            document.documentElement.classList.add('com-sessao');
             telaLogin.style.display = "none";
             if (!(await exigirDigital())) { window.sairDaConta(); return; }
         }
