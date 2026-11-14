@@ -13,7 +13,7 @@ const MESES_PERFIL = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho"
 const TEXTO_ACEITE_PERFIL = "Declaro que as informações são verdadeiras, que sou profissional ou estudante da área da saúde e que entendo que o JR MED é ferramenta de apoio: doses e condutas devem ser conferidas pelo prescritor.";
 // Versão dos Termos de Uso e da Política de Privacidade (termos.html / privacidade.html).
 // Mudou a versão = todos aceitam de novo no próximo acesso.
-const VERSAO_TERMOS = "2026-10";
+const VERSAO_TERMOS = "2026-11";
 const TEXTO_ACEITE_TERMOS = 'Li e concordo com os <a href="termos.html" target="_blank" rel="noopener">Termos de Uso</a> e a <a href="privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.';
 
 function escPerfil(t) { return String(t ?? "").replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch])); }
