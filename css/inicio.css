@@ -347,8 +347,7 @@ html.estilo-apple #tela-login, html.estilo-apple .login-container { background: 
     html:not([data-theme="dark"]) #tela-inicio main .in-busca { background: #fff; border: 1px solid #cfd6de; max-width: none; margin: 12px 0 0; }
     html:not([data-theme="dark"]) #tela-inicio .in-area { background: #fff; border: 1px solid #d8dde0; border-top: 4px solid #005eb8; border-radius: 6px; box-shadow: none; padding: 14px; }
     html:not([data-theme="dark"]) #tela-inicio .in-area .in-lista { background: #f5f7f8; border-radius: 6px; box-shadow: none; }
-    html:not([data-theme="dark"]) #tela-inicio .in-q { background: #005eb8 !important; }
-    html:not([data-theme="dark"]) #tela-inicio .in-area.off .in-q { background: #9aa5b1 !important; }
+    /* Os quadros de ícone mantêm a cor de cada bloco, como no celular. O Adulto fica dessaturado pela regra .in-area.off (acima). */
     html:not([data-theme="dark"]) #tela-inicio .in-acab h3 { color: #212b32; }
     html:not([data-theme="dark"]) #tela-inicio .in-ver, html:not([data-theme="dark"]) #tela-inicio .in-breve { color: #005eb8; }
 }
