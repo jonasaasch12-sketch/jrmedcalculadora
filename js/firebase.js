@@ -437,7 +437,7 @@ window.renderizarUsuarios = function () {
                 <div class="usu-email">${esc(u.perfil?.nome || u.email || "(sem e-mail)")}${EMAILS_ADMIN.includes(u.email) ? ' <span class="usu-tag">admin</span>' : ''}${pendenciaPerfil(u.perfil) ? ' <span class="usu-tag usu-tag-pend">cadastro incompleto</span>' : ''}</div>
                 ${u.perfil?.nome ? `<div class="usu-info">${esc(u.email)}</div>` : ''}
                 ${u.perfil ? `<div class="usu-perfil">${esc(resumoPerfil(u.perfil))}${u.perfil.celular ? ' · ' + esc(u.perfil.celular) : ''}</div>` : ''}
-                <div class="usu-info">Cadastro: ${dataBR(u.cadastro)} · Último acesso: ${dataBR(u.ultimo, true)}${u.versao === 'teste' ? ' (teste)' : ''} · ${u.acessos || 1} acesso(s)</div>
+                <div class="usu-info">Cadastro: ${dataBR(u.cadastro)} · Último acesso: ${dataBR(u.ultimo, true)}${u.versao === 'teste' ? ' (teste)' : ''} · ${esc(String(u.acessos || 1))} acesso(s)</div>
             </div>
         </div>`).join('') : '<p class="form-hint">Nenhum usuário encontrado.</p>');
 };
@@ -529,7 +529,11 @@ window.excluirInativos = async function () {
 // Planilha (CSV com ";" e acentos, abre direto no Excel).
 window.baixarUsuariosCSV = function () {
     let cab = ["Nome", "E-mail", "Atividade", "Conselho", "Registro", "UF", "Especialidade", "Faculdade", "Formatura", "Celular", "Cadastro", "Último acesso", "Acessos", "Situação"];
-    let cel = v => '"' + String(v ?? "").replace(/"/g, '""') + '"';
+    let cel = v => {
+        let s = String(v ?? "");
+        if (/^[=@\-\t\r]|^\+(?!\d)/.test(s)) s = "'" + s; // fórmula de planilha: texto que começa com = @ - ou + (sem número depois) ganha apóstrofo
+        return '"' + s.replace(/"/g, '""') + '"';
+    };
     let linhas = usuariosCarregados.map(u => {
         let p = u.perfil || {};
         return [p.nome, u.email, ATIVIDADES_PERFIL[p.atividade]?.nome, p.conselho, p.registro, p.uf, p.especialidade, p.instituicao,
