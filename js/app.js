@@ -754,26 +754,8 @@ function idadeComoAnos() {
     return String(anos);
 }
 
-/* Ao sair do campo: passa sozinho para a unidade certa (menos de 1 ano → meses; menos de 1 mês → dias) */
-function ajustarUnidadeIdade() {
-    let raw = document.getElementById('idadeInput').value;
-    let sel = document.getElementById('idadeUnidade');
-    if (raw === "" || !sel) { calcularTudo(); return; }
-    let anos = parseFloat(idadeComoAnos());
-    if (isNaN(anos)) { calcularTudo(); return; }
-    let campo = document.getElementById('idadeInput');
-    if (anos < 1 / 12) {
-        sel.value = "dias";
-        campo.value = String(Math.round(anos * 365.25));
-    } else if (anos < 1) {
-        sel.value = "meses";
-        campo.value = String(Math.round(anos * 12 * 10) / 10);
-    } else {
-        sel.value = "anos";
-        campo.value = String(Math.round(anos * 10) / 10);
-    }
-    calcularTudo();
-}
+/* Ao sair do campo: NÃO muda o número nem a unidade que a pessoa digitou (sem arredondar). Só recalcula. */
+function ajustarUnidadeIdade() { calcularTudo(); }
 
 function calcularTudo() {
     let pRaw = document.getElementById('pesoInput').value;
