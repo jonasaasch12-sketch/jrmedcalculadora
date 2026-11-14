@@ -31,8 +31,8 @@ está no repositório é exatamente o que vai para o ar. Login e dados da equipe
 index.html                 telas (login, cabeçalho, painel, modais) + lista de <script>
                            Página inicial pública (apresentação com vídeo, #paginaInicialPublica): SÓ NO TESTE. O script do <head>
                            age só em /teste/ (põe html.pagina-publica-ativa; html.verificando-acesso só se o aparelho já tem cópia do perfil; o CSS fica em css/inicio.css).
-                           Vídeo video/apresentacao.mp4, capa video/apresentacao-capa.jpg. Para liberar no oficial: trocar a 1ª linha
-                           desse script (o `if` de /teste/) e conferir antes o vídeo (mostra doses de exemplo; decide o Dr. Jonas).
+                           Vídeo video/apresentacao.mp4 (cerca de 1 min, com narração) e capa video/apresentacao-capa.jpg, no início da página (formato de celular). Fonte e como refazer: testes/video-fonte/ (não é publicada).
+                           O vídeo mostra uma dose de exemplo (dipirona, 4 anos, 16 kg): decide o Dr. Jonas antes de liberar. Para liberar no oficial: trocar a 1ª linha desse script (o `if` de /teste/).
 css/estilo.css             aparência base (inclui tema escuro: html[data-theme="dark"])
 css/visual.css             camada visual "profissional" (tokens, Inter, cabeçalho, menu de configurações)
 css/layout-b.css           Layout B (proposta do Figma): barra lateral de ícones, faixa do paciente, cards um embaixo do outro,

@@ -1,0 +1,9 @@
+[
+ {"id":"00_intro","texto":"Prescrição pediátrica com a dose calculada na hora. Veja, em um minuto, como usar o JR MED."},
+ {"id":"01_busca","texto":"Primeiro, busque o remédio, a doença ou o sintoma. Aqui, digitamos dipirona, e a lista aparece na hora."},
+ {"id":"02_dose","texto":"Depois, digite a idade e o peso da criança. A dose aparece na hora, com a fonte de cada informação."},
+ {"id":"03_receita","texto":"Toque em Receita para adicionar o remédio. Depois, copie a receita completa e cole no prontuário."},
+ {"id":"04_condutas","texto":"Na aba Condutas, veja o passo a passo de cada doença: diagnóstico, emergência e critérios de internação."},
+ {"id":"05_alergia","texto":"Informe as alergias do paciente. Se um remédio for compatível, o app mostra um aviso na hora."},
+ {"id":"06_fim","texto":"O JR MED é para profissionais de saúde. Entre com seu e-mail e senha. É uma ferramenta de apoio: confira sempre a dose antes de prescrever."}
+]
