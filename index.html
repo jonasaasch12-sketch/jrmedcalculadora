@@ -37,14 +37,14 @@
     })();
     </script>
     <title>JR MED | Calculadora de Doses Pediátricas e Prescrição Médica</title>
-    <meta name="description" content="JR MED: calculadora de doses pediátricas por peso e idade, prescrições e condutas clínicas para profissionais de saúde. Acesso restrito.">
+    <meta name="description" content="JR MED é uma plataforma de apoio à prática médica com calculadora de doses pediátricas por peso e idade, prescrições e manual de condutas clínicas.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.jrmedprescricao.com.br/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="JR MED">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:title" content="JR MED | Calculadora de Doses Pediátricas e Prescrição Médica">
-    <meta property="og:description" content="Calculadora de doses pediátricas por peso e idade, prescrições e condutas clínicas para profissionais de saúde.">
+    <meta property="og:description" content="Plataforma de apoio à prática médica com calculadora de doses pediátricas por peso e idade, prescrições e manual de condutas clínicas.">
     <meta property="og:url" content="https://www.jrmedprescricao.com.br/">
     <meta name="twitter:card" content="summary">
     <script type="application/ld+json">
@@ -84,8 +84,8 @@
         </header>
         <section class="pub-capa">
             <p class="pub-selo">Acesso restrito a profissionais de saúde</p>
-            <h1>Prescrição médica e condutas, em um só lugar</h1>
-            <p>Começamos pela pediatria: doses pelo peso e pela idade, com a fonte de cada dose.</p>
+            <h1>Calculadora de doses pediátricas e prescrição médica</h1>
+            <p>O JR MED reúne cálculo de doses por peso e idade, prescrições e condutas clínicas em uma plataforma de apoio à prática médica. Consulte as referências e confira cada decisão antes de prescrever.</p>
             <div class="pub-botoes">
                 <button type="button" class="pub-btn-primario" onclick="abrirLoginDaPagina()">Entrar no JR MED</button>
                 <a href="#pubVideo" class="pub-btn-secundario">Ver como funciona</a>
@@ -156,14 +156,14 @@
         <footer class="pub-rodape">© 2026 JR MED · Contato: <a href="mailto:jrmedprescricao@gmail.com">jrmedprescricao@gmail.com</a></footer>
     </div>
     <!-- Enquanto o Firebase confere a sessão (ver css/inicio.css, html.verificando-acesso) -->
-    <div id="telaVerificando" class="login-container" role="status" aria-live="polite">
+    <div id="telaVerificando" class="login-container" data-nosnippet role="status" aria-live="polite">
         <div class="login-box verificando-box">
             <div class="logo-futurista logo-login" aria-hidden="true">JR</div>
             <h2 class="login-titulo">JR MED</h2>
             <p class="verificando-txt"><span class="verificando-giro" aria-hidden="true"></span>Verificando acesso…</p>
         </div>
     </div>
-    <div id="tela-login" class="login-container">
+    <div id="tela-login" class="login-container" data-nosnippet>
         <div class="login-box">
             <button type="button" class="login-voltar-pag" onclick="voltarPaginaInicial()">← Página inicial</button>
             <div class="logo-futurista logo-login" aria-hidden="true">JR</div>
@@ -193,7 +193,7 @@
     </div>
 
     <!-- Bloqueio com digital (celular): cobre o app até confirmar a digital -->
-    <div id="tela-bloqueio" class="login-container tela-bloqueio" style="display:none;">
+    <div id="tela-bloqueio" class="login-container tela-bloqueio" data-nosnippet style="display:none;">
         <div class="login-box bloqueio-box">
             <div class="logo-futurista logo-login" aria-hidden="true">JR</div>
             <h2 class="login-titulo">JR MED bloqueado</h2>
@@ -205,7 +205,7 @@
     </div>
 
     <!-- Completar cadastro (contas antigas, dados faltando ou acadêmico após a formatura) -->
-    <div id="tela-perfil" class="login-container" style="display:none;">
+    <div id="tela-perfil" class="login-container" data-nosnippet style="display:none;">
         <div class="login-box">
             <div class="logo-futurista logo-login" aria-hidden="true">JR</div>
             <h2 class="login-titulo">Complete seu cadastro</h2>
@@ -224,7 +224,7 @@
     <!-- TELA INICIAL (Pediatria | Adulto), montada por js/inicio.js -->
     <div id="tela-inicio" style="display:none;"></div>
 
-    <div id="aplicativo-principal" style="display: none;">
+    <div id="aplicativo-principal" data-nosnippet style="display: none;">
         <header class="header-banner">
             <div class="header-left">
                 <div class="logo-futurista logo-header" aria-hidden="true">JR</div>
