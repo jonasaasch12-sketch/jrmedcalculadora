@@ -93,6 +93,9 @@ risco real na tela de usuários.
 | Campos | borda `#cfd6de`, cantos 10px, foco com contorno azul fino |
 | Texto | `#212b32` (título e corpo), `#5b6670` (legenda), fonte Inter |
 
+- **Página nova aberta pela tela inicial:** abre dentro da tela inicial, trocando só `#tela-inicio main`, e mantém o
+  topo com o logotipo JR, a lateral e a barra de baixo (pedido do Dr. Jonas, 11/2026). Nunca uma tela solta com topo
+  próprio. Modelo: `js/procedimentos.js`.
 - Toda mudança de tela é testada no celular e no computador, no claro e no escuro: skill `testar-tela`.
 
 ## Comentários

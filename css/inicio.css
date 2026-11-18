@@ -458,3 +458,11 @@ html[data-theme="dark"] #tela-inicio .proc-voltar { color: #8cc4ff; }
 html[data-theme="dark"] #tela-inicio .proc-campo { background: #3a1d1d; border-color: #7a2e2e; color: #ffb4ab; }
 html[data-theme="dark"] #tela-inicio .proc-campo.ok { background: #13283d; border-color: #2a3644; color: #b9dcff; }
 html[data-theme="dark"] #tela-inicio .proc-dica, html[data-theme="dark"] #tela-inicio .proc-aviso { color: #9aa4ad; }
+
+/* ===== Tela inicial no celular: topo azul com o logotipo, igual à tarja do computador (pedido do Dr. Jonas, 11/2026) ===== */
+@media (max-width: 849px), (orientation: portrait) {
+    #tela-inicio .in-topo-cel, html[data-theme="dark"] #tela-inicio .in-topo-cel { background: #005eb8; border-bottom: 0; color: #fff; }
+    #tela-inicio .in-logo-cel b { color: #fff; }
+    #tela-inicio .in-logo-cel small { color: rgba(255, 255, 255, .85); }
+    #tela-inicio .in-logo-cel .in-lg { background: linear-gradient(135deg, #0f766e, #14b8a6); color: #fff; }
+}
