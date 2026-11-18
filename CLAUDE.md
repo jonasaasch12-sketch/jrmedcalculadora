@@ -228,6 +228,10 @@ funcionar na raiz e em `/teste/`. `js/modo-teste.js` detecta `/teste/` (constant
 
 Todas as telas (login, início, prescrição, condutas e as próximas) seguem o mesmo padrão. Ao criar tela nova, usar estes valores; não inventar cor nova.
 
+- **Página nova aberta pela tela inicial** (pedido do Dr. Jonas, 11/2026): abre DENTRO da tela inicial, trocando só o conteúdo de `#tela-inicio main`,
+  para manter sempre o mesmo topo com o logotipo JR, a lateral (computador) e a barra de baixo (celular). Nunca uma tela solta com topo próprio.
+  Modelo: `js/procedimentos.js` (`abrirProcedimentos`, "‹ Início" chama `montarInicio()`).
+
 - **Tarja azul no topo:** `#005eb8` (faixa do cabeçalho da Prescrição e da tarja do login). Texto da tarja em branco.
 - **Botão principal:** azul sólido `#005eb8` (hover `#0a6fd6`), cantos 10px, sem degradê e sem sombra forte.
 - **Logo:** "JR" em quadrado verde-azulado (gradiente de `#0f766e` a `#14b8a6`). Não mudar a cor do logo.
