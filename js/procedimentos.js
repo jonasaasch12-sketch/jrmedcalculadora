@@ -5,7 +5,8 @@
 // Campos no modelo: {{rótulo}} = texto livre; {{rótulo|opção 1|opção 2}} = lista de opções.
 // Nada é guardado: os campos se apagam ao fechar (não colocar dado que identifique o paciente).
 // Só no teste até o Dr. Jonas conferir os textos (PROCEDIMENTOS_LIBERADO).
-// Carregado depois de js/inicio.js (usa INICIO_PEDIATRIA, escaparHtml).
+// Carregado depois de js/inicio.js (usa INICIO_PEDIATRIA, mostrarInicio, montarInicio, escaparHtml).
+// A página abre dentro da tela inicial (#tela-inicio main), com a mesma tarja, logo e menus.
 // =====================================================
 const PROCEDIMENTOS_LIBERADO = false;
 
@@ -85,44 +86,46 @@ function procCampos(texto) {
     });
 }
 
+// A página abre DENTRO da tela inicial (mesma tarja, logo, lateral e barra de baixo): troca só o conteúdo central
+// (pedido do Dr. Jonas, 11/2026: toda página com o mesmo padrão da tela inicial).
+let procEscutando = false;
 function abrirProcedimentos() {
-    let tela = document.getElementById("telaProcedimentos");
-    if (!tela) {
-        tela = document.createElement("div");
-        tela.id = "telaProcedimentos";
+    if (typeof mostrarInicio === "function") mostrarInicio();
+    let tela = document.getElementById("tela-inicio");
+    if (!tela) return;
+    if (!procEscutando) {
+        procEscutando = true;
         tela.addEventListener("click", procClique);
         tela.addEventListener("input", procAtualizarFalta);
         tela.addEventListener("change", procAtualizarFalta);
-        document.body.appendChild(tela);
     }
     procAtual = null;
     procDesenhar();
-    tela.style.display = "flex";
-    document.body.classList.add("proc-aberto");
 }
 
 function fecharProcedimentos() {
-    let tela = document.getElementById("telaProcedimentos");
-    if (tela) { tela.style.display = "none"; tela.innerHTML = ""; }
-    document.body.classList.remove("proc-aberto");
     procAtual = null;
+    if (typeof montarInicio === "function") montarInicio();
+    window.scrollTo(0, 0);
 }
 
 function procDesenhar() {
-    let tela = document.getElementById("telaProcedimentos"), e = escaparHtml;
+    let main = document.querySelector("#tela-inicio main"), e = escaparHtml;
+    if (!main) return;
     let p = PROCEDIMENTOS.find(x => x.id === procAtual);
-    let topo = `<header class="proc-topo"><button type="button" class="proc-voltar" data-acao="${p ? "lista" : "fechar"}">‹ ${p ? "Procedimentos" : "Início"}</button><b>${p ? e(p.nome) : "Descrição de procedimentos"}</b></header>`;
+    let topo = `<button type="button" class="proc-voltar" data-acao="${p ? "lista" : "fechar"}">‹ ${p ? "Procedimentos" : "Início"}</button><h1>${p ? e(p.nome) : "Descrição de procedimentos"}</h1>`;
     if (!p) {
         let linhas = PROCEDIMENTOS.map(x => `<button type="button" class="proc-item" data-proc="${x.id}">${e(x.nome)}<span>›</span></button>`).join("");
-        tela.innerHTML = `${topo}<div class="proc-corpo"><p class="proc-dica">Escolha o procedimento. O texto vem pronto: preencha só os campos em vermelho e copie para o prontuário.</p><div class="proc-lista">${linhas}</div>
+        main.innerHTML = `<div class="proc-corpo">${topo}<p class="proc-dica">Escolha o procedimento. O texto vem pronto: preencha só os campos em vermelho e copie para o prontuário.</p><div class="proc-lista">${linhas}</div>
             <p class="proc-aviso">Modelos de apoio: confira e ajuste ao que foi feito. Não digite nome nem dado que identifique o paciente. Nada fica salvo.</p></div>`;
-        return;
-    }
-    tela.innerHTML = `${topo}<div class="proc-corpo"><div class="proc-texto" id="procTexto">${procCampos(p.texto)}</div>
+    } else {
+        main.innerHTML = `<div class="proc-corpo">${topo}<div class="proc-texto" id="procTexto">${procCampos(p.texto)}</div>
         <div class="proc-acoes"><button type="button" class="proc-prox" data-acao="proximo">Próximo campo <span id="procFalta"></span></button><button type="button" class="proc-copiar" data-acao="copiar">Copiar texto</button></div>
         <p class="proc-aviso">Campo em vermelho = falta preencher. Não digite nome nem dado que identifique o paciente.</p></div>`;
-    procAtualizarFalta();
-    let primeiro = tela.querySelector(".proc-campo"); if (primeiro && !(typeof ehCelular === "function" && ehCelular())) primeiro.focus();
+        procAtualizarFalta();
+        let primeiro = main.querySelector(".proc-campo"); if (primeiro && !(typeof ehCelular === "function" && ehCelular())) primeiro.focus();
+    }
+    window.scrollTo(0, 0); main.scrollTop = 0;
 }
 
 function procFaltando() {
@@ -147,7 +150,7 @@ function procTextoFinal() {
 
 function procClique(ev) {
     let b = ev.target.closest("[data-acao],[data-proc]"); if (!b) return;
-    if (b.dataset.proc) { procAtual = b.dataset.proc; procDesenhar(); window.scrollTo(0, 0); return; }
+    if (b.dataset.proc) { procAtual = b.dataset.proc; procDesenhar(); return; }
     let a = b.dataset.acao;
     if (a === "fechar") fecharProcedimentos();
     else if (a === "lista") { procAtual = null; procDesenhar(); }
