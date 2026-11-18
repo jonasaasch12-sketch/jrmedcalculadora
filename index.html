@@ -7,23 +7,26 @@
     <!-- Segurança (pedido do Dr. Jonas para a TI do hospital): só carrega código, fontes e conexões das origens listadas. -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://*.googleapis.com https://www.gstatic.com https://jrmed-calculadora.firebaseapp.com https://*.firebaseio.com wss://*.firebaseio.com; frame-src https://jrmed-calculadora.firebaseapp.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
     <meta name="referrer" content="strict-origin-when-cross-origin">
+    <!-- Inicia o download do módulo de autenticação antes dos scripts clássicos do aplicativo. -->
+    <link rel="modulepreload" href="js/firebase.js">
     <script>
     /* Página inicial pública: "Entrar" mostra o login; "Página inicial" volta para a apresentação. */
     function abrirLoginDaPagina() { document.documentElement.classList.add('login-aberto'); setTimeout(function () { var e = document.getElementById('emailInput'); if (e) e.focus(); }, 0); }
     function voltarPaginaInicial() { document.documentElement.classList.remove('login-aberto'); window.scrollTo(0, 0); }
     </script>
     <script>
-    /* Em todas as versões. Quem chega sem entrar vê a apresentação logo, sem esperar o Firebase.
-       Quem já entrou neste aparelho (há cópia do perfil, jrmed_perfil) vê "Verificando acesso…" (classe
-       html.verificando-acesso, css/inicio.css) até o Firebase conferir a conta, para não mostrar a apresentação
-       antes do app. Se o Firebase não responder em 8 s, mostra a apresentação (o login só abre pelo "Entrar").
-       As bibliotecas do Firebase começam a baixar já aqui. */
+    /* A apresentação aparece para visitantes novos. Em aparelhos que já autenticaram antes,
+       a marca local de sessão evita mostrar a apresentação durante a restauração da sessão Firebase.
+       Essa marca é apenas uma pista visual: somente o Firebase confirma se a sessão continua válida. */
     (function () {
         var raiz = document.documentElement;
         raiz.classList.add('pagina-publica-ativa');
-        var jaEntrouNesteAparelho = false;
-        try { jaEntrouNesteAparelho = !!localStorage.getItem('jrmed_perfil'); } catch (e) { }
-        if (jaEntrouNesteAparelho) raiz.classList.add('verificando-acesso');
+        var sessaoJaConhecida = false;
+        try {
+            sessaoJaConhecida = !!localStorage.getItem('jrmed_perfil') ||
+                localStorage.getItem('jrmed_sessao_conhecida') === '1';
+        } catch (e) { }
+        if (sessaoJaConhecida) raiz.classList.add('verificando-acesso');
         ['firebase-app.js', 'firebase-auth.js', 'firebase-firestore.js'].forEach(function (arq) {
             var pre = document.createElement('link');
             pre.rel = 'modulepreload';

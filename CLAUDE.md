@@ -24,22 +24,42 @@ está no repositório é exatamente o que vai para o ar. Login e dados da equipe
   Na dúvida, perguntar. Conteúdo do Manual HIAS (2017) é a referência mais antiga.
 - Texto técnico, igual à fonte. Ignorar a parte de adultos dos materiais enviados.
 - Respostas ao usuário em português, linguagem simples (ele é médico, não programador).
+- **Rodar também `node testes/conferir-padroes.js`** antes de publicar: confere a organização (cards, condutas, nomes,
+  caminhos, versões). Desvio novo falha; os que já existiam estão em `testes/padroes-conhecidos.json` (fila de arrumação).
+
+## Skills: o passo a passo de cada tipo de tarefa
+
+As regras deste arquivo valem sempre. O **como fazer**, passo a passo, fica nas skills em `.claude/skills/<nome>/SKILL.md`
+(o Claude Code carrega sozinho quando a tarefa pede; também dá para chamar com `/nome`). Outra ferramenta de IA: ler o `AGENTS.md`.
+
+| Skill | Quando usar |
+|---|---|
+| `publicar` | commit, pedido de mudança, levar para o teste, "pode liberar", desfazer publicação |
+| `remedio` | criar ou alterar card de remédio, dose, teto, receita, fonte, menu |
+| `conduta` | criar ou alterar conduta, passos, critérios de internação, escores, fontes |
+| `padroes` | arquivo novo, nomes, HTML com dados, CSS e padrão visual, recurso só no teste, limpeza |
+| `seguranca` | Firebase, regras do banco, login, dados pessoais, Termos e Privacidade |
+| `auditoria` | revisar, auditar, comparar teste e oficial, sem alterar nada |
+| `testar-tela` | abrir o app no navegador desta máquina e tirar fotos (celular e computador) |
+
+Regra nova combinada com o Dr. Jonas: escrever aqui e na skill da área, no mesmo pedido de mudança.
 
 ## Estrutura
 
 ```
 index.html                 telas (login, cabeçalho, painel, modais) + lista de <script>
-                           Página inicial pública (apresentação com vídeo, #paginaInicialPublica): SÓ NO TESTE. O script do <head>
-                           age só em /teste/ (põe html.pagina-publica-ativa; html.verificando-acesso só se o aparelho já tem cópia do perfil; o CSS fica em css/inicio.css).
+                           Página inicial pública (apresentação com vídeo, #paginaInicialPublica): em todas as versões (liberada em 11/2026). O script do <head>
+                           põe html.pagina-publica-ativa; html.verificando-acesso se o aparelho já entrou antes (cópia do perfil ou a marca jrmed_sessao_conhecida); o CSS fica em css/inicio.css.
+                           Textos para os buscadores (título, descrição, JSON-LD, perguntas frequentes); as telas internas levam data-nosnippet.
                            Vídeo video/apresentacao.mp4 (cerca de 1 min, com narração) e capa video/apresentacao-capa.jpg, no início da página (formato de celular). Fonte e como refazer: testes/video-fonte/ (não é publicada).
-                           O vídeo mostra uma dose de exemplo (dipirona, 4 anos, 16 kg): decide o Dr. Jonas antes de liberar. Para liberar no oficial: trocar a 1ª linha desse script (o `if` de /teste/).
+                           O vídeo mostra uma dose de exemplo (dipirona, 4 anos, 16 kg).
 css/estilo.css             aparência base (inclui tema escuro: html[data-theme="dark"])
 css/visual.css             camada visual "profissional" (tokens, Inter, cabeçalho, menu de configurações)
 css/layout-b.css           Layout B (proposta do Figma): barra lateral de ícones, faixa do paciente, cards um embaixo do outro,
                            receita fixa à direita (≥1280px); celular: cabeçalho azul-marinho, chips de categoria,
                            barra inferior. Carregado por último. Texto da receita lido com textoDaCaixa() (js/base.js)
-css/temas-teste.css        visuais A/B/C (classe html.visual-a/b/c, js/modo-teste.js). A · Hospitalar = PADRÃO no oficial e no teste (sai no modo escuro);
-                           no teste, Menu → 🎨 Visual (teste) compara com Antigo/B/C
+css/temas-teste.css        visuais A/B/C/D (classe html.visual-a/b/c/d, js/modo-teste.js). A · Hospitalar = PADRÃO no oficial e no teste (sai no modo escuro);
+                           no teste, Menu → 🎨 Visual (teste) compara com Antigo/B/C/D
 js/base.js                 auxiliares usados nos cálculos (recHead, round05, ceftriaxona)
 js/modo-teste.js           versão de teste: faixa, selo e bloqueio de quem não é admin
 medicamentos/registro.js   registrarMedicamentos(): cria farmaciaJR, detalhesMedicacoes, fichasPadrao
@@ -57,25 +77,27 @@ js/cadastro.js             cadastro profissional (nome, atividade, CRM/COREN/CRF
 js/digital.js              celular: desbloqueio com digital/rosto (WebAuthn, só no aparelho); computador: sessão sai após 1 h sem uso (firebase.js)
 js/atalhos.js              ⚡ Atalhos por cima do prontuário (Document Picture-in-Picture, Chrome/Edge no computador):
                            exame físico ♂/♀ e orientações de alta (1 clique = copiado), "meus atalhos" (localStorage), calculadora (peso + busca)
-                           com "+ Receita" na MESMA receita do app (carrinhoPrescricao; textoReceitaCompleta/viaDaReceita em app.js). Só no teste (ATALHOS_LIBERADOS)
+                           com "+ Receita" na MESMA receita do app (carrinhoPrescricao; textoReceitaCompleta/viaDaReceita em app.js). Liberado para todos em 11/2026 (ATALHOS_LIBERADOS = true)
                            "Meus atalhos" (+ Adicionar atalho → Do sistema = card / Texto meu = modelo livre, ex.: prontuário do hospital) salvos NA CONTA:
                            Firestore `atalhos_usuarios/{uid}` (window.JRAtalhos em firebase.js; precisa da regra publicada no console; sem ela, localStorage).
                            Aba "Prescrição pronta" ({tipo:"kit", nome, ids}, até 15 cards): só copia com PESO e IDADE; texto = textoReceitaDeItens() (app.js).
                            Limite 30 atalhos × 5000 letras. Aviso "não coloque dados de pacientes". Termos (item 5) e Privacidade já citam os atalhos.
                            Tablet (Android/iPad, ehTablet()): não há janela por cima de outro app → abre num PAINEL à direita dentro do app
                            (iframe sem src, abrirPainelAtalhos; ✕ fecha). Celular: botão não aparece.
-                           AO LIBERAR: subir VERSAO_TERMOS (js/cadastro.js) para "2026-11" e a "versão" no topo de termos.html/privacidade.html
-js/inicio.js + css/inicio.css  🏠 TELA INICIAL depois do login (só no teste: INICIO_LIBERADO = false): estilo "Apple" (ícones SVG de traço,
+                           Termos e Privacidade na versão 2026-11: VERSAO_TERMOS (js/cadastro.js) é igual à versão escrita no topo de termos.html e privacidade.html
+js/inicio.js + css/inicio.css  🏠 TELA INICIAL depois do login (liberada para todos em 11/2026: INICIO_LIBERADO = true): estilo "Apple" (ícones SVG de traço,
                            listas com ›), blocos Pediatria (Prescrição, Condutas, Emergência = cat-pals, Exame físico, Atalhos) e Adulto ("Em breve"),
                            Prescrições prontas (kits dos atalhos) e Recentes (localStorage jrmed_recentes; embrulha adicionarAoCarrinho/abrirConduta).
                            firebase.js chama aoEntrarNoApp()/aoSairDoApp(). Volta: "‹ Início" no cabeçalho, aba 🏠 no celular, item no Menu.
-                           O adulto terá os PRÓPRIOS atalhos (decisão do Dr. Jonas). No oficial nada muda.
+                           O adulto terá os PRÓPRIOS atalhos (decisão do Dr. Jonas).
 js/firebase.js             login e Firestore (módulo); sem e-mail de confirmação (suspenso: não chegava), o cadastro pede o e-mail 2x; grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)
 privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; contato jrmedprescricao@gmail.com). Mudou o texto?
                            Subir VERSAO_TERMOS em js/cadastro.js (todos aceitam de novo). "Meus dados" (ver/corrigir/baixar/excluir) em js/firebase.js
 sw.js                      modo offline (rede primeiro)
-testes/verificar.js        verificação automática (só precisa de Node)
+testes/verificar.js        verificação automática das doses (só precisa de Node); bloqueia a publicação se falhar na main
+testes/conferir-padroes.js conferência da organização (cards, condutas, nomes, caminhos, versões); desvios antigos em testes/padroes-conhecidos.json
+.claude/skills/            skills: passo a passo de cada tipo de tarefa. AGENTS.md aponta as mesmas regras para outras ferramentas de IA
 condutas/condutas.js       área 📖 Condutas (aba ao lado de 💊 Prescrição)
 condutas/ventilacao.js     "Ventilação mecânica" (destaque: true = 1ª da lista; botão na 💉 RSI): tela de ventilador estilo Mindray SV300/SV800 (sem marca):
                            standby (neonato/pediátrico, peso, idade, motivo, modo ★) → curvas animadas (pulmão simulado de 1 compartimento, ilustrativo),
@@ -179,7 +201,9 @@ funcionar na raiz e em `/teste/`. `js/modo-teste.js` detecta `/teste/` (constant
 - `calc(p, i)`: `p` = peso (kg, número), `i` = idade em anos (**texto**, pode ser `""`).
   Retorna `{ v, r }`. Sempre aplicar o **teto** com `Math.min(...)` *depois* do arredondamento.
 - Receita (`r`): 1ª linha = via (`USO ORAL`, `VIA ENDOVENOSA`, `NEBULIZAÇÃO ...`, `ORIENTAÇÕES ...`):
-  é por ela que a receita copiada agrupa os itens. Em MAIÚSCULAS, padrão `1) NOME CONC ---- QTD`.
+  é por ela que a receita copiada agrupa os itens. **Nada antes da via** (nem emoji, nem título): sem ela, a receita
+  completa põe o item em "USO ORAL". Receita de casa: em MAIÚSCULAS, padrão `1) NOME CONC ---- QTD`.
+  Prescrição hospitalar: a via na 1ª linha e o preparo em frases.
 - `badgeSt` (selo fixo): **só em card de dose fixa**. Com ele o quadro azul não é recalculado.
 - Comentários dentro de `calc` de uma linha: usar `/* */`, nunca `//`.
 - Ficha completa: ordem de exibição fixa (em `renderizarBlocoFicha`), **fonte sempre por último**.
@@ -209,10 +233,10 @@ Todas as telas (login, início, prescrição, condutas e as próximas) seguem o 
 - **Campos:** borda `#cfd6de`, cantos 10px; foco com contorno azul fino.
 - **Texto:** `#212b32` para título e corpo; `#5b6670` para legenda. Fonte Inter.
 - **Verde (opção D · Verde, Menu → 🎨 Visual (teste)):** `#0f766e`, o tom do login, para comparar com o azul.
-- **Onde fica:** o estilo novo vale só no teste (`html.estilo-apple`, em `css/inicio.css`). Nas opções de visual (`css/temas-teste.css`), cada uma redefine as cores de `--primary` e do cabeçalho.
+- **Onde fica:** o estilo novo vale em todas as versões desde 11/2026 (`html.estilo-apple`, em `css/inicio.css`; ligado em `js/inicio.js`). Nas opções de visual (`css/temas-teste.css`), cada uma redefine as cores de `--primary` e do cabeçalho.
 
 ## Testar a tela
 
-Servir a pasta (`python3 -m http.server`) e abrir no Playwright (Chromium já instalado).
-O login do Firebase não carrega no ambiente de teste: mostrar o app com
-`tela-login.style.display='none'; aplicativo-principal.style.display='block'`.
+Skill `testar-tela`: `node .claude/skills/testar-tela/scripts/tela.js --ajuda`. Ela sobe um servidor local, abre o
+Chromium (Playwright), simula a entrada (o login do Firebase não carrega no ambiente de teste) e tira fotos no celular
+e no computador, na versão oficial (`/`) e na de teste (`--teste`).

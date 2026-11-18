@@ -350,7 +350,7 @@ registrarConduta({
                         "Manter inicialmente por pelo menos 2–3 meses para avaliar a resposta. Com boa resposta por 2–3 meses, considerar reduzir a dose.",
                         "Reavaliar a necessidade do controlador a cada 3–6 meses (muitas crianças entram em remissão). Ao reduzir ou suspender, rever em 3–6 semanas."
                     ],
-                    remedios: ["clenil_hfa"]
+                    remedios: ["clenil_hfa", "bud_formoterol"]
                 },
                 {
                     nome: "CI: dose diária baixa (≤ 5 anos)",
