@@ -647,6 +647,24 @@
   "70 kg | idade 4": "[40 gts] USO ORAL\n\n1) BROMOPRIDA GOTAS 4 MG/ML --------------- 1 FR\nDAR 40 GOTAS VIA ORAL ATÉ DE 8/8 HORAS SE NÁUSEAS E VÔMITOS.",
   "70 kg | idade 13": "[40 gts] USO ORAL\n\n1) BROMOPRIDA GOTAS 4 MG/ML --------------- 1 FR\nDAR 40 GOTAS VIA ORAL ATÉ DE 8/8 HORAS SE NÁUSEAS E VÔMITOS."
  },
+ "bud_formoterol": {
+  "3 kg | idade -": "[—] Insira a idade do paciente: a dose do GINA para budesonida + formoterol é a de 6 a 11 anos.",
+  "3 kg | idade 0.5": "[< 6 anos] ATENÇÃO: budesonida + formoterol (MART) está no GINA para 6 a 11 anos. Abaixo de 6 anos, usar o corticoide inalatório (Clenil HFA).",
+  "3 kg | idade 4": "[< 6 anos] ATENÇÃO: budesonida + formoterol (MART) está no GINA para 6 a 11 anos. Abaixo de 6 anos, usar o corticoide inalatório (Clenil HFA).",
+  "3 kg | idade 13": "[≥ 12 anos] ATENÇÃO: este card traz a dose do GINA para 6 a 11 anos. A dose de 12 anos ou mais ainda não foi registrada no app.",
+  "10 kg | idade -": "[—] Insira a idade do paciente: a dose do GINA para budesonida + formoterol é a de 6 a 11 anos.",
+  "10 kg | idade 0.5": "[< 6 anos] ATENÇÃO: budesonida + formoterol (MART) está no GINA para 6 a 11 anos. Abaixo de 6 anos, usar o corticoide inalatório (Clenil HFA).",
+  "10 kg | idade 4": "[< 6 anos] ATENÇÃO: budesonida + formoterol (MART) está no GINA para 6 a 11 anos. Abaixo de 6 anos, usar o corticoide inalatório (Clenil HFA).",
+  "10 kg | idade 13": "[≥ 12 anos] ATENÇÃO: este card traz a dose do GINA para 6 a 11 anos. A dose de 12 anos ou mais ainda não foi registrada no app.",
+  "25 kg | idade -": "[—] Insira a idade do paciente: a dose do GINA para budesonida + formoterol é a de 6 a 11 anos.",
+  "25 kg | idade 0.5": "[< 6 anos] ATENÇÃO: budesonida + formoterol (MART) está no GINA para 6 a 11 anos. Abaixo de 6 anos, usar o corticoide inalatório (Clenil HFA).",
+  "25 kg | idade 4": "[< 6 anos] ATENÇÃO: budesonida + formoterol (MART) está no GINA para 6 a 11 anos. Abaixo de 6 anos, usar o corticoide inalatório (Clenil HFA).",
+  "25 kg | idade 13": "[≥ 12 anos] ATENÇÃO: este card traz a dose do GINA para 6 a 11 anos. A dose de 12 anos ou mais ainda não foi registrada no app.",
+  "70 kg | idade -": "[—] Insira a idade do paciente: a dose do GINA para budesonida + formoterol é a de 6 a 11 anos.",
+  "70 kg | idade 0.5": "[< 6 anos] ATENÇÃO: budesonida + formoterol (MART) está no GINA para 6 a 11 anos. Abaixo de 6 anos, usar o corticoide inalatório (Clenil HFA).",
+  "70 kg | idade 4": "[< 6 anos] ATENÇÃO: budesonida + formoterol (MART) está no GINA para 6 a 11 anos. Abaixo de 6 anos, usar o corticoide inalatório (Clenil HFA).",
+  "70 kg | idade 13": "[≥ 12 anos] ATENÇÃO: este card traz a dose do GINA para 6 a 11 anos. A dose de 12 anos ou mais ainda não foi registrada no app."
+ },
  "buscopan": {
   "3 kg | idade -": "[Evitar] ATENÇÃO: Evitar o uso em recém-nascidos (< 1 mês).",
   "3 kg | idade 0.5": "[4 gts] USO ORAL\n\n1) BUSCOPAN GOTAS 10 MG/ML ------------------ 1 FR\nDAR 4 GOTAS, VIA ORAL, DE 8/8 HORAS SE CÓLICAS OU DORES ABDOMINAIS.",

@@ -87,6 +87,25 @@ registrarMedicamentos({
             atencao: "Lavar o rosto e fazer higiene oral após o uso (risco de candidíase). Precisa da idade."
         }
     },
+    "bud_formoterol": {
+        cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais / Inalatórios)",
+        kw: "budesonida formoterol symbicort alenia vannair corticoide inalatorio beta 2 longa laba ci-laba mart air asma manutencao bombinha",
+        nome: "Budesonida + Formoterol (CI-LABA, MART)", apres: "100/6 mcg por dose medida (80/4,5 mcg liberados)",
+        info: "<strong>Manutenção 6 a 11 anos (GINA):</strong> MART etapa 3: 1 inalação 1x/dia + 1 se necessário. Etapa 4: 1 inalação de 12/12h + 1 se necessário. Etapa 1 (AIR): 1 inalação se necessário. Procurar atendimento se > 8 inalações em 24 h.", badge: "6 a 11 anos", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: (p, i) => {
+            /* GINA 2026, 6-11 anos (material da conduta de asma). Fora dessa faixa o material não traz a dose: o card não prescreve. */
+            if (i === "") return { v: "—", r: "Insira a idade do paciente: a dose do GINA para budesonida + formoterol é a de 6 a 11 anos." };
+            let id = parseFloat(String(i).replace(',', '.'));
+            if (id < 6) return { v: "< 6 anos", r: "ATENÇÃO: budesonida + formoterol (MART) está no GINA para 6 a 11 anos. Abaixo de 6 anos, usar o corticoide inalatório (Clenil HFA)." };
+            if (id >= 12) return { v: "≥ 12 anos", r: "ATENÇÃO: este card traz a dose do GINA para 6 a 11 anos. A dose de 12 anos ou mais ainda não foi registrada no app." };
+            return { v: "1 inal. + se necessário", r: `USO INALATÓRIO (MANUTENÇÃO - GINA)\n\n1) BUDESONIDA + FORMOTEROL 100/6 MCG POR DOSE ------ 1 INALADOR\nESCOLHER UMA DAS OPÇÕES:\nOPÇÃO ETAPA 3 (MART): FAZER 1 INALAÇÃO 1 VEZ AO DIA, E MAIS 1 INALAÇÃO SE FALTA DE AR, CHIADO OU TOSSE.\nOPÇÃO ETAPA 4 (MART): FAZER 1 INALAÇÃO DE 12/12 HORAS, E MAIS 1 INALAÇÃO SE FALTA DE AR, CHIADO OU TOSSE.\nOPÇÃO ETAPA 1 (SÓ ALÍVIO): FAZER 1 INALAÇÃO SE FALTA DE AR, CHIADO OU TOSSE.\nPROCURAR ATENDIMENTO SE PRECISAR DE MAIS DE 8 INALAÇÕES EM 24 HORAS.\nFAZER HIGIENE ORAL APÓS O USO.` };
+        },
+        detalhes: {
+            indicacao: "Asma 6 a 11 anos: MART (manutenção e alívio com o mesmo inalador) nas etapas 3 e 4, ou alívio anti-inflamatório (AIR) na etapa 1 (GINA).",
+            dose: "Budesonida-formoterol 80/4,5 mcg liberados (100/6 mcg medidos). Etapa 3: 1 inalação 1x/dia + 1 se necessário. Etapa 4: 1 inalação 2x/dia + 1 se necessário (ainda dose baixa). Etapa 1: 1 inalação se necessário.",
+            atencao: "Precisa da idade: em branco, < 6 anos ou ≥ 12 anos o card não prescreve. Mais de 8 inalações em 24 h: procurar atendimento. Nunca usar LABA sem corticoide inalatório. Reavaliar em 2 a 3 meses."
+        }
+    },
     "pulmicort": {
         cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais / Inalatórios)", 
         kw: "pulmicort budesonida nebulizacao asma laringite oral ambulatorial inalatorio",

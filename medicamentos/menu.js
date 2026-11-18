@@ -48,7 +48,7 @@ const categorias = [
                 nome: "Asma", conduta: "asma",
                 remedios: [
                     // Prescrição Ambulatorial
-                    "clenil_hfa", "pred_sol", "predsin_cp", "salb_spray",
+                    "clenil_hfa", "bud_formoterol", "pred_sol", "predsin_cp", "salb_spray",
                     // Prescrição para Emergência
                     "metil", "magnesio_ev",
                     // Adicionados (manual HIAS)
