@@ -91,7 +91,7 @@ console.log(`JR MED — ${ids.length} remédios e ${condutas.length} condutas ca
 // =====================================================
 // 1. CARDS DE REMÉDIO
 // =====================================================
-const PESOS = [4, 10, 20, 45], IDADES = ['', '0.5', '5', '13'];
+const PESOS = [4, 10, 20, 45], IDADES = ['', '0.5', '5', '8', '13'];
 // Mesma regra de viaDaReceita() (js/app.js): é pela 1ª linha que a receita completa agrupa os itens.
 const ehVia = linha => { const u = linha.trim().toUpperCase(); return u.startsWith('USO') || u.startsWith('VIA') || /NEBULIZAÇÃO|VENÓCLISE|DISPOSITIVOS|ORIENTAÇÕES/.test(u); };
 const numero = v => { const m = String(v).match(/(\d+(?:[.,]\d+)?)\s*(mL|ml|gts|gotas|mg)\b/); return m ? parseFloat(m[1].replace(',', '.')) : NaN; };
