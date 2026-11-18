@@ -92,7 +92,7 @@ js/inicio.js + css/inicio.css  🏠 TELA INICIAL depois do login (liberada para 
                            O adulto terá os PRÓPRIOS atalhos (decisão do Dr. Jonas).
 js/procedimentos.js        📝 Descrição de procedimentos (tela inicial → Pediatria): modelos de texto para o prontuário (PL, CVC, IOT, intraósseo,
                            drenagem torácica, toracocentese, sutura, cateterismo vesical); campos {{rótulo}} ou {{rótulo|opção|opção}}, em vermelho até
-                           preencher; "Copiar texto". Nada é salvo. Só no teste até o Dr. Jonas conferir os textos (PROCEDIMENTOS_LIBERADO = false)
+                           preencher; "Copiar texto". Abre DENTRO da tela inicial (#tela-inicio main: mesma tarja, logo e menus). Nada é salvo. Só no teste até o Dr. Jonas conferir os textos (PROCEDIMENTOS_LIBERADO = false)
 js/firebase.js             login e Firestore (módulo); sem e-mail de confirmação (suspenso: não chegava), o cadastro pede o e-mail 2x; grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)
 privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; contato jrmedprescricao@gmail.com). Mudou o texto?
