@@ -430,3 +430,31 @@ html.pagina-publica-ativa .login-voltar-pag { display: block; }
 }
 /* Com sessão aberta (app ou cadastro), a página inicial pública não aparece */
 html.com-sessao #paginaInicialPublica { display: none !important; }
+
+/* ===== 📝 Descrição de procedimentos (js/procedimentos.js; só no teste até a conferência) ===== */
+#telaProcedimentos { display: none; position: fixed; inset: 0; z-index: 3000; flex-direction: column; background: #f2f4f7; color: #212b32; font-family: Inter, system-ui, sans-serif; overflow-y: auto; }
+#telaProcedimentos .proc-topo { position: sticky; top: 0; display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #005eb8; color: #fff; }
+#telaProcedimentos .proc-topo b { font-size: 16px; font-weight: 600; }
+#telaProcedimentos .proc-voltar { background: none; border: 0; color: #fff; font-size: 15px; cursor: pointer; padding: 4px 0; white-space: nowrap; }
+#telaProcedimentos .proc-corpo { width: 100%; max-width: 760px; margin: 0 auto; padding: 16px; box-sizing: border-box; }
+#telaProcedimentos .proc-dica, #telaProcedimentos .proc-aviso { color: #5b6670; font-size: 14px; line-height: 1.45; }
+#telaProcedimentos .proc-lista { background: #fff; border: 1px solid #e3e7ec; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(16,24,40,.08); }
+#telaProcedimentos .proc-item { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 14px 16px; background: #fff; border: 0; border-top: 1px solid #e3e7ec; font-size: 15px; text-align: left; color: #212b32; cursor: pointer; }
+#telaProcedimentos .proc-item:first-child { border-top: 0; }
+#telaProcedimentos .proc-item span { color: #9aa4ad; font-size: 20px; }
+#telaProcedimentos .proc-texto { background: #fff; border: 1px solid #e3e7ec; border-radius: 14px; padding: 16px; font-size: 15px; line-height: 2.1; box-shadow: 0 10px 30px rgba(16,24,40,.08); overflow-wrap: anywhere; }
+#telaProcedimentos .proc-campo { font: inherit; font-size: 14px; line-height: 1.3; max-width: 100%; padding: 2px 6px; border: 1px solid #f3a5a5; border-radius: 6px; background: #fdecec; color: #b42318; }
+#telaProcedimentos .proc-campo.ok { border-color: #cfd6de; background: #eef6ff; color: #0b3d72; }
+#telaProcedimentos .proc-campo:focus { outline: 2px solid #005eb8; outline-offset: 1px; }
+#telaProcedimentos .proc-acoes { position: sticky; bottom: 0; display: flex; gap: 10px; padding: 12px 0; background: #f2f4f7; }
+#telaProcedimentos .proc-acoes button { flex: 1; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; }
+#telaProcedimentos .proc-prox { background: #fff; color: #005eb8; border: 1px solid #cfd6de; }
+#telaProcedimentos .proc-copiar { background: #005eb8; color: #fff; border: 0; }
+#telaProcedimentos .proc-copiar:hover { background: #0a6fd6; }
+html[data-theme="dark"] #telaProcedimentos { background: #0f1720; color: #e6edf3; }
+html[data-theme="dark"] #telaProcedimentos .proc-lista, html[data-theme="dark"] #telaProcedimentos .proc-item, html[data-theme="dark"] #telaProcedimentos .proc-texto { background: #17212b; border-color: #2a3644; color: #e6edf3; }
+html[data-theme="dark"] #telaProcedimentos .proc-acoes { background: #0f1720; }
+html[data-theme="dark"] #telaProcedimentos .proc-prox { background: #17212b; border-color: #2a3644; color: #8cc4ff; }
+html[data-theme="dark"] #telaProcedimentos .proc-campo { background: #3a1d1d; border-color: #7a2e2e; color: #ffb4ab; }
+html[data-theme="dark"] #telaProcedimentos .proc-campo.ok { background: #13283d; border-color: #2a3644; color: #b9dcff; }
+html[data-theme="dark"] #telaProcedimentos .proc-dica, html[data-theme="dark"] #telaProcedimentos .proc-aviso { color: #9aa4ad; }
