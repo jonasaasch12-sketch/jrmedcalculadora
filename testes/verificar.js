@@ -71,10 +71,10 @@ const TETOS = {
     dexa_meningite: 2.5,  // mL de 4 mg/mL = 10 mg/dose
     aciclovir_varicela_vo: 20, // mL de 200 mg/5 mL = 800 mg/dose
     amox_sinusite: 25,    // mL de 400 mg/5 mL = 2 g/dose
-    clav_sinusite: 12.5,  // mL de cada frasco (2 g/dose no total)
+    clav_sinusite: 40,    // mL de 250+62,5 mg/5 mL = 2 g de amoxicilina/dose
     cef_sinusite: 3.5,    // mL IM 285,7 mg/mL (1 g)
     amox_oma: 25,         // mL de 400 mg/5 mL = 2 g/dose (AAP)
-    clav_oma: 12.5,       // mL de cada frasco de 400 mg/5 mL = 1 g cada (2 g/dose no total)
+    clav_oma: 40,         // mL de 250+62,5 mg/5 mL = 2 g de amoxicilina/dose
     cef_oma: 3.5,         // mL IM 285,7 mg/mL (1 g)
     amox_faringo: 10,     // mL de 250 mg/5 mL = 500 mg/dose (IDSA)
     amox_faringo400: 6.25, // mL de 400 mg/5 mL = 500 mg/dose (IDSA)
