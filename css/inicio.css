@@ -466,3 +466,9 @@ html[data-theme="dark"] #tela-inicio .proc-dica, html[data-theme="dark"] #tela-i
     #tela-inicio .in-logo-cel small { color: rgba(255, 255, 255, .85); }
     #tela-inicio .in-logo-cel .in-lg { background: linear-gradient(135deg, #0f766e, #14b8a6); color: #fff; }
 }
+
+/* Procedimentos como página própria (igual Prescrição e Condutas): sem a lateral da tela inicial */
+#tela-inicio .in-corpo.pag-proc aside { display: none; }
+#tela-inicio .in-corpo.pag-proc main { max-width: none; padding-top: 16px; }
+#tela-inicio .in-corpo.pag-proc .cond-inicio-linha { margin: 0 0 8px -10px; }
+#tela-inicio .in-corpo.pag-proc .proc-voltar { display: block; margin-top: 4px; }
