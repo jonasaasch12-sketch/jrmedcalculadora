@@ -697,19 +697,19 @@ registrarMedicamentos({
     },
     "clav_oma": {
         cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais)",
-        kw: "amoxicilina clavulanato dose alta otite media aguda oma falha conjuntivite purulenta dois frascos",
-        nome: "Amoxicilina + Clavulanato: Otite Média Aguda (dose alta)", apres: "Amoxicilina 400 mg/5 mL + Amoxicilina-clavulanato 400+57 mg/5 mL",
-        info: "<strong>Posologia (AAP 2013):</strong> 90 mg/kg/dia de amoxicilina (+ 6,4 mg/kg/dia de clavulanato) de 12/12h, com <strong>dois frascos</strong>: metade da dose em cada (45 mg/kg/dia de amoxicilina 400 + 45 mg/kg/dia de amoxicilina-clavulanato 400+57). Máx. 2 g de amoxicilina/dose. Duração pela idade: < 2 anos 10 dias; ≥ 2 anos 7 dias (OMA grave: 10 dias).", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
+        kw: "amoxicilina clavulanato dose alta otite media aguda oma falha conjuntivite purulenta betalactamase",
+        nome: "Amoxicilina + Clavulanato: Otite Média Aguda (dose alta)", apres: "250 + 62,5 mg / 5 mL",
+        info: "<strong>Posologia (Whitebook):</strong> 0,45 a 0,9 mL/kg/dose (45 a 90 mg/kg/dia de amoxicilina) VO de 12/12h por 7 a 10 dias. <em>App: dose alta, 0,9 mL/kg/dose (90 mg/kg/dia).</em> Máx. 2 g de amoxicilina/dose. Duração: < 2 anos 10 dias; ≥ 2 anos 7 dias (OMA grave: 10 dias).", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p, i) => {
-            /* sem a ES (14:1): 22,5 mg/kg/dose de cada frasco de 400 mg/5 mL; teto 1 g por frasco por dose (2 g de amoxicilina no total) */
-            let v = Math.min(parseFloat(round05(p * 22.5 * 5 / 400)), 12.5), t = String(v).replace('.', ',');
+            /* Whitebook: 250+62,5 mg/5 mL, 0,9 mL/kg/dose (90 mg/kg/dia) de 12/12h. Teto 2 g de amoxicilina/dose = 40 mL (pedido do Dr. Jonas, 11/2026: um frasco só) */
+            let v = Math.min(parseFloat(round05(p * 0.9)), 40), t = String(v).replace('.', ',');
             let id = parseFloat(String(i).replace(',', '.')), d = (isNaN(id) || id < 2) ? 10 : 7, tot = Math.ceil(v * 2 * d);
-            return { v: v + " mL de cada", r: `${recHead}1) AMOXICILINA SUSPENSÃO 400 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR ${d} DIAS.\n\n2) AMOXICILINA + CLAVULANATO 400+57 MG/5ML - ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR ${d} DIAS.\nDAR OS DOIS JUNTOS, NO MESMO HORÁRIO.` };
+            return { v: v + " mL", r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML ---- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR ${d} DIAS.` };
         },
         detalhes: {
-            indicacao: "Otite média aguda com amoxicilina nos últimos 30 dias, conjuntivite purulenta associada, recorrência sem resposta à amoxicilina ou falha da amoxicilina em 48–72 h.",
-            dose: "90 mg/kg/dia de amoxicilina + 6,4 mg/kg/dia de clavulanato VO de 12/12h (máx. 2 g de amoxicilina/dose), em dois frascos: amoxicilina 400 mg/5 mL + amoxicilina-clavulanato 400+57 mg/5 mL, o mesmo volume de cada. < 2 anos: 10 dias; ≥ 2 anos: 7 dias; OMA grave: 10 dias (AAP 2013).",
-            atencao: "Sem a formulação ES (600 + 42,9) no serviço: usar só o 400+57 na dose alta dobraria o clavulanato (mais diarreia). Por isso, dois frascos. Idade em branco: 10 dias."
+            indicacao: "Otite média aguda com risco de bactéria produtora de betalactamase: betalactâmico nos últimos 30 dias, conjuntivite purulenta, perfuração timpânica espontânea, ou sem melhora em 48–72 h de amoxicilina.",
+            dose: "0,45 a 0,9 mL/kg/dose (45 a 90 mg/kg/dia de amoxicilina) VO de 12/12h por 7 a 10 dias (Whitebook). O app usa 90 mg/kg/dia. < 2 anos: 10 dias; ≥ 2 anos: 7 dias.",
+            atencao: "Um frasco só (250 + 62,5 mg/5 mL). Idade em branco: 10 dias. Dose máxima usada: 2 g de amoxicilina por dose (40 mL)."
         }
     },
     "cef_oma": {
@@ -775,18 +775,18 @@ registrarMedicamentos({
     },
     "clav_sinusite": {
         cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais)",
-        kw: "amoxicilina clavulanato dose alta sinusite rinossinusite bacteriana aguda creche menor de 2 anos falha dois frascos",
-        nome: "Amoxicilina + Clavulanato: Sinusite Bacteriana Aguda (dose alta)", apres: "Amoxicilina 400 mg/5 mL + Amoxicilina-clavulanato 400+57 mg/5 mL",
-        info: "<strong>Posologia (AAP 2013 / IDSA 2012):</strong> 90 mg/kg/dia de amoxicilina (+ 6,4 mg/kg/dia de clavulanato) de 12/12h por 10 dias, com <strong>dois frascos</strong>: metade da dose em cada. Máx. 2 g de amoxicilina/dose.", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
+        kw: "amoxicilina clavulanato dose alta sinusite rinossinusite bacteriana aguda creche menor de 2 anos falha betalactamase",
+        nome: "Amoxicilina + Clavulanato: Sinusite Bacteriana Aguda (dose alta)", apres: "250 + 62,5 mg / 5 mL",
+        info: "<strong>Posologia (Whitebook, a mesma da OMA):</strong> 0,9 mL/kg/dose (90 mg/kg/dia de amoxicilina) VO de 12/12h por 10 dias (AAP 2013 / IDSA 2012). Máx. 2 g de amoxicilina/dose.", badge: "Máx: 2 g/dose", recLabel: "Texto para selecionar e copiar:",
         calc: (p) => {
-            /* sem a ES (14:1): 22,5 mg/kg/dose de cada frasco de 400 mg/5 mL; teto 1 g por frasco por dose (2 g no total) */
-            let v = Math.min(parseFloat(round05(p * 22.5 * 5 / 400)), 12.5), t = String(v).replace('.', ','), tot = Math.ceil(v * 2 * 10);
-            return { v: v + " mL de cada", r: `${recHead}1) AMOXICILINA SUSPENSÃO 400 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.\n\n2) AMOXICILINA + CLAVULANATO 400+57 MG/5ML - ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.\nDAR OS DOIS JUNTOS, NO MESMO HORÁRIO.` };
+            /* mesma dose do clav_oma (Whitebook 250+62,5, 90 mg/kg/dia), 10 dias; teto 2 g de amoxicilina/dose = 40 mL (pedido do Dr. Jonas, 11/2026: um frasco só) */
+            let v = Math.min(parseFloat(round05(p * 0.9)), 40), t = String(v).replace('.', ','), tot = Math.ceil(v * 2 * 10);
+            return { v: v + " mL", r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML ---- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.` };
         },
         detalhes: {
             indicacao: "Sinusite bacteriana aguda com fator de risco (< 2 anos, creche, antibiótico nos últimos 30 dias, quadro moderado a grave, imunodeprimido) ou falha da amoxicilina em 72 h.",
-            dose: "90 mg/kg/dia de amoxicilina + 6,4 mg/kg/dia de clavulanato VO de 12/12h por 10 dias (máx. 2 g de amoxicilina/dose), em dois frascos com o mesmo volume.",
-            atencao: "Sem a formulação ES no serviço: usar só o 400+57 dobraria o clavulanato (mais diarreia). Por isso, dois frascos."
+            dose: "0,9 mL/kg/dose (90 mg/kg/dia de amoxicilina) VO de 12/12h por 10 dias, máx. 2 g de amoxicilina/dose. Dose do Whitebook para a OMA, usada também na sinusite.",
+            atencao: "Um frasco só (250 + 62,5 mg/5 mL)."
         }
     },
     "cef_sinusite": {
