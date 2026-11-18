@@ -127,11 +127,24 @@ function fecharProcedimentos() {
     window.scrollTo(0, 0);
 }
 
+// Página própria, como a Prescrição e as Condutas (pedido do Dr. Jonas, 11/2026): sem a lateral da tela inicial,
+// com o subtítulo do app ("Prescrição e condutas médicas") e só o "🏠 Início" para voltar. Tudo isso se
+// desfaz sozinho quando a tela inicial é montada de novo (montarInicio troca todo o conteúdo).
+function procModoPagina() {
+    let tela = document.getElementById("tela-inicio"); if (!tela) return;
+    let corpo = tela.querySelector(".in-corpo"); if (corpo) corpo.classList.add("pag-proc");
+    tela.querySelectorAll(".in-band small, .in-logo-cel small").forEach(el => { el.textContent = "Prescrição e condutas médicas"; });
+    let abaInicio = tela.querySelector(".in-tab button.on"); if (abaInicio) { abaInicio.classList.remove("on"); abaInicio.dataset.acao = "fechar"; }
+}
+
 function procDesenhar() {
     let main = document.querySelector("#tela-inicio main"), e = escaparHtml;
     if (!main) return;
     let p = PROCEDIMENTOS.find(x => x.id === procAtual);
-    let topo = `<button type="button" class="proc-voltar" data-acao="${p ? "lista" : "fechar"}">‹ ${p ? "Procedimentos" : "Início"}</button><h1>${p ? e(p.nome) : "Descrição de procedimentos"}</h1>`;
+    procModoPagina();
+    /* "🏠 Início" no mesmo estilo das Condutas; dentro de um procedimento, "‹ Procedimentos" volta à lista */
+    let inicio = `<div class="cond-inicio-linha"><button type="button" class="cond-btn-inicio" data-acao="fechar" title="Voltar à tela inicial"><span aria-hidden="true">🏠</span>Início</button></div>`;
+    let topo = inicio + (p ? `<button type="button" class="proc-voltar" data-acao="lista">‹ Procedimentos</button>` : "") + `<h1>${p ? e(p.nome) : "Descrição de procedimentos"}</h1>`;
     if (!p) {
         /* lista igual à da tela inicial: quadradinho colorido com ícone, nome e › */
         let linhas = PROCEDIMENTOS.map(x => `<button type="button" class="in-row" data-proc="${x.id}">${procIcone(x)}<div class="in-tx">${e(x.nome)}</div><span class="in-d">${typeof inIcone === "function" ? inIcone("seta") : "›"}</span></button>`).join("");

@@ -92,7 +92,7 @@ js/inicio.js + css/inicio.css  🏠 TELA INICIAL depois do login (liberada para 
                            O adulto terá os PRÓPRIOS atalhos (decisão do Dr. Jonas).
 js/procedimentos.js        📝 Descrição de procedimentos (tela inicial → Pediatria): modelos de texto para o prontuário (PL, CVC, IOT, intraósseo,
                            drenagem torácica, toracocentese, sutura, cateterismo vesical); campos {{rótulo}} ou {{rótulo|opção|opção}}, em vermelho até
-                           preencher; "Copiar texto". Abre DENTRO da tela inicial (#tela-inicio main: mesma tarja, logo e menus). Nada é salvo. Só no teste até o Dr. Jonas conferir os textos (PROCEDIMENTOS_LIBERADO = false)
+                           preencher; "Copiar texto". Página própria como Prescrição/Condutas (sem a lateral do início, subtítulo do app, "🏠 Início"). Nada é salvo. Só no teste até o Dr. Jonas conferir os textos (PROCEDIMENTOS_LIBERADO = false)
 js/firebase.js             login e Firestore (módulo); sem e-mail de confirmação (suspenso: não chegava), o cadastro pede o e-mail 2x; grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)
 privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; contato jrmedprescricao@gmail.com). Mudou o texto?
@@ -228,9 +228,10 @@ funcionar na raiz e em `/teste/`. `js/modo-teste.js` detecta `/teste/` (constant
 
 Todas as telas (login, início, prescrição, condutas e as próximas) seguem o mesmo padrão. Ao criar tela nova, usar estes valores; não inventar cor nova.
 
-- **Página nova aberta pela tela inicial** (pedido do Dr. Jonas, 11/2026): abre DENTRO da tela inicial, trocando só o conteúdo de `#tela-inicio main`,
-  para manter sempre o mesmo topo com o logotipo JR, a lateral (computador) e a barra de baixo (celular). Nunca uma tela solta com topo próprio.
-  Modelo: `js/procedimentos.js` (`abrirProcedimentos`, "‹ Início" chama `montarInicio()`).
+- **Página nova aberta pela tela inicial** (pedido do Dr. Jonas, 11/2026): é uma página do app, igual à Prescrição e às Condutas,
+  e NÃO uma cópia da tela inicial. Mesma tarja azul com o logotipo JR e o subtítulo "Prescrição e condutas médicas" (nunca "Início"),
+  **sem a lateral da tela inicial**, só o botão "🏠 Início" para voltar (no celular, a aba Início da barra de baixo).
+  Modelo: `js/procedimentos.js` (`procModoPagina()`; volta pela `montarInicio()`).
 
 - **Tarja azul no topo:** `#005eb8` (faixa do cabeçalho da Prescrição e da tarja do login). Texto da tarja em branco.
 - **Botão principal:** azul sólido `#005eb8` (hover `#0a6fd6`), cantos 10px, sem degradê e sem sombra forte.
