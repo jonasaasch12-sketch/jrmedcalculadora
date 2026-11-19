@@ -274,6 +274,50 @@ function copiarSoroY(botao) {
 }
 
 
+// ===== Bicarbonato (pH ≤ 6,9): digita o HCO₃ da gasometria e sai a prescrição pronta (pedido do Dr. Jonas, 11/2026) =====
+// Conta em cadBicPreparo() (medicamentos/cad.js): metade de (12 − HCO₃) x 0,3 x peso, 1 mL de bicarbonato 8,4% + 5 mL de AD, em 2 h.
+function ferramentaCadBicarbonato() {
+    setTimeout(atualizarCadBic, 0);
+    return `<div class="sy" id="cadbic">
+        <div class="sy-h">🧪 Bicarbonato: prescrição pronta</div>
+        <div class="cadh-linha"><span class="cadh-rot">HCO₃ da gasometria</span><input id="cadbic-hco3" type="number" inputmode="decimal" min="0" max="12" step="0.1" placeholder="ex.: 4" oninput="atualizarCadBic()" style="width:110px"> <span class="cadh-rot">mEq/L</span></div>
+        <div id="cadbic-corpo"></div>
+    </div>`;
+}
+function textoCadBic(p, h) {
+    let b = cadBicPreparo(p, h), f = n => String(n).replace('.', ',');
+    return `VIA ENDOVENOSA (CETOACIDOSE - ACIDOSE GRAVE, pH ≤ 6,9)
+
+1) BICARBONATO DE SÓDIO 8,4% (1 MEQ/ML) ------ ${b.bic} ML
+   ÁGUA DESTILADA ---------------------------- ${b.ad} ML
+   VOLUME TOTAL: ${b.vol} ML
+INFUNDIR EM BOMBA DE INFUSÃO A ${b.vel} ML/H, EM 2 HORAS.
+(METADE DA DOSE DO IMIP: (12 − ${f(h)}) X 0,3 X ${f(p)} KG = ${b.total} MEQ; NESTA INFUSÃO ${b.meq} MEQ${b.teto ? ", TETO DE 100 MEQ" : ""}.)
+REPETIR A GASOMETRIA AO FINAL DA INFUSÃO. MONITORAR O POTÁSSIO.`;
+}
+function atualizarCadBic() {
+    let corpo = document.getElementById('cadbic-corpo'); if (!corpo) return;
+    let p = parseFloat((document.getElementById('pesoInput') || {}).value);
+    let h = parseFloat(String((document.getElementById('cadbic-hco3') || {}).value).replace(',', '.'));
+    if (isNaN(p) || p <= 0) { corpo.innerHTML = `<div class="cond-nota">Digite o peso lá em cima.</div>`; return; }
+    if (isNaN(h)) { corpo.innerHTML = `<div class="cond-nota">Digite o HCO₃ da gasometria para montar a prescrição.</div>`; return; }
+    if (h >= 12) { corpo.innerHTML = `<div class="cond-nota">HCO₃ ≥ 12: pela fórmula do IMIP não há dose de bicarbonato.</div>`; return; }
+    corpo.innerHTML = `<div class="cond-med-texto" id="cadbic-texto">${escCond(textoCadBic(p, h))}</div>
+        <div class="cond-med-botoes"><button type="button" class="cond-btn-receita" onclick="addCadBicReceita(this)">+ Receita</button><button type="button" class="cond-btn-copiar" onclick="copiarCadBic(this)">📋 Copiar</button></div>`;
+}
+function addCadBicReceita(botao) {
+    let texto = document.getElementById('cadbic-texto').innerText.trim();
+    carrinhoPrescricao.push({ nome: "Bicarbonato de Sódio na CAD", apres: "8,4% diluído 1:5 em AD", texto, via: texto.split('\n')[0].trim() });
+    manterNaTela(botao, atualizarCarrinhoUI);
+    let o = botao.innerHTML; botao.innerHTML = "✓ Na receita"; botao.classList.add('adicionado');
+    setTimeout(() => { botao.innerHTML = o; botao.classList.remove('adicionado'); }, 1200);
+}
+function copiarCadBic(botao) {
+    navigator.clipboard?.writeText(document.getElementById('cadbic-texto').innerText);
+    let o = botao.innerHTML; botao.innerHTML = "✓ Copiado"; setTimeout(() => { botao.innerHTML = o; }, 1200);
+}
+
+
 // ===== Passo 8: transição da insulina EV para SC (escolhas do Dr. Jonas: doses do IFF/Fiocruz e do HC-UFTM,
 // CAD resolvida com HCO₃ > 15, regular SC 30 a 60 min antes de desligar a bomba). =====
 let cadTrEstado = { tipo: 'novo', esquema: 'sus' };
@@ -730,6 +774,7 @@ registrarConduta({
                                 "Só com pH ≤ 6,9 (SPP) ou hipercalemia grave com disfunção cardíaca, em UTI.",
                                 "Dose (IMIP) = (12 − HCO₃ encontrado) x 0,3 x peso. Fazer metade da dose em 2 horas, diluído 1:5 em AD. Repetir a gasometria ao final."
                             ],
+                            ferramenta: "ferramentaCadBicarbonato",
                             remedios: ["cad_bicarbonato"]
                         }
                     ]
