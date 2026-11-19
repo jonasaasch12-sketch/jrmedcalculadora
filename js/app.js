@@ -499,6 +499,7 @@ function inicializarApp() {
                             ${renderizarInfoMed(idRemedio, med)}
                             ${badgeHtml}
                             <div id="alerta-alergia-${instanceId}" style="display:none;" class="tarja-alergia">⚠️ Paciente referiu alergia compatível — confira antes de prescrever</div>
+                            ${med.campoExtra ? `<label class="card-campo-extra">${escaparHtml(med.campoExtra.rotulo)}<input id="extra-${instanceId}" type="number" inputmode="decimal" step="0.1" min="0" placeholder="${escaparHtml(med.campoExtra.placeholder || "")}" oninput="calcularTudo()"><span>${escaparHtml(med.campoExtra.unidade || "")}</span></label>` : ""}
                             <div class="prescription-header-row">
                                 <div class="prescription-label">${med.recLabel}</div>
                                 <div class="card-actions-row">
@@ -791,7 +792,9 @@ function calcularTudo() {
         }
 
         try {
-            let calc = med.calc(p, iRaw);
+            /* campoExtra: caixinha própria do card (ex.: HCO₃ no bicarbonato da CAD), passada como 3º argumento do calc */
+            let extra = med.campoExtra ? ((document.getElementById('extra-' + instanceId) || {}).value || "") : undefined;
+            let calc = med.calc(p, iRaw, extra);
             if (!med.badgeSt) resBox.innerText = calc.v;
             recBox.innerText = calc.r;
         } catch (e) {
@@ -810,6 +813,7 @@ function novoPaciente() {
     if (document.getElementById('idadeUnidade')) document.getElementById('idadeUnidade').value = "anos";
     document.getElementById('alergiaInput').value = "";
     document.getElementById('searchInput').value = "";
+    document.querySelectorAll('.card-campo-extra input').forEach(c => { c.value = ""; });
     carrinhoPrescricao = [];
     atualizarCarrinhoUI();
     filtrarMedicas();

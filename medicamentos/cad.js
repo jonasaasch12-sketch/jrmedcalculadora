@@ -13,6 +13,19 @@ function cadBicPreparo(p, hco3) {
     return { total: f(meq), meq: f(metade), bic: f(metade), ad: f(metade * 5), vol: f(metade * 6), vel: f(metade * 6 / 2), teto: meq / 2 > 100 };
 }
 
+// Prescrição pronta para um HCO₃ (card cad_bicarbonato com a caixinha do HCO₃ e calculadora da conduta de CAD).
+function textoCadBic(p, h) {
+    let b = cadBicPreparo(p, h), f = n => String(n).replace('.', ',');
+    return `VIA ENDOVENOSA (CETOACIDOSE - ACIDOSE GRAVE, pH ≤ 6,9)
+
+1) BICARBONATO DE SÓDIO 8,4% (1 MEQ/ML) ------ ${b.bic} ML
+   ÁGUA DESTILADA ---------------------------- ${b.ad} ML
+   VOLUME TOTAL: ${b.vol} ML
+INFUNDIR EM BOMBA DE INFUSÃO A ${b.vel} ML/H, EM 2 HORAS.
+(METADE DA DOSE DO IMIP: (12 − ${f(h)}) X 0,3 X ${f(p)} KG = ${b.total} MEQ; NESTA INFUSÃO ${b.meq} MEQ${b.teto ? ", TETO DE 100 MEQ" : ""}.)
+REPETIR A GASOMETRIA AO FINAL DA INFUSÃO. MONITORAR O POTÁSSIO.`;
+}
+
 registrarMedicamentos({
     "insulina_cad": {
         cat: "cat-cad", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
@@ -166,16 +179,21 @@ HGT ANTES DAS REFEIÇÕES E ÀS 3 HORAS DA MADRUGADA.
     "cad_bicarbonato": {
         cat: "cat-cad", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
         kw: "bicarbonato de sodio cetoacidose diabetica cad acidose grave ph hipercalemia", nome: "Bicarbonato de Sódio na CAD (pH ≤ 6,9)", apres: "Bicarbonato de sódio 8,4% (1 mEq/mL)",
-        info: "<strong>Conduta (IMIP):</strong> só se pH ≤ 6,9. Dose = (12 − HCO₃ encontrado) x 0,3 x peso. Fazer metade da dose em 2 h, diluída 1:5 em AD, em bomba de infusão. Preparo pronto por HCO₃ na receita; com o HCO₃ exato, use a calculadora da conduta de CAD.", badge: "Não usar de rotina", recLabel: "Texto para selecionar e copiar:",
-        calc: (p) => {
-            /* preparo pronto para cada HCO₃ (pedido do Dr. Jonas, 11/2026): metade da dose do IMIP, 1 mL de bicarbonato 8,4% + 5 mL de AD, em 2 h */
+        info: "<strong>Conduta (IMIP):</strong> só se pH ≤ 6,9. Dose = (12 − HCO₃ encontrado) x 0,3 x peso. Fazer metade da dose em 2 h, diluída 1:5 em AD, em bomba de infusão. Digite o HCO₃ da gasometria na caixinha do card: sai a prescrição pronta.", badge: "Não usar de rotina", recLabel: "Texto para selecionar e copiar:",
+        campoExtra: { rotulo: "HCO₃ da gasometria", unidade: "mEq/L", placeholder: "ex.: 4" },
+        calc: (p, i, extra) => {
+            /* com o HCO₃ digitado na caixinha do card: prescrição pronta (pedido do Dr. Jonas, 11/2026) */
+            let h = parseFloat(String(extra || "").replace(',', '.'));
+            if (!isNaN(h) && h >= 12) return { v: "Sem dose", r: "ATENÇÃO: HCO₃ ≥ 12 mEq/L: pela fórmula do IMIP não há dose de bicarbonato." };
+            if (!isNaN(h) && h >= 0) { let b = cadBicPreparo(p, h); return { v: `${b.bic} mL em 2 h`, r: textoCadBic(p, h) }; }
+            /* sem o HCO₃: preparo pronto para cada HCO₃ (pedido do Dr. Jonas, 11/2026): metade da dose do IMIP, 1 mL de bicarbonato 8,4% + 5 mL de AD, em 2 h */
             let linha = h => { let b = cadBicPreparo(p, h); return `HCO₃ ${h}: BICARBONATO 8,4% ${b.bic} ML + AD ${b.ad} ML (TOTAL ${b.vol} ML) → BOMBA DE INFUSÃO A ${b.vel} ML/H, EM 2 HORAS.`; };
             return { v: "Preparo pelo HCO₃", r: `VIA ENDOVENOSA (CETOACIDOSE - ACIDOSE GRAVE, pH ≤ 6,9)\n\nBICARBONATO DE SÓDIO 8,4% (1 MEQ/ML), DILUÍDO 1:5 EM ÁGUA DESTILADA, METADE DA DOSE EM 2 HORAS.\nUSAR A LINHA DO HCO₃ DA GASOMETRIA:\n${[2, 3, 4, 5, 6, 7, 8, 9, 10].map(linha).join('\n')}\n\nREPETIR A GASOMETRIA AO FINAL DA INFUSÃO. MONITORAR O POTÁSSIO.\n\n* Dose (IMIP) = (12 − HCO₃) x 0,3 x ${String(p).replace('.', ',')} kg; aqui vai a metade. Teto de 100 mEq por infusão (dose de adulto da SBD).\n* Só com pH ≤ 6,9 (ou hipercalemia grave com disfunção cardíaca). Em UTI.\n* Risco: hipocalemia, acidose paradoxal do líquor e edema cerebral.` };
         },
         detalhes: {
             indicacao: "Cetoacidose com pH ≤ 6,9 ou hipercalemia grave com disfunção cardíaca.",
             dose: "(12 − HCO₃) x 0,3 x peso (IMIP): fazer metade em 2 h, diluída 1:5 em AD (1 mL de bicarbonato 8,4% + 5 mL de AD), em bomba de infusão. Teto 100 mEq por infusão.",
-            atencao: "Não é rotina: aumenta o risco de hipocalemia e de edema cerebral. Com o HCO₃ exato, a calculadora da conduta de CAD monta a prescrição pronta."
+            atencao: "Não é rotina: aumenta o risco de hipocalemia e de edema cerebral. Com o HCO₃ digitado na caixinha do card, sai a prescrição pronta; sem ele, uma linha por HCO₃."
         }
     }
 });

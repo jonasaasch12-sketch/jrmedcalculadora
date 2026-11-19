@@ -284,17 +284,6 @@ function ferramentaCadBicarbonato() {
         <div id="cadbic-corpo"></div>
     </div>`;
 }
-function textoCadBic(p, h) {
-    let b = cadBicPreparo(p, h), f = n => String(n).replace('.', ',');
-    return `VIA ENDOVENOSA (CETOACIDOSE - ACIDOSE GRAVE, pH ≤ 6,9)
-
-1) BICARBONATO DE SÓDIO 8,4% (1 MEQ/ML) ------ ${b.bic} ML
-   ÁGUA DESTILADA ---------------------------- ${b.ad} ML
-   VOLUME TOTAL: ${b.vol} ML
-INFUNDIR EM BOMBA DE INFUSÃO A ${b.vel} ML/H, EM 2 HORAS.
-(METADE DA DOSE DO IMIP: (12 − ${f(h)}) X 0,3 X ${f(p)} KG = ${b.total} MEQ; NESTA INFUSÃO ${b.meq} MEQ${b.teto ? ", TETO DE 100 MEQ" : ""}.)
-REPETIR A GASOMETRIA AO FINAL DA INFUSÃO. MONITORAR O POTÁSSIO.`;
-}
 function atualizarCadBic() {
     let corpo = document.getElementById('cadbic-corpo'); if (!corpo) return;
     let p = parseFloat((document.getElementById('pesoInput') || {}).value);

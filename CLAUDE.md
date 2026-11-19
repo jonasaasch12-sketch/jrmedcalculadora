@@ -208,6 +208,8 @@ funcionar na raiz e em `/teste/`. `js/modo-teste.js` detecta `/teste/` (constant
   completa põe o item em "USO ORAL". Receita de casa: em MAIÚSCULAS, padrão `1) NOME CONC ---- QTD`.
   Prescrição hospitalar: a via na 1ª linha e o preparo em frases.
 - `badgeSt` (selo fixo): **só em card de dose fixa**. Com ele o quadro azul não é recalculado.
+- `campoExtra: { rotulo, unidade, placeholder }`: caixinha própria no card (ex.: HCO₃ da gasometria no `cad_bicarbonato`); o valor
+  chega como 3º argumento do `calc(p, i, extra)` (texto, pode vir vazio: o card tem de funcionar sem ele). Pedido do Dr. Jonas, 11/2026.
 - Comentários dentro de `calc` de uma linha: usar `/* */`, nunca `//`.
 - Ficha completa: ordem de exibição fixa (em `renderizarBlocoFicha`), **fonte sempre por último**.
   Se o card tem ficha com dose, o texto abaixo do nome mostra "Ver 📋 Ficha completa".
