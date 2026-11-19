@@ -91,7 +91,7 @@ js/inicio.js + css/inicio.css  🏠 TELA INICIAL depois do login (liberada para 
                            firebase.js chama aoEntrarNoApp()/aoSairDoApp(). Volta: "‹ Início" no cabeçalho, aba 🏠 no celular, item no Menu.
                            O adulto terá os PRÓPRIOS atalhos (decisão do Dr. Jonas).
 js/procedimentos.js        📝 Descrição de procedimentos (tela inicial → Pediatria): modelos de texto para o prontuário (PL, CVC, IOT, intraósseo,
-                           drenagem torácica, toracocentese, sutura, cateterismo vesical); campos {{rótulo}} ou {{rótulo|opção|opção}}, em vermelho até
+                           drenagem torácica, toracocentese, sutura, cateterismo vesical); campos {{rótulo}}, {{?rótulo}} (opcional) ou {{rótulo|opção|opção}}, \\n = quebra de linha; em vermelho até
                            preencher; "Copiar texto". Página própria como Prescrição/Condutas (sem a lateral do início, subtítulo do app, "🏠 Início"). Nada é salvo. Só no teste até o Dr. Jonas conferir os textos (PROCEDIMENTOS_LIBERADO = false)
 js/firebase.js             login e Firestore (módulo); sem e-mail de confirmação (suspenso: não chegava), o cadastro pede o e-mail 2x; grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)

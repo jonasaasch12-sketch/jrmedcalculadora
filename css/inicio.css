@@ -472,3 +472,5 @@ html[data-theme="dark"] #tela-inicio .proc-dica, html[data-theme="dark"] #tela-i
 #tela-inicio .in-corpo.pag-proc main { max-width: none; padding-top: 16px; }
 #tela-inicio .in-corpo.pag-proc .cond-inicio-linha { margin: 0 0 8px -10px; }
 #tela-inicio .in-corpo.pag-proc .proc-voltar { display: block; margin-top: 4px; }
+#tela-inicio .proc-campo.opcional:not(.ok) { border-style: dashed; border-color: #cfd6de; background: #fff; color: #5b6670; }
+html[data-theme="dark"] #tela-inicio .proc-campo.opcional:not(.ok) { background: #17212b; border-color: #2a3644; color: #9aa4ad; }
