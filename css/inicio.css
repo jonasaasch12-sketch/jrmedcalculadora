@@ -475,10 +475,11 @@ html[data-theme="dark"] #tela-inicio .proc-dica, html[data-theme="dark"] #tela-i
 #tela-inicio .proc-campo.opcional:not(.ok) { border-style: dashed; border-color: #cfd6de; background: #fff; color: #5b6670; }
 html[data-theme="dark"] #tela-inicio .proc-campo.opcional:not(.ok) { background: #17212b; border-color: #2a3644; color: #9aa4ad; }
 
-/* Caixinha própria de um card (campoExtra, ex.: HCO₃ no bicarbonato da CAD) */
-.card-campo-extra { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 10px 0 4px; font-size: 14px; font-weight: 600; color: #212b32; }
-.card-campo-extra input { width: 110px; padding: 8px 10px; border: 1px solid #cfd6de; border-radius: 10px; font: inherit; font-weight: 600; background: #fff; color: #212b32; }
-.card-campo-extra input:focus { outline: 2px solid #005eb8; outline-offset: 1px; }
-.card-campo-extra span { font-weight: 500; color: #5b6670; }
-html[data-theme="dark"] .card-campo-extra { color: #e6edf3; }
-html[data-theme="dark"] .card-campo-extra input { background: #17212b; border-color: #2a3644; color: #e6edf3; }
+/* Caixinha própria de um card (campoExtra, ex.: HCO₃ no bicarbonato da CAD): no cabeçalho, ao lado do nome, no lugar do quadro azul */
+.card-campo-extra { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex: none; font-size: 12px; font-weight: 700; color: #005eb8; }
+.card-campo-extra .cce-linha { display: flex; align-items: center; gap: 6px; }
+.card-campo-extra input { width: 84px; padding: 8px 10px; border: 2px solid #005eb8; border-radius: 10px; font: inherit; font-size: 18px; font-weight: 700; text-align: center; background: #eef6ff; color: #0b3d72; }
+.card-campo-extra input:focus { outline: 2px solid #0a6fd6; outline-offset: 1px; }
+.card-campo-extra .cce-linha > span { font-weight: 600; color: #5b6670; }
+html[data-theme="dark"] .card-campo-extra { color: #8cc4ff; }
+html[data-theme="dark"] .card-campo-extra input { background: #13283d; border-color: #8cc4ff; color: #e6edf3; }

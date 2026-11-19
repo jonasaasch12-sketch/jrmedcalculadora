@@ -70,9 +70,10 @@ ajusteRenal, ajusteHepatico, conservacao, fonteRevisao`. A ordem de exibição �
 - **Sem peso.** O app só chama o `calc` sem peso se o card tiver `ignoraPeso: true`. Nesse caso o
   peso chega como `NaN`, e o cálculo tem de tratar isso. Usar só em card de dose fixa.
 - `badgeSt` (selo fixo no lugar do quadro azul): só em card de dose fixa. Com ele o quadro azul não é recalculado.
-- **Caixinha própria** (`campoExtra: { rotulo, unidade, placeholder }`): quando a dose depende de um dado além de peso e idade
-  (ex.: HCO₃ da gasometria no `cad_bicarbonato`). O valor chega como 3º argumento, `calc(p, i, extra)`, em texto e
-  possivelmente vazio: sem ele, o card ainda mostra algo útil (no bicarbonato, uma linha por HCO₃).
+- **Caixinha própria** (`campoExtra: { rotulo, unidade, placeholder, exemplo }`): quando a dose depende de um dado além de
+  peso e idade (ex.: HCO₃ da gasometria no `cad_bicarbonato`). Fica no cabeçalho, ao lado do nome, no lugar do quadro azul.
+  O valor chega como 3º argumento, `calc(p, i, extra)`, em texto. Vazio: o card só pede o valor (pedido do Dr. Jonas).
+  Os testes usam o `exemplo` (padrão "4") para conferir dose, teto e via.
 
 ## 5. A receita (`r`)
 
