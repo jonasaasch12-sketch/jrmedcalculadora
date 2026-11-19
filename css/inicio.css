@@ -474,3 +474,11 @@ html[data-theme="dark"] #tela-inicio .proc-dica, html[data-theme="dark"] #tela-i
 #tela-inicio .in-corpo.pag-proc .proc-voltar { display: block; margin-top: 4px; }
 #tela-inicio .proc-campo.opcional:not(.ok) { border-style: dashed; border-color: #cfd6de; background: #fff; color: #5b6670; }
 html[data-theme="dark"] #tela-inicio .proc-campo.opcional:not(.ok) { background: #17212b; border-color: #2a3644; color: #9aa4ad; }
+
+/* Caixinha própria de um card (campoExtra, ex.: HCO₃ no bicarbonato da CAD) */
+.card-campo-extra { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 10px 0 4px; font-size: 14px; font-weight: 600; color: #212b32; }
+.card-campo-extra input { width: 110px; padding: 8px 10px; border: 1px solid #cfd6de; border-radius: 10px; font: inherit; font-weight: 600; background: #fff; color: #212b32; }
+.card-campo-extra input:focus { outline: 2px solid #005eb8; outline-offset: 1px; }
+.card-campo-extra span { font-weight: 500; color: #5b6670; }
+html[data-theme="dark"] .card-campo-extra { color: #e6edf3; }
+html[data-theme="dark"] .card-campo-extra input { background: #17212b; border-color: #2a3644; color: #e6edf3; }
