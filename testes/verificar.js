@@ -75,6 +75,7 @@ const TETOS = {
     cef_sinusite: 3.5,    // mL IM 285,7 mg/mL (1 g)
     amox_oma: 25,         // mL de 400 mg/5 mL = 2 g/dose (AAP)
     clav_oma: 40,         // mL de 250+62,5 mg/5 mL = 2 g de amoxicilina/dose
+    cad_bicarbonato: 100, // mL de bicarbonato 8,4% (1 mEq/mL) = 100 mEq por infusão (conferido com HCO₃ 4)
     cef_oma: 3.5,         // mL IM 285,7 mg/mL (1 g)
     amox_faringo: 10,     // mL de 250 mg/5 mL = 500 mg/dose (IDSA)
     amox_faringo400: 6.25, // mL de 400 mg/5 mL = 500 mg/dose (IDSA)
@@ -94,6 +95,8 @@ const TETOS = {
     fluconazol: 10,       // mL da diluição 15 mg/mL (150 mg)
 };
 
+// Card com caixinha própria (campoExtra, ex.: HCO₃ do bicarbonato): testado com um valor de exemplo.
+const extraDe = med => med && med.campoExtra ? (med.campoExtra.exemplo || '4') : undefined;
 const PESOS = [2.5, 4, 7, 10, 15, 22, 30, 45, 70];
 const IDADES = ["", "0.1", "0.5", "1", "3", "7", "11", "14"];
 // Combinações guardadas na fotografia (menos, para o arquivo não ficar enorme)
@@ -123,7 +126,7 @@ for (const id of ids) {
     for (const p of PESOS) for (const i of IDADES) {
         if (falhas > falhasAntes) break; // um erro por remédio basta
         let r;
-        try { r = med.calc(p, i); } catch (e) { falha(`${id} (${p} kg, ${i || 'sem'} idade): erro "${e.message}"`); continue; }
+        try { r = med.calc(p, i, extraDe(med)); } catch (e) { falha(`${id} (${p} kg, ${i || 'sem'} idade): erro "${e.message}"`); continue; }
         if (!r || typeof r.v === 'undefined' || typeof r.r !== 'string') { falha(`${id} (${p} kg): resultado sem {v, r}`); continue; }
         if (ruim.test(String(r.v)) || ruim.test(r.r)) falha(`${id} (${p} kg, ${i || 'sem'} idade): texto com valor inválido → ${String(r.v).slice(0, 40)}`);
         if (TETOS[id] !== undefined) {
@@ -176,7 +179,7 @@ const atual = {};
 for (const id of ids) {
     atual[id] = {};
     for (const p of PESOS_REF) for (const i of IDADES_REF) {
-        try { const r = farmaciaJR[id].calc(p, i); atual[id][`${p} kg | idade ${i || '-'}`] = `[${r.v}] ${r.r}`; } catch (e) { atual[id][`${p} kg | idade ${i || '-'}`] = 'ERRO'; }
+        try { const r = farmaciaJR[id].calc(p, i, extraDe(farmaciaJR[id])); atual[id][`${p} kg | idade ${i || '-'}`] = `[${r.v}] ${r.r}`; } catch (e) { atual[id][`${p} kg | idade ${i || '-'}`] = 'ERRO'; }
     }
 }
 if (atualizar || !fs.existsSync(ARQ_REFERENCIA)) {

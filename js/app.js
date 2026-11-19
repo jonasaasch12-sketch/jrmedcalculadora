@@ -494,12 +494,13 @@ function inicializarApp() {
                         <div id="card-${instanceId}" class="med-card" data-keywords="${escaparHtml(med.kw)}" data-nome="${escaparHtml(normalizar(med.nome))}">
                             <div class="med-header">
                                 <div><span class="med-name">${ehInjetavel(med) ? ICONE_SERINGA : ""}${escaparHtml(med.nome)}</span><span class="med-presentation">${escaparHtml(med.apres)}</span></div>
-                                <div id="res-${instanceId}" class="result-box">—</div>
+                                ${med.campoExtra
+                                    ? `<label class="card-campo-extra"><span class="cce-rot">${escaparHtml(med.campoExtra.rotulo)}</span><span class="cce-linha"><input id="extra-${instanceId}" type="number" inputmode="decimal" step="0.1" min="0" placeholder="${escaparHtml(med.campoExtra.placeholder || "")}" oninput="calcularTudo()"><span>${escaparHtml(med.campoExtra.unidade || "")}</span></span></label><div id="res-${instanceId}" class="result-box" hidden>—</div>`
+                                    : `<div id="res-${instanceId}" class="result-box">—</div>`}
                             </div>
                             ${renderizarInfoMed(idRemedio, med)}
                             ${badgeHtml}
                             <div id="alerta-alergia-${instanceId}" style="display:none;" class="tarja-alergia">⚠️ Paciente referiu alergia compatível — confira antes de prescrever</div>
-                            ${med.campoExtra ? `<label class="card-campo-extra">${escaparHtml(med.campoExtra.rotulo)}<input id="extra-${instanceId}" type="number" inputmode="decimal" step="0.1" min="0" placeholder="${escaparHtml(med.campoExtra.placeholder || "")}" oninput="calcularTudo()"><span>${escaparHtml(med.campoExtra.unidade || "")}</span></label>` : ""}
                             <div class="prescription-header-row">
                                 <div class="prescription-label">${med.recLabel}</div>
                                 <div class="card-actions-row">
