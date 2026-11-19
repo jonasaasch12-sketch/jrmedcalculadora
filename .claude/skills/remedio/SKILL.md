@@ -73,7 +73,7 @@ ajusteRenal, ajusteHepatico, conservacao, fonteRevisao`. A ordem de exibição �
 - **Caixinha própria** (`campoExtra: { rotulo, unidade, placeholder, exemplo }`): quando a dose depende de um dado além de
   peso e idade (ex.: HCO₃ da gasometria no `cad_bicarbonato`). Fica no cabeçalho, ao lado do nome, no lugar do quadro azul.
   O valor chega como 3º argumento, `calc(p, i, extra)`, em texto. Vazio: o card só pede o valor (pedido do Dr. Jonas).
-  Os testes usam o `exemplo` (padrão "4") para conferir dose, teto e via.
+  A mesma caixinha aparece no card dentro das condutas. Os testes usam o `exemplo` (padrão "4").
 
 ## 5. A receita (`r`)
 

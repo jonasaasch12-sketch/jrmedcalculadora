@@ -6,14 +6,14 @@
 // que já existem em outras categorias (KCl EV, glicose) só são citados no menu.
 // =====================================================
 // Bicarbonato na CAD (IMIP): metade de (12 − HCO₃) x 0,3 x peso, teto 100 mEq; 1 mL de bicarbonato 8,4% (1 mEq/mL) + 5 mL de AD; correr em 2 h.
-// Usado pelo card cad_bicarbonato e pela calculadora da conduta de CAD (condutas/cetoacidose.js).
+// Usado pelo card cad_bicarbonato (o mesmo card aparece na Prescrição e na conduta de CAD).
 function cadBicPreparo(p, hco3) {
     let meq = Math.max(0, (12 - hco3) * 0.3 * p), metade = Math.min(Math.round(meq / 2 * 10) / 10, 100);
     let f = n => String(Math.round(n * 10) / 10).replace('.', ',');
     return { total: f(meq), meq: f(metade), bic: f(metade), ad: f(metade * 5), vol: f(metade * 6), vel: f(metade * 6 / 2), teto: meq / 2 > 100 };
 }
 
-// Prescrição pronta para um HCO₃ (card cad_bicarbonato com a caixinha do HCO₃ e calculadora da conduta de CAD).
+// Prescrição pronta para um HCO₃ (card cad_bicarbonato, com a caixinha do HCO₃, na Prescrição e na conduta de CAD).
 function textoCadBic(p, h) {
     let b = cadBicPreparo(p, h), f = n => String(n).replace('.', ',');
     return `VIA ENDOVENOSA (CETOACIDOSE - ACIDOSE GRAVE, pH ≤ 6,9)

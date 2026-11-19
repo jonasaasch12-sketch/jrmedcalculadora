@@ -435,7 +435,9 @@ function htmlMedConduta(rid) {
     return `<div class="cond-med" data-med="${rid}">
         <div class="cond-med-topo">
             <div><div class="cond-med-nome">${seringa}${escCond(med.nome)}</div><div class="cond-med-apres">${escCond(med.apres || '')}</div></div>
-            <div class="cond-med-dose" data-dose>—</div>
+            ${med.campoExtra
+                ? `<label class="card-campo-extra"><span class="cce-rot">${escCond(med.campoExtra.rotulo)}</span><span class="cce-linha"><input data-extra type="number" inputmode="decimal" step="0.1" min="0" placeholder="${escCond(med.campoExtra.placeholder || '')}" oninput="atualizarDosesConduta()"><span>${escCond(med.campoExtra.unidade || '')}</span></span></label><div class="cond-med-dose" data-dose hidden>—</div>`
+                : `<div class="cond-med-dose" data-dose>—</div>`}
         </div>
         <div class="cond-med-texto" data-texto></div>
         <div class="cond-med-botoes">
@@ -445,19 +447,21 @@ function htmlMedConduta(rid) {
     </div>`;
 }
 
-function calcCondutaMed(med) {
+/* box = a caixa do card na conduta: de lá vem o valor da caixinha própria (campoExtra), igual ao card da Prescrição */
+function calcCondutaMed(med, box) {
     let pRaw = document.getElementById('pesoInput').value;
     let p = parseFloat(pRaw);
     let iRaw = document.getElementById('idadeInput').value;
     if ((isNaN(p) || p <= 0) && !med.ignoraPeso) return { v: "—", r: "Insira o peso ou digite a idade acima." };
-    try { return med.calc(p, iRaw); } catch (e) { return { v: "Erro", r: "Erro de cálculo." }; }
+    let extra = med.campoExtra ? (((box && box.querySelector('[data-extra]')) || {}).value || "") : undefined;
+    try { return med.calc(p, iRaw, extra); } catch (e) { return { v: "Erro", r: "Erro de cálculo." }; }
 }
 
 function atualizarDosesConduta() {
     document.querySelectorAll('#area-condutas .cond-med').forEach(box => {
         let med = buscarMed(box.dataset.med);
         if (!med) return;
-        let c = calcCondutaMed(med);
+        let c = calcCondutaMed(med, box);
         box.querySelector('[data-dose]').innerText = med.badgeSt ? (med.badge || c.v) : c.v;
         box.querySelector('[data-texto]').innerText = c.r;
         box.classList.toggle('sem-peso', c.v === '—');
@@ -477,7 +481,11 @@ function addCondutaReceita(rid, botao) {
     let med = buscarMed(rid);
     let box = botao.closest('.cond-med');
     let texto = box.querySelector('[data-texto]').innerText.trim();
-    if (box.classList.contains('sem-peso')) { alert("Digite o peso (ou a idade) do paciente no topo antes de adicionar à receita."); return; }
+    if (box.classList.contains('sem-peso')) {
+        let caixa = box.querySelector('[data-extra]');
+        alert(caixa && !caixa.value && document.getElementById('pesoInput').value ? `Digite o ${med.campoExtra.rotulo} no card antes de adicionar à receita.` : "Digite o peso (ou a idade) do paciente no topo antes de adicionar à receita.");
+        return;
+    }
     carrinhoPrescricao.push({ nome: med.nome, apres: med.apres, texto, via: viaDoTextoConduta(texto, med) });
     manterNaTela(box, atualizarCarrinhoUI); /* a receita aparecendo à direita não muda o ponto da tela */
     let original = botao.innerHTML;
