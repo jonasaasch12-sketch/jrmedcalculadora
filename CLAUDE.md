@@ -210,7 +210,7 @@ funcionar na raiz e em `/teste/`. `js/modo-teste.js` detecta `/teste/` (constant
 - `badgeSt` (selo fixo): **só em card de dose fixa**. Com ele o quadro azul não é recalculado.
 - `campoExtra: { rotulo, unidade, placeholder, exemplo }`: caixinha própria no card, **no cabeçalho, ao lado do nome** (no lugar do quadro azul),
   ex.: HCO₃ da gasometria no `cad_bicarbonato`. O valor chega como 3º argumento do `calc(p, i, extra)` (texto; vazio = o card só pede o valor).
-  Os testes (verificar.js e conferir-padroes.js) usam o `exemplo` (padrão "4"). Pedido do Dr. Jonas, 11/2026.
+  Vale também no card dentro das condutas (htmlMedConduta). Os testes (verificar.js e conferir-padroes.js) usam o `exemplo` (padrão "4"). Pedido do Dr. Jonas, 11/2026.
 - Comentários dentro de `calc` de uma linha: usar `/* */`, nunca `//`.
 - Ficha completa: ordem de exibição fixa (em `renderizarBlocoFicha`), **fonte sempre por último**.
   Se o card tem ficha com dose, o texto abaixo do nome mostra "Ver 📋 Ficha completa".
