@@ -2,7 +2,8 @@
 // 📝 DESCRIÇÃO DE PROCEDIMENTOS (pedido do Dr. Jonas, 11/2026): modelos de texto para o prontuário.
 // Na tela inicial: Pediatria → "Descrição de procedimentos". Escolhe o procedimento, preenche só os
 // campos em vermelho (o que muda) e copia o texto pronto.
-// Campos no modelo: {{rótulo}} = texto livre; {{rótulo|opção 1|opção 2}} = lista de opções.
+// Campos no modelo: {{rótulo}} = texto livre; {{?rótulo}} = texto livre opcional; {{rótulo|opção 1|opção 2}} = lista de opções.
+// \n no modelo = quebra de linha (vira <br> na tela e volta a ser quebra no texto copiado).
 // Nada é guardado: os campos se apagam ao fechar (não colocar dado que identifique o paciente).
 // Só no teste até o Dr. Jonas conferir os textos (PROCEDIMENTOS_LIBERADO).
 // Carregado depois de js/inicio.js (usa INICIO_PEDIATRIA, mostrarInicio, montarInicio, escaparHtml).
@@ -30,11 +31,20 @@ const PROCEDIMENTOS = [
             "Retirado o fio-guia íntegro. Refluxo e permeabilidade confirmados em todas as vias. Fixação e curativo estéril. {{tentativas}} tentativa(s). {{controle|Solicitada radiografia de tórax para confirmar a posição|Sem necessidade de radiografia (acesso femoral)}}. Procedimento sem intercorrências."
     },
     {
+        /* Texto-base enviado pelo Dr. Jonas (11/2026). Os [ ] dele viraram campos; "___" virou campo livre. */
         id: "iot", ic: "via_aerea", cor: "#0a84ff", nome: "Intubação orotraqueal",
-        texto: "Procedimento: intubação orotraqueal, indicada por {{indicação}}. Monitorização com oximetria, frequência cardíaca e pressão arterial. Pré-oxigenação com {{pré-oxigenação|bolsa-válvula-máscara com O2 a 100%|máscara não reinalante|cateter nasal de alto fluxo}}. " +
-            "Sequência rápida com {{medicações e doses}}. Laringoscopia {{laringoscopia|direta com lâmina reta|direta com lâmina curva|com videolaringoscópio}} nº {{lâmina}}, Cormack-Lehane {{cormack|I|II|III|IV}}. " +
-            "Introduzida cânula {{cânula|com cuff|sem cuff}} nº {{nº da cânula}}, fixada em {{fixação}} cm na rima labial, em {{tentativas}} tentativa(s). " +
-            "Posição confirmada por expansão torácica simétrica, ausculta pulmonar simétrica e ausente em epigástrio{{capnografia|, e capnografia com curva presente|}}. Iniciada ventilação mecânica. {{controle|Solicitada radiografia de tórax para controle da posição|Radiografia de tórax já realizada, com cânula bem posicionada}}. Procedimento {{intercorrências|sem intercorrências|com intercorrência: descrever}}."
+        texto: "PROCEDIMENTO: INTUBAÇÃO OROTRAQUEAL (IOT)\n\n" +
+            "- Indicação: {{indicação|Insuficiência respiratória aguda|Rebaixamento do nível de consciência (ECG < 8)|Proteção de via aérea|Fadiga muscular respiratória|PCR}}.\n" +
+            "- Preparo e Monitorização: Paciente monitorizado (cardioscopia, oximetria de pulso e PANI), com acesso venoso pérvio e material de via aérea previamente testado (laringoscópio, tubos, fio-guia, bolsa-válvula-máscara e sistema de aspiração). Realizada pré-oxigenação com O2 a 100% sob {{dispositivo|máscara não reinalante|bolsa-válvula-máscara}} por {{tempo em minutos (3-5)}} minutos.\n" +
+            "- Medicações (Sequência Rápida de Intubação): {{SRI|realizada conforme abaixo.|procedimento realizado sem drogas sedativas/bloqueadores devido a quadro de PCR em curso.}}\n" +
+            "  • Analgesia/Pré-tratamento: {{pré-tratamento|Fentanil|Lidocaína|Não realizado}} {{?dose do pré-tratamento (ex.: 40 mcg IV)}}\n" +
+            "  • Indução: {{indução|Etomidato|Cetamina|Midazolam|Propofol|Não realizada (PCR)}} {{?dose da indução (ex.: 6 mg IV)}}\n" +
+            "  • Bloqueador Neuromuscular: {{bloqueador|Succinilcolina|Rocurônio|Não realizado (PCR)}} {{?dose do bloqueador (ex.: 20 mg IV)}}\n" +
+            "- Técnica e Laringoscopia: Paciente posicionado em {{posição|posição olfativa|coxim subescapular}}. Realizada laringoscopia direta com lâmina {{lâmina|curva Macintosh|reta Miller}} nº {{nº da lâmina}}, evidenciando classificação de Cormack-Lehane grau {{Cormack|I|II|III|IV}} {{BURP|sem necessidade de manobra BURP|com necessidade de manobra BURP}}.\n" +
+            "- Dispositivo: Introduzido tubo orotraqueal (TOT) nº {{nº do tubo}} {{cuff|com cuff|sem cuff}} sob visualização direta, na {{tentativa|1ª|2ª|3ª}} tentativa. Insuflado balonete (cuff) até vedação adequada e fixado o tubo na marca de {{fixação em cm}} cm ao nível da rima labial.\n" +
+            "- Confirmação: Posicionamento confirmado por {{confirmação|capnografia em onda|embaçamento do tubo}}, expansibilidade torácica bilateral e simétrica, ausculta pulmonar com murmúrio vesicular presente e simétrico em ambos os hemitórax e ausência de ruídos hidroaéreos em epigástrio.\n" +
+            "- Intercorrências: {{intercorrências|Procedimento realizado sem intercorrências.|Houve episódio de hipotensão transitória, revertido após:|Houve episódio de dessaturação transitória, revertido após:}} {{?como foi revertido (se houve)}}\n" +
+            "- Conduta Pós-IOT: Paciente acoplado à ventilação mecânica invasiva (Modo: {{modo|VCV|PCV}}, FiO2: {{FiO2}}%, PEEP: {{PEEP}} cmH2O, FR: {{FR}} irpm, VC/Pinsp: {{VC ou Pinsp}}). Iniciada sedoanalgesia contínua em bomba de infusão com {{sedoanalgesia|Midazolam + Fentanil|Propofol}}. Solicitada radiografia de tórax no leito para confirmação radiológica e gasometria arterial de controle."
     },
     {
         id: "intraosseo", ic: "osso", cor: "#ff9f0a", nome: "Acesso intraósseo",
@@ -93,14 +103,15 @@ let procAtual = null;
 
 function procCampos(texto) {
     let n = 0;
-    return texto.replace(/\{\{([^}]*)\}\}/g, (m, dentro) => {
+    return texto.replace(/\n/g, "<br>").replace(/\{\{([^}]*)\}\}/g, (m, dentro) => {
         let partes = dentro.split("|"), rotulo = partes[0], id = "pc" + (n++);
+        let opcional = rotulo.startsWith("?"); if (opcional) rotulo = rotulo.slice(1);  /* {{?rótulo}} = campo opcional */
         let e = escaparHtml;
         if (partes.length > 1) {
             let ops = partes.slice(1).map(o => `<option value="${e(o)}">${e(o) || "(nada)"}</option>`).join("");
             return `<select class="proc-campo" data-rotulo="${e(rotulo)}" id="${id}" title="${e(rotulo)}"><option value="" disabled selected>${e(rotulo)}</option>${ops}</select>`;
         }
-        return `<input class="proc-campo" data-rotulo="${e(rotulo)}" id="${id}" placeholder="${e(rotulo)}" size="${Math.max(6, rotulo.length)}" autocomplete="off">`;
+        return `<input class="proc-campo${opcional ? " opcional" : ""}" data-rotulo="${e(rotulo)}" id="${id}" placeholder="${e(rotulo)}" size="${Math.max(6, rotulo.length)}" autocomplete="off">`;
     });
 }
 
@@ -161,7 +172,7 @@ function procDesenhar() {
 }
 
 function procFaltando() {
-    return [...document.querySelectorAll("#procTexto .proc-campo")].filter(c => !c.value.trim() && !(c.tagName === "SELECT" && c.selectedIndex > 0));
+    return [...document.querySelectorAll("#procTexto .proc-campo:not(.opcional)")].filter(c => !c.value.trim() && !(c.tagName === "SELECT" && c.selectedIndex > 0));
 }
 function procAtualizarFalta() {
     let campos = document.querySelectorAll("#procTexto .proc-campo");
@@ -175,9 +186,10 @@ function procTextoFinal() {
     let originais = caixa.querySelectorAll(".proc-campo");
     copia.querySelectorAll(".proc-campo").forEach((c, k) => {
         let o = originais[k], v = o.value.trim();
-        c.replaceWith(document.createTextNode(v || (o.tagName === "SELECT" && o.selectedIndex > 0 ? "" : "[" + o.dataset.rotulo + "]")));
+        c.replaceWith(document.createTextNode(v || (o.classList.contains("opcional") || (o.tagName === "SELECT" && o.selectedIndex > 0) ? "" : "[" + o.dataset.rotulo + "]")));
     });
-    return copia.textContent.replace(/[ \t]+/g, " ").replace(/ ([.,])/g, "$1").trim();
+    copia.querySelectorAll("br").forEach(b => b.replaceWith(document.createTextNode("\n")));
+    return copia.textContent.replace(/[ \t]+/g, " ").replace(/ ([.,])/g, "$1").replace(/ +\n/g, "\n").replace(/\n • /g, "\n  • ").trim();
 }
 
 function procClique(ev) {
