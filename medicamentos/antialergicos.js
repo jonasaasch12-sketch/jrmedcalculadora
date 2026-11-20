@@ -69,9 +69,9 @@ registrarMedicamentos({
             let id = parseFloat(String(i).replace(',', '.'));
             if (id < 0.5) return { v: "< 6 meses", r: "ATENÇÃO: o Whitebook traz a fexofenadina a partir de 6 meses (urticária crônica). Abaixo disso, não prescrever." };
             let cab = `${recHead}1) FEXOFENADINA SUSPENSÃO ORAL 6 MG/ML ------- 1 FR\n`;
-            if (id < 2) return { v: "2,5 mL 12/12h", r: cab + "DAR 2,5 ML (15 MG), VIA ORAL, DE 12/12 HORAS, POR 5 DIAS.\n(6 MESES A MENOS DE 2 ANOS: INDICAÇÃO SÓ NA URTICÁRIA CRÔNICA.)" };
-            if (id < 12) return { v: "5 mL 12/12h", r: cab + "DAR 5 ML (30 MG), VIA ORAL, DE 12/12 HORAS, POR 5 DIAS." };
-            return { v: "10 mL 12/12h", r: cab + "TOMAR 10 ML (60 MG), VIA ORAL, DE 12/12 HORAS, POR 5 DIAS.\n(OU 30 ML (180 MG), VIA ORAL, 1 VEZ AO DIA, POR 5 DIAS.)" };
+            if (id < 2) return { v: "2,5 mL 12/12h", r: cab + "DAR 2,5 ML, VIA ORAL, DE 12/12 HORAS, POR 5 DIAS.\n(6 MESES A MENOS DE 2 ANOS: INDICAÇÃO SÓ NA URTICÁRIA CRÔNICA.)" };
+            if (id < 12) return { v: "5 mL 12/12h", r: cab + "DAR 5 ML, VIA ORAL, DE 12/12 HORAS, POR 5 DIAS." };
+            return { v: "10 mL 12/12h", r: cab + "TOMAR 10 ML, VIA ORAL, DE 12/12 HORAS, POR 5 DIAS.\n(OU 30 ML, VIA ORAL, 1 VEZ AO DIA, POR 5 DIAS.)" };
         },
         detalhes: {
             indicacao: "Rinite alérgica (a partir de 2 anos) e urticária crônica (a partir de 6 meses).",
