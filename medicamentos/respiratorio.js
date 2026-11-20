@@ -34,12 +34,12 @@ registrarMedicamentos({
         calc: (p) => { 
             let cri = Math.max(4, Math.min(Math.round(p / 2), 10));
             let alt = Math.max(4, Math.min(Math.round(p / 3), 10));
-            return { v: `Crise: ${cri} jts\nAlta: ${alt} jts`, r: `USO INALATÓRIO DE ALTA\n\n1) SALBUTAMOL SPRAY 100 MCG + ESPAÇADOR ------ 1 UNID\n• EM CRISE RESGATE: FAZER ${cri} JATOS DE 20/20 MIN POR 1H.\n• ALTA MANUTENÇÃO: FAZER ${alt} JATOS DE 4/4H POR 3 DIAS, DEPOIS 6/6H POR 2 DIAS.` }; 
+            return { v: `Crise: ${cri} jts\nAlta: ${alt} jts`, r: `USO INALATÓRIO DE ALTA\n\n1) SALBUTAMOL SPRAY 100 MCG + ESPAÇADOR ------ 1 UNID\nFAZER ${alt} JATOS DE 4/4H POR 3 DIAS, DEPOIS 6/6H POR 2 DIAS.` }; /* receita de casa só com a manutenção (pedido do Dr. Jonas, 11/2026); a dose da crise fica no quadro azul e no texto do card */
         },
         detalhes: {
             indicacao: "Broncoespasmo: crise de asma e sibilância.",
             dose: "Crise: Peso ÷ 2 jatos de 20/20 min por 1h. Alta: Peso ÷ 3 jatos de 4/4h por 3 dias, depois 6/6h por 2 dias.",
-            atencao: "Mínimo 4 e máximo 10 jatos por vez. Pode causar taquicardia e tremor."
+            atencao: "Mínimo 4 e máximo 10 jatos por vez. Pode causar taquicardia e tremor. A receita sai só com a manutenção de casa (a dose da crise é para a sala de emergência)."
         }
     },
     "pred_sol": {
