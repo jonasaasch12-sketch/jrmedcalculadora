@@ -274,6 +274,8 @@ function copiarSoroY(botao) {
 }
 
 
+
+
 // ===== Passo 8: transição da insulina EV para SC (escolhas do Dr. Jonas: doses do IFF/Fiocruz e do HC-UFTM,
 // CAD resolvida com HCO₃ > 15, regular SC 30 a 60 min antes de desligar a bomba). =====
 let cadTrEstado = { tipo: 'novo', esquema: 'sus' };

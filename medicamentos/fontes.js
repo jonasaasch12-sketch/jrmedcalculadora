@@ -65,6 +65,7 @@ const FONTES_CARDS = {
     nitazoxanida: REF.parasitoses + " Nitazoxanida 7,5 mg/kg/dose (máx. 500 mg) de 12/12h por 3 dias.",
     pred_sol: REF.gina + " Prednisolona 1–2 mg/kg/dia por 3 a 5 dias.",
     bud_formoterol: REF.gina + " Budesonida-formoterol 80/4,5 mcg (6 a 11 anos): MART etapas 3 e 4 e alívio anti-inflamatório na etapa 1.",
+    fexofenadina: "Whitebook (Afya) — Fexofenadina (Drogas Pediátricas / Medicamentos em Pediatria), atualizado em 27/11/2025; bulas Allegra® e Allexofedrin® pediátrico.",
     pulmicort: REF.gina + " Budesonida nebulizada: dose baixa diária de 500 mcg (≥ 1 ano).",
     cad_manitol: REF.ispad, cad_nacl3: REF.ispad, cad_bicarbonato: REF.imip_cad, cad_insulina_sc: REF.cad_sc,
     neuro_fenitoina: REF.crise_wb + " Fenitoína 15–20 mg/kg.",

@@ -430,3 +430,56 @@ html.pagina-publica-ativa .login-voltar-pag { display: block; }
 }
 /* Com sessão aberta (app ou cadastro), a página inicial pública não aparece */
 html.com-sessao #paginaInicialPublica { display: none !important; }
+
+/* ===== 📝 Descrição de procedimentos (js/procedimentos.js; só no teste até a conferência).
+   Abre dentro da tela inicial (#tela-inicio main): mesma tarja, logo, lateral e barra de baixo. ===== */
+#tela-inicio .proc-corpo { max-width: 760px; }
+#tela-inicio .proc-voltar { background: none; border: 0; padding: 0; color: #005eb8; font-size: 15px; font-weight: 500; cursor: pointer; }
+#tela-inicio .proc-corpo h1 { margin-top: 6px; }
+#tela-inicio .proc-dica, #tela-inicio .proc-aviso { color: #5b6670; font-size: 14px; line-height: 1.45; }
+#tela-inicio .proc-lista { background: #fff; border: 1px solid #e3e7ec; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(16,24,40,.08); }
+#tela-inicio .proc-item { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 14px 16px; background: #fff; border: 0; border-top: 1px solid #e3e7ec; font-size: 15px; text-align: left; color: #212b32; cursor: pointer; }
+#tela-inicio .proc-item:first-of-type { border-top: 0; }
+#tela-inicio .proc-item span { color: #9aa4ad; font-size: 20px; }
+#tela-inicio .proc-texto { margin-top: 16px; background: #fff; border: 1px solid #e3e7ec; border-radius: 14px; padding: 16px; font-size: 15px; line-height: 2.1; color: #212b32; box-shadow: 0 10px 30px rgba(16,24,40,.08); overflow-wrap: anywhere; }
+#tela-inicio .proc-campo { font: inherit; font-size: 14px; line-height: 1.3; max-width: 100%; padding: 2px 6px; border: 1px solid #f3a5a5; border-radius: 6px; background: #fdecec; color: #b42318; }
+#tela-inicio .proc-campo.ok { border-color: #cfd6de; background: #eef6ff; color: #0b3d72; }
+#tela-inicio .proc-campo:focus { outline: 2px solid #005eb8; outline-offset: 1px; }
+#tela-inicio .proc-acoes { position: sticky; bottom: 0; display: flex; gap: 10px; padding: 12px 0; background: #f2f4f7; }
+@media (max-width: 849px) { #tela-inicio .proc-acoes { bottom: calc(64px + env(safe-area-inset-bottom)); } }
+#tela-inicio .proc-acoes button { flex: 1; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; }
+#tela-inicio .proc-prox { background: #fff; color: #005eb8; border: 1px solid #cfd6de; }
+#tela-inicio .proc-copiar { background: #005eb8; color: #fff; border: 0; }
+#tela-inicio .proc-copiar:hover { background: #0a6fd6; }
+html[data-theme="dark"] #tela-inicio .proc-lista, html[data-theme="dark"] #tela-inicio .proc-item, html[data-theme="dark"] #tela-inicio .proc-texto { background: #17212b; border-color: #2a3644; color: #e6edf3; }
+html[data-theme="dark"] #tela-inicio .proc-acoes { background: transparent; }
+html[data-theme="dark"] #tela-inicio .proc-prox { background: #17212b; border-color: #2a3644; color: #8cc4ff; }
+html[data-theme="dark"] #tela-inicio .proc-voltar { color: #8cc4ff; }
+html[data-theme="dark"] #tela-inicio .proc-campo { background: #3a1d1d; border-color: #7a2e2e; color: #ffb4ab; }
+html[data-theme="dark"] #tela-inicio .proc-campo.ok { background: #13283d; border-color: #2a3644; color: #b9dcff; }
+html[data-theme="dark"] #tela-inicio .proc-dica, html[data-theme="dark"] #tela-inicio .proc-aviso { color: #9aa4ad; }
+
+/* ===== Tela inicial no celular: topo azul com o logotipo, igual à tarja do computador (pedido do Dr. Jonas, 11/2026) ===== */
+@media (max-width: 849px), (orientation: portrait) {
+    #tela-inicio .in-topo-cel, html[data-theme="dark"] #tela-inicio .in-topo-cel { background: #005eb8; border-bottom: 0; color: #fff; }
+    #tela-inicio .in-logo-cel b { color: #fff; }
+    #tela-inicio .in-logo-cel small { color: rgba(255, 255, 255, .85); }
+    #tela-inicio .in-logo-cel .in-lg { background: linear-gradient(135deg, #0f766e, #14b8a6); color: #fff; }
+}
+
+/* Procedimentos como página própria (igual Prescrição e Condutas): sem a lateral da tela inicial */
+#tela-inicio .in-corpo.pag-proc aside { display: none; }
+#tela-inicio .in-corpo.pag-proc main { max-width: none; padding-top: 16px; }
+#tela-inicio .in-corpo.pag-proc .cond-inicio-linha { margin: 0 0 8px -10px; }
+#tela-inicio .in-corpo.pag-proc .proc-voltar { display: block; margin-top: 4px; }
+#tela-inicio .proc-campo.opcional:not(.ok) { border-style: dashed; border-color: #cfd6de; background: #fff; color: #5b6670; }
+html[data-theme="dark"] #tela-inicio .proc-campo.opcional:not(.ok) { background: #17212b; border-color: #2a3644; color: #9aa4ad; }
+
+/* Caixinha própria de um card (campoExtra, ex.: HCO₃ no bicarbonato da CAD): no cabeçalho, ao lado do nome, no lugar do quadro azul */
+.card-campo-extra { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex: none; font-size: 12px; font-weight: 700; color: #005eb8; }
+.card-campo-extra .cce-linha { display: flex; align-items: center; gap: 6px; }
+.card-campo-extra input { width: 84px; padding: 8px 10px; border: 2px solid #005eb8; border-radius: 10px; font: inherit; font-size: 18px; font-weight: 700; text-align: center; background: #eef6ff; color: #0b3d72; }
+.card-campo-extra input:focus { outline: 2px solid #0a6fd6; outline-offset: 1px; }
+.card-campo-extra .cce-linha > span { font-weight: 600; color: #5b6670; }
+html[data-theme="dark"] .card-campo-extra { color: #8cc4ff; }
+html[data-theme="dark"] .card-campo-extra input { background: #13283d; border-color: #8cc4ff; color: #e6edf3; }

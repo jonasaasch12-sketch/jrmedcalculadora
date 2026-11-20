@@ -85,7 +85,8 @@ const global_ = nome => vm.runInContext(`typeof ${nome} === "undefined" ? undefi
 const farmaciaJR = global_('farmaciaJR'), categorias = global_('categorias'), fichasPadrao = global_('fichasPadrao') || {};
 const FONTES = global_('FONTES_CARDS') || {}, SIGLAS = global_('SIGLAS_FONTE') || {};
 const ids = Object.keys(farmaciaJR);
-const calc = (id, p, i) => { try { const r = farmaciaJR[id].calc(p, i); return { v: String(r.v), r: String(r.r) }; } catch (e) { return { v: 'ERRO', r: 'ERRO: ' + e.message }; } };
+// Card com caixinha própria (campoExtra): confere com um valor de exemplo (o card vazio só pede o valor).
+const calc = (id, p, i) => { try { const r = farmaciaJR[id].calc(p, i, farmaciaJR[id].campoExtra ? (farmaciaJR[id].campoExtra.exemplo || '4') : undefined); return { v: String(r.v), r: String(r.r) }; } catch (e) { return { v: 'ERRO', r: 'ERRO: ' + e.message }; } };
 console.log(`JR MED — ${ids.length} remédios e ${condutas.length} condutas carregados\n`);
 
 // =====================================================

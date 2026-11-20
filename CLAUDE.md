@@ -90,6 +90,9 @@ js/inicio.js + css/inicio.css  🏠 TELA INICIAL depois do login (liberada para 
                            Prescrições prontas (kits dos atalhos) e Recentes (localStorage jrmed_recentes; embrulha adicionarAoCarrinho/abrirConduta).
                            firebase.js chama aoEntrarNoApp()/aoSairDoApp(). Volta: "‹ Início" no cabeçalho, aba 🏠 no celular, item no Menu.
                            O adulto terá os PRÓPRIOS atalhos (decisão do Dr. Jonas).
+js/procedimentos.js        📝 Descrição de procedimentos (tela inicial → Pediatria): modelos de texto para o prontuário (PL, CVC, IOT, intraósseo,
+                           drenagem torácica, toracocentese, sutura, cateterismo vesical); campos {{rótulo}}, {{?rótulo}} (opcional) ou {{rótulo|opção|opção}}, \\n = quebra de linha; em vermelho até
+                           preencher; "Copiar texto". Página própria como Prescrição/Condutas (sem a lateral do início, subtítulo do app, "🏠 Início"). Nada é salvo. Só no teste até o Dr. Jonas conferir os textos (PROCEDIMENTOS_LIBERADO = false)
 js/firebase.js             login e Firestore (módulo); sem e-mail de confirmação (suspenso: não chegava), o cadastro pede o e-mail 2x; grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)
 privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; contato jrmedprescricao@gmail.com). Mudou o texto?
@@ -205,6 +208,9 @@ funcionar na raiz e em `/teste/`. `js/modo-teste.js` detecta `/teste/` (constant
   completa põe o item em "USO ORAL". Receita de casa: em MAIÚSCULAS, padrão `1) NOME CONC ---- QTD`.
   Prescrição hospitalar: a via na 1ª linha e o preparo em frases.
 - `badgeSt` (selo fixo): **só em card de dose fixa**. Com ele o quadro azul não é recalculado.
+- `campoExtra: { rotulo, unidade, placeholder, exemplo }`: caixinha própria no card, **no cabeçalho, ao lado do nome** (no lugar do quadro azul),
+  ex.: HCO₃ da gasometria no `cad_bicarbonato`. O valor chega como 3º argumento do `calc(p, i, extra)` (texto; vazio = o card só pede o valor).
+  Vale também no card dentro das condutas (htmlMedConduta). Os testes (verificar.js e conferir-padroes.js) usam o `exemplo` (padrão "4"). Pedido do Dr. Jonas, 11/2026.
 - Comentários dentro de `calc` de uma linha: usar `/* */`, nunca `//`.
 - Ficha completa: ordem de exibição fixa (em `renderizarBlocoFicha`), **fonte sempre por último**.
   Se o card tem ficha com dose, o texto abaixo do nome mostra "Ver 📋 Ficha completa".
@@ -224,6 +230,11 @@ funcionar na raiz e em `/teste/`. `js/modo-teste.js` detecta `/teste/` (constant
 ## Padrão visual (combinado com o Dr. Jonas, 11/2026)
 
 Todas as telas (login, início, prescrição, condutas e as próximas) seguem o mesmo padrão. Ao criar tela nova, usar estes valores; não inventar cor nova.
+
+- **Página nova aberta pela tela inicial** (pedido do Dr. Jonas, 11/2026): é uma página do app, igual à Prescrição e às Condutas,
+  e NÃO uma cópia da tela inicial. Mesma tarja azul com o logotipo JR e o subtítulo "Prescrição e condutas médicas" (nunca "Início"),
+  **sem a lateral da tela inicial**, só o botão "🏠 Início" para voltar (no celular, a aba Início da barra de baixo).
+  Modelo: `js/procedimentos.js` (`procModoPagina()`; volta pela `montarInicio()`).
 
 - **Tarja azul no topo:** `#005eb8` (faixa do cabeçalho da Prescrição e da tarja do login). Texto da tarja em branco.
 - **Botão principal:** azul sólido `#005eb8` (hover `#0a6fd6`), cantos 10px, sem degradê e sem sombra forte.

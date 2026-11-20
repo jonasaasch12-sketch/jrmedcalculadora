@@ -93,6 +93,9 @@ risco real na tela de usuários.
 | Campos | borda `#cfd6de`, cantos 10px, foco com contorno azul fino |
 | Texto | `#212b32` (título e corpo), `#5b6670` (legenda), fonte Inter |
 
+- **Página nova aberta pela tela inicial:** é uma página do app, como a Prescrição e as Condutas, não uma cópia
+  da tela inicial: tarja azul com o logotipo e o subtítulo "Prescrição e condutas médicas", sem a lateral do início,
+  só o "🏠 Início" para voltar (pedido do Dr. Jonas, 11/2026). Modelo: `js/procedimentos.js` (`procModoPagina`).
 - Toda mudança de tela é testada no celular e no computador, no claro e no escuro: skill `testar-tela`.
 
 ## Comentários
