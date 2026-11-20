@@ -69,14 +69,14 @@ registrarMedicamentos({
             let id = parseFloat(String(i).replace(',', '.'));
             if (id < 0.5) return { v: "< 6 meses", r: "ATENÇÃO: o Whitebook traz a fexofenadina a partir de 6 meses (urticária crônica). Abaixo disso, não prescrever." };
             let cab = `${recHead}1) FEXOFENADINA SUSPENSÃO ORAL 6 MG/ML ------- 1 FR\n`;
-            if (id < 2) return { v: "2,5 mL 12/12h", r: cab + "DAR 2,5 ML (15 MG), VIA ORAL, DE 12/12 HORAS.\n(6 MESES A MENOS DE 2 ANOS: INDICAÇÃO SÓ NA URTICÁRIA CRÔNICA.)" };
-            if (id < 12) return { v: "5 mL 12/12h", r: cab + "DAR 5 ML (30 MG), VIA ORAL, DE 12/12 HORAS." };
-            return { v: "10 mL 12/12h", r: cab + "TOMAR 10 ML (60 MG), VIA ORAL, DE 12/12 HORAS.\n(OU 30 ML (180 MG), VIA ORAL, 1 VEZ AO DIA.)" };
+            if (id < 2) return { v: "2,5 mL 12/12h", r: cab + "DAR 2,5 ML (15 MG), VIA ORAL, DE 12/12 HORAS, POR 5 DIAS.\n(6 MESES A MENOS DE 2 ANOS: INDICAÇÃO SÓ NA URTICÁRIA CRÔNICA.)" };
+            if (id < 12) return { v: "5 mL 12/12h", r: cab + "DAR 5 ML (30 MG), VIA ORAL, DE 12/12 HORAS, POR 5 DIAS." };
+            return { v: "10 mL 12/12h", r: cab + "TOMAR 10 ML (60 MG), VIA ORAL, DE 12/12 HORAS, POR 5 DIAS.\n(OU 30 ML (180 MG), VIA ORAL, 1 VEZ AO DIA, POR 5 DIAS.)" };
         },
         detalhes: {
             indicacao: "Rinite alérgica (a partir de 2 anos) e urticária crônica (a partir de 6 meses).",
             dose: "6 m a < 2 anos (só urticária crônica): 2,5 mL (15 mg) 12/12h | 2–11 anos: 5 mL (30 mg) 12/12h | ≥ 12 anos: 10 mL (60 mg) 12/12h ou 30 mL (180 mg) 1x/dia (Whitebook).",
-            atencao: "Precisa da idade. Na rinite alérgica de 2 a 11 anos, o Whitebook pede peso ≥ 10,5 kg. Também há comprimidos de 60, 120 e 180 mg."
+            atencao: "Precisa da idade. Na rinite alérgica de 2 a 11 anos, o Whitebook pede peso ≥ 10,5 kg. Também há comprimidos de 60, 120 e 180 mg. Duração na receita: 5 dias (escolha do Dr. Jonas, 11/2026; o Whitebook não traz duração)."
         }
     },
     "adrenalina_im": {
