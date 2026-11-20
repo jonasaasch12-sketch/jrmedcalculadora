@@ -58,6 +58,27 @@ registrarMedicamentos({
             atencao: "Liberado a partir de 6 meses. Pouca sonolência. Precisa da idade para calcular."
         }
     },
+    "fexofenadina": {
+        cat: "cat-antialergicos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "fexofenadina allegra allexofedrin antialergico anti-histaminico rinite alergica urticaria cronica prurido oral ambulatorial",
+        nome: "Fexofenadina Suspensão (Allegra Pediátrico)", apres: "6 mg / mL",
+        info: "<strong>Posologia (Whitebook):</strong> rinite alérgica: 2–11 anos (≥ 10,5 kg) 5 mL (30 mg) de 12/12h; ≥ 12 anos 10 mL (60 mg) de 12/12h ou 30 mL (180 mg) 1x/dia. Urticária crônica: 6 meses a < 2 anos 2,5 mL (15 mg) de 12/12h; 2–11 anos 5 mL de 12/12h; ≥ 12 anos 10 mL de 12/12h ou 30 mL 1x/dia.", badge: "", recLabel: "Texto para selecionar e copiar:", ignoraPeso: true,
+        calc: (p, i) => {
+            /* Whitebook (Fexofenadina, Drogas Pediátricas): dose pela idade; < 6 meses fora da faixa da fonte */
+            if (i === "") return { v: "—", r: "Insira a idade acima para calcular a dose." };
+            let id = parseFloat(String(i).replace(',', '.'));
+            if (id < 0.5) return { v: "< 6 meses", r: "ATENÇÃO: o Whitebook traz a fexofenadina a partir de 6 meses (urticária crônica). Abaixo disso, não prescrever." };
+            let cab = `${recHead}1) FEXOFENADINA SUSPENSÃO ORAL 6 MG/ML ------- 1 FR\n`;
+            if (id < 2) return { v: "2,5 mL 12/12h", r: cab + "DAR 2,5 ML (15 MG), VIA ORAL, DE 12/12 HORAS.\n(6 MESES A MENOS DE 2 ANOS: INDICAÇÃO SÓ NA URTICÁRIA CRÔNICA.)" };
+            if (id < 12) return { v: "5 mL 12/12h", r: cab + "DAR 5 ML (30 MG), VIA ORAL, DE 12/12 HORAS." };
+            return { v: "10 mL 12/12h", r: cab + "TOMAR 10 ML (60 MG), VIA ORAL, DE 12/12 HORAS.\n(OU 30 ML (180 MG), VIA ORAL, 1 VEZ AO DIA.)" };
+        },
+        detalhes: {
+            indicacao: "Rinite alérgica (a partir de 2 anos) e urticária crônica (a partir de 6 meses).",
+            dose: "6 m a < 2 anos (só urticária crônica): 2,5 mL (15 mg) 12/12h | 2–11 anos: 5 mL (30 mg) 12/12h | ≥ 12 anos: 10 mL (60 mg) 12/12h ou 30 mL (180 mg) 1x/dia (Whitebook).",
+            atencao: "Precisa da idade. Na rinite alérgica de 2 a 11 anos, o Whitebook pede peso ≥ 10,5 kg. Também há comprimidos de 60, 120 e 180 mg."
+        }
+    },
     "adrenalina_im": {
         cat: "cat-antialergicos", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
         kw: "adrenalina epinefrina intramuscular anafilaxia choque anafilatico alergia grave reacao alergica emergencia", nome: "Adrenalina IM (Anafilaxia)", apres: "Ampola 1 mg / mL (1:1000)",

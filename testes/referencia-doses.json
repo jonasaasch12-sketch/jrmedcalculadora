@@ -2159,6 +2159,24 @@
   "70 kg | idade 4": "[10 jatos] USO INALATÓRIO (CRISE)\n\n1) FENOTEROL SPRAY 100 MCG + ESPAÇADOR ------ 1 UNID\nFAZER 10 JATOS COM ESPAÇADOR, DE 20/20 MINUTOS, 3 VEZES.",
   "70 kg | idade 13": "[10 jatos] USO INALATÓRIO (CRISE)\n\n1) FENOTEROL SPRAY 100 MCG + ESPAÇADOR ------ 1 UNID\nFAZER 10 JATOS COM ESPAÇADOR, DE 20/20 MINUTOS, 3 VEZES."
  },
+ "fexofenadina": {
+  "3 kg | idade -": "[—] Insira a idade acima para calcular a dose.",
+  "3 kg | idade 0.5": "[2,5 mL 12/12h] USO ORAL\n\n1) FEXOFENADINA SUSPENSÃO ORAL 6 MG/ML ------- 1 FR\nDAR 2,5 ML (15 MG), VIA ORAL, DE 12/12 HORAS.\n(6 MESES A MENOS DE 2 ANOS: INDICAÇÃO SÓ NA URTICÁRIA CRÔNICA.)",
+  "3 kg | idade 4": "[5 mL 12/12h] USO ORAL\n\n1) FEXOFENADINA SUSPENSÃO ORAL 6 MG/ML ------- 1 FR\nDAR 5 ML (30 MG), VIA ORAL, DE 12/12 HORAS.",
+  "3 kg | idade 13": "[10 mL 12/12h] USO ORAL\n\n1) FEXOFENADINA SUSPENSÃO ORAL 6 MG/ML ------- 1 FR\nTOMAR 10 ML (60 MG), VIA ORAL, DE 12/12 HORAS.\n(OU 30 ML (180 MG), VIA ORAL, 1 VEZ AO DIA.)",
+  "10 kg | idade -": "[—] Insira a idade acima para calcular a dose.",
+  "10 kg | idade 0.5": "[2,5 mL 12/12h] USO ORAL\n\n1) FEXOFENADINA SUSPENSÃO ORAL 6 MG/ML ------- 1 FR\nDAR 2,5 ML (15 MG), VIA ORAL, DE 12/12 HORAS.\n(6 MESES A MENOS DE 2 ANOS: INDICAÇÃO SÓ NA URTICÁRIA CRÔNICA.)",
+  "10 kg | idade 4": "[5 mL 12/12h] USO ORAL\n\n1) FEXOFENADINA SUSPENSÃO ORAL 6 MG/ML ------- 1 FR\nDAR 5 ML (30 MG), VIA ORAL, DE 12/12 HORAS.",
+  "10 kg | idade 13": "[10 mL 12/12h] USO ORAL\n\n1) FEXOFENADINA SUSPENSÃO ORAL 6 MG/ML ------- 1 FR\nTOMAR 10 ML (60 MG), VIA ORAL, DE 12/12 HORAS.\n(OU 30 ML (180 MG), VIA ORAL, 1 VEZ AO DIA.)",
+  "25 kg | idade -": "[—] Insira a idade acima para calcular a dose.",
+  "25 kg | idade 0.5": "[2,5 mL 12/12h] USO ORAL\n\n1) FEXOFENADINA SUSPENSÃO ORAL 6 MG/ML ------- 1 FR\nDAR 2,5 ML (15 MG), VIA ORAL, DE 12/12 HORAS.\n(6 MESES A MENOS DE 2 ANOS: INDICAÇÃO SÓ NA URTICÁRIA CRÔNICA.)",
+  "25 kg | idade 4": "[5 mL 12/12h] USO ORAL\n\n1) FEXOFENADINA SUSPENSÃO ORAL 6 MG/ML ------- 1 FR\nDAR 5 ML (30 MG), VIA ORAL, DE 12/12 HORAS.",
+  "25 kg | idade 13": "[10 mL 12/12h] USO ORAL\n\n1) FEXOFENADINA SUSPENSÃO ORAL 6 MG/ML ------- 1 FR\nTOMAR 10 ML (60 MG), VIA ORAL, DE 12/12 HORAS.\n(OU 30 ML (180 MG), VIA ORAL, 1 VEZ AO DIA.)",
+  "70 kg | idade -": "[—] Insira a idade acima para calcular a dose.",
+  "70 kg | idade 0.5": "[2,5 mL 12/12h] USO ORAL\n\n1) FEXOFENADINA SUSPENSÃO ORAL 6 MG/ML ------- 1 FR\nDAR 2,5 ML (15 MG), VIA ORAL, DE 12/12 HORAS.\n(6 MESES A MENOS DE 2 ANOS: INDICAÇÃO SÓ NA URTICÁRIA CRÔNICA.)",
+  "70 kg | idade 4": "[5 mL 12/12h] USO ORAL\n\n1) FEXOFENADINA SUSPENSÃO ORAL 6 MG/ML ------- 1 FR\nDAR 5 ML (30 MG), VIA ORAL, DE 12/12 HORAS.",
+  "70 kg | idade 13": "[10 mL 12/12h] USO ORAL\n\n1) FEXOFENADINA SUSPENSÃO ORAL 6 MG/ML ------- 1 FR\nTOMAR 10 ML (60 MG), VIA ORAL, DE 12/12 HORAS.\n(OU 30 ML (180 MG), VIA ORAL, 1 VEZ AO DIA.)"
+ },
  "fleet": {
   "3 kg | idade -": "[8 mL] VIA RETAL\n\n1) FLEET ENEMA: aplicar 8 mL (2,5 mL/kg) via retal.",
   "3 kg | idade 0.5": "[8 mL] VIA RETAL\n\n1) FLEET ENEMA: aplicar 8 mL (2,5 mL/kg) via retal.",
