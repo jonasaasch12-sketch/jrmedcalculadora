@@ -37,6 +37,9 @@ node .claude/skills/testar-tela/scripts/tela.js --peso 20 --idade 5 --receita di
 # Página de apresentação e login (sem simular a entrada)
 node .claude/skills/testar-tela/scripts/tela.js --publica --celular --foto /caminho/publica.png
 
+# Outro tamanho de tela do computador (ex.: notebook 1280 px ou zoom do navegador)
+node .claude/skills/testar-tela/scripts/tela.js --largura 1280 --peso 20 --idade 1 --foto /caminho/1280.png
+
 # Conferir qualquer coisa na página
 node .claude/skills/testar-tela/scripts/tela.js --js "document.querySelectorAll('.med-card').length"
 ```
@@ -75,6 +78,9 @@ tela, sobreposição, contraste ruim no escuro e elemento de teste aparecendo no
   salvos na conta) aparecem vazias. `--admin` só mostra os botões de administração.
 - A foto mostra dados de exemplo. Nunca usar dado de paciente real em teste nem em foto.
 - Foto para o Dr. Jonas ver: acrescentar `--nitido`.
+- Mudança de CSS publicada pode demorar alguns minutos para chegar: o navegador guarda o arquivo antigo
+  (cerca de 10 min no GitHub Pages). Se o Dr. Jonas disser que "não mudou", conferir aqui em várias larguras
+  (`--largura`) e pedir para recarregar a página com Ctrl+Shift+R (no celular: fechar e abrir o site).
 
 ## Depois do teste
 
