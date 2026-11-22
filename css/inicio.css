@@ -483,3 +483,8 @@ html[data-theme="dark"] #tela-inicio .proc-campo.opcional:not(.ok) { background:
 .card-campo-extra .cce-linha > span { font-weight: 600; color: #5b6670; }
 html[data-theme="dark"] .card-campo-extra { color: #8cc4ff; }
 html[data-theme="dark"] .card-campo-extra input { background: #13283d; border-color: #8cc4ff; color: #e6edf3; }
+
+/* Aviso "peso foge do esperado para a idade" (js/app.js): numa linha própria, embaixo de peso/idade/busca,
+   sem empurrar os campos (pedido do Dr. Jonas, 11/2026). */
+.control-panel { flex-wrap: wrap !important; }
+.control-panel > .aviso-peso-idade.visivel { flex: 0 0 100% !important; width: 100% !important; max-width: none !important; order: 99; margin: 8px 0 0 !important; box-sizing: border-box; }

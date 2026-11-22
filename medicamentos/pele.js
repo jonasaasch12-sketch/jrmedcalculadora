@@ -305,7 +305,7 @@ registrarMedicamentos({
         calc: (p) => {
             /* Whitebook (Erisipela, formas leves): amoxicilina 50 mg/kg/dia VO de 8/8 a 12/12h por 5 dias. 250 mg/5 mL de 8/8h: p/3 mL por dose. Teto do app 10 mL (500 mg). Total do tratamento em mL: 3 doses x 5 dias. */
             let v = Math.min(parseFloat(round05(p / 3)), 10), tot = Math.ceil(v * 3 * 5);
-            return { v: v + " mL", r: `${recHead}1) AMOXICILINA 250 MG/5 ML ---------------------- ${tot} ML\nDAR ${String(v).replace('.', ',')} ML, VIA ORAL, DE 8/8 HORAS POR 5 DIAS.` };
+            return { v: v + " mL", r: `${recHead}1) AMOXICILINA 250 MG/5 ML ---------------------- ${tot} ML\nDAR ${String(v).replace('.', ',')} ML, VIA ORAL, DE 8/8 HORAS POR 5 DIAS.\nCONSERVAR NA GELADEIRA (NÃO NA PORTA).` };
         },
         detalhes: { indicacao: "Erisipela leve (tratamento em casa).", dose: "50 mg/kg/dia VO de 8/8h (ou 12/12h) por 5 dias.", atencao: "Teto do app 10 mL (500 mg) por dose. Repouso relativo e membro elevado." },
         ficha: { indicacoes: "Erisipela, formas leves.", dose: "50 mg/kg/dia VO, dividido de 8/8 a 12/12 horas, durante 5 dias", doseMaxima: "Teto do app: 500 mg/dose.", apresentacoes: "Suspensão 250 mg/5 mL.", via: "Oral.", fonteRevisao: "Whitebook (Afya) - Erisipela em Pediatria (Prescrição Ambulatorial: formas leves; Prescrição Hospitalar: formas moderadas a graves), atualizado em 12/03/2026." }
@@ -319,7 +319,7 @@ registrarMedicamentos({
             /* Whitebook (Erisipela, formas leves): amoxicilina + clavulanato 30-50 mg/kg/dia VO de 8/8 a 12/12h por 5 dias. 250 mg/5 mL de 8/8h: 30 mg/kg/dia = p x 0,2 mL; 50 mg/kg/dia = p/3 mL. Teto do app 10 mL. Total em mL: 3 doses x 5 dias. */
             /* Dose média da faixa: 40 mg/kg/dia. */
             let a = Math.min(parseFloat(round05(p * 40 / 3 / 50)), 10), tot = Math.ceil(a * 3 * 5), t = x => String(x).replace('.', ',');
-            return { v: `${a} mL`, r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML -- ${tot} ML\nDAR ${t(a)} ML, VIA ORAL, DE 8/8 HORAS POR 5 DIAS.` };
+            return { v: `${a} mL`, r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML -- ${tot} ML\nDAR ${t(a)} ML, VIA ORAL, DE 8/8 HORAS POR 5 DIAS.\nCONSERVAR NA GELADEIRA (NÃO NA PORTA).` };
         },
         detalhes: { indicacao: "Erisipela leve (tratamento em casa).", dose: "30–50 mg/kg/dia VO de 8/8h (ou 12/12h) por 5 dias.", atencao: "Teto do app 10 mL (500 mg) por dose." },
         ficha: { indicacoes: "Erisipela, formas leves.", dose: "30-50 mg/kg/dia VO, dividido de 8/8 a 12/12 horas, durante 5 dias", doseMaxima: "Teto do app: 500 mg/dose.", apresentacoes: "Suspensão 250 mg + 62,5 mg/5 mL.", via: "Oral.", fonteRevisao: "Whitebook (Afya) - Erisipela em Pediatria (Prescrição Ambulatorial: formas leves; Prescrição Hospitalar: formas moderadas a graves), atualizado em 12/03/2026." }

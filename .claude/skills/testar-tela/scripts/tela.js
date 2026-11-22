@@ -77,7 +77,7 @@ const servidor = http.createServer((req, res) => {
         ? { viewport: { width: 390, height: 844 }, userAgent: 'Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36' }
         : tablet
             ? { viewport: { width: 820, height: 1180 }, userAgent: 'Mozilla/5.0 (iPad; CPU OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1' }
-            : { viewport: { width: 1366, height: 850 } };
+            : { viewport: { width: parseInt(valor('largura', '1366'), 10), height: 850 } }; /* --largura N: outro tamanho de tela do computador */
     const navegador = await playwright.chromium.launch();
     const contexto = await navegador.newContext({
         ...aparelho,
