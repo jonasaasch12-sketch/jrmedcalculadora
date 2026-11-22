@@ -655,7 +655,7 @@ registrarMedicamentos({
             let v = Math.min(parseFloat(round05(p * 25 / 50)), 10), t = String(v).replace('.', ',');
             /* total do tratamento em mL: 2 doses x 10 dias */
             let tot = Math.ceil(v * 2 * 10);
-            return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 250 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.\nNÃO PARAR ANTES DOS 10 DIAS, MESMO SE MELHORAR.` };
+            return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 250 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.\nNÃO PARAR ANTES DOS 10 DIAS, MESMO SE MELHORAR.\nCONSERVAR NA GELADEIRA (NÃO NA PORTA).` };
         },
         detalhes: {
             indicacao: "Faringoamigdalite estreptocócica (estreptococo beta-hemolítico do grupo A).",
@@ -671,7 +671,7 @@ registrarMedicamentos({
             /* Mesma dose do amox_faringo (IDSA 2012: 25 mg/kg/dose 12/12h, máx. 500 mg/dose), no frasco de 400 mg/5 mL (80 mg/mL): máx. 6,25 mL. */
             let v = Math.min(parseFloat(round05(p * 25 * 5 / 400)), 6.25), t = String(v).replace('.', ',');
             let tot = Math.ceil(v * 2 * 10);
-            return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 400 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.\nNÃO PARAR ANTES DOS 10 DIAS, MESMO SE MELHORAR.` };
+            return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 400 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.\nNÃO PARAR ANTES DOS 10 DIAS, MESMO SE MELHORAR.\nCONSERVAR NA GELADEIRA (NÃO NA PORTA).` };
         },
         detalhes: {
             indicacao: "Faringoamigdalite estreptocócica (estreptococo beta-hemolítico do grupo A).",
@@ -687,7 +687,7 @@ registrarMedicamentos({
             let v = Math.min(parseFloat(round05(p * 45 * 5 / 400)), 25), t = String(v).replace('.', ',');
             /* duração AAP: < 2 anos (ou idade não informada) 10 dias; >= 2 anos 7 dias */
             let id = parseFloat(String(i).replace(',', '.')), d = (isNaN(id) || id < 2) ? 10 : 7, tot = Math.ceil(v * 2 * d);
-            return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 400 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR ${d} DIAS.` };
+            return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 400 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR ${d} DIAS.\nCONSERVAR NA GELADEIRA (NÃO NA PORTA).` };
         },
         detalhes: {
             indicacao: "Otite média aguda (1ª escolha).",
@@ -704,7 +704,7 @@ registrarMedicamentos({
             /* Whitebook: 250+62,5 mg/5 mL, 0,9 mL/kg/dose (90 mg/kg/dia) de 12/12h. Teto 2 g de amoxicilina/dose = 40 mL (pedido do Dr. Jonas, 11/2026: um frasco só) */
             let v = Math.min(parseFloat(round05(p * 0.9)), 40), t = String(v).replace('.', ',');
             let id = parseFloat(String(i).replace(',', '.')), d = (isNaN(id) || id < 2) ? 10 : 7, tot = Math.ceil(v * 2 * d);
-            return { v: v + " mL", r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML ---- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR ${d} DIAS.` };
+            return { v: v + " mL", r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML ---- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR ${d} DIAS.\nCONSERVAR NA GELADEIRA (NÃO NA PORTA).` };
         },
         detalhes: {
             indicacao: "Otite média aguda com risco de bactéria produtora de betalactamase: betalactâmico nos últimos 30 dias, conjuntivite purulenta, perfuração timpânica espontânea, ou sem melhora em 48–72 h de amoxicilina.",
@@ -765,7 +765,7 @@ registrarMedicamentos({
         calc: (p) => {
             /* 90 mg/kg/dia de 12/12h por 10 dias; teto 2 g/dose (25 mL). Total do tratamento em mL: 2 doses x 10 dias */
             let v = Math.min(parseFloat(round05(p * 45 * 5 / 400)), 25), t = String(v).replace('.', ','), tot = Math.ceil(v * 2 * 10);
-            return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 400 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.` };
+            return { v: v + " mL", r: `${recHead}1) AMOXICILINA SUSPENSÃO 400 MG/5ML ---------- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.\nCONSERVAR NA GELADEIRA (NÃO NA PORTA).` };
         },
         detalhes: {
             indicacao: "Sinusite bacteriana aguda (1ª escolha).",
@@ -781,7 +781,7 @@ registrarMedicamentos({
         calc: (p) => {
             /* mesma dose do clav_oma (Whitebook 250+62,5, 90 mg/kg/dia), 10 dias; teto 2 g de amoxicilina/dose = 40 mL (pedido do Dr. Jonas, 11/2026: um frasco só) */
             let v = Math.min(parseFloat(round05(p * 0.9)), 40), t = String(v).replace('.', ','), tot = Math.ceil(v * 2 * 10);
-            return { v: v + " mL", r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML ---- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.` };
+            return { v: v + " mL", r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML ---- ${tot} ML\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.\nCONSERVAR NA GELADEIRA (NÃO NA PORTA).` };
         },
         detalhes: {
             indicacao: "Sinusite bacteriana aguda com fator de risco (< 2 anos, creche, antibiótico nos últimos 30 dias, quadro moderado a grave, imunodeprimido) ou falha da amoxicilina em 72 h.",

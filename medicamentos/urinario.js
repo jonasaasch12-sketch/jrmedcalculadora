@@ -15,7 +15,7 @@ registrarMedicamentos({
             /* Dose média da faixa: 30 mg/kg/dia. */
             let a = Math.min(parseFloat(round05(p * 10 / 50)), 10);
             let tot = Math.ceil(a * 3 * 10), t = x => String(x).replace('.', ',');
-            return { v: `${a} mL`, r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML -- ${tot} ML\nDAR ${t(a)} ML, VIA ORAL, DE 8/8 HORAS POR 10 DIAS.` };
+            return { v: `${a} mL`, r: `${recHead}1) AMOXICILINA + CLAVULANATO 250+62,5 MG/5ML -- ${tot} ML\nDAR ${t(a)} ML, VIA ORAL, DE 8/8 HORAS POR 10 DIAS.\nCONSERVAR NA GELADEIRA (NÃO NA PORTA).` };
         },
         detalhes: {
             indicacao: "Infecção do trato urinário (última opção, quando as outras não servem).",
