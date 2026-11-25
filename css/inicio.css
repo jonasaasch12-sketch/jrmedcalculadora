@@ -488,14 +488,3 @@ html[data-theme="dark"] .card-campo-extra input { background: #13283d; border-co
    sem empurrar os campos (pedido do Dr. Jonas, 11/2026). */
 .control-panel { flex-wrap: wrap !important; }
 .control-panel > .aviso-peso-idade.visivel { flex: 0 0 100% !important; width: 100% !important; max-width: none !important; order: 99; margin: 8px 0 0 !important; box-sizing: border-box; }
-
-/* ===== Logo novo (só no teste: html.logo-novo, js/modo-teste.js; pedido do Dr. Jonas, 11/2026) =====
-   Ícone: img/logo-jr.png (quadrado azul, eletrocardiograma e "JR" dourados). Nome "JR MED" em dourado. */
-html.logo-novo .logo-futurista, html.logo-novo #tela-inicio .in-lg {
-    background: #0b4ea2 url("../img/logo-jr.png") center / cover no-repeat !important;
-    color: transparent !important; text-shadow: none !important; border-radius: 22% !important; box-shadow: 0 2px 8px rgba(0, 0, 0, .18) !important;
-}
-html.logo-novo .logo-futurista::before, html.logo-novo .logo-futurista::after { display: none !important; }
-html.logo-novo .brand-title, html.logo-novo #tela-inicio .in-band b, html.logo-novo #tela-inicio .in-logo-cel b,
-html.logo-novo .pub-marca b { color: #f2c14e !important; }
-html.logo-novo #tela-inicio .in-marca { color: #b8860b; }
