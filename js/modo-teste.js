@@ -5,6 +5,9 @@
 // para administradores (a checagem é feita em js/firebase.js, após o login).
 // =====================================================
 const MODO_TESTE = /\/teste\//.test(location.pathname);
+// Logo novo (ícone azul com eletrocardiograma e "JR MED" dourado): só no teste, para o Dr. Jonas comparar (11/2026). CSS: html.logo-novo (css/inicio.css).
+const LOGO_NOVO_LIBERADO = false;
+if (LOGO_NOVO_LIBERADO || MODO_TESTE) document.documentElement.classList.add('logo-novo');
 
 if (MODO_TESTE) {
     document.title = "🧪 TESTE · " + document.title;
