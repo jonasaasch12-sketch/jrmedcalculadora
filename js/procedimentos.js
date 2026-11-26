@@ -67,6 +67,14 @@ const PROCEDIMENTOS = [
             "Curativo oclusivo. {{controle|Solicitada radiografia de tórax de controle|Sem radiografia de controle}}. Procedimento sem intercorrências."
     },
     {
+        /* Modelo enviado pelo Dr. Jonas (11/2026, vídeo "Diário de Plantão"), adaptado ao padrão dos outros textos. */
+        id: "paracentese", ic: "abdome_agulha", cor: "#5ac8fa", nome: "Paracentese",
+        texto: "Procedimento: paracentese {{finalidade|diagnóstica|de alívio|diagnóstica e de alívio}}, indicada por {{indicação}}. Responsável orientado quanto ao procedimento, seus objetivos e possíveis riscos, com consentimento obtido. " +
+            "Higienização das mãos, paramentação adequada, antissepsia da parede abdominal e colocação de campos estéreis. Identificado local apropriado para punção {{guia|com auxílio de ultrassonografia|por exame físico}}. " +
+            "Realizada anestesia local com lidocaína 2%, seguida de punção da cavidade peritoneal com técnica asséptica. Obtido líquido ascítico de aspecto {{aspecto|citrino|turvo|hemorrágico|quiloso}}, sendo coletadas amostras em recipientes estéreis para análise laboratorial. " +
+            "Drenado volume total de {{volume}} mL de líquido ascítico. Ao término, retirado o dispositivo de punção e {{curativo|realizado curativo local|realizado curativo compressivo}}. Procedimento concluído sem intercorrências. Paciente permaneceu estável durante e após o procedimento, sem queixas."
+    },
+    {
         id: "sutura", ic: "sutura", cor: "#af52de", nome: "Sutura de ferimento",
         texto: "Procedimento: sutura de ferimento {{tipo|corto-contuso|cortante|lácero-contuso}} em {{local}}, medindo cerca de {{tamanho}} cm, {{profundidade|superficial|até o subcutâneo|com acometimento muscular}}. " +
             "Higienização das mãos, luvas estéreis, antissepsia com {{antisséptico|clorexidina|PVPI}} e campo estéril. Anestesia local com lidocaína {{anestesia}}. Irrigação abundante com soro fisiológico e revisão da ferida, {{revisão|sem corpo estranho e sem lesão de estruturas profundas|com retirada de corpo estranho}}. " +
@@ -88,6 +96,7 @@ const PROC_ICONES = {
     osso: '<path d="M8.5 6.5 17.5 15.5"/><path d="M6 9a2.5 2.5 0 1 1 3-3 2.5 2.5 0 1 1 3 3M15 18a2.5 2.5 0 1 0 3-3 2.5 2.5 0 1 0 3-3" transform="translate(-3 0)"/>',
     pulmao_dreno: '<path d="M12 4v8M12 8c-2-2-6 0-6 5v5c0 2 2 2 3 1l3-3M12 8c2-2 6 0 6 5v5c0 2-2 2-3 1"/><path d="M19 15h3"/>',
     pulmao_agulha: '<path d="M12 4v8M12 8c-2-2-6 0-6 5v5c0 2 2 2 3 1l3-3M12 8c2-2 6 0 6 5v5c0 2-2 2-3 1l-3-3"/><path d="m21 11-5 3"/>',
+    abdome_agulha: '<ellipse cx="11" cy="14" rx="7" ry="6"/><circle cx="11" cy="14" r="1"/><path d="m21 3-6 6M18 3h3v3"/>',
     sutura: '<path d="M3 12h18"/><path d="M6 8l2 8M11 8l2 8M16 8l2 8"/>',
     gota: '<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/><path d="M9.5 15a2.5 2.5 0 0 0 2.5 2.5"/>'
 };
