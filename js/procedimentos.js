@@ -113,23 +113,6 @@ const PROCEDIMENTOS = [
             "- {{?outras condutas (avaliação cirúrgica, transferência...)}}"
     },
     {
-        /* Conta automática: {{=nome}} vem de calc(); entradas − saídas e diurese em mL/kg/h. */
-        id: "balanco_hidrico", ic: "balanca", cor: "#0a84ff", nome: "Balanço hídrico",
-        texto: "BALANÇO HÍDRICO\n\n- Período: {{horas}} h\n" +
-            "- Entradas: {{entradas em mL}} mL {{?detalhar (soro, dieta, medicações)}}\n" +
-            "- Saídas: {{saídas em mL}} mL {{?detalhar (diurese, drenos, vômitos, evacuações)}}\n" +
-            "- Diurese: {{diurese em mL}} mL\n" +
-            "- Peso: {{peso em kg}} kg\n\n" +
-            "Balanço hídrico: {{=balanco}} mL. Débito urinário: {{=debito}} mL/kg/h.",
-        calc: v => {
-            let e = v("entradas em mL"), s = v("saídas em mL"), d = v("diurese em mL"), p = v("peso em kg"), h = v("horas");
-            let r = {};
-            if (!isNaN(e) && !isNaN(s)) { let b = Math.round(e - s); r.balanco = (b > 0 ? "+" : "") + b; }
-            if (!isNaN(d) && p > 0 && h > 0) r.debito = (d / p / h).toFixed(1).replace(".", ",");
-            return r;
-        }
-    },
-    {
         id: "sutura", ic: "sutura", cor: "#af52de", nome: "Sutura de ferimento",
         texto: "Procedimento: sutura de ferimento {{tipo|corto-contuso|cortante|lácero-contuso}} em {{local}}, medindo cerca de {{tamanho}} cm, {{profundidade|superficial|até o subcutâneo|com acometimento muscular}}. " +
             "Higienização das mãos, luvas estéreis, antissepsia com {{antisséptico|clorexidina|PVPI}} e campo estéril. Anestesia local com lidocaína {{anestesia}}. Irrigação abundante com soro fisiológico e revisão da ferida, {{revisão|sem corpo estranho e sem lesão de estruturas profundas|com retirada de corpo estranho}}. " +
@@ -154,7 +137,6 @@ const PROC_ICONES = {
     abdome_agulha: '<ellipse cx="11" cy="14" rx="7" ry="6"/><circle cx="11" cy="14" r="1"/><path d="m21 3-6 6M18 3h3v3"/>',
     bebe: '<circle cx="12" cy="8" r="4.5"/><path d="M10.5 8h.01M13.5 8h.01M10.8 10.2a2 2 0 0 0 2.4 0"/><path d="M6 21c0-3.5 2.7-6 6-6s6 2.5 6 6"/>',
     trauma: '<rect x="3" y="7" width="18" height="12" rx="2"/><path d="M9 7V5h6v2M12 10v6M9 13h6"/>',
-    balanca: '<path d="M12 3v18M7 21h10M5 7h14"/><path d="m5 7-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z"/>',
     sutura: '<path d="M3 12h18"/><path d="M6 8l2 8M11 8l2 8M16 8l2 8"/>',
     gota: '<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/><path d="M9.5 15a2.5 2.5 0 0 0 2.5 2.5"/>'
 };

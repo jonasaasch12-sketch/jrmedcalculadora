@@ -91,9 +91,14 @@ js/inicio.js + css/inicio.css  🏠 TELA INICIAL depois do login (liberada para 
                            firebase.js chama aoEntrarNoApp()/aoSairDoApp(). Volta: "‹ Início" no cabeçalho, aba 🏠 no celular, item no Menu.
                            O adulto terá os PRÓPRIOS atalhos (decisão do Dr. Jonas).
 js/procedimentos.js        📝 Descrição de procedimentos (tela inicial → Pediatria): modelos de texto para o prontuário (PL, CVC, IOT, intraósseo,
-                           drenagem torácica, toracocentese, paracentese, recepção do RN, politrauma ABCDE, balanço hídrico, sutura, cateterismo vesical); campos {{rótulo}}, {{?rótulo}} (opcional),
+                           drenagem torácica, toracocentese, paracentese, recepção do RN, politrauma ABCDE, sutura, cateterismo vesical); campos {{rótulo}}, {{?rótulo}} (opcional),
                            {{rótulo|opção|opção}} ou {{=nome}} (conta feita pela função calc do modelo), \\n = quebra de linha; em vermelho até
                            preencher; "Copiar texto" espera: enquanto faltar campo obrigatório, mostra "Faltam N campos" e leva ao que falta. Página própria como Prescrição/Condutas (sem a lateral do início, subtítulo do app, "🏠 Início"). Lista em ordem alfabética. Nada é salvo. Só no teste até o Dr. Jonas conferir os textos (PROCEDIMENTOS_LIBERADO = false)
+js/calculadoras.js         🧮 Calculadoras e escores (tela inicial → Pediatria): os escores e as ferramentas que já existem nas condutas, num lugar só,
+                           em ordem alfabética, com busca. NADA É COPIADO: CALCULADORAS aponta { conduta, escore: id } ou { ferramenta: "função" };
+                           o escore é desenhado com htmlEscore() com id "calc_<id>". Peso/idade da página escrevem em #pesoInput/#idadeInput.
+                           Escore ou ferramenta nova numa conduta? Acrescentar em CALCULADORAS. Balanço hídrico mora aqui (calcBalancoHidrico).
+                           Botão "📖 Abrir a conduta". Mesma página dos procedimentos (procModoPagina). Só no teste (CALCULADORAS_LIBERADO = false)
 js/firebase.js             login e Firestore (módulo); sem e-mail de confirmação (suspenso: não chegava), o cadastro pede o e-mail 2x; grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)
 privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; contato jrmedprescricao@gmail.com). Mudou o texto?
