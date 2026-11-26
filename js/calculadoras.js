@@ -41,6 +41,7 @@ const CALCULADORAS = [
     { id: "oma", nome: "Otite média aguda: antibiótico ou observar?", conduta: "otite_media", escore: "oma_decisao" },
     { id: "pecarn_menor", nome: "PECARN: TC de crânio em < 2 anos", conduta: "tce", escore: "pecarn_menor2" },
     { id: "pecarn_maior", nome: "PECARN: TC de crânio em ≥ 2 anos", conduta: "tce", escore: "pecarn_maior2" },
+    { id: "pa", nome: "Pressão arterial por percentil (AAP 2017)", ferramenta: "calcPressaoArterial", tipo: "calc" },
     { id: "phoenix", nome: "Sepse: escore de Phoenix", conduta: "sepse", escore: "phoenix" },
     { id: "queimados", nome: "Queimados: superfície queimada e hidratação", conduta: "queimados", ferramenta: "ferramentaQueimados", peso: true, idade: true, tipo: "calc" },
     { id: "sinusite", nome: "Sinusite: antibiótico ou observar?", conduta: "sinusite", escore: "sinusite_decisao" }
