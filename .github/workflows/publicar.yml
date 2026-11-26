@@ -58,5 +58,10 @@ jobs:
         with:
           path: _site
 
+      # O GitHub às vezes demora alguns segundos para "enxergar" o pacote recém-enviado
+      # (erro "No artifacts named github-pages", 11/2026). A espera evita a falha.
+      - name: Esperar o GitHub registrar o pacote
+        run: sleep 20
+
       - id: deploy
         uses: actions/deploy-pages@v5
