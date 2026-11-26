@@ -99,6 +99,9 @@ js/calculadoras.js         🧮 Calculadoras e escores (tela inicial → Pediatr
                            o escore é desenhado com htmlEscore() com id "calc_<id>". Peso/idade da página escrevem em #pesoInput/#idadeInput.
                            Escore ou ferramenta nova numa conduta? Acrescentar em CALCULADORAS. Balanço hídrico mora aqui (calcBalancoHidrico).
                            Botão "📖 Abrir a conduta". Mesma página dos procedimentos (procModoPagina). Só no teste (CALCULADORAS_LIBERADO = false)
+js/pressao-arterial.js     🩺 PA por percentil (item de Calculadoras e escores, calcPressaoArterial): tabelas AAP 2017 (PA_AAP2017, 1 a 17 anos, transcrição do
+                           pacote pedbp) + altura pelo LMS do CDC 2000 (PA_ALTURA_LMS); coluna = percentil de altura mais próximo. Classificação da tabela 3 da AAP:
+                           1–12 anos pelo percentil ou valor de adulto (o menor); ≥ 13 anos 120/80, 130/80, 140/90
 js/sala-vermelha.js        🚨 Sala vermelha (tela inicial → Pediatria, abaixo de Emergência): uma tela pelo peso/idade com via aérea (tubo, SRI), PCR e arritmias,
                            choque, anafilaxia, crise convulsiva, hipoglicemia/naloxona. NENHUMA DOSE AQUI: SV_BLOCOS lista ids de cards e chama o calc() deles.
                            Só a energia do desfibrilador/cardioversão é conta própria (PALS/AHA 2020, svEnergia). Só no teste (SALA_VERMELHA_LIBERADA = false)
