@@ -488,3 +488,11 @@ html[data-theme="dark"] .card-campo-extra input { background: #13283d; border-co
    sem empurrar os campos (pedido do Dr. Jonas, 11/2026). */
 .control-panel { flex-wrap: wrap !important; }
 .control-panel > .aviso-peso-idade.visivel { flex: 0 0 100% !important; width: 100% !important; max-width: none !important; order: 99; margin: 8px 0 0 !important; box-sizing: border-box; }
+/* Procedimentos: resultado de conta ({{=nome}}) e botão Copiar que espera os campos */
+#tela-inicio .proc-calc { display: inline-block; min-width: 2.5em; padding: 0 6px; border-radius: 6px; background: #e8f5ee; color: #0f5132; font-weight: 600; text-align: center; }
+#tela-inicio .proc-calc.vazio { background: #f2f4f7; color: #9aa4ad; font-weight: 400; }
+#tela-inicio .proc-copiar.espera { background: #cfd6de; color: #3d4852; }
+#tela-inicio .proc-copiar.espera:hover { background: #c3cbd4; }
+html[data-theme="dark"] #tela-inicio .proc-calc { background: #12321f; color: #9fe0b5; }
+html[data-theme="dark"] #tela-inicio .proc-calc.vazio { background: #1d2833; color: #9aa4ad; }
+html[data-theme="dark"] #tela-inicio .proc-copiar.espera { background: #2a3644; color: #c9d1d9; }

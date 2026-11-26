@@ -2,7 +2,9 @@
 // 📝 DESCRIÇÃO DE PROCEDIMENTOS (pedido do Dr. Jonas, 11/2026): modelos de texto para o prontuário.
 // Na tela inicial: Pediatria → "Descrição de procedimentos". Escolhe o procedimento, preenche só os
 // campos em vermelho (o que muda) e copia o texto pronto.
-// Campos no modelo: {{rótulo}} = texto livre; {{?rótulo}} = texto livre opcional; {{rótulo|opção 1|opção 2}} = lista de opções.
+// Campos no modelo: {{rótulo}} = texto livre; {{?rótulo}} = texto livre opcional; {{rótulo|opção 1|opção 2}} = lista de opções;
+// {{=nome}} = resultado de conta, preenchido sozinho pela função calc(v) do modelo (v("rótulo") devolve o número digitado).
+// "Copiar texto" espera: enquanto faltar campo obrigatório, o botão mostra quantos faltam e leva ao próximo (ideia do Dr. Jonas, 11/2026).
 // \n no modelo = quebra de linha (vira <br> na tela e volta a ser quebra no texto copiado).
 // Nada é guardado: os campos se apagam ao fechar (não colocar dado que identifique o paciente).
 // Só no teste até o Dr. Jonas conferir os textos (PROCEDIMENTOS_LIBERADO).
@@ -75,6 +77,59 @@ const PROCEDIMENTOS = [
             "Drenado volume total de {{volume}} mL de líquido ascítico. Ao término, retirado o dispositivo de punção e {{curativo|realizado curativo local|realizado curativo compressivo}}. Procedimento concluído sem intercorrências. Paciente permaneceu estável durante e após o procedimento, sem queixas."
     },
     {
+        /* Ideia do Dr. Jonas (11/2026, vídeo "Diário de Plantão"). Texto no padrão SBP (reanimação neonatal), sem doses. */
+        id: "recepcao_rn", ic: "bebe", cor: "#ff2d55", nome: "Recepção do recém-nascido em sala de parto",
+        texto: "RECEPÇÃO DO RECÉM-NASCIDO EM SALA DE PARTO\n\n" +
+            "- Nascimento: RN do sexo {{sexo|masculino|feminino}}, nascido de parto {{parto|vaginal|cesárea|fórceps}} às {{hora do nascimento}}, idade gestacional de {{IG (semanas e dias)}} pela {{IG por|DUM|USG precoce}}. Líquido amniótico {{líquido amniótico|claro|meconial|sanguinolento}}. Mãe {{G P A}}, {{?pré-natal, sorologias e intercorrências maternas}}.\n" +
+            "- Ao nascer: {{vitalidade|RN com boa vitalidade (respirando ou chorando, com tônus em flexão)|RN sem boa vitalidade, levado à mesa de reanimação}}. Clampeamento do cordão {{clampeamento|tardio, após 60 segundos|após 30 segundos|imediato}}. {{cuidados|Mantido em contato pele a pele com a mãe, com prevenção da perda de calor|Recebido em campos aquecidos sob calor radiante}}. {{?manobras de reanimação realizadas (se houve)}}\n" +
+            "- Apgar: {{Apgar 1º minuto}} no 1º minuto e {{Apgar 5º minuto}} no 5º minuto {{?Apgar 10º minuto (se o 5º < 7)}}.\n" +
+            "- Exame físico: RN em bom estado geral, corado, hidratado, ativo e reativo, choro forte. Fontanela anterior normotensa. Palato íntegro. AR: MV presente bilateralmente, sem desconforto respiratório. ACV: RCR em 2T, BNF, sem sopros, pulsos femorais palpáveis. Abdome flácido, sem visceromegalias; coto umbilical com 2 artérias e 1 veia. Genitália {{genitália|masculina típica, testículos tópicos bilateralmente|feminina típica}}. Ânus pérvio. Manobras de Barlow e Ortolani negativas bilateralmente. Coluna íntegra. {{?alterações ao exame}}\n" +
+            "- Medidas: peso {{peso em g}} g; comprimento {{comprimento em cm}} cm; perímetro cefálico {{PC em cm}} cm. Capurro: {{Capurro (semanas e dias)}}. Classificação: {{classificação|AIG|PIG|GIG}}.\n" +
+            "- Cuidados de rotina: vitamina K {{vitamina K|administrada IM|não administrada}}; profilaxia ocular {{profilaxia ocular|realizada|não realizada}}; vacina contra hepatite B {{hepatite B|realizada|a realizar no alojamento conjunto}}. {{amamentação|Amamentação iniciada na primeira hora de vida|Amamentação não iniciada na primeira hora de vida}}.\n" +
+            "- Destino: {{destino|alojamento conjunto com a mãe|UTI neonatal|unidade de cuidados intermediários neonatal}}."
+    },
+    {
+        /* Ideia do Dr. Jonas (11/2026, vídeo "Diário de Plantão"): ABCDE + AMPLA, adaptado à criança (TEC normal ≤ 2 s). */
+        id: "politrauma", ic: "trauma", cor: "#ff3b30", nome: "Atendimento ao politraumatizado (ABCDE)",
+        texto: "ATENDIMENTO AO POLITRAUMATIZADO (ABCDE)\n\n" +
+            "- Mecanismo do trauma: {{mecanismo}}.\n" +
+            "- Chegada: {{chegada|trazido pelo SAMU|trazido pelo Corpo de Bombeiros|trazido por meios próprios}}, {{imobilização|em prancha rígida com colar cervical|com colar cervical|sem imobilização}}. {{?tempo desde o trauma}}\n" +
+            "- Lesões identificadas: {{lesões}}.\n\n" +
+            "- A: {{A|via aérea pérvia, fala ou chora sem dificuldade|via aérea pérvia após aspiração|via aérea definitiva (IOT)}}, coluna cervical protegida.\n" +
+            "- B: murmúrio vesicular {{ausculta|presente e simétrico, sem ruídos adventícios|diminuído à direita|diminuído à esquerda}}, expansibilidade {{expansibilidade|simétrica|assimétrica}}, FR {{FR}} irpm, SatO2 {{SatO2}}% em {{oxigênio|ar ambiente|máscara não reinalante|cateter nasal}}.\n" +
+            "- C: FC {{FC}} bpm, PA {{PA}} mmHg, TEC {{TEC|≤ 2 s|> 2 s}}, pulsos periféricos {{pulsos|cheios|finos}}, {{hemorragia|sem sangramento externo ativo|sangramento externo controlado com compressão}}. Abdome {{abdome|flácido, indolor, sem sinais de peritonite|doloroso à palpação|com sinais de peritonite}}, pelve {{pelve|estável|instável}}. {{acesso|Obtido acesso venoso periférico|Obtido acesso intraósseo|Sem necessidade de acesso no momento}}.\n" +
+            "- D: Glasgow {{Glasgow}}, pupilas {{pupilas|isocóricas e fotorreagentes|anisocóricas}}, {{motor|sem déficit motor focal|com déficit motor}}. Glicemia capilar {{glicemia}} mg/dL.\n" +
+            "- E: {{exposição|sem outras lesões à exposição|à exposição:}} {{?outras lesões}}, prevenção de hipotermia. Rolamento em bloco: {{coluna|coluna sem dor ou deformidade à palpação|dor à palpação da coluna}}.\n\n" +
+            "AMPLA\n" +
+            "- A (alergias): {{alergias}}\n" +
+            "- M (medicações em uso): {{medicações}}\n" +
+            "- P (passado médico e vacinação): {{passado}}\n" +
+            "- L (líquidos e última refeição): {{última refeição}}\n" +
+            "- A (ambiente e eventos): {{ambiente}}\n\n" +
+            "Condutas iniciais\n" +
+            "- Monitorização contínua e reavaliação seriada pelo ABCDE.\n" +
+            "- Analgesia: {{analgesia}}\n" +
+            "- Exames: {{exames solicitados}}\n" +
+            "- {{?outras condutas (avaliação cirúrgica, transferência...)}}"
+    },
+    {
+        /* Conta automática: {{=nome}} vem de calc(); entradas − saídas e diurese em mL/kg/h. */
+        id: "balanco_hidrico", ic: "balanca", cor: "#0a84ff", nome: "Balanço hídrico",
+        texto: "BALANÇO HÍDRICO\n\n- Período: {{horas}} h\n" +
+            "- Entradas: {{entradas em mL}} mL {{?detalhar (soro, dieta, medicações)}}\n" +
+            "- Saídas: {{saídas em mL}} mL {{?detalhar (diurese, drenos, vômitos, evacuações)}}\n" +
+            "- Diurese: {{diurese em mL}} mL\n" +
+            "- Peso: {{peso em kg}} kg\n\n" +
+            "Balanço hídrico: {{=balanco}} mL. Débito urinário: {{=debito}} mL/kg/h.",
+        calc: v => {
+            let e = v("entradas em mL"), s = v("saídas em mL"), d = v("diurese em mL"), p = v("peso em kg"), h = v("horas");
+            let r = {};
+            if (!isNaN(e) && !isNaN(s)) { let b = Math.round(e - s); r.balanco = (b > 0 ? "+" : "") + b; }
+            if (!isNaN(d) && p > 0 && h > 0) r.debito = (d / p / h).toFixed(1).replace(".", ",");
+            return r;
+        }
+    },
+    {
         id: "sutura", ic: "sutura", cor: "#af52de", nome: "Sutura de ferimento",
         texto: "Procedimento: sutura de ferimento {{tipo|corto-contuso|cortante|lácero-contuso}} em {{local}}, medindo cerca de {{tamanho}} cm, {{profundidade|superficial|até o subcutâneo|com acometimento muscular}}. " +
             "Higienização das mãos, luvas estéreis, antissepsia com {{antisséptico|clorexidina|PVPI}} e campo estéril. Anestesia local com lidocaína {{anestesia}}. Irrigação abundante com soro fisiológico e revisão da ferida, {{revisão|sem corpo estranho e sem lesão de estruturas profundas|com retirada de corpo estranho}}. " +
@@ -97,6 +152,9 @@ const PROC_ICONES = {
     pulmao_dreno: '<path d="M12 4v8M12 8c-2-2-6 0-6 5v5c0 2 2 2 3 1l3-3M12 8c2-2 6 0 6 5v5c0 2-2 2-3 1"/><path d="M19 15h3"/>',
     pulmao_agulha: '<path d="M12 4v8M12 8c-2-2-6 0-6 5v5c0 2 2 2 3 1l3-3M12 8c2-2 6 0 6 5v5c0 2-2 2-3 1l-3-3"/><path d="m21 11-5 3"/>',
     abdome_agulha: '<ellipse cx="11" cy="14" rx="7" ry="6"/><circle cx="11" cy="14" r="1"/><path d="m21 3-6 6M18 3h3v3"/>',
+    bebe: '<circle cx="12" cy="8" r="4.5"/><path d="M10.5 8h.01M13.5 8h.01M10.8 10.2a2 2 0 0 0 2.4 0"/><path d="M6 21c0-3.5 2.7-6 6-6s6 2.5 6 6"/>',
+    trauma: '<rect x="3" y="7" width="18" height="12" rx="2"/><path d="M9 7V5h6v2M12 10v6M9 13h6"/>',
+    balanca: '<path d="M12 3v18M7 21h10M5 7h14"/><path d="m5 7-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z"/>',
     sutura: '<path d="M3 12h18"/><path d="M6 8l2 8M11 8l2 8M16 8l2 8"/>',
     gota: '<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/><path d="M9.5 15a2.5 2.5 0 0 0 2.5 2.5"/>'
 };
@@ -113,6 +171,7 @@ let procAtual = null;
 function procCampos(texto) {
     let n = 0;
     return texto.replace(/\n/g, "<br>").replace(/\{\{([^}]*)\}\}/g, (m, dentro) => {
+        if (dentro.startsWith("=")) return `<span class="proc-calc" data-calc="${escaparHtml(dentro.slice(1))}">—</span>`;  /* {{=nome}} = conta automática (calc do modelo) */
         let partes = dentro.split("|"), rotulo = partes[0], id = "pc" + (n++);
         let opcional = rotulo.startsWith("?"); if (opcional) rotulo = rotulo.slice(1);  /* {{?rótulo}} = campo opcional */
         let e = escaparHtml;
@@ -186,7 +245,24 @@ function procFaltando() {
 function procAtualizarFalta() {
     let campos = document.querySelectorAll("#procTexto .proc-campo");
     campos.forEach(c => c.classList.toggle("ok", !!c.value.trim() || (c.tagName === "SELECT" && c.selectedIndex > 0)));
-    let f = document.getElementById("procFalta"); if (f) f.textContent = `(${procFaltando().length})`;
+    procRecalcular();
+    let falta = procFaltando().length + document.querySelectorAll("#procTexto .proc-calc.vazio").length;
+    let f = document.getElementById("procFalta"); if (f) f.textContent = `(${falta})`;
+    let b = document.querySelector("#tela-inicio .proc-copiar");
+    if (b && !b.classList.contains("copiado")) {
+        b.classList.toggle("espera", falta > 0);
+        b.textContent = falta ? `Faltam ${falta} campo${falta > 1 ? "s" : ""}` : "Copiar texto";
+    }
+}
+function procRecalcular() {
+    let p = PROCEDIMENTOS.find(x => x.id === procAtual), spans = document.querySelectorAll("#procTexto .proc-calc");
+    if (!spans.length) return;
+    let r = {};
+    if (p && p.calc) {
+        let v = rot => { let c = document.querySelector(`#procTexto .proc-campo[data-rotulo="${CSS.escape(rot)}"]`); if (!c) return NaN; let t = c.value.trim(); if (/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(t)) t = t.replace(/\./g, ""); return parseFloat(t.replace(",", ".")); };  /* "1.250" = mil e duzentos e cinquenta; vírgula = decimal */
+        try { r = p.calc(v) || {}; } catch (e) { r = {}; }
+    }
+    spans.forEach(sp => { let x = r[sp.dataset.calc]; sp.textContent = x == null ? "—" : x; sp.classList.toggle("vazio", x == null); });
 }
 
 function procTextoFinal() {
@@ -198,7 +274,7 @@ function procTextoFinal() {
         c.replaceWith(document.createTextNode(v || (o.classList.contains("opcional") || (o.tagName === "SELECT" && o.selectedIndex > 0) ? "" : "[" + o.dataset.rotulo + "]")));
     });
     copia.querySelectorAll("br").forEach(b => b.replaceWith(document.createTextNode("\n")));
-    return copia.textContent.replace(/[ \t]+/g, " ").replace(/ ([.,])/g, "$1").replace(/ +\n/g, "\n").replace(/\n • /g, "\n  • ").trim();
+    return copia.textContent.replace(/[ \t]+/g, " ").replace(/ ([.,])/g, "$1").replace(/ +\n/g, "\n").replace(/\n • /g, "\n  • ").replace(/\n- *(?=\n|$)/g, "").trim();  /* linha "- " de campo opcional vazio some */
 }
 
 function procClique(ev) {
@@ -209,10 +285,11 @@ function procClique(ev) {
     else if (a === "lista") { procAtual = null; procDesenhar(); }
     else if (a === "proximo") { let f = procFaltando()[0]; if (f) { f.focus(); f.scrollIntoView({ block: "center", behavior: "smooth" }); } }
     else if (a === "copiar") {
-        let falta = procFaltando().length;
-        if (falta && !confirm(`Faltam ${falta} campo(s). Copiar assim mesmo? Os campos vazios saem entre colchetes.`)) return;
+        /* o Copiar espera: com campo obrigatório vazio (ou conta sem resultado), leva ao campo que falta */
+        let f = procFaltando()[0] || document.querySelector("#procTexto .proc-calc.vazio");
+        if (f) { if (f.focus) f.focus(); f.scrollIntoView({ block: "center", behavior: "smooth" }); return; }
         let t = procTextoFinal();
-        let ok = () => { b.textContent = "✓ Copiado"; setTimeout(() => { b.textContent = "Copiar texto"; }, 1500); };
+        let ok = () => { b.classList.add("copiado"); b.textContent = "✓ Copiado"; setTimeout(() => { b.classList.remove("copiado"); procAtualizarFalta(); }, 1500); };
         if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok).catch(() => procCopiarAntigo(t, ok));
         else procCopiarAntigo(t, ok);
     }
