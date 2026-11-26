@@ -226,7 +226,8 @@ function procDesenhar() {
     let topo = inicio + (p ? `<button type="button" class="proc-voltar" data-acao="lista">‹ Procedimentos</button>` : "") + `<h1>${p ? e(p.nome) : "Descrição de procedimentos"}</h1>`;
     if (!p) {
         /* lista igual à da tela inicial: quadradinho colorido com ícone, nome e › */
-        let linhas = PROCEDIMENTOS.map(x => `<button type="button" class="in-row" data-proc="${x.id}">${procIcone(x)}<div class="in-tx">${e(x.nome)}</div><span class="in-d">${typeof inIcone === "function" ? inIcone("seta") : "›"}</span></button>`).join("");
+        /* em ordem alfabética (pedido do Dr. Jonas, 11/2026) */
+        let linhas = [...PROCEDIMENTOS].sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR")).map(x => `<button type="button" class="in-row" data-proc="${x.id}">${procIcone(x)}<div class="in-tx">${e(x.nome)}</div><span class="in-d">${typeof inIcone === "function" ? inIcone("seta") : "›"}</span></button>`).join("");
         main.innerHTML = `<div class="proc-corpo">${topo}<p class="proc-dica">Escolha o procedimento. O texto vem pronto: preencha só os campos em vermelho e copie para o prontuário.</p><div class="in-lista proc-lista">${linhas}</div>
             <p class="proc-aviso">Modelos de apoio: confira e ajuste ao que foi feito. Não digite nome nem dado que identifique o paciente. Nada fica salvo.</p></div>`;
     } else {
