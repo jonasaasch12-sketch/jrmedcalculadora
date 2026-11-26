@@ -25,7 +25,7 @@ registrarMedicamentos({
             let tc = Math.round(tc_raw * 2) / 2;
             let ts = Math.round(ts_raw * 2) / 2;
             
-            return { v: `Tubo c/ cuff: ${tc.toFixed(1)}\nTubo s/ cuff: ${ts.toFixed(1)}\nFixação: ${(tc * 3).toFixed(1)} cm`, r: `DISPOSITIVOS SELECIONADOS PELA IDADE:\n\n• LÂMINA DE LARINGOSCÓPIO: LÂMINA ${lam}\n• TUBO COM CUFF: DIÂMETRO ${tc.toFixed(1)} MM\n• TUBO SEM CUFF: DIÂMETRO ${ts.toFixed(1)} MM\n• FIXAÇÃO: ALINHAR EM ${(tc * 3).toFixed(1)} CM NA RIMA LABIAL.` }; 
+            return { v: `Lâmina: ${lam}\nTubo c/ cuff: ${tc.toFixed(1)}\nTubo s/ cuff: ${ts.toFixed(1)}\nFixação: ${(tc * 3).toFixed(1)} cm`, r: `DISPOSITIVOS SELECIONADOS PELA IDADE:\n\n• LÂMINA DE LARINGOSCÓPIO: LÂMINA ${lam}\n• TUBO COM CUFF: DIÂMETRO ${tc.toFixed(1)} MM\n• TUBO SEM CUFF: DIÂMETRO ${ts.toFixed(1)} MM\n• FIXAÇÃO: ALINHAR EM ${(tc * 3).toFixed(1)} CM NA RIMA LABIAL.` }; 
         },
         detalhes: {
             indicacao: "Intubação: escolher tubo, lâmina e profundidade de fixação.",
