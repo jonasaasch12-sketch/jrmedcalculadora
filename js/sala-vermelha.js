@@ -57,7 +57,7 @@ const SV_PREPARO = {
     rsi_propofol: () => "Puro (10 mg/mL). IV/IO.",
     rsi_pancuronio: () => "Puro (2 mg/mL). IV/IO.",
     gluconato_calcio_pals: () => "Gluconato de cálcio 10% puro. IV/IO lento.",
-    flumazenil_pals: () => "Puro (0,1 mg/mL). IV."
+    flumazenil_pals: t => `Puro (0,1 mg/mL). IV. Pode repetir até o total de ${svPega(t, /TOTAL MÁXIMA DE ([\d.,]+ ML)/) || "0,05 mg/kg ou 1 mg"}.`
 };
 function svPega(t, re) { let m = String(t).toUpperCase().match(re); return m ? m[1].toLowerCase().replace(/ ml$/, " mL") : ""; }
 
