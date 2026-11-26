@@ -414,14 +414,16 @@ registrarMedicamentos({
     "flumazenil_pals": {
         cat: "cat-pals", sub: "🚨 Parada / Arritmias (PALS)",
         kw: "flumazenil lanexat antidoto benzodiazepinico midazolam diazepam reversao pals", nome: "Flumazenil", apres: "Ampola 0,1 mg / mL",
-        info: "<strong>Dose:</strong> 0,01 mg/kg. Máx. 0,2 mg/dose.", badge: "Antídoto Benzodiazepínico", recLabel: "Texto para copiar:",
+        info: "<strong>Dose:</strong> 0,01 mg/kg. Máx. 0,2 mg/dose; total máx. 0,05 mg/kg ou 1 mg (o menor).", badge: "Antídoto Benzodiazepínico", recLabel: "Texto para copiar:",
         calc: (p) => {
             let ml = Math.min(Math.round(p * 0.1 * 10) / 10, 2);
-            return { v: ml.toFixed(1) + " mL", r: `VIA ENDOVENOSA (REVERSÃO DE BENZODIAZEPÍNICO)\n\n FAZER ${ml.toFixed(1)} ML DE FLUMAZENIL (0,1 MG/ML) PURO IV.` };
+            /* dose total máxima: 0,05 mg/kg ou 1 mg, o que for menor (0,1 mg/mL) */
+            let totMl = Math.min(Math.round(p * 0.5 * 10) / 10, 10);
+            return { v: ml.toFixed(1) + " mL", r: `VIA ENDOVENOSA (REVERSÃO DE BENZODIAZEPÍNICO)\n\n FAZER ${ml.toFixed(1)} ML DE FLUMAZENIL (0,1 MG/ML) PURO IV.\n PODE REPETIR, ATÉ A DOSE TOTAL MÁXIMA DE ${totMl.toFixed(1)} ML (${(totMl / 10).toFixed(2).replace(".", ",")} MG).` };
         },
         detalhes: {
             indicacao: "Reversão de sedação por benzodiazepínico (midazolam, diazepam).",
-            dose: "0,01 mg/kg IV, puro. Máx. 0,2 mg (2 mL) por dose.",
+            dose: "0,01 mg/kg IV, puro. Máx. 0,2 mg (2 mL) por dose. Dose total máx.: 0,05 mg/kg ou 1 mg (10 mL), o que for menor.",
             atencao: "Pode desencadear convulsão (evitar em quem usa benzodiazepínico por crise). Efeito curto: observar nova sedação. Dose da folha de PCR enviada pelo Dr. Jonas."
         }
     },

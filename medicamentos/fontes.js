@@ -87,7 +87,7 @@ const FONTES_CARDS = {
     rsi_cont_rocuronio: REF.sedacao + " Rocurônio: 0,3 a 0,6 mg/kg/h.",
     rsi_cont_pancuronio: REF.sedacao + " Pancurônio: 0,05 a 0,1 mg/kg/h.",
     rsi_propofol: REF.folha_pcr + " Propofol: 1 mg/kg.", rsi_pancuronio: REF.folha_pcr + " Pancurônio: 0,1 mg/kg.",
-    gluconato_calcio_pals: REF.folha_pcr + " Gluconato de cálcio 10%: 60 mg/kg, máx. 3.000 mg/dose.", flumazenil_pals: REF.folha_pcr + " Flumazenil: 0,01 mg/kg, máx. 0,2 mg/dose."
+    gluconato_calcio_pals: REF.folha_pcr + " Gluconato de cálcio 10%: 60 mg/kg, máx. 3.000 mg/dose.", flumazenil_pals: REF.folha_pcr + " Flumazenil: 0,01 mg/kg, máx. 0,2 mg/dose; total máx. 0,05 mg/kg ou 1 mg."
 };
 
 // Siglas do "info" escritas por extenso
