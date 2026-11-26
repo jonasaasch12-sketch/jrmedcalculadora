@@ -409,6 +409,19 @@ registrarMedicamentos({
             indicacao: "Hipocalcemia, hipercalemia e hipermagnesemia na emergência.",
             dose: "60 mg/kg (0,6 mL/kg) IV/IO, puro. Máx. 3.000 mg (30 mL) por dose.",
             atencao: "Monitorar ECG. Não misturar com bicarbonato na mesma via. Dose da folha de PCR enviada pelo Dr. Jonas."
+        },
+        ficha: {
+            apresentacoes: "Ampola de gluconato de cálcio 10% (100 mg/mL).",
+            indicacoes: "Hipocalcemia sintomática, hipercalemia e hipermagnesemia na emergência.",
+            dose: "60 mg/kg (0,6 mL/kg) IV/IO por dose.",
+            doseMaxima: "3.000 mg (30 mL) por dose.",
+            via: "IV ou IO.",
+            diluicao: "Na emergência, pode ser feito puro. Fora da emergência e em acesso periférico, diluir (até 5 vezes o volume) e preferir acesso central.",
+            infusao: "Lento: no máximo 100 mg/min em crianças e recém-nascidos (bula).",
+            alertasPediatricos: "Monitorar ECG: a injeção rápida causa vasodilatação, hipotensão, bradicardia e arritmia. O extravasamento causa irritação e necrose de pele.",
+            contraindicacoes: "Recém-nascido de até 28 dias em uso de ceftriaxona (precipitado de cálcio-ceftriaxona, com mortes descritas).",
+            interacoes: "Não misturar com bicarbonato nem com fosfato na mesma via (precipita). Ceftriaxona: ver contraindicações.",
+            fonteRevisao: "Folha de Parada Cardiorrespiratória — Connect Ped (dose), enviada pelo Dr. Jonas, 11/2026. Bula do gluconato de cálcio injetável (FDA, via Drugs.com) e protocolo de cálcio EV do Birmingham Women's and Children's NHS (2023)."
         }
     },
     "flumazenil_pals": {
@@ -425,6 +438,17 @@ registrarMedicamentos({
             indicacao: "Reversão de sedação por benzodiazepínico (midazolam, diazepam).",
             dose: "0,01 mg/kg IV, puro, em 15 s. Máx. 0,2 mg (2 mL) por dose. Sem resposta em 45 s: repetir a cada 60 s, até 4 vezes. Dose total máx.: 0,05 mg/kg ou 1 mg (10 mL), o que for menor.",
             atencao: "Pode desencadear convulsão (evitar em quem usa benzodiazepínico por crise). Efeito curto: observar nova sedação. Dose da folha de PCR enviada pelo Dr. Jonas."
+        },
+        ficha: {
+            apresentacoes: "Ampola 0,1 mg/mL.",
+            indicacoes: "Reversão da sedação por benzodiazepínico (midazolam, diazepam).",
+            dose: "0,01 mg/kg IV em 15 segundos. Sem resposta em 45 segundos: repetir a mesma dose a cada 60 segundos, até 4 vezes.",
+            doseMaxima: "0,2 mg (2 mL) por dose. Dose total: 0,05 mg/kg ou 1 mg, o que for menor.",
+            via: "IV, puro.",
+            alertasPediatricos: "Uso pediátrico estudado acima de 1 ano. Efeito curto: observar nova sedação; a segurança de repetir a dose na ressedação não foi estabelecida em crianças.",
+            contraindicacoes: "Hipersensibilidade ao flumazenil ou a benzodiazepínico. Benzodiazepínico em uso para condição grave (estado de mal epiléptico, hipertensão intracraniana). Intoxicação grave por antidepressivo tricíclico.",
+            efeitosAdversos: "Convulsão (sobretudo em uso crônico de benzodiazepínico ou intoxicação mista), abstinência de benzodiazepínico, agitação, arritmia.",
+            fonteRevisao: "Folha de Parada Cardiorrespiratória — Connect Ped (dose), enviada pelo Dr. Jonas, 11/2026. Bula do flumazenil (monografia Drugs.com/AHFS e PDR); Utah Poison Control Center, 2022."
         }
     },
     "procainamida_pals": {

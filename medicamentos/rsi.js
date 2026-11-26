@@ -97,6 +97,15 @@ registrarMedicamentos({
             indicacao: "Indução na sequência rápida de intubação.",
             dose: "1 mg/kg IV/IO, puro.",
             atencao: "Causa hipotensão: evitar no choque. Dose da folha de PCR enviada pelo Dr. Jonas."
+        },
+        ficha: {
+            apresentacoes: "Emulsão injetável 1% (10 mg/mL).",
+            indicacoes: "Indução anestésica na sequência rápida de intubação.",
+            dose: "1 mg/kg IV/IO em bolus.",
+            via: "IV ou IO, puro (agitar antes de usar).",
+            alertasPediatricos: "Pela bula, não é recomendado para indução abaixo de 3 anos nem para sedação contínua em UTI pediátrica (síndrome da infusão do propofol: acidose metabólica, hipercalemia, rabdomiólise, insuficiência cardíaca e renal). Causa hipotensão e apneia: evitar no choque.",
+            contraindicacoes: "Hipersensibilidade ao propofol, ao ovo ou à soja (a emulsão contém lecitina de ovo e óleo de soja).",
+            fonteRevisao: "Folha de Parada Cardiorrespiratória — Connect Ped (dose), enviada pelo Dr. Jonas, 11/2026. Bula do propofol injetável (Diprivan, FDA)."
         }
     },
     "rsi_pancuronio": {
@@ -108,6 +117,17 @@ registrarMedicamentos({
             indicacao: "Bloqueio neuromuscular na intubação.",
             dose: "0,1 mg/kg IV/IO, puro.",
             atencao: "Só fazer depois do sedativo e com via aérea pronta. Ação longa. Dose da folha de PCR enviada pelo Dr. Jonas."
+        },
+        ficha: {
+            apresentacoes: "Ampola 2 mg/mL.",
+            indicacoes: "Bloqueio neuromuscular para intubação e ventilação mecânica.",
+            dose: "0,1 mg/kg IV/IO (faixa usual 0,06 a 0,1 mg/kg).",
+            via: "IV ou IO, puro.",
+            alertasPediatricos: "Início em 2 a 5 minutos; duração de 45 a 60 minutos ou mais. Recém-nascidos são mais sensíveis (efeito mais longo). Só usar com sedação e via aérea garantida.",
+            contraindicacoes: "Hipersensibilidade ao pancurônio ou ao brometo.",
+            efeitosAdversos: "Taquicardia e aumento da PA (efeito vagolítico), reações por liberação de histamina (broncoespasmo, rubor, hipotensão), anafilaxia, paralisia prolongada.",
+            ajusteRenal: "Na insuficiência renal, a recuperação do bloqueio é variável e pode ser muito lenta; pode ser preciso reduzir a dose de manutenção.",
+            fonteRevisao: "Folha de Parada Cardiorrespiratória — Connect Ped (dose), enviada pelo Dr. Jonas, 11/2026. Bula do brometo de pancurônio (Pfizer/FDA) e PDR."
         }
     },
     "rsi_succi": {
