@@ -397,6 +397,34 @@ registrarMedicamentos({
             atencao: "Efeito mais curto que o do opioide: observar nova depressão. Dose menor (1-5 mcg/kg) para uso terapêutico."
         }
     },
+    "gluconato_calcio_pals": {
+        cat: "cat-pals", sub: "🚨 Parada / Arritmias (PALS)",
+        kw: "gluconato de calcio calcio hipocalcemia hipercalemia hipermagnesemia parada pals", nome: "Gluconato de Cálcio 10%", apres: "100 mg / mL",
+        info: "<strong>Dose:</strong> 60 mg/kg (0,6 mL/kg). Máx. 3.000 mg/dose.", badge: "Máx: 30 mL", recLabel: "Texto para copiar:",
+        calc: (p) => {
+            let ml = Math.min(Math.round(p * 0.6 * 10) / 10, 30), mg = Math.round(ml * 100);
+            return { v: ml.toFixed(1) + " mL", r: `VIA ENDOVENOSA (CÁLCIO)\n\n FAZER ${ml.toFixed(1)} ML DE GLUCONATO DE CÁLCIO 10% (${mg} MG) PURO IV/IO, LENTO.` };
+        },
+        detalhes: {
+            indicacao: "Hipocalcemia, hipercalemia e hipermagnesemia na emergência.",
+            dose: "60 mg/kg (0,6 mL/kg) IV/IO, puro. Máx. 3.000 mg (30 mL) por dose.",
+            atencao: "Monitorar ECG. Não misturar com bicarbonato na mesma via. Dose da folha de PCR enviada pelo Dr. Jonas."
+        }
+    },
+    "flumazenil_pals": {
+        cat: "cat-pals", sub: "🚨 Parada / Arritmias (PALS)",
+        kw: "flumazenil lanexat antidoto benzodiazepinico midazolam diazepam reversao pals", nome: "Flumazenil", apres: "Ampola 0,1 mg / mL",
+        info: "<strong>Dose:</strong> 0,01 mg/kg. Máx. 0,2 mg/dose.", badge: "Antídoto Benzodiazepínico", recLabel: "Texto para copiar:",
+        calc: (p) => {
+            let ml = Math.min(Math.round(p * 0.1 * 10) / 10, 2);
+            return { v: ml.toFixed(1) + " mL", r: `VIA ENDOVENOSA (REVERSÃO DE BENZODIAZEPÍNICO)\n\n FAZER ${ml.toFixed(1)} ML DE FLUMAZENIL (0,1 MG/ML) PURO IV.` };
+        },
+        detalhes: {
+            indicacao: "Reversão de sedação por benzodiazepínico (midazolam, diazepam).",
+            dose: "0,01 mg/kg IV, puro. Máx. 0,2 mg (2 mL) por dose.",
+            atencao: "Pode desencadear convulsão (evitar em quem usa benzodiazepínico por crise). Efeito curto: observar nova sedação. Dose da folha de PCR enviada pelo Dr. Jonas."
+        }
+    },
     "procainamida_pals": {
         cat: "cat-pals", sub: "🚨 Parada / Arritmias (PALS)",
         kw: "procainamida taquiarritmia pals", nome: "Procainamida", apres: "Ampola 100 mg/mL",

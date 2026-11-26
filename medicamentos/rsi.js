@@ -88,6 +88,28 @@ registrarMedicamentos({
             atencao: "Só fazer depois do sedativo e com via aérea pronta. Antídoto: sugamadex."
         }
     },
+    "rsi_propofol": {
+        cat: "cat-rsi", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+        kw: "propofol diprivan indutor sedativo bolus intubacao rsi hospitalar injetavel", nome: "Propofol 1% (Bólus de Indução)", apres: "10 mg / mL",
+        info: "<strong>Dose:</strong> 1 mg/kg.", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => { let v = p * 0.1; return { v: v.toFixed(1) + " mL", r: `VIA ENDOVENOSA (RSI - INDUTOR BÓLUS)\n\n FAZER ${v.toFixed(1)} ML DE PROPOFOL 1% (10 MG/ML) PURO IV/IO, AGORA.` }; },
+        detalhes: {
+            indicacao: "Indução na sequência rápida de intubação.",
+            dose: "1 mg/kg IV/IO, puro.",
+            atencao: "Causa hipotensão: evitar no choque. Dose da folha de PCR enviada pelo Dr. Jonas."
+        }
+    },
+    "rsi_pancuronio": {
+        cat: "cat-rsi", sub: "🏥 Uso Hospitalar (Vias Injetáveis)",
+        kw: "pancuronio pavulon bloqueador neuromuscular relaxante intubacao rsi hospitalar injetavel bolus", nome: "Pancurônio (Bloqueador)", apres: "2 mg / mL",
+        info: "<strong>Dose:</strong> 0,1 mg/kg.", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p) => { let v = p * 0.1 / 2; return { v: v.toFixed(1) + " mL", r: `VIA ENDOVENOSA (RSI - BLOQUEADOR)\n\n FAZER ${v.toFixed(1)} ML DE PANCURÔNIO (2 MG/ML) PURO IV/IO, AGORA.` }; },
+        detalhes: {
+            indicacao: "Bloqueio neuromuscular na intubação.",
+            dose: "0,1 mg/kg IV/IO, puro.",
+            atencao: "Só fazer depois do sedativo e com via aérea pronta. Ação longa. Dose da folha de PCR enviada pelo Dr. Jonas."
+        }
+    },
     "rsi_succi": {
         cat: "cat-rsi", sub: "🏥 Uso Hospitalar (Vias Injetáveis)", 
         kw: "succinilcolina succi bloqueador neuromuscular relaxante intubacao rsi hospitalar", nome: "Succinilcolina (Bloqueador)", apres: "FA 100 mg (Reconst. 10 mL AD)",

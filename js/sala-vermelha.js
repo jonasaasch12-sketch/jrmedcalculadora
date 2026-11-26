@@ -14,12 +14,12 @@ function salaVermelhaAtiva() {
 }
 
 const SV_BLOCOS = [
-    { titulo: "Via aérea e intubação", cor: "#0a84ff", ids: ["rsi_tubo", "rsi_fent", "rsi_ceta", "rsi_midaz", "rsi_roc", "rsi_succi"] },
-    { titulo: "Parada cardiorrespiratória e arritmias", cor: "#ff3b30", energia: true, ids: ["epinefrina_pals", "amiodarona_pals", "lidocaina_pals", "adenosina_pals", "atropina", "magnesio_pals", "bicarbonato_pals"] },
+    { titulo: "Via aérea e intubação", cor: "#0a84ff", ids: ["rsi_tubo", "rsi_fent", "rsi_ceta", "rsi_midaz", "rsi_propofol", "rsi_roc", "rsi_succi", "rsi_pancuronio"] },
+    { titulo: "Parada cardiorrespiratória e arritmias", cor: "#ff3b30", energia: true, ids: ["epinefrina_pals", "amiodarona_pals", "lidocaina_pals", "adenosina_pals", "atropina", "magnesio_pals", "bicarbonato_pals", "gluconato_calcio_pals"] },
     { titulo: "Choque", cor: "#ff9f0a", ids: ["sepse_expansao", "adrenalina_sepse", "nora_sepse"] },
     { titulo: "Anafilaxia", cor: "#af52de", ids: ["adrenalina_im", "anaf_expansao"] },
     { titulo: "Crise convulsiva", cor: "#5856d6", ids: ["neuro_midaz_nasal", "neuro_midaz", "neuro_diaz", "neuro_levetiracetam", "neuro_fenitoina", "fenobarbital"] },
-    { titulo: "Hipoglicemia e intoxicação por opioide", cor: "#34c759", ids: ["glicose_pals", "naloxona_pals"] }
+    { titulo: "Hipoglicemia e antídotos", cor: "#34c759", ids: ["glicose_pals", "naloxona_pals", "flumazenil_pals"] }
 ];
 
 /* "Como fazer", sempre visível (pedido do Dr. Jonas, 11/2026: na emergência, ver a diluição sem clicar).
@@ -53,7 +53,11 @@ const SV_PREPARO = {
         let m = String(t).toUpperCase().match(new RegExp(k + "[^\\n]*\\(GLICOSE (\\d+%)\\):\\s*ADMINISTRAR ([\\d.,]+ A [\\d.,]+ ML)"));
         return m ? `${["RN", "Criança", "Adolescente"][n]}: glicose ${m[1]} ${m[2].toLowerCase()}` : "";
     }).filter(Boolean).join(" · "),
-    naloxona_pals: () => "Pura (0,4 mg/mL). IV a cada 2 a 3 min."
+    naloxona_pals: () => "Pura (0,4 mg/mL). IV a cada 2 a 3 min.",
+    rsi_propofol: () => "Puro (10 mg/mL). IV/IO.",
+    rsi_pancuronio: () => "Puro (2 mg/mL). IV/IO.",
+    gluconato_calcio_pals: () => "Gluconato de cálcio 10% puro. IV/IO lento.",
+    flumazenil_pals: () => "Puro (0,1 mg/mL). IV."
 };
 function svPega(t, re) { let m = String(t).toUpperCase().match(re); return m ? m[1].toLowerCase().replace(/ ml$/, " mL") : ""; }
 
