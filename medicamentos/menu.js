@@ -87,14 +87,14 @@ const categorias = [
         ...(VENTILACAO_LIBERADA || (typeof MODO_TESTE !== 'undefined' && MODO_TESTE) ? { conduta: "ventilacao", condutaNome: "Simulador de ventilador" } : {}),
         patologias: [
             { nome: "Escolha de Material e Dispositivos", remedios: ["rsi_tubo"] },
-            { nome: "Pré-medicação e Indução em Bólus", remedios: ["atropina", "rsi_lido", "rsi_fent", "rsi_ceta", "rsi_midaz", "rsi_roc", "rsi_succi"] },
+            { nome: "Pré-medicação e Indução em Bólus", remedios: ["atropina", "rsi_lido", "rsi_fent", "rsi_ceta", "rsi_midaz", "rsi_propofol", "rsi_roc", "rsi_succi", "rsi_pancuronio"] },
             { nome: "Manutenção por Infusão Contínua", remedios: ["rsi_cont_morfina", "rsi_cont_cetamina", "rsi_cont_clonidina", "rsi_cont_precedex", "rsi_cont_rocuronio", "rsi_cont_pancuronio", "rsi_cont_lidocaina", "rsi_cont_propofol"] }
         ]
     },
     { 
         id: "cat-pals", titulo: "Urgência PALS", dotClass: "dot-sintomaticos", cor: "tarja-sintomaticos", nome: "PALS", icone: "🚨 PALS",
         patologias: [
-            { nome: "Parada e Arritmias", remedios: ["atropina", "adenosina_pals", "amiodarona_pals", "epinefrina_pals", "glicose_pals", "lidocaina_pals", "magnesio_pals", "milrinone_pals", "naloxona_pals", "procainamida_pals", "bicarbonato_pals"] },
+            { nome: "Parada e Arritmias", remedios: ["atropina", "adenosina_pals", "amiodarona_pals", "epinefrina_pals", "flumazenil_pals", "glicose_pals", "gluconato_calcio_pals", "lidocaina_pals", "magnesio_pals", "milrinone_pals", "naloxona_pals", "procainamida_pals", "bicarbonato_pals"] },
             { nome: "Sepse e Choque Séptico", conduta: "sepse", condutaNome: "Sepse e choque séptico", remedios: ["sepse_expansao", "cef_sepse", "adrenalina_sepse", "nora_sepse", "hidrocortisona_sepse"] },
             { nome: "Sepse Neonatal: Antibióticos", conduta: "sepse", condutaNome: "Sepse e choque séptico", remedios: ["amp_neo_sepse", "genta_neo_sepse", "cefotax_neo_sepse", "aciclovir_sepse"] }
         ]
