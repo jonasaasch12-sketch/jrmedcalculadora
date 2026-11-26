@@ -419,11 +419,11 @@ registrarMedicamentos({
             let ml = Math.min(Math.round(p * 0.1 * 10) / 10, 2);
             /* dose total máxima: 0,05 mg/kg ou 1 mg, o que for menor (0,1 mg/mL) */
             let totMl = Math.min(Math.round(p * 0.5 * 10) / 10, 10);
-            return { v: ml.toFixed(1) + " mL", r: `VIA ENDOVENOSA (REVERSÃO DE BENZODIAZEPÍNICO)\n\n FAZER ${ml.toFixed(1)} ML DE FLUMAZENIL (0,1 MG/ML) PURO IV.\n PODE REPETIR, ATÉ A DOSE TOTAL MÁXIMA DE ${totMl.toFixed(1)} ML (${(totMl / 10).toFixed(2).replace(".", ",")} MG).` };
+            return { v: ml.toFixed(1) + " mL", r: `VIA ENDOVENOSA (REVERSÃO DE BENZODIAZEPÍNICO)\n\n FAZER ${ml.toFixed(1)} ML DE FLUMAZENIL (0,1 MG/ML) PURO IV, EM 15 SEGUNDOS.\n SE NÃO HOUVER RESPOSTA EM 45 SEGUNDOS, REPETIR A MESMA DOSE A CADA 60 SEGUNDOS, ATÉ 4 VEZES, SEM PASSAR DA DOSE TOTAL MÁXIMA DE ${totMl.toFixed(1)} ML (${(totMl / 10).toFixed(2).replace(".", ",")} MG).` };
         },
         detalhes: {
             indicacao: "Reversão de sedação por benzodiazepínico (midazolam, diazepam).",
-            dose: "0,01 mg/kg IV, puro. Máx. 0,2 mg (2 mL) por dose. Dose total máx.: 0,05 mg/kg ou 1 mg (10 mL), o que for menor.",
+            dose: "0,01 mg/kg IV, puro, em 15 s. Máx. 0,2 mg (2 mL) por dose. Sem resposta em 45 s: repetir a cada 60 s, até 4 vezes. Dose total máx.: 0,05 mg/kg ou 1 mg (10 mL), o que for menor.",
             atencao: "Pode desencadear convulsão (evitar em quem usa benzodiazepínico por crise). Efeito curto: observar nova sedação. Dose da folha de PCR enviada pelo Dr. Jonas."
         }
     },
