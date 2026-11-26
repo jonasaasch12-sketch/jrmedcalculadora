@@ -22,6 +22,41 @@ const SV_BLOCOS = [
     { titulo: "Hipoglicemia e intoxicação por opioide", cor: "#34c759", ids: ["glicose_pals", "naloxona_pals"] }
 ];
 
+/* "Como fazer", sempre visível (pedido do Dr. Jonas, 11/2026: na emergência, ver a diluição sem clicar).
+   Só o modo de preparo do próprio card (texto da receita dele); os números que mudam com o peso são tirados do texto do card (t).
+   Tocar no item continua abrindo a receita completa. Card sem linha aqui: mostra só a dose. */
+const SV_PREPARO = {
+    rsi_fent: () => "Diluir 1 mL + 9 mL de AD (5 mcg/mL). IV/IO lento.",
+    rsi_ceta: () => "Puro (50 mg/mL). IV/IO.",
+    rsi_midaz: () => "Puro (5 mg/mL). IV/IO.",
+    rsi_roc: () => "Puro (10 mg/mL). IV/IO.",
+    rsi_succi: () => "1 FA de 100 mg + 10 mL de AD (10 mg/mL). IV/IO.",
+    epinefrina_pals: t => `IV/IO: 1 mL (1 mg) + 9 mL de AD (0,1 mg/mL), a cada 3 a 5 min. Tubo: ${svPega(t, /ASPIRAR ([\d.,]+ ML) PUROS/) || "pura"}, sem diluir.`,
+    amiodarona_pals: () => "Pura (50 mg/mL), diluir em SG 5%. Correr em 20 a 60 min.",
+    lidocaina_pals: () => "Lidocaína 2% pura (sem vasoconstritor). IV/IO em 2 a 3 min.",
+    adenosina_pals: t => `Pura (3 mg/mL). Bolus rápido + flush de SF. 2ª dose: ${svPega(t, /2ª DOSE[\s\S]*?ASPIRAR ([\d.,]+ ML)/) || "ver receita"}.`,
+    atropina: () => "Pura (0,25 mg/mL). Bolus IV/IO; pode repetir 1 vez.",
+    magnesio_pals: () => "Magnésio 10% puro. IV/IO em 10 a 20 min.",
+    bicarbonato_pals: () => "Bicarbonato 8,4% (1 mEq/mL). Bolus lento.",
+    sepse_expansao: () => "Ringer lactato ou SF 0,9% em 5 a 20 min. Reavaliar após cada bolus.",
+    adrenalina_sepse: () => "1 mL (1 mg) + 99 mL de SG 5% (10 mcg/mL). BIC.",
+    nora_sepse: () => "2 mL + 248 mL de SG 5% (8 mcg/mL). BIC.",
+    adrenalina_im: () => "Pura (1 mg/mL), sem diluir. IM na coxa; repetir a cada 5 a 15 min.",
+    anaf_expansao: () => "SF 0,9% ou Ringer lactato em 5 min.",
+    neuro_midaz_nasal: t => `Puro (5 mg/mL): ${svPega(t, /APLICAR ([\d.,]+ ML) EM CADA NARINA/) || "metade"} em cada narina.`,
+    neuro_midaz: () => "Puro (5 mg/mL). IM.",
+    neuro_diaz: () => "Puro (5 mg/mL). EV ou retal.",
+    neuro_levetiracetam: t => `+ ${svPega(t, /\+ ([\d.,]+ ML) DE SF/) || "SF 0,9%"} de SF 0,9%. BIC em 15 min.`,
+    neuro_fenitoina: t => `Puro EV lento (máx. 50 mg/min), ou + ${svPega(t, /\+ ([\d.,]+ ML) DE SF/) || "SF"} de SF 0,9% em BIC.`,
+    fenobarbital: () => "Diluir em SF 0,9%. EV até 60 mg/min.",
+    glicose_pals: t => ["RECÉM-NASCIDOS", "LACTENTES", "ADOLESCENTES"].map((k, n) => {
+        let m = String(t).toUpperCase().match(new RegExp(k + "[^\\n]*\\(GLICOSE (\\d+%)\\):\\s*ADMINISTRAR ([\\d.,]+ A [\\d.,]+ ML)"));
+        return m ? `${["RN", "Criança", "Adolescente"][n]}: glicose ${m[1]} ${m[2].toLowerCase()}` : "";
+    }).filter(Boolean).join(" · "),
+    naloxona_pals: () => "Pura (0,4 mg/mL). IV a cada 2 a 3 min."
+};
+function svPega(t, re) { let m = String(t).toUpperCase().match(re); return m ? m[1].toLowerCase().replace(/ ml$/, " mL") : ""; }
+
 /* PALS (AHA 2020): desfibrilação 2 → 4 → ≥ 4 J/kg (máx. 10 J/kg ou a dose de adulto); cardioversão sincronizada 0,5–1 → 2 J/kg */
 function svEnergia(p) {
     let j = x => (Math.round(x * 10) / 10).toString().replace(".", ",");
@@ -76,8 +111,9 @@ function svAtualizar() {
         let itens = b.ids.filter(id => typeof farmaciaJR !== "undefined" && farmaciaJR[id]).map(id => {
             let m = farmaciaJR[id], r;
             try { r = m.calc(p, i); } catch (err) { r = { v: "—", r: "" }; }
+            let prep = ""; try { prep = SV_PREPARO[id] ? SV_PREPARO[id](limpar(r.r || "")) : ""; } catch (err) { prep = ""; }
             return `<details class="sv-item">
-                <summary><span class="sv-nome">${e(limpar(m.nome))}<small>${e(limpar(m.apres || ""))}</small></span><span class="sv-dose">${e(limpar(r.v))}</span></summary>
+                <summary><span class="sv-nome">${e(limpar(m.nome))}<small>${e(limpar(m.apres || ""))}</small></span><span class="sv-dose">${/ver receita/i.test(r.v) ? "" : e(limpar(r.v))}</span>${prep ? `<span class="sv-prep">${e(prep)}</span>` : ""}</summary>
                 <div class="sv-receita" id="sv-r-${id}">${e(limpar(r.r || ""))}</div>
                 <button type="button" class="sv-copiar" data-sv-copiar="${id}">Copiar</button>
             </details>`;

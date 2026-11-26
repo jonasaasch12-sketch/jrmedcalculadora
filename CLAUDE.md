@@ -104,7 +104,8 @@ js/pressao-arterial.js     🩺 PA por percentil (item de Calculadoras e escores
                            1–12 anos pelo percentil ou valor de adulto (o menor); ≥ 13 anos 120/80, 130/80, 140/90
 js/sala-vermelha.js        🚨 Sala vermelha (tela inicial → Pediatria, abaixo de Emergência): uma tela pelo peso/idade com via aérea (tubo, SRI), PCR e arritmias,
                            choque, anafilaxia, crise convulsiva, hipoglicemia/naloxona. NENHUMA DOSE AQUI: SV_BLOCOS lista ids de cards e chama o calc() deles.
-                           Só a energia do desfibrilador/cardioversão é conta própria (PALS/AHA 2020, svEnergia). Só no teste (SALA_VERMELHA_LIBERADA = false)
+                           Só a energia do desfibrilador/cardioversão é conta própria (PALS/AHA 2020, svEnergia).
+                           "Como fazer" sempre visível em cada item (SV_PREPARO: diluição tirada do texto do card; pedido do Dr. Jonas: ver sem clicar). Só no teste (SALA_VERMELHA_LIBERADA = false)
 js/firebase.js             login e Firestore (módulo); sem e-mail de confirmação (suspenso: não chegava), o cadastro pede o e-mail 2x; grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)
 privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; contato jrmedprescricao@gmail.com). Mudou o texto?
