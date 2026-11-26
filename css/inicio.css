@@ -17,7 +17,7 @@ html[data-theme="dark"] #tela-inicio {
     --in-aside: #141416; --in-on: rgba(10, 132, 255, .22);
 }
 #tela-inicio * { box-sizing: border-box; }
-#tela-inicio button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; text-align: left; letter-spacing: inherit; }
+#tela-inicio button:not(:where(.calc-ferramenta button)) { /* os botões das calculadoras das condutas mantêm o próprio estilo */  font: inherit; color: inherit; background: none; border: 0; cursor: pointer; text-align: left; letter-spacing: inherit; }
 #tela-inicio svg.in-i { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
 #tela-inicio .in-q { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; color: #fff; flex: none; }
 #tela-inicio .in-q svg.in-i { width: 17px; height: 17px; stroke-width: 2; }
@@ -496,3 +496,28 @@ html[data-theme="dark"] .card-campo-extra input { background: #13283d; border-co
 html[data-theme="dark"] #tela-inicio .proc-calc { background: #12321f; color: #9fe0b5; }
 html[data-theme="dark"] #tela-inicio .proc-calc.vazio { background: #1d2833; color: #9aa4ad; }
 html[data-theme="dark"] #tela-inicio .proc-copiar.espera { background: #2a3644; color: #c9d1d9; }
+/* Calculadoras e escores (js/calculadoras.js): mesma página dos Procedimentos */
+#tela-inicio .calc-busca { width: 100%; margin: 8px 0 14px; padding: 11px 14px; font: inherit; font-size: 15px; border: 1px solid #cfd6de; border-radius: 10px; background: #fff; color: #212b32; box-sizing: border-box; }
+#tela-inicio .calc-busca:focus, #tela-inicio .calc-paciente input:focus, #tela-inicio .calc-campo input:focus { outline: 2px solid #005eb8; outline-offset: 1px; }
+#tela-inicio .calc-vazio { padding: 16px; color: #5b6670; }
+#tela-inicio .calc-paciente { display: flex; flex-wrap: wrap; gap: 12px; margin: 12px 0; }
+#tela-inicio .calc-paciente label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: #5b6670; font-weight: 500; }
+#tela-inicio .calc-paciente input { width: 120px; padding: 9px 10px; font: inherit; font-size: 16px; border: 1px solid #cfd6de; border-radius: 10px; background: #fff; color: #212b32; }
+#tela-inicio .calc-ferramenta { margin-top: 12px; background: #fff; border: 1px solid #e3e7ec; border-radius: 14px; padding: 14px; box-shadow: 0 10px 30px rgba(16,24,40,.08); overflow-x: auto; }
+#tela-inicio .calc-conduta { display: block; width: 100%; margin-top: 14px; padding: 12px; border-radius: 10px; border: 1px solid #cfd6de; background: #fff; color: #005eb8; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; text-align: center; }
+#tela-inicio .calc-campos { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin: 10px 0 14px; }
+#tela-inicio .calc-campo { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: #5b6670; font-weight: 500; }
+#tela-inicio .calc-campo-linha { display: flex; align-items: center; gap: 6px; }
+#tela-inicio .calc-campo input { flex: 1; min-width: 0; padding: 9px 10px; font: inherit; font-size: 16px; border: 1px solid #cfd6de; border-radius: 10px; background: #fff; color: #212b32; }
+#tela-inicio .calc-campo em { font-style: normal; color: #5b6670; }
+#tela-inicio .calc-resultados { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+#tela-inicio .calc-res { background: #f2f4f7; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 4px; }
+#tela-inicio .calc-res span { font-size: 13px; color: #5b6670; }
+#tela-inicio .calc-res strong { font-size: 22px; color: #0f5132; }
+#tela-inicio .calc-copiar { width: 100%; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; }
+html[data-theme="dark"] #tela-inicio .calc-busca, html[data-theme="dark"] #tela-inicio .calc-paciente input, html[data-theme="dark"] #tela-inicio .calc-campo input,
+html[data-theme="dark"] #tela-inicio .calc-ferramenta, html[data-theme="dark"] #tela-inicio .calc-conduta { background: #17212b; border-color: #2a3644; color: #e6edf3; }
+html[data-theme="dark"] #tela-inicio .calc-res { background: #1d2833; }
+html[data-theme="dark"] #tela-inicio .calc-res strong { color: #9fe0b5; }
+html[data-theme="dark"] #tela-inicio .calc-conduta { color: #8cc4ff; }
+#tela-inicio #calcLista .in-tx { white-space: normal; overflow: visible; text-overflow: clip; line-height: 1.3; }
