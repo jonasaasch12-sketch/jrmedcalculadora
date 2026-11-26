@@ -102,6 +102,10 @@ js/calculadoras.js         🧮 Calculadoras e escores (tela inicial → Pediatr
 js/sala-vermelha.js        🚨 Sala vermelha (tela inicial → Pediatria, abaixo de Emergência): uma tela pelo peso/idade com via aérea (tubo, SRI), PCR e arritmias,
                            choque, anafilaxia, crise convulsiva, hipoglicemia/naloxona. NENHUMA DOSE AQUI: SV_BLOCOS lista ids de cards e chama o calc() deles.
                            Só a energia do desfibrilador/cardioversão é conta própria (PALS/AHA 2020, svEnergia). Só no teste (SALA_VERMELHA_LIBERADA = false)
+js/internacao.js           🏥 Prescrição de internação (tela inicial → Pediatria, abaixo da Sala vermelha): escolhe a doença (condutas com cards hospitalares)
+                           e marca dieta, soro (card tgi_manutencao, 70% ou 80%), medicações da conduta (intCardsDaConduta), sintomáticos e cuidados;
+                           sai prescrição numerada para copiar. NENHUMA DOSE AQUI (usa calc() dos cards); nada vem marcado; nada é salvo.
+                           Lista fora: INT_FORA. Só no teste (INTERNACAO_LIBERADA = false)
 js/firebase.js             login e Firestore (módulo); sem e-mail de confirmação (suspenso: não chegava), o cadastro pede o e-mail 2x; grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)
 privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; contato jrmedprescricao@gmail.com). Mudou o texto?
