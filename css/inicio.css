@@ -556,3 +556,7 @@ html[data-theme="dark"] #tela-inicio .sv-copiar { background: #17212b !important
 #tela-inicio .pa-tab td:first-child { font-weight: 700; text-align: left; }
 html[data-theme="dark"] #tela-inicio .pa-falta { background: #1d2833; color: #9aa4ad; }
 html[data-theme="dark"] #tela-inicio .pa-tab th, html[data-theme="dark"] #tela-inicio .pa-tab td { border-color: #2a3644; }
+#tela-inicio .sv-item summary { flex-wrap: wrap; }
+#tela-inicio .sv-prep { flex: 0 0 100%; font-size: 13.5px; line-height: 1.35; color: #212b32; background: #f2f4f7; border-left: 3px solid var(--sv-cor); border-radius: 6px; padding: 6px 9px; }
+#tela-inicio .sv-prep::before { content: "Como fazer: "; font-weight: 700; color: var(--sv-cor); }
+html[data-theme="dark"] #tela-inicio .sv-prep { background: #1d2833; color: #e6edf3; }
