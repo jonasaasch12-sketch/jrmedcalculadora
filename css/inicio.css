@@ -547,16 +547,3 @@ html[data-theme="dark"] #tela-inicio .sv-nome { color: #e6edf3; }
 html[data-theme="dark"] #tela-inicio .sv-receita { background: #1d2833; color: #e6edf3; }
 html[data-theme="dark"] #tela-inicio .sv-energia { background: #2a1a1a; }
 html[data-theme="dark"] #tela-inicio .sv-copiar { background: #17212b !important; border-color: #2a3644 !important; color: #8cc4ff !important; }
-/* Prescrição de internação (js/internacao.js) */
-#tela-inicio .int-sec { margin-top: 14px; background: #fff; border: 1px solid #e3e7ec; border-radius: 14px; padding: 12px 14px; box-shadow: 0 10px 30px rgba(16,24,40,.08); }
-#tela-inicio .int-sec h2 { margin: 0 0 6px; font-size: 15px; font-weight: 700; color: #005eb8; }
-#tela-inicio .int-op { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid #f2f4f7; font-size: 14.5px; color: #212b32; cursor: pointer; }
-#tela-inicio .int-sec h2 + .int-op, #tela-inicio .int-sec div > .int-op:first-child { border-top: 0; }
-#tela-inicio .int-op input { width: 20px; height: 20px; flex-shrink: 0; accent-color: #005eb8; }
-#tela-inicio .int-card span { display: flex; flex-direction: column; flex: 1; min-width: 0; }
-#tela-inicio .int-card small { color: #5b6670; font-size: 12.5px; }
-#tela-inicio .int-card em { font-style: normal; font-weight: 700; color: #005eb8; white-space: pre-line; text-align: right; font-size: 13.5px; max-width: 45%; }
-#tela-inicio .int-saida pre { white-space: pre-wrap; font: inherit; font-size: 13.5px; line-height: 1.5; background: #f2f4f7; border-radius: 10px; padding: 12px; margin: 6px 0 12px; color: #212b32; }
-html[data-theme="dark"] #tela-inicio .int-sec { background: #17212b; border-color: #2a3644; }
-html[data-theme="dark"] #tela-inicio .int-op { color: #e6edf3; border-color: #2a3644; }
-html[data-theme="dark"] #tela-inicio .int-saida pre { background: #1d2833; color: #e6edf3; }
