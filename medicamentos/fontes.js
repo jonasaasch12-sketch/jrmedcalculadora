@@ -77,6 +77,7 @@ const FONTES_CARDS = {
     cad_hidratacao: "UTI Pediátrica — IMIP. Protocolo de Cetoacidose Diabética (2018): solução padrão em Y (soluções A e B).",
 
     // Ajustados às fontes escolhidas pelo Dr. Jonas (10/2026)
+    torante: REF.bula + " Torante® xarope 15 mg/mL: 2-5 anos 2 mL, 6-12 anos 4 mL, acima de 12 anos 6 mL, 3x/dia (folheto Memento Clínica Médica, Momenta Farma, 06/2026, enviado pelo Dr. Jonas em 11/2026).",
     acetilcisteina_xpe: REF.bula + " Aires® xarope 20 mg/mL: 2 a 4 anos 100 mg (5 mL) 2-3x/dia; acima de 4 anos 100 mg 3-4x/dia; fibrose cística 200 mg de 8/8h (folheto Memento Clínica Médica, Momenta Farma, 06/2026, enviado pelo Dr. Jonas em 11/2026).",
     cefdinir: REF.bula + " Tercen®/Terza® 250 mg/5 mL: 14 mg/kg/dia (7 mg/kg de 12/12h ou 14 mg/kg 1x/dia), máx. 600 mg/dia, a partir de 6 meses (folheto Memento Clínica Médica, Momenta Farma, 06/2026, enviado pelo Dr. Jonas em 11/2026).",
     pantoprazol: REF.bula + " Pantoprazol acima de 5 anos: 15 a 40 kg 20 mg; ≥ 40 kg 40 mg, 1x/dia por até 8 semanas (folheto Memento Clínica Médica, Momenta Farma, 06/2026, enviado pelo Dr. Jonas em 11/2026).",
