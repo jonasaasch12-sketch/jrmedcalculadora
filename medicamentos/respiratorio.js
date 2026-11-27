@@ -398,18 +398,29 @@ registrarMedicamentos({
     "torante": {
         cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais / Inalatórios)",
         kw: "torante hedera helix tosse expectorante xarope antitussigeno", nome: "Torante Xarope (Hedera helix)", apres: "15 mg / mL",
-        info: "<strong>Posologia:</strong> 2-5a: 2,5 mL | ≥6a: 5 mL. De 8/8h.", badge: "", recLabel: "Texto para selecionar e copiar:",
+        info: "<strong>Posologia (bula):</strong> 2-5a: 2 mL | 6-12a: 4 mL | >12a: 6 mL. De 8/8h.", badge: "", recLabel: "Texto para selecionar e copiar:",
         calc: (p, i) => {
+            /* Bula (folheto Momenta 06/2026): 2-5 anos 2 mL 3x/dia (máx. 6 mL/dia); 6-12 anos 4 mL 3x/dia (máx. 12 mL/dia); > 12 anos 6 mL 3x/dia (máx. 18 mL/dia). */
             if (i === "") return { v: "—", r: "Insira a idade acima." };
-            let id = parseFloat(i);
-            if (id < 2) return { v: "Evitar", r: "ATENÇÃO: Dose do manual definida a partir de 2 anos." };
-            let ml = id < 6 ? "2,5 ML" : "5 ML";
+            let id = parseFloat(String(i).replace(',', '.'));
+            if (id < 2) return { v: "Evitar", r: "ATENÇÃO: Torante só a partir de 2 anos (bula)." };
+            let ml = id < 6 ? "2 ML" : id <= 12 ? "4 ML" : "6 ML";
             return { v: ml.toLowerCase().replace("ml", "mL"), r: `${recHead}1) TORANTE XAROPE 15 MG/ML ----------------- 1 FR\nDAR ${ml}, VIA ORAL, DE 8/8 HORAS.` };
         },
         detalhes: {
             indicacao: "Tosse produtiva (expectorante).",
-            dose: "2-5 anos: 2,5 mL | ≥6 anos: 5 mL. VO de 8/8h.",
-            atencao: "Dose do manual a partir de 2 anos. Precisa da idade para calcular."
+            dose: "2-5 anos: 2 mL | 6-12 anos: 4 mL | >12 anos: 6 mL. VO de 8/8h (bula).",
+            atencao: "Só a partir de 2 anos. Precisa da idade para calcular. Não passar de 3 doses por dia."
+        },
+        ficha: {
+            apresentacoes: "Xarope 15 mg/mL (extrato seco de folhas de Hedera helix), frascos de 100 mL e 200 mL.",
+            indicacoes: "Fitoterápico. Tratamento sintomático de afecções broncopulmonares com aumento de secreção (expectorante).",
+            dose: "2 a 5 anos: 2 mL VO 3 vezes ao dia.\n6 a 12 anos: 4 mL VO 3 vezes ao dia.\nAcima de 12 anos: 6 mL VO 3 vezes ao dia.",
+            doseMaxima: "2 a 5 anos: 6 mL/dia. 6 a 12 anos: 12 mL/dia. Acima de 12 anos: 18 mL/dia.",
+            via: "Oral.",
+            intervalo: "8/8 horas (3 vezes ao dia).",
+            alertasPediatricos: "Uso a partir de 2 anos.",
+            fonteRevisao: "Bula do Torante® (Hedera helix), Momenta Farma: folheto Memento Clínica Médica (06/2026), enviado pelo Dr. Jonas em 11/2026."
         }
     },
     "acetilcisteina_xpe": {
