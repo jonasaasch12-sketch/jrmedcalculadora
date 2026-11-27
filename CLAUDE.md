@@ -81,7 +81,7 @@ js/atalhos.js              ⚡ Atalhos por cima do prontuário (Document Picture
                            "Meus atalhos" (+ Adicionar atalho → Do sistema = card / Texto meu = modelo livre, ex.: prontuário do hospital) salvos NA CONTA:
                            Firestore `atalhos_usuarios/{uid}` (window.JRAtalhos em firebase.js; precisa da regra publicada no console; sem ela, localStorage).
                            Aba "Prescrição pronta" ({tipo:"kit", nome, ids}, até 15 cards): só copia com PESO e IDADE; texto = textoReceitaDeItens() (app.js).
-                           Limite 30 atalhos × 5000 letras. Aviso "não coloque dados de pacientes". Termos (item 5) e Privacidade já citam os atalhos.
+                           Gravação espera a leitura da conta (atalhosProntos/atalhosGravando) para não apagar o que acabou de ser salvo. Limite 30 atalhos × 5000 letras. Aviso "não coloque dados de pacientes". Termos (item 5) e Privacidade já citam os atalhos.
                            Tablet (Android/iPad, ehTablet()): não há janela por cima de outro app → abre num PAINEL à direita dentro do app
                            (iframe sem src, abrirPainelAtalhos; ✕ fecha). Celular: botão não aparece.
                            Termos e Privacidade na versão 2026-11: VERSAO_TERMOS (js/cadastro.js) é igual à versão escrita no topo de termos.html e privacidade.html
