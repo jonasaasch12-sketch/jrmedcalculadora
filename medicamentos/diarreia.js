@@ -302,6 +302,39 @@ registrarMedicamentos({
             fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Omeprazol, atualizado em 05/02/2026."
         }
     },
+    "pantoprazol": {
+        cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "pantoprazol pantocal pantozol ibp inibidor de bomba de protons refluxo drge esofagite gastrite azia", nome: "Pantoprazol (Pantocal)", apres: "Comprimido 20 mg e 40 mg",
+        info: "<strong>Posologia (bula, acima de 5 anos):</strong> 15 a 40 kg: 20 mg; ≥ 40 kg: 40 mg VO 1x/dia, por até 8 semanas.", badge: "Máx: 40 mg/dia", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            /* Bula: crianças acima de 5 anos: >= 15 kg e < 40 kg: 20 mg 1x/dia; >= 40 kg: 40 mg 1x/dia; até 8 semanas. Contraindicado < 5 anos. */
+            if (i === "") return { v: "—", r: "Insira a idade acima." };
+            let id = parseFloat(String(i).replace(',', '.'));
+            if (id < 5) return { v: "Contraind.", r: "ATENÇÃO: Pantoprazol é contraindicado em menores de 5 anos (bula). Usar omeprazol (dose por peso)." };
+            if (p < 15) return { v: "Sem dose", r: "ATENÇÃO: A bula do pantoprazol não traz dose para menos de 15 kg. Usar omeprazol (dose por peso)." };
+            let mg = p < 40 ? 20 : 40;
+            return { v: `${mg} mg 24/24h`, r: `${recHead}1) PANTOPRAZOL ${mg} MG COMPRIMIDO ---------- 30 CP\nTOMAR 1 COMPRIMIDO, VIA ORAL, 1 VEZ AO DIA, PELA MANHÃ, POR ATÉ 8 SEMANAS.\nENGOLIR INTEIRO, SEM PARTIR OU MASTIGAR.` };
+        },
+        detalhes: {
+            indicacao: "Esofagite de refluxo e sintomas da DRGE, acima de 5 anos.",
+            dose: "Ver 📋 Ficha completa, abaixo.",
+            atencao: "Contraindicado em menores de 5 anos; sem dose na bula abaixo de 15 kg (usar omeprazol). Precisa da idade para calcular."
+        },
+        ficha: {
+            apresentacoes: "Comprimido revestido de liberação retardada 20 mg e 40 mg (caixa com 28).",
+            indicacoes: "Inibidor de bomba de prótons. Em crianças acima de 5 anos: esofagite de refluxo e sintomas associados à DRGE (20 mg nas formas leves; 40 mg nas moderadas e graves, conforme o peso).",
+            dose: "Crianças acima de 5 anos:\n≥ 15 kg e < 40 kg: 20 mg VO 1 vez ao dia, por até 8 semanas.\n≥ 40 kg: 40 mg VO 1 vez ao dia, por até 8 semanas.",
+            doseMaxima: "40 mg/dia em crianças.",
+            via: "Oral. Engolir o comprimido inteiro, sem partir ou mastigar.",
+            intervalo: "24/24 horas, pela manhã.",
+            alertasPediatricos: "Contraindicado em menores de 5 anos. A bula não traz dose abaixo de 15 kg.",
+            contraindicacoes: "Hipersensibilidade ao pantoprazol ou a benzimidazóis. Menores de 5 anos. Uso junto com atazanavir ou nelfinavir.",
+            efeitosAdversos: "Cefaleia, diarreia, náusea, dor abdominal, flatulência. Uso prolongado: hipomagnesemia, deficiência de vitamina B12, fraturas, diarreia por Clostridioides difficile.",
+            interacoes: "Reduz a absorção de fármacos dependentes do pH gástrico (cetoconazol, itraconazol, atazanavir). Pode aumentar o nível de metotrexato.",
+            ajusteHepatico: "Insuficiência hepática grave: evitar doses altas; monitorar enzimas hepáticas.",
+            fonteRevisao: "Bula do Pantocal® (pantoprazol), Momenta Farma: folheto Memento Clínica Médica (06/2026), enviado pelo Dr. Jonas em 11/2026; bula do pantoprazol 20 mg (posologia pediátrica por peso)."
+        }
+    },
     "lactulose": {
         cat: "cat-diarreia", sub: "🏠 Uso Ambulatorial (Vias Orais)",
         kw: "lactulose lactulona constipacao intestino preso laxativo xarope", nome: "Lactulose Xarope (Lactulona)", apres: "667 mg / mL",

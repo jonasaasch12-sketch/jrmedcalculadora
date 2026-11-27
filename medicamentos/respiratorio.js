@@ -412,6 +412,35 @@ registrarMedicamentos({
             atencao: "Dose do manual a partir de 2 anos. Precisa da idade para calcular."
         }
     },
+    "acetilcisteina_xpe": {
+        cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais / Inalatórios)",
+        kw: "acetilcisteina aires fluimucil xarope pediatrico mucolitico expectorante tosse secrecao catarro fibrose cistica", nome: "Acetilcisteína Xarope Pediátrico (Aires)", apres: "20 mg / mL",
+        info: "<strong>Posologia (bula):</strong> 2 a 4 anos: 5 mL (100 mg) 2 a 3x/dia. Acima de 4 anos: 5 mL 3 a 4x/dia. <em>App: 5 mL de 8/8h (3x/dia, comum às duas faixas).</em>", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            /* Bula (Aires xarope 20 mg/mL): uso pediátrico acima de 2 anos. 2-4 anos: 100 mg (5 mL) 2-3x/dia; > 4 anos: 100 mg 3-4x/dia. App: 5 mL de 8/8h. */
+            if (i === "") return { v: "—", r: "Insira a idade acima." };
+            let id = parseFloat(String(i).replace(',', '.'));
+            if (id < 2) return { v: "Contraind.", r: "ATENÇÃO: Acetilcisteína é contraindicada em menores de 2 anos (bula)." };
+            return { v: "5 mL", r: `${recHead}1) ACETILCISTEÍNA XAROPE PEDIÁTRICO 20 MG/ML ---------- 1 FR\nDAR 5 ML, VIA ORAL, DE 8/8 HORAS.` };
+        },
+        detalhes: {
+            indicacao: "Mucolítico: tosse com secreção espessa (bronquite, traqueobronquite); complicação pulmonar da fibrose cística.",
+            dose: "Ver 📋 Ficha completa, abaixo.",
+            atencao: "Contraindicada em menores de 2 anos. Precisa da idade para calcular."
+        },
+        ficha: {
+            apresentacoes: "Xarope pediátrico 20 mg/mL (frasco de 120 mL + copo dosador). Envelope 600 mg (uso adulto).",
+            indicacoes: "Mucolítico e expectorante: secreção espessa nas bronquites e traqueobronquites, e complicação pulmonar da fibrose cística.",
+            dose: "2 a 4 anos: 100 mg (5 mL) VO 2 a 3 vezes ao dia.\nAcima de 4 anos: 100 mg (5 mL) VO 3 a 4 vezes ao dia, ou a critério médico.\nComplicação pulmonar da fibrose cística (acima de 2 anos): 200 mg (10 mL) VO de 8/8 horas.\nO app prescreve 5 mL de 8/8 horas (3 vezes ao dia, frequência comum às duas faixas).",
+            via: "Oral.",
+            intervalo: "8/8 a 12/12 horas (2 a 4 vezes ao dia, conforme a idade).",
+            alertasPediatricos: "Uso pediátrico a partir de 2 anos. Não usar em menores de 2 anos.",
+            contraindicacoes: "Hipersensibilidade à acetilcisteína. Menores de 2 anos.",
+            efeitosAdversos: "Náusea, vômito, desconforto abdominal, diarreia; raramente reação alérgica e broncoespasmo.",
+            interacoes: "Não usar junto com antitussígenos (inibem a tosse e acumulam secreção).",
+            fonteRevisao: "Bula do Aires® (acetilcisteína), Momenta Farma: folheto Memento Clínica Médica (06/2026), enviado pelo Dr. Jonas em 11/2026."
+        }
+    },
     "acebrofilina": {
         cat: "cat-respiratorio", sub: "🏠 Uso Ambulatorial (Vias Orais / Inalatórios)",
         kw: "acebrofilina brondilat tosse expectorante broncodilatador xarope", nome: "Acebrofilina Xarope Pediátrico", apres: "25 mg / 5 mL",

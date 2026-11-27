@@ -34,7 +34,7 @@ const categorias = [
     { 
         id: "cat-antialergicos", titulo: "Antialérgicos", dotClass: "dot-alergias", cor: "tarja-alergias", nome: "Antialérgicos", icone: "🤧 Alerg.",
         patologias: [
-            { nome: "Prurido e Rinite (Vias Orais)", remedios: ["hixizine", "dexclor", "deslo", "fexofenadina", "loratadina", "dexa_elixir"] },
+            { nome: "Prurido e Rinite (Vias Orais)", remedios: ["hixizine", "dexclor", "deslo", "fexofenadina", "loratadina", "bilastina", "dexa_elixir"] },
             { nome: "Anafilaxia (Emergência)", conduta: "anafilaxia", condutaNome: "Anafilaxia", remedios: ["adrenalina_im", "anaf_expansao"] },
             { nome: "Urticária / Reação Alérgica (Hospitalar)", remedios: ["prometa"] }
         ]
@@ -67,7 +67,7 @@ const categorias = [
             { nome: "Faringoamigdalite Estreptocócica", conduta: "faringoamigdalite", condutaNome: "Faringoamigdalite", remedios: ["amox_faringo", "amox_faringo400", "benza", "azitro_faringo"] },
             { nome: "Otite Média Aguda", conduta: "otite_media", condutaNome: "Otite média aguda", remedios: ["amox_oma", "clav_oma", "cef_oma"] },
             { nome: "Sinusite Bacteriana Aguda", conduta: "sinusite", condutaNome: "Sinusite", remedios: ["amox_sinusite", "clav_sinusite", "cef_sinusite"] },
-            { nome: "Tosse (Antitussígenos e Expectorantes)", remedios: ["koid_d", "torante", "acebrofilina", "antux_xpe", "antux_gts", "percoff"] },
+            { nome: "Tosse (Antitussígenos e Expectorantes)", remedios: ["koid_d", "torante", "acetilcisteina_xpe", "acebrofilina", "antux_xpe", "antux_gts", "percoff"] },
             { nome: "Manejo Avançado e Outros Respiratórios", remedios: ["pulmicort", "hidro_ev", "ipra"] }
         ]
     },
@@ -78,7 +78,7 @@ const categorias = [
             { nome: "Doença Meningocócica (Meningococcemia e Meningite)", conduta: "meningococcemia", condutaNome: "Meningococcemia", remedios: ["cef_meningo", "rifampicina_profilaxia", "cef_profilaxia_meningo"] },
             { nome: "Meningite Bacteriana", conduta: "meningite", condutaNome: "Meningite", remedios: ["dexa_meningite", "rifampicina_hib"] },
             { nome: "Febre sem Sinais Localizatórios (Bacteremia Oculta)", conduta: "fssl", condutaNome: "Febre sem sinais localizatórios", remedios: ["cef_fssl"] },
-            { nome: "Outros Antibióticos Orais", remedios: ["cefadroxila", "pen_v", "smx_tmp", "metronidazol_vo", "cipro_vo"] },
+            { nome: "Outros Antibióticos Orais", remedios: ["cefadroxila", "pen_v", "cefdinir", "smx_tmp", "metronidazol_vo", "cipro_vo"] },
             { nome: "Antibióticos Hospitalares (EV)", remedios: ["amicacina", "cefalotina", "cefepime", "ceftazidima", "cipro_ev", "clindamicina", "meropenem", "metronidazol_ev", "oxacilina", "pen_cristalina", "vancomicina"] }
         ]
     },
@@ -123,7 +123,7 @@ const categorias = [
             { nome: "Disenteria: Antibiótico Hospitalar", remedios: ["cef_disenteria", "cefotax_pac"] },
             { nome: "Correção de Potássio e Sódio", remedios: ["kcl_ev", "kcl_xarope", "nacl3_hiponatremia"] },
             { nome: "Parasitoses Intestinais (Verminoses)", conduta: "parasitoses", condutaNome: "Parasitoses intestinais", remedios: ["tgi_alben", "tgi_meben", "nitazoxanida", "metro_parasitas", "pele_iver", "smx_tmp"] },
-            { nome: "Constipação, Refluxo e Mucosite", remedios: ["lactulose", "oleo_mineral", "domperidona", "omeprazol", "solucao_mucosite", "omeprazol_ev", "leite_magnesia", "muvinlax", "fleet"] }
+            { nome: "Constipação, Refluxo e Mucosite", remedios: ["lactulose", "oleo_mineral", "domperidona", "omeprazol", "pantoprazol", "solucao_mucosite", "omeprazol_ev", "leite_magnesia", "muvinlax", "fleet"] }
         ]
     },
     { 
@@ -136,7 +136,7 @@ const categorias = [
             { nome: "Celulite", conduta: "pele_bacteriana", condutaNome: "Infecções bacterianas de pele", remedios: ["cefalexina_celulite", "cefadroxila_celulite", "smx_celulite"] },
             { nome: "Erisipela", conduta: "pele_bacteriana", condutaNome: "Infecções bacterianas de pele", remedios: ["amox_erisipela", "clav_erisipela", "benza", "cefalexina_erisipela", "cef_erisipela", "cefazolina_erisipela", "oxa_erisipela"] },
             { nome: "Celulite Orbitária (Hospitalar)", conduta: "sinusite", condutaNome: "Sinusite (complicações orbitárias)", remedios: ["cef_orbitaria", "vanco_orbitaria", "cefotax_orbitaria", "metro_orbitaria"] },
-            { nome: "Parasitoses, Infecções e Lesões Cutâneas", remedios: ["pele_larva", "pele_delta", "pele_perme_shampoo", "pele_perme", "pele_iver", "pele_escabiose_orient", "pele_nista", "pele_acicl", "pele_trokg","pele_trok", "trok_n", "quadriderm", "cetoconazol_cr", "nistatina_zinco", "penvir", "fluconazol"] }
+            { nome: "Parasitoses, Infecções e Lesões Cutâneas", remedios: ["pele_larva", "pele_delta", "pele_perme_shampoo", "pele_perme", "pele_iver", "pele_escabiose_orient", "pele_nista", "pele_acicl", "valaciclovir_herpes", "pele_trokg","pele_trok", "trok_n", "quadriderm", "cetoconazol_cr", "nistatina_zinco", "penvir", "fluconazol"] }
         ]
     },
     { 

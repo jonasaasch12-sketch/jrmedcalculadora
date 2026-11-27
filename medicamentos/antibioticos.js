@@ -161,6 +161,39 @@ registrarMedicamentos({
             fonteRevisao: "Whitebook (Afya) - Drogas Pediátricas: Metronidazol, atualizado em 05/02/2026."
         }
     },
+    "cefdinir": {
+        cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "cefdinir tercen terza cefalosporina terceira geracao oral otite faringite amigdalite sinusite pele antibiotico suspensao", nome: "Cefdinir Suspensão (Tercen / Terza)", apres: "250 mg / 5 mL",
+        info: "<strong>Posologia (bula):</strong> 14 mg/kg/dia: 7 mg/kg de 12/12h (ou 14 mg/kg 1x/dia, exceto pele), 5 a 10 dias. Máx. 600 mg/dia. A partir de 6 meses.", badge: "Máx: 300 mg/dose", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            /* Bula: 7 mg/kg/dose de 12/12h (máx. 600 mg/dia = 300 mg/dose = 6 mL). 250 mg/5 mL = 50 mg/mL. 10 dias (serve a todas as indicações). Frasco 100 mL. */
+            let id = parseFloat(String(i).replace(',', '.'));
+            if (!isNaN(id) && id < 0.5) return { v: "Contraind.", r: "ATENÇÃO: Cefdinir não tem segurança estabelecida abaixo de 6 meses (bula)." };
+            let v = Math.min(parseFloat(round05(p * 7 / 50)), 6), t = String(v).replace('.', ','), tot = Math.ceil(v * 2 * 10), fr = Math.ceil(tot / 100);
+            return { v: v + " mL", r: `${recHead}1) CEFDINIR SUSPENSÃO 250 MG/5ML (100 ML) ---------- ${fr} FR\nDAR ${t} ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.` };
+        },
+        detalhes: {
+            indicacao: "Otite média aguda, faringoamigdalite, sinusite e infecção de pele não complicada.",
+            dose: "Ver 📋 Ficha completa, abaixo.",
+            atencao: "A partir de 6 meses. Idade em branco: o card prescreve normalmente. Pode deixar as fezes avermelhadas (com ferro)."
+        },
+        ficha: {
+            apresentacoes: "Pó para suspensão oral 250 mg/5 mL: frasco de 100 mL, com seringa dosadora.",
+            indicacoes: "Cefalosporina de 3ª geração oral. Otite média aguda bacteriana, faringite/amigdalite, sinusite maxilar aguda, infecção de pele e tecido mole não complicada.",
+            dose: "14 mg/kg/dia (6 meses a 12 anos):\nOtite média aguda e faringite/amigdalite: 7 mg/kg de 12/12 horas por 5 a 10 dias, ou 14 mg/kg 1 vez ao dia por 10 dias.\nSinusite maxilar aguda: 7 mg/kg de 12/12 horas ou 14 mg/kg 1 vez ao dia, por 10 dias.\nInfecção de pele e tecido mole não complicada: 7 mg/kg de 12/12 horas por 10 dias (a dose única diária não foi estudada na pele).\nO app prescreve 7 mg/kg de 12/12 horas por 10 dias.",
+            doseMaxima: "600 mg/dia (300 mg/dose de 12/12 horas = 6 mL).",
+            via: "Oral, com ou sem alimento.",
+            intervalo: "12/12 horas (ou 24/24 horas, exceto na pele).",
+            reconstituicao: "Seguir as instruções do frasco (água filtrada até a marca). Agitar antes de usar.",
+            alertasPediatricos: "Segurança e eficácia não estabelecidas abaixo de 6 meses.",
+            contraindicacoes: "Hipersensibilidade a cefalosporinas. Cautela em alérgicos à penicilina e em história de colite.",
+            efeitosAdversos: "Diarreia, náusea, dor abdominal, exantema; fezes avermelhadas quando usado com ferro ou fórmula com ferro; colite por Clostridioides difficile.",
+            interacoes: "Antiácidos com alumínio ou magnésio e suplementos de ferro reduzem a absorção: dar o cefdinir 2 horas antes ou depois.",
+            ajusteRenal: "TFG < 30 mL/min/1,73 m²: 7 mg/kg/dia 1 vez ao dia (máx. 300 mg/dia).",
+            conservacao: "Suspensão reconstituída: seguir o prazo da bula do produto.",
+            fonteRevisao: "Bula do Tercen® (cefdinir), Momenta Farma: folheto Memento Clínica Médica (06/2026), enviado pelo Dr. Jonas em 11/2026; bula do Terza® (Eurofarma)."
+        }
+    },
     "cipro_vo": {
         cat: "cat-antibioticos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
         kw: "ciprofloxacino cipro quinolona antibiotico comprimido oral itu infeccao urinaria", nome: "Ciprofloxacino VO", apres: "Comprimido 500 mg",

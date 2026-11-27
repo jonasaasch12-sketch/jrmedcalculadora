@@ -53,6 +53,24 @@
   "70 kg | idade 4": "[10.0 mL] USO ORAL\n\n1) ACEBROFILINA XAROPE 25 MG/5 ML -------- 1 FR\nDAR 10.0 ML, VIA ORAL, DE 12/12 HORAS, POR 5 DIAS.",
   "70 kg | idade 13": "[10.0 mL] USO ORAL\n\n1) ACEBROFILINA XAROPE 25 MG/5 ML -------- 1 FR\nDAR 10.0 ML, VIA ORAL, DE 12/12 HORAS, POR 5 DIAS."
  },
+ "acetilcisteina_xpe": {
+  "3 kg | idade -": "[—] Insira a idade acima.",
+  "3 kg | idade 0.5": "[Contraind.] ATENÇÃO: Acetilcisteína é contraindicada em menores de 2 anos (bula).",
+  "3 kg | idade 4": "[5 mL] USO ORAL\n\n1) ACETILCISTEÍNA XAROPE PEDIÁTRICO 20 MG/ML ---------- 1 FR\nDAR 5 ML, VIA ORAL, DE 8/8 HORAS.",
+  "3 kg | idade 13": "[5 mL] USO ORAL\n\n1) ACETILCISTEÍNA XAROPE PEDIÁTRICO 20 MG/ML ---------- 1 FR\nDAR 5 ML, VIA ORAL, DE 8/8 HORAS.",
+  "10 kg | idade -": "[—] Insira a idade acima.",
+  "10 kg | idade 0.5": "[Contraind.] ATENÇÃO: Acetilcisteína é contraindicada em menores de 2 anos (bula).",
+  "10 kg | idade 4": "[5 mL] USO ORAL\n\n1) ACETILCISTEÍNA XAROPE PEDIÁTRICO 20 MG/ML ---------- 1 FR\nDAR 5 ML, VIA ORAL, DE 8/8 HORAS.",
+  "10 kg | idade 13": "[5 mL] USO ORAL\n\n1) ACETILCISTEÍNA XAROPE PEDIÁTRICO 20 MG/ML ---------- 1 FR\nDAR 5 ML, VIA ORAL, DE 8/8 HORAS.",
+  "25 kg | idade -": "[—] Insira a idade acima.",
+  "25 kg | idade 0.5": "[Contraind.] ATENÇÃO: Acetilcisteína é contraindicada em menores de 2 anos (bula).",
+  "25 kg | idade 4": "[5 mL] USO ORAL\n\n1) ACETILCISTEÍNA XAROPE PEDIÁTRICO 20 MG/ML ---------- 1 FR\nDAR 5 ML, VIA ORAL, DE 8/8 HORAS.",
+  "25 kg | idade 13": "[5 mL] USO ORAL\n\n1) ACETILCISTEÍNA XAROPE PEDIÁTRICO 20 MG/ML ---------- 1 FR\nDAR 5 ML, VIA ORAL, DE 8/8 HORAS.",
+  "70 kg | idade -": "[—] Insira a idade acima.",
+  "70 kg | idade 0.5": "[Contraind.] ATENÇÃO: Acetilcisteína é contraindicada em menores de 2 anos (bula).",
+  "70 kg | idade 4": "[5 mL] USO ORAL\n\n1) ACETILCISTEÍNA XAROPE PEDIÁTRICO 20 MG/ML ---------- 1 FR\nDAR 5 ML, VIA ORAL, DE 8/8 HORAS.",
+  "70 kg | idade 13": "[5 mL] USO ORAL\n\n1) ACETILCISTEÍNA XAROPE PEDIÁTRICO 20 MG/ML ---------- 1 FR\nDAR 5 ML, VIA ORAL, DE 8/8 HORAS."
+ },
  "aciclovir_sepse": {
   "3 kg | idade -": "[1.2–1.8 mL] VIA ENDOVENOSA (SEPSE COM ALTERAÇÃO DO SNC / ENCEFALITE)\n\nACICLOVIR 250 MG (RECONSTITUIR CADA FA EM 10 ML DE AD = 25 MG/ML)\n\n • NEONATOS (ATÉ 28 DIAS): 2.4 ML (60 MG), DILUIR EM SF 0,9% ATÉ 12 ML (20 MG/KG/DOSE) EV DE 8/8 HORAS\n • > 28 DIAS DE VIDA: 1.2 ML (30 MG), DILUIR EM SF 0,9% ATÉ 6 ML A 1.8 ML (45 MG), DILUIR EM SF 0,9% ATÉ 9 ML (10 A 15 MG/KG/DOSE) EV DE 8/8 HORAS\n\nINFUNDIR EM 1 HORA. TRATAR POR 21 DIAS. MANTER BOA HIDRATAÇÃO.",
   "3 kg | idade 0.5": "[1.2–1.8 mL] VIA ENDOVENOSA (SEPSE COM ALTERAÇÃO DO SNC / ENCEFALITE)\n\nACICLOVIR 250 MG (RECONSTITUIR CADA FA EM 10 ML DE AD = 25 MG/ML)\n\n • NEONATOS (ATÉ 28 DIAS): 2.4 ML (60 MG), DILUIR EM SF 0,9% ATÉ 12 ML (20 MG/KG/DOSE) EV DE 8/8 HORAS\n • > 28 DIAS DE VIDA: 1.2 ML (30 MG), DILUIR EM SF 0,9% ATÉ 6 ML A 1.8 ML (45 MG), DILUIR EM SF 0,9% ATÉ 9 ML (10 A 15 MG/KG/DOSE) EV DE 8/8 HORAS\n\nINFUNDIR EM 1 HORA. TRATAR POR 21 DIAS. MANTER BOA HIDRATAÇÃO.",
@@ -592,6 +610,24 @@
   "70 kg | idade 0.5": "[50.0 mL] 🚨 USO HOSPITALAR (ACIDOSE METABÓLICA / HIPERCALEMIA)\n\nAspirar 50.0 mL de Bicarbonato de Sódio a 8,4% (1 mEq/mL).\nAdministrar em BOLUS LENTO.\nMonitorar gasometria arterial e ECG após ventilação adequada.",
   "70 kg | idade 4": "[50.0 mL] 🚨 USO HOSPITALAR (ACIDOSE METABÓLICA / HIPERCALEMIA)\n\nAspirar 50.0 mL de Bicarbonato de Sódio a 8,4% (1 mEq/mL).\nAdministrar em BOLUS LENTO.\nMonitorar gasometria arterial e ECG após ventilação adequada.",
   "70 kg | idade 13": "[50.0 mL] 🚨 USO HOSPITALAR (ACIDOSE METABÓLICA / HIPERCALEMIA)\n\nAspirar 50.0 mL de Bicarbonato de Sódio a 8,4% (1 mEq/mL).\nAdministrar em BOLUS LENTO.\nMonitorar gasometria arterial e ECG após ventilação adequada."
+ },
+ "bilastina": {
+  "3 kg | idade -": "[—] Insira a idade acima.",
+  "3 kg | idade 0.5": "[Contraind.] ATENÇÃO: Bilastina comprimido 20 mg só a partir de 12 anos (bula). Abaixo disso, usar outro antialérgico (loratadina, desloratadina, fexofenadina).",
+  "3 kg | idade 4": "[Contraind.] ATENÇÃO: Bilastina comprimido 20 mg só a partir de 12 anos (bula). Abaixo disso, usar outro antialérgico (loratadina, desloratadina, fexofenadina).",
+  "3 kg | idade 13": "[20 mg 1x/dia] USO ORAL\n\n1) BILASTINA 20 MG COMPRIMIDO ---------- 1 CX\nTOMAR 1 COMPRIMIDO, VIA ORAL, 1 VEZ AO DIA, 1 HORA ANTES OU 2 HORAS DEPOIS DE COMER OU BEBER (INCLUSIVE SUCO DE FRUTAS).",
+  "10 kg | idade -": "[—] Insira a idade acima.",
+  "10 kg | idade 0.5": "[Contraind.] ATENÇÃO: Bilastina comprimido 20 mg só a partir de 12 anos (bula). Abaixo disso, usar outro antialérgico (loratadina, desloratadina, fexofenadina).",
+  "10 kg | idade 4": "[Contraind.] ATENÇÃO: Bilastina comprimido 20 mg só a partir de 12 anos (bula). Abaixo disso, usar outro antialérgico (loratadina, desloratadina, fexofenadina).",
+  "10 kg | idade 13": "[20 mg 1x/dia] USO ORAL\n\n1) BILASTINA 20 MG COMPRIMIDO ---------- 1 CX\nTOMAR 1 COMPRIMIDO, VIA ORAL, 1 VEZ AO DIA, 1 HORA ANTES OU 2 HORAS DEPOIS DE COMER OU BEBER (INCLUSIVE SUCO DE FRUTAS).",
+  "25 kg | idade -": "[—] Insira a idade acima.",
+  "25 kg | idade 0.5": "[Contraind.] ATENÇÃO: Bilastina comprimido 20 mg só a partir de 12 anos (bula). Abaixo disso, usar outro antialérgico (loratadina, desloratadina, fexofenadina).",
+  "25 kg | idade 4": "[Contraind.] ATENÇÃO: Bilastina comprimido 20 mg só a partir de 12 anos (bula). Abaixo disso, usar outro antialérgico (loratadina, desloratadina, fexofenadina).",
+  "25 kg | idade 13": "[20 mg 1x/dia] USO ORAL\n\n1) BILASTINA 20 MG COMPRIMIDO ---------- 1 CX\nTOMAR 1 COMPRIMIDO, VIA ORAL, 1 VEZ AO DIA, 1 HORA ANTES OU 2 HORAS DEPOIS DE COMER OU BEBER (INCLUSIVE SUCO DE FRUTAS).",
+  "70 kg | idade -": "[—] Insira a idade acima.",
+  "70 kg | idade 0.5": "[Contraind.] ATENÇÃO: Bilastina comprimido 20 mg só a partir de 12 anos (bula). Abaixo disso, usar outro antialérgico (loratadina, desloratadina, fexofenadina).",
+  "70 kg | idade 4": "[Contraind.] ATENÇÃO: Bilastina comprimido 20 mg só a partir de 12 anos (bula). Abaixo disso, usar outro antialérgico (loratadina, desloratadina, fexofenadina).",
+  "70 kg | idade 13": "[20 mg 1x/dia] USO ORAL\n\n1) BILASTINA 20 MG COMPRIMIDO ---------- 1 CX\nTOMAR 1 COMPRIMIDO, VIA ORAL, 1 VEZ AO DIA, 1 HORA ANTES OU 2 HORAS DEPOIS DE COMER OU BEBER (INCLUSIVE SUCO DE FRUTAS)."
  },
  "bismujet": {
   "3 kg | idade -": "[5 Gotas] USO TÓPICO ORAL\n\n1) BISMU-JET ------------------------------------- 1 FR\nAPLICAR 05 GOTAS NA BOCA 3 VEZES AO DIA, ANTES DAS REFEIÇÕES.",
@@ -1186,6 +1222,24 @@
   "70 kg | idade 0.5": "[17.5 mL 8/8h] VIA ENDOVENOSA (ERISIPELA)\n\nCEFAZOLINA 1 G (RECONSTITUIR EM 10 ML DE AD = 100 MG/ML)\nFAZER 17.5 ML (1750 MG = 25 MG/KG/DOSE) EV DE 8/8 HORAS.\n\nDOSE MÁXIMA: 2 G POR DOSE.",
   "70 kg | idade 4": "[17.5 mL 8/8h] VIA ENDOVENOSA (ERISIPELA)\n\nCEFAZOLINA 1 G (RECONSTITUIR EM 10 ML DE AD = 100 MG/ML)\nFAZER 17.5 ML (1750 MG = 25 MG/KG/DOSE) EV DE 8/8 HORAS.\n\nDOSE MÁXIMA: 2 G POR DOSE.",
   "70 kg | idade 13": "[17.5 mL 8/8h] VIA ENDOVENOSA (ERISIPELA)\n\nCEFAZOLINA 1 G (RECONSTITUIR EM 10 ML DE AD = 100 MG/ML)\nFAZER 17.5 ML (1750 MG = 25 MG/KG/DOSE) EV DE 8/8 HORAS.\n\nDOSE MÁXIMA: 2 G POR DOSE."
+ },
+ "cefdinir": {
+  "3 kg | idade -": "[0.5 mL] USO ORAL\n\n1) CEFDINIR SUSPENSÃO 250 MG/5ML (100 ML) ---------- 1 FR\nDAR 0,5 ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.",
+  "3 kg | idade 0.5": "[0.5 mL] USO ORAL\n\n1) CEFDINIR SUSPENSÃO 250 MG/5ML (100 ML) ---------- 1 FR\nDAR 0,5 ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.",
+  "3 kg | idade 4": "[0.5 mL] USO ORAL\n\n1) CEFDINIR SUSPENSÃO 250 MG/5ML (100 ML) ---------- 1 FR\nDAR 0,5 ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.",
+  "3 kg | idade 13": "[0.5 mL] USO ORAL\n\n1) CEFDINIR SUSPENSÃO 250 MG/5ML (100 ML) ---------- 1 FR\nDAR 0,5 ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.",
+  "10 kg | idade -": "[1.5 mL] USO ORAL\n\n1) CEFDINIR SUSPENSÃO 250 MG/5ML (100 ML) ---------- 1 FR\nDAR 1,5 ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.",
+  "10 kg | idade 0.5": "[1.5 mL] USO ORAL\n\n1) CEFDINIR SUSPENSÃO 250 MG/5ML (100 ML) ---------- 1 FR\nDAR 1,5 ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.",
+  "10 kg | idade 4": "[1.5 mL] USO ORAL\n\n1) CEFDINIR SUSPENSÃO 250 MG/5ML (100 ML) ---------- 1 FR\nDAR 1,5 ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.",
+  "10 kg | idade 13": "[1.5 mL] USO ORAL\n\n1) CEFDINIR SUSPENSÃO 250 MG/5ML (100 ML) ---------- 1 FR\nDAR 1,5 ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.",
+  "25 kg | idade -": "[3.5 mL] USO ORAL\n\n1) CEFDINIR SUSPENSÃO 250 MG/5ML (100 ML) ---------- 1 FR\nDAR 3,5 ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.",
+  "25 kg | idade 0.5": "[3.5 mL] USO ORAL\n\n1) CEFDINIR SUSPENSÃO 250 MG/5ML (100 ML) ---------- 1 FR\nDAR 3,5 ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.",
+  "25 kg | idade 4": "[3.5 mL] USO ORAL\n\n1) CEFDINIR SUSPENSÃO 250 MG/5ML (100 ML) ---------- 1 FR\nDAR 3,5 ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.",
+  "25 kg | idade 13": "[3.5 mL] USO ORAL\n\n1) CEFDINIR SUSPENSÃO 250 MG/5ML (100 ML) ---------- 1 FR\nDAR 3,5 ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.",
+  "70 kg | idade -": "[6 mL] USO ORAL\n\n1) CEFDINIR SUSPENSÃO 250 MG/5ML (100 ML) ---------- 2 FR\nDAR 6 ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.",
+  "70 kg | idade 0.5": "[6 mL] USO ORAL\n\n1) CEFDINIR SUSPENSÃO 250 MG/5ML (100 ML) ---------- 2 FR\nDAR 6 ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.",
+  "70 kg | idade 4": "[6 mL] USO ORAL\n\n1) CEFDINIR SUSPENSÃO 250 MG/5ML (100 ML) ---------- 2 FR\nDAR 6 ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS.",
+  "70 kg | idade 13": "[6 mL] USO ORAL\n\n1) CEFDINIR SUSPENSÃO 250 MG/5ML (100 ML) ---------- 2 FR\nDAR 6 ML, VIA ORAL, DE 12/12 HORAS POR 10 DIAS."
  },
  "cefepime": {
   "3 kg | idade -": "[1.5 mL] VIA ENDOVENOSA (USO HOSPITALAR)\n\n Reconstituir o FA a 100 mg/mL (1 g em 10 mL de AD). Aspirar 1.5 mL (150 mg) e rediluir em SF 0,9% até 4 mL (40 mg/mL). Infundir em 30 min, de 8/8 horas.",
@@ -3491,6 +3545,24 @@
   "70 kg | idade 4": "[10.0 mL] VIA ENDOVENOSA (USO HOSPITALAR)\n\n Reconstituir o FA a 100 mg/mL (500 mg em 5 mL de AD). Aspirar 10.0 mL (1000 mg) e rediluir em SF 0,9% até 100 mL (10 mg/mL). Administrar de 4/4 horas.",
   "70 kg | idade 13": "[10.0 mL] VIA ENDOVENOSA (USO HOSPITALAR)\n\n Reconstituir o FA a 100 mg/mL (500 mg em 5 mL de AD). Aspirar 10.0 mL (1000 mg) e rediluir em SF 0,9% até 100 mL (10 mg/mL). Administrar de 4/4 horas."
  },
+ "pantoprazol": {
+  "3 kg | idade -": "[—] Insira a idade acima.",
+  "3 kg | idade 0.5": "[Contraind.] ATENÇÃO: Pantoprazol é contraindicado em menores de 5 anos (bula). Usar omeprazol (dose por peso).",
+  "3 kg | idade 4": "[Contraind.] ATENÇÃO: Pantoprazol é contraindicado em menores de 5 anos (bula). Usar omeprazol (dose por peso).",
+  "3 kg | idade 13": "[Sem dose] ATENÇÃO: A bula do pantoprazol não traz dose para menos de 15 kg. Usar omeprazol (dose por peso).",
+  "10 kg | idade -": "[—] Insira a idade acima.",
+  "10 kg | idade 0.5": "[Contraind.] ATENÇÃO: Pantoprazol é contraindicado em menores de 5 anos (bula). Usar omeprazol (dose por peso).",
+  "10 kg | idade 4": "[Contraind.] ATENÇÃO: Pantoprazol é contraindicado em menores de 5 anos (bula). Usar omeprazol (dose por peso).",
+  "10 kg | idade 13": "[Sem dose] ATENÇÃO: A bula do pantoprazol não traz dose para menos de 15 kg. Usar omeprazol (dose por peso).",
+  "25 kg | idade -": "[—] Insira a idade acima.",
+  "25 kg | idade 0.5": "[Contraind.] ATENÇÃO: Pantoprazol é contraindicado em menores de 5 anos (bula). Usar omeprazol (dose por peso).",
+  "25 kg | idade 4": "[Contraind.] ATENÇÃO: Pantoprazol é contraindicado em menores de 5 anos (bula). Usar omeprazol (dose por peso).",
+  "25 kg | idade 13": "[20 mg 24/24h] USO ORAL\n\n1) PANTOPRAZOL 20 MG COMPRIMIDO ---------- 30 CP\nTOMAR 1 COMPRIMIDO, VIA ORAL, 1 VEZ AO DIA, PELA MANHÃ, POR ATÉ 8 SEMANAS.\nENGOLIR INTEIRO, SEM PARTIR OU MASTIGAR.",
+  "70 kg | idade -": "[—] Insira a idade acima.",
+  "70 kg | idade 0.5": "[Contraind.] ATENÇÃO: Pantoprazol é contraindicado em menores de 5 anos (bula). Usar omeprazol (dose por peso).",
+  "70 kg | idade 4": "[Contraind.] ATENÇÃO: Pantoprazol é contraindicado em menores de 5 anos (bula). Usar omeprazol (dose por peso).",
+  "70 kg | idade 13": "[40 mg 24/24h] USO ORAL\n\n1) PANTOPRAZOL 40 MG COMPRIMIDO ---------- 30 CP\nTOMAR 1 COMPRIMIDO, VIA ORAL, 1 VEZ AO DIA, PELA MANHÃ, POR ATÉ 8 SEMANAS.\nENGOLIR INTEIRO, SEM PARTIR OU MASTIGAR."
+ },
  "pct_bebe": {
   "3 kg | idade -": "[0.5 mL] USO ORAL\n\n1) PARACETAMOL SOLUÇÃO BEBÊ 100 MG/ML ------ 1 FR\nDAR 0.5 ML, VIA ORAL, DE 6/6 HORAS SE DOR OU FEBRE (>37,5°C).",
   "3 kg | idade 0.5": "[0.5 mL] USO ORAL\n\n1) PARACETAMOL SOLUÇÃO BEBÊ 100 MG/ML ------ 1 FR\nDAR 0.5 ML, VIA ORAL, DE 6/6 HORAS SE DOR OU FEBRE (>37,5°C).",
@@ -5020,6 +5092,24 @@
   "70 kg | idade 0.5": "[1.0 mL] VIA ENDOVENOSA (GNPE / EDEMA)\n\n FAZER 1.0 ML DE FUROSEMIDA (10 MG/ML) PURA POR VIA ENDOVENOSA, BÓLUS, DE 12/12 HORAS. MÁXIMO 20 MG POR DIA.",
   "70 kg | idade 4": "[1.0 mL] VIA ENDOVENOSA (GNPE / EDEMA)\n\n FAZER 1.0 ML DE FUROSEMIDA (10 MG/ML) PURA POR VIA ENDOVENOSA, BÓLUS, DE 12/12 HORAS. MÁXIMO 20 MG POR DIA.",
   "70 kg | idade 13": "[1.0 mL] VIA ENDOVENOSA (GNPE / EDEMA)\n\n FAZER 1.0 ML DE FUROSEMIDA (10 MG/ML) PURA POR VIA ENDOVENOSA, BÓLUS, DE 12/12 HORAS. MÁXIMO 20 MG POR DIA."
+ },
+ "valaciclovir_herpes": {
+  "3 kg | idade -": "[—] Insira a idade acima.",
+  "3 kg | idade 0.5": "[Contraind.] ATENÇÃO: Valaciclovir só a partir de 12 anos (bula). Abaixo disso, usar aciclovir.",
+  "3 kg | idade 4": "[Contraind.] ATENÇÃO: Valaciclovir só a partir de 12 anos (bula). Abaixo disso, usar aciclovir.",
+  "3 kg | idade 13": "[2 g 12/12h] USO ORAL\n\n1) VALACICLOVIR 500 MG COMPRIMIDO ---------- 8 CP\nTOMAR 4 COMPRIMIDOS (2 G), VIA ORAL, DE 12/12 HORAS, POR 1 DIA (2 TOMADAS).\nCOMEÇAR NOS PRIMEIROS SINTOMAS (FORMIGAMENTO, ARDOR). BEBER BASTANTE ÁGUA.",
+  "10 kg | idade -": "[—] Insira a idade acima.",
+  "10 kg | idade 0.5": "[Contraind.] ATENÇÃO: Valaciclovir só a partir de 12 anos (bula). Abaixo disso, usar aciclovir.",
+  "10 kg | idade 4": "[Contraind.] ATENÇÃO: Valaciclovir só a partir de 12 anos (bula). Abaixo disso, usar aciclovir.",
+  "10 kg | idade 13": "[2 g 12/12h] USO ORAL\n\n1) VALACICLOVIR 500 MG COMPRIMIDO ---------- 8 CP\nTOMAR 4 COMPRIMIDOS (2 G), VIA ORAL, DE 12/12 HORAS, POR 1 DIA (2 TOMADAS).\nCOMEÇAR NOS PRIMEIROS SINTOMAS (FORMIGAMENTO, ARDOR). BEBER BASTANTE ÁGUA.",
+  "25 kg | idade -": "[—] Insira a idade acima.",
+  "25 kg | idade 0.5": "[Contraind.] ATENÇÃO: Valaciclovir só a partir de 12 anos (bula). Abaixo disso, usar aciclovir.",
+  "25 kg | idade 4": "[Contraind.] ATENÇÃO: Valaciclovir só a partir de 12 anos (bula). Abaixo disso, usar aciclovir.",
+  "25 kg | idade 13": "[2 g 12/12h] USO ORAL\n\n1) VALACICLOVIR 500 MG COMPRIMIDO ---------- 8 CP\nTOMAR 4 COMPRIMIDOS (2 G), VIA ORAL, DE 12/12 HORAS, POR 1 DIA (2 TOMADAS).\nCOMEÇAR NOS PRIMEIROS SINTOMAS (FORMIGAMENTO, ARDOR). BEBER BASTANTE ÁGUA.",
+  "70 kg | idade -": "[—] Insira a idade acima.",
+  "70 kg | idade 0.5": "[Contraind.] ATENÇÃO: Valaciclovir só a partir de 12 anos (bula). Abaixo disso, usar aciclovir.",
+  "70 kg | idade 4": "[Contraind.] ATENÇÃO: Valaciclovir só a partir de 12 anos (bula). Abaixo disso, usar aciclovir.",
+  "70 kg | idade 13": "[2 g 12/12h] USO ORAL\n\n1) VALACICLOVIR 500 MG COMPRIMIDO ---------- 8 CP\nTOMAR 4 COMPRIMIDOS (2 G), VIA ORAL, DE 12/12 HORAS, POR 1 DIA (2 TOMADAS).\nCOMEÇAR NOS PRIMEIROS SINTOMAS (FORMIGAMENTO, ARDOR). BEBER BASTANTE ÁGUA."
  },
  "vanco_orbitaria": {
   "3 kg | idade -": "[45 mg 6/6h] VIA ENDOVENOSA (CELULITE ORBITÁRIA)\n\nVANCOMICINA (RECONSTITUIR A 100 MG/ML)\nASPIRAR 0.5 ML (45 MG = 15 MG/KG/DOSE) E DILUIR EM SF 0,9% ATÉ 9 ML (5 MG/ML).\nCORRER EM 60 MINUTOS, DE 6/6 HORAS, POR 2 A 3 SEMANAS OU ATÉ A RESOLUÇÃO.\n\nAJUSTAR PELO NÍVEL SÉRICO E PELA FUNÇÃO RENAL.",
