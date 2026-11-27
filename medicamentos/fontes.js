@@ -28,7 +28,8 @@ const REF = {
     imip_cad: "UTI Pediátrica — IMIP. Protocolo de Cetoacidose Diabética (2018): fórmula do bicarbonato.",
     cad_sc: "Instituto Fernandes Figueira (IFF/Fiocruz) — Cetoacidose diabética na infância: fase de transição; HC-UFTM / Ebserh — PRT.HC-UFTM-UCA.004 (2026); ISPAD 2022, seção 6.6.",
     crise_wb: "Whitebook (Afya) — Crise Convulsiva em Pediatria (Prescrição Hospitalar), atualizado em 29/04/2025.",
-    bula: "Bula do medicamento (texto aprovado pela ANVISA)."
+    bula: "Bula do medicamento (texto aprovado pela ANVISA).",
+    folha_pcr: "Folha de Parada Cardiorrespiratória — Connect Ped (Curso de Medicina Pediátrica de Emergência), enviada pelo Dr. Jonas em 11/2026."
 };
 
 const FONTES_CARDS = {
@@ -84,7 +85,9 @@ const FONTES_CARDS = {
     prometa: "SBP — Departamento Científico de Alergia. Guia Prático de Atualização nº 6: Anafilaxia, atualização 2021: prometazina crianças 1 mg/kg (máx. 50 mg).",
     rsi_cont_propofol: REF.sedacao + " Propofol: 25 a 250 mcg/kg/min (até 75 reduz o risco de síndrome da infusão).",
     rsi_cont_rocuronio: REF.sedacao + " Rocurônio: 0,3 a 0,6 mg/kg/h.",
-    rsi_cont_pancuronio: REF.sedacao + " Pancurônio: 0,05 a 0,1 mg/kg/h."
+    rsi_cont_pancuronio: REF.sedacao + " Pancurônio: 0,05 a 0,1 mg/kg/h.",
+    rsi_propofol: REF.folha_pcr + " Propofol: 1 mg/kg.", rsi_pancuronio: REF.folha_pcr + " Pancurônio: 0,1 mg/kg.",
+    gluconato_calcio_pals: REF.folha_pcr + " Gluconato de cálcio 10%: 60 mg/kg, máx. 3.000 mg/dose.", flumazenil_pals: REF.folha_pcr + " Flumazenil: 0,01 mg/kg, máx. 0,2 mg/dose; total máx. 0,05 mg/kg ou 1 mg. Intervalo (em 15 s; repetir a cada 60 s, até 4 vezes, se sem resposta em 45 s): " + REF.bula
 };
 
 // Siglas do "info" escritas por extenso

@@ -23,6 +23,8 @@ const atualizar = process.argv.includes('--atualizar');
 
 // Tetos por dose: o 1º número do resultado (quadro azul do card) nunca pode passar disso.
 const TETOS = {
+    gluconato_calcio_pals: 30, // mL (3.000 mg)
+    flumazenil_pals: 2,        // mL (0,2 mg)
     dexa_crupe: 5,        // mL (20 mg)
     anaf_expansao: 1000,  // mL por bolus
     sepse_expansao: 1000, // mL por bolus

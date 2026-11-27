@@ -81,7 +81,7 @@ js/atalhos.js              ⚡ Atalhos por cima do prontuário (Document Picture
                            "Meus atalhos" (+ Adicionar atalho → Do sistema = card / Texto meu = modelo livre, ex.: prontuário do hospital) salvos NA CONTA:
                            Firestore `atalhos_usuarios/{uid}` (window.JRAtalhos em firebase.js; precisa da regra publicada no console; sem ela, localStorage).
                            Aba "Prescrição pronta" ({tipo:"kit", nome, ids}, até 15 cards): só copia com PESO e IDADE; texto = textoReceitaDeItens() (app.js).
-                           Limite 30 atalhos × 5000 letras. Aviso "não coloque dados de pacientes". Termos (item 5) e Privacidade já citam os atalhos.
+                           Gravação espera a leitura da conta (atalhosProntos/atalhosGravando) para não apagar o que acabou de ser salvo. Limite 30 atalhos × 5000 letras. Aviso "não coloque dados de pacientes". Termos (item 5) e Privacidade já citam os atalhos.
                            Tablet (Android/iPad, ehTablet()): não há janela por cima de outro app → abre num PAINEL à direita dentro do app
                            (iframe sem src, abrirPainelAtalhos; ✕ fecha). Celular: botão não aparece.
                            Termos e Privacidade na versão 2026-11: VERSAO_TERMOS (js/cadastro.js) é igual à versão escrita no topo de termos.html e privacidade.html
@@ -91,8 +91,21 @@ js/inicio.js + css/inicio.css  🏠 TELA INICIAL depois do login (liberada para 
                            firebase.js chama aoEntrarNoApp()/aoSairDoApp(). Volta: "‹ Início" no cabeçalho, aba 🏠 no celular, item no Menu.
                            O adulto terá os PRÓPRIOS atalhos (decisão do Dr. Jonas).
 js/procedimentos.js        📝 Descrição de procedimentos (tela inicial → Pediatria): modelos de texto para o prontuário (PL, CVC, IOT, intraósseo,
-                           drenagem torácica, toracocentese, sutura, cateterismo vesical); campos {{rótulo}}, {{?rótulo}} (opcional) ou {{rótulo|opção|opção}}, \\n = quebra de linha; em vermelho até
-                           preencher; "Copiar texto". Página própria como Prescrição/Condutas (sem a lateral do início, subtítulo do app, "🏠 Início"). Nada é salvo. Só no teste até o Dr. Jonas conferir os textos (PROCEDIMENTOS_LIBERADO = false)
+                           drenagem torácica, toracocentese, paracentese, recepção do RN, politrauma ABCDE, sutura, cateterismo vesical); campos {{rótulo}}, {{?rótulo}} (opcional),
+                           {{rótulo|opção|opção}} ou {{=nome}} (conta feita pela função calc do modelo), \\n = quebra de linha; em vermelho até
+                           preencher; "Copiar texto" espera: enquanto faltar campo obrigatório, mostra "Faltam N campos" e leva ao que falta. Página própria como Prescrição/Condutas (sem a lateral do início, subtítulo do app, "🏠 Início"). Lista em ordem alfabética. Nada é salvo. Só no teste até o Dr. Jonas conferir os textos (PROCEDIMENTOS_LIBERADO = false)
+js/calculadoras.js         🧮 Calculadoras e escores (tela inicial → Pediatria): os escores e as ferramentas que já existem nas condutas, num lugar só,
+                           em ordem alfabética, com busca. NADA É COPIADO: CALCULADORAS aponta { conduta, escore: id } ou { ferramenta: "função" };
+                           o escore é desenhado com htmlEscore() com id "calc_<id>". Peso/idade da página escrevem em #pesoInput/#idadeInput.
+                           Escore ou ferramenta nova numa conduta? Acrescentar em CALCULADORAS. Balanço hídrico mora aqui (calcBalancoHidrico).
+                           Botão "📖 Abrir a conduta". Mesma página dos procedimentos (procModoPagina). Só no teste (CALCULADORAS_LIBERADO = false)
+js/pressao-arterial.js     🩺 PA por percentil (item de Calculadoras e escores, calcPressaoArterial): tabelas AAP 2017 (PA_AAP2017, 1 a 17 anos, transcrição do
+                           pacote pedbp) + altura pelo LMS do CDC 2000 (PA_ALTURA_LMS); coluna = percentil de altura mais próximo. Classificação da tabela 3 da AAP:
+                           1–12 anos pelo percentil ou valor de adulto (o menor); ≥ 13 anos 120/80, 130/80, 140/90
+js/sala-vermelha.js        🚨 Sala vermelha (tela inicial → Pediatria, abaixo de Emergência): uma tela pelo peso/idade com via aérea (tubo, SRI), PCR e arritmias,
+                           choque, anafilaxia, crise convulsiva, hipoglicemia e antídotos (naloxona, flumazenil). NENHUMA DOSE AQUI: SV_BLOCOS lista ids de cards e chama o calc() deles.
+                           Só a energia do desfibrilador/cardioversão é conta própria (PALS/AHA 2020, svEnergia).
+                           "Como fazer" sempre visível em cada item (SV_PREPARO: diluição tirada do texto do card; pedido do Dr. Jonas: ver sem clicar). Só no teste (SALA_VERMELHA_LIBERADA = false)
 js/firebase.js             login e Firestore (módulo); sem e-mail de confirmação (suspenso: não chegava), o cadastro pede o e-mail 2x; grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)
 privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; contato jrmedprescricao@gmail.com). Mudou o texto?

@@ -56,7 +56,16 @@ function limparAtalhos(lista) {
         return null;
     }).filter(Boolean).slice(0, ATALHOS_MAX);
 }
-async function carregarAtalhosMeus() {
+/* Promessa da leitura em andamento: quem vai gravar espera a leitura terminar, para não gravar por cima
+   da lista da conta (antes, uma prescrição salva logo ao abrir os atalhos podia sumir quando a leitura chegava). */
+let atalhosCarregando = null, atalhosGravando = null;
+function carregarAtalhosMeus() {
+    atalhosCarregando = carregarAtalhosMeusAgora();
+    return atalhosCarregando;
+}
+async function atalhosProntos() { try { if (atalhosCarregando) await atalhosCarregando; } catch (e) {} }
+async function carregarAtalhosMeusAgora() {
+    try { if (atalhosGravando) await atalhosGravando; } catch (e) {} /* não ler a conta no meio de uma gravação */
     let locais = lerAtalhosLocal();
     try {
         if (!window.JRAtalhos || !window.__usuarioAtual) throw new Error("sem-login");
@@ -72,7 +81,12 @@ async function carregarAtalhosMeus() {
         atalhosMeus = locais; atalhosOrigem = "local";
     }
 }
-async function gravarAtalhosMeus(lista) {
+function gravarAtalhosMeus(lista) {
+    atalhosGravando = gravarAtalhosMeusAgora(lista);
+    return atalhosGravando;
+}
+async function gravarAtalhosMeusAgora(lista) {
+    if (typeof lista === "function") { await atalhosProntos(); lista = lista(atalhosMeus); } /* lista montada depois da leitura */
     atalhosMeus = limparAtalhos(lista);
     if (atalhosOrigem === "conta") {
         try { await window.JRAtalhos.salvar(atalhosMeus); return true; }
@@ -455,17 +469,22 @@ function montarAtalhos(win) {
             atalhosKitNovo.splice(+b.dataset.kitTirar, 1); atalhosKitHtml(doc);
         } else if (b.id === "at-kit-salvar") {
             let nome = $("at-kit-nome").value.trim();
-            if (!nome) { $("at-kit-nome").focus(); return; }
+            if (!nome) { $("at-kit-nome").focus(); win.alert("Dê um nome à prescrição (ex.: GECA, IVAS) no primeiro campo."); return; }
             if (!atalhosKitNovo.length) { $("at-kit-busca").focus(); win.alert("Inclua pelo menos um item na prescrição."); return; }
             if (atalhosMeus.length >= ATALHOS_MAX) { win.alert(`Limite de ${ATALHOS_MAX} atalhos. Apague algum para adicionar outro.`); return; }
-            gravarAtalhosMeus(atalhosMeus.concat([{ tipo: "kit", nome, ids: atalhosKitNovo.slice() }])).then(() => {
+            let novo = { tipo: "kit", nome, ids: atalhosKitNovo.slice() };
+            b.disabled = true; b.textContent = "Salvando...";
+            gravarAtalhosMeus(atuais => atuais.concat([novo])).then(() => {
                 atalhosKitNovo = []; $("at-kit-nome").value = ""; $("at-kit-busca").value = "";
                 atalhosKitHtml(doc); $("at-novo").classList.remove("on"); atalhosMeusHtml(doc);
-            });
+                if (typeof inicioKitsHtml === "function") inicioKitsHtml();
+                if (atalhosOrigem !== "conta" && window.__usuarioAtual) win.alert("Prescrição salva só neste aparelho: não foi possível salvar na sua conta agora.");
+            }).catch((e) => { win.alert("Não foi possível salvar a prescrição (" + (e && e.message || e) + "). Tente de novo."); })
+              .finally(() => { b.disabled = false; b.textContent = "Salvar prescrição"; });
         } else if (b.dataset.sis) {
             if (atalhosMeus.length >= ATALHOS_MAX) { win.alert(`Limite de ${ATALHOS_MAX} atalhos. Apague algum para adicionar outro.`); return; }
             let m = buscarMed(b.dataset.sis); if (!m) return;
-            gravarAtalhosMeus(atalhosMeus.concat([{ tipo: "card", id: b.dataset.sis, nome: m.nome }]))
+            gravarAtalhosMeus(atuais => atuais.concat([{ tipo: "card", id: b.dataset.sis, nome: m.nome }]))
                 .then(() => { atalhosMeusHtml(doc); atalhosSistemaHtml(doc); });
         } else if (b.id === "at-novo-cancelar") {
             $("at-novo").classList.remove("on");
@@ -473,7 +492,7 @@ function montarAtalhos(win) {
             let nome = $("at-novo-nome").value.trim(), texto = $("at-novo-texto").value.trim();
             if (!nome || !texto) { (nome ? $("at-novo-texto") : $("at-novo-nome")).focus(); return; }
             if (atalhosMeus.length >= ATALHOS_MAX) { win.alert(`Limite de ${ATALHOS_MAX} atalhos. Apague algum para adicionar outro.`); return; }
-            gravarAtalhosMeus(atalhosMeus.concat([{ tipo: "texto", nome, texto }])).then(() => {
+            gravarAtalhosMeus(atuais => atuais.concat([{ tipo: "texto", nome, texto }])).then(() => {
                 $("at-novo-nome").value = ""; $("at-novo-texto").value = ""; $("at-novo").classList.remove("on");
                 atalhosMeusHtml(doc);
             });
