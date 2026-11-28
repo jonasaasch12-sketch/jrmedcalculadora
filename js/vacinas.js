@@ -4,9 +4,9 @@
 // ("procurar a sala de vacina") se monta sozinho, para copiar na receita. Nada é salvo.
 // Tela inicial → Pediatria → "Calendário vacinal". Página própria como a de Procedimentos (procModoPagina).
 // Idade da página escreve em #idadeInput/#idadeUnidade (os mesmos da Prescrição).
-// Só no teste até o Dr. Jonas conferir (VACINAS_LIBERADO). Carregado depois de js/sala-vermelha.js.
+// Liberado para todos em 11/2026 (VACINAS_LIBERADO = true). Carregado depois de js/sala-vermelha.js.
 // =====================================================
-const VACINAS_LIBERADO = false;
+const VACINAS_LIBERADO = true;
 
 function vacinasAtivo() {
     return VACINAS_LIBERADO || (typeof MODO_TESTE !== "undefined" && MODO_TESTE);

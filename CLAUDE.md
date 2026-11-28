@@ -110,7 +110,7 @@ js/vacinas.js              💉 Calendário vacinal (tela inicial → Pediatria,
                            é devida; ate = some depois dessa idade, ex.: rotavírus aos 8 meses; opcional = ○ da tabela). Pela idade, marca o que já deveria ter
                            sido tomado; o que for desmarcado entra no texto "ORIENTAÇÕES (VACINAÇÃO)" para copiar. Nada é salvo.
                            Abre em TABELA igual à da SBP (VAC_LINHAS × VAC_COLUNAS; bolinha verde = devida, toque = vermelha/em atraso, cinza = idade não chegou;
-                           rola até a coluna da idade); botão "Lista" mostra a versão em lista. Só no teste (VACINAS_LIBERADO = false)
+                           rola até a coluna da idade); botão "Lista" mostra a versão em lista. Liberado para todos em 11/2026 (VACINAS_LIBERADO = true)
 js/firebase.js             login e Firestore (módulo); sem e-mail de confirmação (suspenso: não chegava), o cadastro pede o e-mail 2x; grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)
 privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; contato jrmedprescricao@gmail.com). Mudou o texto?
