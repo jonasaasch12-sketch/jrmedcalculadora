@@ -560,3 +560,66 @@ html[data-theme="dark"] #tela-inicio .pa-tab th, html[data-theme="dark"] #tela-i
 #tela-inicio .sv-prep { flex: 0 0 100%; font-size: 13.5px; line-height: 1.35; color: #212b32; background: #f2f4f7; border-left: 3px solid var(--sv-cor); border-radius: 6px; padding: 6px 9px; }
 #tela-inicio .sv-prep::before { content: "Como fazer: "; font-weight: 700; color: var(--sv-cor); }
 html[data-theme="dark"] #tela-inicio .sv-prep { background: #1d2833; color: #e6edf3; }
+/* Calendário vacinal (js/vacinas.js) */
+#tela-inicio .calc-paciente select { width: 110px; padding: 9px 10px; font: inherit; font-size: 16px; border: 1px solid #cfd6de; border-radius: 10px; background: #fff; color: #212b32; }
+#tela-inicio .vac-grupo { margin-top: 14px; background: #fff; border: 1px solid #e3e7ec; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(16,24,40,.08); }
+#tela-inicio .vac-grupo h2 { margin: 0; padding: 8px 14px; font-size: 14px; font-weight: 700; color: #005eb8; background: #f2f4f7; border-bottom: 1px solid #e3e7ec; }
+#tela-inicio .vac-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px; border-top: 1px solid #e3e7ec; cursor: pointer; }
+#tela-inicio .vac-grupo h2 + .vac-item { border-top: 0; }
+#tela-inicio .vac-item input { width: 20px; height: 20px; margin-top: 1px; flex-shrink: 0; accent-color: #0f766e; }
+#tela-inicio .vac-item span { display: flex; flex-direction: column; font-size: 14.5px; color: #212b32; }
+#tela-inicio .vac-item strong { font-weight: 600; }
+#tela-inicio .vac-item small { font-size: 12.5px; color: #5b6670; }
+#tela-inicio .vac-item.falta { background: #fff5f5; }
+#tela-inicio .vac-item.falta strong { color: #b42318; }
+#tela-inicio .vac-proximas { margin-top: 12px; font-size: 13.5px; color: #5b6670; line-height: 1.4; }
+#tela-inicio .vac-ok { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: #ecfdf3; border: 1px solid #abefc6; color: #067647; font-size: 14px; }
+#tela-inicio .vac-texto-caixa { position: relative; z-index: 5; margin-top: 14px; padding: 12px 14px; background: #fff; border: 1px solid #e3e7ec; border-radius: 14px; box-shadow: 0 10px 30px rgba(16,24,40,.16); }
+#tela-inicio .vac-texto-titulo { font-size: 13px; font-weight: 700; color: #b42318; margin-bottom: 6px; }
+#tela-inicio .vac-texto { white-space: pre-line; max-height: 180px; overflow: auto; padding: 10px 12px; background: #f2f4f7; border-radius: 10px; font-size: 13px; line-height: 1.45; color: #212b32; margin-bottom: 10px; }
+#tela-inicio .vac-obs { margin-top: 16px; font-size: 13.5px; color: #5b6670; }
+#tela-inicio .vac-obs summary { cursor: pointer; font-weight: 600; color: #005eb8; }
+#tela-inicio .vac-obs ul { margin: 8px 0 0; padding-left: 18px; line-height: 1.45; }
+html[data-theme="dark"] #tela-inicio .vac-grupo, html[data-theme="dark"] #tela-inicio .vac-texto-caixa { background: #17212b; border-color: #2a3644; }
+html[data-theme="dark"] #tela-inicio .vac-grupo h2 { background: #1d2833; border-color: #2a3644; color: #8cc4ff; }
+html[data-theme="dark"] #tela-inicio .vac-item { border-color: #2a3644; }
+html[data-theme="dark"] #tela-inicio .vac-item span { color: #e6edf3; }
+html[data-theme="dark"] #tela-inicio .vac-item.falta { background: #2a1a1a; }
+html[data-theme="dark"] #tela-inicio .vac-texto { background: #1d2833; color: #e6edf3; }
+html[data-theme="dark"] #tela-inicio .calc-paciente select { background: #17212b; border-color: #2a3644; color: #e6edf3; }
+#tela-inicio .vac-texto-caixa .proc-copiar { width: 100%; padding: 12px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; }
+@media (max-width: 849px) { #tela-inicio .vac-texto-caixa { position: sticky; bottom: calc(72px + env(safe-area-inset-bottom)); } #tela-inicio .vac-texto { max-height: 96px; } }
+/* Calendário vacinal: tabela no formato da SBP */
+#tela-inicio .vac-modos { display: inline-flex; margin: 4px 0 6px; padding: 3px; background: #e3e7ec; border-radius: 10px; }
+#tela-inicio .vac-modos button { padding: 6px 16px; border: 0; border-radius: 8px; background: transparent; color: #5b6670; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+#tela-inicio .vac-modos button.ativo { background: #fff; color: #005eb8; box-shadow: 0 1px 3px rgba(16,24,40,.12); }
+#tela-inicio .vac-legenda { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 10px 0 8px; font-size: 12.5px; color: #5b6670; }
+#tela-inicio .vac-legenda > span { display: inline-flex; align-items: center; gap: 5px; }
+#tela-inicio .vac-tabela-rolagem { overflow-x: auto; background: #fff; border: 1px solid #e3e7ec; border-radius: 14px; box-shadow: 0 10px 30px rgba(16,24,40,.08); -webkit-overflow-scrolling: touch; }
+#tela-inicio .vac-tabela { border-collapse: separate; border-spacing: 0; font-size: 12.5px; min-width: 100%; }
+#tela-inicio .vac-tabela thead th { position: sticky; top: 0; padding: 8px 4px; background: #005eb8; color: #fff; font-weight: 600; white-space: nowrap; text-align: center; min-width: 40px; }
+#tela-inicio .vac-tabela thead th.atual { background: #0f766e; }
+#tela-inicio .vac-tabela th.vac-canto, #tela-inicio .vac-tabela tbody th { position: sticky; left: 0; z-index: 1; text-align: left; }
+#tela-inicio .vac-tabela th.vac-canto { z-index: 2; padding-left: 10px; }
+#tela-inicio .vac-tabela tbody th { min-width: 120px; max-width: 140px; padding: 6px 8px 6px 10px; background: #fff; color: #212b32; font-weight: 600; line-height: 1.25; border-right: 1px solid #e3e7ec; }
+#tela-inicio .vac-tabela td { padding: 4px 2px; text-align: center; border-top: 1px solid #f2f4f7; }
+#tela-inicio .vac-tabela tbody tr:nth-child(even) th, #tela-inicio .vac-tabela tbody tr:nth-child(even) td { background: #f7f9fb; }
+#tela-inicio .vac-tabela td.atual { background: #ecfdf3 !important; }
+#tela-inicio .vac-tabela td button { padding: 4px; border: 0; background: transparent; cursor: pointer; line-height: 0; }
+#tela-inicio .vac-bola { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; font-size: 12px; font-weight: 700; line-height: 1; color: #fff; flex-shrink: 0; }
+#tela-inicio .vac-bola.ok { background: #0f766e; }
+#tela-inicio .vac-bola.falta { background: #d92d20; }
+#tela-inicio .vac-bola.futuro { background: #fff; border: 2px solid #cfd6de; width: 18px; height: 18px; }
+#tela-inicio .vac-bola.neutro { background: #005eb8; width: 16px; height: 16px; }
+#tela-inicio .vac-bola.passou { background: transparent; color: #8a949c; }
+
+#tela-inicio .vac-bola.ok.opcional { color: #fff; box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px #0f766e; }
+#tela-inicio .vac-bola.falta.opcional { box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px #d92d20; }
+html[data-theme="dark"] #tela-inicio .vac-modos { background: #2a3644; }
+html[data-theme="dark"] #tela-inicio .vac-modos button.ativo { background: #17212b; color: #8cc4ff; }
+html[data-theme="dark"] #tela-inicio .vac-tabela-rolagem { background: #17212b; border-color: #2a3644; }
+html[data-theme="dark"] #tela-inicio .vac-tabela tbody th { background: #17212b; color: #e6edf3; border-color: #2a3644; }
+html[data-theme="dark"] #tela-inicio .vac-tabela td { border-color: #2a3644; }
+html[data-theme="dark"] #tela-inicio .vac-tabela tbody tr:nth-child(even) th, html[data-theme="dark"] #tela-inicio .vac-tabela tbody tr:nth-child(even) td { background: #1d2833; }
+html[data-theme="dark"] #tela-inicio .vac-tabela td.atual { background: #12352c !important; }
+html[data-theme="dark"] #tela-inicio .vac-bola.futuro { background: #17212b; border-color: #4a5664; }
