@@ -106,6 +106,9 @@ js/sala-vermelha.js        🚨 Sala vermelha (tela inicial → Pediatria, abaix
                            choque, anafilaxia, crise convulsiva, hipoglicemia e antídotos (naloxona, flumazenil). NENHUMA DOSE AQUI: SV_BLOCOS lista ids de cards e chama o calc() deles.
                            Só a energia do desfibrilador/cardioversão é conta própria (PALS/AHA 2020, svEnergia).
                            "Como fazer" sempre visível em cada item (SV_PREPARO: diluição tirada do texto do card; pedido do Dr. Jonas: ver sem clicar). Só no teste (SALA_VERMELHA_LIBERADA = false)
+js/vacinas.js              💉 Calendário vacinal (tela inicial → Pediatria, depois de Exame físico): calendário SBP 2026/2027 em VACINAS_SBP (m = mês em que a dose
+                           é devida; ate = some depois dessa idade, ex.: rotavírus aos 8 meses; opcional = ○ da tabela). Pela idade, marca o que já deveria ter
+                           sido tomado; o que for desmarcado entra no texto "ORIENTAÇÕES (VACINAÇÃO)" para copiar. Nada é salvo. Só no teste (VACINAS_LIBERADO = false)
 js/firebase.js             login e Firestore (módulo); sem e-mail de confirmação (suspenso: não chegava), o cadastro pede o e-mail 2x; grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)
 privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; contato jrmedprescricao@gmail.com). Mudou o texto?
