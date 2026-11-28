@@ -86,7 +86,7 @@ js/atalhos.js              ⚡ Atalhos por cima do prontuário (Document Picture
                            (iframe sem src, abrirPainelAtalhos; ✕ fecha). Celular: botão não aparece.
                            Termos e Privacidade na versão 2026-11: VERSAO_TERMOS (js/cadastro.js) é igual à versão escrita no topo de termos.html e privacidade.html
 js/inicio.js + css/inicio.css  🏠 TELA INICIAL depois do login (liberada para todos em 11/2026: INICIO_LIBERADO = true): estilo "Apple" (ícones SVG de traço,
-                           listas com ›), blocos Pediatria (Prescrição, Condutas, Emergência = cat-pals, Exame físico, Atalhos) e Adulto ("Em breve"),
+                           listas com ›), blocos Pediatria (Prescrição, Condutas, Calendário vacinal, Atalhos; Emergência e Exame físico saíram em 11/2026, pedido do Dr. Jonas) e Adulto ("Em breve"),
                            Prescrições prontas (kits dos atalhos) e Recentes (localStorage jrmed_recentes; embrulha adicionarAoCarrinho/abrirConduta).
                            firebase.js chama aoEntrarNoApp()/aoSairDoApp(). Volta: "‹ Início" no cabeçalho, aba 🏠 no celular, item no Menu.
                            O adulto terá os PRÓPRIOS atalhos (decisão do Dr. Jonas).
@@ -102,11 +102,11 @@ js/calculadoras.js         🧮 Calculadoras e escores (tela inicial → Pediatr
 js/pressao-arterial.js     🩺 PA por percentil (item de Calculadoras e escores, calcPressaoArterial): tabelas AAP 2017 (PA_AAP2017, 1 a 17 anos, transcrição do
                            pacote pedbp) + altura pelo LMS do CDC 2000 (PA_ALTURA_LMS); coluna = percentil de altura mais próximo. Classificação da tabela 3 da AAP:
                            1–12 anos pelo percentil ou valor de adulto (o menor); ≥ 13 anos 120/80, 130/80, 140/90
-js/sala-vermelha.js        🚨 Sala vermelha (tela inicial → Pediatria, abaixo de Emergência): uma tela pelo peso/idade com via aérea (tubo, SRI), PCR e arritmias,
+js/sala-vermelha.js        🚨 Sala vermelha (tela inicial → Pediatria, abaixo de Condutas): uma tela pelo peso/idade com via aérea (tubo, SRI), PCR e arritmias,
                            choque, anafilaxia, crise convulsiva, hipoglicemia e antídotos (naloxona, flumazenil). NENHUMA DOSE AQUI: SV_BLOCOS lista ids de cards e chama o calc() deles.
                            Só a energia do desfibrilador/cardioversão é conta própria (PALS/AHA 2020, svEnergia).
                            "Como fazer" sempre visível em cada item (SV_PREPARO: diluição tirada do texto do card; pedido do Dr. Jonas: ver sem clicar). Só no teste (SALA_VERMELHA_LIBERADA = false)
-js/vacinas.js              💉 Calendário vacinal (tela inicial → Pediatria, depois de Exame físico): calendário SBP 2026/2027 em VACINAS_SBP (m = mês em que a dose
+js/vacinas.js              💉 Calendário vacinal (tela inicial → Pediatria, antes de Atalhos): calendário SBP 2026/2027 em VACINAS_SBP (m = mês em que a dose
                            é devida; ate = some depois dessa idade, ex.: rotavírus aos 8 meses; opcional = ○ da tabela). Pela idade, marca o que já deveria ter
                            sido tomado; o que for desmarcado entra no texto "ORIENTAÇÕES (VACINAÇÃO)" para copiar. Nada é salvo.
                            Abre em TABELA igual à da SBP (VAC_LINHAS × VAC_COLUNAS; bolinha verde = devida, toque = vermelha/em atraso, cinza = idade não chegou;

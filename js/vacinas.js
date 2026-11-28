@@ -291,11 +291,12 @@ function vacSincronizarIdade() {
     if (typeof calcEscrever === "function") calcEscrever("idadeInput", v);
 }
 
-// Item na tela inicial (Pediatria), logo depois de "Exame físico e orientações".
+// Item na tela inicial (Pediatria), antes de "Atalhos".
 if (vacinasAtivo() && typeof INICIO_PEDIATRIA !== "undefined" && !INICIO_PEDIATRIA.some(x => x.d === "vacinas")) {
     INICIO_ICONES.seringa = '<path d="m18 2 4 4M15 5l4 4M17 7 7.5 16.5M9 9l6 6M11.5 6.5l6 6-9 9H5v-3.5l9-9M5 19l-3 3"/>';
-    let ref = INICIO_PEDIATRIA.findIndex(x => x.d === "exame");
-    INICIO_PEDIATRIA.splice(ref + 1, 0, { d: "vacinas", ic: "seringa", cor: "#34c759", t: "Calendário vacinal", s: "Marque o que falta e copie a orientação" });
+    /* logo antes de "Atalhos" (o último da lista) */
+    let ref = INICIO_PEDIATRIA.findIndex(x => x.d === "atalhos");
+    INICIO_PEDIATRIA.splice(ref < 0 ? INICIO_PEDIATRIA.length : ref, 0, { d: "vacinas", ic: "seringa", cor: "#34c759", t: "Calendário vacinal", s: "Marque o que falta e copie a orientação" });
     if (typeof irDoInicio === "function") {
         let original = window.irDoInicio;
         window.irDoInicio = function (destino) {

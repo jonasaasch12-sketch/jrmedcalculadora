@@ -292,10 +292,10 @@ function procCopiarAntigo(t, ok) {
     area.remove();
 }
 
-// Item na tela inicial (Pediatria), logo depois de "Exame físico e orientações".
+// Item na tela inicial (Pediatria), logo depois de "Condutas".
 if (procedimentosAtivo() && typeof INICIO_PEDIATRIA !== "undefined" && !INICIO_PEDIATRIA.some(i => i.d === "procedimentos")) {
     INICIO_ICONES.agulha = '<path d="m18 3 3 3M16.5 4.5l3 3M19 6l-9.5 9.5-3-3L16 3"/><path d="m7.5 13.5-3 3 3 3 3-3M4.5 19.5 3 21"/>';
-    let pos = INICIO_PEDIATRIA.findIndex(i => i.d === "exame") + 1;
+    let pos = INICIO_PEDIATRIA.findIndex(i => i.d === "condutas") + 1;
     INICIO_PEDIATRIA.splice(pos, 0, { d: "procedimentos", ic: "agulha", cor: "#5856d6", t: "Descrição de procedimentos", s: "Modelos prontos para o prontuário" });
     if (typeof irDoInicio === "function") {
         let original = irDoInicio;

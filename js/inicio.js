@@ -36,8 +36,7 @@ function inQuad(nome, cor, grande) { return `<div class="in-q${grande ? " grande
 const INICIO_PEDIATRIA = [
     { d: "prescricao", ic: "pilula", cor: "var(--in-ped)", t: "Prescrição", s: "Remédios por sistema e por doença" },
     { d: "condutas", ic: "livro", cor: "var(--in-cond)", t: "Condutas", s: "Passo a passo, escores e critérios" },
-    { d: "emergencia", ic: "pulso", cor: "var(--in-emer)", t: "Emergência", s: "PALS, sequência rápida de intubação" },
-    { d: "exame", ic: "prancheta", cor: "var(--in-exa)", t: "Exame físico e orientações", s: "Modelos e sinais de alarme" },
+    /* "Emergência" e "Exame físico e orientações" saíram da tela inicial (pedido do Dr. Jonas, 11/2026): continuam na Prescrição */
     { d: "atalhos", ic: "raio", cor: "var(--in-ata)", t: "Atalhos", s: "Janela por cima do prontuário · Ctrl+V", so: "atalhos" }
 ];
 const INICIO_ADULTO = [

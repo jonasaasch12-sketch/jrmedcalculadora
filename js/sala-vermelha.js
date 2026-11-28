@@ -147,10 +147,10 @@ function svClique(ev) {
     }
 }
 
-// Item na tela inicial (Pediatria), logo depois de "Emergência".
+// Item na tela inicial (Pediatria), logo depois de "Condutas".
 if (salaVermelhaAtiva() && typeof INICIO_PEDIATRIA !== "undefined" && !INICIO_PEDIATRIA.some(x => x.d === "sala_vermelha")) {
     INICIO_ICONES.sirene = '<path d="M7 17v-5a5 5 0 0 1 10 0v5"/><path d="M4 21h16M5 17h14v4H5zM12 3v2M4.2 6.2l1.4 1.4M19.8 6.2l-1.4 1.4"/>';
-    let ref = INICIO_PEDIATRIA.findIndex(x => x.d === "emergencia");
+    let ref = INICIO_PEDIATRIA.findIndex(x => x.d === "condutas");
     INICIO_PEDIATRIA.splice(ref + 1, 0, { d: "sala_vermelha", ic: "sirene", cor: "#ff3b30", t: "Sala vermelha", s: "Doses, tubo e choque pelo peso, numa tela" });
     if (typeof irDoInicio === "function") {
         let original = window.irDoInicio;

@@ -222,11 +222,11 @@ function calcCopiarBalanco(botao) {
     else if (typeof procCopiarAntigo === "function") procCopiarAntigo(t, ok);
 }
 
-// Item na tela inicial (Pediatria), logo depois de "Descrição de procedimentos" (ou de "Exame físico").
+// Item na tela inicial (Pediatria), logo depois de "Descrição de procedimentos" (ou de "Condutas").
 if (calculadorasAtivo() && typeof INICIO_PEDIATRIA !== "undefined" && !INICIO_PEDIATRIA.some(i => i.d === "calculadoras")) {
     INICIO_ICONES.calculadora = CALC_ICONES.calc;
     let ref = INICIO_PEDIATRIA.findIndex(i => i.d === "procedimentos");
-    if (ref < 0) ref = INICIO_PEDIATRIA.findIndex(i => i.d === "exame");
+    if (ref < 0) ref = INICIO_PEDIATRIA.findIndex(i => i.d === "condutas");
     INICIO_PEDIATRIA.splice(ref + 1, 0, { d: "calculadoras", ic: "calculadora", cor: "#0a84ff", t: "Calculadoras e escores", s: "Glasgow, PRAM, PECARN, balanço hídrico..." });
     if (typeof irDoInicio === "function") {
         let original = window.irDoInicio;
