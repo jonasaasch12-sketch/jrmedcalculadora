@@ -184,8 +184,7 @@ function abrirProcedimentos() {
 
 function fecharProcedimentos() {
     procAtual = null;
-    if (typeof montarInicio === "function") montarInicio();
-    window.scrollTo(0, 0);
+    if (typeof voltarDaPagina === "function") voltarDaPagina();
 }
 
 // Página própria, como a Prescrição e as Condutas (pedido do Dr. Jonas, 11/2026): sem a lateral da tela inicial,
@@ -196,6 +195,16 @@ function procModoPagina() {
     let corpo = tela.querySelector(".in-corpo"); if (corpo) corpo.classList.add("pag-proc");
     tela.querySelectorAll(".in-band small, .in-logo-cel small").forEach(el => { el.textContent = "Prescrição e condutas médicas"; });
     let abaInicio = tela.querySelector(".in-tab button.on"); if (abaInicio) { abaInicio.classList.remove("on"); abaInicio.dataset.acao = "fechar"; }
+    /* aba "Início" da barra do celular: volta à tela inicial em qualquer página (não só nos Procedimentos) */
+    if (!tela._abaInicioPagina) {
+        tela._abaInicioPagina = true;
+        tela.addEventListener("click", ev => {
+            let b = ev.target.closest('.in-tab button[data-acao="fechar"]');
+            if (b && !document.querySelector("#tela-inicio .proc-corpo:not(.calc-corpo):not(.sv-corpo):not(.vac-corpo)") && typeof voltarDaPagina === "function") voltarDaPagina();
+        });
+    }
+    /* passo no histórico: o "voltar" do celular volta à tela inicial (popstate em js/inicio.js) */
+    try { if (!(history.state && history.state.modo === "pagina")) history.pushState({ modo: "pagina" }, "", location.href); } catch (e) { }
 }
 
 function procDesenhar() {

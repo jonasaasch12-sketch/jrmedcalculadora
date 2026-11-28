@@ -138,7 +138,7 @@ function svDigitou(ev) {
 
 function svClique(ev) {
     let b = ev.target.closest("[data-sv-acao],[data-sv-copiar]"); if (!b) return;
-    if (b.dataset.svAcao === "fechar") { if (typeof montarInicio === "function") montarInicio(); window.scrollTo(0, 0); return; }
+    if (b.dataset.svAcao === "fechar") { if (typeof voltarDaPagina === "function") voltarDaPagina(); return; }
     if (b.dataset.svCopiar) {
         let t = (document.getElementById("sv-r-" + b.dataset.svCopiar) || {}).textContent || "";
         let ok = () => { b.textContent = "✓ Copiado"; setTimeout(() => { b.textContent = "Copiar"; }, 1500); };
