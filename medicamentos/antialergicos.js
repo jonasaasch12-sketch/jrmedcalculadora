@@ -164,6 +164,37 @@ registrarMedicamentos({
             atencao: "Evitar em menores de 2 anos. Precisa da idade para calcular."
         }
     },
+    "bilastina": {
+        cat: "cat-antialergicos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
+        kw: "bilastina hisbila alektos antialergico anti-histaminico rinite urticaria conjuntivite comprimido adolescente", nome: "Bilastina Comprimido (Hisbila)", apres: "20 mg",
+        info: "<strong>Posologia (bula):</strong> a partir de 12 anos: 20 mg VO 1x/dia, 1 h antes ou 2 h depois de comer ou beber (inclusive suco de frutas).", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            /* Bula (Hisbila 20 mg): adultos e crianças maiores de 12 anos, 1 cp 1x/dia, 1 h antes ou 2 h depois de alimentos/bebidas. < 12 anos: contraindicado. */
+            if (i === "") return { v: "—", r: "Insira a idade acima." };
+            let id = parseFloat(String(i).replace(',', '.'));
+            if (id < 12) return { v: "Contraind.", r: "ATENÇÃO: Bilastina comprimido 20 mg só a partir de 12 anos (bula). Abaixo disso, usar outro antialérgico (loratadina, desloratadina, fexofenadina)." };
+            return { v: "20 mg 1x/dia", r: `${recHead}1) BILASTINA 20 MG COMPRIMIDO ---------- 1 CX\nTOMAR 1 COMPRIMIDO, VIA ORAL, 1 VEZ AO DIA, 1 HORA ANTES OU 2 HORAS DEPOIS DE COMER OU BEBER (INCLUSIVE SUCO DE FRUTAS).` };
+        },
+        detalhes: {
+            indicacao: "Rinoconjuntivite alérgica e urticária, a partir de 12 anos.",
+            dose: "Ver 📋 Ficha completa, abaixo.",
+            atencao: "Só a partir de 12 anos. Tomar longe da comida e do suco de frutas (diminuem a absorção)."
+        },
+        ficha: {
+            apresentacoes: "Comprimido 20 mg (caixas com 15 ou 30).",
+            indicacoes: "Anti-histamínico H1 de 2ª geração: rinoconjuntivite alérgica (sazonal e perene) e urticária.",
+            dose: "A partir de 12 anos: 20 mg (1 comprimido) VO 1 vez ao dia.",
+            doseMaxima: "20 mg/dia.",
+            via: "Oral, 1 hora antes ou 2 horas depois de alimentos ou bebidas, inclusive suco de frutas.",
+            intervalo: "24/24 horas.",
+            alertasPediatricos: "O comprimido de 20 mg é contraindicado em menores de 12 anos.",
+            contraindicacoes: "Hipersensibilidade à bilastina. Menores de 12 anos.",
+            efeitosAdversos: "Cefaleia, sonolência, tontura, fadiga.",
+            interacoes: "Suco de toranja e de outras frutas e alimentos reduzem a absorção. Cetoconazol, eritromicina e diltiazem aumentam o nível. Cuidado com inibidores da glicoproteína P na insuficiência renal.",
+            ajusteRenal: "Não precisa de ajuste; evitar junto com inibidores da glicoproteína P na insuficiência renal moderada ou grave.",
+            fonteRevisao: "Bula do Hisbila® (bilastina), Momenta Farma: folheto Memento Clínica Médica (06/2026), enviado pelo Dr. Jonas em 11/2026."
+        }
+    },
     "dexa_elixir": {
         cat: "cat-antialergicos", sub: "🏠 Uso Ambulatorial (Vias Orais)",
         kw: "dexametasona elixir decadron corticoide oral alergia inflamacao", nome: "Dexametasona Elixir (Decadron)", apres: "0,1 mg / mL",

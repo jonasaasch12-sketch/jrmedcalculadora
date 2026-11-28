@@ -24,6 +24,8 @@ const atualizar = process.argv.includes('--atualizar');
 // Tetos por dose: o 1º número do resultado (quadro azul do card) nunca pode passar disso.
 const TETOS = {
     gluconato_calcio_pals: 30, // mL (3.000 mg)
+    cefdinir: 6,               // mL de 250 mg/5 mL = 300 mg/dose (600 mg/dia, bula)
+    pantoprazol: 40,           // mg/dia (bula, ≥ 40 kg)
     flumazenil_pals: 2,        // mL (0,2 mg)
     dexa_crupe: 5,        // mL (20 mg)
     anaf_expansao: 1000,  // mL por bolus

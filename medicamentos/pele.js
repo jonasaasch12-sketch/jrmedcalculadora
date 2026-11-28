@@ -413,6 +413,37 @@ registrarMedicamentos({
             atencao: "Melhor resultado se iniciado logo nos primeiros sintomas."
         }
     },
+    "valaciclovir_herpes": {
+        cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)",
+        kw: "valaciclovir vanlure valtrex herpes labial simples zoster antiviral comprimido adolescente", nome: "Valaciclovir: Herpes Labial (Vanlure)", apres: "Comprimido 500 mg",
+        info: "<strong>Posologia (bula, a partir de 12 anos):</strong> herpes labial: 2 g VO de 12/12h por 1 dia (iniciar nos primeiros sintomas).", badge: "", recLabel: "Texto para selecionar e copiar:",
+        calc: (p, i) => {
+            /* Bula (Vanlure 500 mg): uso adulto e pediátrico acima de 12 anos. Herpes labial: 2 g 2x/dia por 1 dia = 4 cp de 12/12h (8 cp). */
+            if (i === "") return { v: "—", r: "Insira a idade acima." };
+            let id = parseFloat(String(i).replace(',', '.'));
+            if (id < 12) return { v: "Contraind.", r: "ATENÇÃO: Valaciclovir só a partir de 12 anos (bula). Abaixo disso, usar aciclovir." };
+            return { v: "2 g 12/12h", r: `${recHead}1) VALACICLOVIR 500 MG COMPRIMIDO ---------- 8 CP\nTOMAR 4 COMPRIMIDOS (2 G), VIA ORAL, DE 12/12 HORAS, POR 1 DIA (2 TOMADAS).\nCOMEÇAR NOS PRIMEIROS SINTOMAS (FORMIGAMENTO, ARDOR). BEBER BASTANTE ÁGUA.` };
+        },
+        detalhes: {
+            indicacao: "Herpes labial (vesícula), a partir de 12 anos.",
+            dose: "Ver 📋 Ficha completa, abaixo (herpes-zóster e herpes simples).",
+            atencao: "Só a partir de 12 anos. Começar no primeiro sinal. Ajustar na insuficiência renal."
+        },
+        ficha: {
+            apresentacoes: "Comprimido revestido 500 mg (caixas com 10 ou 42).",
+            indicacoes: "Antiviral (pró-fármaco do aciclovir): herpes-zóster, herpes simples (tratamento e prevenção de recorrência), herpes labial.",
+            dose: "A partir de 12 anos:\nHerpes labial (vesícula): 2 g VO de 12/12 horas por 1 dia.\nHerpes simples: 500 mg VO de 12/12 horas por 3 a 10 dias, conforme a gravidade.\nPrevenção de recorrência do herpes simples: imunocompetente 500 mg 1 vez ao dia; imunocomprometido 500 mg de 12/12 horas.\nHerpes-zóster: 1.000 mg VO de 8/8 horas por 7 dias.",
+            doseMaxima: "Herpes-zóster: 3 g/dia. Herpes labial: 4 g em 1 dia.",
+            via: "Oral, com ou sem alimento. Manter boa hidratação.",
+            intervalo: "8/8, 12/12 ou 24/24 horas, conforme a indicação.",
+            alertasPediatricos: "Uso pediátrico a partir de 12 anos. Abaixo disso, usar aciclovir.",
+            contraindicacoes: "Hipersensibilidade ao valaciclovir ou ao aciclovir.",
+            efeitosAdversos: "Cefaleia, náusea, vômito, dor abdominal, tontura. Raro: neurotoxicidade (confusão, agitação) e lesão renal, sobretudo com função renal reduzida ou desidratação.",
+            interacoes: "Fármacos nefrotóxicos aumentam o risco renal. Cimetidina e probenecida aumentam o nível do aciclovir.",
+            ajusteRenal: "Reduzir a dose na insuficiência renal (ver bula).",
+            fonteRevisao: "Bula do Vanlure® (valaciclovir), Momenta Farma: folheto Memento Clínica Médica (06/2026), enviado pelo Dr. Jonas em 11/2026."
+        }
+    },
     "pele_trok": {
         cat: "cat-pele", sub: "🏠 Uso Ambulatorial (Vias Orais / Tópicos)", 
         kw: "trok trok pomada creme corticoide pele ambulatorial topica", nome: "Trok", apres: "Cetoconazol + Dipropionato de Betametasona Tópico",
