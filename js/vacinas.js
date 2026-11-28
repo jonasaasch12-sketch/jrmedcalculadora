@@ -255,7 +255,7 @@ function vacClique(ev) {
         vacAtualizar();
         return;
     }
-    if (b.dataset.vacAcao === "fechar") { if (typeof montarInicio === "function") montarInicio(); window.scrollTo(0, 0); return; }
+    if (b.dataset.vacAcao === "fechar") { if (typeof voltarDaPagina === "function") voltarDaPagina(); return; }
     if (b.dataset.vacAcao === "copiar") {
         let t = (document.getElementById("vacTexto") || {}).textContent || "";
         let ok = () => { b.textContent = "✓ Copiado"; setTimeout(() => { b.textContent = "Copiar texto"; }, 1500); };

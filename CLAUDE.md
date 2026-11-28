@@ -110,7 +110,7 @@ js/vacinas.js              💉 Calendário vacinal (tela inicial → Pediatria,
                            é devida; ate = some depois dessa idade, ex.: rotavírus aos 8 meses; opcional = ○ da tabela). Pela idade, marca o que já deveria ter
                            sido tomado; o que for desmarcado entra no texto "ORIENTAÇÕES (VACINAÇÃO)" para copiar. Nada é salvo.
                            Abre em TABELA igual à da SBP (VAC_LINHAS × VAC_COLUNAS; bolinha verde = devida, toque = vermelha/em atraso, cinza = idade não chegou;
-                           rola até a coluna da idade); botão "Lista" mostra a versão em lista. Liberado para todos em 11/2026 (VACINAS_LIBERADO = true)
+                           rola até a coluna da idade; ocupa a tela toda no computador); botão "Lista" mostra a versão em lista. Liberado para todos em 11/2026 (VACINAS_LIBERADO = true)
 js/firebase.js             login e Firestore (módulo); sem e-mail de confirmação (suspenso: não chegava), o cadastro pede o e-mail 2x; grava cada acesso em `usuarios/{uid}` (tela 👥 Usuários, só admin;
                            precisa da regra da coleção `usuarios` publicada no console do Firebase)
 privacidade.html, termos.html  Política de Privacidade e Termos de Uso (LGPD; contato jrmedprescricao@gmail.com). Mudou o texto?
@@ -252,7 +252,8 @@ Todas as telas (login, início, prescrição, condutas e as próximas) seguem o 
 - **Página nova aberta pela tela inicial** (pedido do Dr. Jonas, 11/2026): é uma página do app, igual à Prescrição e às Condutas,
   e NÃO uma cópia da tela inicial. Mesma tarja azul com o logotipo JR e o subtítulo "Prescrição e condutas médicas" (nunca "Início"),
   **sem a lateral da tela inicial**, só o botão "🏠 Início" para voltar (no celular, a aba Início da barra de baixo).
-  Modelo: `js/procedimentos.js` (`procModoPagina()`; volta pela `montarInicio()`).
+  Modelo: `js/procedimentos.js` (`procModoPagina()`, que grava o passo {modo: "pagina"} no histórico para o "voltar" do celular/tablet
+  voltar à tela inicial em vez de sair do app; o "🏠 Início" da página chama `voltarDaPagina()` em js/inicio.js).
 
 - **Tarja azul no topo:** `#005eb8` (faixa do cabeçalho da Prescrição e da tarja do login). Texto da tarja em branco.
 - **Botão principal:** azul sólido `#005eb8` (hover `#0a6fd6`), cantos 10px, sem degradê e sem sombra forte.

@@ -251,6 +251,15 @@ function irDoInicio(destino, busca) {
     else window.scrollTo(0, 0);
 }
 
+// Páginas abertas pela tela inicial (Procedimentos, Calculadoras, Sala vermelha, Calendário vacinal): procModoPagina()
+// grava um passo {modo: "pagina"} no histórico, para o "voltar" do celular/tablet voltar à tela inicial em vez de sair do app.
+// O botão "🏠 Início" da página usa voltarDaPagina(), que desfaz esse passo.
+function voltarDaPagina() {
+    try { if (history.state && history.state.modo === "pagina") { history.back(); return; } } catch (e) { }
+    montarInicio();
+    window.scrollTo(0, 0);
+}
+
 // Botão "voltar" do navegador/celular: volta para a tela inicial quando ela foi o passo anterior.
 window.addEventListener("popstate", (ev) => {
     if (!inicioAtivo()) return;

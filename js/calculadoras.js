@@ -156,7 +156,7 @@ function calcClique(ev) {
     let b = ev.target.closest("[data-calc],[data-calc-acao]"); if (!b) return;
     if (b.dataset.calc) { calcAtual = b.dataset.calc; calcDesenhar(); return; }
     let a = b.dataset.calcAcao;
-    if (a === "fechar") { calcAtual = null; if (typeof montarInicio === "function") montarInicio(); window.scrollTo(0, 0); }
+    if (a === "fechar") { calcAtual = null; if (typeof voltarDaPagina === "function") voltarDaPagina(); }
     else if (a === "lista") { calcAtual = null; calcDesenhar(); }
     else if (a === "conduta") {
         let x = CALCULADORAS.find(c => c.id === calcAtual);
