@@ -1,6 +1,6 @@
 // =====================================================
 // 🚨 FICHA DA SALA VERMELHA (pedido do Dr. Jonas, 11/2026): uma tela só, pelo peso e pela idade, com o que se usa
-// nos primeiros minutos da emergência (via aérea, PCR, arritmias, choque, anafilaxia, crise convulsiva).
+// nos primeiros minutos da emergência (sequência rápida de intubação em passos, PCR, arritmias, choque, anafilaxia, crise convulsiva).
 // NENHUMA DOSE É ESCRITA AQUI: cada item chama o calc() do card da Prescrição (farmaciaJR). Corrigiu o card, muda aqui.
 // Única conta própria: energia do desfibrilador/cardioversão (PALS/AHA 2020), em SV_ENERGIA.
 // Tela inicial → Pediatria → "Sala vermelha" (logo abaixo de Emergência). Página própria como a de Procedimentos.
@@ -14,7 +14,27 @@ function salaVermelhaAtiva() {
 }
 
 const SV_BLOCOS = [
-    { titulo: "Via aérea e intubação", cor: "#0a84ff", ids: ["rsi_tubo", "rsi_fent", "rsi_ceta", "rsi_midaz", "rsi_propofol", "rsi_roc", "rsi_succi", "rsi_pancuronio"] },
+    /* Sequência rápida de intubação em passos, na ordem em que se faz (pedido do Dr. Jonas, 11/2026) */
+    { titulo: "Sequência rápida de intubação", cor: "#0a84ff", passos: [
+        { titulo: "Posicionar o paciente", texto: [
+            "Decúbito dorsal, cabeceira plana, alinhar o meato acústico externo com o esterno (posição olfativa).",
+            "Menores de 2 anos: coxim sob os ombros (occipício grande). Maiores de 2 anos: coxim sob o occipício.",
+            "Monitorizar (FC, SpO₂, PA) e garantir acesso venoso ou intraósseo."
+        ] },
+        { titulo: "Pré-oxigenar", texto: [
+            "O₂ a 100% por 3 minutos: máscara não reinalante, VNI ou bolsa-válvula-máscara (ambu) se a respiração for insuficiente."
+        ] },
+        { titulo: "Escolher e testar o material", ids: ["rsi_tubo"], texto: [
+            "Aspirador ligado, laringoscópio com a lâmina testada, tubo do tamanho calculado e 0,5 acima e abaixo, fio-guia, ambu, capnógrafo."
+        ] },
+        { titulo: "Pré-medicação (se indicada)", ids: ["atropina", "rsi_lido"] },
+        { titulo: "Analgesia", ids: ["rsi_fent"] },
+        { titulo: "Sedação (indução)", ids: ["rsi_ceta", "rsi_midaz", "rsi_propofol"] },
+        { titulo: "Bloqueio neuromuscular", ids: ["rsi_succi", "rsi_roc", "rsi_pancuronio"], texto: [
+            "Sempre depois do sedativo.",
+            "Não usar em quem depende do próprio tônus para manter a via aérea pérvia, nem com sinais de intubação e ventilação difíceis."
+        ] }
+    ] },
     { titulo: "Parada cardiorrespiratória e arritmias", cor: "#ff3b30", energia: true, ids: ["epinefrina_pals", "amiodarona_pals", "lidocaina_pals", "adenosina_pals", "atropina", "magnesio_pals", "bicarbonato_pals", "gluconato_calcio_pals"] },
     { titulo: "Choque", cor: "#ff9f0a", ids: ["sepse_expansao", "adrenalina_sepse", "nora_sepse"] },
     { titulo: "Anafilaxia", cor: "#af52de", ids: ["adrenalina_im", "anaf_expansao"] },
@@ -26,6 +46,7 @@ const SV_BLOCOS = [
    Só o modo de preparo do próprio card (texto da receita dele); os números que mudam com o peso são tirados do texto do card (t).
    Tocar no item continua abrindo a receita completa. Card sem linha aqui: mostra só a dose. */
 const SV_PREPARO = {
+    rsi_lido: () => "Lidocaína 2% pura (20 mg/mL), sem vasoconstritor. IV/IO.",
     rsi_fent: () => "Diluir 1 mL + 9 mL de AD (5 mcg/mL). IV/IO lento.",
     rsi_ceta: () => "Puro (50 mg/mL). IV/IO.",
     rsi_midaz: () => "Puro (5 mg/mL). IV/IO.",
@@ -59,6 +80,18 @@ const SV_PREPARO = {
     gluconato_calcio_pals: () => "Gluconato de cálcio 10% puro. IV/IO lento.",
     flumazenil_pals: t => `Puro (0,1 mg/mL). IV em 15 s. Sem resposta em 45 s: repetir a cada 60 s (até 4 vezes), no total máximo de ${svPega(t, /TOTAL MÁXIMA DE ([\d.,]+ ML)/) || "0,05 mg/kg ou 1 mg"}.`
 };
+/* Indicação e contraindicação na SRI, sempre visíveis (tabela de medicações da sequência rápida enviada pelo Dr. Jonas, 11/2026) */
+const SV_INDICACAO = {
+    atropina: { ind: "Paciente tendendo à bradicardia (diminui a secreção das vias aéreas e a bradicardia).", contra: "Não há." },
+    rsi_lido: { ind: "TCE e aumento da pressão intracraniana (diminui os reflexos de tosse e vômito). Usar sem vasoconstritor.", contra: "Instabilidade hemodinâmica." },
+    rsi_fent: { ind: "Preferido no choque cardiogênico (estabilidade hemodinâmica), hipertensos, aumento da PIC e choque séptico. Infundir lento (30 a 60 s): risco de rigidez torácica (tratar com naloxona + relaxante muscular).", contra: "Não há." },
+    rsi_ceta: { ind: "Preferência no choque séptico, na instabilidade hemodinâmica e na crise asmática (broncodilata; aumenta FC e PAM).", contra: "Cautela em menores de 3 meses, insuficiência cardíaca, HIC, isquemia coronariana grave, aneurisma cerebral e doença psiquiátrica." },
+    rsi_midaz: { ind: "Estado de mal epiléptico. Antagonista: flumazenil.", contra: "Instabilidade hemodinâmica; evitar na insuficiência hepática." },
+    rsi_propofol: { ind: "Aumento da pressão intracraniana e estado de mal epiléptico.", contra: "Instabilidade hemodinâmica, alergia a ovo, acidose metabólica importante." },
+    rsi_succi: { ind: "Suspeita de estômago cheio, consciência plena ou parcial, agitação, convulsão, HIC, trauma, intoxicação.", contra: "Doença neuromuscular desnervante, hipercalemia, queimadura, trauma, doença muscular esquelética crônica." },
+    rsi_roc: { ind: "Suspeita de estômago cheio, consciência plena ou parcial, agitação, convulsão, HIC, trauma, intoxicação. Antagonista: sugamadex 2 a 4 mg/kg.", contra: "Paciente que depende do próprio tônus para manter a via aérea; sinais de intubação e ventilação difíceis." }
+};
+
 function svPega(t, re) { let m = String(t).toUpperCase().match(re); return m ? m[1].toLowerCase().replace(/ ml$/, " mL") : ""; }
 
 /* PALS (AHA 2020): desfibrilação 2 → 4 → ≥ 4 J/kg (máx. 10 J/kg ou a dose de adulto); cardioversão sincronizada 0,5–1 → 2 J/kg */
@@ -111,20 +144,30 @@ function svAtualizar() {
     let e = escaparHtml, limpar = t => String(t).replace(/<br\s*\/?>/gi, "\n").replace(/<[^>]+>/g, "");
     let html = "";
     if (!i) html += `<div class="sv-aviso">Sem a idade, o tamanho do tubo é estimado pelo peso. Digite a idade para mais precisão.</div>`;
-    SV_BLOCOS.forEach(b => {
-        let itens = b.ids.filter(id => typeof farmaciaJR !== "undefined" && farmaciaJR[id]).map(id => {
+    let svItens = ids => ids.filter(id => typeof farmaciaJR !== "undefined" && farmaciaJR[id]).map(id => {
             let m = farmaciaJR[id], r;
             try { r = m.calc(p, i); } catch (err) { r = { v: "—", r: "" }; }
             let prep = ""; try { prep = SV_PREPARO[id] ? SV_PREPARO[id](limpar(r.r || "")) : ""; } catch (err) { prep = ""; }
             return `<details class="sv-item">
-                <summary><span class="sv-nome">${e(limpar(m.nome))}<small>${e(limpar(m.apres || ""))}</small></span><span class="sv-dose">${/ver receita/i.test(r.v) ? "" : e(limpar(r.v))}</span>${prep ? `<span class="sv-prep">${e(prep)}</span>` : ""}</summary>
+                <summary><span class="sv-nome">${e(limpar(m.nome))}<small>${e(limpar(m.apres || ""))}</small></span><span class="sv-dose">${/ver receita/i.test(r.v) ? "" : e(limpar(r.v))}</span>${prep ? `<span class="sv-prep">${e(prep)}</span>` : ""}${svIndicacaoHtml(id)}</summary>
                 <div class="sv-receita" id="sv-r-${id}">${e(limpar(r.r || ""))}</div>
                 <button type="button" class="sv-copiar" data-sv-copiar="${id}">Copiar</button>
             </details>`;
         }).join("");
-        html += `<section class="sv-bloco" style="--sv-cor:${b.cor}"><h2>${e(b.titulo)}</h2>${b.energia ? svEnergia(p) : ""}${itens}</section>`;
+    SV_BLOCOS.forEach(b => {
+        let corpo = b.passos
+            ? b.passos.map((ps, n) => `<div class="sv-passo"><div class="sv-passo-tit"><span class="sv-passo-n">${n + 1}</span>${e(ps.titulo)}</div>
+                ${ps.texto ? `<ul class="sv-passo-txt">${ps.texto.map(x => `<li>${e(x)}</li>`).join("")}</ul>` : ""}${ps.ids ? svItens(ps.ids) : ""}</div>`).join("")
+                + `<div class="sv-fonte sv-fonte-srl">Indicações e contraindicações: tabela de medicações da sequência rápida de intubação (material do Dr. Jonas).</div>`
+            : svItens(b.ids);
+        html += `<section class="sv-bloco" style="--sv-cor:${b.cor}"><h2>${e(b.titulo)}</h2>${b.energia ? svEnergia(p) : ""}${corpo}</section>`;
     });
     caixa.innerHTML = html;
+}
+function svIndicacaoHtml(id) {
+    let x = SV_INDICACAO[id]; if (!x) return "";
+    let e = escaparHtml;
+    return `<span class="sv-ind"><b>Indicação:</b> ${e(x.ind)}</span><span class="sv-ind sv-contra"><b>Contraindicação:</b> ${e(x.contra)}</span>`;
 }
 function calcLerSv(id) { let c = document.getElementById(id); return c ? c.value.trim() : ""; }
 
