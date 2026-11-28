@@ -625,3 +625,19 @@ html[data-theme="dark"] #tela-inicio .vac-tabela td.atual { background: #12352c 
 html[data-theme="dark"] #tela-inicio .vac-bola.futuro { background: #17212b; border-color: #4a5664; }
 #tela-inicio .proc-corpo.vac-corpo { max-width: none; } /* calendário vacinal: tela toda no computador (pedido do Dr. Jonas) */
 #tela-inicio .vac-tabela { width: 100%; }
+/* Sala vermelha: sequência rápida de intubação em passos */
+#tela-inicio .sv-passo { border-top: 1px solid #e3e7ec; }
+#tela-inicio .sv-bloco h2 + .sv-passo { border-top: 0; }
+#tela-inicio .sv-passo-tit { display: flex; align-items: center; gap: 10px; padding: 10px 14px 6px; font-size: 15px; font-weight: 700; color: #212b32; background: #f7f9fb; }
+#tela-inicio .sv-passo-n { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--sv-cor); color: #fff; font-size: 13px; flex-shrink: 0; }
+#tela-inicio .sv-passo-txt { margin: 0; padding: 4px 14px 10px 48px; background: #f7f9fb; font-size: 13.5px; line-height: 1.45; color: #212b32; }
+#tela-inicio .sv-passo .sv-item { border-top: 1px solid #eef1f4; }
+#tela-inicio .sv-ind { flex: 0 0 100%; font-size: 12.5px; line-height: 1.35; color: #5b6670; }
+#tela-inicio .sv-ind b { color: #067647; font-weight: 600; }
+#tela-inicio .sv-contra b { color: #b42318; }
+#tela-inicio .sv-fonte-srl { padding: 8px 14px 10px; border-top: 1px solid #e3e7ec; }
+html[data-theme="dark"] #tela-inicio .sv-passo-tit, html[data-theme="dark"] #tela-inicio .sv-passo-txt { background: #1d2833; color: #e6edf3; }
+html[data-theme="dark"] #tela-inicio .sv-passo, html[data-theme="dark"] #tela-inicio .sv-passo .sv-item { border-color: #2a3644; }
+html[data-theme="dark"] #tela-inicio .sv-ind { color: #9aa4ad; }
+html[data-theme="dark"] #tela-inicio .sv-ind b { color: #75e0a7; }
+html[data-theme="dark"] #tela-inicio .sv-contra b { color: #fda29b; }
